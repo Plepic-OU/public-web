@@ -309,12 +309,12 @@ p:last-child {
   margin-bottom: var(--space-3);
 }
 
-/* Broken grid accent bar */
+/* Accent bar at hero bottom - connects to training section */
 .hero-accent {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 60%;
+  width: 100%;
   height: 8px;
   background: var(--color-brand);
 }
@@ -322,10 +322,6 @@ p:last-child {
 @media (max-width: 768px) {
   .hero-content {
     max-width: 100%;
-  }
-
-  .hero-accent {
-    width: 40%;
   }
 }
 
