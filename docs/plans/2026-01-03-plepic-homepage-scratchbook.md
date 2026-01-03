@@ -12,7 +12,7 @@ Design: [2026-01-03-plepic-homepage-design.md](./2026-01-03-plepic-homepage-desi
 
 ## My approach
 
-Start by stealing from the training one-pager - it already has the design system (colors, fonts, responsive patterns). Don't reinvent.
+Follow the design system in the design doc (Swiss Style + Broken Grid, Inter font, 12-column grid). The training one-pager uses different fonts and simpler layout - only reuse its colors and content, not its CSS patterns.
 
 Build homepage first, get it looking good, then the training subpage is just the one-pager content with shared header/footer.
 
@@ -20,7 +20,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 
 ## Order of work
 
-- [ ] Set up file structure + copy assets to images/
+- [x] Set up file structure + copy assets to images/
 - [ ] Create shared CSS with design system from one-pager
 - [ ] Homepage: navigation (sticky header)
 - [ ] Homepage: hero banner
