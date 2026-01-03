@@ -28,7 +28,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 - [x] Homepage: client logos
 - [x] Homepage: testimonials/stats
 - [x] Homepage: team section (the complex one)
-- [ ] Homepage: footer/contact
+- [x] Homepage: footer/contact
 - [ ] Add meta tags, OpenGraph, favicon
 - [ ] Training subpage: adapt one-pager with shared header/footer
 - [ ] robots.txt
