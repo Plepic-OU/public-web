@@ -31,15 +31,57 @@ public-web/
 
 ## Design System
 
-**Colors:**
-- Brand green: #00674f
-- Background: #f5f3ee (warm cream)
-- White: #ffffff
-- Text: #1a1a1a, #444, #666
+**Design Philosophy: Swiss Style + Broken Grid**
 
-**Typography:**
-- Headings: DM Serif Display
-- Body: Source Sans Pro (400, 600, 700)
+Inspired by the International Typographic Style (Swiss Design) with intentional grid breaks for visual tension and modern dynamism.
+
+**Core Principles:**
+- Mathematical 12-column grid as foundation
+- Deliberate breaks where elements escape grid boundaries
+- Strong typographic hierarchy with generous whitespace
+- Asymmetrical compositions that create visual interest
+- Flush-left alignment (no centered text except hero tagline)
+- Objective, utilitarian aesthetic with moments of playfulness
+
+**Grid System:**
+- Base: 12-column grid, 1200px max-width, 24px gutters
+- Breakpoints: 480px (mobile), 768px (tablet), 1024px (desktop)
+- Grid breaks: Elements may extend beyond columns, overlap adjacent sections, or use negative margins to break visual monotony
+
+**Colors:**
+- Brand green: #00674f (primary accent, CTAs, key numbers)
+- Background: #f5f3ee (warm cream, main canvas)
+- White: #ffffff (cards, elevated surfaces)
+- Black: #1a1a1a (headlines, primary text)
+- Gray: #444 (body text), #666 (secondary text), #e0e0e0 (borders)
+- Accent blocks: Solid green backgrounds for emphasis sections
+
+**Typography (Swiss-inspired):**
+- Headlines: Inter (700, 800) — clean geometric sans-serif
+- Body: Inter (400, 500, 600) — consistent type family
+- Accent/Labels: Inter (600) uppercase with letter-spacing: 0.1em
+- Scale: 14px base, 1.5 line-height, modular scale (1.25 ratio)
+- Numbers: Tabular figures for stats, oversized for impact (72-96px)
+
+**Spacing System:**
+- Base unit: 8px
+- Section padding: 80px (desktop), 48px (mobile)
+- Component spacing: 24px, 32px, 48px
+- Micro spacing: 4px, 8px, 16px
+
+**Visual Elements:**
+- Photos: Grayscale with high contrast, may break grid boundaries
+- Geometric shapes: Rectangles and lines as dividers/accents
+- No rounded corners (except buttons: 4px max)
+- Thin borders (1px) for subtle separation
+- Drop shadows: Minimal, only for elevation (cards)
+
+**Broken Grid Techniques:**
+1. **Offset positioning:** Elements shifted 20-40px outside their grid column
+2. **Overlapping sections:** Photos or accent blocks extend into adjacent sections
+3. **Asymmetric margins:** Left-heavy or right-heavy compositions per section
+4. **Bleeding elements:** Full-bleed backgrounds that contrast contained content
+5. **Staggered layouts:** Alternating left/right alignment between sections
 
 **Tagline:** "Curious play. Epic growth."
 
@@ -58,23 +100,32 @@ public-web/
 ### 2. Hero Banner
 
 - **Background:** Warm cream (#f5f3ee)
-- **Layout:** Left-aligned content
+- **Layout:** Asymmetric two-column (7/5 split)
+  - Left: Headline + CTA (spans columns 1-7)
+  - Right: Large decorative number "01" or geometric block extending off-canvas
 - **Headline:** "Claude Code and Performance-Based Development for Entrepreneurs"
-- **Tagline:** "Curious play. Epic growth."
+- **Tagline:** "Curious play. Epic growth." (smaller, uppercase, tracked)
 - **CTA:** Green button "Book Free Strategy Session" (scrolls to Contact)
+- **Grid break:** Green accent bar extends from left edge past content boundary
 
 ### 3. Training Highlight
 
-- **Label:** "MARCH 2026 COHORT"
-- **Headline:** "Master agentic coding in 6 weeks"
+- **Background:** Full-bleed brand green (#00674f)
+- **Layout:** Offset grid composition
+  - Label + Headline: Left-aligned, columns 2-7 (indented from edge)
+  - Stats: Right side, columns 8-12, vertically stacked
+- **Label:** "MARCH 2026 COHORT" (uppercase, white, tracked)
+- **Headline:** "Master agentic coding in 6 weeks" (white, large)
 - **Description:** Claude Code practitioners train your developers to work 3-5x faster. Learn from early adopters how to build prompt libraries and automated workflows.
-- **Stats grid (4 items):**
+- **Stats block (staggered alignment):**
   - 6 Weeks / Fridays
   - 50 Academic Hours
   - 20 Max Participants
   - 2+ Years Experience Required
-- **Pricing:** "80% funded by Töötukassa → You pay €504 (+VAT)"
+  - Numbers in oversized white type (72px), labels below (14px)
+- **Pricing:** "80% funded by Töötukassa → You pay €504 (+VAT)" (highlighted in cream)
 - **Link:** "View full program →" (links to /training)
+- **Grid break:** Stats numbers overlap section boundary at top
 
 ### 4. Client Logos
 
@@ -84,38 +135,57 @@ public-web/
 
 ### 5. Testimonials & Stats
 
+- **Layout:** Two-column asymmetric (4/8 split)
+  - Left column: Oversized stats stacked vertically
+  - Right column: Supporting text
 - **Stats (2 items):**
-  - 8.4/10 Hackathon Avg. Score
-  - 100+ Developers Trained
+  - "8.4" / "Hackathon Avg. Score" — number in 96px brand green, label in 14px gray
+  - "100+" / "Developers Trained" — same treatment
 - **Note:** "Try our teaching style at upcoming hackathons before you commit to the full course."
-- **Style:** Large serif numbers in brand green
+- **Grid break:** Large numbers overlap into left margin area
+- **Style:** Swiss-inspired large numerals with clear hierarchy
 
 ### 6. Team
 
-Two full-width cards based on the hackathon slides design.
+Two team cards using broken grid layout with overlapping photos and asymmetric compositions.
+
+**Layout pattern (alternating):**
+- Card 1 (Joosep): Photo left, breaks grid leftward; content right
+- Card 2 (Kaido): Photo right, breaks grid rightward; content left
 
 **Joosep Simm card:**
-- Photo: Grayscale with name label overlay
+- **Photo:** Grayscale, high contrast, extends 40px beyond left grid boundary
+- **Name overlay:** White label positioned at photo bottom edge, extending into content area
 - Title: "Developer, Architect & AI Trainer"
-- Languages: Java, Kotlin, Golang, TypeScript, Python
+- Languages: Java, Kotlin, Golang, TypeScript, Python (inline badges)
 - Skills: Frontend, Backend, DevOps, AI Coding
 - Tagline: Telecommunications | Blockchain | AML | Energy | Game Design | Agentic Coding | Father of Two
-- Timeline: 2005 → 2015 → 2025 with company logos (Nortal, Guardtime, Salv, Scopeful)
+- Timeline: Horizontal bar with year markers (2005 → 2015 → 2025) and company logos below
 
 **Kaido Koort card:**
-- Photo: Grayscale with name label overlay
+- **Photo:** Grayscale, high contrast, extends 40px beyond right grid boundary
+- **Name overlay:** White label positioned at photo bottom edge, extending into content area
 - Title: "Over 23 years I've led eight teams, launched six products and wrote a handbook"
-- Credentials: MSc, MA
+- Credentials: MSc, MA (small badges)
 - Products: StaffLogic, Smart-ID, SurfCast, Lunar Base, PSD2, KaTa
 - Tagline: Professional Service Companies | Analysis | Strategy | Product | CTO | Game Design | Incentive Alignment | Father of Two
-- Timeline: 2005 → 2015 → 2025 with company logos (Starman, Sampo Pank, Nortal, SK ID Solutions, Luminor, Makecommerce, LHV, Scopeful)
+- Timeline: Horizontal bar with year markers (2005 → 2015 → 2025) and company logos below
 
-**Shared element:** Book cover "AI Coding for Beginners" with caption "Co-authors"
+**Shared element:** Book cover "AI Coding for Beginners"
+- Positioned between the two cards, centered
+- Slight rotation (2-3°) for visual interest
+- Caption: "Co-authors" below
+
+**Grid break techniques:**
+- Photos extend beyond content container
+- Name labels overlap photo/content boundary
+- Timeline bars span full width, ignore column structure
 
 **Mobile responsive:**
-- Photo + name stacks above content
-- Timeline simplified (years + key logos)
-- Book cover moves below bio
+- Single column, photos full-width (no offset)
+- Name labels stack below photo
+- Timelines simplified to key milestones
+- Book cover centered between cards
 
 ### 7. Footer / Contact
 
@@ -139,9 +209,24 @@ Two full-width cards based on the hackathon slides design.
 
 ## Responsive Behavior
 
-- **Desktop:** Multi-column layouts where appropriate
-- **Tablet:** Reduced columns, adjusted spacing
-- **Mobile:** Single column, stacked elements, simplified timelines
+**Desktop (1024px+):**
+- Full 12-column grid active
+- All broken grid effects (offsets, overlaps, bleeds)
+- Asymmetric layouts with alternating compositions
+
+**Tablet (768px - 1023px):**
+- 8-column grid
+- Reduced grid breaks (20px offsets instead of 40px)
+- Photos contained within grid (no overflow)
+- Maintain asymmetric text alignment
+
+**Mobile (< 768px):**
+- Single column, full-width
+- No grid breaks — clean stacked layout
+- Photos full-width, no offsets
+- Centered CTAs, left-aligned text
+- Simplified timelines (years only, fewer logos)
+- Stats numbers remain large (64px) but contained
 
 ## Assets
 
