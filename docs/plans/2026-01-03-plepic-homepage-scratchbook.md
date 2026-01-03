@@ -23,7 +23,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 - [x] Set up file structure + copy assets to images/
 - [x] Create shared CSS with design system
 - [x] Homepage: navigation (sticky header)
-- [ ] Homepage: hero banner
+- [x] Homepage: hero banner
 - [ ] Homepage: training highlight section
 - [ ] Homepage: client logos
 - [ ] Homepage: testimonials/stats

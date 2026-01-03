@@ -283,14 +283,21 @@ p:last-child {
    ======================================== */
 
 .hero {
+  position: relative;
   padding-top: calc(var(--header-height) + var(--space-section));
   padding-bottom: var(--space-section);
   background: var(--color-bg);
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 700px; /* ~7 columns of 12 */
 }
 
 .hero h1 {
   color: var(--color-brand);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  line-height: 1.1;
 }
 
 .tagline {
@@ -299,7 +306,27 @@ p:last-child {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-secondary);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-3);
+}
+
+/* Broken grid accent bar */
+.hero-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 8px;
+  background: var(--color-brand);
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-accent {
+    width: 40%;
+  }
 }
 
 /* ========================================
