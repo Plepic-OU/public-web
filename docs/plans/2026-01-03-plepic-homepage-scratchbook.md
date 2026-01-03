@@ -26,7 +26,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 - [x] Homepage: hero banner
 - [x] Homepage: training highlight section
 - [x] Homepage: client logos
-- [ ] Homepage: testimonials/stats
+- [x] Homepage: testimonials/stats
 - [ ] Homepage: team section (the complex one)
 - [ ] Homepage: footer/contact
 - [ ] Add meta tags, OpenGraph, favicon

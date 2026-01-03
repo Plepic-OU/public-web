@@ -483,13 +483,67 @@ p:last-child {
    Section: Stats
    ======================================== */
 
+.stats-section {
+  background: var(--color-bg);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.stats-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.stat-block {
+  display: flex;
+  flex-direction: column;
+}
+
 .stats-section .stat-number {
-  margin-bottom: var(--space-2);
+  font-size: var(--text-display);
+  margin-bottom: var(--space-1);
 }
 
 .stats-section .stat-label {
   font-size: var(--text-sm);
   color: var(--color-secondary);
+}
+
+.stats-note {
+  padding-left: var(--space-6);
+  border-left: 2px solid var(--color-brand);
+}
+
+.stats-note p {
+  font-size: var(--text-lg);
+  color: var(--color-body);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .stats-numbers {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .stats-section .stat-number {
+    font-size: var(--text-5xl);
+  }
+
+  .stats-note {
+    padding-left: var(--space-4);
+  }
 }
 
 /* ========================================
