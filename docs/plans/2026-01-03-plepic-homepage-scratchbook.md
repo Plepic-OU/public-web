@@ -32,8 +32,8 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 - [x] Add meta tags, OpenGraph, favicon
 - [x] Training subpage: adapt one-pager with shared header/footer
 - [x] robots.txt
-- [ ] Test responsive on mobile
-- [ ] Final review + commit
+- [ ] Test responsive on mobile (requires browser)
+- [ ] Final review + commit (requires browser)
 
 ## Uncertainties
 
