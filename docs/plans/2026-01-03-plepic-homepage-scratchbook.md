@@ -27,7 +27,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 - [x] Homepage: training highlight section
 - [x] Homepage: client logos
 - [x] Homepage: testimonials/stats
-- [ ] Homepage: team section (the complex one)
+- [x] Homepage: team section (the complex one)
 - [ ] Homepage: footer/contact
 - [ ] Add meta tags, OpenGraph, favicon
 - [ ] Training subpage: adapt one-pager with shared header/footer
@@ -39,7 +39,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 
 - Smooth scroll: CSS `scroll-behavior: smooth` - does it work well enough in Safari? Will test, might be fine.
 - ~~Sticky header shadow on scroll~~ → Needed tiny JS (5 lines), CSS can't detect scroll position
-- Timeline in Team section: how to make it responsive? The PDF design is horizontal - might need to simplify for mobile.
+- ~~Timeline in Team section~~ → Simplified to year markers only (2005 → 2015 → 2025), flexbox wraps on mobile
 - Favicon: need to create from logo. Can probably use online converter.
 
 ## Watch out for
