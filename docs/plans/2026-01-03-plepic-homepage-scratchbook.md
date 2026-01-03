@@ -21,7 +21,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 ## Order of work
 
 - [x] Set up file structure + copy assets to images/
-- [ ] Create shared CSS with design system from one-pager
+- [x] Create shared CSS with design system
 - [ ] Homepage: navigation (sticky header)
 - [ ] Homepage: hero banner
 - [ ] Homepage: training highlight section
@@ -54,3 +54,4 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 
 | Task | Learning | Placed in |
 |------|----------|-----------|
+| CSS design system | Use CSS custom properties for all design tokens - makes responsive overrides clean | Scratchbook |
