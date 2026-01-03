@@ -30,7 +30,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 - [x] Homepage: team section (the complex one)
 - [x] Homepage: footer/contact
 - [x] Add meta tags, OpenGraph, favicon
-- [ ] Training subpage: adapt one-pager with shared header/footer
+- [x] Training subpage: adapt one-pager with shared header/footer
 - [ ] robots.txt
 - [ ] Test responsive on mobile
 - [ ] Final review + commit
