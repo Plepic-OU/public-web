@@ -22,7 +22,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 
 - [x] Set up file structure + copy assets to images/
 - [x] Create shared CSS with design system
-- [ ] Homepage: navigation (sticky header)
+- [x] Homepage: navigation (sticky header)
 - [ ] Homepage: hero banner
 - [ ] Homepage: training highlight section
 - [ ] Homepage: client logos
@@ -38,7 +38,7 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 ## Uncertainties
 
 - Smooth scroll: CSS `scroll-behavior: smooth` - does it work well enough in Safari? Will test, might be fine.
-- Sticky header shadow on scroll: need tiny bit of JS or can fake with CSS? Try CSS first.
+- ~~Sticky header shadow on scroll~~ → Needed tiny JS (5 lines), CSS can't detect scroll position
 - Timeline in Team section: how to make it responsive? The PDF design is horizontal - might need to simplify for mobile.
 - Favicon: need to create from logo. Can probably use online converter.
 
@@ -55,3 +55,4 @@ Do sections top-to-bottom since they're independent. Team section is the complex
 | Task | Learning | Placed in |
 |------|----------|-----------|
 | CSS design system | Use CSS custom properties for all design tokens - makes responsive overrides clean | Scratchbook |
+| Navigation | Scroll shadow needs JS - CSS has no scroll position detection | Scratchbook |

@@ -12,8 +12,7 @@
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
 
-  <!-- Header placeholder - will be built in next task -->
-  <header class="header">
+  <header class="header" id="header">
     <div class="header-inner">
       <a href="/" class="logo">Plepic</a>
       <nav class="nav">
@@ -29,5 +28,12 @@
     <!-- Sections will be added in subsequent tasks -->
   </main>
 
+  <script>
+    // Add shadow to header on scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+  </script>
 </body>
 </html>
