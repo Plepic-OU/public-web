@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plepic - Agentic Coding Training</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+Pro:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --global-margin-bottom: clamp(20px, 1.5vw, 50px);
+        --global-padding: clamp(20px, 2vw, 45px);
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Source Sans Pro", sans-serif;
+        background: #f5f3ee;
+        color: #1a1a1a;
+        width: min(1500px, 100%);
+        min-height: 297mm;
+        padding: 45px 57px;
+        position: relative;
+        margin: 0 auto;
+        font-size: clamp(16px, 1.2vw, 20px);
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 20px 15px;
+        }
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--global-margin-bottom);
+        padding-bottom: 11px;
+        border-bottom: 2px solid #00674f;
+      }
+
+      @media (max-width: 600px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+      }
+
+      .logo-block {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+
+      .logo {
+        font-family: "DM Serif Display", serif;
+        font-size: 3.5em;
+        color: #00674f;
+        letter-spacing: -0.5px;
+      }
+
+      .tagline {
+        color: #666;
+        font-style: italic;
+        white-space: nowrap;
+      }
+
+      .tagline-top {
+        color: #00674f;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .hero {
+        margin-bottom: var(--global-margin-bottom);
+      }
+
+      .hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(45px, 3.5vw, 72px);
+        color: #00674f;
+        line-height: 1.1;
+        margin-bottom: 11px;
+      }
+
+      .hero .subtitle {
+        color: #444;
+        line-height: 1.4;
+        max-width: 90%;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 19px;
+        margin-bottom: var(--global-margin-bottom);
+      }
+
+      @media (max-width: 800px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media print {
+        .main-content {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .problem-box {
+        background: linear-gradient(135deg, #00674f 0%, #004d3a 100%);
+        color: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        align-content: center;
+      }
+
+      .problem-box h3 {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        opacity: 0.85;
+      }
+
+      .problem-box p {
+        line-height: 1.45;
+      }
+
+      .solution-box {
+        background: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        border-left: 3px solid #00674f;
+        align-content: center;
+      }
+
+      .solution-box h3 {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #00674f;
+        margin-bottom: 4px;
+      }
+
+      .solution-box .solution-intro {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 8px;
+      }
+
+      .solution-box ul {
+        list-style: none;
+        line-height: 1.55;
+      }
+
+      .solution-box li {
+        padding-left: 30px;
+        position: relative;
+      }
+
+      .solution-box li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #00674f;
+      }
+
+      .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+
+      .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+
+      .detail-item {
+        background: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        text-align: center;
+      }
+
+      .detail-item .number {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(32px, 4vw, 48px);
+        color: #00674f;
+        line-height: 1;
+      }
+
+      .detail-item .label {
+        color: #666;
+        margin-top: 4px;
+      }
+
+      .price-highlight {
+        background: #00674f;
+        color: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        align-content: center;
+      }
+
+      .price-highlight .funding-lead {
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.5px;
+        margin-bottom: 9px;
+      }
+
+      .price-highlight .price-breakdown {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        padding: var(--global-padding);
+      }
+
+      .price-highlight .price-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 0;
+      }
+
+      .price-highlight .price-line.total {
+        opacity: 0.8;
+      }
+
+      .price-highlight .price-line.total .strikethrough {
+        text-decoration: line-through;
+      }
+
+      .price-highlight .price-line.savings {
+        color: #90ee90;
+      }
+
+      .price-highlight .price-line.final {
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        margin-top: 15px;
+        padding-top: 20px;
+        font-weight: 700;
+      }
+
+      .price-highlight .price-line.final .amount {
+        font-family: "DM Serif Display", serif;
+        font-size: 21px;
+      }
+
+      .price-highlight .vat-note {
+        text-align: center;
+        font-size: 13px;
+        opacity: 0.8;
+        margin-top: 8px;
+      }
+
+      .curriculum {
+        background: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        margin-bottom: var(--global-margin-bottom);
+      }
+
+      .curriculum h3 {
+        text-transform: uppercase;
+        color: #00674f;
+        margin-bottom: 9px;
+      }
+
+      .week-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .week {
+        flex: 1;
+        color: #444;
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .week .week-num {
+        font-weight: 700;
+        color: #00674f;
+        font-size: clamp(16px, 4vw, 28px);
+        white-space: nowrap;
+      }
+
+      .week.final {
+        background: #e8f5e9;
+        font-weight: 600;
+      }
+
+      .social-proof {
+        background: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        margin-bottom: var(--global-margin-bottom);
+      }
+
+      .social-proof h3 {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #00674f;
+        margin-bottom: 9px;
+      }
+
+      .hackathon-note {
+        color: #555;
+        font-style: italic;
+        margin-top: 19px;
+        padding-top: 18px;
+        border-top: 1px dashed #ddd;
+      }
+
+      .proof-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      @media (max-width: 1000px) {
+        .proof-content {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+
+      .companies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 11px;
+        align-items: center;
+      }
+
+      @media (min-width: 800px) {
+        .companies {
+          flex-wrap: nowrap;
+        }
+      }
+
+      .company-logo {
+        padding: 6px 9px;
+      }
+
+      .company-logo svg {
+        height: 24px;
+        width: auto;
+      }
+
+      .company-logo:last-child svg {
+        height: 45px;
+      }
+
+      .stats {
+        display: flex;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .stat {
+        padding: 0 8px;
+      }
+
+      .stat .value {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(32px, 4vw, 48px);
+        color: #00674f;
+      }
+
+      .stat .label {
+        color: #666;
+      }
+
+      .footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 19px;
+        align-items: center;
+      }
+
+      @media (max-width: 1000px) {
+        .footer {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+      }
+
+      .instructors h4 {
+        color: #00674f;
+        margin-bottom: 2px;
+      }
+
+      .instructor-tagline {
+        color: #666;
+        font-style: italic;
+        margin-bottom: var(--global-margin-bottom);
+      }
+
+      .instructor-row {
+        display: flex;
+        gap: 30px;
+        margin-bottom: var(--global-margin-bottom);
+      }
+
+      @media (max-width: 800px) {
+        .instructor-row {
+          flex-direction: column;
+        }
+      }
+
+      @media print {
+        .instructor-row {
+          flex-direction: row;
+        }
+      }
+
+      .instructor {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .instructor-photo {
+        width: clamp(80px, 5vw, 120px);
+        height: clamp(80px, 5vw, 120px);
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #00674f;
+        filter: grayscale();
+        aspect-ratio: 1;
+      }
+
+      .instructor-photo.color {
+        filter: none;
+      }
+
+      .instructor-info strong {
+        color: #00674f;
+        display: block;
+      }
+
+      .instructor-info p {
+        color: #666;
+        line-height: 1.3;
+        margin: 0;
+      }
+
+      .coauthors {
+        font-size: clamp(14px, 2vw, 16px);
+        color: #00674f;
+        font-style: italic;
+        margin-top: 8px;
+      }
+
+      .cta {
+        text-align: center;
+        background: #00674f;
+        color: white;
+        padding: var(--global-padding);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .regirstration-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      @media (max-width: 600px) {
+        .regirstration-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .regirstration-content .info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .regirstration-content img {
+        width: clamp(120px, 15vw, 170px);
+        height: clamp(120px, 15vw, 170px);
+        border-radius: 3px;
+        margin: 0 auto 15px;
+      }
+
+      .cta .qr-placeholder {
+        width: clamp(120px, 15vw, 170px);
+        height: clamp(120px, 15vw, 170px);
+        background: white;
+        margin: 0 auto 15px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        color: #00674f;
+      }
+
+      .cta .limited {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 14px 19px;
+        border-radius: 2px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 170px;
+        min-width: 100px;
+        text-align: center;
+      }
+
+      .cta .registration {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+      }
+
+
+      .powered-by {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: var(--global-margin-bottom);
+      }
+
+      .powered-by span {
+        font-size: 9px;
+        color: #999;
+      }
+
+      .powered-by svg {
+        height: 16px;
+        width: auto;
+      }
+
+      .accent-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 15px;
+        background: linear-gradient(
+          90deg,
+          #00674f 0%,
+          #00674f 60%,
+          #f5f3ee 60%
+        );
+      }
+
+      @media print {
+        body {
+          width: 210mm;
+          height: 297mm;
+          padding: 12mm 15mm;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo-block">
+        <div class="logo">Plepic</div>
+        <div class="tagline">Curious play. Epic growth.</div>
+      </div>
+      <div class="tagline-top">March 2026 Cohort</div>
+    </div>
+
+    <div class="hero">
+      <h1>Master agentic coding<br />before your competitors do</h1>
+      <p class="subtitle">
+        Claude Code practitioners train your developers to work 3-5x faster in 6 weeks. Most tech teams are using AI coding tools inefficiently and aren't implementing reusable agents. Learn from Claude Code early adopters how to build prompt libraries and automated workflows.
+        
+      </p>
+    </div>
+
+    <div class="main-content">
+      <div class="problem-box">
+        <h3>The Challenge</h3>
+        <p>
+          Online tutorials don't stick. Developers watch videos, forget most of it,
+          and keep coding the old way. This training uses your real codebase,
+          so skills transfer immediately to daily work.
+        </p>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="number">6</div>
+          <div class="label">Weeks / Fridays</div>
+        </div>
+        <div class="detail-item">
+          <div class="number">50</div>
+          <div class="label">Academic Hours</div>
+        </div>
+        <div class="detail-item">
+          <div class="number">20</div>
+          <div class="label">Max Participants</div>
+        </div>
+        <div class="detail-item">
+          <div class="number">2+</div>
+          <div class="label">Years Dev Experience Required</div>
+        </div>
+      </div>
+
+      <div class="solution-box">
+        <h3>What You'll Build</h3>
+        <p class="solution-intro">
+          Using your company's actual codebase:
+        </p>
+        <ul>
+          <li>Prompt library your whole team can reuse</li>
+          <li>Write specs first, let AI build features</li>
+          <li>Set up AI to review and improve its own code</li>
+          <li>Automate code quality checks</li>
+          <li>Generate architecture docs automatically</li>
+          <li>Final project: Real feature for your product</li>
+        </ul>
+      </div>
+
+      <div class="price-highlight">
+        <div class="funding-lead">80% FUNDED BY TÖÖTUKASSA</div>
+        <div class="price-breakdown">
+          <div class="price-line total">
+            <span class="label">Course price</span>
+            <span class="amount strikethrough">€2,520</span>
+          </div>
+          <div class="price-line savings">
+            <span class="label">Töötukassa covers</span>
+            <span class="amount">−€2,016</span>
+          </div>
+          <div class="price-line final">
+            <span class="label">You pay</span>
+            <span class="amount">€504</span>
+          </div>
+        </div>
+        <div class="vat-note">+VAT per developer</div>
+      </div>
+    </div>
+
+    <div class="curriculum">
+      <h3>6-Week Curriculum</h3>
+      <div class="week-grid">
+        <div class="week">
+          <span class="week-num">1</span> Agentic Foundations
+        </div>
+        <div class="week">
+          <span class="week-num">2</span> Prompt Engineering
+        </div>
+        <div class="week">
+          <span class="week-num">3</span> Spec-Driven Development
+        </div>
+        <div class="week">
+          <span class="week-num">4</span> Quality & Architecture
+        </div>
+        <div class="week final">
+          <span class="week-num">5-6</span> Graduation Project
+        </div>
+      </div>
+    </div>
+
+    <div class="social-proof">
+      <h3>Used by Estonian Tech Companies</h3>
+      <div class="proof-content">
+        <div class="companies">
+          <span class="company-logo">
+            <svg
+              width="120"
+              enable-background="new 0 0 125 28"
+              viewBox="0 0 125 28"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <clipPath id="a">
+                <path d="m0 0h124.1v28h-124.1z"></path>
+              </clipPath>
+              <g clip-path="url(#a)" fill="#1318c8">
+                <path
+                  d="m115.8 16.2h-.2c-2.8-.6-3.8-.9-3.8-2.1 0-.6.4-2.1 3.6-2.1 2.2 0 3.5.6 4 2.2h4.3c-.6-2.7-2.6-5.5-8.1-5.5-2.4 0-4.5.5-5.9 1.6-1.4 1-2.1 2.6-2.1 4.4 0 2.9 1.6 4.1 7.4 5.5.5.1.9.2 1.2.3 2.2.5 3.5.8 3.5 2.2 0 1.3-1.2 2-3.7 2-2.8 0-4.4-.8-5-2.8h-4.2c.9 3.9 4.3 6.1 9.1 6.1 4 0 8.1-1.6 8.1-6 .1-3.5-2.5-4.5-8.2-5.8z"
+                ></path>
+                <path
+                  d="m94.8 8.6c-5.4 0-9.7 4.3-9.7 9.7s4.3 9.7 9.7 9.7c4.1 0 7.6-2.6 9-6.1h-4.7c-1 1.4-2.6 2.4-4.3 2.4-2.6 0-4.8-2-5.3-4.7h14.9c.1-.4.1-.8.1-1.2 0-5.4-4.4-9.8-9.7-9.8zm-5.1 7.7c.8-2.2 2.7-3.9 5-3.9s4.3 1.6 5 3.9z"
+                ></path>
+                <path
+                  d="m74.1 8.6c-2.2 0-4.2.9-5.6 2.4-1.4-1.5-3.4-2.4-5.6-2.4-4.3 0-7.8 3.5-7.8 7.8v11.6h4.3v-11.6c0-1.9 1.6-3.4 3.4-3.4 1.9 0 3.4 1.6 3.4 3.4v11.6h4.3v-11.6c0-1.9 1.6-3.4 3.4-3.4 1.9 0 3.4 1.6 3.4 3.4v11.6h4.3v-11.6c.3-4.3-3.2-7.8-7.5-7.8z"
+                ></path>
+                <path d="m46.3 28h4.3v-28l-4.3.9z"></path>
+                <path
+                  d="m33 8.6c-5.4 0-9.7 4.3-9.7 9.7s4.3 9.7 9.7 9.7c4.1 0 7.6-2.6 9-6.1h-4.7c-1 1.4-2.6 2.4-4.3 2.4-2.6 0-4.8-2-5.3-4.7h14.9c.1-.4.1-.8.1-1.2 0-5.4-4.4-9.8-9.7-9.8zm-5.1 7.7c.8-2.2 2.7-3.9 5-3.9s4.3 1.6 5 3.9z"
+                ></path>
+                <path
+                  d="m15.1 4.3v9.7h-10.8v-9.7h-4.3v23.7h4.3v-9.7h10.8v9.7h4.3v-23.7z"
+                ></path>
+              </g>
+            </svg>
+          </span>
+          <span class="company-logo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="117"
+              height="32"
+              viewBox="0 0 117 32"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M30.1927 3.52026V3.46275C30.1927 3.34774 30.1927 3.29023 30.1352 3.17521C29.7327 1.04739 27.4898 -0.332817 25.132 0.0697438C22.7166 0.472304 21.1064 2.54261 21.5089 4.72794C21.5089 4.78545 21.5233 4.82858 21.5377 4.87171C21.552 4.91485 21.5664 4.95798 21.5664 5.01549C21.5664 5.04424 21.5808 5.08737 21.5952 5.1305C21.6096 5.17363 21.6239 5.21677 21.6239 5.24552V5.30303C21.9115 6.05064 22.3715 6.68323 23.0616 7.1433C22.7166 7.66088 22.2565 8.17846 21.6814 8.52351C21.3364 8.75354 20.8763 8.98358 20.7038 9.04109C20.7038 9.04109 21.969 9.67368 23.4067 9.67368C23.9818 9.67368 24.5569 9.61617 25.1895 9.50116H25.247C25.3332 9.4724 25.4339 9.44365 25.5345 9.41489C25.6352 9.38614 25.7358 9.35739 25.8221 9.32863C25.8459 9.32863 25.8697 9.31877 25.8976 9.30721C25.9371 9.29086 25.9847 9.27112 26.0521 9.27112C26.1096 9.24237 26.1671 9.22799 26.2246 9.21361C26.2821 9.19924 26.3396 9.18486 26.3972 9.15611C26.4259 9.12735 26.469 9.11297 26.5122 9.0986C26.5553 9.08422 26.5984 9.06984 26.6272 9.04109C26.658 9.02568 26.6847 9.01028 26.7094 8.99598L26.7095 8.99597C26.7772 8.95689 26.8305 8.92607 26.9147 8.92607C26.9722 8.86856 27.0873 8.81105 27.1448 8.81105C27.2023 8.75354 27.3173 8.69604 27.3748 8.69604C27.4898 8.63853 27.5473 8.58102 27.6048 8.52351C27.6336 8.49476 27.6767 8.466 27.7199 8.43725C27.763 8.40849 27.8061 8.37974 27.8349 8.35099C27.8636 8.32223 27.9068 8.29348 27.9499 8.26472C27.993 8.23597 28.0361 8.20721 28.0649 8.17846L28.2374 8.00593L28.4675 7.7759C28.525 7.71839 28.5825 7.66088 28.64 7.66088L28.87 7.43085C28.892 7.40888 28.9056 7.38692 28.9172 7.36815C28.9359 7.3378 28.9495 7.31583 28.985 7.31583C29.0138 7.25832 29.0569 7.21519 29.1001 7.17206C29.1432 7.12893 29.1863 7.0858 29.2151 7.02829L29.3301 6.91327C29.3876 6.79825 29.4451 6.68323 29.5601 6.56822C29.5601 6.53946 29.5745 6.52509 29.5889 6.51071C29.6033 6.49633 29.6176 6.48196 29.6176 6.4532L29.7902 6.10815C29.7902 6.08371 29.7902 6.06966 29.7946 6.05716C29.8005 6.04026 29.8146 6.0262 29.8477 5.99313C29.9052 5.87811 29.9627 5.7631 30.0202 5.59057V5.53306C30.049 5.47555 30.0633 5.40367 30.0777 5.33178C30.0921 5.2599 30.1065 5.18801 30.1352 5.1305V5.07299C30.1927 4.90047 30.1927 4.78545 30.1927 4.61292V4.55542C30.1927 4.46915 30.2071 4.39727 30.2215 4.32538C30.2359 4.2535 30.2502 4.18161 30.2502 4.09535C30.2502 3.86531 30.2502 3.69279 30.1927 3.52026ZM36.9205 6.68403C39.9109 3.29102 44.1665 1.45074 48.8247 1.45074C55.7258 1.45074 60.0389 5.87891 59.9814 12.9525C59.9814 23.0165 52.9079 30.6076 43.5339 30.6076C36.6904 30.6076 32.4348 26.1795 32.4348 19.0484C32.4348 14.3327 34.045 9.90451 36.9205 6.68403ZM40.371 18.4158C40.371 22.2114 41.9237 24.2817 44.6841 24.2817C49.2848 24.2817 52.1027 18.7608 52.1027 13.6426C52.1027 9.90451 50.55 7.8342 47.7321 7.8342C43.1314 7.8342 40.371 13.1825 40.371 18.4158ZM28.4068 9.84609L28.4643 9.78858C28.5793 9.73107 28.6368 9.67356 28.6368 9.67356L24.9562 30.1466H17.5376L19.5504 18.99H9.37141L8.96885 21.1753C8.50879 21.0603 7.99121 20.9453 7.47363 20.8877C7.2436 20.8302 7.01356 20.8302 6.78353 20.8302H6.55349C5.9209 20.8302 5.2883 20.9452 4.65571 21.0603H4.54069C4.42573 21.089 4.32513 21.1177 4.22453 21.1465L4.22439 21.1465C4.12375 21.1753 4.02311 21.204 3.9081 21.2328C3.87934 21.2328 3.85059 21.2472 3.82183 21.2615C3.79308 21.2759 3.76432 21.2903 3.73557 21.2903H3.62055C3.50553 21.2903 3.33301 21.3478 3.21799 21.4053C3.18924 21.4341 3.14611 21.4485 3.10298 21.4628C3.05984 21.4772 3.01671 21.4916 2.98796 21.5203L2.87294 21.5778C2.81544 21.5778 2.70044 21.6353 2.58544 21.6928L2.5854 21.6929C2.52789 21.6929 2.41287 21.7504 2.35536 21.8079L2.24035 21.8654C2.21159 21.8941 2.16846 21.9229 2.12533 21.9517C2.0822 21.9804 2.03907 22.0092 2.01031 22.0379C1.9528 22.0667 1.90967 22.0954 1.86654 22.1242C1.82341 22.1529 1.78028 22.1817 1.72277 22.2104L1.60775 22.268C1.49273 22.3255 1.43522 22.383 1.37772 22.4405L5.05827 1.96741H12.4769L10.4641 13.1241H20.7006L21.1032 10.9388C21.3907 11.0538 21.6207 11.1113 21.9083 11.1688C22.3684 11.2838 22.8284 11.3413 23.2885 11.3413H23.5185C24.1511 11.3413 24.7837 11.2263 25.4163 11.1113H25.5313C25.6464 11.0825 25.747 11.0538 25.8476 11.025C25.9483 10.9963 26.0489 10.9675 26.1639 10.9388C26.2313 10.9388 26.2789 10.919 26.3184 10.9027C26.3463 10.8911 26.3701 10.8812 26.394 10.8812L26.509 10.8237C26.5665 10.795 26.6384 10.7662 26.7103 10.7375C26.7821 10.7087 26.854 10.68 26.9115 10.6512C26.9403 10.6225 26.9834 10.6081 27.0266 10.5937C27.0697 10.5793 27.1128 10.5649 27.1416 10.5362L27.2566 10.4787C27.3141 10.4787 27.4291 10.4212 27.5441 10.3637L27.5441 10.3637C27.6016 10.3637 27.7167 10.3062 27.7742 10.2486L27.8892 10.1911C27.9179 10.1624 27.9611 10.1336 28.0042 10.1049L28.0042 10.1049L28.0042 10.1049C28.0473 10.0761 28.0905 10.0474 28.1192 10.0186C28.1767 9.98986 28.2199 9.96111 28.263 9.93235C28.3061 9.9036 28.3493 9.87484 28.4068 9.84609ZM73.4405 1.96774H66.482L61.4212 30.0895H77.5811L78.7313 23.591H69.5874L73.4405 1.96774ZM100.121 20.9453L107.137 1.96741H116.856L116.569 30.0891H109.725L110.415 11.2838L103.399 30.0891H95.2329L92.2999 11.4563L88.9069 30.0891H81.9484L87.5267 1.96741H97.3032L100.121 20.9453ZM9.54643 23.0738C9.37391 23.1313 8.91384 23.3614 8.56879 23.5914C7.9937 23.994 7.47612 24.454 7.13107 24.8566C7.82117 25.3167 8.28124 25.9493 8.56879 26.6969V26.7544C8.56879 26.7831 8.58316 26.8263 8.59754 26.8694C8.61192 26.9125 8.6263 26.9557 8.6263 26.9844C8.6263 27.0419 8.64067 27.085 8.65505 27.1282C8.66943 27.1713 8.6838 27.2144 8.6838 27.2719C9.08636 29.4573 7.47612 31.5276 5.06076 31.9301C2.70291 32.3327 0.460069 30.9525 0.0575089 28.8247C0 28.7097 0 28.6522 0 28.5371V28.4796V28.0196C0 27.9333 0.0143772 27.8614 0.0287544 27.7895C0.0431316 27.7176 0.0575089 27.6458 0.0575089 27.5595V27.502C0.0575089 27.3295 0.0575085 27.2144 0.115017 27.0419V26.9844C0.143771 26.9269 0.158149 26.855 0.172526 26.7831C0.186903 26.7112 0.20128 26.6394 0.230034 26.5818V26.5243C0.287543 26.3518 0.345052 26.2368 0.40256 26.1218C0.460069 26.0643 0.460069 26.0643 0.460069 26.0068L0.632595 25.6617C0.632595 25.6329 0.646972 25.6186 0.661349 25.6042C0.675726 25.5898 0.690104 25.5754 0.690104 25.5467C0.805121 25.4317 0.86263 25.3167 0.920138 25.2016L1.03516 25.0866C1.06391 25.0291 1.10704 24.986 1.15017 24.9428C1.1933 24.8997 1.23644 24.8566 1.26519 24.7991C1.30073 24.7991 1.31431 24.7771 1.33307 24.7468C1.34466 24.728 1.35824 24.706 1.38021 24.6841L1.61024 24.454C1.66775 24.454 1.72526 24.3965 1.78277 24.339L2.0128 24.109L2.18533 23.9364C2.21408 23.9077 2.25721 23.8789 2.30035 23.8502C2.34348 23.8214 2.38661 23.7927 2.41536 23.7639C2.44412 23.7352 2.48725 23.7064 2.53038 23.6777C2.57351 23.6489 2.61664 23.6202 2.6454 23.5914C2.70291 23.5339 2.76041 23.4764 2.87543 23.4189C2.93294 23.4189 3.04796 23.3614 3.10547 23.3039C3.16297 23.3039 3.27799 23.2463 3.3355 23.1888C3.4197 23.1888 3.47308 23.158 3.54076 23.1189C3.56554 23.1046 3.59223 23.0892 3.62304 23.0738C3.6518 23.0451 3.69493 23.0307 3.73806 23.0163C3.78119 23.0019 3.82432 22.9876 3.85308 22.9588C3.91059 22.93 3.9681 22.9157 4.0256 22.9013C4.08311 22.8869 4.14062 22.8725 4.19813 22.8438C4.26551 22.8438 4.31315 22.824 4.35262 22.8077C4.38052 22.7961 4.40434 22.7863 4.42817 22.7863C4.51443 22.7575 4.61507 22.7288 4.71571 22.7C4.81635 22.6713 4.91699 22.6425 5.00325 22.6137H5.06076C5.69335 22.4987 6.26844 22.4412 6.84353 22.4412C8.28124 22.4412 9.54643 23.0738 9.54643 23.0738Z"
+                fill="#FF4646"
+              />
+            </svg>
+          </span>
+          <span class="company-logo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="118"
+              height="27"
+              viewBox="0 0 118 27"
+              fill="none"
+            >
+              <path
+                d="M40.3095 6.32574H33.4824V14.8886L36.3753 19.8643V9.06431H40.3095C45.4781 9.06431 47.7924 12.8829 47.7924 16.6629C47.7924 21.2143 44.7838 24.2614 40.3095 24.2614H38.921L40.5024 27C46.4424 26.9228 50.7624 22.6028 50.7624 16.7014C50.7238 10.6843 46.3267 6.32574 40.3095 6.32574Z"
+                fill="#0096A9"
+              />
+              <path
+                d="M15.6214 0L23.4128 13.5L31.2042 26.9999H15.6214H0L7.79141 13.5L15.6214 0Z"
+                fill="#1D1D1B"
+              />
+              <path
+                d="M56.2002 19.4785L59.9031 10.3371L63.5673 19.4785H56.2002ZM49.9902 27H53.2302L55.1588 22.2171H64.6473L66.5759 27H69.8159L59.9031 2.81573L49.9902 27Z"
+                fill="#0096A9"
+              />
+              <path
+                d="M66.8457 9.06431H73.21V27H76.1028V9.06431H82.4671V6.32574H66.8457V9.06431Z"
+                fill="#0096A9"
+              />
+              <path
+                d="M84.1621 27H97.7006V24.2614H87.055V17.7814H97.5078V15.0429H87.055V9.06431H97.7006V6.32574H84.1621V27Z"
+                fill="#0096A9"
+              />
+              <path
+                d="M102.832 24.2614V6.32574H99.9004V27H112.243V24.2614H102.832Z"
+                fill="#0096A9"
+              />
+              <path
+                d="M114.981 11.5328C113.592 11.5328 112.551 10.4528 112.551 9.10282C112.551 7.75283 113.592 6.67283 114.981 6.67283C116.369 6.67283 117.411 7.75283 117.411 9.10282C117.372 10.4142 116.331 11.5328 114.981 11.5328ZM114.981 11.8414C116.485 11.8414 117.719 10.5685 117.719 9.10282C117.719 7.59854 116.524 6.36426 114.981 6.36426C113.476 6.36426 112.242 7.63711 112.242 9.10282C112.242 10.5685 113.438 11.8414 114.981 11.8414Z"
+                fill="#1D1D1B"
+              />
+              <path
+                d="M114.328 8.02293H115.1C115.524 8.02293 115.755 8.21578 115.755 8.56293C115.755 8.91007 115.485 9.06435 115.1 9.06435H114.328V8.02293ZM115.717 10.3372H116.141L115.447 9.33435L115.562 9.29578C115.948 9.18007 116.141 8.91007 116.141 8.52435C116.141 8.02293 115.794 7.71436 115.177 7.71436H114.02V10.3372H114.367V9.37292H115.1L115.717 10.3372Z"
+                fill="#1D1D1B"
+              />
+            </svg>
+          </span>
+          <span class="company-logo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="119"
+              height="20"
+              viewBox="0 0 119 20"
+              fill="none"
+            >
+              <g clip-path="url(#clip0_1385_2931)">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M5.15916 3.71652L5.34023 3.99465L6.05683 5.0995V5.09578L7.28787 6.98721C7.35949 7.12697 7.44042 7.26168 7.53014 7.39042L8.05821 8.17422L8.54074 8.91839L9.37826 10.2187L10.857 12.4906C10.8827 12.5353 10.9108 12.5785 10.9412 12.6201L11.8187 13.9683L15.2238 19.2195C15.5182 19.7366 16.1431 20.0251 16.497 19.9988C17.0377 19.9587 17.4475 19.5456 17.5859 19.2925L21.0347 13.9683L24.4373 8.72219C25.1415 7.7542 24.4323 6.7775 23.4523 6.83725H18.9915C17.9972 6.79183 17.6226 5.85492 18.0415 5.11632L18.1338 4.97465L18.2102 4.85709L18.2292 4.82803H18.2283L20.0688 1.99045C20.732 1.07888 20.1416 0.159404 19.2519 0.105469H4.85711C3.96746 0.159404 3.37695 1.07888 4.04019 1.99045L5.15916 3.7155V3.71652ZM10.6229 3.01774C10.4144 2.61143 10.7644 2.28726 11.0288 2.27626C11.2673 2.26629 11.5053 2.26752 11.7377 2.27395C12.1144 2.28456 12.3224 2.36749 12.4891 2.62429L14.0665 5.02511C14.3385 5.44382 14.2837 5.74357 13.9239 6.22581C13.8431 6.33108 13.7555 6.43098 13.6619 6.52488C13.3881 6.79014 12.9885 6.82168 12.7195 6.35981L11.7886 4.83571L10.6229 3.01774ZM14.9914 9.74952C14.7829 9.34317 15.1329 9.019 15.3972 9.00799C15.6359 8.99806 15.8738 8.9993 16.1062 9.00574C16.4829 9.01629 16.691 9.09927 16.8576 9.35603L18.435 11.7568C18.707 12.1756 18.6522 12.4753 18.2924 12.9575C18.2115 13.0628 18.124 13.1627 18.0303 13.2567C17.7565 13.5219 17.357 13.5535 17.0879 13.0915L16.1571 11.5675L14.9914 9.74952V9.74952ZM9.38342 19.2925C9.24471 19.5456 8.83496 19.9587 8.29494 19.9988C7.94036 20.0251 7.31527 19.7366 7.02123 19.2195L3.61573 13.9683L0.285448 8.85098C-0.338414 8.05534 0.0983842 6.78395 1.2252 6.83725H2.99436C4.72378 6.8922 4.83754 6.80508 5.94266 8.4876L10.3454 15.2629C11.0016 16.2141 10.9252 16.9168 10.4537 17.6403L9.38342 19.2925Z"
+                  fill="#231B33"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M104.145 0V19.5476H105.474V16.5081C106.61 18.5995 108.854 19.7707 111.18 19.7707C115.003 19.7707 118.022 17.2331 118.022 12.6599C118.022 8.1146 114.975 5.54911 111.153 5.54911C108.798 5.54911 106.582 6.55299 105.474 8.78382V0H104.145ZM111.097 6.85973C114.172 6.85973 116.693 8.78382 116.693 12.6599C116.693 16.4802 114.172 18.4322 111.097 18.4322C107.884 18.4322 105.502 16.0619 105.502 12.6321C105.502 9.20216 107.939 6.85973 111.097 6.85973V6.85973ZM88.3003 12.1022C88.605 8.72808 91.0426 6.80399 93.868 6.80399C97.1642 6.80399 99.3802 8.70022 99.4079 12.1022H88.3003ZM93.868 19.7428C96.0562 19.7428 98.4384 18.8504 99.768 17.0937L98.7985 16.3129C97.7736 17.6793 95.6684 18.4043 93.868 18.4043C91.0426 18.4043 88.5773 16.536 88.3003 13.3013H100.627C101.153 7.9194 97.7182 5.54912 93.868 5.54912C90.0177 5.54912 86.9153 8.53288 86.9153 12.6599C86.9153 17.0379 90.0177 19.7428 93.868 19.7428V19.7428ZM85.4749 5.77224H83.9791L79.8796 17.9581L75.7246 5.77224H74.7551L70.5725 17.9581L66.4452 5.77224H64.9495L69.8246 19.5476H71.3204L73.5363 13.5523L75.2537 8.17035L76.9157 13.5243L79.1317 19.5476H80.6275L85.4749 5.77224ZM57.3874 1.75675V5.77224H54.4789V6.91554H57.3874V15.309C57.3874 18.0139 58.3292 19.7428 61.2376 19.7428C62.0963 19.7428 62.955 19.4639 63.8137 19.0457L63.3428 17.9302C62.6503 18.2648 61.9024 18.488 61.2376 18.488C59.1048 18.488 58.7169 17.1774 58.7169 15.309V6.91554H63.3705V5.77224H58.7169V1.61734L57.3874 1.75675ZM51.709 5.71645V19.5476H50.3517V5.71645H51.709ZM33.1501 0V19.5476H34.4797V16.5081C35.6154 18.5995 37.8591 19.7707 40.1859 19.7707C44.0084 19.7707 47.0277 17.2331 47.0277 12.6599C47.0277 8.1146 43.9807 5.54911 40.1582 5.54911C37.8037 5.54911 35.5877 6.55299 34.4797 8.78382V0H33.1501ZM40.1028 6.85973C43.1774 6.85973 45.6981 8.78382 45.6981 12.6599C45.6981 16.4802 43.1774 18.4322 40.1028 18.4322C36.8896 18.4322 34.5075 16.0619 34.5075 12.6321C34.5075 9.20216 36.945 6.85973 40.1028 6.85973Z"
+                  fill="#231B33"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M49.9639 1.28282C49.9639 2.7329 52.1521 2.7329 52.1521 1.28282C52.1521 -0.167191 49.9639 -0.167191 49.9639 1.28282Z"
+                  fill="#231B33"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_1385_2931">
+                  <rect width="118.022" height="20" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </span>
+          <span class="company-logo">
+            <svg
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 50 580 251"
+            >
+              <defs>
+                <style>
+                  .afg-green {
+                    fill: #00e600;
+                  }
+                  .afg-blue {
+                    fill: #0071ff;
+                  }
+                </style>
+              </defs>
+              <g>
+                <path
+                  d="M211.91,200.07l-23.84-31.51-6.14,7.32v24.19h-16.76V121.36h16.76v35.16l27.85-35.16h20.65l-31.27,36.93,33.39,41.77h-20.65Z"
+                />
+                <path
+                  d="M264.3,200.07v-63.96h-23.01v-14.75h62.78v14.75h-22.89v63.96h-16.87Z"
+                />
+                <path d="M320.7,200.07V121.36h16.76v78.71h-16.76Z" />
+                <path
+                  d="M381,200.07l-30.44-78.71h19.12l21.83,60.53,21.71-60.53h19.12l-30.33,78.71h-21Z"
+                />
+                <path
+                  d="M494.27,200.07l-4.84-13.33h-33.75l-4.96,13.33h-19.12l30.44-78.71h21l30.33,78.71h-19.12Zm-21.71-61.95l-12.27,33.87h24.54l-12.27-33.87Z"
+                />
+              </g>
+              <g>
+                <polygon
+                  class="afg-green"
+                  points="136.56 165.88 116.81 121.7 98.32 121.7 118.07 165.88 133.36 200.07 151.85 200.07 136.56 165.88"
+                />
+                <polygon
+                  class="afg-blue"
+                  points="100.39 165.88 85.1 200.07 66.61 200.07 81.9 165.88 100.39 165.88"
+                />
+              </g>
+              <g>
+                <path
+                  d="M122.22,268.24v-25.5h16.71v2.83h-13.54v8.22h13.27v2.83h-13.27v11.62h-3.17Z"
+                />
+                <path d="M147.08,268.24v-25.5h3.17v25.5h-3.17Z" />
+                <path
+                  d="M178.09,268.24l-14.88-20.34v20.34h-3.17v-25.5h3.25l14.68,19.92v-19.92h3.17v25.5h-3.06Z"
+                />
+                <path
+                  d="M209.14,268.24l-2.26-5.66h-12.7l-2.26,5.66h-3.63l10.25-25.5h3.94l10.29,25.5h-3.63Zm-8.6-22.22l-5.43,13.73h10.82l-5.39-13.73Z"
+                />
+                <path
+                  d="M237.97,268.24l-14.88-20.34v20.34h-3.17v-25.5h3.25l14.68,19.92v-19.92h3.17v25.5h-3.06Z"
+                />
+                <path
+                  d="M249.79,255.5c0-7.84,5.77-13.19,13.12-13.19,4.51,0,7.65,2.18,9.67,5.05l-2.68,1.49c-1.45-2.14-4.09-3.71-7-3.71-5.58,0-9.83,4.28-9.83,10.36s4.25,10.36,9.83,10.36c2.91,0,5.54-1.53,7-3.71l2.71,1.49c-2.14,2.91-5.2,5.05-9.71,5.05-7.34,0-13.12-5.35-13.12-13.19Z"
+                />
+                <path
+                  d="M280.5,268.24v-25.5h16.71v2.83h-13.54v8.22h13.27v2.83h-13.27v8.79h13.54v2.83h-16.71Z"
+                />
+                <path
+                  d="M318.74,255.5c0-7.92,5.85-13.19,13.12-13.19,4.51,0,7.65,1.99,9.9,4.78l-2.52,1.57c-1.61-2.06-4.32-3.52-7.38-3.52-5.58,0-9.83,4.28-9.83,10.36s4.25,10.4,9.83,10.4c3.06,0,5.58-1.49,6.84-2.75v-5.2h-8.76v-2.83h11.93v9.22c-2.37,2.64-5.85,4.4-10.02,4.4-7.27,0-13.12-5.32-13.12-13.23Z"
+                />
+                <path
+                  d="M365.62,268.24l-6.5-10.13h-5.09v10.13h-3.17v-25.5h10.25c4.67,0,7.99,2.98,7.99,7.69s-3.14,7.11-6.62,7.42l6.88,10.4h-3.75Zm.19-17.82c0-2.87-2.06-4.86-5.08-4.86h-6.69v9.75h6.69c3.02,0,5.08-2.03,5.08-4.89Z"
+                />
+                <path
+                  d="M376.9,255.5c0-7.53,5.09-13.19,12.66-13.19s12.66,5.66,12.66,13.19-5.12,13.19-12.66,13.19-12.66-5.66-12.66-13.19Zm22.03,0c0-5.96-3.67-10.36-9.37-10.36s-9.37,4.4-9.37,10.36,3.63,10.36,9.37,10.36,9.37-4.44,9.37-10.36Z"
+                />
+                <path
+                  d="M411.01,258.33v-15.6h3.17v15.52c0,4.67,2.52,7.61,7.23,7.61s7.23-2.94,7.23-7.61v-15.52h3.17v15.56c0,6.35-3.48,10.4-10.4,10.4s-10.4-4.09-10.4-10.36Z"
+                />
+                <path
+                  d="M441.6,268.24v-25.5h10.25c5.12,0,7.99,3.52,7.99,7.69s-2.94,7.69-7.99,7.69h-7.07v10.13h-3.17Zm14.95-17.82c0-2.87-2.06-4.86-5.09-4.86h-6.69v9.71h6.69c3.02,0,5.09-1.99,5.09-4.86Z"
+                />
+              </g>
+            </svg>
+          </span>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="value">8.4/10</div>
+            <div class="label">Hackathon Avg. Score</div>
+          </div>
+          <div class="stat">
+            <div class="value">100+</div>
+            <div class="label">Developers Trained</div>
+          </div>
+        </div>
+      </div>
+      <div class="hackathon-note">
+        Try our teaching style at upcoming hackathons before you commit
+        to the full course.
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="instructors">
+        <h4>Your Instructors</h4>
+        <p class="instructor-tagline">
+          Live instruction from active practitioners, not recorded videos
+        </p>
+        <div class="instructor-row">
+          <div class="instructor">
+            <img class="instructor-photo" src="image.png" alt="" />
+
+            <div class="instructor-info">
+              <strong>Joosep Simm</strong>
+              <p>20+ years dev experience<br />5 hackathons led</p>
+            </div>
+          </div>
+          <div class="instructor">
+            <img class="instructor-photo" src="image3.jpg" alt="" />
+            <div class="instructor-info">
+              <strong>Kaido Koort</strong>
+              <p>20+ years in software<br />Former Head of Dev, Smart-ID</p>
+            </div>
+          </div>
+        </div>
+        <div class="coauthors">Co-authors of "AI Coding for Beginners"</div>
+      </div>
+
+      <div class="cta">
+        <h4>Info and registration</h4>
+        <div class="regirstration-content">
+          <div class="info">
+            <img src="image2.png" alt="" />
+            <strong>Plepic OÜ</strong>
+            <span>kaido@plepic.com</span>
+            <span>+372 5077 333</span>
+          </div>
+          <div class="registration">
+            <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank">
+              <img src="qr-code.png" alt="Scan to register" />
+            </a>
+            <div class="limited">Limited to 20 spots</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="powered-by">
+      <span>Powered by</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg"
+        viewBox="0 0 689.97997 148.17999"
+        width="689.97998"
+        height="148.17999"
+      >
+        <defs id="defs145">
+          <style id="style143">
+            .cls-1 {
+              fill: #0f0f0d;
+            }
+
+            .cls-1,
+            .cls-2 {
+              stroke-width: 0px;
+            }
+
+            .cls-2 {
+              fill: #d97757;
+            }
+          </style>
+        </defs>
+        <g id="g314" transform="translate(-75.96,-223.53)">
+          <path
+            class="cls-2"
+            d="m 105.01,322.07 29.14,-16.35 0.49,-1.42 -0.49,-0.79 h -1.42 l -4.87,-0.3 -16.65,-0.45 -14.44,-0.6 -13.99,-0.75 -3.52,-0.75 -3.3,-4.35 0.34,-2.17 2.96,-1.99 4.24,0.37 9.37,0.64 14.06,0.97 10.2,0.6 15.11,1.57 h 2.4 l 0.34,-0.97 -0.82,-0.6 -0.64,-0.6 -14.55,-9.86 -15.75,-10.42 -8.25,-6 -4.46,-3.04 -2.25,-2.85 -0.97,-6.22 4.05,-4.46 5.44,0.37 1.39,0.37 5.51,4.24 11.77,9.11 15.37,11.32 2.25,1.87 0.9,-0.64 0.11,-0.45 -1.01,-1.69 -8.36,-15.11 -8.92,-15.37 -3.97,-6.37 -1.05,-3.82 c -0.37,-1.57 -0.64,-2.89 -0.64,-4.5 l 4.61,-6.26 2.55,-0.82 6.15,0.82 2.59,2.25 3.82,8.74 6.19,13.76 9.6,18.71 2.81,5.55 1.5,5.14 0.56,1.57 h 0.97 v -0.9 l 0.79,-10.54 1.46,-12.94 1.42,-16.65 0.49,-4.69 2.32,-5.62 4.61,-3.04 3.6,1.72 2.96,4.24 -0.41,2.74 -1.76,11.44 -3.45,17.92 -2.25,12 h 1.31 l 1.5,-1.5 6.07,-8.06 10.2,-12.75 4.5,-5.06 5.25,-5.59 3.37,-2.66 h 6.37 l 4.69,6.97 -2.1,7.2 -6.56,8.32 -5.44,7.05 -7.8,10.5 -4.87,8.4 0.45,0.67 1.16,-0.11 17.62,-3.75 9.52,-1.72 11.36,-1.95 5.14,2.4 0.56,2.44 -2.02,4.99 -12.15,3 -14.25,2.85 -21.22,5.02 -0.26,0.19 0.3,0.37 9.56,0.9 4.09,0.22 h 10.01 l 18.64,1.39 4.87,3.22 2.92,3.94 -0.49,3 -7.5,3.82 -10.12,-2.4 -23.62,-5.62 -8.1,-2.02 h -1.12 v 0.67 l 6.75,6.6 12.37,11.17 15.49,14.4 0.79,3.56 -1.99,2.81 -2.1,-0.3 -13.61,-10.24 -5.25,-4.61 -11.89,-10.01 h -0.79 v 1.05 l 2.74,4.01 14.47,21.75 0.75,6.67 -1.05,2.17 -3.75,1.31 -4.12,-0.75 -8.47,-11.89 -8.74,-13.39 -7.05,-12 -0.86,0.49 -4.16,44.81 -1.95,2.29 -4.5,1.72 -3.75,-2.85 -1.99,-4.61 1.99,-9.11 2.4,-11.89 1.95,-9.45 1.76,-11.74 1.05,-3.9 -0.07,-0.26 -0.86,0.11 -8.85,12.15 -13.46,18.19 -10.65,11.4 -2.55,1.01 -4.42,-2.29 0.41,-4.09 2.47,-3.64 14.74,-18.75 8.89,-11.62 5.74,-6.71 -0.04,-0.97 h -0.34 l -39.15,25.42 -6.97,0.9 -3,-2.81 0.37,-4.61 1.42,-1.5 11.77,-8.1 -0.04,0.04 z"
+            shape-rendering="optimizeQuality"
+            id="path147"
+          />
+          <path
+            class="cls-1"
+            d="m 317.73,349.33 c -18.82,0 -31.69,-10.5 -37.76,-26.66 -3.17,-8.42 -4.74,-17.36 -4.61,-26.36 0,-27.11 12.15,-45.94 39,-45.94 18.04,0 29.17,7.87 35.51,26.66 h 7.72 l -1.05,-25.91 c -10.8,-6.97 -24.3,-10.5 -40.72,-10.5 -23.14,0 -42.82,10.35 -53.77,29.02 -5.66,9.86 -8.53,21.07 -8.32,32.44 0,20.74 9.79,39.11 28.16,49.31 10.06,5.37 21.34,8.04 32.74,7.72 17.92,0 32.14,-3.41 44.74,-9.37 l 3.26,-28.57 h -7.87 c -4.72,13.05 -10.35,20.89 -19.69,25.05 -4.57,2.06 -10.35,3.11 -17.32,3.11 z m 81.18,-98.96 0.75,-12.75 h -5.32 l -23.7,7.12 v 3.86 l 10.5,4.87 v 89.17 c 0,6.07 -3.11,7.42 -11.25,8.44 v 6.52 h 40.31 v -6.52 c -8.17,-1.01 -11.25,-2.36 -11.25,-8.44 V 250.4 l -0.04,-0.04 z m 160.31,108.75 h 3.11 l 27.26,-5.17 v -6.67 l -3.82,-0.3 c -6.37,-0.6 -8.02,-1.91 -8.02,-7.12 v -47.55 l 0.75,-15.26 h -4.31 l -25.76,3.71 v 6.52 l 2.51,0.45 c 6.97,1.01 9.04,2.96 9.04,7.84 v 42.37 c -6.67,5.17 -13.05,8.44 -20.62,8.44 -8.4,0 -13.61,-4.27 -13.61,-14.25 v -39.79 l 0.75,-15.26 h -4.42 l -25.8,3.71 v 6.52 l 2.66,0.45 c 6.97,1.01 9.04,2.96 9.04,7.84 v 39.11 c 0,16.57 9.37,24.45 24.3,24.45 11.4,0 20.74,-6.07 27.75,-14.51 l -0.75,14.51 -0.04,-0.04 z M 484.3,306.36 c 0,-21.19 -11.25,-29.32 -31.57,-29.32 -17.92,0 -30.94,7.42 -30.94,19.72 0,3.67 1.31,6.49 3.97,8.44 l 13.65,-1.8 c -0.6,-4.12 -0.9,-6.64 -0.9,-7.69 0,-6.97 3.71,-10.5 11.25,-10.5 11.14,0 16.76,7.84 16.76,20.44 v 4.12 l -28.12,8.44 c -9.37,2.55 -14.7,4.76 -18.26,9.94 -1.89,3.17 -2.8,6.82 -2.62,10.5 0,12 8.25,20.47 22.35,20.47 10.2,0 19.24,-4.61 27.11,-13.35 2.81,8.74 7.12,13.35 14.81,13.35 6.22,0 11.85,-2.51 16.87,-7.42 l -1.5,-5.17 c -2.17,0.6 -4.27,0.9 -6.49,0.9 -4.31,0 -6.37,-3.41 -6.37,-10.09 v -30.97 z m -36,40.76 c -7.69,0 -12.45,-4.46 -12.45,-12.3 0,-5.32 2.51,-8.44 7.87,-10.24 l 22.8,-7.24 v 21.9 c -7.27,5.51 -11.55,7.87 -18.22,7.87 z m 237.36,6.82 v -6.67 l -3.86,-0.3 c -6.37,-0.6 -7.99,-1.91 -7.99,-7.12 v -89.47 l 0.75,-12.75 h -5.36 l -23.7,7.12 v 3.86 l 10.5,4.87 v 29.32 c -5.91,-4.05 -12.98,-6.08 -20.14,-5.77 -23.55,0 -41.92,17.92 -41.92,44.74 0,22.09 13.2,37.35 34.95,37.35 11.25,0 21.04,-5.47 27.11,-13.95 l -0.75,13.95 h 3.15 l 27.26,-5.17 v 0 z m -49.35,-68.02 c 11.25,0 19.69,6.52 19.69,18.52 v 33.75 c -5.18,5.16 -12.23,8 -19.54,7.87 -16.12,0 -24.3,-12.75 -24.3,-29.77 0,-19.12 9.34,-30.37 24.15,-30.37 z M 743.3,302.8 c -2.1,-9.9 -8.17,-15.52 -16.61,-15.52 -12.6,0 -21.34,9.49 -21.34,23.1 0,20.14 10.65,33.19 27.86,33.19 11.48,-0.12 22.04,-6.33 27.71,-16.31 l 5.02,1.35 c -2.25,17.47 -18.07,30.52 -37.5,30.52 -22.8,0 -38.51,-16.87 -38.51,-40.87 0,-24 17.06,-41.21 39.86,-41.21 17.02,0 29.02,10.24 32.89,28.01 l -59.4,18.22 v -8.02 l 40.01,-12.41 v -0.04 z"
+            shape-rendering="optimizeQuality"
+            id="path149"
+          />
+        </g>
+      </svg>
+    </div>
+  </body>
+</html>
