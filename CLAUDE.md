@@ -32,7 +32,6 @@ docs/               # Design documents and one-pagers
 
 ## Content Notes
 
-- Site is bilingual context (Estonian market, English content)
-- Company logos are inline SVGs for performance
+- Site is English only language, but Estonian market, English content.
+- Company logos are inline SVGs for performance. Also using some PNG images.
 - Team photos use `filter: grayscale(100%)`
-- Training pricing references Töötukassa (Estonian unemployment fund) subsidy
