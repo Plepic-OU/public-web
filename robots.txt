@@ -1,4 +1,10 @@
+# Robots.txt for plepic.com
+
 User-agent: *
 Allow: /
 
+# Sitemap location
 Sitemap: https://plepic.com/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
