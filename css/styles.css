@@ -457,6 +457,10 @@ p:last-child {
   width: 100%;
 }
 
+.nav .btn-primary{
+  color: #000000;
+}
+
 .nav-cta {
   margin-left: var(--space-md);
   padding: var(--space-sm) var(--space-lg) !important;
