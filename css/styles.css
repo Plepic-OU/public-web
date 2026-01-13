@@ -1295,16 +1295,42 @@ p:last-child {
    ======================================== */
 
 .training-hero {
-  padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
-  background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: var(--header-height);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Match main hero background */
+.training-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 152, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, var(--color-space) 0%, var(--color-void) 100%);
+  z-index: -1;
 }
 
 .training-hero-content {
-  max-width: 700px;
+  max-width: 800px;
+  animation: fadeInUp 1s ease-out;
 }
 
 .training-hero h1 {
   margin-bottom: var(--space-lg);
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.training-hero h1 .highlight {
+  color: var(--color-cyan);
+  text-shadow: var(--glow-cyan);
 }
 
 .training-hero-subtitle {
@@ -1319,12 +1345,15 @@ p:last-child {
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 255, 102, 0.1);
-  border: 1px solid var(--color-green);
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--color-green);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-cyan);
   margin-bottom: var(--space-lg);
+  animation: fadeInUp 1s ease-out 0.2s both;
 }
 
 .cohort-badge::before {
@@ -1333,6 +1362,7 @@ p:last-child {
   height: 8px;
   background: var(--color-green);
   border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-green);
   animation: blink 1s ease-in-out infinite;
 }
 
@@ -1821,4 +1851,170 @@ p:last-child {
   .btn {
     border: 1px solid #000;
   }
+}
+
+/* ========================================
+   SC2 Command Interface Enhancements
+   Subtle Terran UI Elements
+   ======================================== */
+
+/* Command Panel Frame - Enhanced stat cards */
+.stat-card {
+  /* Beveled corner illusion via clip-path */
+  clip-path: polygon(
+    0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px)
+  );
+  /* Inner glow effect */
+  box-shadow:
+    inset 0 0 20px rgba(0, 255, 255, 0.05),
+    inset 0 1px 0 rgba(0, 255, 255, 0.1);
+}
+
+.stat-card:hover {
+  box-shadow:
+    inset 0 0 30px rgba(0, 255, 255, 0.1),
+    inset 0 1px 0 rgba(0, 255, 255, 0.2),
+    0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+/* Tech Tree Curriculum Connector */
+.curriculum-grid {
+  position: relative;
+}
+
+/* Vertical connector line between curriculum items */
+.curriculum-item {
+  /* Beveled corners for command card feel */
+  clip-path: polygon(
+    0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px)
+  );
+  /* Subtle inner frame glow */
+  box-shadow:
+    inset 0 0 15px rgba(0, 255, 255, 0.03),
+    inset 0 1px 0 rgba(0, 255, 255, 0.08);
+}
+
+.curriculum-item:hover {
+  box-shadow:
+    inset 0 0 25px rgba(0, 255, 255, 0.08),
+    inset 0 1px 0 rgba(0, 255, 255, 0.15),
+    0 0 15px rgba(0, 255, 255, 0.1);
+}
+
+/* Build progress indicator for curriculum */
+.curriculum-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,
+    var(--color-cyan) 0%,
+    rgba(0, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.curriculum-item:hover::after {
+  opacity: 1;
+}
+
+/* Final curriculum item (graduation) gets orange accent */
+.curriculum-final {
+  border-color: rgba(255, 152, 0, 0.2);
+}
+
+.curriculum-final::before {
+  background: var(--color-orange) !important;
+}
+
+.curriculum-final::after {
+  background: linear-gradient(90deg,
+    var(--color-orange) 0%,
+    rgba(255, 152, 0, 0.3) 50%,
+    transparent 100%
+  ) !important;
+}
+
+.curriculum-final:hover {
+  border-color: var(--color-orange);
+  box-shadow:
+    inset 0 0 25px rgba(255, 152, 0, 0.08),
+    inset 0 1px 0 rgba(255, 152, 0, 0.15),
+    0 0 15px rgba(255, 152, 0, 0.1);
+}
+
+/* Powered by Claude Code Badge */
+.powered-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-dim);
+  margin-top: var(--space-lg);
+  transition: all var(--transition-base);
+}
+
+.powered-badge:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  color: var(--color-text);
+}
+
+.powered-badge img,
+.powered-badge svg {
+  height: 14px;
+  width: auto;
+  opacity: 0.7;
+}
+
+.powered-badge:hover img,
+.powered-badge:hover svg {
+  opacity: 1;
+}
+
+/* Panel Command Frame Enhancement */
+.panel {
+  /* Enhanced inner glow for command interface feel */
+  box-shadow:
+    inset 0 0 30px rgba(0, 255, 255, 0.02),
+    inset 0 1px 0 rgba(0, 255, 255, 0.05);
+}
+
+.panel:hover {
+  box-shadow:
+    inset 0 0 40px rgba(0, 255, 255, 0.05),
+    inset 0 1px 0 rgba(0, 255, 255, 0.1),
+    0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+/* Resource Cost Display (for pricing) */
+.pricing-row {
+  position: relative;
+}
+
+.pricing-row.total::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-cyan) 20%,
+    var(--color-cyan) 80%,
+    transparent 100%
+  );
 }
