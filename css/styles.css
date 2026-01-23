@@ -1756,6 +1756,37 @@ p:last-child {
   height: 24px;
 }
 
+/* Enlist Section Responsive */
+@media (max-width: 768px) {
+  .enlist-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .enlist-content h2 {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .enlist-content p {
+    font-size: 1rem;
+  }
+
+  .btn-enlist {
+    padding: var(--space-md) var(--space-xl);
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .enlist-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .btn-enlist {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 0.9rem;
+  }
+}
+
 /* ========================================
    Utilities
    ======================================== */
