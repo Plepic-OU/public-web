@@ -1459,9 +1459,9 @@ p:last-child {
     grid-template-columns: 1fr;
   }
 
-  /* Reset span for graduation card on single-column layout */
+  /* Reset span for graduation card on single-column layout (needs !important to override inline style) */
   .curriculum-final {
-    grid-column: span 1;
+    grid-column: span 1 !important;
   }
 }
 
