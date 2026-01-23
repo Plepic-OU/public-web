@@ -848,6 +848,21 @@ p:last-child {
   }
 }
 
+@media (max-width: 480px) {
+  .training-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .stat-card {
+    padding: var(--space-md);
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+  }
+}
+
 /* ========================================
    Section: Clients
    ======================================== */
@@ -969,6 +984,20 @@ p:last-child {
 
   .big-stat-value {
     font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .big-stat-value {
+    font-size: 2.5rem;
+  }
+
+  .stats-message {
+    padding-left: var(--space-lg);
+  }
+
+  .stats-message p {
+    font-size: 1rem;
   }
 }
 
@@ -1465,6 +1494,16 @@ p:last-child {
   }
 }
 
+@media (max-width: 480px) {
+  .curriculum-week {
+    font-size: 1.25rem;
+  }
+
+  .curriculum-item {
+    padding: var(--space-lg);
+  }
+}
+
 /* Course Details */
 .details-section {
   background: var(--color-void);
@@ -1657,6 +1696,37 @@ p:last-child {
 @media (max-width: 768px) {
   .pricing-content {
     grid-template-columns: 1fr;
+  }
+
+  .pricing-box {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .pricing-header h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .registration-panel {
+    padding: var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-box,
+  .registration-panel {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .pricing-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .pricing-value.final {
+    font-size: 1.5rem;
+  }
+
+  .spots-remaining {
+    font-size: 0.9rem;
   }
 }
 
