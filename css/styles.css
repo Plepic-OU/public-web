@@ -1458,6 +1458,11 @@ p:last-child {
   .curriculum-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Reset span for graduation card on single-column layout */
+  .curriculum-final {
+    grid-column: span 1;
+  }
 }
 
 /* Course Details */
