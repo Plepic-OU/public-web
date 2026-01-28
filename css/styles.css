@@ -22,6 +22,7 @@
   --color-cyan-dim: #00d4ff;
   --color-cyan-glow: rgba(0, 255, 255, 0.3);
   --color-cyan-subtle: rgba(0, 255, 255, 0.1);
+  --color-cyan-readable: #80ffff;  /* Softer cyan for body text readability */
 
   /* CTA Colors - Starcraft Orange */
   --color-orange: #ff9800;
@@ -89,7 +90,7 @@ html {
 body {
   font-family: var(--font-body);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--color-text);
   background: var(--color-void);
   min-height: 100vh;
@@ -2609,5 +2610,118 @@ p:last-child {
 @media (max-width: 600px) {
   .terminal-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   Mobile Typography Improvements
+   ======================================== */
+
+@media (max-width: 480px) {
+  .label,
+  .stat-label,
+  .hero-stat-label,
+  .big-stat-label {
+    font-size: 0.8rem;
+  }
+
+  .team-role,
+  .team-experience,
+  .skill-tag {
+    font-size: 0.8rem;
+  }
+
+  .pricing-note,
+  .powered-badge {
+    font-size: 0.75rem;
+  }
+
+  /* Larger touch targets for nav */
+  .nav a {
+    padding: var(--space-lg) 0;
+  }
+}
+
+/* ========================================
+   Mobile Animation Optimizations
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* Reduce particle count on mobile */
+  .hero-particles span:nth-child(n+5) {
+    display: none;
+  }
+
+  /* Slower animations = less CPU */
+  .hero-particles span {
+    animation-duration: 30s;
+  }
+
+  /* Reduce scanline intensity on mobile */
+  body::after {
+    opacity: 0.15;
+  }
+}
+
+/* ========================================
+   Urgency Elements
+   ======================================== */
+
+.deadline-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-orange);
+  margin-top: var(--space-md);
+}
+
+.deadline-notice svg {
+  flex-shrink: 0;
+}
+
+/* ========================================
+   Mobile Sticky CTA
+   ======================================== */
+
+.sticky-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-md);
+    background: rgba(5, 5, 8, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-cyan);
+    z-index: 999;
+    justify-content: center;
+    transform: translateY(100%);
+    transition: transform var(--transition-base);
+  }
+
+  .sticky-cta.visible {
+    transform: translateY(0);
+  }
+
+  .sticky-cta .btn {
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  /* Add padding to body to prevent content overlap */
+  body.has-sticky-cta {
+    padding-bottom: 70px;
   }
 }
