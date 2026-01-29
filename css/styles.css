@@ -2245,6 +2245,7 @@ p:last-child {
   font-size: 0.9rem;
   color: var(--color-cyan);
   border-radius: 0 4px 4px 0;
+  white-space: nowrap;
 }
 
 .code-snippet--orange {
@@ -2611,6 +2612,201 @@ p:last-child {
   .terminal-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ========================================
+   Homepage: Perspective Shift Section
+   ======================================== */
+
+.perspective-shift {
+  background: linear-gradient(180deg, var(--color-void) 0%, var(--color-space) 50%, var(--color-void) 100%);
+  position: relative;
+}
+
+.perspective-shift::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-cyan) 50%, transparent 100%);
+  box-shadow: var(--glow-cyan);
+}
+
+.perspective-shift-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.perspective-shift-content h2 {
+  margin-bottom: var(--space-lg);
+}
+
+.perspective-shift-content h2 .highlight {
+  color: var(--color-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.perspective-shift-desc {
+  font-size: 1.125rem;
+  color: var(--color-text);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.perspective-shift-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin: var(--space-2xl) 0;
+}
+
+.shift-col {
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.shift-col h4 {
+  margin-bottom: var(--space-sm);
+  font-size: 1.1rem;
+}
+
+.shift-col p {
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-md);
+}
+
+.shift-col--agent {
+  background: rgba(0, 255, 255, 0.03);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.shift-col--autocomplete {
+  background: rgba(255, 152, 0, 0.03);
+  border: 1px solid rgba(255, 152, 0, 0.2);
+}
+
+.perspective-shift-quote {
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl);
+  border-left: 3px solid var(--color-orange);
+  background: rgba(255, 152, 0, 0.05);
+}
+
+.perspective-shift-quote p {
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+.perspective-shift-quote cite {
+  display: block;
+  margin-top: var(--space-md);
+  color: var(--color-orange);
+  font-style: normal;
+}
+
+@media (max-width: 600px) {
+  .perspective-shift-comparison {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}
+
+/* ========================================
+   Homepage: Hackathon Section
+   ======================================== */
+
+.hackathon-section {
+  background: var(--color-void);
+  position: relative;
+}
+
+.hackathon-content h2 {
+  margin-bottom: var(--space-xl);
+}
+
+.hackathon-content h2 .highlight {
+  color: var(--color-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.hackathon-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.hackathon-message p {
+  font-size: 1.125rem;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+.hackathon-message p + p {
+  margin-top: var(--space-lg);
+}
+
+.hackathon-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+@media (max-width: 768px) {
+  .hackathon-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .hackathon-stats {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+/* ========================================
+   Homepage: Incentive Alignment Section
+   ======================================== */
+
+.incentive-section {
+  background: linear-gradient(180deg, var(--color-space) 0%, var(--color-void) 100%);
+  position: relative;
+}
+
+.incentive-content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.incentive-content h2 {
+  margin-bottom: var(--space-lg);
+}
+
+.incentive-content p {
+  font-size: 1.125rem;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+/* ========================================
+   Training Page: Curriculum Tagline
+   ======================================== */
+
+.curriculum-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-cyan-readable);
+  margin-bottom: var(--space-md);
+  font-style: italic;
+}
+
+.curriculum-final .curriculum-tagline {
+  color: var(--color-orange);
 }
 
 /* ========================================
