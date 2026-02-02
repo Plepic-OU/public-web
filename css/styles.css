@@ -683,12 +683,13 @@ p:last-child {
 }
 
 /* ========================================
-   Section: Training Preview
+   Section: Training Preview (Hangar Bay)
    ======================================== */
 
 .training-preview {
-  background: linear-gradient(180deg, var(--color-void) 0%, var(--color-space) 50%, var(--color-void) 100%);
   position: relative;
+  overflow: hidden;
+  min-height: 80vh;
 }
 
 .training-preview::before {
@@ -700,6 +701,113 @@ p:last-child {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, var(--color-cyan) 50%, transparent 100%);
   box-shadow: var(--glow-cyan);
+  z-index: 2;
+}
+
+/* Mech Backdrop */
+.mech-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.mech-backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+
+.mech-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 5, 8, 0.95) 0%,
+    rgba(5, 5, 8, 0.8) 40%,
+    rgba(5, 5, 8, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+/* Training Hangar Content */
+.training-hangar {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+
+.training-hangar .training-content {
+  backdrop-filter: blur(2px);
+  padding: var(--space-xl);
+  border-radius: 8px;
+  background: rgba(5, 5, 8, 0.3);
+}
+
+/* HUD Stats */
+.hangar-stats {
+  display: flex;
+  gap: var(--space-lg);
+  margin: var(--space-xl) 0;
+}
+
+.hangar-stat {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-cyan-subtle);
+  border-radius: 4px;
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.hangar-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.hangar-stat-label {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Mobile: stack with image on top */
+@media (max-width: 768px) {
+  .training-preview {
+    min-height: auto;
+  }
+
+  .mech-backdrop {
+    position: relative;
+    height: 300px;
+  }
+
+  .mech-backdrop::after {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(5, 5, 8, 0.8) 80%,
+      rgba(5, 5, 8, 1) 100%
+    );
+  }
+
+  .training-hangar {
+    max-width: 100%;
+    margin-top: -60px;
+  }
+
+  .training-hangar .training-content {
+    background: rgba(5, 5, 8, 0.9);
+  }
+
+  .hangar-stats {
+    flex-wrap: wrap;
+  }
 }
 
 .training-grid {
@@ -1333,19 +1441,56 @@ p:last-child {
   overflow: hidden;
 }
 
-/* Match main hero background */
-.training-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 152, 0, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, var(--color-space) 0%, var(--color-void) 100%);
-  z-index: -1;
+/* Mech backdrop for training hero */
+.training-hero .mech-backdrop img {
+  object-position: right top;
+}
+
+/* Training hero hangar content */
+.training-hero .training-hangar {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+
+.training-hero .training-hangar .training-hero-content {
+  backdrop-filter: blur(2px);
+  padding: var(--space-xl);
+  border-radius: 8px;
+  background: rgba(5, 5, 8, 0.3);
+}
+
+/* Mobile: stack with image on top for training hero */
+@media (max-width: 768px) {
+  .training-hero {
+    flex-direction: column;
+    min-height: auto;
+    padding-top: var(--header-height);
+  }
+
+  .training-hero .mech-backdrop {
+    position: relative;
+    height: 300px;
+    width: 100%;
+  }
+
+  .training-hero .mech-backdrop::after {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(5, 5, 8, 0.8) 80%,
+      rgba(5, 5, 8, 1) 100%
+    );
+  }
+
+  .training-hero .training-hangar {
+    max-width: 100%;
+    margin-top: -60px;
+  }
+
+  .training-hero .training-hangar .training-hero-content {
+    background: rgba(5, 5, 8, 0.9);
+  }
 }
 
 .training-hero-content {
