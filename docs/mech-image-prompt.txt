@@ -1,0 +1,42 @@
+Nano Banana Image Prompt — Plepic Mech Visual
+===============================================
+
+Generate a Starcraft-inspired SCV / mech vehicle illustration for use as a hero visual on a dark retro-futuristic tech website.
+
+Style:
+- Dark background (#050508 to #0a0a12 gradient), matching a space/void aesthetic
+- Retro-futuristic, military sci-fi art direction inspired by Starcraft Terran units
+- Clean vector-style or semi-realistic digital illustration
+- Matte metallic body with subtle panel lines and rivet details
+
+Color palette:
+- Primary accent: Cyan (#00FFFF) — used for HUD elements, visor glow, energy lines
+- Secondary accent: Orange (#FF9800) — used for warning lights, exhaust glow, status indicators
+- Body: Dark gunmetal grays with subtle cyan edge lighting
+- Background: Deep space black with faint cyan grid lines (50px spacing, very subtle)
+
+Subject:
+- A humanoid mech/exosuit (think Starcraft SCV meets a piloted combat frame)
+- Cockpit/visor area clearly visible, showing a human pilot silhouette inside
+- The pilot's hands are on controls — emphasize "human in command" not "autonomous robot"
+- Proportions: stocky, utilitarian, built for work not warfare
+- Tool arms: one arm has a code terminal/holographic display, the other has a multi-tool appendage
+
+Details:
+- HUD overlay elements floating near the mech: "LLM LOOP ACTIVE", status bars, a circular arrow icon
+- Faint scanline overlay across the entire image (2px repeating horizontal lines at 10% opacity)
+- Subtle particle effects — small cyan dots drifting upward like data points
+- "PLEPIC" stenciled on the mech's shoulder plate in Orbitron-style font
+- Small "CLAUDE CODE" badge/decal on the chest plate
+
+Composition:
+- 3/4 front view, slightly from below (heroic angle)
+- Mech centered, facing slightly right
+- Aspect ratio: 16:9 or 3:2 for hero banner use
+- Leave negative space on the left for text overlay
+
+Do NOT include:
+- Weapons, guns, or military insignia
+- Anime/manga styling
+- Bright or saturated backgrounds
+- Generic robot/android look — this should feel industrial and utilitarian

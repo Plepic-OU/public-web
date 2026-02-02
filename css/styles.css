@@ -1369,8 +1369,8 @@ p:last-child {
   margin-bottom: var(--space-xl);
 }
 
-/* Cohort Badge */
-.cohort-badge {
+/* Squad Badge */
+.squad-badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
@@ -1386,7 +1386,7 @@ p:last-child {
   animation: fadeInUp 1s ease-out 0.2s both;
 }
 
-.cohort-badge::before {
+.squad-badge::before {
   content: '';
   width: 8px;
   height: 8px;
@@ -2184,45 +2184,22 @@ p:last-child {
   position: relative;
 }
 
-.loop-ring {
+.loop-arrow {
   position: absolute;
-  border: 4px solid;
-  border-radius: 50%;
-  animation: rotate 8s linear infinite;
-}
-
-.loop-ring:nth-child(1) {
+  inset: 0;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  border-color: var(--color-cyan) transparent transparent transparent;
-}
-
-.loop-ring:nth-child(2) {
-  width: 75%;
-  height: 75%;
-  top: 12.5%;
-  left: 12.5%;
-  border-color: transparent var(--color-cyan-dim) transparent transparent;
-  animation-direction: reverse;
-  animation-duration: 6s;
-}
-
-.loop-ring:nth-child(3) {
-  width: 50%;
-  height: 50%;
-  top: 25%;
-  left: 25%;
-  border-color: transparent transparent rgba(0, 255, 255, 0.5) transparent;
-  animation-duration: 4s;
+  transform-origin: center center;
+  animation: rotate 6s linear infinite;
+  filter: drop-shadow(0 0 8px var(--color-cyan-glow));
 }
 
 .loop-center {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 800;

@@ -73,9 +73,21 @@
           <!-- Loop Animation Visual -->
           <div class="agent-loop-visual">
             <div class="loop-icon">
-              <div class="loop-ring"></div>
-              <div class="loop-ring"></div>
-              <div class="loop-ring"></div>
+              <svg class="loop-arrow" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <filter id="hero-glow">
+                    <feGaussianBlur stdDeviation="2" result="blur"/>
+                    <feMerge>
+                      <feMergeNode in="blur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                <g filter="url(#hero-glow)">
+                  <path d="M 107.5 32.4 A 55 55 0 1 1 52.5 32.4" fill="none" stroke="#00ffff" stroke-width="4" stroke-linecap="round"/>
+                  <polygon points="63,26 50,28 55,37" fill="#00ffff"/>
+                </g>
+              </svg>
               <div class="loop-center">LLM</div>
             </div>
           </div>
@@ -100,9 +112,21 @@
           <div class="comparison-card comparison-card--agent">
             <div class="comparison-visual">
               <div class="loop-icon">
-                <div class="loop-ring"></div>
-                <div class="loop-ring"></div>
-                <div class="loop-ring"></div>
+                <svg class="loop-arrow" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <filter id="comp-glow">
+                      <feGaussianBlur stdDeviation="2" result="blur"/>
+                      <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <g filter="url(#comp-glow)">
+                    <path d="M 107.5 32.4 A 55 55 0 1 1 52.5 32.4" fill="none" stroke="#00ffff" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="63,26 50,28 55,37" fill="#00ffff"/>
+                  </g>
+                </svg>
                 <div class="loop-center">LLM</div>
               </div>
             </div>
@@ -130,7 +154,7 @@
                 </div>
               </div>
             </div>
-            <h3 class="comparison-title comparison-title--orange">GH COPILOT</h3>
+            <h3 class="comparison-title comparison-title--orange">COPILOT</h3>
             <p class="comparison-desc">Autocomplete &ne; Agent</p>
             <div class="code-snippet code-snippet--orange">prompt &rarr; response &rarr; done</div>
           </div>
@@ -164,7 +188,7 @@
           <div class="timeline-item timeline-item--current">
             <div class="timeline-date">Now</div>
             <div class="timeline-content">
-              <p>Where are you on the path from autocomplete to agentic? Teams who master this transition work 3-5x faster.</p>
+              <p>Where are you on the path from autocomplete to agentic? Teams who master this transition ship quality software 3-5x faster.</p>
             </div>
           </div>
         </div>
@@ -235,7 +259,7 @@
       <div class="container">
         <div class="enlist-content">
           <h2>Ready to Build Your Mech?</h2>
-          <p>Our 6-week training program is a virtual hangar where you construct your agentic development machine. View the full curriculum and enlist.</p>
+          <p>Our 6-week training program is a virtual hangar where you construct your agentic development mech &mdash; a powerful tool you pilot, not AI that replaces you. View the full curriculum and enlist.</p>
 
           <a href="/training/" class="btn-enlist">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
