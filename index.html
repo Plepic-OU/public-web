@@ -5,13 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plepic - Curious play. Epic growth.</title>
 
-  <!-- Google Analytics -->
+  <!-- Google Analytics + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-65CCEV6RS9');
+    gtag('config', 'AW-17874572217');
+  </script>
+
+  <!-- Google Ads Conversion Tracking -->
+  <script>
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a');
+      if (!link) return;
+      var href = link.href || '';
+
+      if (href.indexOf('forms.gle/3M7XrK845svufeFn6') !== -1) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17874572217/1kJMCIeh7vEbELmnoctC',
+          'value': 504, 'currency': 'EUR'
+        });
+      } else if (href.indexOf('calendar.app.google/h5sq5y19e8a11GRQ7') !== -1) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17874572217/o9b0CIqh7vEbELmnoctC',
+          'value': 50, 'currency': 'EUR'
+        });
+      } else if (href.indexOf('mailto:kaido@plepic.com') !== -1) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17874572217/RDYVCIul7vEbELmnoctC',
+          'value': 5, 'currency': 'EUR'
+        });
+      } else if (href.indexOf('tel:+3725077333') !== -1) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17874572217/Rl7sCI6l7vEbELmnoctC',
+          'value': 5, 'currency': 'EUR'
+        });
+      } else if (href.indexOf('linkedin.com/in/kaidokoort') !== -1) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17874572217/3LOMCImm7vEbELmnoctC',
+          'value': 1, 'currency': 'EUR'
+        });
+      }
+    });
   </script>
 
   <meta name="description" content="We transform developers into agentic developers. Hands-on hackathons and a 6-week training program powered by Claude Code.">
