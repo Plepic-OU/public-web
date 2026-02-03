@@ -923,37 +923,6 @@ p:last-child {
   text-shadow: var(--glow-cyan);
 }
 
-/* Legacy hangar stats - now using data points instead */
-.hangar-stats {
-  display: flex;
-  gap: var(--space-lg);
-  margin: var(--space-xl) 0;
-}
-
-.hangar-stat {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-cyan-subtle);
-  border-radius: 4px;
-  background: rgba(0, 255, 255, 0.05);
-}
-
-.hangar-stat-value {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-cyan);
-  text-shadow: var(--glow-cyan);
-}
-
-.hangar-stat-label {
-  font-size: 0.75rem;
-  color: var(--color-text-dim);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 @media (max-width: 600px) {
   .mech-hud-stats .stat-value {
     font-size: 1.1rem;
@@ -971,20 +940,6 @@ p:last-child {
   .mech-hud-stats .stat-card {
     padding: 4px var(--space-sm);
   }
-}
-
-/* Training Hangar Content - legacy support */
-.training-hangar {
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
-}
-
-.training-hangar .training-content {
-  backdrop-filter: blur(2px);
-  padding: var(--space-xl);
-  border-radius: 8px;
-  background: rgba(5, 5, 8, 0.3);
 }
 
 .training-grid {
@@ -1475,33 +1430,6 @@ p:last-child {
   letter-spacing: 0.2em;
   color: var(--color-text-dim);
   margin-top: var(--space-md);
-}
-
-/* Company Logos in Team Cards */
-.team-logos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--space-lg);
-  padding-top: var(--space-md);
-  border-top: 1px solid rgba(0, 255, 255, 0.1);
-  margin-top: var(--space-md);
-}
-
-.team-logos img {
-  height: 48px;
-  width: auto;
-  max-width: 160px;
-  object-fit: contain;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 4px;
-  transition: transform var(--transition-fast);
-}
-
-.team-logos img:hover {
-  transform: scale(1.05);
 }
 
 @media (max-width: 900px) {
