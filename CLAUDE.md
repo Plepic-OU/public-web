@@ -12,7 +12,8 @@ Plepic is a static marketing website for an Estonian tech training company. The 
 
 ```
 index.html          # Homepage
-training/index.html # Training subpage
+agent/index.html    # What is an AI Agent? (educational)
+training/index.html # Training program details & enrollment
 css/styles.css      # Single stylesheet with CSS custom properties
 images/             # All static assets (logos, photos)
 docs/               # Design documents and one-pagers
@@ -29,10 +30,11 @@ docs/               # Design documents and one-pagers
 **Design system:** CSS uses custom properties (design tokens) defined in `:root`. Reference `docs/plans/2026-01-03-plepic-homepage-design.md` for design decisions.
 
 **Key CSS patterns:**
-- Swiss style typography with `DM Serif Display` (logo) and `Inter` (body)
-- 12-column grid system with broken grid layouts
-- Brand color: `--color-brand: #00674f` (dark green)
+- Starcraft-inspired retro-futuristic aesthetic with `Orbitron` (headings/logo), `Exo 2` (body), and `Share Tech Mono` (code/labels)
+- CSS grid layouts with broken grid designs
+- Brand colors: cyan `--color-cyan: #00ffff` and orange `--color-orange: #ff6600` on dark void `--color-void: #050508`
 - All spacing uses 8px base unit via `--space-*` tokens
+- Fonts loaded via `<link>` in HTML (not CSS @import) for faster discovery
 
 ## Content Notes
 

@@ -3,8 +3,7 @@
    Starcraft-Inspired Retro-Futuristic Design
    ======================================== */
 
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+/* Fonts — loaded via <link> in HTML for faster discovery (no @import chain) */
 
 /* ========================================
    CSS Custom Properties
