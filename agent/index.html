@@ -182,22 +182,33 @@
             <span>vs</span>
           </div>
 
-          <!-- Copilot Card -->
+          <!-- Autocomplete Card -->
           <div class="comparison-card comparison-card--autocomplete">
             <div class="comparison-visual">
-              <div class="cube-container">
-                <div class="cube">
-                  <div class="cube-face">💩</div>
-                  <div class="cube-face">💩</div>
-                  <div class="cube-face">💩</div>
-                  <div class="cube-face">💩</div>
-                  <div class="cube-face">💩</div>
-                  <div class="cube-face">💩</div>
-                </div>
+              <div class="single-shot-visual">
+                <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" class="single-shot-arrow">
+                  <defs>
+                    <filter id="orange-glow">
+                      <feGaussianBlur stdDeviation="2" result="blur"/>
+                      <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <g filter="url(#orange-glow)">
+                    <!-- Single straight arrow: prompt to response, then stops -->
+                    <line x1="30" y1="80" x2="130" y2="80" stroke="#ff9800" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="130,80 115,70 115,90" fill="#ff9800"/>
+                    <!-- Dead-end bar at the end -->
+                    <line x1="140" y1="60" x2="140" y2="100" stroke="#ff9800" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+                  </g>
+                </svg>
+                <div class="single-shot-label">ONE SHOT</div>
               </div>
             </div>
-            <h3 class="comparison-title comparison-title--orange">COPILOT</h3>
-            <p class="comparison-desc">Autocomplete &ne; Agent</p>
+            <h3 class="comparison-title comparison-title--orange">AUTOCOMPLETE</h3>
+            <p class="comparison-desc">Single prompt, single response</p>
             <div class="code-snippet code-snippet--orange">prompt &rarr; response &rarr; done</div>
           </div>
         </div>
@@ -230,7 +241,7 @@
           <div class="timeline-item timeline-item--current">
             <div class="timeline-date">Now</div>
             <div class="timeline-content">
-              <p>Where are you on the path from autocomplete to agentic? Teams who master this transition ship quality software 3-5x faster.</p>
+              <p>Teams who master agentic development ship quality software 3-5x faster. Where are you on the path from autocomplete to agent?</p>
             </div>
           </div>
         </div>
@@ -301,17 +312,17 @@
       <div class="container">
         <div class="enlist-content">
           <h2>Ready to Build Your Mech?</h2>
-          <p>Our 6-week training program is a virtual hangar where you construct your agentic development mech &mdash; a powerful tool you pilot, not AI that replaces you. View the full curriculum and enlist.</p>
+          <p>Our 6-week program is a virtual hangar where you construct your agentic development mech &mdash; a powerful tool you pilot, not AI that replaces you.</p>
 
           <a href="/training/" class="btn-enlist">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
             </svg>
-            View Training Program
+            View Full Program
           </a>
 
           <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">
-            Want to experience this firsthand? <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" style="color: var(--color-void); text-decoration: underline;">Book a hackathon for your team</a>.
+            Not ready to commit? <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" style="color: var(--color-void); text-decoration: underline;">Book a hackathon</a> to try our teaching style first.
           </p>
         </div>
       </div>
