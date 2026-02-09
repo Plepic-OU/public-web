@@ -3330,6 +3330,16 @@ html, body {
 
   .shift-col {
     padding: var(--space-lg);
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Code snippets - allow horizontal scroll on mobile */
+  .code-snippet {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    font-size: 0.8rem;
   }
 
   /* Agent vs Autocomplete comparison */
@@ -3340,6 +3350,9 @@ html, body {
 
   .comparison-card {
     padding: var(--space-xl);
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
   }
 
   /* Loop icon smaller on mobile */
