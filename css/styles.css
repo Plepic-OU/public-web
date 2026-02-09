@@ -1678,6 +1678,8 @@ p:last-child {
   color: var(--color-cyan);
   margin-bottom: var(--space-lg);
   animation: fadeInUp 1s ease-out 0.2s both;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .squad-badge::before {
