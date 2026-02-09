@@ -1638,9 +1638,9 @@ p:last-child {
 }
 
 @media (max-width: 900px) {
-  .training-hero {
+  section.training-hero {
     min-height: auto;
-    padding-top: calc(var(--header-height) + var(--space-2xl));
+    padding-top: calc(var(--header-height) + var(--space-lg));
     align-items: flex-start;
   }
 }
@@ -2468,6 +2468,14 @@ p:last-child {
   padding-top: var(--header-height);
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  section.agent-hero {
+    min-height: auto;
+    padding-top: calc(var(--header-height) + var(--space-lg));
+    align-items: flex-start;
+  }
 }
 
 .agent-hero::before {
