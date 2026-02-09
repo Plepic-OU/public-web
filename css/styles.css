@@ -946,20 +946,22 @@ p:last-child {
 
 @media (max-width: 600px) {
   .mech-hud-stats .stat-value {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 
   .mech-hud-stats .stat-label {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
   }
 
   .mech-hud-stats {
-    gap: 4px;
-    left: var(--space-sm);
+    gap: 2px;
+    left: var(--space-xs);
+    top: var(--space-sm);
+    transform: none;
   }
 
   .mech-hud-stats .stat-card {
-    padding: 4px var(--space-sm);
+    padding: 2px var(--space-xs);
   }
 }
 
@@ -1638,7 +1640,8 @@ p:last-child {
 @media (max-width: 900px) {
   .training-hero {
     min-height: auto;
-    padding-top: var(--header-height);
+    padding-top: calc(var(--header-height) + var(--space-lg));
+    align-items: flex-start;
   }
 }
 
