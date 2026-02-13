@@ -137,6 +137,28 @@
   }
   </script>
 
+  <!-- Structured Data - Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://plepic.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Training",
+        "item": "https://plepic.com/training/"
+      }
+    ]
+  }
+  </script>
+
   <!-- Fonts — preconnect for early DNS/TLS, then load as render-blocking stylesheet (prevents CLS from font swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
