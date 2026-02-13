@@ -150,6 +150,12 @@ a:hover {
   text-shadow: 0 0 10px var(--color-cyan-glow);
 }
 
+a:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* ========================================
    Typography
    ======================================== */
@@ -318,6 +324,20 @@ p:last-child {
   box-shadow: 0 0 40px var(--color-orange-glow), 0 0 80px var(--color-orange-glow), 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   color: #000000;
   text-shadow: none;
+}
+
+/* Focus visible for keyboard navigation */
+.btn:focus-visible {
+  outline: 3px solid var(--color-cyan);
+  outline-offset: 3px;
+}
+
+.btn-primary:focus-visible {
+  outline-color: var(--color-cyan);
+}
+
+.btn-secondary:focus-visible {
+  outline-color: var(--color-text-bright);
 }
 
 /* Large CTA */
