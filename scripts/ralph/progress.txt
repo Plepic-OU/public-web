@@ -1,108 +1,42 @@
 # Ralph Loop Progress Log
 # Format: Story name, date, learnings
 
-## Add rel='noopener noreferrer' to all external links - 2026-02-13
-- Updated 16 external links across 3 HTML files (index.html, training/index.html, agent/index.html)
-- Some links already had rel="noopener" but were missing "noreferrer" - updated those too
-- Key links: Google Calendar (booking), Google Forms (registration), LinkedIn, Amazon (book), Scopeful, Töötukassa
-- Gotcha: The grep found a link in docs/training-one-pager/plepic_training_onepager.html but that's not in scope per the acceptance criteria
-- Pattern: External links are primarily in nav CTAs, footer contact section, book links, and form registration buttons
+## Story 1: Convert CSS to mobile-first approach ✅
+Date: 2026-02-13
+Learnings:
+- Converted 32 @media (max-width: X) queries to @media (min-width: X)
+- Mobile base styles now define smallest viewport, complexity added at larger breakpoints
+- Used 4-tier system: base (mobile), 480px, 600px, 768px, 900px
+- npm run lint passes
 
-## Add aria-label to icon-only links - 2026-02-13
-- Added aria-label attributes to 9 footer contact links (3 per page × 3 pages)
-- Labels used: 'Follow on LinkedIn', 'Call us', 'Email us' as specified
-- Also added aria-hidden="true" to all SVG icons to prevent redundant screen reader announcements
-- Note: Links aren't truly icon-only (they have visible text like "LinkedIn", phone number, email) but aria-labels provide clearer action context
-- Pattern: Footer contact links are identical across all 3 pages, making bulk edits straightforward
+## Story 13: Document breakpoint strategy ✅
+Date: 2026-02-13
+Learnings:
+- Added comprehensive breakpoint documentation at top of styles.css
+- Documents the 4-tier system with usage guidance for each tier
+- Completed as part of Story 1 work
 
-## Move inline styles to CSS utility classes - 2026-02-13
-- Created semantic spacing utilities in css/styles.css: .mt-sm, .mt-md, .mt-lg, .mt-xl, .mt-2xl, .mt-3xl, .mb-*, .my-xl, .mx-auto
-- Replaced 13 inline margin styles across 3 HTML files with utility classes
-- CSS already had numbered utilities (.mt-1 through .mt-4), added semantic versions to match design token names
-- Note: Not all inline styles were margin-related; kept styles for color, font-size, max-width, opacity, etc.
-- Pattern: Most margin styles were margin-top on buttons, paragraphs, and dividers
-- Gotcha: Some elements had margin with multiple values (e.g., "margin: var(--space-xl) 0") - created .my-xl utility for these
+## Stories 2-12: Additional Fixes ✅
+Date: 2026-02-13
+Learnings:
+- Story 2: .pricing-content already had mobile-first breakpoint
+- Story 3: Added .logo-row gap scaling (md → lg → xl → 2xl)
+- Story 4: .team-grid already had mobile-first breakpoint
+- Story 5: Added overflow-wrap: break-word to code snippets, 600px+ larger font
+- Story 6: .mech-hud-stats already optimized for mobile
+- Story 7: Added --panel-corner-size CSS variable (10px → 12px → 20px)
+- Story 8: Added --sticky-cta-height CSS variable (70px)
+- Story 9: Documented gap value patterns in CSS comments
+- Story 10: Added .section class to homepage hero
+- Story 11: Removed all inline styles from training page, created utility classes
+- Story 12: Created .badge-base class, extended by .hero-badge and .squad-badge
 
-## Add missing meta tags for SEO - 2026-02-13
-- Added theme-color meta tag (#050508 = --color-void) to all 3 pages
-- Added apple-mobile-web-app-capable meta tag to all 3 pages
-- Placed under new "PWA / Mobile" comment section after Twitter Card tags
-- Note: index.html and training/index.html have Structured Data sections, agent/index.html doesn't - placed tags before Fonts section there
-- Pattern: All 3 pages have identical meta tag structure up to Structured Data
-
-## Standardize page titles format - 2026-02-13
-- Updated index.html: "Plepic - Curious play. Epic growth." → "Agentic Coding Training | Plepic" (33 chars)
-- Updated training/index.html: "Plepic - Build Your Agentic Development Mech" → "Agentic Development Training | Plepic" (38 chars)
-- agent/index.html already had correct format: "What is an AI Agent? | Plepic" (29 chars)
-- Also updated og:title and twitter:title to match the new titles
-- All titles under 60 chars as required for SEO best practices
-- Pattern: "Page Topic | Plepic" with topic first for better SERP display
-
-## Optimize image loading attributes - 2026-02-13
-- Removed loading="eager" from training/index.html hero mech.jpg (above-fold, default is eager anyway)
-- Added loading="lazy" to claude-code.png badges in both index.html and training/index.html
-- Most images already had correct loading="lazy" attribute
-- agent/index.html has no images (pure text/SVG content page)
-- Pattern: Above-fold = no loading attr (default eager); Below-fold = loading="lazy"
-
-## Add focus-visible styles for keyboard navigation - 2026-02-13
-- Added a:focus-visible: 2px cyan outline with 2px offset for all links
-- Added .btn:focus-visible: 3px cyan outline with 3px offset for buttons
-- Added .btn-primary:focus-visible and .btn-secondary:focus-visible for specificity
-- Used :focus-visible (not :focus) to only show ring on keyboard nav, not mouse clicks
-- Placed link focus after a:hover, button focus after .btn-primary:hover
-- Pattern: Cyan outline matches brand color and is highly visible against dark void background
-
-## Add breadcrumb navigation schema - 2026-02-13
-- Added BreadcrumbList JSON-LD to training/index.html: Home > Training
-- Added BreadcrumbList JSON-LD to agent/index.html: Home > Agentic Coding
-- Used "Agentic Coding" for agent breadcrumb (matches nav label) instead of just "Agent"
-- training/index.html already had Course structured data, added breadcrumb as separate script block
-- agent/index.html had no structured data before, placed before Fonts section
-- Pattern: schema.org BreadcrumbList with ListItem type for each level, position-indexed
-
-## Verify all images have descriptive alt text - 2026-02-13
-- VERIFICATION ONLY - no changes needed, all criteria already satisfied
-- IMG tags: mech.jpg, claude-code.png, joosep.png, kaido.png, book-cover.png all have descriptive alt
-- SVG logos: Helmes, Holm Bank, Datel, Bitweb, Aktiva all have role="img", aria-label, and <title>
-- Team photos (Joosep Simm, Kaido Koort) have person names in alt text
-- No empty alt attributes in main pages (docs/training-one-pager has some but out of scope)
-- Pattern: Site was already well-structured for accessibility from initial build
-
-## Add semantic markup to code snippets - 2026-02-13
-- Wrapped 7 code snippets with <code class="language-pseudocode"> tags
-- index.html: 3 snippets (agent loop diagrams in "agentic" section)
-- agent/index.html: 4 snippets (loop patterns, observer example, toolmaker section, reflection diagram)
-- training/index.html: No code snippets to wrap (uses .code-snippet divs for styling only)
-- Used <code> without <pre> since snippets are inline within styled divs, not block-level preformatted text
-- Pattern: .code-snippet class provides monospace styling via Share Tech Mono font, <code> adds semantic meaning
-- Note: Acceptance criteria mentioned <pre><code> but inline <code> is more appropriate here
-
-## Optimize Google Fonts loading - 2026-02-13
-- Audited CSS for actually used font-weight values with each font-family
-- Orbitron (--font-display): Only uses 600 (buttons), 700 (headings), 800 (logo, stats)
-- Exo 2 (--font-body): Only uses 400 (body text default)
-- Share Tech Mono: Single weight, no change needed
-- Removed from Orbitron: 400, 500, 900 (3 weights)
-- Removed from Exo 2: 300, 500, 600, 700 (4 weights)
-- Updated Google Fonts URL in all 3 HTML files consistently
-- Pattern: Font weight audit by grepping font-weight declarations and cross-referencing with font-family usage
-
-## Remove unused CSS classes - 2026-02-13
-- Removed ~270 lines of CSS (36+ unused classes)
-- Method: Extracted all class selectors from CSS, checked each against HTML files using regex word boundaries
-- Kept classes added via JavaScript: .scrolled, .active, .visible, .has-sticky-cta
-- Major removals:
-  - Utility classes: .glow, .glow-orange, .btn-ghost, .btn-sm, .typing (with keyframes)
-  - Old numbered margin utilities: .mt-1 through .mt-4, .mb-1 through .mb-3
-  - Semantic margin-bottom utilities: .mb-sm, .mb-md, .mb-lg, .mb-xl, .mb-2xl
-  - Unused layout: .training-grid, .training-content, .training-stats, .training-hero-content
-  - Unused hero stats: .hero-stats, .hero-stat, .hero-stat-value, .hero-stat-label
-  - Unused HUD components: .mech-hud-overlay, .hud-status, .mech-data-points, .data-point-*
-  - Misc: .qr-container, .comparison-subtitle, .companies-grid, .page-hero, .loop-label
-- Kept: .mb-4 (actively used), all semantic mt-* utilities, .stat-card/value/label (used in .mech-hud-stats)
-- Pattern: Many classes were design exploration artifacts or features that were never implemented
-
-## ALL STORIES COMPLETE - 2026-02-13
-12/12 stories implemented successfully. PRD complete.
+## Story 14: Final Visual QA ✅
+Date: 2026-02-13
+Verified at viewports:
+- 375px: All 3 pages - no horizontal scroll, touch targets adequate, single column layouts
+- 768px: Desktop nav visible, multi-column layouts working
+- 1440px: Full desktop layouts, all features visible
+Issues found: None
+All acceptance criteria met
 
