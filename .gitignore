@@ -1,3 +1,9 @@
 .idea/.DS_Store
 node_modules/
 .claude/.ralph-loop.local.md
+
+# Playwright visual test artifacts
+tests/visual/results/
+tests/visual/report/
+playwright-report/
+test-results/

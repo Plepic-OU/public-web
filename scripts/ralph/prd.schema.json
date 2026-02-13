@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ralph Loop PRD Schema",
+  "description": "Schema for Ralph Loop Product Requirements Document",
+  "type": "object",
+  "required": ["stories"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "PRD metadata",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "created": {
+          "type": "string",
+          "format": "date",
+          "description": "Creation date"
+        },
+        "description": {
+          "type": "string",
+          "description": "PRD description"
+        }
+      }
+    },
+    "stories": {
+      "type": "array",
+      "description": "List of stories to implement",
+      "items": {
+        "type": "object",
+        "required": ["priority", "title", "acceptanceCriteria", "passes"],
+        "properties": {
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Story priority (lower = higher priority)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Short descriptive title"
+          },
+          "acceptanceCriteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "description": "List of testable acceptance criteria"
+          },
+          "passes": {
+            "type": "boolean",
+            "description": "Whether all acceptance criteria pass"
+          },
+          "blockedBy": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": [],
+            "description": "List of story priorities that must complete first"
+          },
+          "complexity": {
+            "type": "string",
+            "enum": ["S", "M", "L"],
+            "description": "Size estimate: S=small, M=medium, L=large"
+          },
+          "testCommand": {
+            "type": "string",
+            "description": "Command to run for validation (e.g., 'npm run lint && npm run test:visual')"
+          }
+        }
+      }
+    }
+  }
+}

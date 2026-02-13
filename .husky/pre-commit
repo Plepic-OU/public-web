@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Ralph Loop Pre-commit Hook
+# Runs lint and visual regression tests before allowing commit.
+# To bypass in emergencies: git commit --no-verify
+
+echo "Running pre-commit checks..."
+
+# Run lint checks
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "Lint failed. Fix errors before committing."
+  exit 1
+fi
+
+# Run visual regression tests (skip if no snapshots exist yet)
+if [ -d "tests/visual" ] && [ "$(ls -A tests/visual/*.spec.ts 2>/dev/null)" ]; then
+  # Only run if snapshots exist (first run will need --update-snapshots)
+  if [ -d "tests/visual/pages.spec.ts-snapshots" ]; then
+    npm run test:visual
+    if [ $? -ne 0 ]; then
+      echo "Visual regression tests failed. Review changes or update snapshots."
+      exit 1
+    fi
+  else
+    echo "Skipping visual tests (no snapshots yet). Run: npm run test:visual:update"
+  fi
+fi
+
+echo "Pre-commit checks passed!"
