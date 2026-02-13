@@ -1,0 +1,160 @@
+{
+  "stories": [
+    {
+      "priority": 1,
+      "title": "Convert CSS to mobile-first approach",
+      "acceptanceCriteria": [
+        "Convert all @media (max-width: X) to @media (min-width: X)",
+        "Restructure base styles for mobile, add complexity at larger breakpoints",
+        "Consolidate to 4-tier system: base (mobile), 480px, 600px, 768px, 900px",
+        "Verify at all 6 viewports (375px, 480px, 600px, 768px, 900px, 1440px), no visual regression",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 2,
+      "title": "Add missing .pricing-content 768px breakpoint",
+      "acceptanceCriteria": [
+        "Add @media (min-width: 768px) for 2-column grid on .pricing-content",
+        "Base style: single column (mobile-first)",
+        "Test pricing/registration panel stacking at all viewports",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 3,
+      "title": "Fix .logo-row gap scaling",
+      "acceptanceCriteria": [
+        "Base: gap: var(--space-md) (mobile)",
+        "480px+: gap: var(--space-lg)",
+        "600px+: gap: var(--space-xl)",
+        "768px+: gap: var(--space-2xl)",
+        "No horizontal scroll at 375px",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 4,
+      "title": "Add .team-grid responsive breakpoint",
+      "acceptanceCriteria": [
+        "Base: single column (mobile)",
+        "768px+: 3-column layout with book divider",
+        "Fix book divider order/display",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 5,
+      "title": "Fix code snippet overflow",
+      "acceptanceCriteria": [
+        "Base: max-width: 100%; overflow-x: auto; word-break: break-word",
+        "600px+: larger font size",
+        "No horizontal page scroll at any viewport",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 6,
+      "title": "Optimize .mech-hud-stats for mobile",
+      "acceptanceCriteria": [
+        "Base: top-left position, small fonts",
+        "600px+: restore original positioning/sizing",
+        "Stats readable, no image overlap",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 7,
+      "title": "Add --panel-corner-size CSS variable",
+      "acceptanceCriteria": [
+        "Base: --panel-corner-size: 10px",
+        "600px+: 12px",
+        "768px+: 20px",
+        "Apply to all panel corner brackets",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 8,
+      "title": "Add --sticky-cta-height CSS variable",
+      "acceptanceCriteria": [
+        "Create variable for sticky CTA height",
+        "Use in body.has-sticky-cta padding",
+        "Footer not obscured at 375px",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 9,
+      "title": "Standardize gap values",
+      "acceptanceCriteria": [
+        "Card grids: var(--space-lg)",
+        "Section content: var(--space-xl)",
+        "Document pattern in CSS comments",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 10,
+      "title": "Add .section class to homepage hero",
+      "acceptanceCriteria": [
+        "Add section class to .hero element in index.html",
+        "Padding matches other sections",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 11,
+      "title": "Remove inline styles from training page",
+      "acceptanceCriteria": [
+        "Move inline styles (lines 240, 352, 421-440) to CSS utilities",
+        "Create: .flex-col-center, .max-w-350, .text-center-sm",
+        "Zero inline style attributes",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 12,
+      "title": "Create shared badge base class",
+      "acceptanceCriteria": [
+        "Create .badge-base with shared styles",
+        ".hero-badge, .squad-badge extend base",
+        "Reduce CSS duplication",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 13,
+      "title": "Document breakpoint strategy",
+      "acceptanceCriteria": [
+        "Add CSS comment block documenting 4-tier breakpoint system",
+        "Include usage guidance for each tier",
+        "npm run lint passes"
+      ],
+      "passes": true
+    },
+    {
+      "priority": 14,
+      "title": "Final visual QA across all pages",
+      "acceptanceCriteria": [
+        "Verify all 3 pages at all 6 viewport sizes",
+        "Check touch targets 44px+ on mobile",
+        "Confirm no horizontal scroll anywhere",
+        "Document any remaining issues"
+      ],
+      "passes": true
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plepic - Curious play. Epic growth.</title>
+  <title>Agentic Coding Training | Plepic</title>
 
   <!-- Google Analytics + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9"></script>
@@ -54,7 +54,7 @@
   <meta name="description" content="We transform developers into agentic developers. Hands-on hackathons and a 6-week training program powered by Claude Code.">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Plepic - Curious play. Epic growth.">
+  <meta property="og:title" content="Agentic Coding Training | Plepic">
   <meta property="og:description" content="We transform developers into agentic developers. Ship quality software 3-5x faster — not AI slop, but production-grade code with human oversight.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://plepic.com/">
@@ -69,9 +69,13 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Plepic - Curious play. Epic growth.">
+  <meta name="twitter:title" content="Agentic Coding Training | Plepic">
   <meta name="twitter:description" content="We transform developers into agentic developers. Ship quality software 3-5x faster — not AI slop, but production-grade code with human oversight.">
   <meta name="twitter:image" content="https://plepic.com/images/plepic-og.jpg">
+
+  <!-- PWA / Mobile -->
+  <meta name="theme-color" content="#050508">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -117,7 +121,7 @@
   <!-- Fonts — preconnect for early DNS/TLS, then load as render-blocking stylesheet (prevents CLS from font swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Exo+2:wght@400&family=Share+Tech+Mono&display=swap">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
@@ -135,7 +139,7 @@
         <a href="#clients">Clients</a>
         <a href="#operatives">Team</a>
         <a href="#contact">Contact</a>
-        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" class="btn btn-primary nav-cta">Book Strategy Session</a>
+        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta">Book Strategy Session</a>
       </nav>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
@@ -158,7 +162,7 @@
 
       <div class="container">
         <div class="hero-content">
-          <div class="hero-badge">
+          <div class="badge-base hero-badge">
             <span>100+ Developers Trained · 8.4/10 Score</span>
           </div>
 
@@ -171,7 +175,7 @@
           </p>
 
           <div class="btn-group">
-            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" class="btn btn-primary btn-lg btn-pulse">
+            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg btn-pulse">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
               Book Strategy Session
             </a>
@@ -195,20 +199,20 @@
             Not marketing fluff about "autonomous systems." An agent is simply an LLM that can use tools, runs in a loop until the task is done, and maintains context throughout.
           </p>
 
-          <div class="code-snippet" style="margin: var(--space-xl) 0;">
-            while(task) { think &rarr; act &rarr; observe }
+          <div class="code-snippet my-xl">
+            <code class="language-pseudocode">while(task) { think &rarr; act &rarr; observe }</code>
           </div>
 
           <div class="perspective-shift-comparison">
             <div class="shift-col shift-col--agent">
               <h4 class="text-cyan">Agent</h4>
               <p>LLM + Tools + Loop + Context</p>
-              <div class="code-snippet" style="font-size: 0.8rem;">while(task) { think &rarr; act &rarr; observe }</div>
+              <div class="code-snippet" style="font-size: 0.8rem;"><code class="language-pseudocode">while(task) { think &rarr; act &rarr; observe }</code></div>
             </div>
             <div class="shift-col shift-col--autocomplete">
               <h4 class="text-orange">Autocomplete</h4>
               <p>Single prompt, single response</p>
-              <div class="code-snippet code-snippet--orange" style="font-size: 0.8rem;">prompt &rarr; response &rarr; done</div>
+              <div class="code-snippet code-snippet--orange" style="font-size: 0.8rem;"><code class="language-pseudocode">prompt &rarr; response &rarr; done</code></div>
             </div>
           </div>
 
@@ -217,7 +221,7 @@
             <cite>Kaido Koort</cite>
           </blockquote>
 
-          <a href="/agent/" class="btn btn-secondary" style="margin-top: var(--space-xl);">Learn What Makes an Agent &rarr;</a>
+          <a href="/agent/" class="btn btn-secondary mt-xl">Learn What Makes an Agent &rarr;</a>
         </div>
       </div>
     </section>
@@ -285,7 +289,7 @@
         </div>
 
         <div class="powered-badge">
-          <img src="images/claude-code.png" alt="Claude Code" style="height: 16px; width: auto;">
+          <img src="images/claude-code.png" alt="Claude Code" style="height: 16px; width: auto;" loading="lazy">
           Powered by Claude Code
         </div>
       </div>
@@ -306,7 +310,7 @@
               <p>
                 Experience our teaching style firsthand before committing to the full training.
               </p>
-              <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" class="btn btn-primary btn-lg" style="margin-top: var(--space-xl);">
+              <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg mt-xl">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
                 Book a Hackathon for Your Team
               </a>
@@ -336,7 +340,7 @@
           <p>
             First, build your mech. Then scale with your fleet. The next step? Align incentives so agencies and clients both win when software ships faster. Agentic development changes how code gets written &mdash; the next frontier is changing how projects get priced.
           </p>
-          <a href="https://scopeful.dev" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: var(--space-lg);">
+          <a href="https://scopeful.dev" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-lg">
             Learn About Incentive Alignment &rarr;
           </a>
         </div>
@@ -459,7 +463,7 @@
 
           <!-- Book Divider -->
           <div class="book-divider">
-            <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener"><img src="images/book-cover.png" alt="AI Coding for Beginners - book cover" loading="lazy"></a>
+            <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer"><img src="images/book-cover.png" alt="AI Coding for Beginners - book cover" loading="lazy"></a>
             <p class="book-caption">Co-authors</p>
           </div>
 
@@ -497,20 +501,20 @@
         <div class="footer-contact">
           <h3>// Establish Contact</h3>
           <div class="contact-links">
-            <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener noreferrer" aria-label="Follow on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
               </svg>
               LinkedIn
             </a>
-            <a href="tel:+3725077333">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <a href="tel:+3725077333" aria-label="Call us">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               +372 5077 333
             </a>
-            <a href="mailto:kaido@plepic.com">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <a href="mailto:kaido@plepic.com" aria-label="Email us">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
               </svg>
               kaido@plepic.com
