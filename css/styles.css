@@ -200,17 +200,6 @@ p:last-child {
   opacity: 0.6;
 }
 
-/* Glowing Text */
-.glow {
-  color: var(--color-cyan);
-  text-shadow: var(--glow-cyan);
-}
-
-.glow-orange {
-  color: var(--color-orange);
-  text-shadow: var(--glow-orange);
-}
-
 /* ========================================
    Layout
    ======================================== */
@@ -377,18 +366,6 @@ p:last-child {
   color: var(--color-text-bright);
   box-shadow: 0 0 30px var(--color-cyan-glow), inset 0 1px 0 rgba(0, 255, 255, 0.2);
   transform: translateY(-2px);
-}
-
-/* Ghost Button */
-.btn-ghost {
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.btn-ghost:hover {
-  border-color: var(--color-cyan);
-  color: var(--color-cyan);
 }
 
 /* Button Group */
@@ -687,39 +664,6 @@ p:last-child {
   animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-/* Hero Stats */
-.hero-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xl) var(--space-2xl);
-  margin-top: var(--space-3xl);
-  padding-top: var(--space-xl);
-  border-top: 1px solid rgba(0, 255, 255, 0.2);
-  animation: fadeInUp 1s ease-out 0.7s both;
-}
-
-.hero-stat {
-  text-align: center;
-}
-
-.hero-stat-value {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--color-orange);
-  text-shadow: var(--glow-orange);
-  line-height: 1;
-}
-
-.hero-stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-text-dim);
-  margin-top: var(--space-xs);
-}
-
 /* ========================================
    Section: Training Preview (Tactical Display)
    ======================================== */
@@ -829,86 +773,6 @@ p:last-child {
   pointer-events: none;
 }
 
-/* HUD overlay elements on the mech image */
-.mech-hud-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* LLM Loop Active indicator */
-.hud-status {
-  position: absolute;
-  top: var(--space-md);
-  left: var(--space-md);
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-sm);
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(0, 255, 255, 0.4);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-cyan);
-}
-
-.hud-status::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--color-green);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--color-green);
-  animation: blink 1s ease-in-out infinite;
-}
-
-/* Data points positioned around the mech */
-.mech-data-points {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
-}
-
-.data-point {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 255, 255, 0.03);
-  border: 1px solid rgba(0, 255, 255, 0.15);
-  border-left: 2px solid var(--color-cyan);
-  transition: all var(--transition-fast);
-}
-
-.data-point:hover {
-  background: rgba(0, 255, 255, 0.08);
-  border-color: rgba(0, 255, 255, 0.3);
-}
-
-.data-point-value {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-cyan);
-  text-shadow: 0 0 10px var(--color-cyan-glow);
-  line-height: 1;
-}
-
-.data-point-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-dim);
-  margin-top: var(--space-xs);
-}
-
 /* Stats overlaid on left side of mech image */
 .mech-hud-stats {
   position: absolute;
@@ -983,21 +847,6 @@ p:last-child {
   .mech-hud-stats .stat-card {
     padding: 2px var(--space-xs);
   }
-}
-
-.training-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2xl);
-  align-items: center;
-}
-
-.training-content h2 {
-  margin-bottom: var(--space-lg);
-}
-
-.training-content h2 .highlight {
-  color: var(--color-cyan);
 }
 
 .training-features {
@@ -1085,13 +934,6 @@ p:last-child {
   opacity: 0.7;
 }
 
-/* Training Stats Panel */
-.training-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-}
-
 .stat-card {
   background: linear-gradient(180deg, rgba(0, 255, 255, 0.08) 0%, rgba(0, 255, 255, 0.02) 100%);
   border: 1px solid rgba(0, 255, 255, 0.25);
@@ -1145,22 +987,7 @@ p:last-child {
   margin-top: var(--space-sm);
 }
 
-@media (max-width: 768px) {
-  .training-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .training-stats {
-    order: -1;
-  }
-}
-
 @media (max-width: 480px) {
-  .training-stats {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-  }
-
   .stat-card {
     padding: var(--space-md);
   }
@@ -1665,11 +1492,6 @@ p:last-child {
   }
 }
 
-.training-hero-content {
-  max-width: 800px;
-  animation: fadeInUp 1s ease-out;
-}
-
 .training-hero h1 {
   margin-bottom: var(--space-lg);
   animation: fadeInUp 1s ease-out 0.3s both;
@@ -2003,25 +1825,6 @@ p:last-child {
   margin: var(--space-sm) 0;
 }
 
-.qr-container {
-  display: inline-block;
-  padding: var(--space-md);
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: all var(--transition-base);
-}
-
-.qr-container:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 8px 25px rgba(0, 0, 0, 0.4);
-}
-
-.qr-container img {
-  width: 120px;
-  height: 120px;
-}
-
 .spots-remaining {
   display: inline-flex;
   align-items: center;
@@ -2215,14 +2018,6 @@ p:last-child {
 .text-cyan { color: var(--color-cyan); }
 .text-orange { color: var(--color-orange); }
 
-.mt-1 { margin-top: var(--space-sm); }
-.mt-2 { margin-top: var(--space-md); }
-.mt-3 { margin-top: var(--space-lg); }
-.mt-4 { margin-top: var(--space-xl); }
-
-.mb-1 { margin-bottom: var(--space-sm); }
-.mb-2 { margin-bottom: var(--space-md); }
-.mb-3 { margin-bottom: var(--space-lg); }
 .mb-4 { margin-bottom: var(--space-xl); }
 
 /* Semantic spacing utilities */
@@ -2232,12 +2027,6 @@ p:last-child {
 .mt-xl { margin-top: var(--space-xl); }
 .mt-2xl { margin-top: var(--space-2xl); }
 .mt-3xl { margin-top: var(--space-3xl); }
-
-.mb-sm { margin-bottom: var(--space-sm); }
-.mb-md { margin-bottom: var(--space-md); }
-.mb-lg { margin-bottom: var(--space-lg); }
-.mb-xl { margin-bottom: var(--space-xl); }
-.mb-2xl { margin-bottom: var(--space-2xl); }
 
 .my-xl { margin-top: var(--space-xl); margin-bottom: var(--space-xl); }
 .mx-auto { margin-left: auto; margin-right: auto; }
@@ -2279,26 +2068,6 @@ p:last-child {
 .fade-in:nth-child(4) { animation-delay: 0.4s; }
 .fade-in:nth-child(5) { animation-delay: 0.5s; }
 .fade-in:nth-child(6) { animation-delay: 0.6s; }
-
-/* Typing effect for headers */
-.typing {
-  overflow: hidden;
-  border-right: 2px solid var(--color-cyan);
-  white-space: nowrap;
-  animation:
-    typing 2s steps(30) forwards,
-    blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: var(--color-cyan); }
-}
 
 /* ========================================
    Print Styles
@@ -2685,22 +2454,6 @@ p:last-child {
   text-shadow: 0 0 40px var(--color-orange-glow);
 }
 
-.comparison-subtitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: var(--space-md);
-}
-
-.comparison-card--agent .comparison-subtitle {
-  color: rgba(0, 255, 255, 0.7);
-}
-
-.comparison-card--autocomplete .comparison-subtitle {
-  color: rgba(255, 152, 0, 0.7);
-}
-
 .comparison-desc {
   font-size: 0.9rem;
   margin-bottom: var(--space-lg);
@@ -2871,10 +2624,6 @@ p:last-child {
 
   .comparison-title {
     font-size: 2rem;
-  }
-
-  .comparison-subtitle {
-    font-size: 1.25rem;
   }
 
   .timeline {
@@ -3411,10 +3160,6 @@ html, body {
     height: 100px;
   }
 
-  .loop-label {
-    font-size: 1.25rem;
-  }
-
   /* Terminal cards grid */
   .terminal-grid {
     grid-template-columns: 1fr;
@@ -3474,11 +3219,6 @@ html, body {
     font-size: 0.9rem;
   }
 
-  .btn-sm {
-    min-height: 40px;
-    padding: var(--space-sm) var(--space-lg);
-  }
-
   .btn-lg {
     min-height: 56px;
     padding: var(--space-lg) var(--space-2xl);
@@ -3521,12 +3261,6 @@ html, body {
 .company-logo {
   opacity: 0.8;
   filter: grayscale(100%) brightness(2);
-}
-
-.companies-grid {
-  background: rgba(255, 255, 255, 0.02);
-  padding: var(--space-lg);
-  border-radius: 8px;
 }
 
 /* Task #6: Reduce section padding on mobile */
@@ -3580,16 +3314,14 @@ html, body {
     font-size: 2rem;
   }
 
-  .agent-hero h1,
-  .page-hero h1 {
+  .agent-hero h1 {
     font-size: 2rem;
   }
 }
 
 @media (max-width: 480px) {
   .training-hero h1,
-  .agent-hero h1,
-  .page-hero h1 {
+  .agent-hero h1 {
     font-size: 1.5rem;
   }
 
