@@ -1,0 +1,131 @@
+{
+  "stories": [
+    {
+      "priority": 1,
+      "title": "Add rel='noopener noreferrer' to all external links",
+      "acceptanceCriteria": [
+        "All <a> tags with target='_blank' have rel='noopener noreferrer'",
+        "Update across index.html, training/index.html, agent/index.html",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 2,
+      "title": "Add aria-label to icon-only links",
+      "acceptanceCriteria": [
+        "Footer social/contact icons have descriptive aria-label attributes",
+        "Labels: 'Follow on LinkedIn', 'Call us', 'Email us'",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 3,
+      "title": "Move inline styles to CSS utility classes",
+      "acceptanceCriteria": [
+        "Create .mt-xl, .mt-lg, .mt-md utility classes in styles.css",
+        "Replace all inline margin/padding styles with class names",
+        "npm run lint passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 4,
+      "title": "Add missing meta tags for SEO",
+      "acceptanceCriteria": [
+        "Add <meta name='theme-color' content='#050508'> to all pages",
+        "Add <meta name='apple-mobile-web-app-capable' content='yes'>",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 5,
+      "title": "Standardize page titles format",
+      "acceptanceCriteria": [
+        "All titles follow: 'Page Topic | Plepic' format",
+        "Titles under 60 characters",
+        "Update og:title to match",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 6,
+      "title": "Optimize image loading attributes",
+      "acceptanceCriteria": [
+        "Above-fold images: remove loading attribute (default eager)",
+        "Below-fold images: add loading='lazy'",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 7,
+      "title": "Add focus-visible styles for keyboard navigation",
+      "acceptanceCriteria": [
+        "Add .btn:focus-visible with cyan outline in styles.css",
+        "Add a:focus-visible for all links",
+        "Focus ring visible on Tab navigation",
+        "npm run lint:css passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 8,
+      "title": "Add breadcrumb navigation schema",
+      "acceptanceCriteria": [
+        "Add breadcrumb JSON-LD to training/index.html: Home > Training",
+        "Add breadcrumb JSON-LD to agent/index.html: Home > Agent",
+        "Valid schema.org format",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 9,
+      "title": "Verify all images have descriptive alt text",
+      "acceptanceCriteria": [
+        "All company logos have descriptive alt (e.g., 'Helmes logo')",
+        "Team photos have person names in alt",
+        "No empty alt except decorative images",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 10,
+      "title": "Add semantic markup to code snippets",
+      "acceptanceCriteria": [
+        "Wrap code snippets in <pre><code> tags",
+        "Add class='language-pseudocode' where appropriate",
+        "Monospace font styling applies",
+        "npm run lint:html passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 11,
+      "title": "Optimize Google Fonts loading",
+      "acceptanceCriteria": [
+        "Audit CSS for used font weights",
+        "Remove unused weights from Google Fonts URL",
+        "Update all 3 HTML files consistently",
+        "npm run lint passes"
+      ],
+      "passes": false
+    },
+    {
+      "priority": 12,
+      "title": "Remove unused CSS classes",
+      "acceptanceCriteria": [
+        "Identify classes in styles.css not used in any HTML",
+        "Remove confirmed unused classes",
+        "All pages render correctly",
+        "npm run lint:css passes"
+      ],
+      "passes": false
+    }
+  ]
+}
