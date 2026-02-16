@@ -1,19 +1,21 @@
 {
   "name": "public-web",
   "version": "1.0.0",
-  "description": "tere",
+  "description": "Plepic marketing website",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "npm run lint && npm run test:visual",
+    "test": "npm run lint && npm run test:a11y && npm run test:visual",
+    "lint": "npm run lint:html && npm run lint:css",
     "lint:html": "htmlhint '*.html' 'agent/*.html' 'training/*.html'",
     "lint:css": "stylelint 'css/*.css'",
-    "lint": "npm run lint:html && npm run lint:css",
-    "test:visual": "playwright test --config=playwright.visual.config.ts",
-    "test:visual:update": "playwright test --config=playwright.visual.config.ts --update-snapshots",
-    "prepare": "husky"
+    "test:visual": "playwright test --config=playwright.config.ts",
+    "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
+    "test:a11y": "playwright test --config=playwright.config.ts --grep @a11y",
+    "test:lighthouse": "lhci autorun",
+    "serve": "npx serve -l 8080 ."
   },
   "repository": {
     "type": "git",
@@ -28,9 +30,10 @@
   },
   "homepage": "https://github.com/Plepic-OU/public-web#readme",
   "devDependencies": {
+    "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.50.0",
+    "@axe-core/playwright": "^4.10.0",
     "htmlhint": "^1.9.1",
-    "husky": "^9.1.0",
     "serve": "^14.2.0",
     "stylelint": "^17.2.0",
     "stylelint-config-standard": "^40.0.0"

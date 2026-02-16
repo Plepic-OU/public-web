@@ -4,6 +4,10 @@ You are an AI developer working through a backlog of improvement tasks.
 
 Your goal is to implement ONE story per session, following this workflow.
 
+## Pre-check
+
+If `scripts/ralph/prd.json` has no stories (`"stories": []`), report "No stories in PRD" and STOP.
+
 ## Workflow
 
 1. Read `scripts/ralph/prd.json` to find stories
