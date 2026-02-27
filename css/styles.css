@@ -2434,7 +2434,7 @@ p:last-child {
 /* Code Snippet */
 .code-snippet {
   display: inline-block;
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 255, 255, 0.05) 100%);
   border-left: 3px solid var(--color-cyan);
   font-family: var(--font-mono);
@@ -3243,7 +3243,7 @@ h2 {
 /* Base (mobile): Code snippets */
 .code-snippet {
   max-width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   display: block;
   font-size: 0.8rem;
   overflow-wrap: break-word;
