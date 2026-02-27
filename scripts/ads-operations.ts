@@ -10,6 +10,9 @@
  * All operations respect guard rails in ads-config.json and log to actions directory.
  */
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import { GoogleAdsApi, enums, MutateOperation } from "google-ads-api";
 import * as fs from "fs";
 import * as path from "path";

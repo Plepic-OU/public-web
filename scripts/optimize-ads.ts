@@ -12,6 +12,9 @@
  *   npx ts-node scripts/optimize-ads.ts --date 2026-02-17
  */
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import * as fs from "fs";
 import * as path from "path";
 import {

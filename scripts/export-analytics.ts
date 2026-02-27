@@ -10,6 +10,9 @@
  *   npx ts-node scripts/export-analytics.ts --date 2026-02-17
  */
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
 import * as fs from "fs";
 import * as path from "path";
@@ -83,22 +86,30 @@ interface GA4Report {
 }
 
 async function initializeClient(): Promise<BetaAnalyticsDataClient> {
-  // Check for credentials file or environment variable
+  // Option 1: Full JSON in environment variable (GitHub Actions)
   if (process.env.GA_SERVICE_ACCOUNT_JSON) {
-    // Use credentials from environment variable (GitHub Actions)
     const credentials = JSON.parse(process.env.GA_SERVICE_ACCOUNT_JSON);
     return new BetaAnalyticsDataClient({ credentials });
   }
 
+  // Option 2: Individual .env variables (local development)
+  if (process.env.GA_SERVICE_ACCOUNT_EMAIL && process.env.GA_SERVICE_ACCOUNT_PRIVATE_KEY) {
+    const credentials = {
+      client_email: process.env.GA_SERVICE_ACCOUNT_EMAIL,
+      private_key: process.env.GA_SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    };
+    return new BetaAnalyticsDataClient({ credentials });
+  }
+
+  // Option 3: JSON credentials file
   if (fs.existsSync(CREDENTIALS_PATH)) {
-    // Use credentials file (local development)
     return new BetaAnalyticsDataClient({
       keyFilename: CREDENTIALS_PATH,
     });
   }
 
   throw new Error(
-    "No credentials found. Set GA_SERVICE_ACCOUNT_JSON env var or create " +
+    "No credentials found. Set GA_SERVICE_ACCOUNT_* env vars in .env or create " +
       CREDENTIALS_PATH
   );
 }
