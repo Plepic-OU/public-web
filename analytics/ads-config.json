@@ -1,0 +1,28 @@
+{
+  "autonomous_mode": false,
+  "limits": {
+    "max_bid_change_percent": 20,
+    "max_daily_bid_changes": 10,
+    "pause_threshold_spend_no_conversion": 75,
+    "pause_threshold_quality_score": 3,
+    "min_data_days_before_action": 14,
+    "min_impressions_before_action": 200
+  },
+  "targets": {
+    "target_cpa": 50,
+    "target_roas": 5,
+    "max_cpc": 5.00,
+    "min_ctr": 0.02
+  },
+  "notifications": {
+    "notify_on_pause": true,
+    "notify_on_bid_change": false,
+    "notify_on_negative_keyword": true,
+    "notification_email": null
+  },
+  "negative_keyword_rules": {
+    "auto_add_irrelevant_high_spend": false,
+    "spend_threshold_for_negative": 25,
+    "match_type": "PHRASE"
+  }
+}
