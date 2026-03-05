@@ -58,8 +58,8 @@
 
   /* Text Colors */
   --color-text: #e0e6ed;
-  --color-text-dim: #8b949e;
-  --color-text-bright: #ffffff;
+  --color-text-dim: #9ca3af;
+  --color-text-bright: #f0f4f8;
 
   /* Typography */
   --font-display: 'Orbitron', sans-serif;
@@ -174,7 +174,7 @@ body::after {
     rgba(0, 0, 0, 0.1) 4px
   );
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
   opacity: 0.3;
 }
 
@@ -434,7 +434,7 @@ p:last-child {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 255, 255, 0.1);
   z-index: 1000;
-  transition: all var(--transition-base);
+  transition: background var(--transition-base), border-bottom-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .header.scrolled {
@@ -1003,7 +1003,7 @@ p:last-child {
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .stat-card:hover {
@@ -1283,7 +1283,7 @@ p:last-child {
   padding: var(--space-xl);
   position: relative;
   overflow: visible;
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
 }
 
 .team-card:hover {
@@ -1633,7 +1633,7 @@ p:last-child {
   border: 1px solid rgba(0, 255, 255, 0.1);
   padding: var(--space-lg);
   position: relative;
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .curriculum-item:hover {
@@ -2046,6 +2046,11 @@ p:last-child {
   border-color: var(--color-void);
 }
 
+.btn-enlist:focus-visible {
+  outline: 3px solid var(--color-void);
+  outline-offset: 3px;
+}
+
 .btn-enlist svg {
   width: 24px;
   height: 24px;
@@ -2147,6 +2152,11 @@ p:last-child {
    ======================================== */
 
 @media print {
+  body {
+    background: white;
+    color: #000;
+  }
+
   body::before,
   body::after {
     display: none;
@@ -2163,8 +2173,44 @@ p:last-child {
     padding-top: var(--space-xl);
   }
 
+  .hero-particles,
+  .menu-toggle,
+  .sticky-cta {
+    display: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
   .btn {
     border: 1px solid #000;
+    color: #000;
+    background: none;
+    box-shadow: none;
+  }
+
+  .panel {
+    border-color: #ccc;
+    background: white;
+  }
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

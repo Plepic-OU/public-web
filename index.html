@@ -7,49 +7,7 @@
 
   <!-- Google Analytics + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-65CCEV6RS9');
-    gtag('config', 'AW-17874572217');
-  </script>
-
-  <!-- Google Ads Conversion Tracking -->
-  <script>
-    document.addEventListener('click', function(e) {
-      var link = e.target.closest('a');
-      if (!link) return;
-      var href = link.href || '';
-
-      if (href.indexOf('forms.gle/3M7XrK845svufeFn6') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/1kJMCIeh7vEbELmnoctC',
-          'value': 504, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('calendar.app.google/h5sq5y19e8a11GRQ7') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/o9b0CIqh7vEbELmnoctC',
-          'value': 50, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('mailto:kaido@plepic.com') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/RDYVCIul7vEbELmnoctC',
-          'value': 5, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('tel:+3725077333') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/Rl7sCI6l7vEbELmnoctC',
-          'value': 5, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('linkedin.com/in/kaidokoort') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/3LOMCImm7vEbELmnoctC',
-          'value': 1, 'currency': 'EUR'
-        });
-      }
-    });
-  </script>
+  <script src="/scripts/tracking.js"></script>
 
   <meta name="description" content="We transform developers into agentic developers. Hands-on hackathons and a 6-week training program powered by Claude Code.">
 
@@ -199,10 +157,6 @@
             Not marketing fluff about "autonomous systems." An agent is simply an LLM that can use tools, runs in a loop until the task is done, and maintains context throughout.
           </p>
 
-          <div class="code-snippet my-xl">
-            <code class="language-pseudocode">while(task) { think &rarr; act &rarr; observe }</code>
-          </div>
-
           <div class="perspective-shift-comparison">
             <div class="shift-col shift-col--agent">
               <h4 class="text-cyan">Agent</h4>
@@ -277,7 +231,7 @@
         </ul>
 
         <div class="training-price-box">
-          <div class="price-funding">80% Funded by Töötukassa</div>
+          <div class="price-funding">80% Funded by <span lang="et">Töötukassa</span></div>
           <div class="price-display">
             <span class="price-original">&euro;2,520</span>
             <span class="price-final">&euro;504 <small>(+VAT)</small></span>
@@ -522,8 +476,8 @@
           </div>
         </div>
         <div class="footer-company">
-          <p class="company-name">Plepic OÜ</p>
-          <p class="company-address">Liivalaia 7, 10118, Tallinn</p>
+          <p class="company-name">Plepic <span lang="et">OÜ</span></p>
+          <p class="company-address"><span lang="et">Liivalaia 7, 10118, Tallinn</span></p>
           <p class="company-legal">Reg. nr: 11275881 · VAT ID: EE102813797</p>
         </div>
       </div>
@@ -554,6 +508,15 @@
         nav.classList.remove('active');
         menuToggle.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    // Close mobile menu with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.focus();
+      }
     });
   </script>
 </body>
