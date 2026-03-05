@@ -7,49 +7,7 @@
 
   <!-- Google Analytics + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-65CCEV6RS9');
-    gtag('config', 'AW-17874572217');
-  </script>
-
-  <!-- Google Ads Conversion Tracking -->
-  <script>
-    document.addEventListener('click', function(e) {
-      var link = e.target.closest('a');
-      if (!link) return;
-      var href = link.href || '';
-
-      if (href.indexOf('forms.gle/3M7XrK845svufeFn6') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/1kJMCIeh7vEbELmnoctC',
-          'value': 504, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('calendar.app.google/h5sq5y19e8a11GRQ7') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/o9b0CIqh7vEbELmnoctC',
-          'value': 50, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('mailto:kaido@plepic.com') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/RDYVCIul7vEbELmnoctC',
-          'value': 5, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('tel:+3725077333') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/Rl7sCI6l7vEbELmnoctC',
-          'value': 5, 'currency': 'EUR'
-        });
-      } else if (href.indexOf('linkedin.com/in/kaidokoort') !== -1) {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17874572217/3LOMCImm7vEbELmnoctC',
-          'value': 1, 'currency': 'EUR'
-        });
-      }
-    });
-  </script>
+  <script src="/scripts/tracking.js"></script>
 
   <meta name="description" content="Build your agentic development mech in 6 weeks. A virtual hangar where you construct LLM loops, prompt libraries, and workflows. 80% funded by Töötukassa.">
 
@@ -95,7 +53,7 @@
       "name": "March 2026 Squad",
       "startDate": "2026-03-06",
       "endDate": "2026-04-10",
-      "courseMode": "onsite",
+      "courseMode": "online",
       "courseWorkload": "PT50H",
       "instructor": [
         {
@@ -241,10 +199,6 @@
           Questions? <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" class="text-cyan">Book a free strategy session</a>
         </p>
 
-        <div class="deadline-notice">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-          Registration closes February 21, 2026
-        </div>
       </div>
     </section>
 
@@ -367,7 +321,7 @@
           <div class="pricing-box">
             <div class="pricing-header">
               <p class="label">Investment</p>
-              <h2>80% Funded by Töötukassa</h2>
+              <h2>80% Funded by <span lang="et">Töötukassa</span></h2>
             </div>
 
             <div class="pricing-rows">
@@ -385,7 +339,7 @@
               </div>
             </div>
 
-            <p class="pricing-note">+VAT per developer &middot; <a href="https://www.tootukassa.ee/et/teenused/tooandjatele/koolitustoetus-tooandjatele-tootaja-ikt-oskuste-arendamiseks" target="_blank" rel="noopener noreferrer">Töötukassa application</a> required before training starts</p>
+            <p class="pricing-note">+VAT per developer &middot; <a href="https://www.tootukassa.ee/et/teenused/tooandjatele/koolitustoetus-tooandjatele-tootaja-ikt-oskuste-arendamiseks" target="_blank" rel="noopener noreferrer"><span lang="et">Töötukassa</span> application</a> required before training starts</p>
           </div>
 
           <div class="registration-panel">
@@ -475,7 +429,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer id="contact" class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-contact">
@@ -502,8 +456,8 @@
           </div>
         </div>
         <div class="footer-company">
-          <p class="company-name">Plepic OÜ</p>
-          <p class="company-address">Liivalaia 7, 10118, Tallinn</p>
+          <p class="company-name">Plepic <span lang="et">OÜ</span></p>
+          <p class="company-address"><span lang="et">Liivalaia 7, 10118, Tallinn</span></p>
           <p class="company-legal">Reg. nr: 11275881 &middot; VAT ID: EE102813797</p>
         </div>
       </div>
@@ -541,6 +495,15 @@
         nav.classList.remove('active');
         menuToggle.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    // Close mobile menu with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.focus();
+      }
     });
 
     // Sticky CTA visibility
