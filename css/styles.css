@@ -2538,12 +2538,12 @@ p:last-child {
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
 }
 
-.comparison-card--autocomplete {
+.comparison-card--conversational {
   background: linear-gradient(180deg, rgba(255, 152, 0, 0.06) 0%, rgba(255, 152, 0, 0.01) 100%);
   border-color: rgba(255, 152, 0, 0.25);
 }
 
-.comparison-card--autocomplete:hover {
+.comparison-card--conversational:hover {
   border-color: rgba(255, 152, 0, 0.5);
   box-shadow: 0 0 30px rgba(255, 152, 0, 0.15);
 }
@@ -2586,7 +2586,7 @@ p:last-child {
   color: rgba(0, 255, 255, 0.6);
 }
 
-.comparison-card--autocomplete .comparison-desc {
+.comparison-card--conversational .comparison-desc {
   color: rgba(255, 152, 0, 0.5);
 }
 
@@ -2939,14 +2939,14 @@ p:last-child {
   box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
 }
 
-.shift-col--autocomplete {
+.shift-col--conversational {
   background: linear-gradient(180deg, rgba(255, 152, 0, 0.08) 0%, rgba(255, 152, 0, 0.02) 100%);
   border: 1px solid rgba(255, 152, 0, 0.3);
   border-radius: 4px;
   transition: all var(--transition-base);
 }
 
-.shift-col--autocomplete:hover {
+.shift-col--conversational:hover {
   border-color: rgba(255, 152, 0, 0.5);
   box-shadow: 0 0 25px rgba(255, 152, 0, 0.1);
 }
