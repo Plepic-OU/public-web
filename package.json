@@ -1,16 +1,25 @@
 {
   "name": "public-web",
   "version": "1.0.0",
-  "description": "tere",
+  "description": "Plepic marketing website",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint && npm run test:a11y && npm run test:visual",
+    "lint": "npm run lint:html && npm run lint:css",
     "lint:html": "htmlhint '*.html' 'agent/*.html' 'training/*.html'",
     "lint:css": "stylelint 'css/*.css'",
-    "lint": "npm run lint:html && npm run lint:css"
+    "test:visual": "playwright test --config=playwright.config.ts",
+    "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
+    "test:a11y": "playwright test --config=playwright.config.ts --grep @a11y",
+    "test:lighthouse": "lhci autorun",
+    "serve": "npx serve -l 8080 .",
+    "analytics:export": "ts-node scripts/export-analytics.ts && ts-node scripts/export-ads.ts",
+    "analytics:optimize": "ts-node scripts/optimize-ads.ts",
+    "analytics:optimize:dry": "ts-node scripts/optimize-ads.ts --dry-run",
+    "analytics:pipeline": "npm run analytics:export && npm run analytics:optimize"
   },
   "repository": {
     "type": "git",
@@ -25,8 +34,17 @@
   },
   "homepage": "https://github.com/Plepic-OU/public-web#readme",
   "devDependencies": {
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.50.0",
+    "@axe-core/playwright": "^4.10.0",
     "htmlhint": "^1.9.1",
+    "serve": "^14.2.0",
     "stylelint": "^17.2.0",
-    "stylelint-config-standard": "^40.0.0"
+    "stylelint-config-standard": "^40.0.0",
+    "@google-analytics/data": "^4.0.0",
+    "google-ads-api": "^14.0.0",
+    "typescript": "^5.3.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
   }
 }
