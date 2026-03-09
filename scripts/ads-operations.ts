@@ -15,10 +15,6 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Configuration paths
-const CREDENTIALS_PATH = path.join(
-  __dirname,
-  "../analytics/credentials/ads-credentials.json"
-);
 const CONFIG_PATH = path.join(__dirname, "../analytics/ads-config.json");
 const ACTIONS_DIR = path.join(__dirname, "../analytics/actions");
 
@@ -105,26 +101,25 @@ function loadConfig(): AdsConfig {
 // Load credentials
 function loadCredentials(): AdsCredentials {
   if (
-    process.env.ADS_CLIENT_ID &&
-    process.env.ADS_CLIENT_SECRET &&
-    process.env.ADS_REFRESH_TOKEN &&
-    process.env.ADS_DEVELOPER_TOKEN &&
-    process.env.ADS_CUSTOMER_ID
+    !process.env.ADS_CLIENT_ID ||
+    !process.env.ADS_CLIENT_SECRET ||
+    !process.env.ADS_REFRESH_TOKEN ||
+    !process.env.ADS_DEVELOPER_TOKEN ||
+    !process.env.ADS_CUSTOMER_ID
   ) {
-    return {
-      client_id: process.env.ADS_CLIENT_ID,
-      client_secret: process.env.ADS_CLIENT_SECRET,
-      refresh_token: process.env.ADS_REFRESH_TOKEN,
-      developer_token: process.env.ADS_DEVELOPER_TOKEN,
-      customer_id: process.env.ADS_CUSTOMER_ID,
-      login_customer_id: process.env.ADS_LOGIN_CUSTOMER_ID,
-    };
+    throw new Error(
+      "Missing ADS_* environment variables. Source .env locally, or configure GitHub Actions secrets."
+    );
   }
 
-  if (!fs.existsSync(CREDENTIALS_PATH)) {
-    throw new Error(`Credentials file not found: ${CREDENTIALS_PATH}`);
-  }
-  return JSON.parse(fs.readFileSync(CREDENTIALS_PATH, "utf-8"));
+  return {
+    client_id: process.env.ADS_CLIENT_ID,
+    client_secret: process.env.ADS_CLIENT_SECRET,
+    refresh_token: process.env.ADS_REFRESH_TOKEN,
+    developer_token: process.env.ADS_DEVELOPER_TOKEN,
+    customer_id: process.env.ADS_CUSTOMER_ID,
+    login_customer_id: process.env.ADS_LOGIN_CUSTOMER_ID,
+  };
 }
 
 function formatCustomerId(customerId: string): string {
