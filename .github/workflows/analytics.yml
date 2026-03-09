@@ -1,0 +1,94 @@
+name: Analytics Export
+
+on:
+  schedule:
+    # Daily at 06:00 UTC (08:00 Estonia)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  export-ga4:
+    name: Export GA4 Data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Export GA4 analytics
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GA_SERVICE_ACCOUNT_JSON: ${{ secrets.GA_SERVICE_ACCOUNT_JSON }}
+        run: npx ts-node scripts/export-analytics.ts
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ga4-report
+          path: analytics/reports/*-ga4.json
+          retention-days: 90
+
+  export-ads:
+    name: Export Google Ads Data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Export Google Ads data
+        env:
+          ADS_CUSTOMER_ID: ${{ secrets.ADS_CUSTOMER_ID }}
+          ADS_DEVELOPER_TOKEN: ${{ secrets.ADS_DEVELOPER_TOKEN }}
+          ADS_CLIENT_ID: ${{ secrets.ADS_CLIENT_ID }}
+          ADS_CLIENT_SECRET: ${{ secrets.ADS_CLIENT_SECRET }}
+          ADS_REFRESH_TOKEN: ${{ secrets.ADS_REFRESH_TOKEN }}
+        run: npx ts-node scripts/export-ads.ts
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ads-report
+          path: analytics/reports/*-ads.json
+          retention-days: 90
+
+  optimize-ads:
+    name: Optimize Ads (Dry Run)
+    needs: [export-ga4, export-ads]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ga4-report
+          path: analytics/reports/
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ads-report
+          path: analytics/reports/
+
+      - name: Run ads optimizer (dry run)
+        env:
+          ADS_CUSTOMER_ID: ${{ secrets.ADS_CUSTOMER_ID }}
+          ADS_DEVELOPER_TOKEN: ${{ secrets.ADS_DEVELOPER_TOKEN }}
+          ADS_CLIENT_ID: ${{ secrets.ADS_CLIENT_ID }}
+          ADS_CLIENT_SECRET: ${{ secrets.ADS_CLIENT_SECRET }}
+          ADS_REFRESH_TOKEN: ${{ secrets.ADS_REFRESH_TOKEN }}
+        run: npx ts-node scripts/optimize-ads.ts --dry-run

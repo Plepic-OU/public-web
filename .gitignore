@@ -1,5 +1,9 @@
 .idea/.DS_Store
 node_modules/
+
+# Environment variables (NEVER commit)
+.env
+*.env
 .claude/.ralph-loop.local.md
 
 # Test artifacts
@@ -14,4 +18,3 @@ scripts/dist/
 
 # Analytics credentials (NEVER commit)
 analytics/credentials/*.json
-!analytics/credentials/README.md
