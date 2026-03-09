@@ -77,5 +77,5 @@ npx ts-node scripts/export-ads.ts --test
 
 - Never commit credential files
 - Rotate refresh tokens periodically
-- Use least-privilege access (Viewer for GA4, Standard for Ads)
+- Use least-privilege access (Viewer for GA4, Basic for Ads)
 - Monitor API usage in Cloud Console

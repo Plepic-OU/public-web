@@ -18,6 +18,7 @@
     "notify_on_pause": true,
     "notify_on_bid_change": false,
     "notify_on_negative_keyword": true,
+    "notify_on_budget_alert": false,
     "notification_email": null
   },
   "negative_keyword_rules": {
