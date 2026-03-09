@@ -16,10 +16,6 @@ import * as path from "path";
 
 // Configuration
 const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || "515893461"; // Numeric property ID
-const CREDENTIALS_PATH = path.join(
-  __dirname,
-  "../analytics/credentials/ga-service-account.json"
-);
 const REPORTS_DIR = path.join(__dirname, "../analytics/reports");
 
 // Conversion event values (EUR)
@@ -83,24 +79,14 @@ interface GA4Report {
 }
 
 async function initializeClient(): Promise<BetaAnalyticsDataClient> {
-  // Check for credentials file or environment variable
-  if (process.env.GA_SERVICE_ACCOUNT_JSON) {
-    // Use credentials from environment variable (GitHub Actions)
-    const credentials = JSON.parse(process.env.GA_SERVICE_ACCOUNT_JSON);
-    return new BetaAnalyticsDataClient({ credentials });
+  if (!process.env.GA_SERVICE_ACCOUNT_JSON) {
+    throw new Error(
+      "No credentials found. Set GA_SERVICE_ACCOUNT_JSON env var (source .env locally, or configure GitHub Actions secrets)."
+    );
   }
 
-  if (fs.existsSync(CREDENTIALS_PATH)) {
-    // Use credentials file (local development)
-    return new BetaAnalyticsDataClient({
-      keyFilename: CREDENTIALS_PATH,
-    });
-  }
-
-  throw new Error(
-    "No credentials found. Set GA_SERVICE_ACCOUNT_JSON env var or create " +
-      CREDENTIALS_PATH
-  );
+  const credentials = JSON.parse(process.env.GA_SERVICE_ACCOUNT_JSON);
+  return new BetaAnalyticsDataClient({ credentials });
 }
 
 async function fetchSummaryMetrics(

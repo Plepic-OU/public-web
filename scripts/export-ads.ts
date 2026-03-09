@@ -15,10 +15,6 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Configuration
-const CREDENTIALS_PATH = path.join(
-  __dirname,
-  "../analytics/credentials/ads-credentials.json"
-);
 const REPORTS_DIR = path.join(__dirname, "../analytics/reports");
 
 interface AdsCredentials {
@@ -110,33 +106,26 @@ interface AdsReport {
 }
 
 function loadCredentials(): AdsCredentials {
-  // Check environment variables first (for GitHub Actions)
   if (
-    process.env.ADS_CLIENT_ID &&
-    process.env.ADS_CLIENT_SECRET &&
-    process.env.ADS_REFRESH_TOKEN &&
-    process.env.ADS_DEVELOPER_TOKEN &&
-    process.env.ADS_CUSTOMER_ID
+    !process.env.ADS_CLIENT_ID ||
+    !process.env.ADS_CLIENT_SECRET ||
+    !process.env.ADS_REFRESH_TOKEN ||
+    !process.env.ADS_DEVELOPER_TOKEN ||
+    !process.env.ADS_CUSTOMER_ID
   ) {
-    return {
-      client_id: process.env.ADS_CLIENT_ID,
-      client_secret: process.env.ADS_CLIENT_SECRET,
-      refresh_token: process.env.ADS_REFRESH_TOKEN,
-      developer_token: process.env.ADS_DEVELOPER_TOKEN,
-      customer_id: process.env.ADS_CUSTOMER_ID,
-      login_customer_id: process.env.ADS_LOGIN_CUSTOMER_ID,
-    };
-  }
-
-  // Fall back to credentials file
-  if (!fs.existsSync(CREDENTIALS_PATH)) {
     throw new Error(
-      `Credentials file not found: ${CREDENTIALS_PATH}\n` +
-        "Set ADS_* environment variables or create the credentials file."
+      "Missing ADS_* environment variables. Source .env locally, or configure GitHub Actions secrets."
     );
   }
 
-  return JSON.parse(fs.readFileSync(CREDENTIALS_PATH, "utf-8"));
+  return {
+    client_id: process.env.ADS_CLIENT_ID,
+    client_secret: process.env.ADS_CLIENT_SECRET,
+    refresh_token: process.env.ADS_REFRESH_TOKEN,
+    developer_token: process.env.ADS_DEVELOPER_TOKEN,
+    customer_id: process.env.ADS_CUSTOMER_ID,
+    login_customer_id: process.env.ADS_LOGIN_CUSTOMER_ID,
+  };
 }
 
 function initializeClient(credentials: AdsCredentials): GoogleAdsApi {
