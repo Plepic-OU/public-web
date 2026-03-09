@@ -15,7 +15,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Configuration
-const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || "465026539"; // Numeric property ID
+const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || "515893461"; // Numeric property ID
 const CREDENTIALS_PATH = path.join(
   __dirname,
   "../analytics/credentials/ga-service-account.json"
