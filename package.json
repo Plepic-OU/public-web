@@ -14,6 +14,7 @@
     "test:visual": "playwright test --config=playwright.config.ts",
     "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
     "test:a11y": "playwright test --config=playwright.config.ts --grep @a11y",
+    "test:security": "playwright test --config=playwright.config.ts --grep @security",
     "test:lighthouse": "lhci autorun",
     "serve": "npx serve -l 8080 .",
     "analytics:export": "ts-node scripts/export-analytics.ts && ts-node scripts/export-ads.ts",
