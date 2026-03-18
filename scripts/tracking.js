@@ -41,5 +41,41 @@ document.addEventListener('click', function(e) {
       'send_to': 'AW-17874572217/3LOMCImm7vEbELmnoctC',
       'value': 1, 'currency': 'EUR'
     });
+  } else if (href.indexOf('discord.gg/') !== -1) {
+    gtag('event', 'discord_click', { value: 2, currency: 'EUR' });
   }
 });
+
+// Scroll depth tracking (homepage only)
+if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+  var scrollThresholds = [25, 50, 75, 100];
+  var scrollFired = {};
+
+  window.addEventListener('scroll', function() {
+    var scrollPercent = Math.round(
+      (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100
+    );
+
+    scrollThresholds.forEach(function(threshold) {
+      if (scrollPercent >= threshold && !scrollFired[threshold]) {
+        scrollFired[threshold] = true;
+        gtag('event', 'scroll_depth', { percent: threshold, page: 'homepage' });
+      }
+    });
+  }, { passive: true });
+
+  // Pricing section visibility
+  var pricingSection = document.getElementById('pricing');
+  if (pricingSection) {
+    var pricingObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          gtag('event', 'pricing_viewed', { page: 'homepage' });
+          pricingObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    pricingObserver.observe(pricingSection);
+  }
+}

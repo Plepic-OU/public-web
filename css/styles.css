@@ -3856,3 +3856,107 @@ h2 {
 .underline {
   text-decoration: underline;
 }
+
+/* ========================================
+   Homepage Conversion Optimization
+   ======================================== */
+
+/* Hero qualifier text */
+.hero-qualifier {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  margin-top: var(--space-md);
+  letter-spacing: 0.02em;
+}
+
+/* What You Get - facts grid */
+.what-you-get .facts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+
+@media (min-width: 768px) {
+  .what-you-get .facts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .what-you-get .facts-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Hackathon inline (demoted from full section) */
+.hackathon-inline {
+  text-align: center;
+  color: var(--color-text-dim);
+  font-size: 0.95rem;
+  margin-top: var(--space-lg);
+}
+
+.hackathon-inline a {
+  color: var(--color-cyan);
+  text-decoration: underline;
+}
+
+/* Social proof section */
+.social-proof-section {
+  padding: var(--space-2xl) 0;
+}
+
+.social-proof-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.community-link {
+  text-align: center;
+  margin-top: var(--space-xl);
+}
+
+.discord-link {
+  color: var(--color-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.discord-link:hover {
+  color: var(--color-text);
+}
+
+/* Agent page CTA sections */
+.agent-cta-section {
+  padding: var(--space-xl) 0;
+  border-top: 1px solid rgba(0, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+}
+
+.agent-cta-section--alt {
+  border-color: rgba(255, 102, 0, 0.15);
+}
+
+.agent-cta-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.agent-cta-content p {
+  margin-bottom: var(--space-md);
+  color: var(--color-text-dim);
+}
+
+/* Hide particles on mobile for performance */
+@media (max-width: 767px) {
+  .hero-particles {
+    display: none;
+  }
+}
