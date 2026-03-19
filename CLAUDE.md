@@ -21,11 +21,29 @@ docs/               # Design documents and one-pagers
 
 ## Development
 
-**Local development:** Open HTML files directly in browser or use any static file server.
+**Local development:** `npm run serve` starts a local server on port 8080.
 
-**Branching:** All development work should be done in a separate feature branch, not directly on `main`.
+**Branching:** `main` is protected. All changes via PRs from feature branches. Create the branch BEFORE making any changes.
 
-**Deployment:** GitHub Pages from `main` branch. Push to main = deploy. Custom domain: plepic.com
+### Design Workflow
+
+**Never bulk-rewrite HTML/CSS for design changes.** Design is not refactoring.
+
+1. **Feature branch first.** Before touching any file.
+2. **One section at a time.** Start with the hero or one key component. Get feedback before expanding.
+3. **Visual iteration loop (Chrome DevTools MCP):**
+   - Start local server: `npm run serve`
+   - Open page via `navigate_page` MCP tool
+   - Make a CSS/HTML change
+   - `take_screenshot` → evaluate the result visually
+   - Adjust and repeat
+   - Never write more than ~20 lines of CSS without screenshotting
+4. **For major redesigns:** Create a standalone `prototype.html` first. Iterate on it. Only port to production files once the design is proven.
+5. **Playwright for verification:** After design work is done, run `npm run test:visual` as a final quality gate.
+
+**Design principles ≠ token swaps.** "Nature-digital fusion" means organic shapes and asymmetric layouts, not `--color-cyan` → `--color-green`.
+
+**Deployment:** GitHub Pages from `main` branch. Merge PR = deploy. Custom domain: plepic.com
 
 **Design system:** CSS uses custom properties (design tokens) defined in `:root`. Reference `docs/plans/2026-01-03-plepic-homepage-design.md` for design decisions.
 

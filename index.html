@@ -37,7 +37,7 @@
   <meta name="twitter:image" content="https://plepic.com/images/plepic-og.jpg">
 
   <!-- PWA / Mobile -->
-  <meta name="theme-color" content="#050508">
+  <meta name="theme-color" content="#faf7f2">
   <meta name="mobile-web-app-capable" content="yes">
 
   <!-- Structured Data -->
@@ -84,7 +84,7 @@
   <!-- Fonts — preconnect for early DNS/TLS, then load as render-blocking stylesheet (prevents CLS from font swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Exo+2:wght@400&family=Share+Tech+Mono&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
@@ -95,14 +95,12 @@
   <!-- Header -->
   <header class="header" id="header">
     <div class="header-inner">
-      <a href="/" class="logo">PLEPIC</a>
+      <a href="/" class="logo">Plepic</a>
       <nav class="nav">
         <a href="/agent/">Agentic Coding</a>
         <a href="/training/">Training</a>
-        <a href="#clients">Clients</a>
-        <a href="#operatives">Team</a>
-        <a href="#contact">Contact</a>
-        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta">Talk to Kaido</a>
+        <a href="#team">Team</a>
+        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="nav-cta">Talk to Kaido</a>
       </nav>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
@@ -110,42 +108,44 @@
 
   <main id="main">
 
-    <!-- Section 1: Hero / Positioning -->
+    <!-- Section 1: Hero -->
     <section class="hero">
-      <!-- Animated particles -->
-      <div class="hero-particles">
-        <span style="left: 10%; animation-delay: 0s;"></span>
-        <span style="left: 20%; animation-delay: 2s;"></span>
-        <span style="left: 35%; animation-delay: 4s;"></span>
-        <span style="left: 50%; animation-delay: 1s;"></span>
-        <span style="left: 65%; animation-delay: 3s;"></span>
-        <span style="left: 80%; animation-delay: 5s;"></span>
-        <span style="left: 90%; animation-delay: 2.5s;"></span>
-      </div>
-
-      <div class="container">
-        <div class="hero-content">
-          <div class="badge-base hero-badge">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="badge-base">
             <span>300+ Developers Trained &middot; Squad 2: May 8</span>
           </div>
 
-          <h1>Claude Code Training for <span class="highlight">Development Teams</span></h1>
+          <h1>Claude Code<br>Training for<br><span class="green">Dev Teams</span></h1>
 
-          <p class="hero-description">
-            6 Fridays with senior developers, building real software.<br>
-            Master Claude Code &mdash; from setup to production workflows.<br>
-            <span lang="et">Töötukassa</span> covers 80% &rarr; you pay &euro;504.
+          <p class="hero-desc">
+            6 Fridays with senior developers, building real software.
+            Master Claude Code &mdash; from setup to production workflows.
+            <strong><span lang="et">Töötukassa</span> covers 80%</strong> &rarr; you pay <strong>&euro;504</strong>.
           </p>
 
-          <div class="btn-group">
-            <a href="/training/" class="btn btn-primary btn-lg">
-              View Full Program &rarr;
-            </a>
-          </div>
+          <a href="/training/" class="btn-primary">View Full Program &rarr;</a>
 
           <p class="hero-qualifier">For developers with 2+ years experience &middot; Max 20 per squad</p>
-
         </div>
+
+        <div class="hero-visual">
+          <div class="butterfly-container">
+            <svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+              <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#16a34a" stroke-width="1.5"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.13" stroke="#16a34a" stroke-width="1.4"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#16a34a" stroke-width="1.3"/><polygon points="147,130 147,105 15,108" fill="#16a34a" opacity="0.4" stroke="#16a34a" stroke-width="1.2"/><polygon points="147,130 15,108 28,150" fill="#22c55e" opacity="0.29" stroke="#16a34a" stroke-width="1.1"/><polygon points="147,165 147,130 28,150" fill="#16a34a" opacity="0.19" stroke="#16a34a" stroke-width="1"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#16a34a" stroke-width="0.9"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.1" stroke="#16a34a" stroke-width="0.7"/><polygon points="147,178 82,195 75,220" fill="#16a34a" opacity="0.19" stroke="#16a34a" stroke-width="0.8"/><polygon points="147,195 75,220 100,240" fill="#16a34a" opacity="0.13" stroke="#16a34a" stroke-width="0.7"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#16a34a" stroke-width="0.5"/></g>
+              <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#16a34a" stroke-width="1.5"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.13" stroke="#16a34a" stroke-width="1.4"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#16a34a" stroke-width="1.3"/><polygon points="153,130 153,105 285,108" fill="#16a34a" opacity="0.4" stroke="#16a34a" stroke-width="1.2"/><polygon points="153,130 285,108 272,150" fill="#22c55e" opacity="0.29" stroke="#16a34a" stroke-width="1.1"/><polygon points="153,165 153,130 272,150" fill="#16a34a" opacity="0.19" stroke="#16a34a" stroke-width="1"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#16a34a" stroke-width="0.9"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.1" stroke="#16a34a" stroke-width="0.7"/><polygon points="153,178 218,195 225,220" fill="#16a34a" opacity="0.19" stroke="#16a34a" stroke-width="0.8"/><polygon points="153,195 225,220 200,240" fill="#16a34a" opacity="0.13" stroke="#16a34a" stroke-width="0.7"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#16a34a" stroke-width="0.5"/></g>
+              <polygon points="150,95 146,112 150,128 154,112" fill="#16a34a" opacity="0.48" stroke="#16a34a" stroke-width="1"/><polygon points="150,128 147,142 150,155 153,142" fill="#16a34a" opacity="0.35" stroke="#16a34a" stroke-width="0.8"/><polygon points="150,155 148,168 150,178 152,168" fill="#166534" opacity="0.24" stroke="#16a34a" stroke-width="0.6"/><polygon points="150,178 149,188 150,200 151,188" fill="#166534" opacity="0.16" stroke="#16a34a" stroke-width="0.5"/>
+              <ellipse cx="150" cy="90" rx="4" ry="5" fill="#16a34a" opacity="0.32" stroke="#16a34a" stroke-width="0.8"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#16a34a" stroke-width="1" opacity="0.56"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#16a34a" stroke-width="1" opacity="0.56"/><circle cx="136" cy="41" r="2.5" fill="#22c55e" opacity="0.64" stroke="#16a34a" stroke-width="0.6"/><circle cx="164" cy="41" r="2.5" fill="#22c55e" opacity="0.64" stroke="#16a34a" stroke-width="0.6"/>
+            </svg>
+          </div>
+          <div class="hero-code">while(task) { think &rarr; act &rarr; observe }</div>
+        </div>
+      </div>
+
+      <div class="hero-bottom">
+        <span>Trusted by</span>
+        <div class="hero-bottom-line"></div>
+        <span>Helmes &middot; Holm Bank &middot; Datel &middot; Bitweb &middot; Aktiva &middot; Delfi &middot; Merit &middot; Mindworks &middot; Rethinkers</span>
       </div>
     </section>
 
@@ -223,16 +223,25 @@
     <section class="incentive-section section">
       <div class="container">
         <div class="incentive-content">
-          <p class="label">The Bigger Picture</p>
-          <h2>When Developers Ship Faster, Hourly Billing Breaks</h2>
-          <p>
-            Agentic AI changes how code gets written.<br>
-            The next step: changing how it gets priced.<br>
-            We're building Scopeful &mdash; performance-based pricing for software agencies.
-          </p>
-          <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-lg">
-            Talk to Kaido
-          </a>
+          <div class="incentive-text">
+            <p class="label">The Bigger Picture</p>
+            <h2>When Developers Ship Faster, Hourly Billing Breaks</h2>
+            <p>
+              Agentic AI changes how code gets written.
+              The next step: changing how it gets priced.
+              We're building Scopeful &mdash; performance-based pricing for software agencies.
+            </p>
+            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-lg">
+              Talk to Kaido
+            </a>
+          </div>
+          <div class="incentive-visual">
+            <div class="incentive-equation">
+              <span class="equation-old">hours &times; rate</span>
+              <span class="equation-arrow">&rarr;</span>
+              <span class="equation-new">scope &times; value</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -283,15 +292,15 @@
               </clipPath>
             </defs>
           </svg>
-          <svg class="company-logo" width="85" height="30" viewBox="0 0 85 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delfi Meedia">
-            <title>Delfi Meedia</title>
+          <svg class="company-logo" width="85" height="30" viewBox="0 0 85 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delfi">
+            <title>Delfi</title>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M18.1142 18.9706C17.7145 19.9303 17.1535 20.7748 16.4474 21.4806C15.741 22.1877 14.8961 22.748 13.9374 23.1474C12.9781 23.5474 11.9384 23.7499 10.8471 23.7499H6.43774V7.85316H10.8471C11.9384 7.85316 12.9787 8.06316 13.9394 8.47639C14.8984 8.88961 15.7426 9.46348 16.4484 10.1825C17.1545 10.9022 17.7152 11.7599 18.1145 12.7315C18.5139 13.7048 18.7165 14.7635 18.7165 15.8803C18.7165 16.9715 18.5139 18.0112 18.1142 18.9706ZM21.2139 6.168C19.9377 4.95671 18.4006 3.98155 16.6448 3.27122C14.889 2.56187 12.9913 2.20251 11.0042 2.20251H0V29.4012H11.0042C12.9919 29.4012 14.89 29.048 16.6458 28.3512C18.4016 27.6538 19.9387 26.6857 21.2139 25.4745C22.4894 24.2638 23.5158 22.8122 24.2645 21.1609C25.0116 19.5125 25.3903 17.7357 25.3903 15.8803C25.3903 13.9728 25.0116 12.1628 24.2642 10.5009C23.5161 8.83768 22.4897 7.37961 21.2139 6.168Z" fill="currentColor"/>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M33.4463 17.0653L33.5089 16.8563C33.8324 15.7785 34.394 14.9298 35.1785 14.335C35.9647 13.7389 36.9105 13.4369 37.9902 13.4369C39.0444 13.4369 39.9844 13.7524 40.7834 14.3753C41.5785 14.9963 42.1589 15.8285 42.5085 16.8498L42.5821 17.0653H33.4463ZM45.5189 11.7444C44.6076 10.7692 43.507 9.98858 42.2483 9.4231C40.9899 8.85858 39.5967 8.57181 38.1076 8.57181C36.6157 8.57181 35.2012 8.846 33.9041 9.38503C32.606 9.92471 31.466 10.6802 30.5157 11.6305C29.5654 12.5815 28.8028 13.7218 28.2502 15.0195C27.698 16.317 27.418 17.7173 27.418 19.1834C27.418 20.6479 27.7109 22.0476 28.2886 23.3447C28.8673 24.6431 29.6622 25.7834 30.6512 26.7341C31.6399 27.6841 32.8325 28.4402 34.1964 28.9808C35.5605 29.5205 37.0351 29.7947 38.5796 29.7947C40.2809 29.7947 41.8302 29.5463 43.1838 29.0576C44.4838 28.5876 45.7735 27.8305 47.0196 26.8073L43.067 23.2976C42.577 23.7589 41.9876 24.1254 41.3125 24.3876C40.5893 24.6689 39.7754 24.8118 38.8944 24.8118C37.6599 24.8118 36.5705 24.4915 35.6564 23.8592C34.7431 23.2279 34.0625 22.4047 33.6331 21.4108L33.5351 21.1837H48.4438V19.7737C48.4438 18.176 48.1828 16.6676 47.6676 15.2883C47.1525 13.9131 46.4296 12.7202 45.5189 11.7444Z" fill="currentColor"/>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M51.3604 29.4012H57.4049V0.180908H51.3604V29.4012Z" fill="currentColor"/>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M83.3719 5.69926C84.0187 5.05249 84.3467 4.25765 84.3467 3.33668C84.3467 2.417 84.0187 1.62184 83.3719 0.974745C82.7248 0.327971 81.9299 0.000228882 81.0096 0.000228882C80.089 0.000228882 79.2948 0.327971 78.6477 0.974745C78.0009 1.6212 77.6729 2.41636 77.6729 3.33668C77.6729 4.25829 78.0009 5.05313 78.6477 5.69926C79.2941 6.34571 80.0887 6.67378 81.0096 6.67378C81.9303 6.67378 82.7254 6.34571 83.3719 5.69926Z" fill="currentColor"/>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M70.3877 7.62261C70.3877 6.7868 70.6609 6.15454 71.1993 5.7439C71.7242 5.34358 72.498 5.14035 73.4996 5.14035C73.9225 5.14035 74.3319 5.16003 74.7158 5.20003C75.0451 5.23454 75.4271 5.29422 75.8535 5.37874V0.43777C75.459 0.346157 74.9722 0.264544 74.4042 0.195834C73.77 0.117447 73.1751 0.0784149 72.6348 0.0784149C69.9632 0.0784149 67.8896 0.725834 66.4719 2.00293C65.0596 3.27519 64.3435 5.12712 64.3435 7.50519V8.92583H59.7822V13.9087H64.3435V29.4016H70.3877V13.9087H77.9877V29.4016H84.0319V8.92583H70.3877V7.62261Z" fill="currentColor"/>
           </svg>
-          <svg class="company-logo" viewBox="0 50 580 251" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aktiva">
+          <svg class="company-logo company-logo--aktiva" viewBox="60 105 450 115" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aktiva">
             <title>Aktiva Finance Group</title>
             <g fill="currentColor">
               <path d="M211.91,200.07l-23.84-31.51-6.14,7.32v24.19h-16.76V121.36h16.76v35.16l27.85-35.16h20.65l-31.27,36.93,33.39,41.77h-20.65Z"/>
@@ -301,8 +310,8 @@
               <path d="M494.27,200.07l-4.84-13.33h-33.75l-4.96,13.33h-19.12l30.44-78.71h21l30.33,78.71h-19.12Zm-21.71-61.95l-12.27,33.87h24.54l-12.27-33.87Z"/>
             </g>
             <g>
-              <polygon points="136.56 165.88 116.81 121.7 98.32 121.7 118.07 165.88 133.36 200.07 151.85 200.07 136.56 165.88" fill="#00ff66"/>
-              <polygon points="100.39 165.88 85.1 200.07 66.61 200.07 81.9 165.88 100.39 165.88" fill="#00ffff"/>
+              <polygon points="136.56 165.88 116.81 121.7 98.32 121.7 118.07 165.88 133.36 200.07 151.85 200.07 136.56 165.88" fill="currentColor"/>
+              <polygon points="100.39 165.88 85.1 200.07 66.61 200.07 81.9 165.88 100.39 165.88" fill="currentColor"/>
             </g>
             <g fill="currentColor">
               <path d="M122.22,268.24v-25.5h16.71v2.83h-13.54v8.22h13.27v2.83h-13.27v11.62h-3.17Z"/>
@@ -324,7 +333,7 @@
     </section>
 
     <!-- Section 6: Team -->
-    <section id="operatives" class="team-section section">
+    <section id="team" class="team-section section">
       <div class="container">
         <div class="team-header">
           <p class="label">Meet the Team</p>
@@ -339,7 +348,7 @@
           <!-- Joosep Card -->
           <article class="team-card">
             <div class="team-photo">
-              <img src="images/joosep.png" alt="Joosep Simm" loading="lazy">
+              <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
             </div>
             <div class="team-info">
               <h3>Joosep Simm</h3>
@@ -361,14 +370,14 @@
 
           <!-- Book Divider -->
           <div class="book-divider">
-            <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer"><img src="images/book-cover.png" alt="AI Coding for Beginners - book cover" loading="lazy"></a>
+            <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer"><img src="images/book-cover.png" alt="AI Coding for Beginners - book cover" width="325" height="522" loading="lazy"></a>
             <p class="book-caption">Co-authors</p>
           </div>
 
           <!-- Kaido Card -->
           <article class="team-card team-card-right">
             <div class="team-photo">
-              <img src="images/kaido.png" alt="Kaido Koort" loading="lazy">
+              <img src="images/kaido.png" alt="Kaido Koort" width="500" height="568" loading="lazy">
             </div>
             <div class="team-info">
               <h3>Kaido Koort</h3>
@@ -396,44 +405,29 @@
   <!-- Footer -->
   <footer id="contact" class="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-contact">
-          <h3>// Establish Contact</h3>
-          <div class="contact-links">
-            <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener noreferrer" aria-label="Follow on LinkedIn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-              LinkedIn
-            </a>
-            <a href="tel:+3725077333" aria-label="Call us">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-              </svg>
-              +372 5077 333
-            </a>
-            <a href="mailto:kaido@plepic.com" aria-label="Email us">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-              </svg>
-              kaido@plepic.com
-            </a>
-            <a href="https://discord.gg/mc4Hhh8F3p" target="_blank" rel="noopener noreferrer" aria-label="Join our Discord">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
-              Discord Community
-            </a>
-          </div>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener noreferrer" aria-label="Follow on LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            LinkedIn
+          </a>
+          <a href="tel:+3725077333" aria-label="Call us">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +372 5077 333
+          </a>
+          <a href="mailto:kaido@plepic.com" aria-label="Email us">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            kaido@plepic.com
+          </a>
+          <a href="https://discord.gg/mc4Hhh8F3p" target="_blank" rel="noopener noreferrer" aria-label="Join our Discord">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            #claude-code-ee
+          </a>
         </div>
-        <div class="footer-company">
-          <p class="company-name">Plepic <span lang="et">OÜ</span></p>
-          <p class="company-address"><span lang="et">Liivalaia 7, 10118, Tallinn</span></p>
-          <p class="company-legal">Reg. nr: 11275881 · VAT ID: EE102813797</p>
+        <div class="footer-company-info">
+          <strong>Plepic <span lang="et">OÜ</span></strong> &middot; <span lang="et">Liivalaia 7, 10118 Tallinn</span> &middot; Reg. code 11275881 &middot; VAT EE102813797<br>
+          &copy; 2026 Plepic &middot; Curious play. Epic growth.
         </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Plepic. All rights reserved. // Curious play. Epic growth.</p>
       </div>
     </div>
   </footer>
