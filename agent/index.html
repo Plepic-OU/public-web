@@ -37,7 +37,7 @@
   <meta name="twitter:image" content="https://plepic.com/images/plepic-og.jpg">
 
   <!-- PWA / Mobile -->
-  <meta name="theme-color" content="#050508">
+  <meta name="theme-color" content="#faf7f2">
   <meta name="mobile-web-app-capable" content="yes">
 
   <!-- Structured Data - Breadcrumb -->
@@ -65,7 +65,7 @@
   <!-- Fonts — preconnect for early DNS/TLS, then load as render-blocking stylesheet (prevents CLS from font swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Exo+2:wght@400&family=Share+Tech+Mono&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 
   <!-- Styles -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -76,14 +76,14 @@
   <!-- Header -->
   <header class="header" id="header">
     <div class="header-inner">
-      <a href="/" class="logo">PLEPIC</a>
+      <a href="/" class="logo">Plepic</a>
       <nav class="nav">
         <a href="/agent/">Agentic Coding</a>
         <a href="/training/">Training</a>
         <a href="/#clients">Clients</a>
-        <a href="/#operatives">Team</a>
+        <a href="/#team">Team</a>
         <a href="/#contact">Contact</a>
-        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta">Talk to Kaido</a>
+        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="nav-cta">Talk to Kaido</a>
       </nav>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
@@ -105,19 +105,8 @@
           <div class="agent-loop-visual">
             <div class="loop-icon">
               <svg class="loop-arrow" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <filter id="hero-glow">
-                    <feGaussianBlur stdDeviation="2" result="blur"/>
-                    <feMerge>
-                      <feMergeNode in="blur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-                <g filter="url(#hero-glow)">
-                  <path d="M 107.5 32.4 A 55 55 0 1 1 52.5 32.4" fill="none" stroke="#00ffff" stroke-width="4" stroke-linecap="round"/>
-                  <polygon points="63,26 50,28 55,37" fill="#00ffff"/>
-                </g>
+                <path d="M 107.5 32.4 A 55 55 0 1 1 52.5 32.4" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+                <polygon points="63,26 50,28 55,37" fill="#22c55e"/>
               </svg>
               <div class="loop-center">LLM</div>
             </div>
@@ -144,19 +133,8 @@
             <div class="comparison-visual">
               <div class="loop-icon">
                 <svg class="loop-arrow" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <filter id="comp-glow">
-                      <feGaussianBlur stdDeviation="2" result="blur"/>
-                      <feMerge>
-                        <feMergeNode in="blur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  <g filter="url(#comp-glow)">
-                    <path d="M 107.5 32.4 A 55 55 0 1 1 52.5 32.4" fill="none" stroke="#00ffff" stroke-width="4" stroke-linecap="round"/>
-                    <polygon points="63,26 50,28 55,37" fill="#00ffff"/>
-                  </g>
+                  <path d="M 107.5 32.4 A 55 55 0 1 1 52.5 32.4" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+                  <polygon points="63,26 50,28 55,37" fill="#22c55e"/>
                 </svg>
                 <div class="loop-center">LLM</div>
               </div>
@@ -176,22 +154,9 @@
             <div class="comparison-visual">
               <div class="single-shot-visual">
                 <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" class="single-shot-arrow">
-                  <defs>
-                    <filter id="orange-glow">
-                      <feGaussianBlur stdDeviation="2" result="blur"/>
-                      <feMerge>
-                        <feMergeNode in="blur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  <g filter="url(#orange-glow)">
-                    <!-- Single straight arrow: prompt to response, then stops -->
-                    <line x1="30" y1="80" x2="130" y2="80" stroke="#ff9800" stroke-width="4" stroke-linecap="round"/>
-                    <polygon points="130,80 115,70 115,90" fill="#ff9800"/>
-                    <!-- Dead-end bar at the end -->
-                    <line x1="140" y1="60" x2="140" y2="100" stroke="#ff9800" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
-                  </g>
+                  <line x1="30" y1="80" x2="130" y2="80" stroke="#8a8a80" stroke-width="4" stroke-linecap="round"/>
+                  <polygon points="130,80 115,70 115,90" fill="#8a8a80"/>
+                  <line x1="140" y1="60" x2="140" y2="100" stroke="#8a8a80" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
                 </svg>
                 <div class="single-shot-label">ONE SHOT</div>
               </div>
@@ -301,7 +266,7 @@
       <div class="container">
         <div class="enlist-content">
           <h2>Ready to Build Your Mech?</h2>
-          <p>Our 6-week program is a virtual hangar where you construct your agentic development mech &mdash; a powerful tool you pilot, not AI that replaces you.</p>
+          <p>Our 6-week program teaches you to build the agentic harness around Claude Code &mdash; a living system of tools, context, and workflows that grows with your codebase.</p>
 
           <a href="/training/" class="btn-enlist">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -324,7 +289,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-contact">
-          <h3>// Establish Contact</h3>
+          <h3>Get in Touch</h3>
           <div class="contact-links">
             <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener noreferrer" aria-label="Follow on LinkedIn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -359,7 +324,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Plepic. All rights reserved. // Curious play. Epic growth.</p>
+        <p>&copy; 2026 Plepic. All rights reserved. Curious play. Epic growth.</p>
       </div>
     </div>
   </footer>
