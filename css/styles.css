@@ -504,7 +504,7 @@ p:last-child {
   display: flex;
   align-items: center;
   gap: 1rem;
-  opacity: 0.35;
+  opacity: 0.5;
 }
 
 .hero-bottom span {
@@ -526,7 +526,7 @@ p:last-child {
 .hero-visual {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
   position: relative;
   align-self: end;
@@ -559,16 +559,14 @@ p:last-child {
 
 .hero-code {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   line-height: normal;
   color: #16a34a;
-  background: var(--surface);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0.5rem 0;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04);
   margin-top: 1rem;
+  opacity: 0.5;
 }
 
 /* Wing hover animation */
