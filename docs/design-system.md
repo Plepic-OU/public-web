@@ -18,13 +18,13 @@ Living document. Updated as decisions are made.
 | Green darker | `#0d7a36` | Deep accents |
 | Green light | `#dcfce7` | Badges, surfaces |
 | Green surface | `#f0fdf4` | Section backgrounds |
-| Amber (CTA) | `#e68a00` | Primary action buttons |
-| Amber dark | `#c27400` | Button hover |
+| Claude orange (CTA) | `#d97757` | Primary action buttons — ties to Claude Code brand |
+| Claude orange dark | `#b8604a` | Button hover |
 | Background | `#faf7f2` | Page background (warm cream) |
 | Background alt | `#f3efe7` | Alternating sections |
 | Surface | `#ffffff` | Cards, panels |
 | Text | `#1c1c1a` | Primary text (warm near-black) |
-| Text secondary | `#555550` | Body text, descriptions |
+| Text secondary | `#4a4a45` | Body text, descriptions |
 | Text muted | `#8a8a80` | Captions, meta, qualifier text |
 | Border | `#e5e2dc` | Card borders, dividers |
 
@@ -114,7 +114,7 @@ Verified at 0px difference on both left and right edges.
 
 ## Buttons
 
-- **Primary (CTA):** Amber `#e68a00`, white text, `border-radius: 14px`, hover lifts + darkens
+- **Primary (CTA):** Claude orange `#d97757`, white text, `border-radius: 14px`, hover lifts + darkens to `#b8604a`
 - **Secondary (Nav):** Green outline `#22c55e`, transparent background, `border-radius: 10px`
 
 ## Components
@@ -133,4 +133,4 @@ Verified at 0px difference on both left and right edges.
 - No AI slop aesthetics from 2024-2025
 - No equal 50/50 grid splits — use asymmetry
 - No same spacing everywhere — use rhythm (tight groupings + generous separations)
-- No competing orange elements (nav CTA must differ from hero CTA)
+- No competing warm elements (nav CTA is green outline, hero CTA is Claude orange)
