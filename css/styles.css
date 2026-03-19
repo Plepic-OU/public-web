@@ -276,7 +276,9 @@ p:last-child {
   font-size: 1.5rem;
   color: var(--text);
   cursor: pointer;
-  padding: var(--space-xs);
+  padding: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 /* ========================================
