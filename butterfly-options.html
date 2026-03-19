@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butterfly Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crete+Round&family=Plus+Jakarta+Sans:wght@400;600&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #faf7f2; color: #1c1c1a; padding: 2rem; }
+    h1 { font-family: 'Crete Round', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+    p.sub { color: #8a8a80; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: #fff;
+      border: 1px solid #e5e2dc;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .card h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .card p { font-size: 0.75rem; color: #8a8a80; margin-bottom: 1rem; }
+    .card svg { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <h1>Butterfly Options</h1>
+  <p class="sub">Pick the one that feels like Plepic. Hover to see wing animation.</p>
+
+  <div class="grid">
+
+    <!-- 1. Original geometric facets (first version) -->
+    <div class="card">
+      <h3>1. Geometric Facets</h3>
+      <p>First iteration — triangular constellation</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1L" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#22c55e" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#0d7a36" stop-opacity="0.4"/>
+          </linearGradient>
+          <linearGradient id="g1R" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#22c55e" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#0d7a36" stop-opacity="0.4"/>
+          </linearGradient>
+          <linearGradient id="g1Low" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="#16a34a" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#166534" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+        <g>
+          <polygon points="147,93 93,57 71,114" fill="url(#g1L)"/>
+          <polygon points="147,93 71,114 57,171" fill="url(#g1L)" opacity="0.85"/>
+          <polygon points="147,93 57,171 86,200" fill="url(#g1L)" opacity="0.7"/>
+          <polygon points="147,143 57,171 86,200" fill="url(#g1Low)" opacity="0.6"/>
+          <polygon points="147,143 86,200 114,229" fill="url(#g1Low)" opacity="0.45"/>
+          <polygon points="147,143 114,229 140,243" fill="url(#g1Low)" opacity="0.3"/>
+          <line x1="147" y1="93" x2="71" y2="114" stroke="#16a34a" stroke-width="0.5" opacity="0.4"/>
+          <line x1="147" y1="93" x2="57" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/>
+          <line x1="147" y1="143" x2="86" y2="200" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/>
+          <circle cx="93" cy="57" r="2" fill="#22c55e" opacity="0.6"/>
+          <circle cx="71" cy="114" r="1.5" fill="#22c55e" opacity="0.5"/>
+          <circle cx="57" cy="171" r="2.5" fill="#22c55e" opacity="0.5"/>
+          <circle cx="86" cy="200" r="1.5" fill="#22c55e" opacity="0.4"/>
+          <circle cx="114" cy="229" r="2" fill="#22c55e" opacity="0.35"/>
+        </g>
+        <g>
+          <polygon points="153,93 207,57 229,114" fill="url(#g1R)"/>
+          <polygon points="153,93 229,114 243,171" fill="url(#g1R)" opacity="0.85"/>
+          <polygon points="153,93 243,171 214,200" fill="url(#g1R)" opacity="0.7"/>
+          <polygon points="153,143 243,171 214,200" fill="url(#g1Low)" opacity="0.6"/>
+          <polygon points="153,143 214,200 186,229" fill="url(#g1Low)" opacity="0.45"/>
+          <polygon points="153,143 186,229 160,243" fill="url(#g1Low)" opacity="0.3"/>
+          <line x1="153" y1="93" x2="229" y2="114" stroke="#16a34a" stroke-width="0.5" opacity="0.4"/>
+          <line x1="153" y1="93" x2="243" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/>
+          <line x1="153" y1="143" x2="214" y2="200" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/>
+          <circle cx="207" cy="57" r="2" fill="#22c55e" opacity="0.6"/>
+          <circle cx="229" cy="114" r="1.5" fill="#22c55e" opacity="0.5"/>
+          <circle cx="243" cy="171" r="2.5" fill="#22c55e" opacity="0.5"/>
+          <circle cx="214" cy="200" r="1.5" fill="#22c55e" opacity="0.4"/>
+          <circle cx="186" cy="229" r="2" fill="#22c55e" opacity="0.35"/>
+        </g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/>
+        <path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="130" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+        <circle cx="170" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 2. Minimal wireframe -->
+    <div class="card">
+      <h3>2. Wireframe</h3>
+      <p>Lines and nodes only — pure constellation</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left wing outline -->
+        <path d="M148,100 C135,75 100,50 75,65 C50,80 40,120 45,155 C50,185 70,200 95,205 C120,210 145,195 148,170Z" fill="none" stroke="#22c55e" stroke-width="1.2" opacity="0.5"/>
+        <path d="M148,175 C140,200 125,235 110,245 C95,255 80,245 80,230 C80,215 95,200 120,195Z" fill="none" stroke="#22c55e" stroke-width="1" opacity="0.35"/>
+        <!-- Internal structure -->
+        <line x1="148" y1="100" x2="75" y2="65" stroke="#22c55e" stroke-width="0.6" opacity="0.25"/>
+        <line x1="148" y1="100" x2="45" y2="155" stroke="#22c55e" stroke-width="0.6" opacity="0.2"/>
+        <line x1="148" y1="140" x2="65" y2="120" stroke="#22c55e" stroke-width="0.5" opacity="0.15"/>
+        <line x1="148" y1="170" x2="95" y2="205" stroke="#22c55e" stroke-width="0.5" opacity="0.15"/>
+        <!-- Right wing -->
+        <path d="M152,100 C165,75 200,50 225,65 C250,80 260,120 255,155 C250,185 230,200 205,205 C180,210 155,195 152,170Z" fill="none" stroke="#22c55e" stroke-width="1.2" opacity="0.5"/>
+        <path d="M152,175 C160,200 175,235 190,245 C205,255 220,245 220,230 C220,215 205,200 180,195Z" fill="none" stroke="#22c55e" stroke-width="1" opacity="0.35"/>
+        <line x1="152" y1="100" x2="225" y2="65" stroke="#22c55e" stroke-width="0.6" opacity="0.25"/>
+        <line x1="152" y1="100" x2="255" y2="155" stroke="#22c55e" stroke-width="0.6" opacity="0.2"/>
+        <line x1="152" y1="140" x2="235" y2="120" stroke="#22c55e" stroke-width="0.5" opacity="0.15"/>
+        <line x1="152" y1="170" x2="205" y2="205" stroke="#22c55e" stroke-width="0.5" opacity="0.15"/>
+        <!-- Nodes -->
+        <circle cx="75" cy="65" r="3" fill="#22c55e" opacity="0.6"/>
+        <circle cx="45" cy="155" r="3" fill="#22c55e" opacity="0.5"/>
+        <circle cx="95" cy="205" r="2.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="110" cy="245" r="2" fill="#22c55e" opacity="0.3"/>
+        <circle cx="225" cy="65" r="3" fill="#22c55e" opacity="0.6"/>
+        <circle cx="255" cy="155" r="3" fill="#22c55e" opacity="0.5"/>
+        <circle cx="205" cy="205" r="2.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="190" cy="245" r="2" fill="#22c55e" opacity="0.3"/>
+        <circle cx="65" cy="120" r="1.5" fill="#22c55e" opacity="0.3"/>
+        <circle cx="235" cy="120" r="1.5" fill="#22c55e" opacity="0.3"/>
+        <!-- Body & antennae -->
+        <line x1="150" y1="80" x2="150" y2="260" stroke="#1c1c1a" stroke-width="1.5" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,95 Q138,65 128,48" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,95 Q162,65 172,48" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="128" cy="47" r="2.5" fill="#22c55e" opacity="0.45"/>
+        <circle cx="172" cy="47" r="2.5" fill="#22c55e" opacity="0.45"/>
+      </svg>
+    </div>
+
+    <!-- 3. Dot cloud -->
+    <div class="card">
+      <h3>3. Particle Cloud</h3>
+      <p>Butterfly shape formed by scattered dots</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left upper wing dots -->
+        <circle cx="120" cy="80" r="4" fill="#22c55e" opacity="0.5"/>
+        <circle cx="100" cy="90" r="5" fill="#22c55e" opacity="0.45"/>
+        <circle cx="85" cy="105" r="6" fill="#22c55e" opacity="0.4"/>
+        <circle cx="75" cy="125" r="5" fill="#22c55e" opacity="0.45"/>
+        <circle cx="70" cy="148" r="7" fill="#22c55e" opacity="0.4"/>
+        <circle cx="78" cy="170" r="5" fill="#22c55e" opacity="0.35"/>
+        <circle cx="90" cy="185" r="4" fill="#22c55e" opacity="0.3"/>
+        <circle cx="108" cy="80" r="3" fill="#4ade80" opacity="0.5"/>
+        <circle cx="90" cy="115" r="4" fill="#16a34a" opacity="0.35"/>
+        <circle cx="95" cy="145" r="5" fill="#22c55e" opacity="0.35"/>
+        <circle cx="110" cy="100" r="3.5" fill="#4ade80" opacity="0.4"/>
+        <circle cx="115" cy="130" r="4" fill="#22c55e" opacity="0.3"/>
+        <circle cx="105" cy="160" r="3.5" fill="#16a34a" opacity="0.3"/>
+        <circle cx="125" cy="110" r="3" fill="#4ade80" opacity="0.35"/>
+        <circle cx="130" cy="150" r="3" fill="#22c55e" opacity="0.25"/>
+        <circle cx="120" cy="175" r="3" fill="#16a34a" opacity="0.25"/>
+        <circle cx="135" cy="100" r="2" fill="#fbbf24" opacity="0.3"/>
+        <circle cx="80" cy="90" r="3" fill="#fbbf24" opacity="0.15"/>
+        <!-- Left lower wing -->
+        <circle cx="110" cy="200" r="4" fill="#16a34a" opacity="0.3"/>
+        <circle cx="100" cy="215" r="3.5" fill="#16a34a" opacity="0.25"/>
+        <circle cx="115" cy="225" r="3" fill="#166534" opacity="0.2"/>
+        <circle cx="125" cy="210" r="2.5" fill="#16a34a" opacity="0.2"/>
+        <circle cx="130" cy="230" r="2" fill="#166534" opacity="0.15"/>
+        <!-- Right upper wing dots (mirror) -->
+        <circle cx="180" cy="80" r="4" fill="#22c55e" opacity="0.5"/>
+        <circle cx="200" cy="90" r="5" fill="#22c55e" opacity="0.45"/>
+        <circle cx="215" cy="105" r="6" fill="#22c55e" opacity="0.4"/>
+        <circle cx="225" cy="125" r="5" fill="#22c55e" opacity="0.45"/>
+        <circle cx="230" cy="148" r="7" fill="#22c55e" opacity="0.4"/>
+        <circle cx="222" cy="170" r="5" fill="#22c55e" opacity="0.35"/>
+        <circle cx="210" cy="185" r="4" fill="#22c55e" opacity="0.3"/>
+        <circle cx="192" cy="80" r="3" fill="#4ade80" opacity="0.5"/>
+        <circle cx="210" cy="115" r="4" fill="#16a34a" opacity="0.35"/>
+        <circle cx="205" cy="145" r="5" fill="#22c55e" opacity="0.35"/>
+        <circle cx="190" cy="100" r="3.5" fill="#4ade80" opacity="0.4"/>
+        <circle cx="185" cy="130" r="4" fill="#22c55e" opacity="0.3"/>
+        <circle cx="195" cy="160" r="3.5" fill="#16a34a" opacity="0.3"/>
+        <circle cx="175" cy="110" r="3" fill="#4ade80" opacity="0.35"/>
+        <circle cx="170" cy="150" r="3" fill="#22c55e" opacity="0.25"/>
+        <circle cx="180" cy="175" r="3" fill="#16a34a" opacity="0.25"/>
+        <circle cx="165" cy="100" r="2" fill="#fbbf24" opacity="0.3"/>
+        <circle cx="220" cy="90" r="3" fill="#fbbf24" opacity="0.15"/>
+        <!-- Right lower -->
+        <circle cx="190" cy="200" r="4" fill="#16a34a" opacity="0.3"/>
+        <circle cx="200" cy="215" r="3.5" fill="#16a34a" opacity="0.25"/>
+        <circle cx="185" cy="225" r="3" fill="#166534" opacity="0.2"/>
+        <circle cx="175" cy="210" r="2.5" fill="#16a34a" opacity="0.2"/>
+        <circle cx="170" cy="230" r="2" fill="#166534" opacity="0.15"/>
+        <!-- Body & antennae -->
+        <line x1="150" y1="75" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.12" stroke-linecap="round"/>
+        <path d="M150,85 Q140,60 132,45" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.12" stroke-linecap="round"/>
+        <path d="M150,85 Q160,60 168,45" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.12" stroke-linecap="round"/>
+        <circle cx="132" cy="44" r="2" fill="#22c55e" opacity="0.4"/>
+        <circle cx="168" cy="44" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 4. Simple flat wings -->
+    <div class="card">
+      <h3>4. Flat Silhouette</h3>
+      <p>Clean flat shapes, no effects</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <path d="M148,105 C140,75 110,50 80,55 C50,60 35,90 38,130 C40,165 58,190 85,200 C110,208 140,195 148,175Z" fill="#22c55e" opacity="0.45"/>
+        <path d="M148,180 C142,200 130,235 115,248 C100,260 82,255 80,240 C78,225 90,210 115,200Z" fill="#16a34a" opacity="0.3"/>
+        <path d="M152,105 C160,75 190,50 220,55 C250,60 265,90 262,130 C260,165 242,190 215,200 C190,208 160,195 152,175Z" fill="#22c55e" opacity="0.45"/>
+        <path d="M152,180 C158,200 170,235 185,248 C200,260 218,255 220,240 C222,225 210,210 185,200Z" fill="#16a34a" opacity="0.3"/>
+        <line x1="150" y1="82" x2="150" y2="260" stroke="#1c1c1a" stroke-width="2" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,100 Q138,70 128,52" fill="none" stroke="#1c1c1a" stroke-width="1.2" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,100 Q162,70 172,52" fill="none" stroke="#1c1c1a" stroke-width="1.2" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="128" cy="50" r="2.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="172" cy="50" r="2.5" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 5. Line art -->
+    <div class="card">
+      <h3>5. Single Stroke</h3>
+      <p>Continuous line drawing — elegant, minimal</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <path d="M150,260 L150,100
+                 C140,75 108,48 78,58 C48,68 35,98 40,135 C45,172 65,195 92,203 C118,210 142,198 148,178
+                 L150,178
+                 L152,178
+                 C158,198 182,210 208,203 C235,195 255,172 260,135 C265,98 252,68 222,58 C192,48 160,75 150,100
+                 M148,178 C142,200 128,238 112,250 C96,262 80,255 78,238 C76,222 92,208 118,198
+                 M152,178 C158,200 172,238 188,250 C204,262 220,255 222,238 C224,222 208,208 182,198"
+              fill="none" stroke="#22c55e" stroke-width="1.8" opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M150,95 Q138,62 126,45" fill="none" stroke="#22c55e" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+        <path d="M150,95 Q162,62 174,45" fill="none" stroke="#22c55e" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+        <circle cx="126" cy="44" r="2.5" fill="#22c55e" opacity="0.5"/>
+        <circle cx="174" cy="44" r="2.5" fill="#22c55e" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- 6. Overlapping circles -->
+    <div class="card">
+      <h3>6. Circle Clusters</h3>
+      <p>Wings from overlapping transparent circles</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left upper -->
+        <circle cx="100" cy="110" r="45" fill="#22c55e" opacity="0.2"/>
+        <circle cx="85" cy="130" r="40" fill="#22c55e" opacity="0.18"/>
+        <circle cx="110" cy="90" r="35" fill="#4ade80" opacity="0.15"/>
+        <circle cx="120" cy="140" r="30" fill="#16a34a" opacity="0.15"/>
+        <circle cx="90" cy="155" r="25" fill="#16a34a" opacity="0.12"/>
+        <!-- Left lower -->
+        <circle cx="115" cy="200" r="22" fill="#16a34a" opacity="0.15"/>
+        <circle cx="108" cy="218" r="18" fill="#166534" opacity="0.12"/>
+        <!-- Right upper -->
+        <circle cx="200" cy="110" r="45" fill="#22c55e" opacity="0.2"/>
+        <circle cx="215" cy="130" r="40" fill="#22c55e" opacity="0.18"/>
+        <circle cx="190" cy="90" r="35" fill="#4ade80" opacity="0.15"/>
+        <circle cx="180" cy="140" r="30" fill="#16a34a" opacity="0.15"/>
+        <circle cx="210" cy="155" r="25" fill="#16a34a" opacity="0.12"/>
+        <!-- Right lower -->
+        <circle cx="185" cy="200" r="22" fill="#16a34a" opacity="0.15"/>
+        <circle cx="192" cy="218" r="18" fill="#166534" opacity="0.12"/>
+        <!-- Body -->
+        <line x1="150" y1="72" x2="150" y2="255" stroke="#1c1c1a" stroke-width="2" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,90 Q138,62 128,45" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,90 Q162,62 172,45" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="128" cy="44" r="2.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="172" cy="44" r="2.5" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 7. Hex mesh -->
+    <div class="card">
+      <h3>7. Hex Mesh</h3>
+      <p>Wing shape filled with hexagonal cells</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="hexWL">
+            <path d="M148,105 C140,75 110,50 80,55 C50,60 35,90 38,130 C40,165 58,190 85,200 C110,208 140,195 148,175Z"/>
+          </clipPath>
+          <clipPath id="hexWR">
+            <path d="M152,105 C160,75 190,50 220,55 C250,60 265,90 262,130 C260,165 242,190 215,200 C190,208 160,195 152,175Z"/>
+          </clipPath>
+          <clipPath id="hexLL">
+            <path d="M148,180 C142,200 130,238 115,248 C100,258 82,252 80,238 C78,222 92,208 118,198Z"/>
+          </clipPath>
+          <clipPath id="hexLR">
+            <path d="M152,180 C158,200 170,238 185,248 C200,258 218,252 220,238 C222,222 208,208 182,198Z"/>
+          </clipPath>
+        </defs>
+        <!-- Hex grid within wing clips -->
+        <g clip-path="url(#hexWL)">
+          <g fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.35">
+            <polygon points="70,70 82,62 94,70 94,84 82,92 70,84"/>
+            <polygon points="94,70 106,62 118,70 118,84 106,92 94,84"/>
+            <polygon points="118,70 130,62 142,70 142,84 130,92 118,84"/>
+            <polygon points="58,92 70,84 82,92 82,106 70,114 58,106"/>
+            <polygon points="82,92 94,84 106,92 106,106 94,114 82,106"/>
+            <polygon points="106,92 118,84 130,92 130,106 118,114 106,106"/>
+            <polygon points="130,92 142,84 154,92 154,106 142,114 130,106"/>
+            <polygon points="46,114 58,106 70,114 70,128 58,136 46,128"/>
+            <polygon points="70,114 82,106 94,114 94,128 82,136 70,128"/>
+            <polygon points="94,114 106,106 118,114 118,128 106,136 94,128"/>
+            <polygon points="118,114 130,106 142,114 142,128 130,136 118,128"/>
+            <polygon points="40,136 52,128 64,136 64,150 52,158 40,150"/>
+            <polygon points="64,136 76,128 88,136 88,150 76,158 64,150"/>
+            <polygon points="88,136 100,128 112,136 112,150 100,158 88,150"/>
+            <polygon points="112,136 124,128 136,136 136,150 124,158 112,150"/>
+            <polygon points="52,158 64,150 76,158 76,172 64,180 52,172"/>
+            <polygon points="76,158 88,150 100,158 100,172 88,180 76,172"/>
+            <polygon points="100,158 112,150 124,158 124,172 112,180 100,172"/>
+            <polygon points="124,158 136,150 148,158 148,172 136,180 124,172"/>
+            <polygon points="76,180 88,172 100,180 100,194 88,202 76,194"/>
+            <polygon points="100,180 112,172 124,180 124,194 112,202 100,194"/>
+          </g>
+          <!-- Some cells filled -->
+          <polygon points="94,114 106,106 118,114 118,128 106,136 94,128" fill="#22c55e" opacity="0.15"/>
+          <polygon points="70,114 82,106 94,114 94,128 82,136 70,128" fill="#22c55e" opacity="0.12"/>
+          <polygon points="88,136 100,128 112,136 112,150 100,158 88,150" fill="#22c55e" opacity="0.18"/>
+          <polygon points="64,136 76,128 88,136 88,150 76,158 64,150" fill="#4ade80" opacity="0.1"/>
+          <polygon points="106,92 118,84 130,92 130,106 118,114 106,106" fill="#22c55e" opacity="0.1"/>
+        </g>
+        <g clip-path="url(#hexWR)">
+          <g fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.35" transform="translate(300,0) scale(-1,1)">
+            <polygon points="70,70 82,62 94,70 94,84 82,92 70,84"/>
+            <polygon points="94,70 106,62 118,70 118,84 106,92 94,84"/>
+            <polygon points="118,70 130,62 142,70 142,84 130,92 118,84"/>
+            <polygon points="58,92 70,84 82,92 82,106 70,114 58,106"/>
+            <polygon points="82,92 94,84 106,92 106,106 94,114 82,106"/>
+            <polygon points="106,92 118,84 130,92 130,106 118,114 106,106"/>
+            <polygon points="130,92 142,84 154,92 154,106 142,114 130,106"/>
+            <polygon points="46,114 58,106 70,114 70,128 58,136 46,128"/>
+            <polygon points="70,114 82,106 94,114 94,128 82,136 70,128"/>
+            <polygon points="94,114 106,106 118,114 118,128 106,136 94,128"/>
+            <polygon points="118,114 130,106 142,114 142,128 130,136 118,128"/>
+            <polygon points="40,136 52,128 64,136 64,150 52,158 40,150"/>
+            <polygon points="64,136 76,128 88,136 88,150 76,158 64,150"/>
+            <polygon points="88,136 100,128 112,136 112,150 100,158 88,150"/>
+            <polygon points="112,136 124,128 136,136 136,150 124,158 112,150"/>
+            <polygon points="52,158 64,150 76,158 76,172 64,180 52,172"/>
+            <polygon points="76,158 88,150 100,158 100,172 88,180 76,172"/>
+            <polygon points="100,158 112,150 124,158 124,172 112,180 100,172"/>
+            <polygon points="124,158 136,150 148,158 148,172 136,180 124,172"/>
+            <polygon points="76,180 88,172 100,180 100,194 88,202 76,194"/>
+            <polygon points="100,180 112,172 124,180 124,194 112,202 100,194"/>
+          </g>
+          <polygon points="206,114 194,106 182,114 182,128 194,136 206,128" fill="#22c55e" opacity="0.15"/>
+          <polygon points="230,114 218,106 206,114 206,128 218,136 230,128" fill="#22c55e" opacity="0.12"/>
+          <polygon points="212,136 200,128 188,136 188,150 200,158 212,150" fill="#22c55e" opacity="0.18"/>
+          <polygon points="236,136 224,128 212,136 212,150 224,158 236,150" fill="#4ade80" opacity="0.1"/>
+        </g>
+        <g clip-path="url(#hexLL)">
+          <polygon points="100,195 112,187 124,195 124,209 112,217 100,209" fill="none" stroke="#22c55e" stroke-width="0.7" opacity="0.25"/>
+          <polygon points="112,217 124,209 136,217 136,231 124,239 112,231" fill="none" stroke="#22c55e" stroke-width="0.6" opacity="0.2"/>
+        </g>
+        <g clip-path="url(#hexLR)">
+          <polygon points="200,195 188,187 176,195 176,209 188,217 200,209" fill="none" stroke="#22c55e" stroke-width="0.7" opacity="0.25"/>
+          <polygon points="188,217 176,209 164,217 164,231 176,239 188,231" fill="none" stroke="#22c55e" stroke-width="0.6" opacity="0.2"/>
+        </g>
+        <!-- Outlines -->
+        <path d="M148,105 C140,75 110,50 80,55 C50,60 35,90 38,130 C40,165 58,190 85,200 C110,208 140,195 148,175Z" fill="none" stroke="#16a34a" stroke-width="0.8" opacity="0.2"/>
+        <path d="M152,105 C160,75 190,50 220,55 C250,60 265,90 262,130 C260,165 242,190 215,200 C190,208 160,195 152,175Z" fill="none" stroke="#16a34a" stroke-width="0.8" opacity="0.2"/>
+        <path d="M148,180 C142,200 130,238 115,248 C100,258 82,252 80,238 C78,222 92,208 118,198Z" fill="none" stroke="#16a34a" stroke-width="0.6" opacity="0.15"/>
+        <path d="M152,180 C158,200 170,238 185,248 C200,258 218,252 220,238 C222,222 208,208 182,198Z" fill="none" stroke="#16a34a" stroke-width="0.6" opacity="0.15"/>
+        <!-- Body -->
+        <line x1="150" y1="80" x2="150" y2="260" stroke="#1c1c1a" stroke-width="1.5" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,98 Q138,65 128,48" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,98 Q162,65 172,48" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="128" cy="47" r="2" fill="#22c55e" opacity="0.4"/>
+        <circle cx="172" cy="47" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 8. Gradient wings + thin veins -->
+    <div class="card">
+      <h3>8. Gradient + Veins</h3>
+      <p>Solid color wings with delicate vein network</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="g8UL" cx="30%" cy="40%" r="70%">
+            <stop offset="0%" stop-color="#4ade80" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#15803d" stop-opacity="0.2"/>
+          </radialGradient>
+          <radialGradient id="g8UR" cx="70%" cy="40%" r="70%">
+            <stop offset="0%" stop-color="#4ade80" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#15803d" stop-opacity="0.2"/>
+          </radialGradient>
+        </defs>
+        <!-- Wings -->
+        <path d="M148,105 C140,75 110,50 80,55 C50,60 35,90 38,130 C40,165 58,190 85,200 C110,208 140,195 148,175Z" fill="url(#g8UL)"/>
+        <path d="M148,180 C142,200 130,238 115,248 C100,258 82,252 80,238 C78,222 92,208 118,198Z" fill="#16a34a" opacity="0.25"/>
+        <path d="M152,105 C160,75 190,50 220,55 C250,60 265,90 262,130 C260,165 242,190 215,200 C190,208 160,195 152,175Z" fill="url(#g8UR)"/>
+        <path d="M152,180 C158,200 170,238 185,248 C200,258 218,252 220,238 C222,222 208,208 182,198Z" fill="#16a34a" opacity="0.25"/>
+        <!-- Veins — left -->
+        <path d="M148,110 C125,105 90,80 75,90" fill="none" stroke="#15803d" stroke-width="1" opacity="0.3"/>
+        <path d="M148,130 C115,128 70,115 50,130" fill="none" stroke="#15803d" stroke-width="0.8" opacity="0.25"/>
+        <path d="M148,150 C120,148 80,155 55,165" fill="none" stroke="#15803d" stroke-width="0.7" opacity="0.2"/>
+        <path d="M148,170 C125,172 95,185 85,198" fill="none" stroke="#15803d" stroke-width="0.6" opacity="0.15"/>
+        <!-- Veins — right -->
+        <path d="M152,110 C175,105 210,80 225,90" fill="none" stroke="#15803d" stroke-width="1" opacity="0.3"/>
+        <path d="M152,130 C185,128 230,115 250,130" fill="none" stroke="#15803d" stroke-width="0.8" opacity="0.25"/>
+        <path d="M152,150 C180,148 220,155 245,165" fill="none" stroke="#15803d" stroke-width="0.7" opacity="0.2"/>
+        <path d="M152,170 C175,172 205,185 215,198" fill="none" stroke="#15803d" stroke-width="0.6" opacity="0.15"/>
+        <!-- Body -->
+        <line x1="150" y1="82" x2="150" y2="260" stroke="#1c1c1a" stroke-width="2" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,100 Q138,68 128,50" fill="none" stroke="#1c1c1a" stroke-width="1.2" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,100 Q162,68 172,50" fill="none" stroke="#1c1c1a" stroke-width="1.2" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="128" cy="49" r="2.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="172" cy="49" r="2.5" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 9. Abstract wings — minimal curves -->
+    <div class="card">
+      <h3>9. Abstract Curves</h3>
+      <p>Two simple curved strokes suggesting wings</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left wing — thick curved stroke -->
+        <path d="M148,170 C130,130 80,60 55,90 C30,120 45,190 90,210" fill="none" stroke="#22c55e" stroke-width="28" opacity="0.25" stroke-linecap="round"/>
+        <path d="M148,170 C130,130 80,60 55,90 C30,120 45,190 90,210" fill="none" stroke="#4ade80" stroke-width="12" opacity="0.2" stroke-linecap="round"/>
+        <!-- Left lower -->
+        <path d="M145,185 C130,210 110,248 100,245 C85,240 90,220 110,205" fill="none" stroke="#16a34a" stroke-width="16" opacity="0.2" stroke-linecap="round"/>
+        <!-- Right wing -->
+        <path d="M152,170 C170,130 220,60 245,90 C270,120 255,190 210,210" fill="none" stroke="#22c55e" stroke-width="28" opacity="0.25" stroke-linecap="round"/>
+        <path d="M152,170 C170,130 220,60 245,90 C270,120 255,190 210,210" fill="none" stroke="#4ade80" stroke-width="12" opacity="0.2" stroke-linecap="round"/>
+        <!-- Right lower -->
+        <path d="M155,185 C170,210 190,248 200,245 C215,240 210,220 190,205" fill="none" stroke="#16a34a" stroke-width="16" opacity="0.2" stroke-linecap="round"/>
+        <!-- Body -->
+        <line x1="150" y1="82" x2="150" y2="258" stroke="#1c1c1a" stroke-width="2.5" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,100 Q136,65 125,48" fill="none" stroke="#1c1c1a" stroke-width="1.5" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,100 Q164,65 175,48" fill="none" stroke="#1c1c1a" stroke-width="1.5" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="125" cy="46" r="3" fill="#22c55e" opacity="0.4"/>
+        <circle cx="175" cy="46" r="3" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- 10. Data flow -->
+    <div class="card">
+      <h3>10. Data Flow</h3>
+      <p>Lines flowing from body outward — like data transforming</p>
+      <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left wing flow lines -->
+        <path d="M148,100 C120,85 75,60 60,80" stroke="#22c55e" stroke-width="2" opacity="0.45" fill="none" stroke-linecap="round"/>
+        <path d="M148,115 C110,105 60,85 45,110" stroke="#22c55e" stroke-width="2" opacity="0.4" fill="none" stroke-linecap="round"/>
+        <path d="M148,130 C105,125 55,120 40,145" stroke="#22c55e" stroke-width="1.8" opacity="0.35" fill="none" stroke-linecap="round"/>
+        <path d="M148,145 C108,142 58,148 42,170" stroke="#16a34a" stroke-width="1.5" opacity="0.3" fill="none" stroke-linecap="round"/>
+        <path d="M148,160 C115,162 70,175 55,195" stroke="#16a34a" stroke-width="1.2" opacity="0.25" fill="none" stroke-linecap="round"/>
+        <path d="M148,175 C125,180 90,198 82,210" stroke="#16a34a" stroke-width="1" opacity="0.2" fill="none" stroke-linecap="round"/>
+        <!-- Lower left -->
+        <path d="M148,190 C135,205 118,235 112,248" stroke="#166534" stroke-width="0.8" opacity="0.18" fill="none" stroke-linecap="round"/>
+        <path d="M148,200 C138,215 125,240 120,250" stroke="#166534" stroke-width="0.7" opacity="0.15" fill="none" stroke-linecap="round"/>
+        <!-- End dots left -->
+        <circle cx="60" cy="80" r="3" fill="#22c55e" opacity="0.5"/>
+        <circle cx="45" cy="110" r="3" fill="#22c55e" opacity="0.45"/>
+        <circle cx="40" cy="145" r="3.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="42" cy="170" r="2.5" fill="#16a34a" opacity="0.35"/>
+        <circle cx="55" cy="195" r="2" fill="#16a34a" opacity="0.3"/>
+        <circle cx="82" cy="210" r="1.5" fill="#16a34a" opacity="0.25"/>
+        <circle cx="112" cy="248" r="1.5" fill="#166534" opacity="0.2"/>
+        <!-- Right wing (mirror) -->
+        <path d="M152,100 C180,85 225,60 240,80" stroke="#22c55e" stroke-width="2" opacity="0.45" fill="none" stroke-linecap="round"/>
+        <path d="M152,115 C190,105 240,85 255,110" stroke="#22c55e" stroke-width="2" opacity="0.4" fill="none" stroke-linecap="round"/>
+        <path d="M152,130 C195,125 245,120 260,145" stroke="#22c55e" stroke-width="1.8" opacity="0.35" fill="none" stroke-linecap="round"/>
+        <path d="M152,145 C192,142 242,148 258,170" stroke="#16a34a" stroke-width="1.5" opacity="0.3" fill="none" stroke-linecap="round"/>
+        <path d="M152,160 C185,162 230,175 245,195" stroke="#16a34a" stroke-width="1.2" opacity="0.25" fill="none" stroke-linecap="round"/>
+        <path d="M152,175 C175,180 210,198 218,210" stroke="#16a34a" stroke-width="1" opacity="0.2" fill="none" stroke-linecap="round"/>
+        <path d="M152,190 C165,205 182,235 188,248" stroke="#166534" stroke-width="0.8" opacity="0.18" fill="none" stroke-linecap="round"/>
+        <path d="M152,200 C162,215 175,240 180,250" stroke="#166534" stroke-width="0.7" opacity="0.15" fill="none" stroke-linecap="round"/>
+        <circle cx="240" cy="80" r="3" fill="#22c55e" opacity="0.5"/>
+        <circle cx="255" cy="110" r="3" fill="#22c55e" opacity="0.45"/>
+        <circle cx="260" cy="145" r="3.5" fill="#22c55e" opacity="0.4"/>
+        <circle cx="258" cy="170" r="2.5" fill="#16a34a" opacity="0.35"/>
+        <circle cx="245" cy="195" r="2" fill="#16a34a" opacity="0.3"/>
+        <circle cx="218" cy="210" r="1.5" fill="#16a34a" opacity="0.25"/>
+        <circle cx="188" cy="248" r="1.5" fill="#166534" opacity="0.2"/>
+        <!-- Body -->
+        <line x1="150" y1="82" x2="150" y2="260" stroke="#1c1c1a" stroke-width="2" opacity="0.18" stroke-linecap="round"/>
+        <path d="M150,95 Q138,65 128,48" fill="none" stroke="#1c1c1a" stroke-width="1.2" opacity="0.15" stroke-linecap="round"/>
+        <path d="M150,95 Q162,65 172,48" fill="none" stroke="#1c1c1a" stroke-width="1.2" opacity="0.15" stroke-linecap="round"/>
+        <circle cx="128" cy="47" r="2.5" fill="#22c55e" opacity="0.45"/>
+        <circle cx="172" cy="47" r="2.5" fill="#22c55e" opacity="0.45"/>
+      </svg>
+    </div>
+
+  </div>
+</body>
+</html>

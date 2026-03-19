@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geometric Butterfly Variations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crete+Round&family=Plus+Jakarta+Sans:wght@400;600&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #faf7f2; color: #1c1c1a; padding: 2rem; }
+    h1 { font-family: 'Crete Round', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+    p.sub { color: #8a8a80; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: #fff; border: 1px solid #e5e2dc; border-radius: 16px; padding: 1.5rem; text-align: center; }
+    .card h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .card p { font-size: 0.75rem; color: #8a8a80; margin-bottom: 1rem; }
+    .card svg { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <h1>Geometric Butterfly — 12 Variations</h1>
+  <p class="sub">All based on #1 (triangular facets/constellation). Varying density, opacity, spread, and accent.</p>
+
+  <div class="grid">
+
+    <!-- A. Original #1 for reference -->
+    <div class="card">
+      <h3>A. Original #1</h3>
+      <p>Reference — the first iteration</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="aL" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22c55e" stop-opacity="0.7"/><stop offset="100%" stop-color="#0d7a36" stop-opacity="0.4"/></linearGradient>
+          <linearGradient id="aR" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#22c55e" stop-opacity="0.7"/><stop offset="100%" stop-color="#0d7a36" stop-opacity="0.4"/></linearGradient>
+          <linearGradient id="aLow" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#16a34a" stop-opacity="0.5"/><stop offset="100%" stop-color="#166534" stop-opacity="0.2"/></linearGradient>
+        </defs>
+        <g><polygon points="147,93 93,57 71,114" fill="url(#aL)"/><polygon points="147,93 71,114 57,171" fill="url(#aL)" opacity="0.85"/><polygon points="147,93 57,171 86,200" fill="url(#aL)" opacity="0.7"/><polygon points="147,143 57,171 86,200" fill="url(#aLow)" opacity="0.6"/><polygon points="147,143 86,200 114,229" fill="url(#aLow)" opacity="0.45"/><polygon points="147,143 114,229 140,243" fill="url(#aLow)" opacity="0.3"/><line x1="147" y1="93" x2="71" y2="114" stroke="#16a34a" stroke-width="0.5" opacity="0.4"/><line x1="147" y1="93" x2="57" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="147" y1="143" x2="86" y2="200" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><circle cx="93" cy="57" r="2" fill="#22c55e" opacity="0.6"/><circle cx="71" cy="114" r="1.5" fill="#22c55e" opacity="0.5"/><circle cx="57" cy="171" r="2.5" fill="#22c55e" opacity="0.5"/><circle cx="86" cy="200" r="1.5" fill="#22c55e" opacity="0.4"/><circle cx="114" cy="229" r="2" fill="#22c55e" opacity="0.35"/></g>
+        <g><polygon points="153,93 207,57 229,114" fill="url(#aR)"/><polygon points="153,93 229,114 243,171" fill="url(#aR)" opacity="0.85"/><polygon points="153,93 243,171 214,200" fill="url(#aR)" opacity="0.7"/><polygon points="153,143 243,171 214,200" fill="url(#aLow)" opacity="0.6"/><polygon points="153,143 214,200 186,229" fill="url(#aLow)" opacity="0.45"/><polygon points="153,143 186,229 160,243" fill="url(#aLow)" opacity="0.3"/><line x1="153" y1="93" x2="229" y2="114" stroke="#16a34a" stroke-width="0.5" opacity="0.4"/><line x1="153" y1="93" x2="243" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="153" y1="143" x2="214" y2="200" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><circle cx="207" cy="57" r="2" fill="#22c55e" opacity="0.6"/><circle cx="229" cy="114" r="1.5" fill="#22c55e" opacity="0.5"/><circle cx="243" cy="171" r="2.5" fill="#22c55e" opacity="0.5"/><circle cx="214" cy="200" r="1.5" fill="#22c55e" opacity="0.4"/><circle cx="186" cy="229" r="2" fill="#22c55e" opacity="0.35"/></g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- B. Wider spread, fewer facets -->
+    <div class="card">
+      <h3>B. Wide Spread</h3>
+      <p>Wings stretch further out, only 4 facets per wing</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="bL" x1="0%" y1="20%" x2="80%" y2="100%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0.6"/><stop offset="100%" stop-color="#15803d" stop-opacity="0.25"/></linearGradient><linearGradient id="bR" x1="100%" y1="20%" x2="20%" y2="100%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0.6"/><stop offset="100%" stop-color="#15803d" stop-opacity="0.25"/></linearGradient></defs>
+        <g><polygon points="147,100 80,50 40,120" fill="url(#bL)"/><polygon points="147,100 40,120 45,195" fill="url(#bL)" opacity="0.7"/><polygon points="147,160 45,195 100,220" fill="url(#bL)" opacity="0.45"/><polygon points="147,160 100,220 140,245" fill="url(#bL)" opacity="0.25"/><line x1="147" y1="100" x2="80" y2="50" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/><line x1="147" y1="100" x2="40" y2="120" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="147" y1="100" x2="45" y2="195" stroke="#16a34a" stroke-width="0.5" opacity="0.2"/><line x1="147" y1="160" x2="45" y2="195" stroke="#16a34a" stroke-width="0.4" opacity="0.18"/><line x1="147" y1="160" x2="100" y2="220" stroke="#16a34a" stroke-width="0.4" opacity="0.15"/><circle cx="80" cy="50" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="40" cy="120" r="2" fill="#22c55e" opacity="0.45"/><circle cx="45" cy="195" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="100" cy="220" r="2" fill="#22c55e" opacity="0.3"/></g>
+        <g><polygon points="153,100 220,50 260,120" fill="url(#bR)"/><polygon points="153,100 260,120 255,195" fill="url(#bR)" opacity="0.7"/><polygon points="153,160 255,195 200,220" fill="url(#bR)" opacity="0.45"/><polygon points="153,160 200,220 160,245" fill="url(#bR)" opacity="0.25"/><line x1="153" y1="100" x2="220" y2="50" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/><line x1="153" y1="100" x2="260" y2="120" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="153" y1="100" x2="255" y2="195" stroke="#16a34a" stroke-width="0.5" opacity="0.2"/><line x1="153" y1="160" x2="255" y2="195" stroke="#16a34a" stroke-width="0.4" opacity="0.18"/><line x1="153" y1="160" x2="200" y2="220" stroke="#16a34a" stroke-width="0.4" opacity="0.15"/><circle cx="220" cy="50" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="260" cy="120" r="2" fill="#22c55e" opacity="0.45"/><circle cx="255" cy="195" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="200" cy="220" r="2" fill="#22c55e" opacity="0.3"/></g>
+        <line x1="150" y1="78" x2="150" y2="252" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,95 Q138,65 125,48" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,95 Q162,65 175,48" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="125" cy="47" r="2" fill="#22c55e" opacity="0.4"/><circle cx="175" cy="47" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- C. Lines only, no fills -->
+    <div class="card">
+      <h3>C. Skeleton Only</h3>
+      <p>Same geometry, no polygon fills — just the constellation</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g><line x1="147" y1="93" x2="93" y2="57" stroke="#22c55e" stroke-width="1" opacity="0.5"/><line x1="147" y1="93" x2="71" y2="114" stroke="#22c55e" stroke-width="1" opacity="0.45"/><line x1="147" y1="93" x2="57" y2="171" stroke="#22c55e" stroke-width="0.8" opacity="0.4"/><line x1="93" y1="57" x2="71" y2="114" stroke="#22c55e" stroke-width="0.7" opacity="0.35"/><line x1="71" y1="114" x2="57" y2="171" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/><line x1="57" y1="171" x2="86" y2="200" stroke="#22c55e" stroke-width="0.6" opacity="0.25"/><line x1="147" y1="143" x2="57" y2="171" stroke="#22c55e" stroke-width="0.6" opacity="0.25"/><line x1="147" y1="143" x2="86" y2="200" stroke="#22c55e" stroke-width="0.5" opacity="0.2"/><line x1="147" y1="143" x2="114" y2="229" stroke="#22c55e" stroke-width="0.5" opacity="0.18"/><line x1="86" y1="200" x2="114" y2="229" stroke="#22c55e" stroke-width="0.4" opacity="0.15"/><line x1="114" y1="229" x2="140" y2="243" stroke="#22c55e" stroke-width="0.4" opacity="0.12"/><circle cx="93" cy="57" r="3" fill="#22c55e" opacity="0.6"/><circle cx="71" cy="114" r="2.5" fill="#22c55e" opacity="0.5"/><circle cx="57" cy="171" r="3" fill="#22c55e" opacity="0.5"/><circle cx="86" cy="200" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="114" cy="229" r="2.5" fill="#22c55e" opacity="0.35"/><circle cx="140" cy="243" r="2" fill="#22c55e" opacity="0.25"/></g>
+        <g><line x1="153" y1="93" x2="207" y2="57" stroke="#22c55e" stroke-width="1" opacity="0.5"/><line x1="153" y1="93" x2="229" y2="114" stroke="#22c55e" stroke-width="1" opacity="0.45"/><line x1="153" y1="93" x2="243" y2="171" stroke="#22c55e" stroke-width="0.8" opacity="0.4"/><line x1="207" y1="57" x2="229" y2="114" stroke="#22c55e" stroke-width="0.7" opacity="0.35"/><line x1="229" y1="114" x2="243" y2="171" stroke="#22c55e" stroke-width="0.7" opacity="0.3"/><line x1="243" y1="171" x2="214" y2="200" stroke="#22c55e" stroke-width="0.6" opacity="0.25"/><line x1="153" y1="143" x2="243" y2="171" stroke="#22c55e" stroke-width="0.6" opacity="0.25"/><line x1="153" y1="143" x2="214" y2="200" stroke="#22c55e" stroke-width="0.5" opacity="0.2"/><line x1="153" y1="143" x2="186" y2="229" stroke="#22c55e" stroke-width="0.5" opacity="0.18"/><line x1="214" y1="200" x2="186" y2="229" stroke="#22c55e" stroke-width="0.4" opacity="0.15"/><line x1="186" y1="229" x2="160" y2="243" stroke="#22c55e" stroke-width="0.4" opacity="0.12"/><circle cx="207" cy="57" r="3" fill="#22c55e" opacity="0.6"/><circle cx="229" cy="114" r="2.5" fill="#22c55e" opacity="0.5"/><circle cx="243" cy="171" r="3" fill="#22c55e" opacity="0.5"/><circle cx="214" cy="200" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="186" cy="229" r="2.5" fill="#22c55e" opacity="0.35"/><circle cx="160" cy="243" r="2" fill="#22c55e" opacity="0.25"/></g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- D. Brighter, more saturated -->
+    <div class="card">
+      <h3>D. High Saturation</h3>
+      <p>Bolder green, higher opacity fills</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="dL" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0.85"/><stop offset="100%" stop-color="#16a34a" stop-opacity="0.55"/></linearGradient><linearGradient id="dR" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0.85"/><stop offset="100%" stop-color="#16a34a" stop-opacity="0.55"/></linearGradient></defs>
+        <g><polygon points="147,93 93,57 71,114" fill="url(#dL)"/><polygon points="147,93 71,114 57,171" fill="url(#dL)" opacity="0.9"/><polygon points="147,93 57,171 86,200" fill="url(#dL)" opacity="0.75"/><polygon points="147,143 57,171 86,200" fill="#16a34a" opacity="0.55"/><polygon points="147,143 86,200 114,229" fill="#16a34a" opacity="0.4"/><polygon points="147,143 114,229 140,243" fill="#166534" opacity="0.3"/><line x1="147" y1="93" x2="71" y2="114" stroke="#0d7a36" stroke-width="0.7" opacity="0.5"/><line x1="147" y1="93" x2="57" y2="171" stroke="#0d7a36" stroke-width="0.6" opacity="0.4"/><line x1="147" y1="143" x2="86" y2="200" stroke="#0d7a36" stroke-width="0.5" opacity="0.35"/><circle cx="93" cy="57" r="2.5" fill="#4ade80" opacity="0.8"/><circle cx="71" cy="114" r="2" fill="#4ade80" opacity="0.7"/><circle cx="57" cy="171" r="3" fill="#22c55e" opacity="0.65"/><circle cx="86" cy="200" r="2" fill="#22c55e" opacity="0.5"/><circle cx="114" cy="229" r="2.5" fill="#16a34a" opacity="0.4"/></g>
+        <g><polygon points="153,93 207,57 229,114" fill="url(#dR)"/><polygon points="153,93 229,114 243,171" fill="url(#dR)" opacity="0.9"/><polygon points="153,93 243,171 214,200" fill="url(#dR)" opacity="0.75"/><polygon points="153,143 243,171 214,200" fill="#16a34a" opacity="0.55"/><polygon points="153,143 214,200 186,229" fill="#16a34a" opacity="0.4"/><polygon points="153,143 186,229 160,243" fill="#166534" opacity="0.3"/><line x1="153" y1="93" x2="229" y2="114" stroke="#0d7a36" stroke-width="0.7" opacity="0.5"/><line x1="153" y1="93" x2="243" y2="171" stroke="#0d7a36" stroke-width="0.6" opacity="0.4"/><line x1="153" y1="143" x2="214" y2="200" stroke="#0d7a36" stroke-width="0.5" opacity="0.35"/><circle cx="207" cy="57" r="2.5" fill="#4ade80" opacity="0.8"/><circle cx="229" cy="114" r="2" fill="#4ade80" opacity="0.7"/><circle cx="243" cy="171" r="3" fill="#22c55e" opacity="0.65"/><circle cx="214" cy="200" r="2" fill="#22c55e" opacity="0.5"/><circle cx="186" cy="229" r="2.5" fill="#16a34a" opacity="0.4"/></g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.2" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2.5" fill="#4ade80" opacity="0.6"/><circle cx="170" cy="52" r="2.5" fill="#4ade80" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- E. Amber accent wing tips -->
+    <div class="card">
+      <h3>E. Amber Tips</h3>
+      <p>Warm amber on upper wing tips, green body</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="eL" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f59e0b" stop-opacity="0.5"/><stop offset="50%" stop-color="#22c55e" stop-opacity="0.55"/><stop offset="100%" stop-color="#15803d" stop-opacity="0.3"/></linearGradient><linearGradient id="eR" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#f59e0b" stop-opacity="0.5"/><stop offset="50%" stop-color="#22c55e" stop-opacity="0.55"/><stop offset="100%" stop-color="#15803d" stop-opacity="0.3"/></linearGradient></defs>
+        <g><polygon points="147,93 93,57 71,114" fill="url(#eL)"/><polygon points="147,93 71,114 57,171" fill="url(#eL)" opacity="0.8"/><polygon points="147,93 57,171 86,200" fill="#22c55e" opacity="0.5"/><polygon points="147,143 57,171 86,200" fill="#16a34a" opacity="0.4"/><polygon points="147,143 86,200 114,229" fill="#16a34a" opacity="0.3"/><polygon points="147,143 114,229 140,243" fill="#166534" opacity="0.2"/><line x1="147" y1="93" x2="93" y2="57" stroke="#b45309" stroke-width="0.5" opacity="0.3"/><line x1="147" y1="93" x2="71" y2="114" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="147" y1="93" x2="57" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><circle cx="93" cy="57" r="2.5" fill="#f59e0b" opacity="0.6"/><circle cx="71" cy="114" r="2" fill="#22c55e" opacity="0.5"/><circle cx="57" cy="171" r="2.5" fill="#22c55e" opacity="0.45"/><circle cx="86" cy="200" r="1.5" fill="#16a34a" opacity="0.35"/><circle cx="114" cy="229" r="2" fill="#16a34a" opacity="0.3"/></g>
+        <g><polygon points="153,93 207,57 229,114" fill="url(#eR)"/><polygon points="153,93 229,114 243,171" fill="url(#eR)" opacity="0.8"/><polygon points="153,93 243,171 214,200" fill="#22c55e" opacity="0.5"/><polygon points="153,143 243,171 214,200" fill="#16a34a" opacity="0.4"/><polygon points="153,143 214,200 186,229" fill="#16a34a" opacity="0.3"/><polygon points="153,143 186,229 160,243" fill="#166534" opacity="0.2"/><line x1="153" y1="93" x2="207" y2="57" stroke="#b45309" stroke-width="0.5" opacity="0.3"/><line x1="153" y1="93" x2="229" y2="114" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="153" y1="93" x2="243" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><circle cx="207" cy="57" r="2.5" fill="#f59e0b" opacity="0.6"/><circle cx="229" cy="114" r="2" fill="#22c55e" opacity="0.5"/><circle cx="243" cy="171" r="2.5" fill="#22c55e" opacity="0.45"/><circle cx="214" cy="200" r="1.5" fill="#16a34a" opacity="0.35"/><circle cx="186" cy="229" r="2" fill="#16a34a" opacity="0.3"/></g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2" fill="#f59e0b" opacity="0.45"/><circle cx="170" cy="52" r="2" fill="#f59e0b" opacity="0.45"/>
+      </svg>
+    </div>
+
+    <!-- F. Asymmetric -->
+    <div class="card">
+      <h3>F. Asymmetric</h3>
+      <p>Left and right wings differ slightly — more natural</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g><polygon points="147,93 88,52 65,118" fill="#22c55e" opacity="0.55"/><polygon points="147,93 65,118 52,178" fill="#22c55e" opacity="0.45"/><polygon points="147,93 52,178 80,205" fill="#22c55e" opacity="0.35"/><polygon points="147,150 52,178 80,205" fill="#16a34a" opacity="0.35"/><polygon points="147,150 80,205 120,235" fill="#16a34a" opacity="0.25"/><line x1="147" y1="93" x2="88" y2="52" stroke="#16a34a" stroke-width="0.6" opacity="0.35"/><line x1="147" y1="93" x2="65" y2="118" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="147" y1="93" x2="52" y2="178" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="65" y1="118" x2="52" y2="178" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/><circle cx="88" cy="52" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="65" cy="118" r="2" fill="#22c55e" opacity="0.45"/><circle cx="52" cy="178" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="80" cy="205" r="2" fill="#16a34a" opacity="0.3"/></g>
+        <g><polygon points="153,90 212,60 238,108" fill="#22c55e" opacity="0.6"/><polygon points="153,90 238,108 248,165" fill="#22c55e" opacity="0.5"/><polygon points="153,90 248,165 225,198" fill="#22c55e" opacity="0.4"/><polygon points="153,145 248,165 225,198" fill="#16a34a" opacity="0.35"/><polygon points="153,145 225,198 188,225" fill="#16a34a" opacity="0.25"/><polygon points="153,145 188,225 162,240" fill="#166534" opacity="0.18"/><line x1="153" y1="90" x2="212" y2="60" stroke="#16a34a" stroke-width="0.6" opacity="0.35"/><line x1="153" y1="90" x2="238" y2="108" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="153" y1="90" x2="248" y2="165" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="238" y1="108" x2="248" y2="165" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/><circle cx="212" cy="60" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="238" cy="108" r="2" fill="#22c55e" opacity="0.45"/><circle cx="248" cy="165" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="225" cy="198" r="2" fill="#16a34a" opacity="0.3"/><circle cx="188" cy="225" r="1.5" fill="#16a34a" opacity="0.25"/></g>
+        <line x1="150" y1="75" x2="150" y2="248" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,90 Q138,62 125,45" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,90 Q162,62 175,45" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="125" cy="44" r="2" fill="#22c55e" opacity="0.4"/><circle cx="175" cy="44" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- G. Larger nodes -->
+    <div class="card">
+      <h3>G. Bold Nodes</h3>
+      <p>Same facets but much larger, bolder vertex dots</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g><polygon points="147,93 93,57 71,114" fill="#22c55e" opacity="0.35"/><polygon points="147,93 71,114 57,171" fill="#22c55e" opacity="0.28"/><polygon points="147,93 57,171 86,200" fill="#22c55e" opacity="0.2"/><polygon points="147,143 57,171 86,200" fill="#16a34a" opacity="0.2"/><polygon points="147,143 86,200 114,229" fill="#16a34a" opacity="0.15"/><line x1="147" y1="93" x2="93" y2="57" stroke="#22c55e" stroke-width="0.8" opacity="0.3"/><line x1="147" y1="93" x2="71" y2="114" stroke="#22c55e" stroke-width="0.7" opacity="0.25"/><line x1="147" y1="93" x2="57" y2="171" stroke="#22c55e" stroke-width="0.6" opacity="0.2"/><line x1="71" y1="114" x2="57" y2="171" stroke="#22c55e" stroke-width="0.5" opacity="0.18"/><line x1="57" y1="171" x2="86" y2="200" stroke="#22c55e" stroke-width="0.5" opacity="0.15"/><line x1="86" y1="200" x2="114" y2="229" stroke="#22c55e" stroke-width="0.4" opacity="0.12"/><circle cx="93" cy="57" r="5" fill="#22c55e" opacity="0.5"/><circle cx="71" cy="114" r="4" fill="#22c55e" opacity="0.45"/><circle cx="57" cy="171" r="6" fill="#22c55e" opacity="0.4"/><circle cx="86" cy="200" r="4" fill="#16a34a" opacity="0.35"/><circle cx="114" cy="229" r="5" fill="#16a34a" opacity="0.3"/><circle cx="140" cy="243" r="3" fill="#166534" opacity="0.2"/></g>
+        <g><polygon points="153,93 207,57 229,114" fill="#22c55e" opacity="0.35"/><polygon points="153,93 229,114 243,171" fill="#22c55e" opacity="0.28"/><polygon points="153,93 243,171 214,200" fill="#22c55e" opacity="0.2"/><polygon points="153,143 243,171 214,200" fill="#16a34a" opacity="0.2"/><polygon points="153,143 214,200 186,229" fill="#16a34a" opacity="0.15"/><line x1="153" y1="93" x2="207" y2="57" stroke="#22c55e" stroke-width="0.8" opacity="0.3"/><line x1="153" y1="93" x2="229" y2="114" stroke="#22c55e" stroke-width="0.7" opacity="0.25"/><line x1="153" y1="93" x2="243" y2="171" stroke="#22c55e" stroke-width="0.6" opacity="0.2"/><line x1="229" y1="114" x2="243" y2="171" stroke="#22c55e" stroke-width="0.5" opacity="0.18"/><line x1="243" y1="171" x2="214" y2="200" stroke="#22c55e" stroke-width="0.5" opacity="0.15"/><line x1="214" y1="200" x2="186" y2="229" stroke="#22c55e" stroke-width="0.4" opacity="0.12"/><circle cx="207" cy="57" r="5" fill="#22c55e" opacity="0.5"/><circle cx="229" cy="114" r="4" fill="#22c55e" opacity="0.45"/><circle cx="243" cy="171" r="6" fill="#22c55e" opacity="0.4"/><circle cx="214" cy="200" r="4" fill="#16a34a" opacity="0.35"/><circle cx="186" cy="229" r="5" fill="#16a34a" opacity="0.3"/><circle cx="160" cy="243" r="3" fill="#166534" opacity="0.2"/></g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="3" fill="#22c55e" opacity="0.5"/><circle cx="170" cy="52" r="3" fill="#22c55e" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- H. Taller, more vertical -->
+    <div class="card">
+      <h3>H. Tall Wings</h3>
+      <p>Wings stretch vertically — more elegant proportion</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="hL" x1="0%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0.6"/><stop offset="100%" stop-color="#15803d" stop-opacity="0.3"/></linearGradient><linearGradient id="hR" x1="100%" y1="0%" x2="20%" y2="100%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0.6"/><stop offset="100%" stop-color="#15803d" stop-opacity="0.3"/></linearGradient></defs>
+        <g><polygon points="147,85 105,40 78,100" fill="url(#hL)"/><polygon points="147,85 78,100 65,170" fill="url(#hL)" opacity="0.75"/><polygon points="147,85 65,170 85,200" fill="url(#hL)" opacity="0.55"/><polygon points="147,155 65,170 85,200" fill="#16a34a" opacity="0.4"/><polygon points="147,180 85,200 105,240" fill="#16a34a" opacity="0.3"/><polygon points="147,180 105,240 138,258" fill="#166534" opacity="0.2"/><line x1="147" y1="85" x2="105" y2="40" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/><line x1="147" y1="85" x2="78" y2="100" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="147" y1="85" x2="65" y2="170" stroke="#16a34a" stroke-width="0.5" opacity="0.2"/><line x1="65" y1="170" x2="85" y2="200" stroke="#16a34a" stroke-width="0.4" opacity="0.15"/><circle cx="105" cy="40" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="78" cy="100" r="2" fill="#22c55e" opacity="0.45"/><circle cx="65" cy="170" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="85" cy="200" r="2" fill="#16a34a" opacity="0.3"/><circle cx="105" cy="240" r="2" fill="#16a34a" opacity="0.25"/></g>
+        <g><polygon points="153,85 195,40 222,100" fill="url(#hR)"/><polygon points="153,85 222,100 235,170" fill="url(#hR)" opacity="0.75"/><polygon points="153,85 235,170 215,200" fill="url(#hR)" opacity="0.55"/><polygon points="153,155 235,170 215,200" fill="#16a34a" opacity="0.4"/><polygon points="153,180 215,200 195,240" fill="#16a34a" opacity="0.3"/><polygon points="153,180 195,240 162,258" fill="#166534" opacity="0.2"/><line x1="153" y1="85" x2="195" y2="40" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/><line x1="153" y1="85" x2="222" y2="100" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="153" y1="85" x2="235" y2="170" stroke="#16a34a" stroke-width="0.5" opacity="0.2"/><line x1="235" y1="170" x2="215" y2="200" stroke="#16a34a" stroke-width="0.4" opacity="0.15"/><circle cx="195" cy="40" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="222" cy="100" r="2" fill="#22c55e" opacity="0.45"/><circle cx="235" cy="170" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="215" cy="200" r="2" fill="#16a34a" opacity="0.3"/><circle cx="195" cy="240" r="2" fill="#16a34a" opacity="0.25"/></g>
+        <line x1="150" y1="68" x2="150" y2="265" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,82 Q140,55 130,38" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,82 Q160,55 170,38" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="37" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="37" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- I. Minimal — 3 triangles per wing -->
+    <div class="card">
+      <h3>I. Ultra Minimal</h3>
+      <p>Just 3 triangles per wing — maximum simplicity</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g><polygon points="147,100 85,60 55,150" fill="#22c55e" opacity="0.5"/><polygon points="147,100 55,150 90,210" fill="#22c55e" opacity="0.35"/><polygon points="147,165 90,210 135,240" fill="#16a34a" opacity="0.25"/><line x1="147" y1="100" x2="85" y2="60" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/><line x1="147" y1="100" x2="55" y2="150" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="55" y1="150" x2="90" y2="210" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/><circle cx="85" cy="60" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="55" cy="150" r="3" fill="#22c55e" opacity="0.45"/><circle cx="90" cy="210" r="2.5" fill="#16a34a" opacity="0.35"/><circle cx="135" cy="240" r="2" fill="#16a34a" opacity="0.25"/></g>
+        <g><polygon points="153,100 215,60 245,150" fill="#22c55e" opacity="0.5"/><polygon points="153,100 245,150 210,210" fill="#22c55e" opacity="0.35"/><polygon points="153,165 210,210 165,240" fill="#16a34a" opacity="0.25"/><line x1="153" y1="100" x2="215" y2="60" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/><line x1="153" y1="100" x2="245" y2="150" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><line x1="245" y1="150" x2="210" y2="210" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/><circle cx="215" cy="60" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="245" cy="150" r="3" fill="#22c55e" opacity="0.45"/><circle cx="210" cy="210" r="2.5" fill="#16a34a" opacity="0.35"/><circle cx="165" cy="240" r="2" fill="#16a34a" opacity="0.25"/></g>
+        <line x1="150" y1="78" x2="150" y2="248" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,95 Q140,68 130,52" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,95 Q160,68 170,52" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="51" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="51" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- J. Mixed fill + wireframe -->
+    <div class="card">
+      <h3>J. Half-Filled</h3>
+      <p>Some facets filled, some wireframe only</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <polygon points="147,93 93,57 71,114" fill="#22c55e" opacity="0.5"/>
+          <polygon points="147,93 71,114 57,171" fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.4"/>
+          <polygon points="147,93 57,171 86,200" fill="#22c55e" opacity="0.3"/>
+          <polygon points="147,143 57,171 86,200" fill="none" stroke="#16a34a" stroke-width="0.6" opacity="0.3"/>
+          <polygon points="147,143 86,200 114,229" fill="#16a34a" opacity="0.2"/>
+          <polygon points="147,143 114,229 140,243" fill="none" stroke="#166534" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="93" cy="57" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="71" cy="114" r="2" fill="#22c55e" opacity="0.5"/><circle cx="57" cy="171" r="2.5" fill="#22c55e" opacity="0.45"/><circle cx="86" cy="200" r="2" fill="#16a34a" opacity="0.35"/><circle cx="114" cy="229" r="2" fill="#16a34a" opacity="0.3"/><circle cx="140" cy="243" r="1.5" fill="#166534" opacity="0.2"/>
+        </g>
+        <g>
+          <polygon points="153,93 207,57 229,114" fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.4"/>
+          <polygon points="153,93 229,114 243,171" fill="#22c55e" opacity="0.45"/>
+          <polygon points="153,93 243,171 214,200" fill="none" stroke="#22c55e" stroke-width="0.6" opacity="0.3"/>
+          <polygon points="153,143 243,171 214,200" fill="#16a34a" opacity="0.3"/>
+          <polygon points="153,143 214,200 186,229" fill="none" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/>
+          <polygon points="153,143 186,229 160,243" fill="#166534" opacity="0.15"/>
+          <circle cx="207" cy="57" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="229" cy="114" r="2" fill="#22c55e" opacity="0.5"/><circle cx="243" cy="171" r="2.5" fill="#22c55e" opacity="0.45"/><circle cx="214" cy="200" r="2" fill="#16a34a" opacity="0.35"/><circle cx="186" cy="229" r="2" fill="#16a34a" opacity="0.3"/><circle cx="160" cy="243" r="1.5" fill="#166534" opacity="0.2"/>
+        </g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- K. Facets with outer glow dots -->
+    <div class="card">
+      <h3>K. Scattered Nodes</h3>
+      <p>Extra floating dots beyond wing tips — expanding outward</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g><polygon points="147,93 93,57 71,114" fill="#22c55e" opacity="0.55"/><polygon points="147,93 71,114 57,171" fill="#22c55e" opacity="0.45"/><polygon points="147,93 57,171 86,200" fill="#22c55e" opacity="0.35"/><polygon points="147,143 57,171 86,200" fill="#16a34a" opacity="0.3"/><polygon points="147,143 86,200 114,229" fill="#16a34a" opacity="0.2"/><line x1="147" y1="93" x2="93" y2="57" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="147" y1="93" x2="57" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><circle cx="93" cy="57" r="2" fill="#22c55e" opacity="0.55"/><circle cx="71" cy="114" r="1.5" fill="#22c55e" opacity="0.45"/><circle cx="57" cy="171" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="86" cy="200" r="1.5" fill="#16a34a" opacity="0.35"/>
+          <!-- Scattered outer dots -->
+          <circle cx="78" cy="42" r="1.5" fill="#22c55e" opacity="0.25"/><circle cx="55" cy="95" r="1" fill="#22c55e" opacity="0.2"/><circle cx="42" cy="148" r="1.5" fill="#22c55e" opacity="0.18"/><circle cx="38" cy="192" r="1" fill="#16a34a" opacity="0.15"/><circle cx="72" cy="222" r="1" fill="#16a34a" opacity="0.12"/>
+          <line x1="93" y1="57" x2="78" y2="42" stroke="#22c55e" stroke-width="0.3" opacity="0.15"/><line x1="57" y1="171" x2="42" y2="148" stroke="#22c55e" stroke-width="0.3" opacity="0.12"/>
+        </g>
+        <g><polygon points="153,93 207,57 229,114" fill="#22c55e" opacity="0.55"/><polygon points="153,93 229,114 243,171" fill="#22c55e" opacity="0.45"/><polygon points="153,93 243,171 214,200" fill="#22c55e" opacity="0.35"/><polygon points="153,143 243,171 214,200" fill="#16a34a" opacity="0.3"/><polygon points="153,143 214,200 186,229" fill="#16a34a" opacity="0.2"/><line x1="153" y1="93" x2="207" y2="57" stroke="#16a34a" stroke-width="0.5" opacity="0.3"/><line x1="153" y1="93" x2="243" y2="171" stroke="#16a34a" stroke-width="0.5" opacity="0.25"/><circle cx="207" cy="57" r="2" fill="#22c55e" opacity="0.55"/><circle cx="229" cy="114" r="1.5" fill="#22c55e" opacity="0.45"/><circle cx="243" cy="171" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="214" cy="200" r="1.5" fill="#16a34a" opacity="0.35"/>
+          <circle cx="222" cy="42" r="1.5" fill="#22c55e" opacity="0.25"/><circle cx="245" cy="95" r="1" fill="#22c55e" opacity="0.2"/><circle cx="258" cy="148" r="1.5" fill="#22c55e" opacity="0.18"/><circle cx="262" cy="192" r="1" fill="#16a34a" opacity="0.15"/><circle cx="228" cy="222" r="1" fill="#16a34a" opacity="0.12"/>
+          <line x1="207" y1="57" x2="222" y2="42" stroke="#22c55e" stroke-width="0.3" opacity="0.15"/><line x1="243" y1="171" x2="258" y2="148" stroke="#22c55e" stroke-width="0.3" opacity="0.12"/>
+        </g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- L. Dense mesh, many small facets -->
+    <div class="card">
+      <h3>L. Dense Mesh</h3>
+      <p>Many smaller facets — detailed crystalline structure</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <polygon points="147,93 110,60 93,93" fill="#22c55e" opacity="0.55"/><polygon points="147,93 93,93 80,130" fill="#22c55e" opacity="0.5"/><polygon points="147,93 110,60 80,80" fill="#4ade80" opacity="0.4"/><polygon points="93,93 80,80 65,115" fill="#22c55e" opacity="0.4"/><polygon points="93,93 65,115 80,130" fill="#22c55e" opacity="0.35"/><polygon points="147,130 80,130 65,165" fill="#22c55e" opacity="0.4"/><polygon points="147,130 147,93 80,130" fill="#22c55e" opacity="0.3"/><polygon points="65,115 65,165 55,140" fill="#22c55e" opacity="0.3"/><polygon points="147,165 65,165 75,195" fill="#16a34a" opacity="0.35"/><polygon points="147,165 75,195 95,210" fill="#16a34a" opacity="0.28"/><polygon points="147,165 147,130 65,165" fill="#16a34a" opacity="0.25"/><polygon points="147,200 95,210 115,235" fill="#16a34a" opacity="0.2"/><polygon points="147,200 115,235 140,245" fill="#166534" opacity="0.15"/>
+          <line x1="147" y1="93" x2="110" y2="60" stroke="#16a34a" stroke-width="0.4" opacity="0.25"/><line x1="147" y1="93" x2="93" y2="93" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/><line x1="93" y1="93" x2="80" y2="130" stroke="#16a34a" stroke-width="0.3" opacity="0.18"/><line x1="80" y1="130" x2="65" y2="165" stroke="#16a34a" stroke-width="0.3" opacity="0.15"/><line x1="65" y1="165" x2="75" y2="195" stroke="#16a34a" stroke-width="0.3" opacity="0.12"/>
+          <circle cx="110" cy="60" r="1.5" fill="#22c55e" opacity="0.5"/><circle cx="80" cy="80" r="1" fill="#22c55e" opacity="0.4"/><circle cx="93" cy="93" r="1.5" fill="#22c55e" opacity="0.45"/><circle cx="65" cy="115" r="1" fill="#22c55e" opacity="0.35"/><circle cx="80" cy="130" r="1.5" fill="#22c55e" opacity="0.4"/><circle cx="55" cy="140" r="1" fill="#22c55e" opacity="0.3"/><circle cx="65" cy="165" r="2" fill="#22c55e" opacity="0.35"/><circle cx="75" cy="195" r="1.5" fill="#16a34a" opacity="0.3"/><circle cx="95" cy="210" r="1" fill="#16a34a" opacity="0.25"/><circle cx="115" cy="235" r="1.5" fill="#16a34a" opacity="0.2"/>
+        </g>
+        <g>
+          <polygon points="153,93 190,60 207,93" fill="#22c55e" opacity="0.55"/><polygon points="153,93 207,93 220,130" fill="#22c55e" opacity="0.5"/><polygon points="153,93 190,60 220,80" fill="#4ade80" opacity="0.4"/><polygon points="207,93 220,80 235,115" fill="#22c55e" opacity="0.4"/><polygon points="207,93 235,115 220,130" fill="#22c55e" opacity="0.35"/><polygon points="153,130 220,130 235,165" fill="#22c55e" opacity="0.4"/><polygon points="153,130 153,93 220,130" fill="#22c55e" opacity="0.3"/><polygon points="235,115 235,165 245,140" fill="#22c55e" opacity="0.3"/><polygon points="153,165 235,165 225,195" fill="#16a34a" opacity="0.35"/><polygon points="153,165 225,195 205,210" fill="#16a34a" opacity="0.28"/><polygon points="153,165 153,130 235,165" fill="#16a34a" opacity="0.25"/><polygon points="153,200 205,210 185,235" fill="#16a34a" opacity="0.2"/><polygon points="153,200 185,235 160,245" fill="#166534" opacity="0.15"/>
+          <line x1="153" y1="93" x2="190" y2="60" stroke="#16a34a" stroke-width="0.4" opacity="0.25"/><line x1="153" y1="93" x2="207" y2="93" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/><line x1="207" y1="93" x2="220" y2="130" stroke="#16a34a" stroke-width="0.3" opacity="0.18"/><line x1="220" y1="130" x2="235" y2="165" stroke="#16a34a" stroke-width="0.3" opacity="0.15"/>
+          <circle cx="190" cy="60" r="1.5" fill="#22c55e" opacity="0.5"/><circle cx="220" cy="80" r="1" fill="#22c55e" opacity="0.4"/><circle cx="207" cy="93" r="1.5" fill="#22c55e" opacity="0.45"/><circle cx="235" cy="115" r="1" fill="#22c55e" opacity="0.35"/><circle cx="220" cy="130" r="1.5" fill="#22c55e" opacity="0.4"/><circle cx="245" cy="140" r="1" fill="#22c55e" opacity="0.3"/><circle cx="235" cy="165" r="2" fill="#22c55e" opacity="0.35"/><circle cx="225" cy="195" r="1.5" fill="#16a34a" opacity="0.3"/><circle cx="205" cy="210" r="1" fill="#16a34a" opacity="0.25"/><circle cx="185" cy="235" r="1.5" fill="#16a34a" opacity="0.2"/>
+        </g>
+        <line x1="150" y1="78" x2="150" y2="252" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="1.5" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="52" r="1.5" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- M. Outlined facets -->
+    <div class="card">
+      <h3>M. Outlined Facets</h3>
+      <p>Thin stroke borders on each triangle, subtle fill</p>
+      <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <polygon points="147,93 93,57 71,114" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="0.6" opacity="0.4"/>
+          <polygon points="147,93 71,114 57,171" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="0.5" opacity="0.35"/>
+          <polygon points="147,93 57,171 86,200" fill="#22c55e" opacity="0.1" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
+          <polygon points="147,143 57,171 86,200" fill="#16a34a" opacity="0.08" stroke="#16a34a" stroke-width="0.4" opacity="0.25"/>
+          <polygon points="147,143 86,200 114,229" fill="#16a34a" opacity="0.06" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/>
+          <polygon points="147,143 114,229 140,243" fill="#166534" opacity="0.04" stroke="#166534" stroke-width="0.3" opacity="0.15"/>
+          <circle cx="93" cy="57" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="71" cy="114" r="2" fill="#22c55e" opacity="0.45"/><circle cx="57" cy="171" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="86" cy="200" r="2" fill="#16a34a" opacity="0.3"/><circle cx="114" cy="229" r="2" fill="#16a34a" opacity="0.25"/><circle cx="140" cy="243" r="1.5" fill="#166534" opacity="0.18"/>
+        </g>
+        <g>
+          <polygon points="153,93 207,57 229,114" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="0.6" opacity="0.4"/>
+          <polygon points="153,93 229,114 243,171" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="0.5" opacity="0.35"/>
+          <polygon points="153,93 243,171 214,200" fill="#22c55e" opacity="0.1" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
+          <polygon points="153,143 243,171 214,200" fill="#16a34a" opacity="0.08" stroke="#16a34a" stroke-width="0.4" opacity="0.25"/>
+          <polygon points="153,143 214,200 186,229" fill="#16a34a" opacity="0.06" stroke="#16a34a" stroke-width="0.4" opacity="0.2"/>
+          <polygon points="153,143 186,229 160,243" fill="#166534" opacity="0.04" stroke="#166534" stroke-width="0.3" opacity="0.15"/>
+          <circle cx="207" cy="57" r="2.5" fill="#22c55e" opacity="0.55"/><circle cx="229" cy="114" r="2" fill="#22c55e" opacity="0.45"/><circle cx="243" cy="171" r="2.5" fill="#22c55e" opacity="0.4"/><circle cx="214" cy="200" r="2" fill="#16a34a" opacity="0.3"/><circle cx="186" cy="229" r="2" fill="#16a34a" opacity="0.25"/><circle cx="160" cy="243" r="1.5" fill="#166534" opacity="0.18"/>
+        </g>
+        <line x1="150" y1="78" x2="150" y2="250" stroke="#1c1c1a" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/><path d="M150,93 Q140,68 130,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><path d="M150,93 Q160,68 170,53" fill="none" stroke="#1c1c1a" stroke-width="1" opacity="0.15" stroke-linecap="round"/><circle cx="130" cy="52" r="2" fill="#22c55e" opacity="0.4"/><circle cx="170" cy="52" r="2" fill="#22c55e" opacity="0.4"/>
+      </svg>
+    </div>
+
+  </div>
+</body>
+</html>
