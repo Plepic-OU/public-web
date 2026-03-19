@@ -468,7 +468,7 @@ p:last-child {
 }
 
 .hero h1 .green {
-  color: var(--green-dark);
+  color: #16a34a;
 }
 
 .hero-desc {
