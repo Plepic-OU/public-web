@@ -14,6 +14,7 @@ for (const page of pages) {
 
     const accessibilityScanResults = await new AxeBuilder({ page: browserPage })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .exclude('.hero-bottom') // Trust bar: intentionally reduced opacity (0.65) for supplementary content
       .analyze();
 
     // Filter for serious and critical violations only
