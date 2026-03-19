@@ -427,42 +427,135 @@ p:last-child {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 80px 0;
+  padding: 60px 0;
   position: relative;
   overflow: hidden;
 }
 
-.hero-particles {
-  display: none;
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 2rem;
+  max-width: var(--max-width);
+  padding: 0 2rem;
+  margin: -5vh auto 0;
+  align-items: end;
+  width: 100%;
+  position: relative;
 }
 
-.hero-content {
-  max-width: 680px;
+.hero-text {
+  max-width: 580px;
 }
 
-.hero .highlight {
+.hero h1 .green {
   color: var(--green-dark);
 }
 
-.hero-description {
+.hero-desc {
   font-size: 1.1rem;
   line-height: 1.6;
   color: var(--text-2);
-  margin-bottom: 2rem;
-  max-width: 540px;
+  margin-bottom: 2.5rem;
+  max-width: 480px;
 }
 
-.hero-description strong,
-.hero-description span {
+.hero-desc strong {
   color: var(--text);
   font-weight: 600;
 }
 
 .hero-qualifier {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.8rem;
   color: var(--text-3);
 }
+
+/* Trust bar at bottom of hero */
+.hero-bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  max-width: var(--max-width);
+  padding: 0 2rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.35;
+}
+
+.hero-bottom span {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hero-bottom-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Butterfly visual */
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  position: relative;
+  align-self: end;
+}
+
+.butterfly-container {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 300 / 280;
+}
+
+.butterfly-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.butterfly-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--green-dark);
+  background: var(--surface);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04);
+  margin-top: 1rem;
+}
+
+/* Wing hover animation */
+.butterfly-svg .wing-group {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: 210px 210px;
+}
+.butterfly-container:hover .wing-left { transform: rotate(-4deg) translateX(-6px); }
+.butterfly-container:hover .wing-right { transform: rotate(4deg) translateX(6px); }
 
 /* ========================================
    Perspective Shift Section
@@ -1826,6 +1919,42 @@ p:last-child {
     min-height: auto;
   }
 
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 0 1.25rem;
+  }
+
+  .hero-text {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero-desc {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+  }
+
+  .hero-visual {
+    order: -1;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .butterfly-container {
+    max-width: 180px;
+  }
+
+  .hero-bottom {
+    display: none;
+  }
+
+  .btn-primary {
+    margin: 0 auto;
+  }
+
   .perspective-shift-comparison {
     grid-template-columns: 1fr;
   }
@@ -1894,6 +2023,39 @@ p:last-child {
 
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet: hero stacks at 900px */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .hero-text {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero-desc {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-visual {
+    order: -1;
+    align-items: center;
+  }
+
+  .butterfly-container {
+    max-width: 220px;
+  }
+
+  .hero-bottom {
+    display: none;
   }
 }
 
