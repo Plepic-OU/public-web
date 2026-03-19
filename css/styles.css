@@ -484,6 +484,24 @@ p:last-child {
   font-weight: 600;
 }
 
+.hero-price {
+  font-size: 1.05rem;
+  line-height: normal;
+  color: var(--text-2);
+  margin-bottom: 2rem;
+}
+
+.hero-price strong {
+  color: var(--text);
+}
+
+.price-highlight {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
 .hero-qualifier {
   margin-top: 0.5rem;
   font-size: 0.8rem;
