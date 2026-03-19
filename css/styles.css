@@ -703,14 +703,6 @@ p:last-child {
   50% { filter: brightness(1.2); }
 }
 
-.hero-tagline {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--color-text-dim);
-  margin-bottom: var(--space-sm);
-  animation: fadeInUp 1s ease-out 0.4s both;
-}
-
 .hero-description {
   font-size: 1.15rem;
   color: var(--color-text);
@@ -2335,7 +2327,7 @@ section.training-hero {
 
 .powered-badge img,
 .powered-badge svg {
-  height: 14px;
+  height: 16px;
   width: auto;
   opacity: 0.7;
 }
@@ -2343,6 +2335,38 @@ section.training-hero {
 .powered-badge:hover img,
 .powered-badge:hover svg {
   opacity: 1;
+}
+
+/* Hero Qualifier Text */
+.hero-qualifier {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+  margin-top: var(--space-md);
+}
+
+/* Guarantee Box (inside orange enlist section) */
+.guarantee-box {
+  background: var(--color-void);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.guarantee-box p {
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.guarantee-box strong {
+  color: var(--color-cyan);
 }
 
 /* Panel Command Frame Enhancement */
@@ -2494,6 +2518,11 @@ section.training-hero {
 .code-snippet--orange {
   border-color: var(--color-orange);
   color: var(--color-orange);
+}
+
+.code-snippet--lg {
+  font-size: 1rem;
+  padding: 1.5rem;
 }
 
 /* Comparison Section - Base (mobile-first) */
@@ -3265,10 +3294,6 @@ html, body {
   padding: var(--space-xs) var(--space-md);
 }
 
-.hero-tagline {
-  font-size: 0.85rem;
-}
-
 .hero .btn-group {
   flex-direction: column;
   gap: var(--space-md);
@@ -3288,10 +3313,14 @@ h2 {
 /* Base (mobile): Code snippets */
 .code-snippet {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   display: block;
   font-size: 0.8rem;
   overflow-wrap: break-word;
+}
+
+.shift-col .code-snippet {
+  font-size: clamp(0.7rem, 2.5vw, 0.9rem);
 }
 
 /* 600px+: Larger code snippet font */
@@ -3352,10 +3381,6 @@ h2 {
     font-size: 2.25rem;
   }
 
-  .hero-tagline {
-    font-size: 0.9rem;
-  }
-
   h2 {
     font-size: 1.75rem;
   }
@@ -3372,7 +3397,6 @@ h2 {
 /* 768px+: Desktop hero and layout */
 @media (min-width: 768px) {
   .hero h1 {
-    font-size: 3rem;
     line-height: 1.1;
   }
 
@@ -3384,10 +3408,6 @@ h2 {
   .hero-badge {
     font-size: 0.85rem;
     padding: var(--space-sm) var(--space-lg);
-  }
-
-  .hero-tagline {
-    font-size: 1rem;
   }
 
   .hero .btn-group {
@@ -3831,6 +3851,10 @@ h2 {
 
 .max-w-200 {
   max-width: 200px;
+}
+
+.max-w-600 {
+  max-width: 600px;
 }
 
 .h-16 {
