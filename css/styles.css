@@ -253,7 +253,7 @@ p:last-child {
 .nav-cta {
   padding: 0.5rem 1.2rem !important;
   border: 1.5px solid var(--green) !important;
-  color: #16a34a !important;
+  color: #0d7a36 !important;
   border-radius: 10px !important;
   font-weight: 500 !important;
   font-size: 0.9rem !important;
@@ -301,7 +301,7 @@ p:last-child {
   gap: 0.5rem;
   padding: 1rem 2.25rem;
   background: #d97757;
-  color: #fff;
+  color: #3d1f14;
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
@@ -313,7 +313,7 @@ p:last-child {
 
 .btn-primary:hover {
   background: #b8604a;
-  color: #fff;
+  color: #3d1f14;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(217, 119, 87, 0.25);
 }
@@ -506,7 +506,7 @@ p:last-child {
   margin-top: 0.5rem;
   font-size: 0.8rem;
   line-height: normal;
-  color: #8a8a80;
+  color: #6b6b60;
   letter-spacing: 0.01em;
 }
 
@@ -579,12 +579,12 @@ p:last-child {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: normal;
-  color: #16a34a;
+  color: #0d7a36;
   background: transparent;
   padding: 0.5rem 0;
   white-space: nowrap;
   margin-top: -1.5rem;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* Wing hover animation */
