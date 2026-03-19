@@ -41,5 +41,44 @@ document.addEventListener('click', function(e) {
       'send_to': 'AW-17874572217/3LOMCImm7vEbELmnoctC',
       'value': 1, 'currency': 'EUR'
     });
+  } else if (href.indexOf('discord.gg/') !== -1) {
+    gtag('event', 'discord_click', { value: 2, currency: 'EUR' });
   }
 });
+
+// Homepage scroll depth tracking (25/50/75/100%)
+(function() {
+  var scrollThresholds = [25, 50, 75, 100];
+  var firedThresholds = {};
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (docHeight <= 0) return;
+    var scrollPercent = Math.round((scrollTop / docHeight) * 100);
+    for (var i = 0; i < scrollThresholds.length; i++) {
+      var threshold = scrollThresholds[i];
+      if (scrollPercent >= threshold && !firedThresholds[threshold]) {
+        firedThresholds[threshold] = true;
+        gtag('event', 'scroll_depth', { percent: threshold, page_path: window.location.pathname });
+      }
+    }
+  }, { passive: true });
+})();
+
+// Training page #pricing section visibility
+(function() {
+  if (typeof IntersectionObserver === 'undefined') return;
+  var pricingSection = document.getElementById('pricing');
+  if (!pricingSection) return;
+  var fired = false;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !fired) {
+        fired = true;
+        gtag('event', 'pricing_section_view', { page_path: window.location.pathname });
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  observer.observe(pricingSection);
+})();
