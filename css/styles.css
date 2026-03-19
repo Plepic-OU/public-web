@@ -583,7 +583,7 @@ p:last-child {
   background: transparent;
   padding: 0.5rem 0;
   white-space: nowrap;
-  margin-top: 1rem;
+  margin-top: -1.5rem;
   opacity: 0.5;
 }
 
