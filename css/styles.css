@@ -222,6 +222,7 @@ p:last-child {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
+  line-height: normal;
   color: var(--text) !important;
   text-decoration: none;
   letter-spacing: 0.02em;
@@ -239,6 +240,7 @@ p:last-child {
 
 .nav a {
   font-size: 0.9rem;
+  line-height: normal;
   color: var(--text-2);
   text-decoration: none;
   font-weight: 500;
@@ -251,10 +253,10 @@ p:last-child {
 .nav-cta {
   padding: 0.5rem 1.2rem !important;
   border: 1.5px solid var(--green) !important;
-  color: var(--green-dark) !important;
+  color: #16a34a !important;
   border-radius: 10px !important;
-  font-weight: 600 !important;
-  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
   background: transparent !important;
   box-shadow: none !important;
 }
@@ -294,18 +296,26 @@ p:last-child {
 }
 
 .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 1rem 2.25rem;
-  background: var(--amber);
+  background: #e68a00;
   color: #fff;
+  font-family: var(--font-body);
   font-size: 1rem;
+  font-weight: 600;
+  line-height: normal;
   border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
-  background: var(--amber-dark);
+  background: #c27400;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(168, 101, 0, 0.25);
+  box-shadow: 0 8px 24px rgba(230, 138, 0, 0.25);
 }
 
 .btn-secondary {
@@ -352,7 +362,7 @@ p:last-child {
   gap: 0.5rem;
   padding: 0.3rem 0.9rem;
   background: var(--green-surface);
-  color: var(--green-darker);
+  color: #0d7a36;
   font-size: 0.78rem;
   font-weight: 600;
   line-height: normal;
@@ -477,7 +487,9 @@ p:last-child {
 .hero-qualifier {
   margin-top: 0.5rem;
   font-size: 0.8rem;
-  color: var(--text-3);
+  line-height: normal;
+  color: #8a8a80;
+  letter-spacing: 0.01em;
 }
 
 /* Trust bar at bottom of hero */
@@ -548,7 +560,8 @@ p:last-child {
 .hero-code {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--green-dark);
+  line-height: normal;
+  color: #16a34a;
   background: var(--surface);
   padding: 0.5rem 1rem;
   border-radius: 8px;
