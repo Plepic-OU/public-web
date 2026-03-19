@@ -66,6 +66,8 @@ JetBrains+Mono:wght@400;700
 - **Text alignment:** Left-aligned (not centered)
 - **Max width:** 1120px container
 - **Desktop-first** responsive
+- **Primary viewport:** 1440×900 (MacBook Pro 15")
+- **Breakpoints:** Stack to single column at ~900px, mobile adjustments at ~480px
 
 ## Buttons
 
