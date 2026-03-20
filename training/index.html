@@ -155,11 +155,11 @@
     <!-- Training Hero -->
     <section class="training-hero section">
       <div class="container">
-        <div class="badge-base squad-badge">
+        <div class="badge-base squad-badge hero-entrance hero-entrance-1">
           <span>Recruiting: May 2026 Squad</span>
         </div>
 
-        <h1>Assemble Your <span class="highlight">Agentic Harness</span></h1>
+        <h1 class="hero-entrance hero-entrance-2">Assemble Your <span class="highlight">Agentic Harness</span></h1>
 
         <!-- Mech Viewport -->
         <div class="mech-viewport">
@@ -193,11 +193,11 @@
 
         </div>
 
-        <p class="training-hero-subtitle">
+        <p class="training-hero-subtitle hero-entrance hero-entrance-3">
           Your mech around Claude Code &mdash; tools, context, and workflows that grow with your codebase. You direct the agent. It ships production-grade code.
         </p>
 
-        <div class="btn-group">
+        <div class="btn-group hero-entrance hero-entrance-4">
           <a href="#curriculum" class="btn btn-secondary btn-lg">
             See the Curriculum
           </a>
@@ -214,7 +214,7 @@
     <!-- Curriculum Section -->
     <section id="curriculum" class="curriculum-section section">
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 reveal">
           <p class="label">Mech Assembly</p>
           <h2>6-Session Curriculum</h2>
           <div class="powered-badge mt-sm">
@@ -225,7 +225,7 @@
           <p class="mt-md text-dim">New to agentic coding? <a href="/agent/">Learn what makes an agent different &rarr;</a></p>
         </div>
 
-        <div class="curriculum-grid">
+        <div class="curriculum-grid reveal reveal-delay-1">
           <div class="curriculum-item fade-in">
             <div class="curriculum-week">Fri, May 8</div>
             <div class="curriculum-title">Core OS</div>
@@ -277,7 +277,7 @@
     <!-- What You'll Build Section -->
     <section class="details-section section">
       <div class="container">
-        <div class="details-grid">
+        <div class="details-grid reveal">
           <div class="detail-panel panel">
             <div class="panel-header">Your Mech's Toolkit</div>
             <h3>Built in Your Own Codebase</h3>
@@ -306,7 +306,7 @@
     <!-- Pricing Section -->
     <section id="pricing" class="pricing-section section">
       <div class="container">
-        <div class="pricing-content">
+        <div class="pricing-content reveal">
           <div class="pricing-box">
             <div class="pricing-header">
               <p class="label">Investment</p>
@@ -352,7 +352,7 @@
     <!-- Team Preview -->
     <section class="team-section section">
       <div class="container">
-        <div class="team-header">
+        <div class="team-header reveal">
           <p class="label">Meet the Team</p>
           <h2>Instructors</h2>
           <div class="experience-badge">
@@ -397,7 +397,7 @@
     <!-- MASSIVE CTA Section -->
     <section id="enlist" class="enlist-section">
       <div class="container">
-        <div class="enlist-content">
+        <div class="enlist-content reveal">
           <h2>Assemble Your Harness</h2>
           <p><span class="tooltip-trigger" tabindex="0" aria-describedby="guarantee-tip">Ship quality software 3-5x faster.<span class="tooltip" role="tooltip" id="guarantee-tip">3x Time Savings Guarantee &mdash; If you don't experience at least 3x time savings in typical development tasks after completing this training, we'll refund your contribution in full. Conditions apply.</span></span></p>
 
@@ -441,7 +441,7 @@
         </div>
         <div class="footer-company-info">
           <strong>Plepic <span lang="et">OÜ</span></strong> &middot; <span lang="et">Liivalaia 7, 10118 Tallinn</span> &middot; Reg. code 11275881 &middot; VAT EE102813797<br>
-          &copy; 2026 Plepic &middot; Curious play. Epic growth.
+          &copy; 2026 Plepic &middot; <span class="footer-tagline">Curious play. Epic growth.</span>
         </div>
       </div>
     </div>
@@ -505,6 +505,28 @@
 
       observer.observe(heroSection);
     }
+
+    // Scroll-triggered reveal animations
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Console easter egg for developers
+    console.log(
+      '%cwhile(curious) { explore \u2192 apply \u2192 transform }',
+      'color: #16a34a; font-size: 14px; font-family: monospace; font-weight: bold;'
+    );
+    console.log(
+      '%cWe teach developers to build with AI agents. plepic.com/training',
+      'color: #4a4a45; font-size: 11px;'
+    );
   </script>
 </body>
 </html>
