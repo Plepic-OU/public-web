@@ -233,3 +233,5 @@ Before any PR, verify consistency with diff checks.
 | `optimize-ads.ts` | Run autonomous optimization | `npx ts-node scripts/optimize-ads.ts` |
 
 Add `--test` flag to test API connections, `--dry-run` for optimize-ads to preview without changes.
+
+All scripts auto-load `.env` via `dotenv/config` — no manual `source .env` needed.

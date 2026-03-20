@@ -10,6 +10,7 @@
  *   npx ts-node scripts/export-ads.ts --date 2026-02-17
  */
 
+import "dotenv/config";
 import { GoogleAdsApi, enums } from "google-ads-api";
 import * as fs from "fs";
 import * as path from "path";
