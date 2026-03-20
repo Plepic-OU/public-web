@@ -226,13 +226,13 @@ p:last-child {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: normal;
-  color: var(--text) !important;
+  color: #16a34a !important;
   text-decoration: none;
   letter-spacing: 0.02em;
 }
 
 .logo:hover {
-  color: var(--text) !important;
+  color: #16a34a !important;
 }
 
 .nav {
@@ -644,10 +644,10 @@ p:last-child {
 .hero-cursor {
   display: inline-block;
   width: 2px;
-  height: 1em;
+  height: 0.85em;
   background: var(--green-dark);
   margin-left: 2px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
   animation: cursor-blink 1s step-end infinite;
 }
 
