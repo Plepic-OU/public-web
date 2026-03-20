@@ -94,12 +94,12 @@
       <div class="container">
         <div class="agent-hero-grid">
           <div class="agent-hero-text">
-            <p class="label">Definition</p>
-            <h1><span class="highlight">LLM using tools in a loop</span> with context</h1>
-            <p class="agent-hero-description">
+            <p class="label hero-entrance hero-entrance-1">Definition</p>
+            <h1 class="hero-entrance hero-entrance-2"><span class="highlight">LLM using tools in a loop</span> with context</h1>
+            <p class="agent-hero-description hero-entrance hero-entrance-3">
               Not marketing fluff about &ldquo;autonomous systems.&rdquo; An agent is an LLM that can use tools, runs in a loop until the task is done, and keeps context across iterations. This is the definition that changes how you think about AI.
             </p>
-            <div class="code-snippet" tabindex="0"><code class="language-pseudocode">while(task) { think &rarr; act &rarr; observe }</code></div>
+            <div class="code-snippet hero-entrance hero-entrance-4" tabindex="0"><code class="language-pseudocode">while(task) { think &rarr; act &rarr; observe }</code></div>
           </div>
           <div class="agent-hero-video">
             <div class="agent-video">
@@ -120,12 +120,12 @@
     <!-- Comparison Section: Agent vs Copilot -->
     <section class="comparison-section section">
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 reveal">
           <p class="label">The Difference</p>
           <h2>Agentic AI vs Conversational AI</h2>
         </div>
 
-        <div class="comparison-grid">
+        <div class="comparison-grid reveal reveal-delay-1">
           <!-- Agent Card -->
           <div class="comparison-card comparison-card--agent">
             <div class="comparison-visual">
@@ -170,12 +170,12 @@
     <!-- Timeline Section -->
     <section class="timeline-section section">
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 reveal">
           <p class="label">Evolution</p>
           <h2>The Rise of Agentic Coding</h2>
         </div>
 
-        <div class="timeline">
+        <div class="timeline reveal reveal-delay-1">
           <div class="timeline-item">
             <div class="timeline-date">Feb 2025</div>
             <div class="timeline-content">
@@ -203,7 +203,7 @@
     <!-- Why Terminal Section -->
     <section class="terminal-section section">
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 reveal">
           <p class="label">Advantage</p>
           <h2>Why Terminal Agents Win</h2>
           <p class="mx-auto text-dim max-w-600">
@@ -211,7 +211,7 @@
           </p>
         </div>
 
-        <div class="terminal-grid">
+        <div class="terminal-grid reveal reveal-delay-1">
           <div class="terminal-card">
             <div class="terminal-card-title">Extensibility</div>
             <p class="terminal-card-desc">Hooks for pre/post actions. Custom MCP servers. Integration with any CLI tool.</p>
@@ -235,12 +235,12 @@
     <!-- Reflection Loop Section -->
     <section class="reflection-section section">
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 reveal">
           <p class="label">Breakthrough</p>
           <h2>The Learning Loop</h2>
         </div>
 
-        <div class="reflection-content">
+        <div class="reflection-content reveal reveal-delay-1">
           <div class="reflection-diagram">
             <div class="code-snippet code-snippet--lg">
               <code class="language-pseudocode">while(task) { think &rarr; act &rarr; observe }</code>
@@ -262,7 +262,7 @@
     <!-- CTA Section -->
     <section class="enlist-section">
       <div class="container">
-        <div class="enlist-content">
+        <div class="enlist-content reveal">
           <h2>Ready to Assemble Your Harness?</h2>
           <p>6 weeks. Assemble the agentic harness around Claude Code &mdash; tools, context, and workflows that grow with your codebase.</p>
 
@@ -306,7 +306,7 @@
         </div>
         <div class="footer-company-info">
           <strong>Plepic <span lang="et">OÜ</span></strong> &middot; <span lang="et">Liivalaia 7, 10118 Tallinn</span> &middot; Reg. code 11275881 &middot; VAT EE102813797<br>
-          &copy; 2026 Plepic &middot; Curious play. Epic growth.
+          &copy; 2026 Plepic &middot; <span class="footer-tagline">Curious play. Epic growth.</span>
         </div>
       </div>
     </div>
@@ -370,6 +370,28 @@
 
       observer.observe(heroSection);
     }
+
+    // Scroll-triggered reveal animations
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Console easter egg for developers
+    console.log(
+      '%cwhile(curious) { explore \u2192 apply \u2192 transform }',
+      'color: #16a34a; font-size: 14px; font-family: monospace; font-weight: bold;'
+    );
+    console.log(
+      '%cWe teach developers to build with AI agents. plepic.com/training',
+      'color: #4a4a45; font-size: 11px;'
+    );
   </script>
 </body>
 </html>
