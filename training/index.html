@@ -225,48 +225,64 @@
           <p class="mt-md text-dim">New to agentic coding? <a href="/agent/">Learn what makes an agent different &rarr;</a></p>
         </div>
 
-        <div class="curriculum-grid reveal reveal-delay-1">
-          <div class="curriculum-item fade-in">
-            <div class="curriculum-week">Fri, May 8</div>
-            <div class="curriculum-title">Core OS</div>
-            <div class="curriculum-tagline">Your mech's foundation</div>
-            <div class="curriculum-desc">
+        <div class="curriculum-timeline reveal reveal-delay-1">
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-1-desc">
+              <span class="curriculum-week">Fri, May 8</span>
+              <span class="curriculum-title">Core OS</span>
+              <span class="curriculum-tagline">Your mech's foundation</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-1-desc" hidden>
               Claude Code setup and IDE integration. Token economics and when to use extended thinking. Commands like /review, /test, /debug. Sub-agents for task delegation. Creating CLAUDE.md files that encode your team's conventions.
             </div>
           </div>
 
-          <div class="curriculum-item fade-in">
-            <div class="curriculum-week">Fri, May 15</div>
-            <div class="curriculum-title">Context Engine</div>
-            <div class="curriculum-tagline">Teaching your mech to read context</div>
-            <div class="curriculum-desc">
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-2-desc">
+              <span class="curriculum-week">Fri, May 15</span>
+              <span class="curriculum-title">Context Engine</span>
+              <span class="curriculum-tagline">Teaching your mech to read context</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-2-desc" hidden>
               What makes agents understand your intent: code structure, documentation, and examples. Crafting Software Requirements Documents (SRDs) that capture scope, constraints, and acceptance criteria the agent can verify.
             </div>
           </div>
 
-          <div class="curriculum-item fade-in">
-            <div class="curriculum-week">Fri, May 22</div>
-            <div class="curriculum-title">The Loop</div>
-            <div class="curriculum-tagline">Your mech's core operating cycle: think &rarr; act &rarr; observe</div>
-            <div class="curriculum-desc">
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-3-desc">
+              <span class="curriculum-week">Fri, May 22</span>
+              <span class="curriculum-title">The Loop</span>
+              <span class="curriculum-tagline">think &rarr; act &rarr; observe</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-3-desc" hidden>
               The Explore-Plan-Code-Commit pattern from Anthropic's engineering team. Breaking SRDs into agent-executable tasks. AI-enhanced TDD: write tests first, commit them, let Claude implement. Using separate Claude instances for independent code review.
             </div>
           </div>
 
-          <div class="curriculum-item fade-in">
-            <div class="curriculum-week">Fri, May 29</div>
-            <div class="curriculum-title">Fleet Mode</div>
-            <div class="curriculum-tagline">Run multiple agents in parallel</div>
-            <div class="curriculum-desc">
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-4-desc">
+              <span class="curriculum-week">Fri, May 29</span>
+              <span class="curriculum-title">Fleet Mode</span>
+              <span class="curriculum-tagline">Run multiple agents in parallel</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-4-desc" hidden>
               Parallel development with git worktrees and multiple Claude instances. Agent debugging: logging, observability, and error feedback patterns. Feedback loops that let agents self-correct before commit. Generating C4 diagrams and Architecture Decision Records.
             </div>
           </div>
 
-          <div class="curriculum-item curriculum-final fade-in grid-col-span-2">
-            <div class="curriculum-week">Fri, Jun 5 & Fri, Jun 12</div>
-            <div class="curriculum-title">First Deploy</div>
-            <div class="curriculum-tagline">Your mech meets the real world</div>
-            <div class="curriculum-desc">
+          <div class="curriculum-item curriculum-final">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-5-desc">
+              <span class="curriculum-week">Fri, Jun 5 &amp; 12</span>
+              <span class="curriculum-title">First Deploy</span>
+              <span class="curriculum-tagline">Your mech meets the real world</span>
+              <span class="curriculum-sessions-badge">2 sessions</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-5-desc" hidden>
               Apply everything you've learned to build a real feature for your product. Work on your company's actual codebase with instructor support. Present your project and graduate with a production-ready deliverable.
             </div>
           </div>
@@ -306,90 +322,94 @@
     <!-- Pricing Section -->
     <section id="pricing" class="pricing-section section">
       <div class="container">
-        <div class="pricing-content reveal">
-          <div class="pricing-box">
-            <div class="pricing-header">
-              <p class="label">Investment</p>
-              <h2>80% Funded by <span lang="et">Töötukassa</span></h2>
+        <div class="pricing-hero reveal">
+          <p class="label">Investment</p>
+          <h2>Training Program</h2>
+          <p class="section-subtitle">50 academic hours &middot; 6 Fridays &middot; Online via Google Meet</p>
+
+          <div class="pricing-cards">
+            <div class="pricing-card">
+              <div class="pricing-card-header">
+                <span class="pricing-tier">Standard</span>
+              </div>
+              <div class="pricing-card-price">&euro;2,520</div>
+              <p class="pricing-card-note">+VAT per developer</p>
+              <ul class="pricing-card-features">
+                <li>For development teams across Europe</li>
+                <li>Full 6-session program</li>
+                <li>Work on your own codebase</li>
+              </ul>
+              <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+                Reserve Your Spot
+              </a>
             </div>
 
-            <div class="pricing-rows">
-              <div class="pricing-row">
-                <span class="pricing-label">Full course price</span>
-                <span class="pricing-value strikethrough">&euro;2,520</span>
+            <div class="pricing-card pricing-card-featured">
+              <div class="pricing-card-header">
+                <span class="pricing-tier">&#x1F1EA;&#x1F1EA; Estonian Subsidy</span>
               </div>
-              <div class="pricing-row">
-                <span class="pricing-label">Töötukassa covers</span>
-                <span class="pricing-value savings">&minus;&euro;2,016</span>
+              <div class="pricing-card-price">&euro;504</div>
+              <p class="pricing-card-note">+VAT per developer</p>
+              <div class="pricing-card-breakdown">
+                <div class="breakdown-row">
+                  <span>Full price</span>
+                  <span class="strikethrough">&euro;2,520</span>
+                </div>
+                <div class="breakdown-row">
+                  <span><span lang="et">Töötukassa</span> covers</span>
+                  <span class="savings">&minus;&euro;2,016</span>
+                </div>
               </div>
-              <div class="pricing-row total">
-                <span class="pricing-label">You pay</span>
-                <span class="pricing-value final">&euro;504</span>
-              </div>
+              <p class="pricing-card-explainer">
+                <span lang="et">Töötukassa</span> is Estonia's employer training fund.
+                <a href="https://www.tootukassa.ee/et/teenused/tooandjatele/koolitustoetus-tooandjatele-tootaja-ikt-oskuste-arendamiseks" target="_blank" rel="noopener noreferrer">Apply before training starts &rarr;</a>
+              </p>
+              <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg btn-pulse">
+                Reserve Your Spot
+              </a>
             </div>
-
-            <p class="pricing-note">+VAT per developer &middot; <a href="https://www.tootukassa.ee/et/teenused/tooandjatele/koolitustoetus-tooandjatele-tootaja-ikt-oskuste-arendamiseks" target="_blank" rel="noopener noreferrer"><span lang="et">Töötukassa</span> application</a> required before training starts</p>
           </div>
 
-          <div class="registration-panel">
-            <h3>Secure Your Spot</h3>
-
-            <div class="spots-remaining">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-              Limited to 20 spots per squad
+          <div class="pricing-proof">
+            <div class="proof-stat">
+              <span class="proof-number">300+</span>
+              <span class="proof-label">developers trained</span>
             </div>
-
-            <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg btn-pulse">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              Reserve Your Spot
-            </a>
-
+            <div class="proof-stat">
+              <span class="proof-number">8.4/10</span>
+              <span class="proof-label">student NPS</span>
+            </div>
+            <div class="proof-stat">
+              <span class="proof-number">3&times;</span>
+              <span class="proof-label">speed guarantee</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Team Preview -->
-    <section class="team-section section">
+    <!-- Team Strip -->
+    <section class="team-strip section">
       <div class="container">
-        <div class="team-header reveal">
-          <p class="label">Meet the Team</p>
-          <h2>Instructors</h2>
-          <div class="experience-badge">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            40+ Years Combined Professional Experience
-          </div>
-        </div>
-
-        <div class="mt-xl flex-center-wrap">
-          <div class="panel max-w-350 text-center">
-            <div class="team-photo max-w-200 mx-auto">
-              <img src="../images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
+        <div class="reveal">
+          <p class="label text-center">Your Instructors</p>
+          <div class="team-inline">
+            <div class="team-member">
+              <img src="../images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Joosep Simm</strong>
+                <span class="team-member-role">Developer, Architect & AI Trainer &middot; 20+ yrs</span>
+              </div>
             </div>
-            <h3 class="mt-md">Joosep Simm</h3>
-            <p class="team-role">Developer, Architect & AI Trainer</p>
-            <div class="team-experience justify-center">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              20+ Years Dev Experience &middot; 5 Hackathons Led
+            <div class="team-member">
+              <img src="../images/kaido.png" alt="Kaido Koort" width="500" height="568" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Kaido Koort</strong>
+                <span class="team-member-role">Tech Leader & Product Strategist &middot; 20+ yrs</span>
+              </div>
             </div>
           </div>
-
-          <div class="panel max-w-350 text-center">
-            <div class="team-photo max-w-200 mx-auto">
-              <img src="../images/kaido.png" alt="Kaido Koort" width="500" height="568" loading="lazy">
-            </div>
-            <h3 class="mt-md">Kaido Koort</h3>
-            <p class="team-role">Tech Leader & Product Strategist</p>
-            <div class="team-experience justify-center">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              20+ Years in Software &middot; Former Head of Dev, Smart-ID
-            </div>
-          </div>
-        </div>
-
-        <div class="book-divider mt-3xl">
-          <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer"><img src="../images/book-cover.png" alt="AI Coding for Beginners - book cover" width="325" height="522" loading="lazy"></a>
-          <p class="book-caption">Co-authors of "AI Coding for Beginners"</p>
+          <p class="team-book-note text-center">Co-authors of <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer">"AI Coding for Beginners"</a></p>
         </div>
       </div>
     </section>
@@ -450,7 +470,7 @@
   <!-- Mobile Sticky CTA -->
   <div class="sticky-cta" id="stickyCta">
     <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-      Reserve Your Spot - &euro;504
+      Reserve Your Spot
     </a>
   </div>
 
@@ -517,6 +537,18 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Curriculum accordion
+    document.querySelectorAll('.curriculum-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.curriculum-item');
+        const desc = item.querySelector('.curriculum-desc');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        desc.hidden = expanded;
+        item.toggleAttribute('data-expanded');
+      });
+    });
 
     // Console easter egg for developers
     console.log(
