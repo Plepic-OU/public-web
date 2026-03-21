@@ -1214,6 +1214,12 @@ p:last-child {
   inset: 0;
   width: 100%;
   height: 100%;
+  animation: loop-spin 8s linear infinite;
+}
+
+@keyframes loop-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .loop-arrow path {
@@ -1313,18 +1319,20 @@ p:last-child {
 
 /* Single-shot visual (conversational AI) */
 .single-shot-visual {
-  position: relative;
   width: 100px;
   height: 100px;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-sm);
 }
 
 .single-shot-arrow {
-  width: 100%;
-  height: 100%;
+  width: 80px;
+  height: 30px;
+  flex-shrink: 0;
 }
 
 .single-shot-arrow line,
@@ -1334,12 +1342,12 @@ p:last-child {
 }
 
 .single-shot-label {
-  position: absolute;
   font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--text-3);
   font-weight: 700;
   letter-spacing: 0.1em;
+  flex-shrink: 0;
 }
 
 /* ========================================
