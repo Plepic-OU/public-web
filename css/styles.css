@@ -1672,59 +1672,96 @@ p:last-child {
   display: inline-block;
 }
 
-.curriculum-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
-  margin-top: var(--space-2xl);
-}
-
-.curriculum-item {
+.curriculum-timeline {
+  max-width: 720px;
+  margin: var(--space-2xl) auto 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: var(--space-xl);
+  overflow: hidden;
+}
+
+.curriculum-timeline .curriculum-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.curriculum-timeline .curriculum-item:last-child {
+  border-bottom: none;
+}
+
+.curriculum-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-lg) var(--space-xl);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  transition: background var(--transition-fast);
+}
+
+.curriculum-header:hover {
+  background: var(--bg);
 }
 
 .curriculum-week {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 700;
-  line-height: normal;
   color: var(--green-dark);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: var(--space-sm);
+  white-space: nowrap;
 }
 
 .curriculum-title {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: var(--space-xs);
+  white-space: nowrap;
 }
 
 .curriculum-tagline {
   font-size: 0.85rem;
-  color: var(--green-dark);
-  font-weight: 600;
-  margin-bottom: var(--space-md);
+  color: var(--text-3);
+  flex: 1;
+}
+
+.curriculum-chevron {
+  color: var(--text-3);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+[data-expanded] > .curriculum-header .curriculum-chevron {
+  transform: rotate(180deg);
 }
 
 .curriculum-desc {
   font-size: 0.85rem;
   color: var(--text-2);
   line-height: 1.6;
+  padding: 0 var(--space-xl) var(--space-lg);
 }
 
 .curriculum-final {
-  border-color: var(--green-light);
   background: var(--green-surface);
 }
 
-.grid-col-span-2 {
-  grid-column: span 2;
+.curriculum-sessions-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  background: var(--green-light);
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
 }
 
 /* ========================================
@@ -1807,115 +1844,219 @@ p:last-child {
    ======================================== */
 
 .pricing-section {
-  background: var(--bg-alt);
+  background: var(--green-surface);
+  border-top: 1px solid var(--green-light);
+  border-bottom: 1px solid var(--green-light);
 }
 
-.pricing-content {
+.pricing-hero {
+  text-align: center;
+}
+
+.pricing-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-2xl);
-  max-width: 800px;
-  margin: 0 auto;
-  align-items: start;
+  gap: var(--space-xl);
+  max-width: 720px;
+  margin: var(--space-2xl) auto 0;
 }
 
-.pricing-box {
+.pricing-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: var(--space-2xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.pricing-header {
+.pricing-card-featured {
+  border-color: var(--green);
+  box-shadow: 0 4px 24px rgba(34, 197, 94, 0.1);
+  transform: scale(1.02);
+}
+
+.pricing-card-header {
+  margin-bottom: var(--space-md);
+}
+
+.pricing-tier {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--green-dark);
+}
+
+.pricing-card-price {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.pricing-card-note {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.pricing-card-features {
+  list-style: none;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
   margin-bottom: var(--space-xl);
 }
 
-.pricing-header h2 {
-  font-size: 1.5rem;
+.pricing-card-features li {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  padding-left: var(--space-lg);
+  position: relative;
 }
 
-.pricing-rows {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+.pricing-card-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
 }
 
-.pricing-row {
+.pricing-card-breakdown {
+  width: 100%;
+  margin-bottom: var(--space-md);
+}
+
+.breakdown-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--border);
-}
-
-.pricing-row.total {
-  border-bottom: none;
-  padding-top: var(--space-sm);
-}
-
-.pricing-label {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  padding: var(--space-xs) 0;
   color: var(--text-2);
 }
 
-.pricing-value {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.pricing-value.strikethrough {
+.breakdown-row .strikethrough {
   text-decoration: line-through;
   color: var(--text-3);
 }
 
-.pricing-value.savings {
+.breakdown-row .savings {
   color: var(--green-dark);
+  font-weight: 600;
 }
 
-.pricing-value.final {
-  font-size: 1.75rem;
-  color: var(--text);
-}
-
-.pricing-note {
-  font-size: 0.8rem;
+.pricing-card-explainer {
+  font-size: 0.75rem;
   color: var(--text-3);
-  margin-top: var(--space-lg);
   line-height: 1.5;
+  margin-bottom: var(--space-xl);
 }
 
-.pricing-note a {
+.pricing-card-explainer a {
   color: var(--green-dark);
   text-decoration: underline;
 }
 
-.registration-panel {
-  text-align: center;
+.pricing-card .btn {
+  margin-top: auto;
 }
 
-.registration-panel h3 {
+.pricing-proof {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2xl);
+  margin-top: var(--space-2xl);
+}
+
+.proof-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.proof-number {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  margin-bottom: var(--space-xl);
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--text);
-  letter-spacing: 0;
 }
 
-.spots-remaining {
+.proof-label {
+  font-size: 0.75rem;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   Training Page — Team Strip (compact)
+   ======================================== */
+
+.team-strip {
+  padding: var(--space-2xl) 0;
+}
+
+.team-inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2xl);
+  margin: var(--space-lg) 0;
+}
+
+.team-member {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  font-size: 0.85rem;
-  color: var(--claude-orange-text);
-  font-weight: 600;
-  margin-bottom: var(--space-xl);
+  gap: var(--space-md);
 }
 
-.spots-remaining svg {
-  color: var(--claude-orange-text);
+.team-strip img.team-member-photo {
+  width: 56px;
+  max-width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.team-member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.team-member-info strong {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.team-member-role {
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.team-book-note {
+  font-size: 0.8rem;
+  color: var(--text-3);
+}
+
+.team-book-note a {
+  color: var(--green-dark);
+  text-decoration: underline;
 }
 
 /* ========================================
@@ -2220,20 +2361,33 @@ p:last-child {
   }
 
   /* Training page */
-  .curriculum-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-col-span-2 {
-    grid-column: span 1;
-  }
-
   .details-grid {
     grid-template-columns: 1fr;
   }
 
-  .pricing-content {
+  .curriculum-header {
+    flex-wrap: wrap;
+  }
+
+  .curriculum-week {
+    width: 100%;
+  }
+
+  .curriculum-tagline {
+    display: none;
+  }
+
+  .team-inline {
+    flex-direction: column;
+  }
+
+  .pricing-cards {
     grid-template-columns: 1fr;
+  }
+
+  .pricing-card-featured {
+    order: -1;
+    transform: none;
   }
 
   .mech-hud-stats {
@@ -2404,11 +2558,10 @@ p:last-child {
   animation: butterfly-breathe 4s ease-in-out infinite;
 }
 
-/* Card hover lift — panels, team cards, terminal cards, curriculum items */
+/* Card hover lift — panels, team cards, terminal cards */
 .panel,
 .team-card,
 .terminal-card,
-.curriculum-item,
 .comparison-card,
 .big-stat,
 .shift-col {
@@ -2419,7 +2572,6 @@ p:last-child {
 .panel:hover,
 .team-card:hover,
 .terminal-card:hover,
-.curriculum-item:hover,
 .comparison-card:hover,
 .big-stat:hover,
 .shift-col:hover {
