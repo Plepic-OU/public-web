@@ -643,11 +643,11 @@ p:last-child {
 /* Hero code cursor blink */
 .hero-cursor {
   display: inline-block;
-  width: 2px;
-  height: 0.85em;
+  width: 1px;
+  height: 1.1em;
   background: var(--green-dark);
   margin-left: 2px;
-  vertical-align: middle;
+  vertical-align: -2px;
   animation: cursor-blink 1s step-end infinite;
 }
 
