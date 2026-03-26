@@ -1810,6 +1810,26 @@ p:last-child {
   border-radius: 50%;
 }
 
+.cert-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-2);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-md);
+}
+
+.cert-icon {
+  flex-shrink: 0;
+  color: var(--green-dark);
+  transition: color 0.3s, filter 0.3s;
+}
+
+.cert-line:hover .cert-icon {
+  color: #d4a017;
+  filter: drop-shadow(0 0 4px rgba(212, 160, 23, 0.4));
+}
+
 /* ========================================
    Training Page — Stats / Why This Works
    ======================================== */
