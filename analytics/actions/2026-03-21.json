@@ -1,0 +1,34 @@
+{
+  "date": "2026-03-21",
+  "actions": [
+    {
+      "timestamp": "2026-03-21T11:49:03.824Z",
+      "action": "PAUSE_CAMPAIGN",
+      "campaign": "Leads-Performance Max-1",
+      "campaign_id": "23561226362",
+      "reason": "Expert advice: PMax not worth it at this stage. Switching to simple keyword campaigns.",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-03-21T12:38:02.617Z",
+      "action": "ENABLE_CAMPAIGN",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "User requested activation for Squad 2 enrollment push",
+      "previous_state": "PAUSED",
+      "new_state": "ENABLED",
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 0,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 0,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}

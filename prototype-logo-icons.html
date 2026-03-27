@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plepic Logo Icon Variations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --border: #e5e2dc;
+      --dark: #1c1c1a;
+      --brand: #137a30;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 3rem 2rem;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-family: 'Zilla Slab', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .cell {
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid var(--border);
+    }
+    .cell.light { background: var(--surface); }
+    .cell.cream { background: var(--bg); }
+    .cell.dark { background: var(--dark); border-color: #333; }
+    .cell-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+    .cell.light .cell-label, .cell.cream .cell-label { color: var(--text-3); }
+    .cell.dark .cell-label { color: #6b6b60; }
+    .logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .logo-text-light {
+      font-family: 'Zilla Slab', serif;
+      font-weight: 700;
+      color: var(--brand);
+    }
+    .logo-text-dark {
+      font-family: 'Zilla Slab', serif;
+      font-weight: 700;
+      color: #22c55e;
+    }
+    .size-row {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .size-item .cell-label { color: var(--text-3); }
+    @media (max-width: 900px) {
+      .row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Logo Icon Variations</h1>
+<p class="subtitle">The geometric crystalline butterfly at different detail levels. All use the correct shading: dark near body, fading outward. Shown on light and dark backgrounds.</p>
+
+<!-- ============================================ -->
+<div class="section-label">V0 — Homepage Faithful (11 triangles per wing — exact structure from landing page)</div>
+<div class="row">
+  <div class="cell light">
+    <svg width="56" height="52" viewBox="0 0 300 280">
+      <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="1.5"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1.4"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.3"/><polygon points="147,130 147,105 15,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.2"/><polygon points="147,130 15,108 28,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.1"/><polygon points="147,165 147,130 28,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.9"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="0.7"/><polygon points="147,178 82,195 75,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/><polygon points="147,195 75,220 100,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="0.7"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.5"/></g>
+      <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="1.5"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1.4"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.3"/><polygon points="153,130 153,105 285,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.2"/><polygon points="153,130 285,108 272,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.1"/><polygon points="153,165 153,130 272,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.9"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="0.7"/><polygon points="153,178 218,195 225,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/><polygon points="153,195 225,220 200,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="0.7"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.5"/></g>
+      <polygon points="150,95 146,112 150,128 154,112" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="1"/>
+      <polygon points="150,128 147,142 150,155 153,142" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="150,155 148,168 150,178 152,168" fill="#137a30" opacity="0.24" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="150,178 149,188 150,200 151,188" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.5"/>
+      <ellipse cx="150" cy="90" rx="4" ry="5" fill="#137a30" opacity="0.32" stroke="#137a30" stroke-width="0.8"/>
+      <path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#137a30" stroke-width="1" opacity="0.56"/>
+      <path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#137a30" stroke-width="1" opacity="0.56"/>
+      <circle cx="136" cy="41" r="2.5" fill="#22c55e" opacity="0.64" stroke="#137a30" stroke-width="0.6"/>
+      <circle cx="164" cy="41" r="2.5" fill="#22c55e" opacity="0.64" stroke="#137a30" stroke-width="0.6"/>
+    </svg>
+    <div class="cell-label">On white</div>
+  </div>
+  <div class="cell cream">
+    <div class="logo-lockup">
+      <svg width="36" height="34" viewBox="0 0 300 280">
+        <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="1.5"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1.4"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.3"/><polygon points="147,130 147,105 15,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.2"/><polygon points="147,130 15,108 28,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.1"/><polygon points="147,165 147,130 28,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.9"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="0.7"/><polygon points="147,178 82,195 75,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/><polygon points="147,195 75,220 100,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="0.7"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.5"/></g>
+        <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="1.5"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1.4"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.3"/><polygon points="153,130 153,105 285,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.2"/><polygon points="153,130 285,108 272,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.1"/><polygon points="153,165 153,130 272,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.9"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="0.7"/><polygon points="153,178 218,195 225,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/><polygon points="153,195 225,220 200,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="0.7"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.5"/></g>
+        <polygon points="150,95 146,112 150,128 154,112" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="1"/>
+        <polygon points="150,128 147,142 150,155 153,142" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="150,155 148,168 150,178 152,168" fill="#137a30" opacity="0.24" stroke="#137a30" stroke-width="0.6"/>
+        <polygon points="150,178 149,188 150,200 151,188" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.5"/>
+        <path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#137a30" stroke-width="1" opacity="0.56"/>
+        <path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#137a30" stroke-width="1" opacity="0.56"/>
+        <circle cx="136" cy="41" r="2.5" fill="#22c55e" opacity="0.64" stroke="#137a30" stroke-width="0.6"/>
+        <circle cx="164" cy="41" r="2.5" fill="#22c55e" opacity="0.64" stroke="#137a30" stroke-width="0.6"/>
+      </svg>
+      <span class="logo-text-light" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on cream</div>
+  </div>
+  <div class="cell dark">
+    <svg width="56" height="52" viewBox="0 0 300 280">
+      <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.5"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.4"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.3"/><polygon points="147,130 147,105 15,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.2"/><polygon points="147,130 15,108 28,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.1"/><polygon points="147,165 147,130 28,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.9"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="0.7"/><polygon points="147,178 82,195 75,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/><polygon points="147,195 75,220 100,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="0.7"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.5"/></g>
+      <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.5"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.4"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.3"/><polygon points="153,130 153,105 285,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.2"/><polygon points="153,130 285,108 272,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.1"/><polygon points="153,165 153,130 272,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.9"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="0.7"/><polygon points="153,178 218,195 225,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/><polygon points="153,195 225,220 200,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="0.7"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.5"/></g>
+      <polygon points="150,95 146,112 150,128 154,112" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="150,128 147,142 150,155 153,142" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="150,155 148,168 150,178 152,168" fill="#4ade80" opacity="0.24" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="150,178 149,188 150,200 151,188" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.5"/>
+      <path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.56"/>
+      <path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.56"/>
+      <circle cx="136" cy="41" r="2.5" fill="#4ade80" opacity="0.64" stroke="#4ade80" stroke-width="0.6"/>
+      <circle cx="164" cy="41" r="2.5" fill="#4ade80" opacity="0.64" stroke="#4ade80" stroke-width="0.6"/>
+    </svg>
+    <div class="cell-label">On dark</div>
+  </div>
+  <div class="cell dark">
+    <div class="logo-lockup">
+      <svg width="36" height="34" viewBox="0 0 300 280">
+        <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.5"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.4"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.3"/><polygon points="147,130 147,105 15,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.2"/><polygon points="147,130 15,108 28,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.1"/><polygon points="147,165 147,130 28,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.9"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="0.7"/><polygon points="147,178 82,195 75,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/><polygon points="147,195 75,220 100,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="0.7"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.5"/></g>
+        <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.5"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.4"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.3"/><polygon points="153,130 153,105 285,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.2"/><polygon points="153,130 285,108 272,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.1"/><polygon points="153,165 153,130 272,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.9"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="0.7"/><polygon points="153,178 218,195 225,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/><polygon points="153,195 225,220 200,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="0.7"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.5"/></g>
+        <polygon points="150,95 146,112 150,128 154,112" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="150,128 147,142 150,155 153,142" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="150,155 148,168 150,178 152,168" fill="#4ade80" opacity="0.24" stroke="#4ade80" stroke-width="0.6"/>
+        <path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.56"/>
+        <path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.56"/>
+        <circle cx="136" cy="41" r="2.5" fill="#4ade80" opacity="0.64"/>
+        <circle cx="164" cy="41" r="2.5" fill="#4ade80" opacity="0.64"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on dark</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<div class="section-label">V1 — Full Detail (7 triangles per wing + body + antennae)</div>
+<div class="row">
+  <div class="cell light">
+    <svg width="56" height="50" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="58,42 22,18 12,34" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,52 58,42 12,34" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="58,65 16,58 24,74" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.7"/>
+      <polygon points="58,75 24,74 38,84" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="62,42 98,18 108,34" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,52 62,42 108,34" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="62,65 104,58 96,74" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.7"/>
+      <polygon points="62,75 96,74 82,84" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,68 59,76 60,82 61,76" fill="#137a30" opacity="0.2" stroke="#137a30" stroke-width="0.5"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+      <circle cx="68" cy="14" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+    </svg>
+    <div class="cell-label">On white</div>
+  </div>
+  <div class="cell cream">
+    <svg width="56" height="50" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="58,42 22,18 12,34" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,52 58,42 12,34" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="58,65 16,58 24,74" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.7"/>
+      <polygon points="58,75 24,74 38,84" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="62,42 98,18 108,34" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,52 62,42 108,34" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="62,65 104,58 96,74" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="0.7"/>
+      <polygon points="62,75 96,74 82,84" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,68 59,76 60,82 61,76" fill="#137a30" opacity="0.2" stroke="#137a30" stroke-width="0.5"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+      <circle cx="68" cy="14" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+    </svg>
+    <div class="cell-label">On cream</div>
+  </div>
+  <div class="cell dark">
+    <svg width="56" height="50" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="58,42 22,18 12,34" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="58,52 58,42 12,34" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="58,65 16,58 24,74" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.7"/>
+      <polygon points="58,75 24,74 38,84" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="62,42 98,18 108,34" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,52 62,42 108,34" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="62,65 104,58 96,74" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.7"/>
+      <polygon points="62,75 96,74 82,84" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="60,68 59,76 60,82 61,76" fill="#4ade80" opacity="0.2" stroke="#4ade80" stroke-width="0.5"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="#4ade80" opacity="0.6"/>
+      <circle cx="68" cy="14" r="2" fill="#4ade80" opacity="0.6"/>
+    </svg>
+    <div class="cell-label">On dark</div>
+  </div>
+  <div class="cell dark">
+    <div class="logo-lockup">
+      <svg width="32" height="28" viewBox="0 0 120 110">
+        <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="58,42 22,18 12,34" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,52 58,42 12,34" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,52 12,34 16,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="62,42 98,18 108,34" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,52 62,42 108,34" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,52 108,34 104,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="60,36 57,45 60,52 63,45" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,52 58,60 60,68 62,60" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.6"/>
+        <line x1="60" y1="36" x2="52" y2="14" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="36" x2="68" y2="14" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="52" cy="14" r="2" fill="#4ade80" opacity="0.6"/>
+        <circle cx="68" cy="14" r="2" fill="#4ade80" opacity="0.6"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on dark</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<div class="section-label">V2 — Medium Detail (5 triangles per wing + antennae) ★ Your Pick</div>
+<div class="row">
+  <div class="cell light">
+    <div class="logo-lockup">
+      <svg width="36" height="32" viewBox="0 0 120 100">
+        <polygon points="58,38 42,20 22,14" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+        <polygon points="58,38 22,14 10,30" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+        <polygon points="58,48 58,38 10,30" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+        <polygon points="58,48 10,30 14,54" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+        <polygon points="58,62 58,48 14,54" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="62,38 78,20 98,14" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+        <polygon points="62,38 98,14 110,30" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+        <polygon points="62,48 62,38 110,30" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+        <polygon points="62,48 110,30 106,54" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+        <polygon points="62,62 62,48 106,54" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="60,32 57,42 60,50 63,42" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="60,50 58,58 60,66 62,58" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+        <polygon points="60,66 59,74 60,80 61,74" fill="#137a30" opacity="0.2" stroke="#137a30" stroke-width="0.5"/>
+        <line x1="60" y1="32" x2="52" y2="10" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="32" x2="68" y2="10" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="52" cy="10" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+        <circle cx="68" cy="10" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+      </svg>
+      <span class="logo-text-light" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on white</div>
+  </div>
+  <div class="cell cream">
+    <div class="logo-lockup">
+      <svg width="36" height="32" viewBox="0 0 120 100">
+        <polygon points="58,38 42,20 22,14" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+        <polygon points="58,38 22,14 10,30" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+        <polygon points="58,48 58,38 10,30" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+        <polygon points="58,48 10,30 14,54" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+        <polygon points="58,62 58,48 14,54" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="62,38 78,20 98,14" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+        <polygon points="62,38 98,14 110,30" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+        <polygon points="62,48 62,38 110,30" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+        <polygon points="62,48 110,30 106,54" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+        <polygon points="62,62 62,48 106,54" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="60,32 57,42 60,50 63,42" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+        <polygon points="60,50 58,58 60,66 62,58" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+        <polygon points="60,66 59,74 60,80 61,74" fill="#137a30" opacity="0.2" stroke="#137a30" stroke-width="0.5"/>
+        <line x1="60" y1="32" x2="52" y2="10" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="32" x2="68" y2="10" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="52" cy="10" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+        <circle cx="68" cy="10" r="2" fill="#22c55e" opacity="0.6" stroke="#137a30" stroke-width="0.5"/>
+      </svg>
+      <span class="logo-text-light" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on cream</div>
+  </div>
+  <div class="cell dark">
+    <div class="logo-lockup">
+      <svg width="36" height="32" viewBox="0 0 120 100">
+        <polygon points="58,38 42,20 22,14" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="58,38 22,14 10,30" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,48 58,38 10,30" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,48 10,30 14,54" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="58,62 58,48 14,54" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="62,38 78,20 98,14" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="62,38 98,14 110,30" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,48 62,38 110,30" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,48 110,30 106,54" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="62,62 62,48 106,54" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,32 57,42 60,50 63,42" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,50 58,58 60,66 62,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.6"/>
+        <polygon points="60,66 59,74 60,80 61,74" fill="#4ade80" opacity="0.2" stroke="#4ade80" stroke-width="0.5"/>
+        <line x1="60" y1="32" x2="52" y2="10" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="32" x2="68" y2="10" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="52" cy="10" r="2" fill="#4ade80" opacity="0.6"/>
+        <circle cx="68" cy="10" r="2" fill="#4ade80" opacity="0.6"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on dark</div>
+  </div>
+  <div class="cell dark">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,38 42,20 22,14" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="58,38 22,14 10,30" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="58,48 58,38 10,30" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="58,48 10,30 14,54" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+      <polygon points="58,62 58,48 14,54" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="62,38 78,20 98,14" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="62,38 98,14 110,30" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,48 62,38 110,30" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,48 110,30 106,54" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.9"/>
+      <polygon points="62,62 62,48 106,54" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="60,32 57,42 60,50 63,42" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="60,50 58,58 60,66 62,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="60,66 59,74 60,80 61,74" fill="#4ade80" opacity="0.2" stroke="#4ade80" stroke-width="0.5"/>
+      <line x1="60" y1="32" x2="52" y2="10" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="32" x2="68" y2="10" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="10" r="2" fill="#4ade80" opacity="0.6"/>
+      <circle cx="68" cy="10" r="2" fill="#4ade80" opacity="0.6"/>
+    </svg>
+    <div class="cell-label">Icon only on dark</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<div class="section-label">V3 — Reduced (4 triangles per wing, no antennae)</div>
+<div class="row">
+  <div class="cell light">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,36 40,18 18,12" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="58,36 18,12 8,32" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,48 58,36 8,32" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,48 8,32 18,60" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="62,36 80,18 102,12" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="62,36 102,12 112,32" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,48 62,36 112,32" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,48 112,32 102,60" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="60,30 57,40 60,48 63,40" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,48 58,58 60,68 62,58" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,68 59,78 60,86 61,78" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.4"/>
+    </svg>
+    <div class="cell-label">On white</div>
+  </div>
+  <div class="cell cream">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,36 40,18 18,12" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="58,36 18,12 8,32" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,48 58,36 8,32" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,48 8,32 18,60" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="62,36 80,18 102,12" fill="#22c55e" opacity="0.1" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="62,36 102,12 112,32" fill="#4ade80" opacity="0.13" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,48 62,36 112,32" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,48 112,32 102,60" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="60,30 57,40 60,48 63,40" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,48 58,58 60,68 62,58" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,68 59,78 60,86 61,78" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.4"/>
+    </svg>
+    <div class="cell-label">On cream</div>
+  </div>
+  <div class="cell dark">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,36 40,18 18,12" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="58,36 18,12 8,32" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="58,48 58,36 8,32" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="58,48 8,32 18,60" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="0.9"/>
+      <polygon points="62,36 80,18 102,12" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="62,36 102,12 112,32" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,48 62,36 112,32" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,48 112,32 102,60" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="0.9"/>
+      <polygon points="60,30 57,40 60,48 63,40" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="60,48 58,58 60,68 62,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="60,68 59,78 60,86 61,78" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.4"/>
+    </svg>
+    <div class="cell-label">On dark</div>
+  </div>
+  <div class="cell dark">
+    <div class="logo-lockup">
+      <svg width="32" height="28" viewBox="0 0 120 100">
+        <polygon points="58,36 40,18 18,12" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="58,36 18,12 8,32" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,48 58,36 8,32" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,48 8,32 18,60" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="62,36 80,18 102,12" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="62,36 102,12 112,32" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,48 62,36 112,32" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,48 112,32 102,60" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="60,30 57,40 60,48 63,40" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,48 58,58 60,68 62,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.6"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on dark</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<div class="section-label">V4 — Minimal (3 triangles per wing, stroke only, no fill on outer)</div>
+<div class="row">
+  <div class="cell light">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,36 38,16 14,10" fill="none" stroke="#137a30" stroke-width="1.2" opacity="0.3"/>
+      <polygon points="58,36 14,10 6,36" fill="none" stroke="#137a30" stroke-width="1" opacity="0.4"/>
+      <polygon points="58,50 58,36 6,36" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,36 82,16 106,10" fill="none" stroke="#137a30" stroke-width="1.2" opacity="0.3"/>
+      <polygon points="62,36 106,10 114,36" fill="none" stroke="#137a30" stroke-width="1" opacity="0.4"/>
+      <polygon points="62,50 62,36 114,36" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/>
+      <polygon points="60,30 57,42 60,50 63,42" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,50 58,60 60,70 62,60" fill="#137a30" opacity="0.3" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,70 59,80 60,88 61,80" fill="#137a30" opacity="0.14" stroke="#137a30" stroke-width="0.4"/>
+    </svg>
+    <div class="cell-label">On white</div>
+  </div>
+  <div class="cell cream">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,36 38,16 14,10" fill="none" stroke="#137a30" stroke-width="1.2" opacity="0.3"/>
+      <polygon points="58,36 14,10 6,36" fill="none" stroke="#137a30" stroke-width="1" opacity="0.4"/>
+      <polygon points="58,50 58,36 6,36" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,36 82,16 106,10" fill="none" stroke="#137a30" stroke-width="1.2" opacity="0.3"/>
+      <polygon points="62,36 106,10 114,36" fill="none" stroke="#137a30" stroke-width="1" opacity="0.4"/>
+      <polygon points="62,50 62,36 114,36" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/>
+      <polygon points="60,30 57,42 60,50 63,42" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,50 58,60 60,70 62,60" fill="#137a30" opacity="0.3" stroke="#137a30" stroke-width="0.6"/>
+      <polygon points="60,70 59,80 60,88 61,80" fill="#137a30" opacity="0.14" stroke="#137a30" stroke-width="0.4"/>
+    </svg>
+    <div class="cell-label">On cream</div>
+  </div>
+  <div class="cell dark">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="58,36 38,16 14,10" fill="none" stroke="#4ade80" stroke-width="1.2" opacity="0.3"/>
+      <polygon points="58,36 14,10 6,36" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+      <polygon points="58,50 58,36 6,36" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="62,36 82,16 106,10" fill="none" stroke="#4ade80" stroke-width="1.2" opacity="0.3"/>
+      <polygon points="62,36 106,10 114,36" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+      <polygon points="62,50 62,36 114,36" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="60,30 57,42 60,50 63,42" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="60,50 58,60 60,70 62,60" fill="#4ade80" opacity="0.3" stroke="#4ade80" stroke-width="0.6"/>
+      <polygon points="60,70 59,80 60,88 61,80" fill="#4ade80" opacity="0.14" stroke="#4ade80" stroke-width="0.4"/>
+    </svg>
+    <div class="cell-label">On dark</div>
+  </div>
+  <div class="cell dark">
+    <div class="logo-lockup">
+      <svg width="32" height="28" viewBox="0 0 120 100">
+        <polygon points="58,36 38,16 14,10" fill="none" stroke="#4ade80" stroke-width="1.2" opacity="0.3"/>
+        <polygon points="58,36 14,10 6,36" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+        <polygon points="58,50 58,36 6,36" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,36 82,16 106,10" fill="none" stroke="#4ade80" stroke-width="1.2" opacity="0.3"/>
+        <polygon points="62,36 106,10 114,36" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+        <polygon points="62,50 62,36 114,36" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,30 57,42 60,50 63,42" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,50 58,60 60,70 62,60" fill="#4ade80" opacity="0.3" stroke="#4ade80" stroke-width="0.6"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on dark</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<div class="section-label">V5 — Ultra Minimal (2 triangles per wing, pure geometry)</div>
+<div class="row">
+  <div class="cell light">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="56,38 30,14 8,38" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="56,52 56,38 8,38" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/>
+      <polygon points="64,38 90,14 112,38" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="64,52 64,38 112,38" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/>
+      <polygon points="60,32 57,44 60,54 63,44" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,54 58,66 60,78 62,66" fill="#137a30" opacity="0.25" stroke="#137a30" stroke-width="0.5"/>
+    </svg>
+    <div class="cell-label">On white</div>
+  </div>
+  <div class="cell cream">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="56,38 30,14 8,38" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="56,52 56,38 8,38" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/>
+      <polygon points="64,38 90,14 112,38" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="64,52 64,38 112,38" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/>
+      <polygon points="60,32 57,44 60,54 63,44" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,54 58,66 60,78 62,66" fill="#137a30" opacity="0.25" stroke="#137a30" stroke-width="0.5"/>
+    </svg>
+    <div class="cell-label">On cream</div>
+  </div>
+  <div class="cell dark">
+    <svg width="56" height="50" viewBox="0 0 120 100">
+      <polygon points="56,38 30,14 8,38" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="56,52 56,38 8,38" fill="#22c55e" opacity="0.38" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="64,38 90,14 112,38" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1.2"/>
+      <polygon points="64,52 64,38 112,38" fill="#22c55e" opacity="0.38" stroke="#4ade80" stroke-width="1"/>
+      <polygon points="60,32 57,44 60,54 63,44" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+      <polygon points="60,54 58,66 60,78 62,66" fill="#4ade80" opacity="0.25" stroke="#4ade80" stroke-width="0.5"/>
+    </svg>
+    <div class="cell-label">On dark</div>
+  </div>
+  <div class="cell dark">
+    <div class="logo-lockup">
+      <svg width="32" height="28" viewBox="0 0 120 100">
+        <polygon points="56,38 30,14 8,38" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="56,52 56,38 8,38" fill="#22c55e" opacity="0.38" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="64,38 90,14 112,38" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="64,52 64,38 112,38" fill="#22c55e" opacity="0.38" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,32 57,44 60,54 63,44" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,54 58,66 60,78 62,66" fill="#4ade80" opacity="0.25" stroke="#4ade80" stroke-width="0.5"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.75rem;">Plepic</span>
+    </div>
+    <div class="cell-label">Lockup on dark</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<div class="section-label">Size Comparison — All 5 variants at nav bar scale (24px) on dark</div>
+<div style="background: var(--dark); border-radius: 12px; padding: 2rem; display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; margin-bottom: 3rem;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+    <div class="logo-lockup">
+      <svg width="24" height="22" viewBox="0 0 120 110">
+        <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="58,42 22,18 12,34" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="58,52 58,42 12,34" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="58,52 12,34 16,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="58,65 58,52 16,58" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="58,65 16,58 24,74" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="58,75 24,74 38,84" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="62,42 98,18 108,34" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,52 62,42 108,34" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,52 108,34 104,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="62,65 62,52 104,58" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,65 104,58 96,74" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.9"/>
+        <polygon points="62,75 96,74 82,84" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/>
+        <polygon points="60,36 57,45 60,52 63,45" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,52 58,60 60,68 62,60" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.8"/>
+        <line x1="60" y1="36" x2="52" y2="14" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+        <line x1="60" y1="36" x2="68" y2="14" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+        <circle cx="52" cy="14" r="2.5" fill="#4ade80" opacity="0.6"/>
+        <circle cx="68" cy="14" r="2.5" fill="#4ade80" opacity="0.6"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.25rem;">Plepic</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #6b6b60;">V1 Full</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+    <div class="logo-lockup">
+      <svg width="24" height="22" viewBox="0 0 120 100">
+        <polygon points="58,38 42,20 22,14" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="58,38 22,14 10,30" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="58,48 58,38 10,30" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="58,48 10,30 14,54" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="58,62 58,48 14,54" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="62,38 78,20 98,14" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="62,38 98,14 110,30" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,48 62,38 110,30" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,48 110,30 106,54" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="62,62 62,48 106,54" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,32 57,42 60,50 63,42" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,50 58,58 60,66 62,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.8"/>
+        <line x1="60" y1="32" x2="52" y2="10" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+        <line x1="60" y1="32" x2="68" y2="10" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+        <circle cx="52" cy="10" r="2.5" fill="#4ade80" opacity="0.6"/>
+        <circle cx="68" cy="10" r="2.5" fill="#4ade80" opacity="0.6"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.25rem;">Plepic</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #6b6b60;">V2 Medium</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+    <div class="logo-lockup">
+      <svg width="24" height="22" viewBox="0 0 120 100">
+        <polygon points="58,36 40,18 18,12" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="58,36 18,12 8,32" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="58,48 58,36 8,32" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="58,48 8,32 18,60" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="62,36 80,18 102,12" fill="#22c55e" opacity="0.1" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="62,36 102,12 112,32" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,48 62,36 112,32" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,48 112,32 102,60" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.2"/>
+        <polygon points="60,30 57,40 60,48 63,40" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,48 58,58 60,68 62,58" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="0.8"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.25rem;">Plepic</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #6b6b60;">V3 Reduced</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+    <div class="logo-lockup">
+      <svg width="24" height="22" viewBox="0 0 120 100">
+        <polygon points="58,36 38,16 14,10" fill="none" stroke="#4ade80" stroke-width="1.8" opacity="0.3"/>
+        <polygon points="58,36 14,10 6,36" fill="none" stroke="#4ade80" stroke-width="1.5" opacity="0.4"/>
+        <polygon points="58,50 58,36 6,36" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="62,36 82,16 106,10" fill="none" stroke="#4ade80" stroke-width="1.8" opacity="0.3"/>
+        <polygon points="62,36 106,10 114,36" fill="none" stroke="#4ade80" stroke-width="1.5" opacity="0.4"/>
+        <polygon points="62,50 62,36 114,36" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="60,30 57,42 60,50 63,42" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,50 58,60 60,70 62,60" fill="#4ade80" opacity="0.3" stroke="#4ade80" stroke-width="0.8"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.25rem;">Plepic</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #6b6b60;">V4 Minimal</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+    <div class="logo-lockup">
+      <svg width="24" height="22" viewBox="0 0 120 100">
+        <polygon points="56,38 30,14 8,38" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="56,52 56,38 8,38" fill="#22c55e" opacity="0.38" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="64,38 90,14 112,38" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1.8"/>
+        <polygon points="64,52 64,38 112,38" fill="#22c55e" opacity="0.38" stroke="#4ade80" stroke-width="1.5"/>
+        <polygon points="60,32 57,44 60,54 63,44" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1"/>
+        <polygon points="60,54 58,66 60,78 62,66" fill="#4ade80" opacity="0.25" stroke="#4ade80" stroke-width="0.8"/>
+      </svg>
+      <span class="logo-text-dark" style="font-size: 1.25rem;">Plepic</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #6b6b60;">V5 Ultra</span>
+  </div>
+</div>
+
+</body>
+</html>

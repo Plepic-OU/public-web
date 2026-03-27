@@ -1,0 +1,54 @@
+{
+  "date": "2026-03-22",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-03-22",
+    "end": "2026-03-22"
+  },
+  "summary": {
+    "sessions": 2,
+    "users": 2,
+    "new_users": 2,
+    "page_views": 2,
+    "avg_session_duration": 0.6241815,
+    "bounce_rate": 1,
+    "pages_per_session": 1
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 2,
+      "sessions": 2,
+      "bounce_rate": 1,
+      "avg_time_on_page": 0.6241815
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 50,
+    "mobile": 50,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Singapore",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [],
+  "total_conversion_value": 0
+}

@@ -1,0 +1,46 @@
+{
+  "date": "2026-03-25",
+  "actions": [
+    {
+      "timestamp": "2026-03-25T12:36:33.520Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "claude code",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Dominate impression share for core brand-tool term in Estonia",
+      "match_type": "EXACT",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-03-25T12:36:37.899Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "free",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Exclude free-seekers — training is paid (€2,520)",
+      "match_type": "BROAD",
+      "success": true
+    },
+    {
+      "timestamp": "2026-03-25T12:38:13.591Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "claude cowork",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Capture misspelling/variant of claude code seen in search terms",
+      "match_type": "EXACT",
+      "new_state": "ENABLED",
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 0,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 1,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}

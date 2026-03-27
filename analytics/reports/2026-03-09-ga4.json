@@ -1,0 +1,94 @@
+{
+  "date": "2026-03-09",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-03-09",
+    "end": "2026-03-09"
+  },
+  "summary": {
+    "sessions": 6,
+    "users": 6,
+    "new_users": 3,
+    "page_views": 11,
+    "avg_session_duration": 280.2341135,
+    "bounce_rate": 0.5,
+    "pages_per_session": 1.8333333333333333
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 6,
+      "sessions": 5,
+      "bounce_rate": 0.8,
+      "avg_time_on_page": 206.61597979999996
+    },
+    {
+      "path": "/training/",
+      "page_views": 5,
+      "sessions": 4,
+      "bounce_rate": 0.25,
+      "avg_time_on_page": 162.0811955
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 3,
+      "users": 3,
+      "conversions": 3
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 0
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 1
+    },
+    {
+      "source": "gemini.google.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    },
+    {
+      "source": "linkedin.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 1
+    }
+  ],
+  "devices": {
+    "desktop": 83,
+    "mobile": 17,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 4,
+      "users": 4
+    },
+    {
+      "country": "South Korea",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "United States",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [],
+  "total_conversion_value": 0
+}
