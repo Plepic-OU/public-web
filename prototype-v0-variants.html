@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plepic Logo — V0 Faithful Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --border: #e5e2dc;
+      --dark: #1c1c1a;
+      --brand: #137a30;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 3rem 2rem;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    h1 { font-family: 'Zilla Slab', serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--text-2); font-size: 0.95rem; margin-bottom: 3rem; max-width: 640px; line-height: 1.6; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-3);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .card {
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      border: 1px solid var(--border);
+      min-height: 180px;
+    }
+    .card.white { background: var(--surface); }
+    .card.cream { background: var(--bg); }
+    .card.dark { background: var(--dark); border-color: #333; }
+    .card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; text-align: center;
+    }
+    .card.white .card-label, .card.cream .card-label { color: var(--text-3); }
+    .card.dark .card-label { color: #6b6b60; }
+    .lockup-h { display: flex; align-items: center; gap: 0.6rem; }
+    .lockup-v { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+    .lockup-h-tight { display: flex; align-items: center; gap: 0.3rem; }
+    .t-light { font-family: 'Zilla Slab', serif; font-weight: 700; color: var(--brand); }
+    .t-dark { font-family: 'Zilla Slab', serif; font-weight: 700; color: #22c55e; }
+    @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<h1>V0 Faithful — 9 Layout Variants</h1>
+<p class="subtitle">Homepage butterfly (11 triangles/wing) with bolder antennae and brighter strokes. Each variant shows a different icon + text placement on white, cream, and dark.</p>
+
+<script>
+// Reusable SVG generators with enhanced antennae and brighter strokes
+function bflyLight(w, h) {
+  return `<svg width="${w}" height="${h}" viewBox="0 0 300 280">
+    <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="2"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.15" stroke="#137a30" stroke-width="1.8"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.7"/><polygon points="147,130 147,105 15,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.6"/><polygon points="147,130 15,108 28,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.5"/><polygon points="147,165 147,130 28,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.4"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="1.2"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1"/><polygon points="147,178 82,195 75,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.1"/><polygon points="147,195 75,220 100,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="1"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.8"/></g>
+    <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="2"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.15" stroke="#137a30" stroke-width="1.8"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.7"/><polygon points="153,130 153,105 285,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.6"/><polygon points="153,130 285,108 272,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.5"/><polygon points="153,165 153,130 272,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.4"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="1.2"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1"/><polygon points="153,178 218,195 225,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.1"/><polygon points="153,195 225,220 200,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="1"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.8"/></g>
+    <polygon points="150,95 146,112 150,128 154,112" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="1.2"/>
+    <polygon points="150,128 147,142 150,155 153,142" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/>
+    <polygon points="150,155 148,168 150,178 152,168" fill="#137a30" opacity="0.24" stroke="#137a30" stroke-width="0.8"/>
+    <polygon points="150,178 149,188 150,200 151,188" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.6"/>
+    <ellipse cx="150" cy="88" rx="5" ry="6" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/>
+    <path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="#137a30" stroke-width="1.6" opacity="0.6"/>
+    <path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="#137a30" stroke-width="1.6" opacity="0.6"/>
+    <circle cx="132" cy="31" r="4.5" fill="#22c55e" opacity="0.7" stroke="#137a30" stroke-width="1"/>
+    <circle cx="168" cy="31" r="4.5" fill="#22c55e" opacity="0.7" stroke="#137a30" stroke-width="1"/>
+  </svg>`;
+}
+
+function bflyDark(w, h) {
+  return `<svg width="${w}" height="${h}" viewBox="0 0 300 280">
+    <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="2"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.15" stroke="#4ade80" stroke-width="1.8"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.7"/><polygon points="147,130 147,105 15,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.6"/><polygon points="147,130 15,108 28,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.5"/><polygon points="147,165 147,130 28,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.4"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="1.2"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1"/><polygon points="147,178 82,195 75,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="1.1"/><polygon points="147,195 75,220 100,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/></g>
+    <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="2"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.15" stroke="#4ade80" stroke-width="1.8"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.7"/><polygon points="153,130 153,105 285,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.6"/><polygon points="153,130 285,108 272,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.5"/><polygon points="153,165 153,130 272,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.4"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="1.2"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1"/><polygon points="153,178 218,195 225,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="1.1"/><polygon points="153,195 225,220 200,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/></g>
+    <polygon points="150,95 146,112 150,128 154,112" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1.2"/>
+    <polygon points="150,128 147,142 150,155 153,142" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1"/>
+    <polygon points="150,155 148,168 150,178 152,168" fill="#4ade80" opacity="0.24" stroke="#4ade80" stroke-width="0.8"/>
+    <polygon points="150,178 149,188 150,200 151,188" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.6"/>
+    <ellipse cx="150" cy="88" rx="5" ry="6" fill="#4ade80" opacity="0.38" stroke="#4ade80" stroke-width="1"/>
+    <path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="#4ade80" stroke-width="1.6" opacity="0.6"/>
+    <path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="#4ade80" stroke-width="1.6" opacity="0.6"/>
+    <circle cx="132" cy="31" r="4.5" fill="#4ade80" opacity="0.7" stroke="#4ade80" stroke-width="1"/>
+    <circle cx="168" cy="31" r="4.5" fill="#4ade80" opacity="0.7" stroke="#4ade80" stroke-width="1"/>
+  </svg>`;
+}
+
+const variants = [
+  { id: 1, name: 'Icon Left + Text', desc: 'Horizontal, icon before text',
+    render: (bg) => `<div class="lockup-h">${bg==='dark'?bflyDark(40,37):bflyLight(40,37)}<span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:2rem">Plepic</span></div>` },
+
+  { id: 2, name: 'Text + Icon Right', desc: 'Horizontal, text before icon',
+    render: (bg) => `<div class="lockup-h"><span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:2rem">Plepic</span>${bg==='dark'?bflyDark(40,37):bflyLight(40,37)}</div>` },
+
+  { id: 3, name: 'Stacked — Icon Above', desc: 'Centered vertical, icon on top',
+    render: (bg) => `<div class="lockup-v">${bg==='dark'?bflyDark(52,48):bflyLight(52,48)}<span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:1.75rem">Plepic</span></div>` },
+
+  { id: 4, name: 'Stacked — Text Above', desc: 'Centered vertical, text on top',
+    render: (bg) => `<div class="lockup-v"><span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:1.75rem">Plepic</span>${bg==='dark'?bflyDark(48,44):bflyLight(48,44)}</div>` },
+
+  { id: 5, name: 'Large Icon + Small Text', desc: 'Icon dominates, text as caption',
+    render: (bg) => `<div class="lockup-v">${bg==='dark'?bflyDark(72,67):bflyLight(72,67)}<span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:1rem;letter-spacing:0.15em;text-transform:uppercase">Plepic</span></div>` },
+
+  { id: 6, name: 'Tight Horizontal', desc: 'Icon tucked close to text, no gap',
+    render: (bg) => `<div class="lockup-h-tight">${bg==='dark'?bflyDark(32,30):bflyLight(32,30)}<span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:2rem">Plepic</span></div>` },
+
+  { id: 7, name: 'Icon Left + Two Lines', desc: 'Icon beside stacked name + tagline',
+    render: (bg) => `<div class="lockup-h" style="gap:0.5rem">${bg==='dark'?bflyDark(44,41):bflyLight(44,41)}<div style="display:flex;flex-direction:column"><span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:1.75rem;line-height:1">Plepic</span><span style="font-size:0.55rem;color:${bg==='dark'?'#6b6b60':'#6b6b60'};font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;text-transform:uppercase">Agentic Development</span></div></div>` },
+
+  { id: 8, name: 'Nav Bar Scale', desc: 'As it would appear in site header',
+    render: (bg) => `<div style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 0.5rem"><div class="lockup-h" style="gap:0.4rem">${bg==='dark'?bflyDark(24,22):bflyLight(24,22)}<span class="${bg==='dark'?'t-dark':'t-light'}" style="font-size:1.35rem">Plepic</span></div><div style="display:flex;gap:1.25rem;font-size:0.75rem;color:${bg==='dark'?'#8a8a80':'#6b6b60'}"><span>Training</span><span>Agent</span><span>Team</span></div></div>` },
+
+  { id: 9, name: 'App Icon / Favicon', desc: 'Icon only, square crop',
+    render: (bg) => `<div style="width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:${bg==='dark'?'#222':'#f0fdf4'};border:1px solid ${bg==='dark'?'#333':'#dcfce7'}">${bg==='dark'?bflyDark(44,41):bflyLight(44,41)}</div>` },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('variants');
+
+  variants.forEach(v => {
+    const section = document.createElement('div');
+    section.innerHTML = `
+      <div class="section-label">${v.id}. ${v.name} — ${v.desc}</div>
+      <div class="grid-3">
+        <div class="card white">
+          ${v.render('light')}
+          <div class="card-label">On white</div>
+        </div>
+        <div class="card cream">
+          ${v.render('light')}
+          <div class="card-label">On cream</div>
+        </div>
+        <div class="card dark">
+          ${v.render('dark')}
+          <div class="card-label">On dark</div>
+        </div>
+      </div>
+    `;
+    container.appendChild(section);
+  });
+});
+</script>
+
+<div id="variants"></div>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plepic Logo — Wing Shape Experiments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --border: #e5e2dc;
+      --dark: #1c1c1a;
+      --brand: #137a30;
+    }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); padding: 3rem 2rem; max-width: 1440px; margin: 0 auto; }
+    h1 { font-family: 'Zilla Slab', serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--text-2); font-size: 0.95rem; margin-bottom: 3rem; max-width: 640px; line-height: 1.6; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .cell {
+      border-radius: 12px;
+      padding: 1.75rem 1.25rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; border: 1px solid var(--border); min-height: 160px;
+    }
+    .cell.white { background: var(--surface); }
+    .cell.cream { background: var(--bg); }
+    .cell.dark { background: var(--dark); border-color: #333; }
+    .cell-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; text-align: center;
+    }
+    .cell.white .cell-label, .cell.cream .cell-label { color: var(--text-3); }
+    .cell.dark .cell-label { color: #6b6b60; }
+    .lockup { display: flex; align-items: center; gap: 0.5rem; }
+    .t-l { font-family: 'Zilla Slab', serif; font-weight: 700; color: var(--brand); }
+    .t-d { font-family: 'Zilla Slab', serif; font-weight: 700; color: #22c55e; }
+    .ref-tag {
+      display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      background: #dcfce7; color: #065f28; padding: 2px 6px; border-radius: 3px;
+      margin-left: 0.5rem; vertical-align: middle;
+    }
+    @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<h1>Wing Shape Experiments</h1>
+<p class="subtitle">9 wing variations with sharper, bowtie-inspired upper wings. Each shown as icon alone + lockup, on white/cream/dark. V0 (homepage faithful) shown as reference.</p>
+
+<div id="content"></div>
+
+<script>
+// Common parts: body, antennae, lower wings stay similar. We vary the UPPER wing shape.
+// stroke colors: light=#137a30, dark=#4ade80
+// The key change: upper wing tips are sharper, more angular, extending outward like a bowtie
+
+const variants = [
+
+// === REFERENCE: V0 Homepage Faithful ===
+{ name: 'V0 — Homepage Faithful', tag: 'reference',
+  light: (s) => `<svg width="${s}" height="${s*0.93}" viewBox="0 0 300 280">
+    <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="2"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.15" stroke="#137a30" stroke-width="1.8"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.7"/><polygon points="147,130 147,105 15,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.6"/><polygon points="147,130 15,108 28,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.5"/><polygon points="147,165 147,130 28,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.4"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="1.2"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1"/><polygon points="147,178 82,195 75,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.1"/><polygon points="147,195 75,220 100,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="1"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.8"/></g>
+    <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="2"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.15" stroke="#137a30" stroke-width="1.8"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.7"/><polygon points="153,130 153,105 285,108" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.6"/><polygon points="153,130 285,108 272,150" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.5"/><polygon points="153,165 153,130 272,150" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.4"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="1.2"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1"/><polygon points="153,178 218,195 225,220" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.1"/><polygon points="153,195 225,220 200,240" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="1"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.8"/></g>
+    <polygon points="150,95 146,112 150,128 154,112" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="1.2"/><polygon points="150,128 147,142 150,155 153,142" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/><polygon points="150,155 148,168 150,178 152,168" fill="#137a30" opacity="0.24" stroke="#137a30" stroke-width="0.8"/><polygon points="150,178 149,188 150,200 151,188" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.6"/>
+    <ellipse cx="150" cy="88" rx="5" ry="6" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/><path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="#137a30" stroke-width="1.6" opacity="0.6"/><path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="#137a30" stroke-width="1.6" opacity="0.6"/><circle cx="132" cy="31" r="4.5" fill="#22c55e" opacity="0.7" stroke="#137a30" stroke-width="1"/><circle cx="168" cy="31" r="4.5" fill="#22c55e" opacity="0.7" stroke="#137a30" stroke-width="1"/>
+  </svg>`,
+  dark: (s) => `<svg width="${s}" height="${s*0.93}" viewBox="0 0 300 280">
+    <g><polygon points="147,105 110,68 55,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="2"/><polygon points="147,105 55,48 20,72" fill="#4ade80" opacity="0.15" stroke="#4ade80" stroke-width="1.8"/><polygon points="147,105 20,72 15,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.7"/><polygon points="147,130 147,105 15,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.6"/><polygon points="147,130 15,108 28,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.5"/><polygon points="147,165 147,130 28,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.4"/><polygon points="147,165 28,150 50,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="1.2"/><polygon points="147,178 50,182 82,195" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1"/><polygon points="147,178 82,195 75,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="1.1"/><polygon points="147,195 75,220 100,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/><polygon points="147,195 100,240 135,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/></g>
+    <g><polygon points="153,105 190,68 245,48" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="2"/><polygon points="153,105 245,48 280,72" fill="#4ade80" opacity="0.15" stroke="#4ade80" stroke-width="1.8"/><polygon points="153,105 280,72 285,108" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.7"/><polygon points="153,130 153,105 285,108" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.6"/><polygon points="153,130 285,108 272,150" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.5"/><polygon points="153,165 153,130 272,150" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.4"/><polygon points="153,165 272,150 250,182" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="1.2"/><polygon points="153,178 250,182 218,195" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1"/><polygon points="153,178 218,195 225,220" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="1.1"/><polygon points="153,195 225,220 200,240" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/><polygon points="153,195 200,240 165,232" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/></g>
+    <polygon points="150,95 146,112 150,128 154,112" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1.2"/><polygon points="150,128 147,142 150,155 153,142" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1"/><polygon points="150,155 148,168 150,178 152,168" fill="#4ade80" opacity="0.24" stroke="#4ade80" stroke-width="0.8"/><polygon points="150,178 149,188 150,200 151,188" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.6"/>
+    <ellipse cx="150" cy="88" rx="5" ry="6" fill="#4ade80" opacity="0.38" stroke="#4ade80" stroke-width="1"/><path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="#4ade80" stroke-width="1.6" opacity="0.6"/><path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="#4ade80" stroke-width="1.6" opacity="0.6"/><circle cx="132" cy="31" r="4.5" fill="#4ade80" opacity="0.7" stroke="#4ade80" stroke-width="1"/><circle cx="168" cy="31" r="4.5" fill="#4ade80" opacity="0.7" stroke="#4ade80" stroke-width="1"/>
+  </svg>`
+},
+
+// W1: Sharp bowtie — top tips pushed higher and wider, angular points
+{ name: 'W1 — Sharp Bowtie', tag: null,
+  light: (s) => `<svg width="${s}" height="${s*0.93}" viewBox="0 0 300 280">
+    <g><polygon points="147,105 100,52 40,30" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="2"/><polygon points="147,105 40,30 10,65" fill="#4ade80" opacity="0.15" stroke="#137a30" stroke-width="1.8"/><polygon points="147,105 10,65 12,105" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.7"/><polygon points="147,130 147,105 12,105" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.6"/><polygon points="147,130 12,105 25,148" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.5"/><polygon points="147,165 147,130 25,148" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.4"/><polygon points="147,165 25,148 48,178" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="1.2"/><polygon points="147,178 48,178 78,192" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1"/><polygon points="147,178 78,192 72,218" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.1"/><polygon points="147,195 72,218 98,238" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="1"/><polygon points="147,195 98,238 133,230" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.8"/></g>
+    <g><polygon points="153,105 200,52 260,30" fill="#22c55e" opacity="0.19" stroke="#137a30" stroke-width="2"/><polygon points="153,105 260,30 290,65" fill="#4ade80" opacity="0.15" stroke="#137a30" stroke-width="1.8"/><polygon points="153,105 290,65 288,105" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="1.7"/><polygon points="153,130 153,105 288,105" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1.6"/><polygon points="153,130 288,105 275,148" fill="#22c55e" opacity="0.29" stroke="#137a30" stroke-width="1.5"/><polygon points="153,165 153,130 275,148" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.4"/><polygon points="153,165 275,148 252,178" fill="#4ade80" opacity="0.16" stroke="#137a30" stroke-width="1.2"/><polygon points="153,178 252,178 222,192" fill="#22c55e" opacity="0.12" stroke="#137a30" stroke-width="1"/><polygon points="153,178 222,192 228,218" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="1.1"/><polygon points="153,195 228,218 202,238" fill="#137a30" opacity="0.13" stroke="#137a30" stroke-width="1"/><polygon points="153,195 202,238 167,230" fill="#22c55e" opacity="0.08" stroke="#137a30" stroke-width="0.8"/></g>
+    <polygon points="150,95 146,112 150,128 154,112" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="1.2"/><polygon points="150,128 147,142 150,155 153,142" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="1"/><polygon points="150,155 148,168 150,178 152,168" fill="#137a30" opacity="0.24" stroke="#137a30" stroke-width="0.8"/><polygon points="150,178 149,188 150,200 151,188" fill="#137a30" opacity="0.16" stroke="#137a30" stroke-width="0.6"/>
+    <ellipse cx="150" cy="88" rx="5" ry="6" fill="#137a30" opacity="0.38" stroke="#137a30" stroke-width="1"/><path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="#137a30" stroke-width="1.6" opacity="0.6"/><path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="#137a30" stroke-width="1.6" opacity="0.6"/><circle cx="132" cy="31" r="4.5" fill="#22c55e" opacity="0.7" stroke="#137a30" stroke-width="1"/><circle cx="168" cy="31" r="4.5" fill="#22c55e" opacity="0.7" stroke="#137a30" stroke-width="1"/>
+  </svg>`,
+  dark: (s) => `<svg width="${s}" height="${s*0.93}" viewBox="0 0 300 280">
+    <g><polygon points="147,105 100,52 40,30" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="2"/><polygon points="147,105 40,30 10,65" fill="#4ade80" opacity="0.15" stroke="#4ade80" stroke-width="1.8"/><polygon points="147,105 10,65 12,105" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.7"/><polygon points="147,130 147,105 12,105" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.6"/><polygon points="147,130 12,105 25,148" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.5"/><polygon points="147,165 147,130 25,148" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.4"/><polygon points="147,165 25,148 48,178" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="1.2"/><polygon points="147,178 48,178 78,192" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1"/><polygon points="147,178 78,192 72,218" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="1.1"/><polygon points="147,195 72,218 98,238" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/><polygon points="147,195 98,238 133,230" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/></g>
+    <g><polygon points="153,105 200,52 260,30" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="2"/><polygon points="153,105 260,30 290,65" fill="#4ade80" opacity="0.15" stroke="#4ade80" stroke-width="1.8"/><polygon points="153,105 290,65 288,105" fill="#22c55e" opacity="0.35" stroke="#4ade80" stroke-width="1.7"/><polygon points="153,130 153,105 288,105" fill="#22c55e" opacity="0.4" stroke="#4ade80" stroke-width="1.6"/><polygon points="153,130 288,105 275,148" fill="#4ade80" opacity="0.29" stroke="#4ade80" stroke-width="1.5"/><polygon points="153,165 153,130 275,148" fill="#22c55e" opacity="0.19" stroke="#4ade80" stroke-width="1.4"/><polygon points="153,165 275,148 252,178" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="1.2"/><polygon points="153,178 252,178 222,192" fill="#22c55e" opacity="0.12" stroke="#4ade80" stroke-width="1"/><polygon points="153,178 222,192 228,218" fill="#4ade80" opacity="0.19" stroke="#4ade80" stroke-width="1.1"/><polygon points="153,195 228,218 202,238" fill="#4ade80" opacity="0.13" stroke="#4ade80" stroke-width="1"/><polygon points="153,195 202,238 167,230" fill="#22c55e" opacity="0.08" stroke="#4ade80" stroke-width="0.8"/></g>
+    <polygon points="150,95 146,112 150,128 154,112" fill="#4ade80" opacity="0.48" stroke="#4ade80" stroke-width="1.2"/><polygon points="150,128 147,142 150,155 153,142" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="1"/><polygon points="150,155 148,168 150,178 152,168" fill="#4ade80" opacity="0.24" stroke="#4ade80" stroke-width="0.8"/><polygon points="150,178 149,188 150,200 151,188" fill="#4ade80" opacity="0.16" stroke="#4ade80" stroke-width="0.6"/>
+    <ellipse cx="150" cy="88" rx="5" ry="6" fill="#4ade80" opacity="0.38" stroke="#4ade80" stroke-width="1"/><path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="#4ade80" stroke-width="1.6" opacity="0.6"/><path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="#4ade80" stroke-width="1.6" opacity="0.6"/><circle cx="132" cy="31" r="4.5" fill="#4ade80" opacity="0.7" stroke="#4ade80" stroke-width="1"/><circle cx="168" cy="31" r="4.5" fill="#4ade80" opacity="0.7" stroke="#4ade80" stroke-width="1"/>
+  </svg>`
+},
+
+// W2: Extreme bowtie — very sharp/tall upper tips, narrow waist
+{ name: 'W2 — Extreme Bowtie', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:22, uwide:275, waist:8, lw:235}),
+  dark: (s) => mkBfly(s,'dark',{utip:22, uwide:275, waist:8, lw:235})
+},
+
+// W3: Swept wings — tips angled backward like a jet
+{ name: 'W3 — Swept Back', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:38, uwide:260, waist:12, lw:240}),
+  dark: (s) => mkBfly(s,'dark',{utip:38, uwide:260, waist:12, lw:240})
+},
+
+// W4: Tall narrow — wings extend higher but not as wide
+{ name: 'W4 — Tall Narrow', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:25, uwide:230, waist:10, lw:225}),
+  dark: (s) => mkBfly(s,'dark',{utip:25, uwide:230, waist:10, lw:225})
+},
+
+// W5: Wide diamond — wings wide at mid-height, pointed top
+{ name: 'W5 — Wide Diamond', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:35, uwide:240, waist:5, lw:250}),
+  dark: (s) => mkBfly(s,'dark',{utip:35, uwide:240, waist:5, lw:250})
+},
+
+// W6: Subtle bowtie — mild sharpening of original
+{ name: 'W6 — Subtle Sharpened', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:42, uwide:252, waist:14, lw:240}),
+  dark: (s) => mkBfly(s,'dark',{utip:42, uwide:252, waist:14, lw:240})
+},
+
+// W7: Asymmetric facets — more triangles on upper, fewer on lower
+{ name: 'W7 — Top-Heavy', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:30, uwide:265, waist:10, lw:220, topHeavy:true}),
+  dark: (s) => mkBfly(s,'dark',{utip:30, uwide:265, waist:10, lw:220, topHeavy:true})
+},
+
+// W8: Compact bowtie — tighter overall, works at small sizes
+{ name: 'W8 — Compact Bowtie', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:35, uwide:245, waist:15, lw:230, compact:true}),
+  dark: (s) => mkBfly(s,'dark',{utip:35, uwide:245, waist:15, lw:230, compact:true})
+},
+
+// W9: Pointed crown — very sharp tips, rounded lower wings
+{ name: 'W9 — Pointed Crown', tag: null,
+  light: (s) => mkBfly(s,'light',{utip:18, uwide:258, waist:10, lw:232, crown:true}),
+  dark: (s) => mkBfly(s,'dark',{utip:18, uwide:258, waist:10, lw:232, crown:true})
+},
+
+];
+
+// Parametric butterfly builder
+function mkBfly(size, mode, p) {
+  const sc = mode==='dark'?'#4ade80':'#137a30';
+  const f1 = mode==='dark'?'#22c55e':'#22c55e';
+  const f2 = mode==='dark'?'#4ade80':'#4ade80';
+  const f3 = mode==='dark'?'#22c55e':'#137a30';
+  const f4 = mode==='dark'?'#4ade80':'#22c55e';
+  const cx = 150, bodyTop = 95;
+
+  // Upper wing geometry
+  const utY = p.utip; // how high the tip goes (lower = higher)
+  const uW = p.uwide; // how wide (from center)
+  const midX = p.waist; // how narrow at waist
+  const lW = p.lw; // lower wing width
+
+  // Key points - left wing
+  const ltip = [cx - (uW-cx)*0.6, utY]; // top tip
+  const lout = [300-uW, utY + 20]; // outer point
+  const lmid_out = [midX, 68 + (utY-30)*0.3]; // mid outer
+  const lwaist = [midX + 2, 108]; // waist point
+
+  // Key points - right wing (mirror)
+  const rtip = [cx + (uW-cx)*0.6, utY];
+  const rout = [uW, utY + 20];
+  const rmid_out = [300-midX, 68 + (utY-30)*0.3];
+  const rwaist = [300-midX-2, 108];
+
+  let polys = '';
+  // Left upper wing (3-4 triangles)
+  polys += poly([cx-3,105], ltip, lout, f1, 0.19, sc, 2);
+  polys += poly([cx-3,105], lout, lmid_out, f2, 0.15, sc, 1.8);
+  polys += poly([cx-3,105], lmid_out, lwaist, f4, 0.35, sc, 1.7);
+  // Left center band
+  polys += poly([cx-3,130], [cx-3,105], lwaist, f3, 0.4, sc, 1.6);
+  // Left mid wing
+  polys += poly([cx-3,130], lwaist, [midX+16,150], f4, 0.29, sc, 1.5);
+  polys += poly([cx-3,165], [cx-3,130], [midX+16,150], f3, 0.19, sc, 1.4);
+
+  if (!p.topHeavy) {
+    // Left lower wing
+    polys += poly([cx-3,165], [midX+16,150], [midX+38,182], f2, 0.16, sc, 1.2);
+    polys += poly([cx-3,178], [midX+38,182], [midX+70,195], f4, 0.12, sc, 1);
+    polys += poly([cx-3,178], [midX+70,195], [midX+63,220], f3, 0.19, sc, 1.1);
+    polys += poly([cx-3,195], [midX+63,220], [midX+88,lW], f3, 0.13, sc, 1);
+    polys += poly([cx-3,195], [midX+88,lW], [cx-15,232], f4, 0.08, sc, 0.8);
+  } else {
+    // Fewer lower triangles
+    polys += poly([cx-3,165], [midX+16,150], [midX+50,185], f2, 0.14, sc, 1.1);
+    polys += poly([cx-3,185], [midX+50,185], [cx-15,225], f3, 0.1, sc, 0.9);
+  }
+
+  // Right upper wing (mirror)
+  polys += poly([cx+3,105], rtip, rout, f1, 0.19, sc, 2);
+  polys += poly([cx+3,105], rout, rmid_out, f2, 0.15, sc, 1.8);
+  polys += poly([cx+3,105], rmid_out, rwaist, f4, 0.35, sc, 1.7);
+  polys += poly([cx+3,130], [cx+3,105], rwaist, f3, 0.4, sc, 1.6);
+  polys += poly([cx+3,130], rwaist, [300-midX-16,150], f4, 0.29, sc, 1.5);
+  polys += poly([cx+3,165], [cx+3,130], [300-midX-16,150], f3, 0.19, sc, 1.4);
+
+  if (!p.topHeavy) {
+    polys += poly([cx+3,165], [300-midX-16,150], [300-midX-38,182], f2, 0.16, sc, 1.2);
+    polys += poly([cx+3,178], [300-midX-38,182], [300-midX-70,195], f4, 0.12, sc, 1);
+    polys += poly([cx+3,178], [300-midX-70,195], [300-midX-63,220], f3, 0.19, sc, 1.1);
+    polys += poly([cx+3,195], [300-midX-63,220], [300-midX-88,lW], f3, 0.13, sc, 1);
+    polys += poly([cx+3,195], [300-midX-88,lW], [cx+15,232], f4, 0.08, sc, 0.8);
+  } else {
+    polys += poly([cx+3,165], [300-midX-16,150], [300-midX-50,185], f2, 0.14, sc, 1.1);
+    polys += poly([cx+3,185], [300-midX-50,185], [cx+15,225], f3, 0.1, sc, 0.9);
+  }
+
+  // Body
+  polys += `<polygon points="150,95 146,112 150,128 154,112" fill="${f3}" opacity="0.48" stroke="${sc}" stroke-width="1.2"/>`;
+  polys += `<polygon points="150,128 147,142 150,155 153,142" fill="${f3}" opacity="0.35" stroke="${sc}" stroke-width="1"/>`;
+  polys += `<polygon points="150,155 148,168 150,178 152,168" fill="${f3}" opacity="0.24" stroke="${sc}" stroke-width="0.8"/>`;
+  if (!p.compact) polys += `<polygon points="150,178 149,188 150,200 151,188" fill="${f3}" opacity="0.16" stroke="${sc}" stroke-width="0.6"/>`;
+
+  // Head + antennae
+  polys += `<ellipse cx="150" cy="88" rx="5" ry="6" fill="${f3}" opacity="0.38" stroke="${sc}" stroke-width="1"/>`;
+  polys += `<path d="M150,82 C145,66 138,48 132,32" fill="none" stroke="${sc}" stroke-width="1.6" opacity="0.6"/>`;
+  polys += `<path d="M150,82 C155,66 162,48 168,32" fill="none" stroke="${sc}" stroke-width="1.6" opacity="0.6"/>`;
+  polys += `<circle cx="132" cy="31" r="4.5" fill="${mode==='dark'?'#4ade80':'#22c55e'}" opacity="0.7" stroke="${sc}" stroke-width="1"/>`;
+  polys += `<circle cx="168" cy="31" r="4.5" fill="${mode==='dark'?'#4ade80':'#22c55e'}" opacity="0.7" stroke="${sc}" stroke-width="1"/>`;
+
+  return `<svg width="${size}" height="${size*0.93}" viewBox="0 0 300 280">${polys}</svg>`;
+}
+
+function poly(a, b, c, fill, op, stroke, sw) {
+  return `<polygon points="${a[0]},${a[1]} ${b[0]},${b[1]} ${c[0]},${c[1]}" fill="${fill}" opacity="${op}" stroke="${stroke}" stroke-width="${sw}"/>`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('content');
+  variants.forEach(v => {
+    const tagHtml = v.tag ? `<span class="ref-tag">${v.tag}</span>` : '';
+    el.innerHTML += `
+      <div class="section-label">${v.name}${tagHtml}</div>
+      <div class="grid">
+        <div class="cell white">${v.light(56)}<div class="cell-label">Icon / white</div></div>
+        <div class="cell cream"><div class="lockup">${v.light(36)}<span class="t-l" style="font-size:1.6rem">Plepic</span></div><div class="cell-label">Lockup / cream</div></div>
+        <div class="cell dark">${v.dark(56)}<div class="cell-label">Icon / dark</div></div>
+        <div class="cell dark"><div class="lockup">${v.dark(36)}<span class="t-d" style="font-size:1.6rem">Plepic</span></div><div class="cell-label">Lockup / dark</div></div>
+        <div class="cell white"><div class="lockup">${v.light(28)}<span class="t-l" style="font-size:1.2rem">Plepic</span></div><div class="cell-label">Nav size / white</div></div>
+      </div>
+    `;
+  });
+});
+</script>
+
+<div id="content"></div>
+
+</body>
+</html>

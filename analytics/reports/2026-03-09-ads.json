@@ -1,0 +1,64 @@
+{
+  "date": "2026-03-09",
+  "account": {
+    "customer_id": "6359946178",
+    "currency": "EUR"
+  },
+  "summary": {
+    "total_spend": 0,
+    "total_impressions": 0,
+    "total_clicks": 0,
+    "overall_ctr": 0,
+    "average_cpc": 0,
+    "total_conversions": 0,
+    "cost_per_conversion": 0,
+    "conversion_value": 0,
+    "roas": 0
+  },
+  "campaigns": [
+    {
+      "campaign_id": "23458825346",
+      "campaign_name": "Agentic Coding Training",
+      "status": 3,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "conversions_value": 0,
+      "average_cpc": 0,
+      "cost_per_conversion": 0,
+      "roas": 0
+    },
+    {
+      "campaign_id": "23561226362",
+      "campaign_name": "Leads-Performance Max-1",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "conversions_value": 0,
+      "average_cpc": 0,
+      "cost_per_conversion": 0,
+      "roas": 0
+    }
+  ],
+  "ad_groups": [
+    {
+      "ad_group_id": "188855530542",
+      "ad_group_name": "Smart Campaign Managed AdGroup",
+      "campaign_id": "23458825346",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0
+    }
+  ],
+  "keywords": [],
+  "search_terms": []
+}

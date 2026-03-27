@@ -1,0 +1,101 @@
+{
+  "date": "2026-02-27",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-02-27",
+    "end": "2026-02-27"
+  },
+  "summary": {
+    "sessions": 158,
+    "users": 147,
+    "new_users": 117,
+    "page_views": 172,
+    "avg_session_duration": 38.54172441772152,
+    "bounce_rate": 0.41139240506329117,
+    "pages_per_session": 1.0886075949367089
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 120,
+      "sessions": 119,
+      "bounce_rate": 0.226890756302521,
+      "avg_time_on_page": 41.6803408487395
+    },
+    {
+      "path": "/",
+      "page_views": 29,
+      "sessions": 23,
+      "bounce_rate": 0.9130434782608695,
+      "avg_time_on_page": 31.906831217391304
+    },
+    {
+      "path": "/agent/",
+      "page_views": 23,
+      "sessions": 23,
+      "bounce_rate": 0.9130434782608695,
+      "avg_time_on_page": 17.207599086956524
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 67,
+      "users": 64,
+      "conversions": 69
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 63,
+      "users": 61,
+      "conversions": 6
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 43,
+      "users": 43,
+      "conversions": 24
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 40,
+      "users": 36,
+      "conversions": 18
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 2,
+      "users": 1,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 26,
+    "mobile": 72,
+    "tablet": 3
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 156,
+      "users": 146
+    },
+    {
+      "country": "Germany",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "United Kingdom",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [],
+  "total_conversion_value": 0
+}

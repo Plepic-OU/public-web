@@ -1,0 +1,102 @@
+{
+  "date": "2026-03-20",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-03-20",
+    "end": "2026-03-20"
+  },
+  "summary": {
+    "sessions": 20,
+    "users": 20,
+    "new_users": 7,
+    "page_views": 43,
+    "avg_session_duration": 214.67377535,
+    "bounce_rate": 0.3,
+    "pages_per_session": 2.15
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 19,
+      "sessions": 15,
+      "bounce_rate": 0.06666666666666667,
+      "avg_time_on_page": 107.54054400000001
+    },
+    {
+      "path": "/",
+      "page_views": 14,
+      "sessions": 12,
+      "bounce_rate": 0.5833333333333334,
+      "avg_time_on_page": 146.6161884166667
+    },
+    {
+      "path": "/agent/",
+      "page_views": 10,
+      "sessions": 7,
+      "bounce_rate": 0.2857142857142857,
+      "avg_time_on_page": 131.56758371428572
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 10,
+      "users": 10,
+      "conversions": 10
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 8,
+      "users": 8,
+      "conversions": 8
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 4,
+      "users": 4,
+      "conversions": 3
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 3,
+      "users": 3,
+      "conversions": 2
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 1
+    }
+  ],
+  "devices": {
+    "desktop": 70,
+    "mobile": 25,
+    "tablet": 5
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 20,
+      "users": 20
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "google_form_signup",
+      "count": 3,
+      "value": 1512
+    },
+    {
+      "event_name": "calendar_click",
+      "count": 2,
+      "value": 100
+    }
+  ],
+  "total_conversion_value": 1612
+}

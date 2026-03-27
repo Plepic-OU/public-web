@@ -1,0 +1,181 @@
+{
+  "date": "2026-03-21",
+  "account": {
+    "customer_id": "6359946178",
+    "currency": "EUR"
+  },
+  "summary": {
+    "total_spend": 1.78,
+    "total_impressions": 4846,
+    "total_clicks": 47,
+    "overall_ctr": 0.97,
+    "average_cpc": 0.04,
+    "total_conversions": 23.999579,
+    "cost_per_conversion": 0.07,
+    "conversion_value": 24,
+    "roas": 13.48
+  },
+  "campaigns": [
+    {
+      "campaign_id": "23561226362",
+      "campaign_name": "Leads-Performance Max-1",
+      "status": 3,
+      "impressions": 4846,
+      "clicks": 47,
+      "ctr": 0.97,
+      "cost": 1.78,
+      "conversions": 23.999579,
+      "conversions_value": 23.999579,
+      "average_cpc": 0.04,
+      "cost_per_conversion": 0.07,
+      "roas": 13.48
+    },
+    {
+      "campaign_id": "23458825346",
+      "campaign_name": "Agentic Coding Training",
+      "status": 3,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "conversions_value": 0,
+      "average_cpc": 0,
+      "cost_per_conversion": 0,
+      "roas": 0
+    },
+    {
+      "campaign_id": "23672333274",
+      "campaign_name": "Claude Code Training - Search",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "conversions_value": 0,
+      "average_cpc": 0,
+      "cost_per_conversion": 0,
+      "roas": 0
+    }
+  ],
+  "ad_groups": [
+    {
+      "ad_group_id": "188855530542",
+      "ad_group_name": "Smart Campaign Managed AdGroup",
+      "campaign_id": "23458825346",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0
+    },
+    {
+      "ad_group_id": "201333005744",
+      "ad_group_name": "Claude Code & Agentic Coding Keywords",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0
+    }
+  ],
+  "keywords": [
+    {
+      "keyword_id": "2430431911619",
+      "keyword_text": "claude code course",
+      "match_type": 2,
+      "ad_group_id": "201333005744",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0,
+      "quality_score": null
+    },
+    {
+      "keyword_id": "2435905717325",
+      "keyword_text": "claude code training",
+      "match_type": 2,
+      "ad_group_id": "201333005744",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0,
+      "quality_score": null
+    },
+    {
+      "keyword_id": "2436308505358",
+      "keyword_text": "claude code training",
+      "match_type": 3,
+      "ad_group_id": "201333005744",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0,
+      "quality_score": null
+    },
+    {
+      "keyword_id": "2447197933904",
+      "keyword_text": "agentic coding course",
+      "match_type": 2,
+      "ad_group_id": "201333005744",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0,
+      "quality_score": null
+    },
+    {
+      "keyword_id": "2459082486125",
+      "keyword_text": "agentic coding training",
+      "match_type": 2,
+      "ad_group_id": "201333005744",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0,
+      "quality_score": null
+    },
+    {
+      "keyword_id": "2459506173795",
+      "keyword_text": "agentic coding training",
+      "match_type": 3,
+      "ad_group_id": "201333005744",
+      "campaign_id": "23672333274",
+      "status": 2,
+      "impressions": 0,
+      "clicks": 0,
+      "ctr": 0,
+      "cost": 0,
+      "conversions": 0,
+      "average_cpc": 0,
+      "quality_score": null
+    }
+  ],
+  "search_terms": []
+}

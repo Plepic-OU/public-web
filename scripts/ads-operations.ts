@@ -475,6 +475,155 @@ export async function addNegativeKeyword(
 }
 
 /**
+ * Pause a campaign
+ */
+export async function pauseCampaign(
+  campaignId: string,
+  reason: string,
+  campaignName?: string
+): Promise<{ success: boolean; error?: string }> {
+  const credentials = loadCredentials();
+  const customer = initializeClient(credentials);
+  const customerId = formatCustomerId(credentials.customer_id);
+
+  const action: ActionLog = {
+    timestamp: new Date().toISOString(),
+    action: "PAUSE_CAMPAIGN",
+    campaign: campaignName,
+    campaign_id: campaignId,
+    reason,
+    previous_state: "ENABLED",
+    new_state: "PAUSED",
+    success: false,
+  };
+
+  try {
+    const resourceName = `customers/${customerId}/campaigns/${campaignId}`;
+
+    await customer.campaigns.update([
+      {
+        resource_name: resourceName,
+        status: enums.CampaignStatus.PAUSED,
+      },
+    ]);
+
+    action.success = true;
+    console.log(`Paused campaign: ${campaignName || campaignId} - ${reason}`);
+  } catch (error: any) {
+    action.success = false;
+    action.error = error.message;
+    console.error(`Failed to pause campaign ${campaignId}:`, error.message);
+  }
+
+  logAction(action);
+  return { success: action.success, error: action.error };
+}
+
+/**
+ * Enable a paused campaign
+ */
+export async function enableCampaign(
+  campaignId: string,
+  reason: string,
+  campaignName?: string
+): Promise<{ success: boolean; error?: string }> {
+  const credentials = loadCredentials();
+  const customer = initializeClient(credentials);
+  const customerId = formatCustomerId(credentials.customer_id);
+
+  const action: ActionLog = {
+    timestamp: new Date().toISOString(),
+    action: "ENABLE_CAMPAIGN",
+    campaign: campaignName,
+    campaign_id: campaignId,
+    reason,
+    previous_state: "PAUSED",
+    new_state: "ENABLED",
+    success: false,
+  };
+
+  try {
+    const resourceName = `customers/${customerId}/campaigns/${campaignId}`;
+
+    await customer.campaigns.update([
+      {
+        resource_name: resourceName,
+        status: enums.CampaignStatus.ENABLED,
+      },
+    ]);
+
+    action.success = true;
+    console.log(`Enabled campaign: ${campaignName || campaignId} - ${reason}`);
+  } catch (error: any) {
+    action.success = false;
+    action.error = error.message;
+    console.error(`Failed to enable campaign ${campaignId}:`, error.message);
+  }
+
+  logAction(action);
+  return { success: action.success, error: action.error };
+}
+
+/**
+ * Add a keyword to an ad group
+ */
+export async function addKeyword(
+  adGroupId: string,
+  keyword: string,
+  matchType: "EXACT" | "PHRASE" | "BROAD",
+  reason: string,
+  campaignName?: string
+): Promise<{ success: boolean; error?: string }> {
+  const credentials = loadCredentials();
+  const customer = initializeClient(credentials);
+  const customerId = formatCustomerId(credentials.customer_id);
+
+  const matchTypeEnum =
+    matchType === "EXACT"
+      ? enums.KeywordMatchType.EXACT
+      : matchType === "PHRASE"
+        ? enums.KeywordMatchType.PHRASE
+        : enums.KeywordMatchType.BROAD;
+
+  const action: ActionLog = {
+    timestamp: new Date().toISOString(),
+    action: "ADD_KEYWORD",
+    keyword,
+    ad_group_id: adGroupId,
+    campaign: campaignName,
+    reason,
+    match_type: matchType,
+    new_state: "ENABLED",
+    success: false,
+  };
+
+  try {
+    await customer.adGroupCriteria.create([
+      {
+        ad_group: `customers/${customerId}/adGroups/${adGroupId}`,
+        keyword: {
+          text: keyword,
+          match_type: matchTypeEnum,
+        },
+        status: enums.AdGroupCriterionStatus.ENABLED,
+      },
+    ]);
+
+    action.success = true;
+    console.log(
+      `Added keyword: [${matchType}] "${keyword}" to ad group ${adGroupId} (${campaignName || ""})`
+    );
+  } catch (error: any) {
+    action.success = false;
+    action.error = error.message;
+    console.error(`Failed to add keyword "${keyword}":`, error.message);
+  }
+
+  logAction(action);
+  return { success: action.success, error: action.error };
+}
+
+/**
  * Get today's action summary
  */
 export function getTodayActionsSummary(): DailyActions["summary"] {
