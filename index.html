@@ -50,6 +50,8 @@
     "url": "https://plepic.com",
     "logo": "https://plepic.com/images/plepic-logo.png",
     "description": "6-week hands-on Claude Code training for development teams. Master agentic workflows with senior developers. €2,520 per developer.",
+    "foundingDate": "2025",
+    "knowsAbout": ["Agentic Coding", "Claude Code", "AI Development", "Software Training"],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Liivalaia 7",
@@ -66,16 +68,117 @@
     "sameAs": [
       "https://linkedin.com/in/kaidokoort/"
     ],
-    "founder": [
+    "founder": {
+      "@type": "Person",
+      "name": "Kaido Koort",
+      "jobTitle": "Founder & CEO",
+      "sameAs": "https://linkedin.com/in/kaidokoort/",
+      "knowsAbout": ["Agentic Coding", "Incentive Alignment", "Product Strategy", "Software Development"]
+    }
+  }
+  </script>
+
+  <!-- FAQ Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
       {
-        "@type": "Person",
-        "name": "Joosep Simm",
-        "jobTitle": "Developer, Architect & AI Trainer"
+        "@type": "Question",
+        "name": "What is agentic coding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until a goal is achieved — enabling developers to ship 3–5× faster by delegating repetitive tasks to an AI agent."
+        }
       },
       {
-        "@type": "Person",
-        "name": "Kaido Koort",
-        "jobTitle": "Tech Leader & Product Strategist"
+        "@type": "Question",
+        "name": "How is agentic AI different from ChatGPT?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ChatGPT responds to a single prompt and stops. An agentic AI runs in a loop: it plans a task, takes actions using tools (like writing files, running tests, or searching code), observes the results, and continues until the job is done. The difference is autonomy over multi-step tasks, not just conversations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Claude Code and why does it matter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Claude Code is Anthropic's terminal-based agentic coding tool, released in February 2025. Unlike IDE plugins, it has full system access — read files, run commands, manage git, and integrate with any tool in your pipeline. It's the first agent that developers can extend with their own workflows, which is why we built our curriculum around it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who is Plepic's training designed for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The training is designed for software developers with at least two years of professional experience who have access to a real codebase. Teams from software agencies, product companies, and tech departments join to accelerate delivery using agentic workflows — not to learn programming basics."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does the training program take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The training runs over six Fridays, each a full day (9:00–15:30) via Google Meet. In total the program covers 50 academic hours and is structured so participants can apply what they learn in their own codebases between sessions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a certificate at the end?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Participants who complete the program receive a Plepic Certificate of Completion in Agentic Development. The certificate covers the agentic development framework including Claude Code, CLAUDE.md architecture, context management, and the full agentic loop with git worktrees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does the training cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The standard price is €2,520 per developer (+VAT). For Estonian teams, the Töötukassa subsidy brings the cost down to €504 per developer — the fund covers €2,016 of the total. You apply for the subsidy before training starts via the Töötukassa employer portal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the Töötukassa subsidy work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Estonian employers can apply for Töötukassa täienduskoolituse toetus (continuing training support), which covers 80% of training costs up to a defined limit. For our program, Töötukassa covers €2,016, leaving €504 per developer. Apply before the training start date via the Töötukassa employer portal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can my team join if they've never used Claude?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. No prior Claude experience is required — only 2+ years of software development experience and access to a real codebase. The first session covers Claude Code setup from scratch, including token economics, commands, and configuration. Teams without prior AI coding tool experience catch up quickly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes Plepic's training different from online courses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We work on your actual codebase, not exercises. Every session is led by senior developers with 20+ years each who build production systems with agentic tools. The curriculum was designed in 2025 specifically for Claude Code — not adapted from generic AI content. We guarantee a 3× speed improvement or continue working with your team."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the training available outside Estonia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The training runs online via Google Meet and is open to European teams at the standard price of €2,520 per developer. The Töötukassa subsidy is only available for Estonian-registered employers. We run cohorts in English and can accommodate teams across the EU."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the agentic harness?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The agentic harness is the structured setup that makes Claude Code work reliably on a real codebase: CLAUDE.md configuration, documentation architecture, brainstorming and scoping skills, the agentic loop, and git worktrees for parallel agent work. The training teaches you to assemble this harness for your specific project."
+        }
       }
     ]
   }
@@ -210,6 +313,44 @@
                 <div class="big-stat-value">300+</div>
                 <div class="big-stat-label">Developers Trained</div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3b: Our Story -->
+    <section class="origin-section section reveal">
+      <div class="container">
+        <div class="origin-content reveal">
+          <p class="label">Our Story</p>
+          <h2>Built on <span class="highlight">Two Decades</span> of Shipping Software</h2>
+
+          <div class="origin-body">
+            <p>Plepic was launched in 2025 by Kaido Koort &mdash; not because AI was trending, but because it was finally real.</p>
+
+            <p>The seed was planted in spring 2024 on a hiking trip with friends. Kaido had grown up on sci-fi books and strategy games, mentally rehearsing AI futures long before they arrived. When the breakthrough came, the public conversation felt almost quaint. He spent 2024 researching incentive alignment in software &mdash; why teams behave the way they do, and what changes when the tools change. After 23 years in software, leading 8 teams and shipping 6 products across both agency and client side, the conclusion was hard to avoid: launching now would be stupid to pass up.</p>
+
+            <p>Joosep Simm joined as lead instructor: 20 years building production systems, the kind of engineer who knows a curriculum has to work on real codebases, not toy examples. Together they designed training from first principles &mdash; what developers actually need to ship faster with AI agents.</p>
+          </div>
+
+          <blockquote class="perspective-shift-quote">
+            <p>&ldquo;Plepic&rsquo;s north star is skin in the game. If the training works, you&rsquo;ll see it in your team&rsquo;s output.&rdquo;</p>
+            <cite>Kaido Koort, Founder</cite>
+          </blockquote>
+
+          <div class="origin-stats">
+            <div class="big-stat">
+              <div class="big-stat-value">23</div>
+              <div class="big-stat-label">Years in Software</div>
+            </div>
+            <div class="big-stat">
+              <div class="big-stat-value">8</div>
+              <div class="big-stat-label">Teams Led</div>
+            </div>
+            <div class="big-stat">
+              <div class="big-stat-value">6</div>
+              <div class="big-stat-label">Products Launched</div>
             </div>
           </div>
         </div>
@@ -393,6 +534,104 @@
           </article>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Section 7: FAQ -->
+    <section class="faq-section section reveal">
+      <div class="container">
+        <div class="reveal">
+          <p class="label">Common Questions</p>
+          <h2>Frequently Asked <span class="highlight">Questions</span></h2>
+
+          <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">What is agentic coding?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until a goal is achieved &mdash; enabling developers to ship 3&ndash;5&times; faster by delegating repetitive tasks to an AI agent.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">How is agentic AI different from ChatGPT?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">ChatGPT responds to a single prompt and stops. An agentic AI runs in a loop: it plans a task, takes actions using tools (like writing files, running tests, or searching code), observes the results, and continues until the job is done. The difference is autonomy over multi-step tasks, not just conversations.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">What is Claude Code and why does it matter?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Claude Code is Anthropic&rsquo;s terminal-based agentic coding tool, released in February 2025. Unlike IDE plugins, it has full system access &mdash; read files, run commands, manage git, and integrate with any tool in your pipeline. It&rsquo;s the first agent that developers can extend with their own workflows, which is why we built our curriculum around it.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">Who is Plepic&rsquo;s training designed for?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">The training is designed for software developers with at least two years of professional experience who have access to a real codebase. Teams from software agencies, product companies, and tech departments join to accelerate delivery using agentic workflows &mdash; not to learn programming basics.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">How long does the training program take?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">The training runs over six Fridays, each a full day (9:00&ndash;15:30) via Google Meet. In total the program covers 50 academic hours and is structured so participants can apply what they learn in their own codebases between sessions.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">Is there a certificate at the end?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Yes. Participants who complete the program receive a Plepic Certificate of Completion in Agentic Development. The certificate covers the agentic development framework including Claude Code, CLAUDE.md architecture, context management, and the full agentic loop with git worktrees.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">How much does the training cost?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">The standard price is &euro;2,520 per developer (+VAT). For Estonian teams, the T&ouml;&ouml;tukassa subsidy brings the cost down to &euro;504 per developer &mdash; the fund covers &euro;2,016 of the total. You apply for the subsidy before training starts via the T&ouml;&ouml;tukassa employer portal.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">How does the T&ouml;&ouml;tukassa subsidy work?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Estonian employers can apply for T&ouml;&ouml;tukassa t&auml;ienduskoolituse toetus (continuing training support), which covers 80% of training costs. For our program, T&ouml;&ouml;tukassa covers &euro;2,016, leaving &euro;504 per developer. Apply before the training start date via the T&ouml;&ouml;tukassa employer portal.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">Can my team join if they&rsquo;ve never used Claude?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Yes. No prior Claude experience is required &mdash; only 2+ years of software development experience and access to a real codebase. The first session covers Claude Code setup from scratch, including token economics, commands, and configuration. Teams without prior AI coding tool experience catch up quickly.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">What makes Plepic&rsquo;s training different from online courses?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">We work on your actual codebase, not exercises. Every session is led by senior developers with 20+ years each who build production systems with agentic tools. The curriculum was designed in 2025 specifically for Claude Code &mdash; not adapted from generic AI content. We guarantee a 3&times; speed improvement or continue working with your team.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">Is the training available outside Estonia?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Yes. The training runs online via Google Meet and is open to European teams at the standard price of &euro;2,520 per developer. The T&ouml;&ouml;tukassa subsidy is only available for Estonian-registered employers. We run cohorts in English and can accommodate teams across the EU.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">What is the agentic harness?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">The agentic harness is the structured setup that makes Claude Code work reliably on a real codebase: CLAUDE.md configuration, documentation architecture, brainstorming and scoping skills, the agentic loop, and git worktrees for parallel agent work. The training teaches you to assemble this harness for your specific project.</p>
+              </div>
+            </details>
+
+          </div>
+        </div>
       </div>
     </section>
 
