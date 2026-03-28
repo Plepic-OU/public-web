@@ -2605,46 +2605,6 @@ p:last-child {
 }
 
 /* ========================================
-   Origin Story Section
-   ======================================== */
-
-.origin-section {
-  background: var(--bg-alt);
-}
-
-.origin-content {
-  max-width: 720px;
-}
-
-.origin-content .highlight {
-  color: var(--green-dark);
-}
-
-.origin-body {
-  margin-top: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.origin-body p {
-  color: var(--text-2);
-  line-height: 1.75;
-}
-
-.origin-stats {
-  display: flex;
-  gap: var(--space-lg);
-  margin-top: var(--space-2xl);
-  flex-wrap: wrap;
-}
-
-.origin-stats .big-stat {
-  flex: 1;
-  min-width: 120px;
-}
-
-/* ========================================
    FAQ Section
    ======================================== */
 
