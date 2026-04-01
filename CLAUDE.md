@@ -45,13 +45,21 @@ docs/               # Design documents and one-pagers
 
 **Deployment:** GitHub Pages from `main` branch. Merge PR = deploy. Custom domain: plepic.com
 
-**Design system:** CSS uses custom properties (design tokens) defined in `:root`. Reference `docs/plans/2026-01-03-plepic-homepage-design.md` for design decisions.
+**Design system:** CSS custom properties in `:root`. Full reference at `prototype-design-system.html`.
+
+**Locked palette (2026-04-01):** All greens at H=137°. System saturation S=73%, vivid exception S=100%. Accent S-matched.
+- `--green` (`#00c638`) — decorative: dots, fills, dark-mode headings. Not text on light.
+- `--green-brand` (`#137b30`) — logo, headings, links. AA on cream/white.
+- `--green-dark` (`#0d5822`) — body text. AAA on cream/white.
+- `--green-light` (`#c5f6d3`) — badge fills, borders.
+- `--green-surface` (`#edfcf1`) — tinted backgrounds.
+- `--accent` (`#e26c45`) — CTA buttons, urgency badges. One per viewport max.
 
 **Key CSS patterns:**
-- Starcraft-inspired retro-futuristic aesthetic with `Orbitron` (headings/logo), `Exo 2` (body), and `Share Tech Mono` (code/labels)
-- CSS grid layouts with broken grid designs
-- Brand colors: cyan `--color-cyan: #00ffff` and orange `--color-orange: #ff6600` on dark void `--color-void: #050508`
-- All spacing uses 8px base unit via `--space-*` tokens
+- Nature-digital aesthetic with `Zilla Slab` (headings/logo), `Plus Jakarta Sans` (body), `JetBrains Mono` (code)
+- Light mode only. Warm cream background `#faf7f2`, no pure black/white
+- CSS grid layouts
+- All spacing uses `--space-*` tokens
 - Fonts loaded via `<link>` in HTML (not CSS @import) for faster discovery
 
 ## Content Notes

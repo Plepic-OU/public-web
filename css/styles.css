@@ -7,18 +7,17 @@
    ======================================== */
 
 :root {
-  /* Green — Nature, growth, transformation */
-  --green: #22c55e;
-  --green-dark: #0d7a36;
-  --green-darker: #065f28;
-  --green-light: #dcfce7;
-  --green-surface: #f0fdf4;
+  /* Green system — H=137°, S=73% (vivid S=100%)
+     Palette locked 2026-04-01. See prototype-design-system.html */
+  --green: #00c638;           /* H137° S100% L39% — decorative: dots, fills, dark-mode headings */
+  --green-brand: #137b30;     /* H137° S73%  L28% — logo, headings, links (AA on cream/white) */
+  --green-dark: #0d5822;      /* H137° S73%  L20% — body text (AAA on cream/white) */
+  --green-light: #c5f6d3;     /* H137° S73%  L87% — badge fills, borders */
+  --green-surface: #edfcf1;   /* H137° S73%  L96% — tinted backgrounds */
 
-  /* Claude Orange — CTAs, Claude Code brand */
-  --claude-orange: #d97757;
-  --claude-orange-dark: #b8604a;
-  --claude-orange-text: #a8553f;
-  --cta-text: #3d1f14;
+  /* Accent — H=15°, S=73% (saturation-matched to brand)
+     Split-complementary of H=137°. One per viewport. */
+  --accent: #e26c45;          /* H15°  S73%  L58% — CTA buttons, urgency badges */
 
   /* Backgrounds */
   --bg: #faf7f2;
@@ -97,7 +96,7 @@ a {
 }
 
 a:hover {
-  color: var(--green-darker);
+  color: var(--green-dark);
 }
 
 a:focus-visible {
@@ -226,13 +225,13 @@ p:last-child {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: normal;
-  color: #16a34a !important;
+  color: #137b30 !important;
   text-decoration: none;
   letter-spacing: 0.02em;
 }
 
 .logo:hover {
-  color: #16a34a !important;
+  color: #137b30 !important;
 }
 
 .nav {
@@ -256,7 +255,7 @@ p:last-child {
 .nav-cta {
   padding: 0.5rem 1.2rem !important;
   border: 1.5px solid var(--green) !important;
-  color: #0d7a36 !important;
+  color: #0d5822 !important;
   border-radius: 10px !important;
   font-weight: 500 !important;
   font-size: 0.9rem !important;
@@ -266,7 +265,7 @@ p:last-child {
 
 .nav-cta:hover {
   background: var(--green-surface) !important;
-  color: var(--green-darker) !important;
+  color: var(--green-dark) !important;
   box-shadow: none !important;
   transform: none !important;
 }
@@ -305,8 +304,8 @@ p:last-child {
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2.25rem;
-  background: var(--claude-orange);
-  color: var(--cta-text);
+  background: var(--accent);
+  color: var(--surface);
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
@@ -317,8 +316,8 @@ p:last-child {
 }
 
 .btn-primary:hover {
-  background: var(--claude-orange-dark);
-  color: var(--cta-text);
+  background: var(--accent);
+  color: var(--surface);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(217, 119, 87, 0.25);
 }
@@ -345,7 +344,7 @@ p:last-child {
 
 .btn-secondary:hover {
   background: var(--green-surface);
-  color: var(--green-darker);
+  color: var(--green-dark);
 }
 
 .btn-lg {
@@ -378,7 +377,7 @@ p:last-child {
   gap: 0.5rem;
   padding: 0.3rem 0.9rem;
   background: var(--green-surface);
-  color: #0d7a36;
+  color: #0d5822;
   font-size: 0.78rem;
   font-weight: 600;
   line-height: normal;
@@ -485,7 +484,7 @@ p:last-child {
 }
 
 .hero h1 .green {
-  color: #16a34a;
+  color: #137b30;
 }
 
 .hero-desc {
@@ -596,7 +595,7 @@ p:last-child {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: normal;
-  color: #0d7a36;
+  color: #0d5822;
   background: transparent;
   padding: 0.5rem 0;
   white-space: nowrap;
@@ -715,11 +714,11 @@ p:last-child {
 
 .text-cyan,
 .shift-col--agent h4 {
-  color: var(--claude-orange-text) !important;
+  color: var(--accent) !important;
 }
 
 .shift-col--agent {
-  border-left: 3px solid var(--claude-orange);
+  border-left: 3px solid var(--accent);
 }
 
 .text-orange,
@@ -946,7 +945,7 @@ p:last-child {
 }
 
 .experience-badge svg {
-  color: var(--claude-orange);
+  color: var(--accent);
 }
 
 .team-grid {
@@ -1027,7 +1026,7 @@ p:last-child {
   line-height: normal;
   padding: 0.2rem 0.6rem;
   background: var(--green-surface);
-  color: var(--green-darker);
+  color: var(--green-dark);
   border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1264,7 +1263,7 @@ p:last-child {
 }
 
 .comparison-card--agent {
-  border-left: 3px solid var(--claude-orange);
+  border-left: 3px solid var(--accent);
 }
 
 .comparison-visual {
@@ -1287,7 +1286,7 @@ p:last-child {
 }
 
 .comparison-title--cyan {
-  color: var(--claude-orange-text);
+  color: var(--accent);
 }
 
 .comparison-title--orange {
@@ -1523,8 +1522,8 @@ p:last-child {
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2.5rem;
-  background: var(--claude-orange);
-  color: var(--cta-text);
+  background: var(--accent);
+  color: var(--surface);
   font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 700;
@@ -1534,8 +1533,8 @@ p:last-child {
 }
 
 .btn-enlist:hover {
-  background: var(--claude-orange-dark);
-  color: var(--cta-text);
+  background: var(--accent);
+  color: var(--surface);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(217, 119, 87, 0.25);
 }
