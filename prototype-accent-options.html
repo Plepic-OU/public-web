@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accent Color Candidates — vs Deep Green</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-brand: #137a30;
+      --green-dark: #065f28;
+      --green-light: #dcfce7;
+      --green-surface: #f0fdf4;
+      --bg-cream: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Zilla Slab', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg-cream);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-header {
+      padding: 3rem 2rem 1.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .page-header h1 span { color: var(--green-brand); }
+    .page-header p {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .section {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-label.on-dark {
+      color: #8a8a80;
+      border-bottom-color: var(--border-dark);
+    }
+
+    /* === Accent definitions === */
+    .accents {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1000px) {
+      .accents { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .accents { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* === Swatch cards === */
+    .swatch-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .swatch-top {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .swatch-top .half {
+      flex: 1;
+      height: 100%;
+    }
+
+    .swatch-body {
+      padding: 1rem;
+    }
+
+    .swatch-body h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .swatch-body .meta {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-3);
+      margin-bottom: 0.35rem;
+    }
+
+    .swatch-body .theory {
+      font-size: 0.75rem;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .contrast-tags {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .ct {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .ct-pass { background: #dcfce7; color: #065f28; }
+    .ct-warn { background: #fefce8; color: #854d0e; }
+    .ct-fail { background: #fef2f2; color: #991b1b; }
+
+    /* === Hero mocks === */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1000px) {
+      .hero-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+
+    .hero-mock {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .hero-nav {
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-nav .logo {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--green-brand);
+    }
+
+    .hero-content {
+      padding: 1.25rem 1rem 1.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      border-radius: 12px 3px 10px 3px;
+      background: var(--green-surface);
+      color: var(--green-dark);
+      border: 1px solid var(--green-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-badge-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+
+    .hero-content h2 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-content h2 .accent { color: var(--green-brand); }
+
+    .hero-content p {
+      font-size: 0.7rem;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-outline-green {
+      background: transparent;
+      border: 1.5px solid var(--green-brand);
+      color: var(--green-brand);
+    }
+
+    /* nav CTA */
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* === Dark hero mocks === */
+    .hero-mock-dark {
+      border-color: var(--border-dark);
+    }
+
+    .hero-mock-dark .hero-nav {
+      background: var(--dark);
+      border-bottom-color: var(--border-dark);
+    }
+
+    .hero-mock-dark .hero-nav .logo {
+      color: #22c55e;
+    }
+
+    .hero-mock-dark .hero-content {
+      background: var(--dark);
+    }
+
+    .hero-mock-dark .hero-badge {
+      background: rgba(34,197,94,0.12);
+      color: #4ade80;
+      border-color: rgba(34,197,94,0.2);
+    }
+
+    .hero-mock-dark .hero-badge-dot {
+      background: #22c55e;
+    }
+
+    .hero-mock-dark .hero-content h2 {
+      color: #e5e2dc;
+    }
+
+    .hero-mock-dark .hero-content h2 .accent {
+      color: #22c55e;
+    }
+
+    .hero-mock-dark .hero-content p {
+      color: #a3a39a;
+    }
+
+    .hero-mock-dark .btn-outline-green {
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    /* === Component comparison row === */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1000px) {
+      .comp-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+
+    .comp-card .label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border-radius: 14px 3px 10px 3px;
+      margin-bottom: 0.75rem;
+    }
+
+    .comp-badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .comp-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .comp-card-inner {
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .comp-card-inner h4 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .comp-card-inner p {
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* === Pricing row === */
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .pricing-card .price {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .pricing-card .price-label {
+      font-size: 0.75rem;
+      color: var(--text-3);
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      font-size: 0.75rem;
+      line-height: 2;
+      color: var(--text-2);
+    }
+
+    .pricing-cta {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Dark section */
+    .dark-section {
+      background: var(--dark);
+      padding: 3rem 0;
+      margin-bottom: 3rem;
+    }
+    .dark-section .section { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>5 Accent Candidates vs <span>Deep Green</span></h1>
+    <p>Green owns the brand — everything is green. The accent only appears on the single CTA button. Which accent gives the best contrast and warmth without fighting the green?</p>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Accent definitions -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">The 5 candidates</div>
+    <div class="accents" id="swatchGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Hero mocks — Light -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">Hero mock — Light (cream background)</div>
+    <div class="hero-grid" id="heroLightGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Hero mocks — Dark -->
+  <!-- ============================================ -->
+  <div class="dark-section">
+    <div class="section" style="margin-bottom: 0;">
+      <div class="section-label on-dark">Hero mock — Dark</div>
+      <div class="hero-grid" id="heroDarkGrid"></div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- UI Components -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">UI Components — Badges, links, cards</div>
+    <div class="comp-grid" id="compGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Pricing CTAs -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">Pricing card — CTA button comparison</div>
+    <div class="comp-grid" id="pricingGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Verdict -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">Analysis</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; max-width: 780px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+        <thead>
+          <tr>
+            <th style="text-align: left; font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); padding: 0.5rem 0.5rem; border-bottom: 1px solid var(--border);">Candidate</th>
+            <th style="text-align: left; font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); padding: 0.5rem 0.5rem; border-bottom: 1px solid var(--border);">Pros</th>
+            <th style="text-align: left; font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); padding: 0.5rem 0.5rem; border-bottom: 1px solid var(--border);">Cons</th>
+          </tr>
+        </thead>
+        <tbody id="verdictTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // === Color data ===
+    const accents = [
+      {
+        name: 'Anthropic Orange',
+        hex: '#d97757',
+        hexDark: '#b8604a',
+        surface: '#fef6f2',
+        surfaceBorder: '#fde8df',
+        textOnLight: '#9a4e3b',
+        theory: 'Split-complementary (warm). Anthropic brand link.',
+        pros: 'Warm, action-oriented, links to Claude/Anthropic partnership. Proven CTA color.',
+        cons: 'Green + orange = Christmas risk at high density. Ties brand to Anthropic.',
+      },
+      {
+        name: 'Teal',
+        hex: '#0d9488',
+        hexDark: '#0f766e',
+        surface: '#f0fdfa',
+        surfaceBorder: '#ccfbf1',
+        textOnLight: '#115e59',
+        theory: 'Analogous-cool. Same family as green, cooler shift.',
+        pros: 'Very harmonious with green. Calm, trustworthy, modern. Nature-digital feel (ocean + forest).',
+        cons: 'Low contrast between green and teal — may blur together. Less CTA urgency.',
+      },
+      {
+        name: 'Black',
+        hex: '#1c1c1a',
+        hexDark: '#0a0a09',
+        surface: '#f3efe7',
+        surfaceBorder: '#e5e2dc',
+        textOnLight: '#1c1c1a',
+        theory: 'Neutral anchor. Green pops, black grounds.',
+        pros: 'Maximum contrast. Timeless, authoritative. Green becomes the only color — pure brand focus.',
+        cons: 'No warmth. CTA button may feel stark/harsh. Harder to create visual hierarchy with two values.',
+      },
+      {
+        name: 'Warm Gold',
+        hex: '#b8860b',
+        hexDark: '#966d08',
+        surface: '#fefbeb',
+        surfaceBorder: '#fde68a',
+        textOnLight: '#7c5c06',
+        theory: 'Analogous-warm. Forest green + golden light.',
+        pros: 'Natural harmony (forest floor, sunlight). Warm, premium feel. Very harmonious.',
+        cons: 'Lower contrast with green — less CTA punch. Can feel old-fashioned.',
+      },
+      {
+        name: 'Bold Gold',
+        hex: '#eab308',
+        hexDark: '#ca9a06',
+        surface: '#fefce8',
+        surfaceBorder: '#fef08a',
+        textOnLight: '#854d0e',
+        theory: 'Analogous-warm. Brighter, bolder than Warm Gold — sunflower energy.',
+        pros: 'High visibility, energetic. Strong CTA pop. Green + yellow = nature (leaves + sun). Joyful.',
+        cons: 'Can feel cheap if overused. Low contrast on cream for text — button-only.',
+      },
+    ];
+
+    // === Utility ===
+    function luminance(hex) {
+      const r = parseInt(hex.slice(1,3), 16) / 255;
+      const g = parseInt(hex.slice(3,5), 16) / 255;
+      const b = parseInt(hex.slice(5,7), 16) / 255;
+      const [R, G, B] = [r, g, b].map(c =>
+        c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+      );
+      return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+    }
+
+    function contrast(fg, bg) {
+      const l1 = luminance(fg), l2 = luminance(bg);
+      return (Math.max(l1,l2) + 0.05) / (Math.min(l1,l2) + 0.05);
+    }
+
+    function ctBadge(ratio) {
+      const r = ratio.toFixed(1);
+      if (ratio >= 4.5) return `<span class="ct ct-pass">${r}:1 AA</span>`;
+      if (ratio >= 3.0) return `<span class="ct ct-warn">${r}:1 Lg</span>`;
+      return `<span class="ct ct-fail">${r}:1</span>`;
+    }
+
+    // === Butterfly SVG (reusable) ===
+    const butterflyLight = `<svg width="22" height="20" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.15" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="58,52 58,42 12,34" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.15" stroke="#137a30" stroke-width="1.2"/>
+      <polygon points="62,52 62,42 108,34" fill="#137a30" opacity="0.4" stroke="#137a30" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="#22c55e" opacity="0.35" stroke="#137a30" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="#137a30" opacity="0.19" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="#137a30" opacity="0.48" stroke="#137a30" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="#137a30" opacity="0.35" stroke="#137a30" stroke-width="0.6"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="#137a30" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="#22c55e" opacity="0.6"/>
+      <circle cx="68" cy="14" r="2" fill="#22c55e" opacity="0.6"/>
+    </svg>`;
+
+    const butterflyDark = `<svg width="22" height="20" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="1.2"/>
+      <polygon points="58,52 58,42 12,34" fill="#22c55e" opacity="0.4" stroke="#22c55e" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="#22c55e" opacity="0.35" stroke="#22c55e" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="#22c55e" opacity="0.19" stroke="#22c55e" stroke-width="0.8"/>
+      <polygon points="62,42 78,24 98,18" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="1.2"/>
+      <polygon points="62,52 62,42 108,34" fill="#22c55e" opacity="0.4" stroke="#22c55e" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="#22c55e" opacity="0.35" stroke="#22c55e" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="#22c55e" opacity="0.19" stroke="#22c55e" stroke-width="0.8"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="#22c55e" opacity="0.48" stroke="#22c55e" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="#22c55e" opacity="0.35" stroke="#22c55e" stroke-width="0.6"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="#22c55e" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="#22c55e" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="#22c55e" opacity="0.6"/>
+      <circle cx="68" cy="14" r="2" fill="#22c55e" opacity="0.6"/>
+    </svg>`;
+
+    // === 1. Swatch cards ===
+    const swatchGrid = document.getElementById('swatchGrid');
+    accents.forEach(a => {
+      const onCream = contrast(a.hex, '#faf7f2');
+      const onWhite = contrast(a.hex, '#ffffff');
+      const onDark = contrast(a.hex, '#1c1c1a');
+
+      const card = document.createElement('div');
+      card.className = 'swatch-card';
+      card.innerHTML = `
+        <div class="swatch-top">
+          <div class="half" style="background: #065f28;"></div>
+          <div class="half" style="background: #137a30;"></div>
+          <div class="half" style="background: #22c55e;"></div>
+          <div class="half" style="background: ${a.hex};"></div>
+        </div>
+        <div class="swatch-body">
+          <h3 style="color: var(--text);">${a.name}</h3>
+          <div class="meta">${a.hex} · ${a.theory}</div>
+          <div class="contrast-tags">
+            <span class="ct" style="background: var(--bg-alt); color: var(--text-3);">on cream</span>${ctBadge(onCream)}
+            <span class="ct" style="background: var(--bg-alt); color: var(--text-3);">on white</span>${ctBadge(onWhite)}
+            <span class="ct" style="background: var(--bg-alt); color: var(--text-3);">on dark</span>${ctBadge(onDark)}
+          </div>
+        </div>
+      `;
+      swatchGrid.appendChild(card);
+    });
+
+    // === 2. Hero mocks — Light ===
+    const heroLightGrid = document.getElementById('heroLightGrid');
+    accents.forEach(a => {
+      // For black accent, use dark text CTA style
+      const ctaTextColor = a.hex === '#1c1c1a' ? '#fff' : '#fff';
+      const mock = document.createElement('div');
+      mock.className = 'hero-mock';
+      mock.innerHTML = `
+        <div class="hero-nav" style="background: rgba(255,255,255,0.95);">
+          <div style="display: flex; align-items: center; gap: 5px;">
+            ${butterflyLight}
+            <span class="logo">Plepic</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="#" style="font-size: 0.65rem; color: var(--text-2); text-decoration: none; font-weight: 500;">Training</a>
+            <button class="nav-cta" style="background: ${a.hex}; color: ${ctaTextColor};">Book a call</button>
+          </div>
+        </div>
+        <div class="hero-content" style="background: var(--bg-cream);">
+          <div class="hero-badge"><span class="hero-badge-dot"></span> Cohort 3 — April 2026</div>
+          <h2>Build production<br><span class="accent">AI agents</span> in 5 days</h2>
+          <p style="color: var(--text-2);">Hands-on training for developers. Ship real agents with Claude Code, not toy demos.</p>
+          <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
+            <span style="font-size: 0.65rem; color: var(--green-brand); font-weight: 600;">300+ trained</span>
+            <span style="font-size: 0.65rem; color: var(--green-brand); font-weight: 600;">NPS 8.4/10</span>
+          </div>
+          <div class="hero-btns">
+            <button class="btn" style="background: ${a.hex}; color: ${ctaTextColor};">Book a free call</button>
+            <button class="btn btn-outline-green">View curriculum</button>
+          </div>
+          <p style="font-size: 0.55rem; color: var(--text-3); margin-top: 0.4rem;">Free 30-min call · <a href="#" style="color: var(--green-brand); text-decoration: underline; text-underline-offset: 2px;">See all dates</a></p>
+        </div>
+      `;
+      heroLightGrid.appendChild(mock);
+    });
+
+    // === 3. Hero mocks — Dark ===
+    const heroDarkGrid = document.getElementById('heroDarkGrid');
+    accents.forEach(a => {
+      const mock = document.createElement('div');
+      mock.className = 'hero-mock hero-mock-dark';
+      // For black accent on dark, invert to white
+      const darkCtaBg = a.hex === '#1c1c1a' ? '#e5e2dc' : a.hex;
+      const darkCtaText = a.hex === '#1c1c1a' ? '#1c1c1a' : '#fff';
+      mock.innerHTML = `
+        <div class="hero-nav">
+          <div style="display: flex; align-items: center; gap: 5px;">
+            ${butterflyDark}
+            <span class="logo">Plepic</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="#" style="font-size: 0.65rem; color: #a3a39a; text-decoration: none; font-weight: 500;">Training</a>
+            <button class="nav-cta" style="background: ${darkCtaBg}; color: ${darkCtaText};">Book a call</button>
+          </div>
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge"><span class="hero-badge-dot"></span> Cohort 3 — April 2026</div>
+          <h2>Build production<br><span class="accent">AI agents</span> in 5 days</h2>
+          <p>Hands-on training for developers. Ship real agents with Claude Code, not toy demos.</p>
+          <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
+            <span style="font-size: 0.65rem; color: #22c55e; font-weight: 600;">300+ trained</span>
+            <span style="font-size: 0.65rem; color: #22c55e; font-weight: 600;">NPS 8.4/10</span>
+          </div>
+          <div class="hero-btns">
+            <button class="btn" style="background: ${darkCtaBg}; color: ${darkCtaText};">Book a free call</button>
+            <button class="btn btn-outline-green">View curriculum</button>
+          </div>
+          <p style="font-size: 0.55rem; color: #6b6b60; margin-top: 0.4rem;">Free 30-min call · <a href="#" style="color: #22c55e; text-decoration: underline; text-underline-offset: 2px;">See all dates</a></p>
+        </div>
+      `;
+      heroDarkGrid.appendChild(mock);
+    });
+
+    // === 4. Component cards ===
+    const compGrid = document.getElementById('compGrid');
+    accents.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'comp-card';
+      card.innerHTML = `
+        <div class="label">${a.name}</div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+          <span class="comp-badge" style="background: var(--green-surface); color: var(--green-dark); border: 1px solid var(--green-light);"><span class="comp-badge-dot" style="background: var(--green);"></span> Cohort open</span>
+          <span class="comp-badge" style="background: var(--green-surface); color: var(--green-dark); border: 1px solid var(--green-light);"><span class="comp-badge-dot" style="background: var(--green);"></span> 12 spots</span>
+        </div>
+        <h4 style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--green-brand); margin-bottom: 0.35rem;">Agentic Coding Training</h4>
+        <p style="font-size: 0.78rem; color: var(--text-2); line-height: 1.6; margin-bottom: 0.5rem;">
+          5-day hands-on program. <a href="#" class="comp-link" style="color: var(--green-brand);">View curriculum</a> ·
+          <a href="#" class="comp-link" style="color: var(--green-brand);">See dates</a>
+        </p>
+        <div class="comp-card-inner" style="background: var(--green-surface); border: 1px solid var(--green-light);">
+          <h4 style="color: var(--green-dark);">Next: April 7-11</h4>
+          <p style="color: var(--green-brand);">Tallinn · Max 12 · NPS 8.4/10</p>
+        </div>
+        <div style="margin-top: 0.75rem;">
+          <button class="btn" style="background: ${a.hex}; color: ${a.hex === '#1c1c1a' ? '#fff' : '#fff'}; width: 100%; justify-content: center;">Book a free call</button>
+        </div>
+      `;
+      compGrid.appendChild(card);
+    });
+
+    // === 5. Pricing cards ===
+    const pricingGrid = document.getElementById('pricingGrid');
+    accents.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'pricing-card';
+      card.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="width: 12px; height: 12px; border-radius: 4px; background: ${a.hex};"></span>
+          <span style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-3);">${a.name}</span>
+        </div>
+        <span class="comp-badge" style="background: var(--green-surface); color: var(--green-dark); border: 1px solid var(--green-light); align-self: flex-start;"><span class="comp-badge-dot" style="background: var(--green);"></span> Most popular</span>
+        <div>
+          <div class="price" style="color: var(--green-brand);">€504</div>
+          <div class="price-label">per participant</div>
+        </div>
+        <ul style="color: var(--green-dark);">
+          <li>5 days hands-on training</li>
+          <li>1 month post-training support</li>
+          <li>Certificate of completion</li>
+        </ul>
+        <button class="pricing-cta" style="background: ${a.hex}; color: ${a.hex === '#1c1c1a' ? '#fff' : '#fff'};">Enroll now</button>
+        <a href="#" style="text-align: center; font-size: 0.75rem; color: var(--green-brand); font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">View full details</a>
+      `;
+      pricingGrid.appendChild(card);
+    });
+
+    // === 6. Verdict table ===
+    const verdictTable = document.getElementById('verdictTable');
+    accents.forEach(a => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--bg-cream); white-space: nowrap;">
+          <span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: ${a.hex}; vertical-align: middle; margin-right: 6px;"></span>
+          <strong>${a.name}</strong>
+        </td>
+        <td style="padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--bg-cream); color: var(--text-2);">${a.pros}</td>
+        <td style="padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--bg-cream); color: var(--text-2);">${a.cons}</td>
+      `;
+      verdictTable.appendChild(tr);
+    });
+  </script>
+
+</body>
+</html>

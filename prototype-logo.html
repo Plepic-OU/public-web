@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plepic Logo — Butterfly + Wordmark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      /* LOCKED PALETTE */
+      --brand: #137a30;
+      --vivid: #00c951;
+      --dark-green: #065f28;
+      --orange: #d97757;
+      --green-light: #c6f7d5;
+      --green-surface: #edfdf2;
+
+      --bg-cream: #faf7f2;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Zilla Slab', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body { font-family: var(--font-body); color: var(--text); background: var(--bg-cream); -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .section { margin-bottom: 3rem; }
+    .dark-section { background: var(--dark); padding: 3rem 0; margin-bottom: 3rem; }
+
+    .page-header { padding: 3rem 0 1.5rem; }
+    .page-header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .page-header h1 span { color: var(--brand); }
+    .page-header p { color: var(--text-2); font-size: 0.95rem; max-width: 640px; line-height: 1.6; }
+
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .section-label.on-dark { color: #8a8a80; border-bottom-color: var(--border-dark); }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+    .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+
+    @media (max-width: 1000px) { .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4, .grid-5, .grid-6 { grid-template-columns: repeat(3, 1fr); } }
+
+    .card {
+      border-radius: 14px; padding: 2rem 1.5rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      text-align: center;
+    }
+    .card-light { background: var(--surface); border: 1px solid var(--border); }
+    .card-cream { background: var(--bg-cream); border: 1px solid var(--border); }
+    .card-dark { background: var(--dark); border: 1px solid var(--border-dark); }
+    .card-brand { background: var(--brand); }
+
+    .card-label {
+      font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .card-light .card-label, .card-cream .card-label { color: var(--text-3); }
+    .card-dark .card-label { color: #6b6b60; }
+    .card-brand .card-label { color: rgba(255,255,255,0.5); }
+
+    .card-note { font-size: 0.7rem; color: var(--text-3); line-height: 1.4; max-width: 200px; }
+
+    .lockup-h { display: flex; align-items: center; gap: 0.6rem; }
+    .lockup-v { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+    .logo-text { font-family: var(--font-display); font-weight: 700; }
+
+    /* Size test row */
+    .size-row {
+      display: flex; align-items: flex-end; gap: 3rem; flex-wrap: wrap;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 2rem;
+    }
+    .size-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .size-item .card-label { color: var(--text-3); }
+
+    /* Nav mock */
+    .nav-mock {
+      border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+    }
+    .nav-bar {
+      padding: 0.75rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-links a { font-size: 0.8rem; text-decoration: none; font-weight: 500; }
+    .nav-cta { padding: 0.4rem 1rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; background: var(--orange); color: #fff; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1><span>Plepic</span> Logo Prototyping</h1>
+    <p>Exploring butterfly icon styles, wordmark lockups, and sizing — all using the locked palette: brand <code>#137a30</code>, vivid <code>#00c951</code>, accent <code>#d97757</code>.</p>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 1. BUTTERFLY STYLES — Large, on white -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">1 — Six butterfly styles at display size</div>
+    <div class="grid-3" id="butterflyGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 2. EACH BUTTERFLY ON DARK -->
+  <!-- ============================================ -->
+</div>
+<div class="dark-section">
+  <div class="container">
+    <div class="section-label on-dark">2 — Same six on dark</div>
+    <div class="grid-6" id="butterflyDarkGrid"></div>
+  </div>
+</div>
+<div class="container">
+
+  <!-- ============================================ -->
+  <!-- 3. WORDMARK LOCKUPS — pick best butterfly -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">3 — Wordmark lockups (horizontal, vertical, icon-only)</div>
+    <div class="grid-3" id="lockupGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 4. BACKGROUNDS — best lockup on all surfaces -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">4 — Lockup on every background</div>
+    <div class="grid-5" id="bgGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 5. SIZE SCALING -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">5 — Size scaling (16px → 64px)</div>
+    <div class="size-row" id="sizeRow"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 6. IN-CONTEXT: Nav bar -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-label">6 — In context: Navigation bar</div>
+    <div id="navMocks"></div>
+  </div>
+
+</div>
+
+<script>
+  const brand = '#137a30';
+  const vivid = '#00c951';
+  const dark = '#1c1c1a';
+
+  // ===== BUTTERFLY BUILDERS =====
+
+  // Style 1: V0 Crystalline (11 triangles per wing, stroked polygons)
+  function bfCrystalline(w, stroke, fill) {
+    const h = Math.round(w * 0.91);
+    return `<svg width="${w}" height="${h}" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1.2"/>
+      <polygon points="58,42 22,18 12,34" fill="${fill}" opacity="0.13" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="58,52 58,42 12,34" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="${fill}" opacity="0.35" stroke="${stroke}" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="${stroke}" opacity="0.19" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="58,65 16,58 24,74" fill="${fill}" opacity="0.16" stroke="${stroke}" stroke-width="0.7"/>
+      <polygon points="58,75 24,74 38,84" fill="${fill}" opacity="0.08" stroke="${stroke}" stroke-width="0.6"/>
+      <polygon points="62,42 78,24 98,18" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1.2"/>
+      <polygon points="62,42 98,18 108,34" fill="${fill}" opacity="0.13" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="62,52 62,42 108,34" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="${fill}" opacity="0.35" stroke="${stroke}" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="${stroke}" opacity="0.19" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="62,65 104,58 96,74" fill="${fill}" opacity="0.16" stroke="${stroke}" stroke-width="0.7"/>
+      <polygon points="62,75 96,74 82,84" fill="${fill}" opacity="0.08" stroke="${stroke}" stroke-width="0.6"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="${stroke}" opacity="0.48" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="${stroke}" opacity="0.35" stroke="${stroke}" stroke-width="0.6"/>
+      <polygon points="60,68 59,76 60,82 61,76" fill="${stroke}" opacity="0.2" stroke="${stroke}" stroke-width="0.5"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="${stroke}" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="${stroke}" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="${fill}" opacity="0.6"/>
+      <circle cx="68" cy="14" r="2" fill="${fill}" opacity="0.6"/>
+    </svg>`;
+  }
+
+  // Style 2: Minimal (4 triangles, simpler)
+  function bfMinimal(w, stroke, fill) {
+    const h = Math.round(w * 0.94);
+    return `<svg width="${w}" height="${h}" viewBox="0 0 64 60">
+      <polygon points="30,20 12,8 8,28" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="30,20 8,28 20,42" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="34,20 52,8 56,28" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="34,20 56,28 44,42" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="0.8"/>
+      <line x1="32" y1="16" x2="32" y2="48" stroke="${stroke}" stroke-width="1.5" opacity="0.5"/>
+      <line x1="32" y1="16" x2="26" y2="4" stroke="${stroke}" stroke-width="0.8" opacity="0.4"/>
+      <line x1="32" y1="16" x2="38" y2="4" stroke="${stroke}" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="26" cy="4" r="1.5" fill="${fill}" opacity="0.5"/>
+      <circle cx="38" cy="4" r="1.5" fill="${fill}" opacity="0.5"/>
+    </svg>`;
+  }
+
+  // Style 3: Wireframe (lines + nodes, organic curves)
+  function bfWireframe(w, stroke, fill) {
+    const h = Math.round(w * 1);
+    return `<svg width="${w}" height="${h}" viewBox="0 0 300 300">
+      <path d="M148,100 C135,75 100,50 75,65 C50,80 40,120 45,155 C50,185 70,200 95,205 C120,210 145,195 148,170Z" fill="none" stroke="${stroke}" stroke-width="1.2" opacity="0.5"/>
+      <path d="M148,175 C140,200 125,235 110,245 C95,255 80,245 80,230 C80,215 95,200 120,195Z" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.35"/>
+      <path d="M152,100 C165,75 200,50 225,65 C250,80 260,120 255,155 C250,185 230,200 205,205 C180,210 155,195 152,170Z" fill="none" stroke="${stroke}" stroke-width="1.2" opacity="0.5"/>
+      <path d="M152,175 C160,200 175,235 190,245 C205,255 220,245 220,230 C220,215 205,200 180,195Z" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.35"/>
+      <line x1="148" y1="100" x2="75" y2="65" stroke="${stroke}" stroke-width="0.6" opacity="0.25"/>
+      <line x1="148" y1="100" x2="45" y2="155" stroke="${stroke}" stroke-width="0.6" opacity="0.2"/>
+      <line x1="152" y1="100" x2="225" y2="65" stroke="${stroke}" stroke-width="0.6" opacity="0.25"/>
+      <line x1="152" y1="100" x2="255" y2="155" stroke="${stroke}" stroke-width="0.6" opacity="0.2"/>
+      <circle cx="75" cy="65" r="3" fill="${fill}" opacity="0.6"/>
+      <circle cx="45" cy="155" r="3" fill="${fill}" opacity="0.5"/>
+      <circle cx="95" cy="205" r="2.5" fill="${fill}" opacity="0.4"/>
+      <circle cx="225" cy="65" r="3" fill="${fill}" opacity="0.6"/>
+      <circle cx="255" cy="155" r="3" fill="${fill}" opacity="0.5"/>
+      <circle cx="205" cy="205" r="2.5" fill="${fill}" opacity="0.4"/>
+      <line x1="150" y1="80" x2="150" y2="260" stroke="${stroke}" stroke-width="1.5" opacity="0.18"/>
+      <path d="M150,95 Q140,65 128,48" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.3"/>
+      <path d="M150,95 Q160,65 172,48" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.3"/>
+      <circle cx="128" cy="47" r="2.5" fill="${fill}" opacity="0.45"/>
+      <circle cx="172" cy="47" r="2.5" fill="${fill}" opacity="0.45"/>
+    </svg>`;
+  }
+
+  // Style 4: Flat Silhouette
+  function bfFlat(w, stroke, fill) {
+    const h = Math.round(w * 1);
+    return `<svg width="${w}" height="${h}" viewBox="0 0 300 300">
+      <path d="M148,105 C140,75 110,50 80,55 C50,60 35,90 38,130 C40,165 58,190 85,200 C110,208 140,195 148,175Z" fill="${fill}" opacity="0.35"/>
+      <path d="M148,180 C142,200 130,235 115,248 C100,260 82,255 80,240 C78,225 90,210 115,200Z" fill="${stroke}" opacity="0.25"/>
+      <path d="M152,105 C160,75 190,50 220,55 C250,60 265,90 262,130 C260,165 242,190 215,200 C190,208 160,195 152,175Z" fill="${fill}" opacity="0.35"/>
+      <path d="M152,180 C158,200 170,235 185,248 C200,260 218,255 220,240 C222,225 210,210 185,200Z" fill="${stroke}" opacity="0.25"/>
+      <line x1="150" y1="82" x2="150" y2="260" stroke="${stroke}" stroke-width="2" opacity="0.15"/>
+      <path d="M150,100 Q138,70 128,52" fill="none" stroke="${stroke}" stroke-width="1.2" opacity="0.3"/>
+      <path d="M150,100 Q162,70 172,52" fill="none" stroke="${stroke}" stroke-width="1.2" opacity="0.3"/>
+      <circle cx="128" cy="50" r="2.5" fill="${fill}" opacity="0.4"/>
+      <circle cx="172" cy="50" r="2.5" fill="${fill}" opacity="0.4"/>
+    </svg>`;
+  }
+
+  // Style 5: Single Stroke
+  function bfStroke(w, stroke, fill) {
+    const h = Math.round(w * 1);
+    return `<svg width="${w}" height="${h}" viewBox="0 0 300 300">
+      <path d="M150,260 L150,100
+               C140,75 108,48 78,58 C48,68 35,98 40,135 C45,172 65,195 92,203 C118,210 142,198 148,178
+               L150,178 L152,178
+               C158,198 182,210 208,203 C235,195 255,172 260,135 C265,98 252,68 222,58 C192,48 160,75 150,100
+               M148,178 C142,200 128,238 112,250 C96,262 80,255 78,238 C76,222 92,208 118,198
+               M152,178 C158,200 172,238 188,250 C204,262 220,255 222,238 C224,222 208,208 182,198"
+            fill="none" stroke="${stroke}" stroke-width="1.8" opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M150,95 Q138,62 126,45" fill="none" stroke="${stroke}" stroke-width="1.2" opacity="0.4" stroke-linecap="round"/>
+      <path d="M150,95 Q162,62 174,45" fill="none" stroke="${stroke}" stroke-width="1.2" opacity="0.4" stroke-linecap="round"/>
+      <circle cx="126" cy="44" r="2.5" fill="${fill}" opacity="0.5"/>
+      <circle cx="174" cy="44" r="2.5" fill="${fill}" opacity="0.5"/>
+    </svg>`;
+  }
+
+  // Style 6: Geometric Facets (gradient triangles — original butterfly-options #1)
+  function bfFacets(w, stroke, fill) {
+    const h = Math.round(w * 1);
+    const id = 'gf' + Math.random().toString(36).slice(2,6);
+    return `<svg width="${w}" height="${h}" viewBox="0 0 300 300">
+      <defs>
+        <linearGradient id="${id}L" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${fill}" stop-opacity="0.7"/><stop offset="100%" stop-color="${stroke}" stop-opacity="0.4"/></linearGradient>
+        <linearGradient id="${id}R" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="${fill}" stop-opacity="0.7"/><stop offset="100%" stop-color="${stroke}" stop-opacity="0.4"/></linearGradient>
+        <linearGradient id="${id}B" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="${stroke}" stop-opacity="0.5"/><stop offset="100%" stop-color="${stroke}" stop-opacity="0.2"/></linearGradient>
+      </defs>
+      <g>
+        <polygon points="147,93 93,57 71,114" fill="url(#${id}L)"/>
+        <polygon points="147,93 71,114 57,171" fill="url(#${id}L)" opacity="0.85"/>
+        <polygon points="147,93 57,171 86,200" fill="url(#${id}L)" opacity="0.7"/>
+        <polygon points="147,143 57,171 86,200" fill="url(#${id}B)" opacity="0.6"/>
+        <polygon points="147,143 86,200 114,229" fill="url(#${id}B)" opacity="0.45"/>
+        <polygon points="147,143 114,229 140,243" fill="url(#${id}B)" opacity="0.3"/>
+      </g>
+      <g>
+        <polygon points="153,93 207,57 229,114" fill="url(#${id}R)"/>
+        <polygon points="153,93 229,114 243,171" fill="url(#${id}R)" opacity="0.85"/>
+        <polygon points="153,93 243,171 214,200" fill="url(#${id}R)" opacity="0.7"/>
+        <polygon points="153,143 243,171 214,200" fill="url(#${id}B)" opacity="0.6"/>
+        <polygon points="153,143 214,200 186,229" fill="url(#${id}B)" opacity="0.45"/>
+        <polygon points="153,143 186,229 160,243" fill="url(#${id}B)" opacity="0.3"/>
+      </g>
+      <line x1="150" y1="78" x2="150" y2="250" stroke="${stroke}" stroke-width="1.5" opacity="0.18"/>
+      <path d="M150,93 Q140,68 130,53" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.3"/>
+      <path d="M150,93 Q160,68 170,53" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.3"/>
+      <circle cx="130" cy="52" r="2" fill="${fill}" opacity="0.5"/>
+      <circle cx="170" cy="52" r="2" fill="${fill}" opacity="0.5"/>
+    </svg>`;
+  }
+
+  const styles = [
+    { name: 'Crystalline', desc: '11 triangles/wing, stroked edges. Sharp, digital-organic.', fn: bfCrystalline, vb: 120 },
+    { name: 'Minimal Geo', desc: '4 triangles total. Clean, icon-friendly, scales well.', fn: bfMinimal, vb: 64 },
+    { name: 'Wireframe', desc: 'Curved outlines + nodes. Constellation map feel.', fn: bfWireframe, vb: 300 },
+    { name: 'Flat Silhouette', desc: 'Solid shapes, no strokes. Bold, simple.', fn: bfFlat, vb: 300 },
+    { name: 'Single Stroke', desc: 'Continuous line. Elegant, editorial.', fn: bfStroke, vb: 300 },
+    { name: 'Gradient Facets', desc: 'Gradient-filled triangles. Richer, more colorful.', fn: bfFacets, vb: 300 },
+  ];
+
+  // ===== 1. BUTTERFLY GRID — LIGHT =====
+  const butterflyGrid = document.getElementById('butterflyGrid');
+  styles.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'card card-light';
+    card.innerHTML = `
+      ${s.fn(120, brand, vivid)}
+      <div class="card-label">${s.name}</div>
+      <div class="card-note">${s.desc}</div>
+    `;
+    butterflyGrid.appendChild(card);
+  });
+
+  // ===== 2. BUTTERFLY GRID — DARK =====
+  const butterflyDarkGrid = document.getElementById('butterflyDarkGrid');
+  styles.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'card card-dark';
+    card.style.padding = '1.25rem 0.75rem';
+    card.innerHTML = `
+      ${s.fn(64, vivid, vivid)}
+      <div class="card-label">${s.name}</div>
+    `;
+    butterflyDarkGrid.appendChild(card);
+  });
+
+  // ===== 3. WORDMARK LOCKUPS =====
+  const lockupGrid = document.getElementById('lockupGrid');
+  const lockups = [
+    {
+      name: 'Horizontal — Crystalline',
+      render: (bg) => {
+        const isD = bg === 'dark';
+        const s = isD ? vivid : brand;
+        const f = vivid;
+        const tc = isD ? vivid : brand;
+        return `<div class="lockup-h">${bfCrystalline(36, s, f)}<span class="logo-text" style="font-size:1.75rem;color:${tc};">Plepic</span></div>`;
+      }
+    },
+    {
+      name: 'Horizontal — Minimal',
+      render: (bg) => {
+        const isD = bg === 'dark';
+        const s = isD ? vivid : brand;
+        const f = vivid;
+        const tc = isD ? vivid : brand;
+        return `<div class="lockup-h">${bfMinimal(30, s, f)}<span class="logo-text" style="font-size:1.75rem;color:${tc};">Plepic</span></div>`;
+      }
+    },
+    {
+      name: 'Horizontal — Gradient Facets',
+      render: (bg) => {
+        const isD = bg === 'dark';
+        const s = isD ? vivid : brand;
+        const f = vivid;
+        const tc = isD ? vivid : brand;
+        return `<div class="lockup-h">${bfFacets(36, s, f)}<span class="logo-text" style="font-size:1.75rem;color:${tc};">Plepic</span></div>`;
+      }
+    },
+    {
+      name: 'Vertical — Crystalline',
+      render: (bg) => {
+        const isD = bg === 'dark';
+        const s = isD ? vivid : brand;
+        const f = vivid;
+        const tc = isD ? vivid : brand;
+        return `<div class="lockup-v">${bfCrystalline(48, s, f)}<span class="logo-text" style="font-size:1.5rem;color:${tc};">Plepic</span></div>`;
+      }
+    },
+    {
+      name: 'Vertical — Flat',
+      render: (bg) => {
+        const isD = bg === 'dark';
+        const s = isD ? vivid : brand;
+        const f = vivid;
+        const tc = isD ? vivid : brand;
+        return `<div class="lockup-v">${bfFlat(48, s, f)}<span class="logo-text" style="font-size:1.5rem;color:${tc};">Plepic</span></div>`;
+      }
+    },
+    {
+      name: 'Text only (no icon)',
+      render: (bg) => {
+        const isD = bg === 'dark';
+        const tc = isD ? vivid : brand;
+        return `<span class="logo-text" style="font-size:2rem;color:${tc};">Plepic</span>`;
+      }
+    },
+  ];
+
+  lockups.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'card card-cream';
+    card.innerHTML = `
+      ${l.render('light')}
+      <div class="card-label">${l.name}</div>
+    `;
+    lockupGrid.appendChild(card);
+  });
+
+  // ===== 4. BEST LOCKUPS ON ALL BACKGROUNDS =====
+  const bgGrid = document.getElementById('bgGrid');
+  const backgrounds = [
+    { cls: 'card-light', label: 'White', bg: 'light' },
+    { cls: 'card-cream', label: 'Cream', bg: 'light' },
+    { cls: '', label: 'Green tint', bg: 'light', style: 'background:var(--green-surface);border:1px solid var(--green-light);' },
+    { cls: 'card-dark', label: 'Dark', bg: 'dark' },
+    { cls: 'card-brand', label: 'On brand', bg: 'brand' },
+  ];
+
+  backgrounds.forEach(b => {
+    const card = document.createElement('div');
+    card.className = `card ${b.cls}`;
+    if (b.style) card.style.cssText = b.style;
+
+    let s, f, tc;
+    if (b.bg === 'dark') { s = vivid; f = vivid; tc = vivid; }
+    else if (b.bg === 'brand') { s = 'rgba(255,255,255,0.4)'; f = 'rgba(255,255,255,0.3)'; tc = '#fff'; }
+    else { s = brand; f = vivid; tc = brand; }
+
+    card.innerHTML = `
+      <div class="lockup-h">
+        ${bfCrystalline(28, s, f)}
+        <span class="logo-text" style="font-size:1.25rem;color:${tc};">Plepic</span>
+      </div>
+      <div class="card-label">${b.label}</div>
+    `;
+    bgGrid.appendChild(card);
+  });
+
+  // ===== 5. SIZE SCALING =====
+  const sizeRow = document.getElementById('sizeRow');
+  [16, 24, 32, 48, 64].forEach(sz => {
+    const item = document.createElement('div');
+    item.className = 'size-item';
+    const fontSize = Math.max(0.6, sz * 0.028);
+    item.innerHTML = `
+      <div class="lockup-h">
+        ${bfCrystalline(sz, brand, vivid)}
+        <span class="logo-text" style="font-size:${fontSize}rem;color:${brand};">Plepic</span>
+      </div>
+      <div class="card-label">${sz}px</div>
+    `;
+    sizeRow.appendChild(item);
+  });
+
+  // ===== 6. NAV MOCKS =====
+  const navMocks = document.getElementById('navMocks');
+
+  // Light nav with crystalline
+  const navLight = document.createElement('div');
+  navLight.className = 'nav-mock';
+  navLight.style.marginBottom = '1rem';
+  navLight.innerHTML = `
+    <div class="nav-bar" style="background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);">
+      <div class="lockup-h" style="gap:0.4rem;">
+        ${bfCrystalline(24, brand, vivid)}
+        <span class="logo-text" style="font-size:1.15rem;color:${brand};">Plepic</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" style="color:var(--text-2);">Training</a>
+        <a href="#" style="color:var(--text-2);">About</a>
+        <a href="#" style="color:var(--text-2);">Products</a>
+        <button class="nav-cta">Book a call</button>
+      </div>
+    </div>
+  `;
+  navMocks.appendChild(navLight);
+
+  // Dark nav
+  const navDark = document.createElement('div');
+  navDark.className = 'nav-mock';
+  navDark.style.cssText = 'border-color:var(--border-dark);margin-bottom:1rem;';
+  navDark.innerHTML = `
+    <div class="nav-bar" style="background:var(--dark);border-bottom:1px solid var(--border-dark);">
+      <div class="lockup-h" style="gap:0.4rem;">
+        ${bfCrystalline(24, vivid, vivid)}
+        <span class="logo-text" style="font-size:1.15rem;color:${vivid};">Plepic</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" style="color:#a3a39a;">Training</a>
+        <a href="#" style="color:#a3a39a;">About</a>
+        <a href="#" style="color:#a3a39a;">Products</a>
+        <button class="nav-cta">Book a call</button>
+      </div>
+    </div>
+  `;
+  navMocks.appendChild(navDark);
+
+  // Minimal nav
+  const navMin = document.createElement('div');
+  navMin.className = 'nav-mock';
+  navMin.innerHTML = `
+    <div class="nav-bar" style="background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);">
+      <div class="lockup-h" style="gap:0.35rem;">
+        ${bfMinimal(22, brand, vivid)}
+        <span class="logo-text" style="font-size:1.15rem;color:${brand};">Plepic</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" style="color:var(--text-2);">Training</a>
+        <a href="#" style="color:var(--text-2);">About</a>
+        <a href="#" style="color:var(--text-2);">Products</a>
+        <button class="nav-cta">Book a call</button>
+      </div>
+    </div>
+  `;
+  navMocks.appendChild(navMin);
+</script>
+
+</body>
+</html>

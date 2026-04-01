@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accent Orange — Hue & Saturation Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-cream: #faf7f2; --surface: #ffffff; --dark: #1c1c1a;
+      --text: #1c1c1a; --text-2: #4a4a45; --text-3: #6b6b60;
+      --border: #e5e2dc; --border-dark: #3a3a38;
+      /* Green A palette */
+      --g-surface: #f0f8f3; --g-light: #cdeed6; --g-vivid: #00c638;
+      --g-brand: #137a30; --g-dark: #075e20;
+      --font-display: 'Zilla Slab', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body { font-family: var(--font-body); color: var(--text); background: var(--bg-cream); -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { margin-bottom: 3rem; }
+    .dark-section { background: var(--dark); padding: 3rem 0; margin-bottom: 3rem; }
+
+    .page-header { padding: 3rem 0 1.5rem; }
+    .page-header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .page-header h1 span { color: var(--g-brand); }
+    .page-header p { color: var(--text-2); font-size: 0.95rem; max-width: 700px; line-height: 1.6; }
+
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .section-label.on-dark { color: #8a8a80; border-bottom-color: var(--border-dark); }
+
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    @media (max-width: 900px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+
+    /* Swatch row */
+    .swatch-row { margin-bottom: 2rem; }
+    .swatch-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; }
+    .swatch-header h3 { font-family: var(--font-display); font-size: 1.05rem; }
+    .swatch-tag { font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; }
+    .swatch-desc { font-size: 0.78rem; color: var(--text-2); margin-bottom: 0.6rem; line-height: 1.5; }
+
+    .swatch-strip { display: flex; gap: 1px; border-radius: 10px; overflow: hidden; max-width: 700px; }
+    .sw { flex: 1; padding: 1rem 0.4rem; text-align: center; min-height: 75px; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.1rem; }
+    .sw .n { font-family: var(--font-mono); font-size: 0.48rem; font-weight: 700; text-transform: uppercase; }
+    .sw .h { font-family: var(--font-mono); font-size: 0.58rem; font-weight: 700; }
+    .sw .hsl { font-family: var(--font-mono); font-size: 0.45rem; opacity: 0.65; }
+
+    /* Mini hero */
+    .mini { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .mini-dark { border-color: var(--border-dark); }
+    .mini-nav { padding: 0.5rem 0.75rem; display: flex; align-items: center; justify-content: space-between; }
+    .mini-body { padding: 1rem 0.75rem 1.25rem; }
+    .btn { display: inline-flex; padding: 0.35rem 0.75rem; border-radius: 7px; font-family: var(--font-body); font-size: 0.6rem; font-weight: 600; border: none; cursor: pointer; color: #fff; }
+
+    .ct { font-family: var(--font-mono); font-size: 0.52rem; font-weight: 700; padding: 2px 5px; border-radius: 3px; }
+    .ct-p { background: #dcfce7; color: #065f28; }
+    .ct-w { background: #fefce8; color: #854d0e; }
+    .ct-f { background: #fef2f2; color: #991b1b; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1>Accent Variants for <span>Palette A</span></h1>
+    <p>Green palette A (H=137°, S=73%) is locked. Testing 4 accent orange variants at different saturation levels. Anthropic's orange (H=15° S=63%) is already the split-complementary of our brand green — the theory is sound, the question is saturation.</p>
+  </div>
+
+  <!-- Swatch strips -->
+  <div class="section" id="swatches"></div>
+
+  <!-- Light heroes -->
+  <div class="section">
+    <div class="section-label">Hero mock — Light</div>
+    <div class="grid-4" id="heroLight"></div>
+  </div>
+
+</div>
+
+<div class="dark-section">
+  <div class="container">
+    <div class="section-label on-dark">Hero mock — Dark</div>
+    <div class="grid-4" id="heroDark"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Component cards -->
+  <div class="section">
+    <div class="section-label">Components — buttons, badges, urgency</div>
+    <div class="grid-4" id="compGrid"></div>
+  </div>
+
+  <!-- Side by side: green + orange -->
+  <div class="section">
+    <div class="section-label">Green + Orange adjacency test</div>
+    <div class="grid-4" id="adjGrid"></div>
+  </div>
+
+</div>
+
+<script>
+  const gBrand = '#137a30';
+  const gVivid = '#00c638';
+  const gDark = '#075e20';
+  const gLight = '#cdeed6';
+  const gSurface = '#f0f8f3';
+  const cream = '#faf7f2';
+  const dark = '#1c1c1a';
+
+  const accents = [
+    {
+      name: '1. Anthropic Original',
+      tag: 'S=63%', tagBg: '#fefce8', tagColor: '#854d0e',
+      desc: 'Exact Anthropic brand color. Lower saturation than the green system (63% vs 73%). Muted, earthy, warm.',
+      hex: '#d97858', h: 15, s: 63, l: 60,
+    },
+    {
+      name: '2. Sat-Matched',
+      tag: 'S=73%', tagBg: '#dcfce7', tagColor: '#065f28',
+      desc: 'Same saturation as brand green (73%). Same hue as Anthropic. Slightly more vivid — the palette breathes at one saturation level.',
+      hex: '#e26c45', h: 15, s: 73, l: 58,
+    },
+    {
+      name: '3. High Saturation',
+      tag: 'S=85%', tagBg: '#e0e7ff', tagColor: '#3730a3',
+      desc: 'Pushed to 85% — more vivid than the greens. Punchier CTA. The button demands attention. Risk: may overpower.',
+      hex: '#ed5b2a', h: 15, s: 85, l: 55,
+    },
+    {
+      name: '4. Deeper Terracotta',
+      tag: 'L=52%', tagBg: '#f3efe7', tagColor: '#4a4a45',
+      desc: 'Same hue and saturation as Anthropic, but darker. More grounded, earthy. Pairs naturally with the warm cream background.',
+      hex: '#d15e37', h: 15, s: 63, l: 52,
+    },
+  ];
+
+  function luminance(hex) {
+    const r = parseInt(hex.slice(1,3),16)/255, g = parseInt(hex.slice(3,5),16)/255, b = parseInt(hex.slice(5,7),16)/255;
+    const [R,G,B] = [r,g,b].map(c => c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055,2.4));
+    return 0.2126*R + 0.7152*G + 0.0722*B;
+  }
+  function contrast(fg,bg) { const l1=luminance(fg),l2=luminance(bg); return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05); }
+  function ctB(r) { const s=r.toFixed(1); return r>=4.5?`<span class="ct ct-p">${s}:1</span>`:r>=3?`<span class="ct ct-w">${s}:1</span>`:`<span class="ct ct-f">${s}:1</span>`; }
+
+  function bf(sz, stroke, fill) {
+    return `<svg width="${sz}" height="${Math.round(sz*0.91)}" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1.2"/>
+      <polygon points="58,52 58,42 12,34" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="${fill}" opacity="0.35" stroke="${stroke}" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="${stroke}" opacity="0.19" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="62,42 78,24 98,18" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1.2"/>
+      <polygon points="62,52 62,42 108,34" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="${fill}" opacity="0.35" stroke="${stroke}" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="${stroke}" opacity="0.19" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="${stroke}" opacity="0.48" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="${stroke}" opacity="0.35" stroke="${stroke}" stroke-width="0.6"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="${stroke}" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="${stroke}" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="${fill}" opacity="0.6"/><circle cx="68" cy="14" r="2" fill="${fill}" opacity="0.6"/>
+    </svg>`;
+  }
+
+  // ===== SWATCH STRIPS =====
+  const swatches = document.getElementById('swatches');
+  accents.forEach(a => {
+    const row = document.createElement('div');
+    row.className = 'swatch-row';
+
+    const greens = [
+      { name:'surface', hex:gSurface, hsl:'H137 S40 L96' },
+      { name:'light', hex:gLight, hsl:'H137 S50 L87' },
+      { name:'vivid', hex:gVivid, hsl:'H137 S100 L39' },
+      { name:'brand', hex:gBrand, hsl:'H137 S73 L28' },
+      { name:'dark', hex:gDark, hsl:'H137 S85 L20' },
+    ];
+
+    let stripHtml = '';
+    greens.forEach(g => {
+      const isL = luminance(g.hex) > 0.4;
+      const tc = isL ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)';
+      const hc = isL ? 'rgba(0,0,0,0.7)' : '#fff';
+      stripHtml += `<div class="sw" style="background:${g.hex};"><div class="n" style="color:${tc};">${g.name}</div><div class="h" style="color:${hc};">${g.hex}</div><div class="hsl" style="color:${tc};">${g.hsl}</div></div>`;
+    });
+
+    stripHtml += `<div class="sw" style="background:${a.hex};flex:1.3;"><div class="n" style="color:rgba(255,255,255,0.8);">accent</div><div class="h" style="color:#fff;">${a.hex}</div><div class="hsl" style="color:rgba(255,255,255,0.7);">H${a.h} S${a.s} L${a.l}</div></div>`;
+
+    const onCream = contrast(a.hex, cream);
+    const onWhite = contrast(a.hex, '#ffffff');
+    const onDark = contrast(a.hex, dark);
+
+    row.innerHTML = `
+      <div class="swatch-header">
+        <h3>${a.name}</h3>
+        <span class="swatch-tag" style="background:${a.tagBg};color:${a.tagColor};">${a.tag}</span>
+      </div>
+      <div class="swatch-desc">${a.desc}</div>
+      <div class="swatch-strip">${stripHtml}</div>
+      <div style="display:flex;gap:0.6rem;margin-top:0.35rem;font-size:0.7rem;color:var(--text-3);">
+        on cream: ${ctB(onCream)} on white: ${ctB(onWhite)} on dark: ${ctB(onDark)}
+      </div>
+    `;
+    swatches.appendChild(row);
+  });
+
+  // ===== HERO LIGHT =====
+  const heroLight = document.getElementById('heroLight');
+  accents.forEach(a => {
+    const m = document.createElement('div');
+    m.className = 'mini';
+    m.innerHTML = `
+      <div class="mini-nav" style="background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:4px;">
+          ${bf(16, gBrand, gVivid)}
+          <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:${gBrand};">Plepic</span>
+        </div>
+        <button class="btn" style="background:${a.hex};">Book a call</button>
+      </div>
+      <div class="mini-body" style="background:var(--bg-cream);">
+        <div style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.12rem 0.4rem;font-size:0.5rem;font-weight:600;border-radius:8px 2px 6px 2px;background:${gSurface};color:${gDark};border:1px solid ${gLight};margin-bottom:0.35rem;">
+          <span style="width:4px;height:4px;border-radius:50%;background:${gVivid};"></span> Cohort 3
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--text);line-height:1.12;margin-bottom:0.3rem;">Build <span style="color:${gBrand};">AI agents</span></h2>
+        <p style="font-size:0.55rem;color:var(--text-2);margin-bottom:0.25rem;">Hands-on 5-day training.</p>
+        <span style="font-size:0.5rem;color:${gBrand};font-weight:600;">300+ trained</span>
+        <div style="display:flex;gap:0.3rem;margin-top:0.4rem;">
+          <button class="btn" style="background:${a.hex};">Book a call</button>
+          <button class="btn" style="background:transparent;border:1.5px solid ${gBrand};color:${gBrand};">Curriculum</button>
+        </div>
+      </div>
+    `;
+    heroLight.appendChild(m);
+  });
+
+  // ===== HERO DARK =====
+  const heroDark = document.getElementById('heroDark');
+  accents.forEach(a => {
+    const m = document.createElement('div');
+    m.className = 'mini mini-dark';
+    m.innerHTML = `
+      <div class="mini-nav" style="background:var(--dark);border-bottom:1px solid var(--border-dark);">
+        <div style="display:flex;align-items:center;gap:4px;">
+          ${bf(16, gVivid, gVivid)}
+          <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:${gVivid};">Plepic</span>
+        </div>
+        <button class="btn" style="background:${a.hex};">Book a call</button>
+      </div>
+      <div class="mini-body" style="background:var(--dark);">
+        <div style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.12rem 0.4rem;font-size:0.5rem;font-weight:600;border-radius:8px 2px 6px 2px;background:rgba(0,198,56,0.12);color:${gLight};border:1px solid rgba(0,198,56,0.2);margin-bottom:0.35rem;">
+          <span style="width:4px;height:4px;border-radius:50%;background:${gVivid};"></span> Cohort 3
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:#e5e2dc;line-height:1.12;margin-bottom:0.3rem;">Build <span style="color:${gVivid};">AI agents</span></h2>
+        <p style="font-size:0.55rem;color:#a3a39a;margin-bottom:0.25rem;">Hands-on 5-day training.</p>
+        <span style="font-size:0.5rem;color:${gVivid};font-weight:600;">300+ trained</span>
+        <div style="display:flex;gap:0.3rem;margin-top:0.4rem;">
+          <button class="btn" style="background:${a.hex};">Book a call</button>
+          <button class="btn" style="background:transparent;border:1.5px solid ${gVivid};color:${gVivid};">Curriculum</button>
+        </div>
+      </div>
+    `;
+    heroDark.appendChild(m);
+  });
+
+  // ===== COMPONENT CARDS =====
+  const compGrid = document.getElementById('compGrid');
+  accents.forEach(a => {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;';
+    card.innerHTML = `
+      <div style="font-family:var(--font-mono);font-size:0.55rem;font-weight:700;text-transform:uppercase;color:var(--text-3);margin-bottom:0.75rem;padding-bottom:0.3rem;border-bottom:1px solid var(--border);">${a.name.split('.')[1].trim()}</div>
+      <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+        <span style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.12rem 0.45rem;font-size:0.65rem;font-weight:600;border-radius:12px 3px 8px 3px;background:${gSurface};color:${gDark};border:1px solid ${gLight};"><span style="width:5px;height:5px;border-radius:50%;background:${gVivid};"></span> Open</span>
+        <span style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.12rem 0.45rem;font-size:0.65rem;font-weight:600;border-radius:12px 3px 8px 3px;background:${a.hex}15;color:${a.hex};border:1px solid ${a.hex}30;"><span style="width:5px;height:5px;border-radius:50%;background:${a.hex};"></span> 4 left</span>
+      </div>
+      <h4 style="font-family:var(--font-display);font-size:0.9rem;color:${gBrand};margin-bottom:0.2rem;">Training</h4>
+      <p style="font-size:0.72rem;color:var(--text-2);margin-bottom:0.6rem;line-height:1.5;">5-day program. <a href="#" style="color:${gBrand};font-weight:600;text-decoration:underline;text-underline-offset:2px;">Curriculum</a></p>
+      <button class="btn" style="background:${a.hex};width:100%;justify-content:center;padding:0.45rem;">Book a call</button>
+    `;
+    compGrid.appendChild(card);
+  });
+
+  // ===== ADJACENCY TEST =====
+  const adjGrid = document.getElementById('adjGrid');
+  accents.forEach(a => {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;';
+    card.innerHTML = `
+      <div style="font-family:var(--font-mono);font-size:0.55rem;font-weight:700;text-transform:uppercase;color:var(--text-3);margin-bottom:0.75rem;padding-bottom:0.3rem;border-bottom:1px solid var(--border);">${a.name.split('.')[1].trim()}</div>
+      <div style="display:flex;gap:0.4rem;margin-bottom:0.6rem;">
+        <button class="btn" style="background:${a.hex};">Enroll</button>
+        <button class="btn" style="background:${gBrand};">Details</button>
+      </div>
+      <div style="display:flex;gap:0.4rem;margin-bottom:0.6rem;">
+        <button class="btn" style="background:${a.hex};">CTA</button>
+        <button class="btn" style="background:transparent;border:1.5px solid ${gBrand};color:${gBrand};">Secondary</button>
+      </div>
+      <div style="display:flex;gap:2px;border-radius:6px;overflow:hidden;margin-bottom:0.6rem;">
+        <div style="flex:3;height:32px;background:${gBrand};"></div>
+        <div style="flex:1;height:32px;background:${a.hex};"></div>
+      </div>
+      <div style="display:flex;gap:2px;border-radius:6px;overflow:hidden;">
+        <div style="flex:3;height:32px;background:${gVivid};"></div>
+        <div style="flex:1;height:32px;background:${a.hex};"></div>
+      </div>
+      <div style="font-size:0.55rem;color:var(--text-3);margin-top:0.35rem;">Green:Orange ratio bars (3:1)</div>
+    `;
+    adjGrid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>

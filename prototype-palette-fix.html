@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palette Hue & Saturation — Fix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-cream: #faf7f2;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --orange: #d97757;
+      --font-display: 'Zilla Slab', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body { font-family: var(--font-body); color: var(--text); background: var(--bg-cream); -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { margin-bottom: 3rem; }
+    .dark-section { background: var(--dark); padding: 3rem 0; margin-bottom: 3rem; }
+
+    .page-header { padding: 3rem 0 1.5rem; }
+    .page-header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .page-header h1 span { color: #137a30; }
+    .page-header p { color: var(--text-2); font-size: 0.95rem; max-width: 700px; line-height: 1.6; }
+
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .section-label.on-dark { color: #8a8a80; border-bottom-color: var(--border-dark); }
+
+    .note { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; max-width: 700px; margin-bottom: 1.5rem; }
+
+    /* Strategy row */
+    .strat { margin-bottom: 2.5rem; }
+    .strat-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; }
+    .strat-header h3 { font-family: var(--font-display); font-size: 1.15rem; }
+    .strat-tag { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+    .strat-desc { font-size: 0.8rem; color: var(--text-2); margin-bottom: 0.75rem; max-width: 640px; line-height: 1.5; }
+
+    .strip { display: flex; gap: 1px; border-radius: 12px; overflow: hidden; margin-bottom: 0.5rem; }
+    .swatch { flex: 1; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.1rem; min-height: 90px; }
+    .swatch .s-name { font-family: var(--font-mono); font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .swatch .s-hex { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; }
+    .swatch .s-hsl { font-family: var(--font-mono); font-size: 0.5rem; opacity: 0.7; }
+    .swatch .s-lock { font-size: 0.5rem; opacity: 0.5; }
+
+    /* Mini hero */
+    .hero-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    @media (max-width: 900px) { .hero-row { grid-template-columns: 1fr 1fr; } }
+
+    .mini-hero { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .mini-hero-dark { border-color: var(--border-dark); }
+    .mini-hero-nav { padding: 0.5rem 0.75rem; display: flex; align-items: center; justify-content: space-between; }
+    .mini-hero-body { padding: 1rem 0.75rem 1.25rem; }
+
+    .btn { display: inline-flex; padding: 0.35rem 0.75rem; border-radius: 7px; font-family: var(--font-body); font-size: 0.6rem; font-weight: 600; border: none; cursor: pointer; }
+
+    .ct { font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700; padding: 2px 5px; border-radius: 3px; display: inline-block; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1><span>Palette</span> Hue & Saturation</h1>
+    <p>4 strategies for building a coherent 5-shade palette from the locked brand green <code>#137a30</code> (H=137°, S=73%, L=28%). Each shows HSL values so you can see exactly what's changing.</p>
+  </div>
+
+  <div class="section" id="stratSection"></div>
+
+  <!-- Hero mocks light -->
+  <div class="section">
+    <div class="section-label">In context — Light hero</div>
+    <div class="hero-row" id="heroLight"></div>
+  </div>
+
+</div>
+
+<!-- Dark heroes -->
+<div class="dark-section">
+  <div class="container">
+    <div class="section-label on-dark">In context — Dark hero</div>
+    <div class="hero-row" id="heroDark"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Decorative comparison -->
+  <div class="section">
+    <div class="section-label">Decorative use — dots, badges, gradients on cream</div>
+    <div class="hero-row" id="decorGrid"></div>
+  </div>
+
+</div>
+
+<script>
+  const strategies = [
+    {
+      name: 'A — Single Hue 137°',
+      tag: 'Most coherent', tagBg: '#dcfce7', tagColor: '#065f28',
+      desc: 'Everything at brand hue (137°). The vivid shifts 7° from the current choice to match. Purest single-family palette.',
+      colors: [
+        { name: 'surface', hex: '#f0f8f3', h: 137, s: 40, l: 96 },
+        { name: 'light',   hex: '#cdeed6', h: 137, s: 50, l: 87 },
+        { name: 'vivid',   hex: '#00c638', h: 137, s: 100, l: 39 },
+        { name: 'brand',   hex: '#137a30', h: 137, s: 73, l: 28, locked: true },
+        { name: 'dark',    hex: '#075e20', h: 137, s: 85, l: 20 },
+      ],
+    },
+    {
+      name: 'B — Split Hue (137° + 144°)',
+      tag: 'Current choice', tagBg: '#fefce8', tagColor: '#854d0e',
+      desc: 'Brand anchored at 137°, vivid stays at 144° (as chosen). Light tints derived from vivid hue. Slight hue shift adds depth.',
+      colors: [
+        { name: 'surface', hex: '#f0f9f3', h: 144, s: 45, l: 96 },
+        { name: 'light',   hex: '#cbf0da', h: 144, s: 55, l: 87 },
+        { name: 'vivid',   hex: '#00c64f', h: 144, s: 100, l: 39 },
+        { name: 'brand',   hex: '#137a30', h: 137, s: 73, l: 28, locked: true },
+        { name: 'dark',    hex: '#075e20', h: 137, s: 85, l: 20 },
+      ],
+    },
+    {
+      name: 'C — Unified 142° (midpoint)',
+      tag: 'Balanced', tagBg: '#e0e7ff', tagColor: '#3730a3',
+      desc: 'Everything at 142° (midpoint of brand and vivid). Brand stays locked at 137° — only 5° off. Best compromise between coherence and the vivid you liked.',
+      colors: [
+        { name: 'surface', hex: '#f0f9f3', h: 142, s: 42, l: 96 },
+        { name: 'light',   hex: '#ccefd9', h: 142, s: 52, l: 87 },
+        { name: 'vivid',   hex: '#00c648', h: 142, s: 100, l: 39 },
+        { name: 'brand',   hex: '#137a30', h: 137, s: 73, l: 28, locked: true },
+        { name: 'dark',    hex: '#065f27', h: 142, s: 88, l: 20 },
+      ],
+    },
+    {
+      name: 'D — Max Saturation Curve',
+      tag: 'Boldest', tagBg: '#dcfce7', tagColor: '#065f28',
+      desc: 'Hue at 142° like C, but saturation cranked higher at every lightness level. Richer tints, deeper darks. The most vivid overall palette.',
+      colors: [
+        { name: 'surface', hex: '#eefaf3', h: 142, s: 60, l: 96 },
+        { name: 'light',   hex: '#bdf3d1', h: 142, s: 70, l: 85 },
+        { name: 'vivid',   hex: '#00c648', h: 142, s: 100, l: 39 },
+        { name: 'brand',   hex: '#137a30', h: 137, s: 73, l: 28, locked: true },
+        { name: 'dark',    hex: '#025922', h: 142, s: 95, l: 18 },
+      ],
+    },
+  ];
+
+  const orange = '#d97757';
+
+  function luminance(hex) {
+    const r = parseInt(hex.slice(1,3), 16) / 255;
+    const g = parseInt(hex.slice(3,5), 16) / 255;
+    const b = parseInt(hex.slice(5,7), 16) / 255;
+    const [R, G, B] = [r, g, b].map(c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+    return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+  }
+
+  function butterfly(sz, stroke, fill) {
+    const h = Math.round(sz * 0.91);
+    return `<svg width="${sz}" height="${h}" viewBox="0 0 120 110">
+      <polygon points="58,42 42,24 22,18" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1.2"/>
+      <polygon points="58,52 58,42 12,34" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="58,52 12,34 16,58" fill="${fill}" opacity="0.35" stroke="${stroke}" stroke-width="0.9"/>
+      <polygon points="58,65 58,52 16,58" fill="${stroke}" opacity="0.19" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="62,42 78,24 98,18" fill="${fill}" opacity="0.15" stroke="${stroke}" stroke-width="1.2"/>
+      <polygon points="62,52 62,42 108,34" fill="${stroke}" opacity="0.4" stroke="${stroke}" stroke-width="1"/>
+      <polygon points="62,52 108,34 104,58" fill="${fill}" opacity="0.35" stroke="${stroke}" stroke-width="0.9"/>
+      <polygon points="62,65 62,52 104,58" fill="${stroke}" opacity="0.19" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="60,36 57,45 60,52 63,45" fill="${stroke}" opacity="0.48" stroke="${stroke}" stroke-width="0.8"/>
+      <polygon points="60,52 58,60 60,68 62,60" fill="${stroke}" opacity="0.35" stroke="${stroke}" stroke-width="0.6"/>
+      <line x1="60" y1="36" x2="52" y2="14" stroke="${stroke}" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60" y1="36" x2="68" y2="14" stroke="${stroke}" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="52" cy="14" r="2" fill="${fill}" opacity="0.6"/>
+      <circle cx="68" cy="14" r="2" fill="${fill}" opacity="0.6"/>
+    </svg>`;
+  }
+
+  // ===== Palette strips =====
+  const stratSection = document.getElementById('stratSection');
+  strategies.forEach(st => {
+    const row = document.createElement('div');
+    row.className = 'strat';
+
+    let stripHtml = '';
+    st.colors.forEach(c => {
+      const isLight = luminance(c.hex) > 0.4;
+      const textColor = isLight ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)';
+      const hexColor = isLight ? 'rgba(0,0,0,0.7)' : '#fff';
+      stripHtml += `<div class="swatch" style="background:${c.hex};">
+        <div class="s-name" style="color:${textColor};">${c.name}${c.locked ? ' 🔒' : ''}</div>
+        <div class="s-hex" style="color:${hexColor};">${c.hex}</div>
+        <div class="s-hsl" style="color:${textColor};">H${c.h}° S${c.s}% L${c.l}%</div>
+      </div>`;
+    });
+
+    // Add orange swatch
+    stripHtml += `<div class="swatch" style="background:${orange};">
+      <div class="s-name" style="color:rgba(255,255,255,0.8);">accent 🔒</div>
+      <div class="s-hex" style="color:#fff;">${orange}</div>
+      <div class="s-hsl" style="color:rgba(255,255,255,0.7);">H15° S63% L60%</div>
+    </div>`;
+
+    row.innerHTML = `
+      <div class="strat-header">
+        <h3>${st.name}</h3>
+        <span class="strat-tag" style="background:${st.tagBg};color:${st.tagColor};">${st.tag}</span>
+      </div>
+      <div class="strat-desc">${st.desc}</div>
+      <div class="strip">${stripHtml}</div>
+    `;
+    stratSection.appendChild(row);
+  });
+
+  // ===== Light hero mocks =====
+  const heroLight = document.getElementById('heroLight');
+  strategies.forEach(st => {
+    const c = Object.fromEntries(st.colors.map(x => [x.name, x.hex]));
+    const mock = document.createElement('div');
+    mock.className = 'mini-hero';
+    mock.innerHTML = `
+      <div class="mini-hero-nav" style="background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:4px;">
+          ${butterfly(16, c.brand, c.vivid)}
+          <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:${c.brand};">Plepic</span>
+        </div>
+        <button class="btn" style="background:${orange};color:#fff;">Call</button>
+      </div>
+      <div class="mini-hero-body" style="background:var(--bg-cream);">
+        <div style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.12rem 0.4rem;font-size:0.5rem;font-weight:600;border-radius:8px 2px 6px 2px;background:${c.surface};color:${c.dark};border:1px solid ${c.light};margin-bottom:0.35rem;">
+          <span style="width:4px;height:4px;border-radius:50%;background:${c.vivid};"></span> Cohort 3
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--text);line-height:1.12;margin-bottom:0.3rem;">Build <span style="color:${c.brand};">AI agents</span></h2>
+        <p style="font-size:0.55rem;color:var(--text-2);margin-bottom:0.3rem;">5-day hands-on training.</p>
+        <span style="font-size:0.5rem;color:${c.brand};font-weight:600;">300+ trained</span>
+        <div style="display:flex;gap:0.3rem;margin-top:0.5rem;">
+          <button class="btn" style="background:${orange};color:#fff;">Book a call</button>
+          <button class="btn" style="background:transparent;border:1.5px solid ${c.brand};color:${c.brand};">Curriculum</button>
+        </div>
+        <div style="height:3px;border-radius:2px;background:linear-gradient(90deg,${c.brand},${c.vivid},transparent);margin-top:0.5rem;"></div>
+      </div>
+    `;
+    heroLight.appendChild(mock);
+  });
+
+  // ===== Dark hero mocks =====
+  const heroDark = document.getElementById('heroDark');
+  strategies.forEach(st => {
+    const c = Object.fromEntries(st.colors.map(x => [x.name, x.hex]));
+    const mock = document.createElement('div');
+    mock.className = 'mini-hero mini-hero-dark';
+    mock.innerHTML = `
+      <div class="mini-hero-nav" style="background:var(--dark);border-bottom:1px solid var(--border-dark);">
+        <div style="display:flex;align-items:center;gap:4px;">
+          ${butterfly(16, c.vivid, c.vivid)}
+          <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:${c.vivid};">Plepic</span>
+        </div>
+        <button class="btn" style="background:${orange};color:#fff;">Call</button>
+      </div>
+      <div class="mini-hero-body" style="background:var(--dark);">
+        <div style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.12rem 0.4rem;font-size:0.5rem;font-weight:600;border-radius:8px 2px 6px 2px;background:rgba(0,198,72,0.12);color:${c.light};border:1px solid rgba(0,198,72,0.2);margin-bottom:0.35rem;">
+          <span style="width:4px;height:4px;border-radius:50%;background:${c.vivid};"></span> Cohort 3
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:#e5e2dc;line-height:1.12;margin-bottom:0.3rem;">Build <span style="color:${c.vivid};">AI agents</span></h2>
+        <p style="font-size:0.55rem;color:#a3a39a;margin-bottom:0.3rem;">5-day hands-on training.</p>
+        <span style="font-size:0.5rem;color:${c.vivid};font-weight:600;">300+ trained</span>
+        <div style="display:flex;gap:0.3rem;margin-top:0.5rem;">
+          <button class="btn" style="background:${orange};color:#fff;">Book a call</button>
+          <button class="btn" style="background:transparent;border:1.5px solid ${c.vivid};color:${c.vivid};">Curriculum</button>
+        </div>
+        <div style="height:3px;border-radius:2px;background:linear-gradient(90deg,${c.vivid},transparent);margin-top:0.5rem;"></div>
+      </div>
+    `;
+    heroDark.appendChild(mock);
+  });
+
+  // ===== Decorative comparison =====
+  const decorGrid = document.getElementById('decorGrid');
+  strategies.forEach(st => {
+    const c = Object.fromEntries(st.colors.map(x => [x.name, x.hex]));
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;';
+    card.innerHTML = `
+      <div style="font-family:var(--font-mono);font-size:0.55rem;font-weight:700;text-transform:uppercase;color:var(--text-3);margin-bottom:0.75rem;padding-bottom:0.35rem;border-bottom:1px solid var(--border);">${st.name.split('—')[0].trim()}</div>
+      <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.6rem;">
+        <span style="width:8px;height:8px;border-radius:50%;background:${c.vivid};"></span>
+        <span style="width:6px;height:6px;border-radius:50%;background:${c.vivid};opacity:0.6;"></span>
+        <span style="width:4px;height:4px;border-radius:50%;background:${c.vivid};opacity:0.3;"></span>
+        <span style="font-size:0.65rem;color:var(--text-3);">dots</span>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:0.25rem;padding:0.15rem 0.5rem;font-size:0.65rem;font-weight:600;border-radius:12px 3px 8px 3px;background:${c.surface};color:${c.dark};border:1px solid ${c.light};margin-bottom:0.6rem;">
+        <span style="width:5px;height:5px;border-radius:50%;background:${c.vivid};"></span> Badge
+      </div>
+      <div style="height:3px;border-radius:2px;background:linear-gradient(90deg,${c.brand},${c.vivid},transparent);margin-bottom:0.6rem;"></div>
+      <div style="border-left:3px solid ${c.vivid};padding-left:0.6rem;font-size:0.7rem;color:var(--text-2);margin-bottom:0.6rem;">Quote accent</div>
+      <div style="background:${c.surface};border:1px solid ${c.light};border-radius:8px;padding:0.5rem;">
+        <span style="font-size:0.65rem;color:${c.dark};font-weight:600;">Tinted card</span>
+      </div>
+    `;
+    decorGrid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
