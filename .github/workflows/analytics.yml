@@ -92,3 +92,4 @@ jobs:
           ADS_CLIENT_SECRET: ${{ secrets.ADS_CLIENT_SECRET }}
           ADS_REFRESH_TOKEN: ${{ secrets.ADS_REFRESH_TOKEN }}
         run: npx ts-node scripts/optimize-ads.ts --dry-run
+
