@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plepic Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="design-system.css">
+</head>
+<body>
+
+<div class="container ds-page">
+
+  <!-- ============================================ -->
+  <!-- HEADER -->
+  <!-- ============================================ -->
+  <div class="ds-header ds-section">
+    <h1><span class="brand">Plepic</span> Design System</h1>
+    <p>Locked palette, typography, and component reference. Single source of truth. Interactive specimens with live contrast calculations.</p>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 1. COLOR PALETTE -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">1 — Color Palette <span class="ds-locked">Locked</span></div>
+
+    <div class="ds-note">
+      <strong>Strategy:</strong> Single hue (137°) for all greens. Saturation at 73% everywhere except vivid (100%). Accent at hue 15° with saturation matched to brand (73%). Simple rule: <em>73% is the system saturation, 100% is the decorative exception.</em>
+    </div>
+
+    <div class="ds-swatch-strip">
+      <div class="ds-sw" style="background: var(--green-surface);">
+        <div class="ds-sw-name" style="color: rgba(0,0,0,0.5);">Surface</div>
+        <div class="ds-sw-hex" style="color: rgba(0,0,0,0.7);">#edfcf1</div>
+        <div class="ds-sw-meta" style="color: rgba(0,0,0,0.5);">S73% L96%</div>
+      </div>
+      <div class="ds-sw" style="background: var(--green-light);">
+        <div class="ds-sw-name" style="color: rgba(0,0,0,0.5);">Light</div>
+        <div class="ds-sw-hex" style="color: rgba(0,0,0,0.7);">#c5f6d3</div>
+        <div class="ds-sw-meta" style="color: rgba(0,0,0,0.5);">S73% L87%</div>
+      </div>
+      <div class="ds-sw" style="background: var(--green-vivid);">
+        <div class="ds-sw-name" style="color: rgba(255,255,255,0.7);">Vivid</div>
+        <div class="ds-sw-hex" style="color: #fff;">#00c638</div>
+        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.6);">S100% L39%</div>
+      </div>
+      <div class="ds-sw" style="background: var(--green-brand);">
+        <div class="ds-sw-name" style="color: rgba(255,255,255,0.7);">Brand</div>
+        <div class="ds-sw-hex" style="color: #fff;">#137b30</div>
+        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.6);">S73% L28%</div>
+      </div>
+      <div class="ds-sw" style="background: var(--green-dark);">
+        <div class="ds-sw-name" style="color: rgba(255,255,255,0.7);">Dark</div>
+        <div class="ds-sw-hex" style="color: #fff;">#0d5822</div>
+        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.6);">S73% L20%</div>
+      </div>
+      <div class="ds-sw" style="background: var(--accent);">
+        <div class="ds-sw-name" style="color: rgba(255,255,255,0.7);">Accent</div>
+        <div class="ds-sw-hex" style="color: #fff;">#e26c45</div>
+        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.6);">H15° S73%</div>
+      </div>
+    </div>
+
+    <!-- Token reference table — populated by JS -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <table class="ds-token-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Value</th>
+            <th>On Cream</th>
+            <th>On White</th>
+            <th>On Dark</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody id="tokenTable"></tbody>
+      </table>
+    </div>
+
+    <!-- Design decisions -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 700px;">
+      <h3 style="font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.75rem;">Design Decisions</h3>
+      <ul class="ds-rules">
+        <li><strong>Single hue (137°)</strong> for all greens — no hue drift between shades.</li>
+        <li><strong>System saturation: 73%.</strong> Surface, light, brand, and dark all share S=73%.</li>
+        <li><strong>Vivid exception: S=100%.</strong> Decorative punch only — dots, fills, dark-mode headings. Never as text on light.</li>
+        <li><strong>Accent at H=15°, S=73%</strong> — split-complementary of 137°, saturation matched.</li>
+        <li><strong>One accent per viewport.</strong> A CTA button and an urgency badge must never be visible simultaneously.</li>
+        <li><strong>No accent variants.</strong> Use opacity for hover/active states.</li>
+        <li><strong>Green = structural identity.</strong> Logo, headings, navigation, badges, links.</li>
+        <li><strong>Orange = action warmth.</strong> CTA buttons and urgency indicators only.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 2. NEUTRALS -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">2 — Neutrals <span class="ds-locked">Locked</span></div>
+
+    <div class="ds-swatch-strip">
+      <div class="ds-sw" style="background: var(--bg); border: 1px solid var(--border);">
+        <div class="ds-sw-name" style="color: var(--text-3);">Cream</div>
+        <div class="ds-sw-hex" style="color: var(--text);">#faf7f2</div>
+        <div class="ds-sw-meta" style="color: var(--text-3);">--bg</div>
+      </div>
+      <div class="ds-sw" style="background: var(--bg-alt); border: 1px solid var(--border);">
+        <div class="ds-sw-name" style="color: var(--text-3);">Alt</div>
+        <div class="ds-sw-hex" style="color: var(--text);">#f3efe7</div>
+        <div class="ds-sw-meta" style="color: var(--text-3);">--bg-alt</div>
+      </div>
+      <div class="ds-sw" style="background: var(--surface); border: 1px solid var(--border);">
+        <div class="ds-sw-name" style="color: var(--text-3);">Surface</div>
+        <div class="ds-sw-hex" style="color: var(--text);">#ffffff</div>
+        <div class="ds-sw-meta" style="color: var(--text-3);">--surface</div>
+      </div>
+      <div class="ds-sw" style="background: var(--border);">
+        <div class="ds-sw-name" style="color: var(--text-3);">Border</div>
+        <div class="ds-sw-hex" style="color: var(--text);">#e5e2dc</div>
+        <div class="ds-sw-meta" style="color: var(--text-3);">--border</div>
+      </div>
+      <div class="ds-sw" style="background: var(--text-3);">
+        <div class="ds-sw-name" style="color: #c5c5ba;">Text 3</div>
+        <div class="ds-sw-hex" style="color: #ddd;">#6b6b60</div>
+        <div class="ds-sw-meta" style="color: #aaa;">Muted</div>
+      </div>
+      <div class="ds-sw" style="background: var(--text-2);">
+        <div class="ds-sw-name" style="color: #a3a39a;">Text 2</div>
+        <div class="ds-sw-hex" style="color: #ccc;">#4a4a45</div>
+        <div class="ds-sw-meta" style="color: #999;">Secondary</div>
+      </div>
+      <div class="ds-sw" style="background: var(--dark);">
+        <div class="ds-sw-name" style="color: #6b6b60;">Dark</div>
+        <div class="ds-sw-hex" style="color: #a3a39a;">#1c1c1a</div>
+        <div class="ds-sw-meta" style="color: #6b6b60;">--dark</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 3. TYPOGRAPHY -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">3 — Typography <span class="ds-locked">Locked</span></div>
+
+    <div class="ds-grid-3">
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Display — Zilla Slab</div>
+        <h2 style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--green-brand); margin-bottom: 0.5rem;">Build production AI agents</h2>
+        <p style="font-size: 0.78rem; color: var(--text-3); margin: 0;">Slab serif. Warm, grounded, distinctive. Headings, hero text, wordmark.</p>
+      </div>
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Body — Plus Jakarta Sans</div>
+        <p style="font-size: 0.95rem; color: var(--text); line-height: 1.65; margin-bottom: 0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>
+        <p style="font-size: 0.78rem; color: var(--text-3); margin: 0;">Geometric sans. Body, nav, buttons, labels.</p>
+      </div>
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Mono — JetBrains Mono</div>
+        <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--green-brand); line-height: 1.65; margin-bottom: 0.5rem;">claude "build me a REST API"<br>npm install @anthropic-ai/sdk</p>
+        <p style="font-size: 0.78rem; color: var(--text-3); margin: 0;">Code, technical labels, hex values.</p>
+      </div>
+    </div>
+
+    <!-- Type scale specimens -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Type Scale</div>
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3);">Hero — clamp(3rem, 2.5rem + 3.5vw, 4.8rem) / 700 / 1.05</span>
+          <h1 style="font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem); line-height: 1.05; letter-spacing: -0.025em;">Build production</h1>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3);">H2 — clamp(1.5rem, 1.25rem + 2vw, 2.25rem) / 600 / 1.15</span>
+          <h2>What you'll learn</h2>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3);">H3 — clamp(1.15rem, 1rem + 0.5vw, 1.5rem) / 700 / 1.15</span>
+          <h3>Agentic patterns</h3>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3);">Body — 1.1rem / 400 / 1.7</span>
+          <p style="font-size: 1.1rem; margin: 0;">Hands-on training that bridges the gap between toy demos and production AI agents.</p>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3);">Label — 0.75rem mono / 600 / normal / uppercase</span>
+          <span class="label">// Training module</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Line-height warning -->
+    <div class="panel panel-cream" style="margin-top: var(--space-lg); max-width: 700px;">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text);">Line-Height Trap</h4>
+      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;">
+        Body has <code style="font-family: var(--font-mono); font-size: 0.8rem;">line-height: 1.7</code>. This leaks into compact components via inheritance.
+        Every compact component (.logo, .nav a, .badge, .btn-*, .label, code blocks) must set <code style="font-family: var(--font-mono); font-size: 0.8rem;">line-height: normal</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 4. SPACING -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">4 — Spacing</div>
+
+    <div class="ds-spacing-row">
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 4px; height: 4px;"></div>
+        <span class="ds-spacing-label">xs · 4px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 8px; height: 8px;"></div>
+        <span class="ds-spacing-label">sm · 8px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 16px; height: 16px;"></div>
+        <span class="ds-spacing-label">md · 16px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 24px; height: 24px;"></div>
+        <span class="ds-spacing-label">lg · 24px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 32px; height: 32px;"></div>
+        <span class="ds-spacing-label">xl · 32px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 48px; height: 48px;"></div>
+        <span class="ds-spacing-label">2xl · 48px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 64px; height: 64px;"></div>
+        <span class="ds-spacing-label">3xl · 64px</span>
+      </div>
+      <div class="ds-spacing-item">
+        <div class="ds-spacing-block" style="width: 96px; height: 96px;"></div>
+        <span class="ds-spacing-label">4xl · 96px</span>
+      </div>
+    </div>
+
+    <p class="ds-note" style="margin-top: var(--space-lg);">
+      <strong>Rhythm:</strong> Use tight groupings + generous separations. Not same spacing everywhere. Related elements close, sections far apart.
+    </p>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 5. COMPONENTS — Light -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">5 — Components</div>
+
+    <div class="ds-grid-2">
+
+      <!-- Light context — with CTA (no urgency badge) -->
+      <div class="panel panel-cream">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with CTA</div>
+
+        <!-- Badges — default only, no urgency when CTA is present -->
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
+          <span class="badge badge-default"><span class="badge-dot"></span> Cohort 3 open</span>
+          <span class="badge badge-default"><span class="badge-dot"></span> 300+ trained</span>
+        </div>
+
+        <!-- Links -->
+        <div style="margin-bottom: var(--space-md);">
+          <a href="#" class="link">View curriculum</a>
+          <span class="link-separator">·</span>
+          <a href="#" class="link">See all dates</a>
+        </div>
+
+        <!-- Buttons — accent appears here, so no other accent element in this viewport -->
+        <div class="ds-btn-row" style="margin-bottom: var(--space-md);">
+          <button class="btn btn-primary" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">Book a call</button>
+          <button class="btn btn-outline">View curriculum</button>
+          <button class="btn btn-ghost">Learn more</button>
+        </div>
+
+        <!-- Info card -->
+        <div class="card-info" style="margin-bottom: var(--space-md);">
+          <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">Next cohort: April 7-11</h4>
+          <p style="margin: 0;">Tallinn · Max 12 participants · NPS 8.4/10</p>
+          <div class="progress-bar"></div>
+        </div>
+
+        <!-- Code block -->
+        <div class="code-block code-block-default">
+          <span class="comment">// Install</span><br>
+          <span class="keyword">npm install</span> -g @anthropic-ai/claude-code
+        </div>
+      </div>
+
+      <!-- Dark context — with CTA (no urgency badge) -->
+      <div class="panel panel-dark on-dark">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with CTA</div>
+
+        <!-- Badges — default only -->
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
+          <span class="badge badge-default"><span class="badge-dot"></span> Cohort 3 open</span>
+        </div>
+
+        <!-- Links -->
+        <div style="margin-bottom: var(--space-md);">
+          <a href="#" class="link">View curriculum</a>
+          <span class="link-separator">·</span>
+          <a href="#" class="link">See all dates</a>
+        </div>
+
+        <!-- Buttons — accent appears here -->
+        <div class="ds-btn-row" style="margin-bottom: var(--space-md);">
+          <button class="btn btn-primary" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">Book a call</button>
+          <button class="btn btn-outline">Curriculum</button>
+          <button class="btn btn-ghost">More</button>
+        </div>
+
+        <!-- Info card -->
+        <div class="card-info" style="margin-bottom: var(--space-md);">
+          <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">Next cohort: April 7-11</h4>
+          <p style="margin: 0;">Tallinn · Max 12 participants · NPS 8.4/10</p>
+          <div class="progress-bar"></div>
+        </div>
+
+        <!-- Code block -->
+        <div class="code-block code-block-default">
+          <span class="comment">// Install</span><br>
+          <span class="keyword">npm install</span> -g @anthropic-ai/claude-code
+        </div>
+      </div>
+    </div>
+
+    <!-- Accent exclusivity demo -->
+    <div class="ds-note" style="margin-top: var(--space-lg);">
+      <strong>Accent rule:</strong> Only one accent-colored element per viewport — whether it's a CTA button, urgency badge, or any other element using <code style="font-family: var(--font-mono); font-size: 0.8rem;">--accent</code>. The urgency badge below appears without a CTA button:
+    </div>
+    <div class="ds-grid-2">
+      <!-- Light — urgency badge without CTA -->
+      <div class="panel panel-cream">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with urgency badge (no CTA)</div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
+          <span class="badge badge-default"><span class="badge-dot"></span> Cohort 3 open</span>
+          <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
+        </div>
+        <div class="ds-btn-row">
+          <button class="btn btn-outline">View curriculum</button>
+          <button class="btn btn-ghost">Learn more</button>
+        </div>
+      </div>
+      <!-- Dark — urgency badge without CTA -->
+      <div class="panel panel-dark on-dark">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with urgency badge (no CTA)</div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
+          <span class="badge badge-default"><span class="badge-dot"></span> Cohort 3 open</span>
+          <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
+        </div>
+        <div class="ds-btn-row">
+          <button class="btn btn-outline">Curriculum</button>
+          <button class="btn btn-ghost">More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 6. HERO COMPOSITIONS -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">6 — Hero Compositions</div>
+
+    <div class="ds-note">
+      Accent appears once per viewport — in the hero body CTA. Nav CTA uses green outline. No urgency badges when the CTA is visible.
+    </div>
+
+    <!-- Light hero -->
+    <div style="border-radius: 14px; overflow: hidden; border: 1px solid var(--border); margin-bottom: var(--space-lg);" id="heroLight"></div>
+
+    <!-- Dark hero -->
+    <div style="border-radius: 14px; overflow: hidden; border: 1px solid var(--border-dark);" id="heroDark"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 7. LOGO & WORDMARK -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">7 — Logo & Wordmark <span class="ds-wip">Coming soon</span></div>
+
+    <div class="ds-note">
+      Butterfly logo and Zilla Slab wordmark lockup. Specimens on all background contexts will be added here.
+    </div>
+
+    <div class="ds-grid-5" id="logoGrid"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 8. RULES & ANTI-PATTERNS -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">8 — Rules & Anti-Patterns</div>
+
+    <div class="ds-grid-2">
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Do</h4>
+        <ul class="ds-rules">
+          <li>Use <strong>--green-brand</strong> for text on light backgrounds (AA)</li>
+          <li>Use <strong>--green-dark</strong> for body text needing AAA</li>
+          <li>Use <strong>--green-vivid</strong> for decorative elements and dark-mode headings</li>
+          <li>Use <strong>--accent</strong> for exactly one element per viewport — a CTA button OR an urgency badge, never both</li>
+          <li>Use asymmetric grids (1.4fr / 0.6fr), not 50/50</li>
+          <li>Use spacing rhythm — tight groupings, generous separations</li>
+          <li>Set <code style="font-family: var(--font-mono); font-size: 0.78rem;">line-height: normal</code> on compact components</li>
+          <li>Light mode only. Dark sections for emphasis, not a toggle.</li>
+        </ul>
+      </div>
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Don't</h4>
+        <ul class="ds-rules">
+          <li><strong>No --green-vivid as text on light</strong> — fails AA (2.5:1 on cream)</li>
+          <li><strong>No multiple accent-colored elements in one viewport</strong> — one CTA button or one urgency badge or one accent dot, never two</li>
+          <li><strong>No accent hover variants</strong> — use opacity for states</li>
+          <li>No cyan, neon, glassmorphism, gradient text, glow effects</li>
+          <li>No all-caps headings (except mono labels and trust bar)</li>
+          <li>No centered-everything layouts on desktop</li>
+          <li>No SVG blur/glow filters</li>
+          <li>No AI slop aesthetics (2024-2025 generic look)</li>
+          <li>No #8a8a80 as readable text — use --text-3 (#6b6b60) minimum</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Contrast utilities ──
+  function luminance(hex) {
+    const r = parseInt(hex.slice(1,3),16)/255, g = parseInt(hex.slice(3,5),16)/255, b = parseInt(hex.slice(5,7),16)/255;
+    const [R,G,B] = [r,g,b].map(c => c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4));
+    return 0.2126*R + 0.7152*G + 0.0722*B;
+  }
+  function contrast(fg, bg) {
+    const l1 = luminance(fg), l2 = luminance(bg);
+    return (Math.max(l1,l2) + 0.05) / (Math.min(l1,l2) + 0.05);
+  }
+  function ctBadge(ratio) {
+    const s = ratio.toFixed(1);
+    if (ratio >= 7)   return '<span class="ds-ct ds-ct-pass">' + s + ':1 AAA</span>';
+    if (ratio >= 4.5) return '<span class="ds-ct ds-ct-pass">' + s + ':1 AA</span>';
+    if (ratio >= 3)   return '<span class="ds-ct ds-ct-warn">' + s + ':1 Lg</span>';
+    return '<span class="ds-ct ds-ct-fail">' + s + ':1</span>';
+  }
+
+  var cream = '#faf7f2', white = '#ffffff', dark = '#1c1c1a';
+
+  // ── Token table ──
+  var tokens = [
+    { token: '--green-surface', hex: '#edfcf1', role: 'Tinted backgrounds, card fills. Decorative only.' },
+    { token: '--green-light',   hex: '#c5f6d3', role: 'Badge fills, borders, subtle highlights. Decorative only.' },
+    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative: dots, icon fills, borders. Headings on dark. Not text on light.' },
+    { token: '--green-brand',   hex: '#137b30', role: 'Logo, headings, links, labels. Primary brand identity.' },
+    { token: '--green-dark',    hex: '#0d5822', role: 'High-contrast body text on light. AAA on cream/white.' },
+    { token: '--accent',        hex: '#e26c45', role: 'CTA button, urgency badges. One per viewport.' },
+  ];
+
+  var tbody = document.getElementById('tokenTable');
+  tokens.forEach(function(t) {
+    var onCream = contrast(t.hex, cream);
+    var onWhite = contrast(t.hex, white);
+    var onDark  = contrast(t.hex, dark);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><code>' + t.token + '</code></td>' +
+      '<td><span class="ds-swatch-dot" style="background:' + t.hex + ';"></span><code>' + t.hex + '</code></td>' +
+      '<td>' + ctBadge(onCream) + '</td>' +
+      '<td>' + ctBadge(onWhite) + '</td>' +
+      '<td>' + ctBadge(onDark) + '</td>' +
+      '<td style="font-size:0.78rem;color:var(--text-2);">' + t.role + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  // ── Butterfly (compact) ──
+  function bf(sz, stroke, fill) {
+    var h = Math.round(sz * 0.91);
+    return '<svg width="' + sz + '" height="' + h + '" viewBox="0 0 120 110">' +
+      '<polygon points="58,42 42,24 22,18" fill="' + fill + '" opacity="0.15" stroke="' + stroke + '" stroke-width="1.2"/>' +
+      '<polygon points="58,52 58,42 12,34" fill="' + stroke + '" opacity="0.4" stroke="' + stroke + '" stroke-width="1"/>' +
+      '<polygon points="58,52 12,34 16,58" fill="' + fill + '" opacity="0.35" stroke="' + stroke + '" stroke-width="0.9"/>' +
+      '<polygon points="58,65 58,52 16,58" fill="' + stroke + '" opacity="0.19" stroke="' + stroke + '" stroke-width="0.8"/>' +
+      '<polygon points="62,42 78,24 98,18" fill="' + fill + '" opacity="0.15" stroke="' + stroke + '" stroke-width="1.2"/>' +
+      '<polygon points="62,52 62,42 108,34" fill="' + stroke + '" opacity="0.4" stroke="' + stroke + '" stroke-width="1"/>' +
+      '<polygon points="62,52 108,34 104,58" fill="' + fill + '" opacity="0.35" stroke="' + stroke + '" stroke-width="0.9"/>' +
+      '<polygon points="62,65 62,52 104,58" fill="' + stroke + '" opacity="0.19" stroke="' + stroke + '" stroke-width="0.8"/>' +
+      '<polygon points="60,36 57,45 60,52 63,45" fill="' + stroke + '" opacity="0.48" stroke="' + stroke + '" stroke-width="0.8"/>' +
+      '<polygon points="60,52 58,60 60,68 62,60" fill="' + stroke + '" opacity="0.35" stroke="' + stroke + '" stroke-width="0.6"/>' +
+      '<line x1="60" y1="36" x2="52" y2="14" stroke="' + stroke + '" stroke-width="0.8" opacity="0.5"/>' +
+      '<line x1="60" y1="36" x2="68" y2="14" stroke="' + stroke + '" stroke-width="0.8" opacity="0.5"/>' +
+      '<circle cx="52" cy="14" r="2" fill="' + fill + '" opacity="0.6"/>' +
+      '<circle cx="68" cy="14" r="2" fill="' + fill + '" opacity="0.6"/>' +
+    '</svg>';
+  }
+
+  // ── Hero light ──
+  // Nav CTA = green outline (not accent) — accent appears only in hero body
+  document.getElementById('heroLight').innerHTML =
+    '<div style="padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);">' +
+      '<div style="display:flex;align-items:center;gap:0.6rem;">' + bf(22,'#137b30','#00c638') + '<span style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--green-brand);">Plepic</span></div>' +
+      '<div style="display:flex;align-items:center;gap:1.5rem;">' +
+        '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">Training</a>' +
+        '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">About</a>' +
+        '<button class="btn btn-outline" style="padding:0.4rem 1rem;font-size:0.75rem;">Book a call</button>' +
+      '</div>' +
+    '</div>' +
+    '<div style="padding:3rem 2rem 3.5rem;background:var(--bg);">' +
+      '<div class="badge badge-default" style="margin-bottom:0.75rem;"><span class="badge-dot"></span> Cohort 3 — April 2026</div>' +
+      '<h2 style="font-family:var(--font-display);font-size:clamp(2rem,1.5rem+3vw,3.5rem);font-weight:700;color:var(--text);line-height:1.08;margin-bottom:1rem;">Build production<br><span style="color:var(--green-brand);">AI agents</span> in 5 days</h2>' +
+      '<p style="font-size:1rem;color:var(--text-2);line-height:1.6;max-width:480px;margin-bottom:0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>' +
+      '<div style="display:flex;gap:1.25rem;margin-bottom:1.5rem;">' +
+        '<span style="font-size:0.78rem;color:var(--green-brand);font-weight:600;">300+ developers trained</span>' +
+        '<span style="font-size:0.78rem;color:var(--green-brand);font-weight:600;">NPS 8.4/10</span>' +
+      '</div>' +
+      '<div class="ds-btn-row">' +
+        '<button class="btn btn-primary" style="padding:0.75rem 1.75rem;font-size:0.95rem;">Book a free call</button>' +
+        '<button class="btn btn-outline">View curriculum</button>' +
+      '</div>' +
+    '</div>';
+
+  // ── Hero dark ──
+  document.getElementById('heroDark').innerHTML =
+    '<div style="padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;background:var(--dark);border-bottom:1px solid var(--border-dark);">' +
+      '<div style="display:flex;align-items:center;gap:0.6rem;">' + bf(22,'#00c638','#00c638') + '<span style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--green-vivid);">Plepic</span></div>' +
+      '<div style="display:flex;align-items:center;gap:1.5rem;">' +
+        '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">Training</a>' +
+        '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">About</a>' +
+        '<button class="btn btn-outline" style="padding:0.4rem 1rem;font-size:0.75rem;border-color:var(--green-vivid);color:var(--green-vivid);">Book a call</button>' +
+      '</div>' +
+    '</div>' +
+    '<div style="padding:3rem 2rem 3.5rem;background:var(--dark);">' +
+      '<div class="badge" style="background:rgba(0,198,56,0.12);color:#cdeed6;border:1px solid rgba(0,198,56,0.2);margin-bottom:0.75rem;"><span class="badge-dot"></span> Cohort 3 — April 2026</div>' +
+      '<h2 style="font-family:var(--font-display);font-size:clamp(2rem,1.5rem+3vw,3.5rem);font-weight:700;color:#e5e2dc;line-height:1.08;margin-bottom:1rem;">Build production<br><span style="color:var(--green-vivid);">AI agents</span> in 5 days</h2>' +
+      '<p style="font-size:1rem;color:#a3a39a;line-height:1.6;max-width:480px;margin-bottom:0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>' +
+      '<div style="display:flex;gap:1.25rem;margin-bottom:1.5rem;">' +
+        '<span style="font-size:0.78rem;color:var(--green-vivid);font-weight:600;">300+ developers trained</span>' +
+        '<span style="font-size:0.78rem;color:var(--green-vivid);font-weight:600;">NPS 8.4/10</span>' +
+      '</div>' +
+      '<div class="ds-btn-row">' +
+        '<button class="btn btn-primary" style="padding:0.75rem 1.75rem;font-size:0.95rem;">Book a free call</button>' +
+        '<button class="btn btn-outline" style="border-color:var(--green-vivid);color:var(--green-vivid);">View curriculum</button>' +
+      '</div>' +
+    '</div>';
+
+  // ── Logo on backgrounds (placeholder) ──
+  var logoGrid = document.getElementById('logoGrid');
+  var bgs = [
+    { bg: 'var(--surface)', border: 'var(--border)', stroke: '#137b30', fill: '#00c638', text: '#137b30', label: 'White', lc: 'var(--text-3)' },
+    { bg: 'var(--bg)',      border: 'var(--border)', stroke: '#137b30', fill: '#00c638', text: '#137b30', label: 'Cream', lc: 'var(--text-3)' },
+    { bg: 'var(--green-surface)', border: 'var(--green-light)', stroke: '#137b30', fill: '#00c638', text: '#137b30', label: 'Green tint', lc: 'var(--text-3)' },
+    { bg: 'var(--dark)',    border: 'var(--border-dark)', stroke: '#00c638', fill: '#00c638', text: '#00c638', label: 'Dark', lc: '#6b6b60' },
+    { bg: 'var(--green-brand)', border: 'var(--green-brand)', stroke: 'rgba(255,255,255,0.4)', fill: 'rgba(255,255,255,0.3)', text: '#fff', label: 'On brand', lc: 'rgba(255,255,255,0.5)' },
+  ];
+  bgs.forEach(function(b) {
+    var card = document.createElement('div');
+    card.style.cssText = 'background:' + b.bg + ';border:1px solid ' + b.border + ';border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:0.75rem;';
+    card.innerHTML =
+      '<div style="display:flex;align-items:center;gap:0.6rem;">' + bf(28, b.stroke, b.fill) + '<span style="font-family:var(--font-display);font-weight:700;font-size:1.25rem;color:' + b.text + ';">Plepic</span></div>' +
+      '<span style="font-family:var(--font-mono);font-size:0.55rem;color:' + b.lc + ';">' + b.label + '</span>';
+    logoGrid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
