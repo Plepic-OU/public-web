@@ -1,0 +1,589 @@
+/* ================================================================
+   PLEPIC DESIGN SYSTEM — Source of Truth
+   Locked palette: 2026-04-01
+   ================================================================
+   This file defines all design tokens, base styles, and component
+   patterns. The production stylesheet (css/styles.css) implements
+   these; design-system.html renders them as a visual reference.
+   ================================================================ */
+
+
+/* ================================================================
+   1. DESIGN TOKENS
+   ================================================================ */
+
+:root {
+  /* ── Green system ── H=137°, S=73% (vivid S=100%)
+     73% is system saturation. 100% is the decorative exception. */
+  --green-surface: #edfcf1;   /* S73%  L96%  — tinted backgrounds */
+  --green-light:   #c5f6d3;   /* S73%  L87%  — badge fills, borders */
+  --green-vivid:   #00c638;   /* S100% L39%  — decorative: dots, fills. Headings on dark. NOT text on light. */
+  --green-brand:   #137b30;   /* S73%  L28%  — logo, headings, links. AA on cream (5.0:1) and white (5.4:1). */
+  --green-dark:    #0d5822;   /* S73%  L20%  — body text on light. AAA on cream (8.1:1). */
+
+  /* ── Accent ── H=15°, S=73% (saturation-matched)
+     Split-complementary of H=137°. ONE per viewport. */
+  --accent:        #e26c45;   /* S73%  L58%  — CTA buttons, urgency. AA-large on light, AA on dark (5.3:1). */
+
+  /* ── Neutrals ── */
+  --bg:            #faf7f2;   /* Page background (warm cream) */
+  --bg-alt:        #f3efe7;   /* Alternating sections */
+  --surface:       #ffffff;   /* Cards, panels */
+  --dark:          #1c1c1a;   /* Dark sections, primary text */
+  --dark-surface:  #262624;   /* Dark-mode card/panel surface */
+
+  /* ── Text ── */
+  --text:          #1c1c1a;   /* Primary — 16.0:1 on cream */
+  --text-2:        #4a4a45;   /* Secondary — 8.3:1 on cream */
+  --text-3:        #6b6b60;   /* Muted — 5.0:1 on cream (AA) */
+
+  /* ── Borders ── */
+  --border:        #e5e2dc;   /* Light context */
+  --border-dark:   #3a3a38;   /* Dark context */
+
+  /* ── Typography ── */
+  --font-display:  'Zilla Slab', Georgia, serif;
+  --font-body:     'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+
+  /* ── Spacing ── */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* ── Layout ── */
+  --max-width:     1120px;
+  --header-height: 64px;
+
+  /* ── Transitions ── */
+  --transition-fast:   150ms ease;
+  --transition-base:   300ms ease;
+  --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ================================================================
+   2. RESET & BASE
+   ================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a {
+  color: var(--green-brand);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:focus-visible {
+  outline: 2px solid var(--green-vivid);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+
+/* ================================================================
+   3. TYPOGRAPHY
+   ================================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2rem, 2rem + 3vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 1.25rem + 2vw, 2.25rem); font-weight: 600; }
+h3 { font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem); }
+h4 { font-size: 1.15rem; }
+
+p { margin-bottom: var(--space-md); }
+p:last-child { margin-bottom: 0; }
+
+
+/* ================================================================
+   4. LAYOUT
+   ================================================================ */
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+
+/* ================================================================
+   5. BUTTONS
+   ================================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+.btn:hover { opacity: 0.85; }
+
+/* Primary — accent orange, white text. ONE accent-colored element per viewport (button OR badge, never both). */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 1rem 2.25rem;
+  border-radius: 14px;
+  font-size: 1rem;
+}
+
+/* Outline — green brand border + text */
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--green-brand);
+  color: var(--green-brand);
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+/* Ghost — underlined link-style */
+.btn-ghost {
+  background: transparent;
+  color: var(--green-brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Dark context overrides */
+.on-dark .btn-outline {
+  border-color: var(--green-vivid);
+  color: var(--green-vivid);
+}
+.on-dark .btn-ghost {
+  color: var(--green-vivid);
+}
+
+
+/* ================================================================
+   6. BADGES
+   ================================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: normal;
+  border-radius: 20px 4px 16px 4px; /* organic asymmetry */
+}
+
+.badge-default {
+  background: var(--green-surface);
+  color: var(--green-dark);
+  border: 1px solid var(--green-light);
+}
+
+/* Urgency — only when no other accent-colored element is in the same viewport */
+.badge-urgency {
+  background: #fdf0eb;
+  color: #a3502e;
+  border: 1px solid #f9d4c4;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-vivid);
+  flex-shrink: 0;
+}
+.badge-urgency .badge-dot {
+  background: var(--accent);
+}
+
+/* Dark context */
+.on-dark .badge-default {
+  background: rgba(0, 198, 56, 0.12);
+  color: #cdeed6;
+  border-color: rgba(0, 198, 56, 0.2);
+}
+.on-dark .badge-urgency {
+  background: rgba(226, 108, 69, 0.15);
+  color: var(--accent);
+  border-color: rgba(226, 108, 69, 0.25);
+}
+
+
+/* ================================================================
+   7. CARDS & PANELS
+   ================================================================ */
+
+.panel {
+  border-radius: 14px;
+  padding: var(--space-xl);
+}
+.panel-white {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.panel-cream {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.panel-dark {
+  background: var(--dark);
+  border: 1px solid var(--border-dark);
+}
+
+/* Info card — green tinted */
+.card-info {
+  background: var(--green-surface);
+  border: 1px solid var(--green-light);
+  border-radius: 10px;
+  padding: var(--space-md);
+}
+.card-info h4 { color: var(--green-dark); }
+.card-info p  { color: var(--green-brand); font-size: 0.78rem; }
+
+.on-dark .card-info {
+  background: rgba(0, 198, 56, 0.1);
+  border-color: rgba(0, 198, 56, 0.18);
+}
+.on-dark .card-info h4 { color: var(--green-vivid); }
+.on-dark .card-info p  { color: #cdeed6; }
+
+
+/* ================================================================
+   8. CODE SNIPPETS
+   ================================================================ */
+
+.code-block {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: normal;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+/* Standard — white bg, bordered */
+.code-block-default {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.code-block-default .comment { color: var(--text-3); }
+.code-block-default .keyword { color: var(--green-brand); }
+
+/* Hero decorative — no bg, muted */
+.code-block-hero {
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0.6;
+  color: var(--green-brand);
+}
+
+/* Dark context */
+.on-dark .code-block-default {
+  background: var(--dark-surface);
+  border-color: var(--border-dark);
+  color: #e5e2dc;
+}
+.on-dark .code-block-default .comment { color: #6b6b60; }
+.on-dark .code-block-default .keyword { color: var(--green-vivid); }
+.on-dark .code-block-hero { color: var(--green-vivid); }
+
+
+/* ================================================================
+   9. LINKS
+   ================================================================ */
+
+.link {
+  color: var(--green-brand);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 0.85rem;
+}
+.link-separator {
+  color: var(--text-3);
+  margin: 0 0.35rem;
+}
+
+.on-dark .link { color: var(--green-vivid); }
+.on-dark .link-separator { color: #6b6b60; }
+
+
+/* ================================================================
+   10. SECTION LABELS
+   ================================================================ */
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--green-dark);
+}
+
+.label-muted {
+  color: var(--text-3);
+}
+
+.on-dark .label { color: var(--green-vivid); }
+.on-dark .label-muted { color: #6b6b60; }
+
+
+/* ================================================================
+   11. LOGO & WORDMARK
+   ================================================================ */
+
+/* Placeholder — logo and wordmark lockup coming soon.
+   Expected structure:
+   .logo-lockup > .logo-butterfly (SVG) + .logo-wordmark (Zilla Slab 700)
+
+   Rules:
+   - Light: --green-brand strokes, --green-vivid fills
+   - Dark:  --green-vivid for both
+   - On brand bg: white at reduced opacity
+   - Gap: 0.6rem, vertically center-aligned
+*/
+
+
+/* ================================================================
+   12. PROGRESS BAR
+   ================================================================ */
+
+.progress-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--green-brand), var(--green-vivid), transparent);
+  margin-top: var(--space-sm);
+}
+.on-dark .progress-bar {
+  background: linear-gradient(90deg, var(--green-vivid), transparent);
+}
+
+
+/* ================================================================
+   13. DARK SECTION CONTEXT
+   ================================================================
+   Apply .on-dark to any container with --dark background.
+   Component overrides are co-located with each component above. */
+
+.on-dark { color: #e5e2dc; }
+.on-dark h1,
+.on-dark h2,
+.on-dark h3,
+.on-dark h4 { color: #e5e2dc; }
+.on-dark p { color: #a3a39a; }
+
+
+/* ================================================================
+   DESIGN SYSTEM REFERENCE PAGE STYLES
+   Only used by design-system.html — not production.
+   ================================================================ */
+
+.ds-page { padding: var(--space-2xl) 0; }
+
+.ds-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+}
+.ds-header h1 .brand { color: var(--green-brand); }
+.ds-header p {
+  color: var(--text-2);
+  font-size: 1rem;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+.ds-section {
+  margin-bottom: var(--space-3xl);
+}
+
+.ds-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: var(--space-lg);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ds-note {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 640px;
+  margin-bottom: var(--space-lg);
+}
+
+.ds-locked {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #dcfce7;
+  color: #065f28;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+}
+
+.ds-wip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #fefce8;
+  color: #854d0e;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+}
+
+/* Swatch strips */
+.ds-swatch-strip {
+  display: flex;
+  gap: 1px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+.ds-sw {
+  flex: 1;
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.1rem;
+}
+.ds-sw-name  { font-family: var(--font-mono); font-size: 0.5rem; font-weight: 700; text-transform: uppercase; }
+.ds-sw-hex   { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; }
+.ds-sw-meta  { font-family: var(--font-mono); font-size: 0.48rem; opacity: 0.65; }
+
+/* Token table */
+.ds-token-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.ds-token-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.ds-token-table td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--bg);
+}
+.ds-token-table code { font-family: var(--font-mono); font-size: 0.78rem; }
+.ds-swatch-dot {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid var(--border);
+}
+
+/* Contrast tags */
+.ds-ct {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+.ds-ct-pass { background: #dcfce7; color: #065f28; }
+.ds-ct-warn { background: #fefce8; color: #854d0e; }
+.ds-ct-fail { background: #fef2f2; color: #991b1b; }
+
+/* Grids */
+.ds-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+.ds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+.ds-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+@media (max-width: 900px) {
+  .ds-grid-2, .ds-grid-3 { grid-template-columns: 1fr; }
+  .ds-grid-5 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Rules list */
+.ds-rules {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  line-height: 1.8;
+  padding-left: 1.25rem;
+}
+.ds-rules strong { color: var(--text); }
+
+/* Btn row for demos */
+.ds-btn-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Spacing demo */
+.ds-spacing-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+.ds-spacing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.ds-spacing-block {
+  background: var(--green-light);
+  border: 1px solid var(--green-brand);
+  border-radius: 4px;
+}
+.ds-spacing-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-3);
+}
