@@ -11,6 +11,8 @@ for (const page of pages) {
   test(`accessibility - ${page.name} @a11y`, async ({ page: browserPage }) => {
     await browserPage.goto(page.path);
     await browserPage.waitForLoadState('networkidle');
+    // Wait for hero-entrance CSS animations to complete (max delay 0.65s + duration 0.7s = 1.35s)
+    await browserPage.waitForTimeout(1500);
 
     const accessibilityScanResults = await new AxeBuilder({ page: browserPage })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
