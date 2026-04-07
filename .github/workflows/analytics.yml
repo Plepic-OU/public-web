@@ -2,8 +2,9 @@ name: Analytics Export
 
 on:
   schedule:
-    # Daily at 06:00 UTC (08:00 Estonia)
-    - cron: '0 6 * * *'
+    # Daily at 04:00 UTC (07:00 Estonia) — must complete before the
+    # weekly review trigger fires at 05:00 UTC (08:00 Estonia)
+    - cron: '0 4 * * *'
   workflow_dispatch:
 
 jobs:
