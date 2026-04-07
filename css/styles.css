@@ -320,78 +320,85 @@ p:last-child {
    Buttons
    ======================================== */
 
+/* ========================================
+   Buttons — design system v2 (locked)
+   System:
+   - Default:  font 0.95rem · padding 0.7rem 1.4rem · radius 10px
+   - .btn-lg:  font 1.05rem · padding 0.95rem 1.9rem · radius 12px (heroes only)
+   - .btn-sm:  font 0.8rem  · padding 0.5rem 1rem    · radius 8px
+   Variants add color only; never change size.
+   ======================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-body);
   font-weight: 600;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition-smooth);
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 2.25rem;
-  background: var(--accent);
-  color: var(--text); /* Dark text on accent: 5.25:1 (AA pass). White was 3.25:1 (AA Large only). */
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: normal;
-  border-radius: 14px;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-primary:hover {
-  background: var(--accent);
-  color: var(--text);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(217, 119, 87, 0.25);
-}
-
-.btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(217, 119, 87, 0.2);
-  transition-duration: 50ms;
-}
-
-.btn-secondary:active {
-  transform: translateY(1px);
-  transition-duration: 50ms;
-}
-
-.btn-secondary {
-  padding: 0.75rem 1.75rem;
-  background: transparent;
-  color: var(--green-dark);
   font-size: 0.95rem;
-  border: 1.5px solid var(--green);
-  border-radius: 12px;
+  line-height: normal;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
 }
-
-.btn-secondary:hover {
-  background: var(--green-surface);
-  color: var(--green-dark);
-}
+.btn:hover { filter: brightness(0.92); }
 
 .btn-lg {
-  padding: 1rem 2.25rem;
   font-size: 1.05rem;
+  padding: 0.95rem 1.9rem;
+  border-radius: 12px;
+}
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
-.btn-pulse {
-  animation: btn-pulse 3s ease-in-out infinite;
+/* Primary — accent orange, dark text (5.25:1 AA on accent). One per viewport. */
+.btn-primary {
+  background: var(--accent);
+  color: var(--text);
 }
+.btn-primary:hover { background: var(--accent); color: var(--text); }
+
+/* Outline — green brand border + text */
+.btn-outline,
+.btn-secondary {
+  background: transparent;
+  border-color: var(--green-brand);
+  color: var(--green-brand);
+}
+.btn-outline:hover,
+.btn-secondary:hover { background: transparent; color: var(--green-brand); }
+
+/* Ghost — underlined link-style */
+.btn-ghost {
+  background: transparent;
+  color: var(--green-brand);
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Dark context overrides */
+.on-dark .btn-outline,
+.on-dark .btn-secondary {
+  border-color: var(--green-vivid);
+  color: var(--green-vivid);
+}
+.on-dark .btn-ghost { color: var(--green-vivid); }
+
+.btn-pulse { animation: btn-pulse 3s ease-in-out infinite; }
 
 @keyframes btn-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 87, 0.3); }
-  50% { box-shadow: 0 0 0 8px rgba(217, 119, 87, 0); }
+  50%      { box-shadow: 0 0 0 8px rgba(217, 119, 87, 0); }
 }
 
 .btn-group {
@@ -1553,26 +1560,28 @@ p:last-child {
   margin-bottom: var(--space-2xl);
 }
 
+/* Enlist CTA — equivalent to .btn.btn-primary.btn-lg */
 .btn-enlist {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 1rem 2.5rem;
-  background: var(--accent);
-  color: var(--surface);
   font-family: var(--font-body);
-  font-size: 1.1rem;
-  font-weight: 700;
-  border-radius: 14px;
-  text-decoration: none;
-  transition: all var(--transition-smooth);
-}
-
-.btn-enlist:hover {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: normal;
+  padding: 0.95rem 1.9rem;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
   background: var(--accent);
-  color: var(--surface);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(217, 119, 87, 0.25);
+  color: var(--text);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+.btn-enlist:hover {
+  filter: brightness(0.92);
+  background: var(--accent);
+  color: var(--text);
 }
 
 /* ========================================
@@ -2699,3 +2708,296 @@ p:last-child {
   line-height: 1.75;
   max-width: 680px;
 }
+
+
+/* ================================================================
+   ============== DESIGN SYSTEM v2 — APPENDED ====================
+   Ported from design-system.css. Sections below are the canonical
+   component library used by design-system.html and reusable across
+   production. Page-specific overrides above this block win via
+   higher specificity; design system rules apply otherwise.
+   ================================================================ */
+
+/* ── Badges ─────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: normal;
+  border-radius: 20px 4px 16px;
+}
+.badge-default {
+  background: var(--green-surface);
+  color: var(--green-dark);
+  border: 1px solid var(--green-light);
+}
+.badge-urgency {
+  background: #fdf0eb;
+  color: #a3502e;
+  border: 1px solid #f9d4c4;
+}
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-vivid);
+  flex-shrink: 0;
+}
+.badge-urgency .badge-dot { background: var(--accent); }
+.on-dark .badge-default {
+  background: rgba(0, 198, 56, 0.12);
+  color: #cdeed6;
+  border-color: rgba(0, 198, 56, 0.2);
+}
+.on-dark .badge-urgency {
+  background: rgba(226, 108, 69, 0.15);
+  color: var(--accent);
+  border-color: rgba(226, 108, 69, 0.25);
+}
+
+/* ── Panel variants (production .panel base remains above) ──── */
+.panel-white {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: var(--space-xl);
+}
+.panel-cream {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: var(--space-xl);
+}
+.panel-dark {
+  background: var(--dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+  padding: var(--space-xl);
+}
+.card-info {
+  background: var(--green-surface);
+  border: 1px solid var(--green-light);
+  border-radius: 10px;
+  padding: var(--space-md);
+}
+.card-info h4 { color: var(--green-dark); }
+.card-info p  { color: var(--green-brand); font-size: 0.78rem; }
+.on-dark .card-info {
+  background: rgba(0, 198, 56, 0.1);
+  border-color: rgba(0, 198, 56, 0.18);
+}
+.on-dark .card-info h4 { color: var(--green-vivid); }
+.on-dark .card-info p  { color: #cdeed6; }
+
+/* ── Code blocks ────────────────────────────────────────────── */
+.code-block {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: normal;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+.code-block-default {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.code-block-default .comment { color: var(--text-3); }
+.code-block-default .keyword { color: var(--green-brand); }
+.code-block-hero {
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0.6;
+  color: var(--green-brand);
+}
+.on-dark .code-block-default {
+  background: var(--dark-surface);
+  border-color: var(--border-dark);
+  color: #e5e2dc;
+}
+.on-dark .code-block-default .comment { color: #6b6b60; }
+.on-dark .code-block-default .keyword { color: var(--green-vivid); }
+.on-dark .code-block-hero { color: var(--green-vivid); }
+
+/* ── Inline link styles ─────────────────────────────────────── */
+.link {
+  color: var(--green-brand);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 0.85rem;
+}
+.link-separator {
+  color: var(--text-3);
+  margin: 0 0.35rem;
+}
+.on-dark .link { color: var(--green-vivid); }
+.on-dark .link-separator { color: #6b6b60; }
+
+/* ── Label variants (.label base lives above) ───────────────── */
+.label-muted { color: var(--text-3); }
+.on-dark .label { color: var(--green-vivid); }
+.on-dark .label-muted { color: #6b6b60; }
+
+/* ── Progress bar ───────────────────────────────────────────── */
+.progress-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--green-brand), var(--green-vivid), transparent);
+  margin-top: var(--space-sm);
+}
+.on-dark .progress-bar {
+  background: linear-gradient(90deg, var(--green-vivid), transparent);
+}
+
+/* ── Dark section context base ──────────────────────────────── */
+.on-dark { color: #e5e2dc; }
+.on-dark h1,
+.on-dark h2,
+.on-dark h3,
+.on-dark h4 { color: #e5e2dc; }
+.on-dark p { color: #a3a39a; }
+
+
+/* ================================================================
+   DESIGN-SYSTEM.HTML REFERENCE PAGE STYLES
+   Used only by design-system.html. Kept here so we have one stylesheet.
+   ================================================================ */
+
+.ds-page { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+.ds-header h1 { font-size: 2.5rem; margin-bottom: var(--space-sm); }
+.ds-header h1 .brand { color: var(--green-brand); }
+.ds-header p {
+  color: var(--text-2);
+  font-size: 1rem;
+  max-width: 640px;
+  line-height: 1.6;
+}
+.ds-section { margin-bottom: var(--space-3xl); }
+.ds-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: var(--space-lg);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.ds-note {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 640px;
+  margin-bottom: var(--space-lg);
+}
+.ds-locked,
+.ds-wip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+}
+.ds-locked { background: #dcfce7; color: #065f28; }
+.ds-wip    { background: #fefce8; color: #854d0e; }
+
+.ds-swatch-strip {
+  display: flex;
+  gap: 1px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+.ds-sw {
+  flex: 1;
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.1rem;
+}
+.ds-sw-name { font-family: var(--font-mono); font-size: 0.5rem;  font-weight: 700; text-transform: uppercase; }
+.ds-sw-hex  { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; }
+.ds-sw-meta { font-family: var(--font-mono); font-size: 0.48rem; opacity: 0.65; }
+
+.ds-token-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.ds-token-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.ds-token-table td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--bg);
+}
+.ds-token-table code { font-family: var(--font-mono); font-size: 0.78rem; }
+.ds-swatch-dot {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid var(--border);
+}
+
+.ds-ct {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+.ds-ct-pass { background: #dcfce7; color: #065f28; }
+.ds-ct-warn { background: #fefce8; color: #854d0e; }
+.ds-ct-fail { background: #fef2f2; color: #991b1b; }
+
+.ds-grid-2 { display: grid; grid-template-columns: 1fr 1fr;        gap: var(--space-lg); }
+.ds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+.ds-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+
+@media (max-width: 900px) {
+  .ds-grid-2, .ds-grid-3 { grid-template-columns: 1fr; }
+  .ds-grid-5 { grid-template-columns: 1fr 1fr; }
+}
+
+.ds-rules { font-size: 0.85rem; color: var(--text-2); line-height: 1.8; padding-left: 1.25rem; }
+.ds-rules strong { color: var(--text); }
+
+.ds-btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+
+.ds-spacing-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+.ds-spacing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.ds-spacing-block {
+  background: var(--green-light);
+  border: 1px solid var(--green-brand);
+  border-radius: 4px;
+}
+.ds-spacing-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-3); }

@@ -14,9 +14,8 @@ Plepic is a static marketing website for an Estonian tech training company. The 
 index.html              # Homepage
 agent/index.html        # What is an AI Agent? (educational)
 training/index.html     # Training program details & enrollment
-css/styles.css          # Production stylesheet
-design-system.css       # Design tokens & component classes (source of truth)
-design-system.html      # Visual reference page (source of truth)
+css/styles.css          # Single stylesheet — production + design system (source of truth)
+design-system.html      # Visual reference page (loads css/styles.css)
 images/                 # All static assets (logos, photos)
 docs/                   # Design documents and one-pagers
 ```
@@ -47,7 +46,7 @@ docs/                   # Design documents and one-pagers
 
 **Deployment:** GitHub Pages from `main` branch. Merge PR = deploy. Custom domain: plepic.com
 
-**Design system:** `design-system.css` (tokens + component classes) and `design-system.html` (visual reference). These two files are the single source of truth.
+**Design system:** `css/styles.css` is the single source of truth — it contains all tokens, base styles, components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.code-block-*`, `.label`, `.link`, `.logo-*`, `.highlight`, `.on-dark`, etc.) and all page-specific layout. `design-system.html` is the visual reference and loads `css/styles.css` directly.
 
 **Locked palette (2026-04-01):** All greens at H=137°. System saturation S=73%, vivid exception S=100%. Accent S-matched.
 - `--green` (`#00c638`) — decorative: dots, fills, dark-mode headings. Not text on light.
