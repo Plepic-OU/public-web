@@ -193,6 +193,33 @@
       </div>
     </div>
 
+    <!-- Heading highlights — light + dark -->
+    <div class="ds-grid-2" style="margin-top: var(--space-lg);">
+      <div class="panel panel-cream">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Cream — .highlight = brand green</div>
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0;">Build production <span class="highlight">AI agents</span> in 5 days</h1>
+          <h2 style="margin: 0;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
+          <h3 style="margin: 0;">Why <span class="highlight">terminal agents</span> win</h3>
+        </div>
+      </div>
+      <div class="panel panel-dark on-dark">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — .highlight = vivid green</div>
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0; color: #e5e2dc;">Build production <span class="highlight">AI agents</span> in 5 days</h1>
+          <h2 style="margin: 0; color: #e5e2dc;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
+          <h3 style="margin: 0; color: #e5e2dc;">Why <span class="highlight">terminal agents</span> win</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Highlight rule note -->
+    <div class="panel panel-white" style="margin-top: var(--space-md); max-width: 720px;">
+      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;">
+        <strong>Highlight rule:</strong> <code style="font-family: var(--font-mono); font-size: 0.8rem;">.highlight</code> uses <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-brand</code> on cream/white (5.03:1 AA) and <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-vivid</code> inside <code style="font-family: var(--font-mono); font-size: 0.8rem;">.on-dark</code> (7.42:1 AAA). <strong>Never use <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-dark</code> for highlights</strong> — it's reserved for body text and visually disappears at heading sizes (8.07:1 contrast vs 15.97:1 for body text is only a 2× difference, indistinguishable as a highlight).
+      </p>
+    </div>
+
     <!-- Line-height warning -->
     <div class="panel panel-cream" style="margin-top: var(--space-lg); max-width: 700px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text);">Line-Height Trap</h4>
@@ -255,6 +282,71 @@
   <div class="ds-section">
     <div class="ds-section-label">5 — Components</div>
 
+    <!-- Button system specimen -->
+    <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
+      <div class="panel-label">Button System</div>
+      <p class="ds-note" style="margin-bottom: var(--space-md);">
+        Three sizes (<code>.btn</code> default, <code>.btn-sm</code>, <code>.btn-lg</code>) × three variants (<code>.btn-primary</code>, <code>.btn-outline</code>, <code>.btn-ghost</code>). <strong>Variants set color only, never size</strong>; size modifiers are independent. Padding and border-radius scale together.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 80px 1fr; gap: 1rem 1.5rem; align-items: center; padding: 1.5rem; background: var(--bg); border-radius: 10px;">
+        <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn-lg</span>
+        <div class="ds-btn-row">
+          <button class="btn btn-primary btn-lg">Book a free call</button>
+          <button class="btn btn-outline btn-lg">View curriculum</button>
+          <button class="btn btn-ghost btn-lg">Learn more</button>
+        </div>
+
+        <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn (default)</span>
+        <div class="ds-btn-row">
+          <button class="btn btn-primary">Book a free call</button>
+          <button class="btn btn-outline">View curriculum</button>
+          <button class="btn btn-ghost">Learn more</button>
+        </div>
+
+        <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn-sm</span>
+        <div class="ds-btn-row">
+          <button class="btn btn-primary btn-sm">Book a call</button>
+          <button class="btn btn-outline btn-sm">Curriculum</button>
+          <button class="btn btn-ghost btn-sm">More</button>
+        </div>
+      </div>
+
+      <p class="ds-note" style="margin-top: var(--space-md); font-size: 0.78rem;">
+        <strong>Specs:</strong>
+        <code>.btn-lg</code> 1.05rem · 0.95rem 1.9rem · radius 12px (heroes) ·
+        <code>.btn</code> 0.95rem · 0.7rem 1.4rem · radius 10px (default) ·
+        <code>.btn-sm</code> 0.8rem · 0.5rem 1rem · radius 8px (nav, dense UIs)
+      </p>
+
+      <!-- Pairing patterns — the right way to put primary + secondary together -->
+      <div class="panel-label" style="margin-top: var(--space-lg);">Pairing Pattern — Primary + Ghost Link</div>
+      <p class="ds-note" style="margin-bottom: var(--space-md); font-size: 0.78rem;">
+        Hero CTAs should pair a solid <code>.btn-primary</code> (orange, the action) with a <code>.btn-ghost</code> text link (the alternative). Two solid buttons compete for attention; a button + link reads as <em>"do this, or just look first"</em> — clearer hierarchy, fewer competing colors. The arrow makes the link unmistakably interactive.
+      </p>
+
+      <div class="ds-grid-2">
+        <div class="panel-cream" style="padding: 1.5rem; border-radius: 10px;">
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Cream</span>
+          <div class="ds-btn-row">
+            <button class="btn btn-primary">Book a free call</button>
+            <a class="btn btn-ghost" href="#">View curriculum &rarr;</a>
+          </div>
+        </div>
+        <div class="on-dark panel-dark" style="padding: 1.5rem; border-radius: 10px; background: var(--dark);">
+          <span style="font-family: var(--font-mono); font-size: 0.55rem; color: #6b6b60; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Dark</span>
+          <div class="ds-btn-row">
+            <button class="btn btn-primary">Book a free call</button>
+            <a class="btn btn-ghost" href="#">View curriculum &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="ds-note" style="margin-top: var(--space-md); font-size: 0.78rem;">
+        <strong>Avoid:</strong> Two solid buttons next to a primary CTA (e.g. <code>.btn-primary</code> + <code>.btn-outline</code>) — they compete and dilute the action. Use <code>.btn-outline</code> only in secondary contexts where there's no primary CTA on the same row (cards listing options, dialogs, empty states).
+      </p>
+    </div>
+
     <div class="ds-grid-2">
 
       <!-- Light context — with CTA (no urgency badge) -->
@@ -274,11 +366,10 @@
           <a href="#" class="link">See all dates</a>
         </div>
 
-        <!-- Buttons — accent appears here, so no other accent element in this viewport -->
+        <!-- Buttons — primary CTA + ghost link. Accent only on btn-primary; no competing solid/outline button. -->
         <div class="ds-btn-row" style="margin-bottom: var(--space-md);">
-          <button class="btn btn-primary" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">Book a call</button>
-          <button class="btn btn-outline">View curriculum</button>
-          <button class="btn btn-ghost">Learn more</button>
+          <button class="btn btn-primary btn-sm">Book a call</button>
+          <a class="btn btn-ghost btn-sm" href="#">View curriculum &rarr;</a>
         </div>
 
         <!-- Info card -->
@@ -311,11 +402,10 @@
           <a href="#" class="link">See all dates</a>
         </div>
 
-        <!-- Buttons — accent appears here -->
+        <!-- Buttons — primary CTA + ghost link. Same pattern on dark; ghost link uses vivid green via .on-dark. -->
         <div class="ds-btn-row" style="margin-bottom: var(--space-md);">
-          <button class="btn btn-primary" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">Book a call</button>
-          <button class="btn btn-outline">Curriculum</button>
-          <button class="btn btn-ghost">More</button>
+          <button class="btn btn-primary btn-sm">Book a call</button>
+          <a class="btn btn-ghost btn-sm" href="#">Curriculum &rarr;</a>
         </div>
 
         <!-- Info card -->
@@ -346,8 +436,8 @@
           <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
         </div>
         <div class="ds-btn-row">
-          <button class="btn btn-outline">View curriculum</button>
-          <button class="btn btn-ghost">Learn more</button>
+          <button class="btn btn-outline btn-sm">View curriculum</button>
+          <button class="btn btn-ghost btn-sm">Learn more</button>
         </div>
       </div>
       <!-- Dark — urgency badge without CTA -->
@@ -358,8 +448,8 @@
           <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
         </div>
         <div class="ds-btn-row">
-          <button class="btn btn-outline">Curriculum</button>
-          <button class="btn btn-ghost">More</button>
+          <button class="btn btn-outline btn-sm">Curriculum</button>
+          <button class="btn btn-ghost btn-sm">More</button>
         </div>
       </div>
     </div>
@@ -386,13 +476,24 @@
   <!-- 7. LOGO & WORDMARK -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">7 — Logo & Wordmark <span class="ds-wip">Coming soon</span></div>
+    <div class="ds-section-label">7 — Logo & Wordmark <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
-      Butterfly logo and Zilla Slab wordmark lockup. Specimens on all background contexts will be added here.
+      Crystalline butterfly with leaf body. Production geometry, viewBox <code>0 0 300 280</code>. Wing fills follow the DK-B-V neighbour rule (no two adjacent facets share a color). Subtle asymmetry on the right hindwing. Orange head, vivid antenna tips. <strong>Wordmark left, butterfly right</strong>; icon ≈ ascender height of text. CSS classes: <code>.logo-lockup</code>, <code>.logo-wordmark</code>, <code>.logo-butterfly</code>.
     </div>
 
+    <!-- Lockup specimens on all background contexts -->
     <div class="ds-grid-5" id="logoGrid"></div>
+
+    <!-- Size stress test -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Size Stress Test (cream)</div>
+      <div id="logoSizesLight" style="display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--bg);border-radius:10px;"></div>
+    </div>
+    <div class="panel panel-dark on-dark" style="margin-top: var(--space-md);">
+      <div class="panel-label on-dark">Size Stress Test (dark)</div>
+      <div id="logoSizesDark" style="display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--dark);border-radius:10px;"></div>
+    </div>
   </div>
 
   <!-- ============================================ -->
@@ -481,92 +582,141 @@
     tbody.appendChild(tr);
   });
 
-  // ── Butterfly (compact) ──
-  function bf(sz, stroke, fill) {
-    var h = Math.round(sz * 0.91);
-    return '<svg width="' + sz + '" height="' + h + '" viewBox="0 0 120 110">' +
-      '<polygon points="58,42 42,24 22,18" fill="' + fill + '" opacity="0.15" stroke="' + stroke + '" stroke-width="1.2"/>' +
-      '<polygon points="58,52 58,42 12,34" fill="' + stroke + '" opacity="0.4" stroke="' + stroke + '" stroke-width="1"/>' +
-      '<polygon points="58,52 12,34 16,58" fill="' + fill + '" opacity="0.35" stroke="' + stroke + '" stroke-width="0.9"/>' +
-      '<polygon points="58,65 58,52 16,58" fill="' + stroke + '" opacity="0.19" stroke="' + stroke + '" stroke-width="0.8"/>' +
-      '<polygon points="62,42 78,24 98,18" fill="' + fill + '" opacity="0.15" stroke="' + stroke + '" stroke-width="1.2"/>' +
-      '<polygon points="62,52 62,42 108,34" fill="' + stroke + '" opacity="0.4" stroke="' + stroke + '" stroke-width="1"/>' +
-      '<polygon points="62,52 108,34 104,58" fill="' + fill + '" opacity="0.35" stroke="' + stroke + '" stroke-width="0.9"/>' +
-      '<polygon points="62,65 62,52 104,58" fill="' + stroke + '" opacity="0.19" stroke="' + stroke + '" stroke-width="0.8"/>' +
-      '<polygon points="60,36 57,45 60,52 63,45" fill="' + stroke + '" opacity="0.48" stroke="' + stroke + '" stroke-width="0.8"/>' +
-      '<polygon points="60,52 58,60 60,68 62,60" fill="' + stroke + '" opacity="0.35" stroke="' + stroke + '" stroke-width="0.6"/>' +
-      '<line x1="60" y1="36" x2="52" y2="14" stroke="' + stroke + '" stroke-width="0.8" opacity="0.5"/>' +
-      '<line x1="60" y1="36" x2="68" y2="14" stroke="' + stroke + '" stroke-width="0.8" opacity="0.5"/>' +
-      '<circle cx="52" cy="14" r="2" fill="' + fill + '" opacity="0.6"/>' +
-      '<circle cx="68" cy="14" r="2" fill="' + fill + '" opacity="0.6"/>' +
-    '</svg>';
+  // ── Butterfly logo (locked 2026-04-07) ─────────────────────────
+  // Production wing geometry, viewBox 0 0 300 280. Crystalline DK-B-V pattern.
+  // Wider leaf body, circle head r=8 (orange), vivid antenna tips r=3.5.
+  // 0.5px fill-matched seam strokes + crispEdges = no pixelation.
+  // Subtle asymmetry: right wing position 6 differs (DK→DK same, see fillsR).
+  var V_='#00c638', B_='#137b30', DK_='#0d5822', AC_='#e26c45';
+  var FILLS_L = [DK_,V_,B_,V_,DK_,V_,B_,DK_,V_,B_,DK_];
+  var FILLS_R = [DK_,V_,B_,V_,DK_,V_,DK_,B_,V_,B_,DK_];
+  var PTS_L = [
+    "147,105 110,68 55,48","147,105 55,48 20,72","147,105 20,72 15,108",
+    "147,130 147,105 15,108","147,130 15,108 28,150","147,165 147,130 28,150",
+    "147,165 28,150 50,178","147,178 50,178 82,195","147,178 82,195 75,220",
+    "147,195 75,220 100,240","147,195 100,240 135,232"
+  ];
+  var PTS_R = [
+    "153,105 190,68 245,48","153,105 245,48 280,72","153,105 280,72 285,108",
+    "153,130 153,105 285,108","153,130 285,108 272,150","153,165 153,130 272,150",
+    "153,165 272,150 250,178","153,178 250,178 218,195","153,178 218,195 225,220",
+    "153,195 225,220 200,240","153,195 200,240 165,232"
+  ];
+
+  // bf(size) — default light/cream version
+  // bf(size, 'dark') — dark-bg version (vivid+brand stay; antennae & body adapt)
+  function bf(sz, mode) {
+    var h = Math.round(sz * 280/300);
+    var lw = '', rw = '', i;
+    for (i = 0; i < 11; i++) {
+      lw += '<polygon points="' + PTS_L[i] + '" fill="' + FILLS_L[i] + '" stroke="' + FILLS_L[i] + '" stroke-width="0.5"/>';
+      rw += '<polygon points="' + PTS_R[i] + '" fill="' + FILLS_R[i] + '" stroke="' + FILLS_R[i] + '" stroke-width="0.5"/>';
+    }
+    var body = '<path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="' + DK_ + '"/>';
+    var ant =
+      '<path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="' + DK_ + '" stroke-width="1.8" opacity="0.7"/>' +
+      '<path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="' + DK_ + '" stroke-width="1.8" opacity="0.7"/>' +
+      '<circle cx="136" cy="41" r="3.5" fill="' + V_ + '"/>' +
+      '<circle cx="164" cy="41" r="3.5" fill="' + V_ + '"/>' +
+      '<circle cx="150" cy="90" r="8" fill="' + AC_ + '" stroke="' + AC_ + '" stroke-width="0.8"/>';
+    var cls = 'logo-butterfly' + (mode === 'hero' ? ' logo-butterfly--hero' : '');
+    var wrap = mode === 'hero'
+      ? '<g class="wing-left">' + lw + '</g><g class="wing-right">' + rw + '</g>'
+      : lw + rw;
+    return '<svg class="' + cls + '" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="' + sz + '" height="' + h + '" shape-rendering="crispEdges">' +
+      wrap + body + ant + '</svg>';
   }
+  // Locked wordmark text colors handled via CSS .logo-wordmark / .on-dark .logo-wordmark
 
   // ── Hero light ──
-  // Nav CTA = green outline (not accent) — accent appears only in hero body
+  // Translucent cream nav (matches production's frosted-glass header).
+  // Nav and hero body use the same horizontal padding (2rem) so they align.
+  // CTA at default size — orange already attracts attention, no need for .btn-lg.
   document.getElementById('heroLight').innerHTML =
-    '<div style="padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);">' +
-      '<div style="display:flex;align-items:center;gap:0.6rem;">' + bf(22,'#137b30','#00c638') + '<span style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--green-brand);">Plepic</span></div>' +
+    '<div style="padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);">' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bf(22) + '</span>' +
       '<div style="display:flex;align-items:center;gap:1.5rem;">' +
         '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">Training</a>' +
         '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">About</a>' +
-        '<button class="btn btn-outline" style="padding:0.4rem 1rem;font-size:0.75rem;">Book a call</button>' +
+        '<button class="btn btn-outline btn-sm">Book a call</button>' +
       '</div>' +
     '</div>' +
     '<div style="padding:3rem 2rem 3.5rem;background:var(--bg);">' +
       '<div class="badge badge-default" style="margin-bottom:0.75rem;"><span class="badge-dot"></span> Cohort 3 — April 2026</div>' +
-      '<h2 style="font-family:var(--font-display);font-size:clamp(2rem,1.5rem+3vw,3.5rem);font-weight:700;color:var(--text);line-height:1.08;margin-bottom:1rem;">Build production<br><span style="color:var(--green-brand);">AI agents</span> in 5 days</h2>' +
+      '<h2 style="font-family:var(--font-display);font-size:clamp(2rem,1.5rem+3vw,3.5rem);font-weight:700;color:var(--text);line-height:1.08;margin-bottom:1rem;">Build production<br><span class="highlight">AI agents</span> in 5 days</h2>' +
       '<p style="font-size:1rem;color:var(--text-2);line-height:1.6;max-width:480px;margin-bottom:0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>' +
       '<div style="display:flex;gap:1.25rem;margin-bottom:1.5rem;">' +
         '<span style="font-size:0.78rem;color:var(--green-brand);font-weight:600;">300+ developers trained</span>' +
         '<span style="font-size:0.78rem;color:var(--green-brand);font-weight:600;">NPS 8.4/10</span>' +
       '</div>' +
       '<div class="ds-btn-row">' +
-        '<button class="btn btn-primary" style="padding:0.75rem 1.75rem;font-size:0.95rem;">Book a free call</button>' +
-        '<button class="btn btn-outline">View curriculum</button>' +
+        '<button class="btn btn-primary">Book a free call</button>' +
+        '<a class="btn btn-ghost" href="#">View curriculum &rarr;</a>' +
       '</div>' +
     '</div>';
 
   // ── Hero dark ──
+  // Same alignment fix. Secondary action is a ghost text link with arrow —
+  // not a second saturated button. Hierarchy: orange CTA = primary,
+  // ghost link = "or just look at the curriculum". Avoids 5+ vivid green elements
+  // competing for attention in one viewport.
   document.getElementById('heroDark').innerHTML =
-    '<div style="padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;background:var(--dark);border-bottom:1px solid var(--border-dark);">' +
-      '<div style="display:flex;align-items:center;gap:0.6rem;">' + bf(22,'#00c638','#00c638') + '<span style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--green-vivid);">Plepic</span></div>' +
+    '<div class="on-dark" style="padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--dark);border-bottom:1px solid var(--border-dark);">' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bf(22) + '</span>' +
       '<div style="display:flex;align-items:center;gap:1.5rem;">' +
         '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">Training</a>' +
         '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">About</a>' +
-        '<button class="btn btn-outline" style="padding:0.4rem 1rem;font-size:0.75rem;border-color:var(--green-vivid);color:var(--green-vivid);">Book a call</button>' +
+        '<button class="btn btn-outline btn-sm">Book a call</button>' +
       '</div>' +
     '</div>' +
-    '<div style="padding:3rem 2rem 3.5rem;background:var(--dark);">' +
+    '<div class="on-dark" style="padding:3rem 2rem 3.5rem;background:var(--dark);">' +
       '<div class="badge" style="background:rgba(0,198,56,0.12);color:#cdeed6;border:1px solid rgba(0,198,56,0.2);margin-bottom:0.75rem;"><span class="badge-dot"></span> Cohort 3 — April 2026</div>' +
-      '<h2 style="font-family:var(--font-display);font-size:clamp(2rem,1.5rem+3vw,3.5rem);font-weight:700;color:#e5e2dc;line-height:1.08;margin-bottom:1rem;">Build production<br><span style="color:var(--green-vivid);">AI agents</span> in 5 days</h2>' +
+      '<h2 style="font-family:var(--font-display);font-size:clamp(2rem,1.5rem+3vw,3.5rem);font-weight:700;color:#e5e2dc;line-height:1.08;margin-bottom:1rem;">Build production<br><span class="highlight">AI agents</span> in 5 days</h2>' +
       '<p style="font-size:1rem;color:#a3a39a;line-height:1.6;max-width:480px;margin-bottom:0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>' +
       '<div style="display:flex;gap:1.25rem;margin-bottom:1.5rem;">' +
         '<span style="font-size:0.78rem;color:var(--green-vivid);font-weight:600;">300+ developers trained</span>' +
         '<span style="font-size:0.78rem;color:var(--green-vivid);font-weight:600;">NPS 8.4/10</span>' +
       '</div>' +
       '<div class="ds-btn-row">' +
-        '<button class="btn btn-primary" style="padding:0.75rem 1.75rem;font-size:0.95rem;">Book a free call</button>' +
-        '<button class="btn btn-outline" style="border-color:var(--green-vivid);color:var(--green-vivid);">View curriculum</button>' +
+        '<button class="btn btn-primary">Book a free call</button>' +
+        '<a class="btn btn-ghost" href="#">View curriculum &rarr;</a>' +
       '</div>' +
     '</div>';
 
-  // ── Logo on backgrounds (placeholder) ──
+  // ── Logo lockups on background contexts ──
   var logoGrid = document.getElementById('logoGrid');
   var bgs = [
-    { bg: 'var(--surface)', border: 'var(--border)', stroke: '#137b30', fill: '#00c638', text: '#137b30', label: 'White', lc: 'var(--text-3)' },
-    { bg: 'var(--bg)',      border: 'var(--border)', stroke: '#137b30', fill: '#00c638', text: '#137b30', label: 'Cream', lc: 'var(--text-3)' },
-    { bg: 'var(--green-surface)', border: 'var(--green-light)', stroke: '#137b30', fill: '#00c638', text: '#137b30', label: 'Green tint', lc: 'var(--text-3)' },
-    { bg: 'var(--dark)',    border: 'var(--border-dark)', stroke: '#00c638', fill: '#00c638', text: '#00c638', label: 'Dark', lc: '#6b6b60' },
-    { bg: 'var(--green-brand)', border: 'var(--green-brand)', stroke: 'rgba(255,255,255,0.4)', fill: 'rgba(255,255,255,0.3)', text: '#fff', label: 'On brand', lc: 'rgba(255,255,255,0.5)' },
+    { bg: 'var(--surface)',       border: 'var(--border)',      label: 'White',      cls: '',        lc: 'var(--text-3)' },
+    { bg: 'var(--bg)',            border: 'var(--border)',      label: 'Cream',      cls: '',        lc: 'var(--text-3)' },
+    { bg: 'var(--green-surface)', border: 'var(--green-light)', label: 'Green tint', cls: '',        lc: 'var(--text-3)' },
+    { bg: 'var(--dark)',          border: 'var(--border-dark)', label: 'Dark',       cls: 'on-dark', lc: '#6b6b60' },
+    { bg: 'var(--green-brand)',   border: 'var(--green-brand)', label: 'On brand',   cls: 'on-dark', lc: 'rgba(255,255,255,0.6)' }
   ];
   bgs.forEach(function(b) {
     var card = document.createElement('div');
+    card.className = b.cls;
     card.style.cssText = 'background:' + b.bg + ';border:1px solid ' + b.border + ';border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:0.75rem;';
     card.innerHTML =
-      '<div style="display:flex;align-items:center;gap:0.6rem;">' + bf(28, b.stroke, b.fill) + '<span style="font-family:var(--font-display);font-weight:700;font-size:1.25rem;color:' + b.text + ';">Plepic</span></div>' +
-      '<span style="font-family:var(--font-mono);font-size:0.55rem;color:' + b.lc + ';">' + b.label + '</span>';
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.25rem;">Plepic</span>' + bf(24) + '</span>' +
+      '<span style="font-family:var(--font-mono);font-size:0.55rem;color:' + b.lc + ';text-transform:uppercase;letter-spacing:0.06em;">' + b.label + '</span>';
     logoGrid.appendChild(card);
+  });
+
+  // ── Size stress tests ──
+  var sizeRows = [120, 64, 32, 24, 16];
+  var lLight = document.getElementById('logoSizesLight');
+  var lDark  = document.getElementById('logoSizesDark');
+  sizeRows.forEach(function(s) {
+    var label = '<div style="font-family:var(--font-mono);font-size:0.5rem;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.3rem;text-align:center;">' + s + 'px</div>';
+    var itemL = document.createElement('div');
+    itemL.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
+    itemL.innerHTML = bf(s) + '<div style="font-family:var(--font-mono);font-size:0.5rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
+    lLight.appendChild(itemL);
+
+    var itemD = document.createElement('div');
+    itemD.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
+    itemD.innerHTML = bf(s) + '<div style="font-family:var(--font-mono);font-size:0.5rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
+    lDark.appendChild(itemD);
   });
 </script>
 

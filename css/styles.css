@@ -8,21 +8,23 @@
 
 :root {
   /* Green system — H=137°, S=73% (vivid S=100%)
-     Palette locked 2026-04-01. See prototype-design-system.html */
-  --green: #00c638;           /* H137° S100% L39% — decorative: dots, fills, dark-mode headings */
-  --green-brand: #137b30;     /* H137° S73%  L28% — logo, headings, links (AA on cream/white) */
-  --green-dark: #0d5822;      /* H137° S73%  L20% — body text (AAA on cream/white) */
-  --green-light: #c5f6d3;     /* H137° S73%  L87% — badge fills, borders */
-  --green-surface: #edfcf1;   /* H137° S73%  L96% — tinted backgrounds */
+     Palette locked 2026-04-01. */
+  --green-vivid:   #00c638;   /* S100% L39% — decorative: dots, fills, dark-mode headings. NOT text on light. */
+  --green:         var(--green-vivid); /* back-compat alias */
+  --green-brand:   #137b30;   /* S73%  L28% — logo, headings, links. AA on cream/white. */
+  --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
+  --green-light:   #c5f6d3;   /* S73%  L87% — badge fills, borders */
+  --green-surface: #edfcf1;   /* S73%  L96% — tinted backgrounds */
 
-  /* Accent — H=15°, S=73% (saturation-matched to brand)
-     Split-complementary of H=137°. One per viewport. */
-  --accent: #e26c45;          /* H15°  S73%  L58% — CTA buttons, urgency badges */
+  /* Accent — H=15°, S=73% (saturation-matched). One per viewport. */
+  --accent: #e26c45;
 
   /* Backgrounds */
   --bg: #faf7f2;
   --bg-alt: #f3efe7;
   --surface: #ffffff;
+  --dark: #1c1c1a;
+  --dark-surface: #262624;
 
   /* Text */
   --text: #1c1c1a;
@@ -31,6 +33,7 @@
 
   /* Borders */
   --border: #e5e2dc;
+  --border-dark: #3a3a38;
 
   /* Typography */
   --font-display: 'Zilla Slab', Georgia, serif;
@@ -90,13 +93,13 @@ img {
 }
 
 a {
-  color: var(--green-dark);
+  color: var(--green-brand);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--green-dark);
+  color: var(--green-brand);
 }
 
 a:focus-visible {
@@ -220,19 +223,42 @@ p:last-child {
   justify-content: space-between;
 }
 
-.logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
+/* Logo lockup — wordmark + crystalline butterfly. Locked 2026-04-07. */
+.logo-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   line-height: normal;
-  color: #137b30 !important;
   text-decoration: none;
-  letter-spacing: 0.02em;
+}
+.logo-wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.01em;
+  color: var(--green-brand);
+  line-height: normal;
+}
+.logo-butterfly {
+  display: block;
+  shape-rendering: crispEdges;
+}
+.logo-butterfly--hero { shape-rendering: crispEdges; }
+
+@keyframes wing-breathe-left  { 0%,100% { transform: rotate(0) scaleX(1); } 50% { transform: rotate(-2deg) scaleX(0.97); } }
+
+@keyframes wing-breathe-right { 0%,100% { transform: rotate(0) scaleX(1); } 50% { transform: rotate(2deg)  scaleX(0.97); } }
+.logo-butterfly--hero .wing-left  { transform-origin: 147px 140px; animation: wing-breathe-left 4s ease-in-out infinite; }
+.logo-butterfly--hero .wing-right { transform-origin: 153px 140px; animation: wing-breathe-right 4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-butterfly--hero .wing-left,
+  .logo-butterfly--hero .wing-right { animation: none; }
 }
 
-.logo:hover {
-  color: #137b30 !important;
-}
+/* Heading highlight — brand green on light, vivid on dark. Never --green-dark (reserved for body text). */
+.highlight { color: var(--green-brand); }
+.on-dark .highlight { color: var(--green-vivid); }
 
 .nav {
   display: flex;
@@ -252,20 +278,27 @@ p:last-child {
   color: var(--text);
 }
 
+/* Nav CTA — matches design system .btn-outline.btn-sm */
 .nav-cta {
-  padding: 0.5rem 1.2rem !important;
-  border: 1.5px solid var(--green) !important;
-  color: #0d5822 !important;
-  border-radius: 10px !important;
-  font-weight: 500 !important;
-  font-size: 0.9rem !important;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  padding: 0.5rem 1rem !important;
+  border: 1.5px solid var(--green-brand) !important;
+  color: var(--green-brand) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
   background: transparent !important;
   box-shadow: none !important;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
 }
 
 .nav-cta:hover {
-  background: var(--green-surface) !important;
-  color: var(--green-dark) !important;
+  opacity: 0.85;
+  background: transparent !important;
+  color: var(--green-brand) !important;
   box-shadow: none !important;
   transform: none !important;
 }
@@ -305,7 +338,7 @@ p:last-child {
   gap: 0.5rem;
   padding: 1rem 2.25rem;
   background: var(--accent);
-  color: var(--surface);
+  color: var(--text); /* Dark text on accent: 5.25:1 (AA pass). White was 3.25:1 (AA Large only). */
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
@@ -317,7 +350,7 @@ p:last-child {
 
 .btn-primary:hover {
   background: var(--accent);
-  color: var(--surface);
+  color: var(--text);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(217, 119, 87, 0.25);
 }
@@ -589,7 +622,10 @@ p:last-child {
 .butterfly-svg {
   width: 100%;
   height: 100%;
+  opacity: 0.28;
 }
+
+.hero-visual { transform: translateY(0.75rem); }
 
 .hero-code {
   font-family: var(--font-mono);
@@ -673,7 +709,7 @@ p:last-child {
 }
 
 .perspective-shift-content .highlight {
-  color: var(--green-dark);
+  color: var(--green-brand);
 }
 
 .perspective-shift-desc {
@@ -766,7 +802,7 @@ p:last-child {
 }
 
 .hackathon-content .highlight {
-  color: var(--green-dark);
+  color: var(--green-brand);
 }
 
 .hackathon-grid {
@@ -1166,7 +1202,7 @@ p:last-child {
 }
 
 .agent-hero-text .highlight {
-  color: var(--green-dark);
+  color: var(--green-brand);
 }
 
 .agent-hero-description {
@@ -1558,7 +1594,7 @@ p:last-child {
 }
 
 .training-hero .highlight {
-  color: var(--green-dark);
+  color: var(--green-brand);
 }
 
 .training-hero-subtitle {
@@ -2612,7 +2648,7 @@ p:last-child {
 }
 
 .faq-section .highlight {
-  color: var(--green-dark);
+  color: var(--green-brand);
 }
 
 .faq-list {
