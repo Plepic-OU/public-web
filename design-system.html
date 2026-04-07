@@ -479,7 +479,10 @@
     <div class="ds-section-label">7 — Logo & Wordmark <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
-      Crystalline butterfly with leaf body. Production geometry, viewBox <code>0 0 300 280</code>. Wing fills follow the DK-B-V neighbour rule (no two adjacent facets share a color). Subtle asymmetry on the right hindwing. Orange head, vivid antenna tips. <strong>Wordmark left, butterfly right</strong>; icon ≈ ascender height of text. CSS classes: <code>.logo-lockup</code>, <code>.logo-wordmark</code>, <code>.logo-butterfly</code>.
+      <strong>Crystalline butterfly with leaf body, locked 2026-04-07.</strong> Wordmark left, butterfly right;
+      icon ≈ ascender height of text. CSS classes: <code>.logo-lockup</code>, <code>.logo-wordmark</code>,
+      <code>.logo-butterfly</code> (all defined in <code>css/styles.css</code>). The butterfly geometry below
+      is the single source of truth — copy from this section when inlining anywhere new.
     </div>
 
     <!-- Lockup specimens on all background contexts -->
@@ -493,6 +496,136 @@
     <div class="panel panel-dark on-dark" style="margin-top: var(--space-md);">
       <div class="panel-label on-dark">Size Stress Test (dark)</div>
       <div id="logoSizesDark" style="display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--dark);border-radius:10px;"></div>
+    </div>
+
+    <!-- Stacked / vertical lockup variant -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Stacked Lockup — <code>.logo-lockup--stacked</code></div>
+      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
+        Vertical variant — butterfly above wordmark. Use in narrow contexts (mobile splash, footer columns,
+        social avatars) where the horizontal lockup would feel cramped. Same SVG geometry, same colors;
+        only the layout changes via <code>flex-direction: column-reverse</code>.
+      </p>
+      <div style="display:flex; gap:3rem; align-items:center; flex-wrap:wrap;">
+        <div id="stackedLight" style="padding:1.5rem 2rem; background:var(--bg); border-radius:10px;"></div>
+        <div id="stackedDark"  style="padding:1.5rem 2rem; background:var(--dark); border-radius:10px;"></div>
+      </div>
+    </div>
+
+    <!-- Construction specification -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Construction Spec</div>
+      <table class="ds-token-table" style="margin-top: 0.5rem;">
+        <tbody>
+          <tr><td><strong>viewBox</strong></td><td><code>0 0 300 280</code> — square-ish, 300 wide × 280 tall</td></tr>
+          <tr><td><strong>Wing facets</strong></td><td>11 triangles per wing, 22 total. Adjacent triangles share an edge.</td></tr>
+          <tr><td><strong>Wing center seam</strong></td><td>Left wings end at x=147; right wings start at x=153. The 6px gap is the body channel.</td></tr>
+          <tr><td><strong>Body</strong></td><td>Leaf shape, single <code>&lt;path&gt;</code> bezier from (150,92) to (150,200), filled <code>--green-dark</code></td></tr>
+          <tr><td><strong>Antennae</strong></td><td>Two bezier paths from (150,86) curving outward to (136,42) and (164,42). Stroke <code>--green-dark</code> 1.8px, opacity 0.7.</td></tr>
+          <tr><td><strong>Antenna tips</strong></td><td>Two circles r=3.5 at (136,41) and (164,41), filled <code>--green-vivid</code></td></tr>
+          <tr><td><strong>Head</strong></td><td>Single circle r=8 at (150,90), filled <code>--accent</code> (the only orange in the mark)</td></tr>
+          <tr><td><strong>Pixelation fix</strong></td><td>Each polygon has <code>stroke="<em>same as fill</em>"</code> at <code>stroke-width="0.5"</code>. Combined with <code>shape-rendering="crispEdges"</code> on the SVG root, this eliminates diagonal seam artifacts between adjacent triangles.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Wing facet color table -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Wing Facet Colors (DK-B-V Neighbour Rule)</div>
+      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
+        No two adjacent facets share a color. Pattern uses <strong>DK</strong> (<code>--green-dark</code>),
+        <strong>B</strong> (<code>--green-brand</code>), and <strong>V</strong> (<code>--green-vivid</code>).
+        The right wing has a deliberate asymmetry at <strong>position 6</strong> (V → DK), giving the mark a hand-crafted feel.
+      </p>
+      <table class="ds-token-table" style="margin-top: 0.5rem;">
+        <thead>
+          <tr><th>Slot</th><th>Left wing</th><th>Right wing</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>DK</td><td>DK</td></tr>
+          <tr><td>1</td><td>V</td><td>V</td></tr>
+          <tr><td>2</td><td>B</td><td>B</td></tr>
+          <tr><td>3</td><td>V</td><td>V</td></tr>
+          <tr><td>4</td><td>DK</td><td>DK</td></tr>
+          <tr><td>5</td><td>V</td><td>V</td></tr>
+          <tr><td><strong>6</strong></td><td>B</td><td><strong>DK</strong> ← asymmetry exception</td></tr>
+          <tr><td>7</td><td>DK</td><td>B</td></tr>
+          <tr><td>8</td><td>V</td><td>V</td></tr>
+          <tr><td>9</td><td>B</td><td>B</td></tr>
+          <tr><td>10</td><td>DK</td><td>DK</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Final SVG markup -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Final SVG Markup (copy-paste for new locations)</div>
+      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
+        This is the exact markup inlined into <code>images/favicon.svg</code> and the nav lockup on
+        every production page. Resize via <code>width</code> / <code>height</code> attributes; the
+        viewBox is fixed.
+      </p>
+      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.65rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
+  &lt;!-- Left wing — 11 facets, DK-B-V pattern --&gt;
+  &lt;polygon points="147,105 110,68 55,48"  fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,105 55,48 20,72"   fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,105 20,72 15,108"  fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;!-- Right wing — note asymmetry on slot 6 (DK instead of B) --&gt;
+  &lt;polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;!-- Body, antennae, head --&gt;
+  &lt;path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/&gt;
+  &lt;path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/&gt;
+  &lt;path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/&gt;
+  &lt;circle cx="136" cy="41" r="3.5" fill="#00c638"/&gt;
+  &lt;circle cx="164" cy="41" r="3.5" fill="#00c638"/&gt;
+  &lt;circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/&gt;
+&lt;/svg&gt;</pre>
+    </div>
+
+    <!-- Design rationale -->
+    <div class="ds-grid-2" style="margin-top: var(--space-lg);">
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Design Rationale</h4>
+        <ul class="ds-rules">
+          <li><strong>Crystalline triangles</strong> echo the "agentic, structured, decomposable" nature of Claude Code workflows — facets that fit together precisely.</li>
+          <li><strong>Leaf body</strong> ties the mark to the nature-digital fusion theme. The body is darker than wings to read as anatomy, not just a stripe.</li>
+          <li><strong>Orange head</strong> is the only accent in the mark — one accent per element, matching the system rule. Visually, it terminates the body and gives the eye a focal point.</li>
+          <li><strong>Vivid antenna tips</strong> mirror the hero "vivid green dot" pattern — small bursts of saturation as accent dots, never as text.</li>
+          <li><strong>Asymmetry at slot 6</strong> prevents the mark from looking machine-generated. A perfectly mirrored butterfly reads as clip-art; the right-wing exception gives it a hand-drawn quality.</li>
+          <li><strong>DK-B-V rule</strong> is what gives the wings depth without using opacity or gradients. Three solid greens, never adjacent same-color, creates faceted shading.</li>
+        </ul>
+      </div>
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Anti-Patterns (rejected variants)</h4>
+        <ul class="ds-rules">
+          <li><strong>No opacity-based wings</strong> — earlier prototypes used <code>fill="#00c638" opacity="0.19"</code> with brand-green strokes. Looked washed-out and required a coloured background to read. Solid fills only.</li>
+          <li><strong>No outlined-only wings</strong> — pure stroke designs read as wireframe, not crystalline. Always filled triangles.</li>
+          <li><strong>No mirrored geometry</strong> — perfectly symmetrical wings looked machine-generated. The slot-6 asymmetry is intentional and locked.</li>
+          <li><strong>No gradient fills</strong> — the DK-B-V neighbour rule replaces gradients. Three flat colours create depth without rendering cost.</li>
+          <li><strong>No <code>stroke="none"</code> on facets</strong> — without the 0.5px fill-matched seam stroke, browser anti-aliasing creates visible white seams between adjacent triangles. The stroke is invisible (same colour as fill) but eliminates the artifact.</li>
+          <li><strong>No <code>shape-rendering="auto"</code></strong> — diagonal edges pixelate at small sizes. <code>crispEdges</code> is locked.</li>
+          <li><strong>No round head</strong> below r=8 — smaller heads look like a dot, larger looks like a balloon. r=8 is locked.</li>
+          <li><strong>No mono-colour butterflies</strong> — single-green versions lose all crystalline depth. The DK-B-V triad is the identity.</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -560,7 +693,7 @@
   var tokens = [
     { token: '--green-surface', hex: '#edfcf1', role: 'Tinted backgrounds, card fills. Decorative only.' },
     { token: '--green-light',   hex: '#c5f6d3', role: 'Badge fills, borders, subtle highlights. Decorative only.' },
-    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative: dots, icon fills, borders. Headings on dark. Not text on light.' },
+    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative on light (dots, icons, borders). On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. NOT body text on dark — that uses off-white #e5e2dc. NOT text on light.' },
     { token: '--green-brand',   hex: '#137b30', role: 'Logo, headings, links, labels. Primary brand identity.' },
     { token: '--green-dark',    hex: '#0d5822', role: 'High-contrast body text on light. AAA on cream/white.' },
     { token: '--accent',        hex: '#e26c45', role: 'CTA button, urgency badges. One per viewport.' },
@@ -690,7 +823,7 @@
     { bg: 'var(--bg)',            border: 'var(--border)',      label: 'Cream',      cls: '',        lc: 'var(--text-3)' },
     { bg: 'var(--green-surface)', border: 'var(--green-light)', label: 'Green tint', cls: '',        lc: 'var(--text-3)' },
     { bg: 'var(--dark)',          border: 'var(--border-dark)', label: 'Dark',       cls: 'on-dark', lc: '#6b6b60' },
-    { bg: 'var(--green-brand)',   border: 'var(--green-brand)', label: 'On brand',   cls: 'on-dark', lc: 'rgba(255,255,255,0.6)' }
+    { bg: 'var(--green-brand)',   border: 'var(--green-brand)', label: 'On brand',   cls: 'on-brand', lc: 'rgba(255,255,255,0.6)' }
   ];
   bgs.forEach(function(b) {
     var card = document.createElement('div');
@@ -718,6 +851,12 @@
     itemD.innerHTML = bf(s) + '<div style="font-family:var(--font-mono);font-size:0.5rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
     lDark.appendChild(itemD);
   });
+
+  // ── Stacked lockup variant ──
+  document.getElementById('stackedLight').innerHTML =
+    '<span class="logo-lockup logo-lockup--stacked"><span class="logo-wordmark" style="font-size:1.6rem;">Plepic</span>' + bf(56) + '</span>';
+  document.getElementById('stackedDark').innerHTML =
+    '<span class="logo-lockup logo-lockup--stacked on-dark"><span class="logo-wordmark" style="font-size:1.6rem;">Plepic</span>' + bf(56) + '</span>';
 </script>
 
 </body>
