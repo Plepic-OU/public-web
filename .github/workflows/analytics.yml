@@ -93,3 +93,28 @@ jobs:
           ADS_REFRESH_TOKEN: ${{ secrets.ADS_REFRESH_TOKEN }}
         run: npx ts-node scripts/optimize-ads.ts --dry-run
 
+      - name: Push reports to private repo
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          # Clone the private repo with token auth
+          git clone "https://x-access-token:${PRIVATE_REPO_TOKEN}@github.com/ad112/Plepic-Business.git" /tmp/private-repo
+
+          # Copy the freshly downloaded reports
+          mkdir -p /tmp/private-repo/analytics/reports
+          cp analytics/reports/*-ga4.json /tmp/private-repo/analytics/reports/ 2>/dev/null || true
+          cp analytics/reports/*-ads.json /tmp/private-repo/analytics/reports/ 2>/dev/null || true
+
+          cd /tmp/private-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add analytics/reports/
+
+          if git diff --staged --quiet; then
+            echo "No new reports to push"
+          else
+            git commit -m "chore: sync analytics reports $(date -u +%Y-%m-%d)"
+            git push
+            echo "Reports pushed to private repo"
+          fi
+
