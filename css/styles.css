@@ -30,6 +30,7 @@
   --text: #1c1c1a;
   --text-2: #4a4a45;
   --text-3: #6b6b60;
+  --text-on-dark: #e5e2dc;
 
   /* Borders */
   --border: #e5e2dc;
@@ -440,7 +441,7 @@ p:last-child {
   gap: 0.5rem;
   padding: 0.3rem 0.9rem;
   background: var(--green-surface);
-  color: #0d5822;
+  color: var(--green-brand);
   font-size: 0.78rem;
   font-weight: 600;
   line-height: normal;
@@ -546,8 +547,8 @@ p:last-child {
   max-width: 580px;
 }
 
-.hero h1 .green {
-  color: #137b30;
+.hero h1 .highlight {
+  color: var(--green-brand);
 }
 
 .hero-desc {
@@ -585,7 +586,7 @@ p:last-child {
   margin-top: 0.5rem;
   font-size: 0.8rem;
   line-height: normal;
-  color: #6b6b60;
+  color: var(--text-3);
   letter-spacing: 0.01em;
 }
 
@@ -661,7 +662,7 @@ p:last-child {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: normal;
-  color: #0d5822;
+  color: var(--green-dark);
   background: transparent;
   padding: 0.5rem 0;
   white-space: nowrap;
@@ -763,7 +764,7 @@ p:last-child {
   padding: var(--space-xl);
 }
 
-.shift-col h4 {
+.shift-col h3 {
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 700;
@@ -778,17 +779,17 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-.text-cyan,
+.text-agent,
 .shift-col--agent h4 {
-  color: var(--accent) !important;
+  color: var(--green-brand) !important;
 }
 
 .shift-col--agent {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--green-brand);
 }
 
-.text-orange,
-.shift-col--conversational h4 {
+.text-conversational,
+.shift-col--conversational h3 {
   color: var(--text-3) !important;
 }
 
@@ -866,7 +867,7 @@ p:last-child {
   font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--green-dark);
+  color: var(--green-brand);
   line-height: 1;
 }
 
@@ -1351,11 +1352,11 @@ p:last-child {
   margin-bottom: var(--space-sm);
 }
 
-.comparison-title--cyan {
-  color: var(--accent);
+.comparison-title--agent {
+  color: var(--green-brand);
 }
 
-.comparison-title--orange {
+.comparison-title--conversational {
   color: var(--text-3);
 }
 
@@ -2840,9 +2841,9 @@ p:last-child {
 .on-dark .code-block-default {
   background: var(--dark-surface);
   border-color: var(--border-dark);
-  color: #e5e2dc;
+  color: var(--text-on-dark);
 }
-.on-dark .code-block-default .comment { color: #6b6b60; }
+.on-dark .code-block-default .comment { color: var(--text-3); }
 .on-dark .code-block-default .keyword { color: var(--green-vivid); }
 .on-dark .code-block-hero { color: var(--green-vivid); }
 
@@ -2859,12 +2860,12 @@ p:last-child {
   margin: 0 0.35rem;
 }
 .on-dark .link { color: var(--green-vivid); }
-.on-dark .link-separator { color: #6b6b60; }
+.on-dark .link-separator { color: var(--text-3); }
 
 /* ── Label variants (.label base lives above) ───────────────── */
 .label-muted { color: var(--text-3); }
 .on-dark .label { color: var(--green-vivid); }
-.on-dark .label-muted { color: #6b6b60; }
+.on-dark .label-muted { color: var(--text-3); }
 
 /* ── Progress bar ───────────────────────────────────────────── */
 .progress-bar {
@@ -3024,3 +3025,34 @@ p:last-child {
   border-radius: 4px;
 }
 .ds-spacing-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-3); }
+
+
+/* ================================================================
+   MOBILE TOUCH TARGETS — coarse pointer / narrow viewport
+   Apple HIG / Material guideline: 44×44px minimum.
+   Desktop CTAs stay refined; mobile gets a min-height floor.
+   ================================================================ */
+@media (pointer: coarse), (max-width: 768px) {
+  .btn,
+  .nav-cta,
+  .btn-enlist {
+    min-height: 44px;
+  }
+  .btn-sm {
+    min-height: 40px;
+  }
+}
+
+/* ================================================================
+   REDUCED MOTION — respects OS-level vestibular preference
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
