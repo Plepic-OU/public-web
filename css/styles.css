@@ -9,7 +9,7 @@
 :root {
   /* Green system — H=137°, S=73% (vivid S=100%)
      Palette locked 2026-04-01. */
-  --green-vivid:   #00c638;   /* S100% L39% — decorative: dots, fills, dark-mode headings. NOT text on light. */
+  --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
   --green:         var(--green-vivid); /* back-compat alias */
   --green-brand:   #137b30;   /* S73%  L28% — logo, headings, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
@@ -231,6 +231,12 @@ p:last-child {
   line-height: normal;
   text-decoration: none;
 }
+/* Stacked variant — butterfly on top, wordmark below */
+.logo-lockup--stacked {
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.3rem;
+}
 .logo-wordmark {
   font-family: var(--font-display);
   font-weight: 600;
@@ -239,6 +245,9 @@ p:last-child {
   color: var(--green-brand);
   line-height: normal;
 }
+.on-dark .logo-wordmark { color: var(--green-vivid); }
+/* On a brand-green background, the wordmark switches to dark text for contrast. */
+.on-brand .logo-wordmark { color: var(--text); }
 .logo-butterfly {
   display: block;
   shape-rendering: crispEdges;
@@ -346,6 +355,10 @@ p:last-child {
   transition: filter var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
 }
 .btn:hover { filter: brightness(0.92); }
+.btn:focus-visible {
+  outline: 2px solid var(--green-vivid);
+  outline-offset: 2px;
+}
 
 .btn-lg {
   font-size: 1.05rem;
@@ -372,8 +385,18 @@ p:last-child {
   border-color: var(--green-brand);
   color: var(--green-brand);
 }
+/* Outline hover — fill with surface tint since brightness filter is invisible on transparent */
 .btn-outline:hover,
-.btn-secondary:hover { background: transparent; color: var(--green-brand); }
+.btn-secondary:hover {
+  background: var(--green-surface);
+  color: var(--green-brand);
+  filter: none;
+}
+.on-dark .btn-outline:hover,
+.on-dark .btn-secondary:hover {
+  background: rgba(0, 198, 56, 0.12);
+  color: var(--green-vivid);
+}
 
 /* Ghost — underlined link-style */
 .btn-ghost {

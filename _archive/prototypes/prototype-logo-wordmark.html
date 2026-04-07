@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plepic Logo — #18 DK-B-V Refinement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-surface: #edfcf1; --green-light: #c5f6d3; --green: #00c638;
+      --green-brand: #137b30; --green-dark: #0d5822; --accent: #e26c45;
+      --bg-cream: #faf7f2; --surface: #ffffff; --dark: #1c1c1a;
+      --text: #1c1c1a; --text-2: #4a4a45; --text-3: #6b6b60; --border: #e5e2dc;
+      --font-display: 'Zilla Slab', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body { font-family: var(--font-body); color: var(--text); background: var(--bg-cream); -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+    .page-header { padding: 3rem 0 1.5rem; }
+    .page-header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .page-header h1 span { color: var(--green-brand); }
+    .page-header p { color: var(--text-2); font-size: 0.95rem; max-width: 700px; line-height: 1.6; }
+    .section { margin-bottom: 3rem; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3);
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .grid-sm { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    .grid-lg { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (max-width: 1100px) { .grid-sm { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px) { .grid-sm, .grid-lg { grid-template-columns: 1fr; } }
+    .card {
+      border-radius: 12px; padding: 1rem 0.75rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      text-align: center; background: var(--surface); border: 1px solid var(--border);
+    }
+    .card.ref { border: 2px solid var(--green-brand); }
+    .card-label { font-family: var(--font-mono); font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+    .card-note { font-size: 0.6rem; color: var(--text-3); line-height: 1.3; max-width: 200px; }
+    .card svg { display: block; }
+    .ref-badge { font-family: var(--font-mono); font-size: 0.45rem; font-weight: 700; text-transform: uppercase; padding: 2px 5px; border-radius: 3px; background: var(--green-light); color: var(--green-dark); }
+    .dual-bg { display: flex; gap: 2px; border-radius: 8px; overflow: hidden; width: 100%; }
+    .dual-bg > div { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0.5rem 0.25rem; }
+    .bg-cream { background: var(--bg-cream); }
+    .bg-dark { background: var(--dark); }
+    /* Lockups */
+    .lockup-h { display: inline-flex; align-items: center; gap: 0.45rem; }
+    .lockup-v { display: inline-flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+    .logo-text { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.01em; }
+    /* Size strip */
+    .size-strip { display: flex; align-items: flex-end; gap: 2rem; flex-wrap: wrap; padding: 1.5rem 2rem; border-radius: 12px; }
+    .size-strip.on-cream { background: var(--bg-cream); border: 1px solid var(--border); }
+    .size-strip.on-dark { background: var(--dark); border: 1px solid #3a3a38; }
+    .size-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+    .size-item .card-label { font-size: 0.45rem; }
+    .size-item.on-dark .card-label { color: #6b6b60; }
+    /* Hero mock */
+    .hero-mock {
+      border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+      background: var(--bg-cream); position: relative; min-height: 350px;
+    }
+    .hero-nav { padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+    .hero-nav-links { display: flex; align-items: center; gap: 1.25rem; }
+    .hero-nav-links a { font-size: 0.75rem; text-decoration: none; font-weight: 500; color: var(--text-2); }
+    .hero-nav-cta { font-size: 0.7rem; font-weight: 600; padding: 0.35rem 0.9rem; border-radius: 6px; text-decoration: none; background: var(--accent); color: #fff; }
+    .hero-center { display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; z-index: 1; }
+    .hero-butterfly { opacity: 0.35; }
+    /* Breathing animation */
+    @keyframes wing-breathe-left { 0%,100% { transform: rotate(0) scaleX(1); } 50% { transform: rotate(-2deg) scaleX(0.97); } }
+    @keyframes wing-breathe-right { 0%,100% { transform: rotate(0) scaleX(1); } 50% { transform: rotate(2deg) scaleX(0.97); } }
+    .hero-butterfly .wing-left { transform-origin: 147px 140px; animation: wing-breathe-left 4s ease-in-out infinite; }
+    .hero-butterfly .wing-right { transform-origin: 153px 140px; animation: wing-breathe-right 4s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Plepic <span>Logo</span> — #18 Refinement</h1>
+    <p>DK-B-V strict palette neighbours. Dark body, orange head, vivid antenna tips. Refining strokes, micro-details, lockups, sizes, and in-context preview.</p>
+  </div>
+</div>
+
+<div class="container section">
+  <div class="section-label">1 &mdash; Pixelation Fixes (compare at small sizes)</div>
+  <div class="grid-sm" id="strokes"></div>
+</div>
+
+<div class="container section">
+  <div class="section-label">2 &mdash; Polish Opportunities</div>
+  <div class="grid-sm" id="tweaks"></div>
+</div>
+
+<div class="container section">
+  <div class="section-label">3 &mdash; Wordmark Lockups</div>
+  <div class="grid-lg" id="lockups"></div>
+</div>
+
+<div class="container section">
+  <div class="section-label">4 &mdash; Size Stress Test</div>
+  <div id="sizes"></div>
+</div>
+
+<div class="container section">
+  <div class="section-label">5 &mdash; In-Context Preview</div>
+  <div id="hero"></div>
+</div>
+
+<script>
+// ── Locked palette ──
+const V  = '#00c638', B  = '#137b30', DK = '#0d5822';
+const LT = '#c5f6d3', SF = '#edfcf1', AC = '#e26c45';
+
+function svg(inner, w, vb='0 0 300 280', sr='geometricPrecision') {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="${w}" height="${w*280/300}" shape-rendering="${sr}">${inner}</svg>`;
+}
+function p(pts, fill, op, stroke, sw) {
+  return `<polygon points="${pts}" fill="${fill}" opacity="${op}" stroke="${stroke}" stroke-width="${sw}"/>`;
+}
+
+// ── #18 Reference: DK-B-V neighbours, dark body, leaf body, fill-matched strokes ──
+const REF_FILLS = [DK, V, B, V, DK, V, B, DK, V, B, DK];
+const FULL = [1,1,1,1,1,1,1,1,1,1,1];
+const FULL_B = [1,1,1,1];
+
+// Leaf body builder
+const leafBody = (color) => (c) =>
+  `<path d="M150,92 C155,120 155,150 150,200 C145,150 145,120 150,92Z" fill="${color}"/>`;
+
+function colorButterfly(w, cfg) {
+  const { s, bodyF, bodyF2, dotF, headF, ops, bodyOps, sw, facetFills, facetFillsR } = cfg;
+  const stw = sw || [0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8];
+  const fills = facetFills || REF_FILLS;
+  const fillsR = facetFillsR || fills;
+  const hd = headF || AC;
+  const ms = cfg.matchStrokes;
+  const pts_l = [
+    "147,105 110,68 55,48", "147,105 55,48 20,72", "147,105 20,72 15,108",
+    "147,130 147,105 15,108", "147,130 15,108 28,150", "147,165 147,130 28,150",
+    "147,165 28,150 50,178", "147,178 50,178 82,195", "147,178 82,195 75,220",
+    "147,195 75,220 100,240", "147,195 100,240 135,232"
+  ];
+  const pts_r = [
+    "153,105 190,68 245,48", "153,105 245,48 280,72", "153,105 280,72 285,108",
+    "153,130 153,105 285,108", "153,130 285,108 272,150", "153,165 153,130 272,150",
+    "153,165 272,150 250,178", "153,178 250,178 218,195", "153,178 218,195 225,220",
+    "153,195 225,220 200,240", "153,195 200,240 165,232"
+  ];
+  const outline = cfg.outlineOnly; // if true: no internal strokes, outer contour only
+  const outlineColor = cfg.outlineColor || DK;
+  const outlineWidth = cfg.outlineWidth || 1;
+  // seamFill: invisible fill-matched stroke to eliminate adjacent polygon seams
+  // 0 = stroke="none" (will show seams), >0 = fill-matched stroke at that width
+  const seamFill = cfg.seamFill !== undefined ? cfg.seamFill : 0.5;
+  let lw = '', rw = '';
+  for (let i = 0; i < 11; i++) {
+    const o = Math.min(ops[i], 1);
+    if (outline) {
+      // No per-facet strokes
+      const sw0 = seamFill > 0 ? seamFill : 0;
+      const stL = seamFill > 0 ? fills[i] : 'none';
+      const stR = seamFill > 0 ? fillsR[i] : 'none';
+      lw += p(pts_l[i], fills[i], o, stL, sw0);
+      rw += p(pts_r[i], fillsR[i], o, stR, sw0);
+    } else if (s === 'none') {
+      // No outline AND no explicit stroke — apply seam-fill (or none)
+      const sw0 = seamFill > 0 ? seamFill : 0;
+      const stL = seamFill > 0 ? fills[i] : 'none';
+      const stR = seamFill > 0 ? fillsR[i] : 'none';
+      lw += p(pts_l[i], fills[i], o, stL, sw0);
+      rw += p(pts_r[i], fillsR[i], o, stR, sw0);
+    } else {
+      const stL = ms ? fills[i] : s;
+      const stR = ms ? fillsR[i] : s;
+      const stWidth = stw[i];
+      lw += p(pts_l[i], fills[i], o, stL, stWidth);
+      rw += p(pts_r[i], fillsR[i], o, stR, stWidth);
+    }
+  }
+  // Outer contour silhouettes (drawn on top of fills)
+  if (outline || cfg.addOutline) {
+    const contourL = "147,105 110,68 55,48 20,72 15,108 28,150 50,178 82,195 75,220 100,240 135,232 147,195";
+    const contourR = "153,105 190,68 245,48 280,72 285,108 272,150 250,178 218,195 225,220 200,240 165,232 153,195";
+    lw += `<polyline points="${contourL}" fill="none" stroke="${outlineColor}" stroke-width="${outlineWidth}" stroke-linejoin="round" stroke-linecap="round"/>`;
+    rw += `<polyline points="${contourR}" fill="none" stroke="${outlineColor}" stroke-width="${outlineWidth}" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }
+  const bodyStroke = ms ? (cfg.bodyF || DK) : (s === 'none' ? (cfg.bodyF || DK) : s);
+  let bd;
+  if (cfg.bodyFn) {
+    bd = cfg.bodyFn({ bodyF: cfg.bodyF||DK, bodyF2: cfg.bodyF2||DK, hd, dotF: cfg.dotF||V, s: bodyStroke, DK });
+  } else {
+    bd = leafBody(DK)({});
+  }
+  const antStroke = cfg.antStroke || DK;
+  const antWidth = cfg.antWidth || 1;
+  const antCurve = cfg.antCurve || 'C146,72 140,55 136,42';
+  const antCurveR = cfg.antCurveR || 'C154,72 160,55 164,42';
+  const tipL = cfg.antTipPos || '136,41';
+  const tipR = cfg.antTipPosR || '164,41';
+  const tipRad = cfg.antTipR || 2.5;
+  // Antennae BEHIND head: render antennae first, then head on top
+  const headR = cfg.headR || 6; // perfect circle radius
+  const ant =
+    `<path d="M150,86 ${antCurve}" fill="none" stroke="${antStroke}" stroke-width="${antWidth}" opacity="0.7"/>` +
+    `<path d="M150,86 ${antCurveR}" fill="none" stroke="${antStroke}" stroke-width="${antWidth}" opacity="0.7"/>` +
+    `<circle cx="${tipL.split(',')[0]}" cy="${tipL.split(',')[1]}" r="${tipRad}" fill="${cfg.dotF||V}" stroke="none"/>` +
+    `<circle cx="${tipR.split(',')[0]}" cy="${tipR.split(',')[1]}" r="${tipRad}" fill="${cfg.dotF||V}" stroke="none"/>` +
+    `<circle cx="150" cy="90" r="${headR}" fill="${hd}" stroke="${hd}" stroke-width="0.8"/>`;
+  return svg(lw + rw + bd + ant, w, '0 0 300 280', cfg.shapeRendering || 'geometricPrecision');
+}
+
+// Animated butterfly for hero (wraps wings in groups for CSS animation)
+function heroButterfly(w, cfg) {
+  const fills = cfg.facetFills || REF_FILLS;
+  const fillsR = cfg.facetFillsR || REF_FILLS_R;
+  const stw = cfg.sw || [0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8];
+  const ms = cfg.matchStrokes;
+  const pts_l = [
+    "147,105 110,68 55,48", "147,105 55,48 20,72", "147,105 20,72 15,108",
+    "147,130 147,105 15,108", "147,130 15,108 28,150", "147,165 147,130 28,150",
+    "147,165 28,150 50,178", "147,178 50,178 82,195", "147,178 82,195 75,220",
+    "147,195 75,220 100,240", "147,195 100,240 135,232"
+  ];
+  const pts_r = [
+    "153,105 190,68 245,48", "153,105 245,48 280,72", "153,105 280,72 285,108",
+    "153,130 153,105 285,108", "153,130 285,108 272,150", "153,165 153,130 272,150",
+    "153,165 272,150 250,178", "153,178 250,178 218,195", "153,178 218,195 225,220",
+    "153,195 225,220 200,240", "153,195 200,240 165,232"
+  ];
+  let lw = '', rw = '';
+  for (let i = 0; i < 11; i++) {
+    // Seam-fill 0.5px stroke matching fill (eliminates pixelation gaps)
+    lw += p(pts_l[i], fills[i], 1, fills[i], 0.5);
+    rw += p(pts_r[i], fillsR[i], 1, fillsR[i], 0.5);
+  }
+  // Wider leaf body to match base
+  const bd = `<path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="${DK}"/>`;
+  // Antennae behind head, r=8 circle, larger tips r=3.5
+  const ant =
+    `<path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="${DK}" stroke-width="1.8" opacity="0.7"/>` +
+    `<path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="${DK}" stroke-width="1.8" opacity="0.7"/>` +
+    `<circle cx="136" cy="41" r="3.5" fill="${V}" stroke="none"/>` +
+    `<circle cx="164" cy="41" r="3.5" fill="${V}" stroke="none"/>` +
+    `<circle cx="150" cy="90" r="8" fill="${AC}" stroke="${AC}" stroke-width="0.8"/>`;
+  return `<svg class="hero-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="${w}" height="${w*280/300}" shape-rendering="crispEdges">` +
+    `<g class="wing-left">${lw}</g><g class="wing-right">${rw}</g>${bd}${ant}</svg>`;
+}
+
+// ── Shared base config ──
+// Outline thin (0.5px DK, outer contour only), circle head r=8, antennae behind, subtle asymmetry
+const REF_FILLS_R = [DK, V, B, V, DK, V, DK, B, V, B, DK];
+// New ref: NO outline, fill-matched 0.5px seam fill, crispEdges shape-rendering
+// Wider body, larger antenna tips r=3.5
+const widerLeafBody = (color) => (c) =>
+  `<path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="${color}"/>`;
+const base = { ops: FULL, bodyOps: FULL_B, facetFills: REF_FILLS, facetFillsR: REF_FILLS_R,
+  s: 'none', seamFill: 0.5, shapeRendering: 'crispEdges',
+  bodyFn: widerLeafBody(DK), headF: AC, dotF: V, bodyF: DK, bodyF2: DK,
+  headR: 8, antWidth: 1.8, antTipR: 3.5 };
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 1: STROKE VARIATIONS
+// ═══════════════════════════════════════════════════════════
+// Section 1: Pixelation fix comparison
+// All show the SAME butterfly with different rendering strategies
+const strokeVars = [
+  { id: '1', name: 'No Fix (bug)', desc: 'No seam-fill, no geometricPrecision.',
+    cfg: { ...base, seamFill: 0, shapeRendering: 'auto' } },
+  { id: '2', name: 'Geometric Only', desc: 'shape-rendering=geometricPrecision only.',
+    cfg: { ...base, seamFill: 0, shapeRendering: 'geometricPrecision' } },
+  { id: '3', name: 'Seam-Fill 0.5 Only', desc: 'Fill-matched 0.5px stroke, no geo hint.',
+    cfg: { ...base, seamFill: 0.5, shapeRendering: 'auto' } },
+  { id: '4', name: 'Both (recommended)', desc: 'Geo hint + fill-matched 0.5px.', ref: true,
+    cfg: { ...base, seamFill: 0.5, shapeRendering: 'geometricPrecision' } },
+  { id: '5', name: 'Seam-Fill 0.3', desc: 'Both, thinner 0.3px.',
+    cfg: { ...base, seamFill: 0.3, shapeRendering: 'geometricPrecision' } },
+  { id: '6', name: 'Seam-Fill 1px', desc: 'Both, thicker 1px.',
+    cfg: { ...base, seamFill: 1, shapeRendering: 'geometricPrecision' } },
+  { id: '7', name: 'Crisp Edges', desc: 'shape-rendering=crispEdges (no AA).',
+    cfg: { ...base, seamFill: 0, shapeRendering: 'crispEdges' } },
+  { id: '8', name: 'Optimize Speed', desc: 'shape-rendering=optimizeSpeed (browser default at small).',
+    cfg: { ...base, seamFill: 0, shapeRendering: 'optimizeSpeed' } },
+];
+
+const strokeGrid = document.getElementById('strokes');
+strokeVars.forEach(v => {
+  const card = document.createElement('div');
+  card.className = 'card' + (v.ref ? ' ref' : '');
+  card.innerHTML =
+    `<div class="card-label">${v.ref ? '<span class="ref-badge">Ref</span> ' : ''}${v.id}. ${v.name}</div>` +
+    `<div class="dual-bg"><div class="bg-cream">${colorButterfly(65, v.cfg)}</div><div class="bg-dark">${colorButterfly(65, v.cfg)}</div></div>` +
+    `<div class="card-note">${v.desc}</div>`;
+  strokeGrid.appendChild(card);
+});
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 2: MICRO-TWEAKS
+// ═══════════════════════════════════════════════════════════
+// Section 2: Polish opportunities — small refinements not about color/3D
+const tweakVars = [
+  { id: '1', name: 'Reference', desc: 'Current best. No outline, fill-matched 0.5px.', ref: true,
+    cfg: { ...base } },
+  { id: '2', name: 'Wider Body', desc: 'Wider leaf body for more presence.',
+    cfg: { ...base, bodyFn: (c) => `<path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="${DK}"/>` } },
+  { id: '3', name: 'Thinner Body', desc: 'Narrower leaf body, lighter feel.',
+    cfg: { ...base, bodyFn: (c) => `<path d="M150,92 C153,120 153,150 150,200 C147,150 147,120 150,92Z" fill="${DK}"/>` } },
+  { id: '4', name: 'Body Lower', desc: 'Body starts at y=95 instead of 92.',
+    cfg: { ...base, bodyFn: (c) => `<path d="M150,95 C155,123 155,153 150,203 C145,153 145,123 150,95Z" fill="${DK}"/>` } },
+  { id: '5', name: 'Head r=6 (smaller)', desc: 'Smaller head, less dominant.',
+    cfg: { ...base, headR: 6 } },
+  { id: '6', name: 'Head r=10 (bigger)', desc: 'Larger head, more presence.',
+    cfg: { ...base, headR: 10 } },
+  { id: '7', name: 'Larger Ant Tips', desc: 'Antenna tip dots r=3.5.',
+    cfg: { ...base, antTipR: 3.5 } },
+  { id: '8', name: 'Smaller Ant Tips', desc: 'Antenna tip dots r=1.5.',
+    cfg: { ...base, antTipR: 1.5 } },
+];
+
+const tweakGrid = document.getElementById('tweaks');
+tweakVars.forEach(v => {
+  const card = document.createElement('div');
+  card.className = 'card' + (v.ref ? ' ref' : '');
+  card.innerHTML =
+    `<div class="card-label">${v.ref ? '<span class="ref-badge">Ref</span> ' : ''}${v.id}. ${v.name}</div>` +
+    `<div class="dual-bg"><div class="bg-cream">${colorButterfly(65, v.cfg)}</div><div class="bg-dark">${colorButterfly(65, v.cfg)}</div></div>` +
+    `<div class="card-note">${v.desc}</div>`;
+  tweakGrid.appendChild(card);
+});
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 3: WORDMARK LOCKUPS
+// ═══════════════════════════════════════════════════════════
+const lockupContainer = document.getElementById('lockups');
+const bf = (sz) => colorButterfly(sz, base);
+
+// Lockup: wordmark LEFT, logo RIGHT. Icon locked at 24px for horizontal.
+const lockups = [
+  { name: 'Horizontal — Cream', bg: 'bg-cream',
+    html: `<div class="lockup-h"><span class="logo-text" style="font-size:1.3rem;color:${B}">Plepic</span>${bf(24)}</div>` },
+  { name: 'Horizontal — Dark', bg: 'bg-dark',
+    html: `<div class="lockup-h"><span class="logo-text" style="font-size:1.3rem;color:${V}">Plepic</span>${bf(24)}</div>` },
+  { name: 'Stacked — Cream', bg: 'bg-cream',
+    html: `<div class="lockup-v">${bf(56)}<span class="logo-text" style="font-size:1.1rem;color:${B}">Plepic</span></div>` },
+  { name: 'Stacked — Dark', bg: 'bg-dark',
+    html: `<div class="lockup-v">${bf(56)}<span class="logo-text" style="font-size:1.1rem;color:${V}">Plepic</span></div>` },
+];
+lockups.forEach(l => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML =
+    `<div class="card-label">${l.name}</div>` +
+    `<div style="width:100%;padding:1.5rem;border-radius:8px;display:flex;align-items:center;justify-content:center" class="${l.bg}">${l.html}</div>`;
+  lockupContainer.appendChild(card);
+});
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 4: SIZE STRESS TEST
+// ═══════════════════════════════════════════════════════════
+const sizeContainer = document.getElementById('sizes');
+const sizes = [120, 64, 32, 24, 16];
+
+// Icon only — cream
+let creamStrip = '<div class="size-strip on-cream">';
+creamStrip += '<div class="size-item"><span class="card-label">Icon on Cream</span></div>';
+sizes.forEach(s => { creamStrip += `<div class="size-item">${bf(s)}<span class="card-label">${s}px</span></div>`; });
+creamStrip += '</div>';
+
+// Icon only — dark
+let darkStrip = '<div class="size-strip on-dark" style="margin-top:0.5rem">';
+darkStrip += '<div class="size-item on-dark"><span class="card-label">Icon on Dark</span></div>';
+sizes.forEach(s => { darkStrip += `<div class="size-item on-dark">${bf(s)}<span class="card-label">${s}px</span></div>`; });
+darkStrip += '</div>';
+
+// Lockup — cream
+let lockupCream = '<div class="size-strip on-cream" style="margin-top:0.5rem">';
+lockupCream += '<div class="size-item"><span class="card-label">Lockup on Cream</span></div>';
+[64, 32, 24].forEach(s => {
+  const textSize = s <= 24 ? '0.55rem' : s <= 32 ? '0.7rem' : '1rem';
+  lockupCream += `<div class="size-item"><div class="lockup-h"><span class="logo-text" style="font-size:${textSize};color:${B}">Plepic</span>${bf(s*0.7)}</div><span class="card-label">${s}px text</span></div>`;
+});
+lockupCream += '</div>';
+
+// Lockup — dark
+let lockupDark = '<div class="size-strip on-dark" style="margin-top:0.5rem">';
+lockupDark += '<div class="size-item on-dark"><span class="card-label">Lockup on Dark</span></div>';
+[64, 32, 24].forEach(s => {
+  const textSize = s <= 24 ? '0.55rem' : s <= 32 ? '0.7rem' : '1rem';
+  lockupDark += `<div class="size-item on-dark"><div class="lockup-h"><span class="logo-text" style="font-size:${textSize};color:${V}">Plepic</span>${bf(s*0.7)}</div><span class="card-label">${s}px text</span></div>`;
+});
+lockupDark += '</div>';
+
+sizeContainer.innerHTML = creamStrip + darkStrip + lockupCream + lockupDark;
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 5: IN-CONTEXT HERO PREVIEW
+// ═══════════════════════════════════════════════════════════
+const heroContainer = document.getElementById('hero');
+heroContainer.innerHTML = `
+  <div class="hero-mock">
+    <div class="hero-nav">
+      <div class="lockup-h"><span class="logo-text" style="font-size:0.9rem;color:${B}">Plepic</span>${bf(24)}</div>
+      <div class="hero-nav-links">
+        <a href="#">Agentic Coding</a>
+        <a href="#">Training</a>
+        <a href="#">Team</a>
+        <a class="hero-nav-cta" href="#">Book a Call</a>
+      </div>
+    </div>
+    <div class="hero-center">
+      ${heroButterfly(220, { facetFills: REF_FILLS, matchStrokes: true, sw: [0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8] })}
+    </div>
+  </div>
+`;
+</script>
+</body>
+</html>
