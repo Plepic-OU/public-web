@@ -1298,9 +1298,11 @@ p:last-child {
 
 .loop-center {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--green-dark);
+  color: var(--text-1);
+  text-align: center;
+  line-height: 1.15;
   z-index: 1;
 }
 
