@@ -689,6 +689,7 @@
     }
 
     // Scroll-triggered reveal animations
+    document.documentElement.classList.add('js-reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
