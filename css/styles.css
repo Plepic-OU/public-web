@@ -181,8 +181,11 @@ p:last-child {
   position: absolute;
   top: -100%;
   left: var(--space-md);
-  padding: var(--space-sm) var(--space-md);
-  background: var(--green);
+  padding: 0.75rem var(--space-md);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  background: var(--green-brand);
   color: #fff;
   font-weight: 600;
   z-index: 200;
@@ -282,6 +285,10 @@ p:last-child {
   color: var(--text-2);
   text-decoration: none;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.5rem;
 }
 
 .nav a:hover {
@@ -293,7 +300,8 @@ p:last-child {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-body);
-  padding: 0.5rem 1rem !important;
+  padding: 0.75rem 1rem !important;
+  min-height: 44px;
   border: 1.5px solid var(--green-brand) !important;
   color: var(--green-brand) !important;
   border-radius: 8px !important;
@@ -1157,6 +1165,8 @@ p:last-child {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  min-height: 44px;
+  padding-block: 0.5rem;
   color: #b0b0a5;
   font-size: 0.85rem;
   transition: color var(--transition-fast);
