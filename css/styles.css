@@ -1289,11 +1289,11 @@ p:last-child {
 }
 
 .loop-arrow path {
-  stroke: var(--green) !important;
+  stroke: var(--accent) !important;
 }
 
 .loop-arrow polygon {
-  fill: var(--green) !important;
+  fill: var(--accent) !important;
 }
 
 .loop-center {
@@ -1335,7 +1335,7 @@ p:last-child {
 }
 
 .comparison-card--agent {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--green-brand);
 }
 
 .comparison-visual {
