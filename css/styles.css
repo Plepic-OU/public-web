@@ -2106,6 +2106,40 @@ p:last-child {
   letter-spacing: 0.05em;
 }
 
+.pricing-testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+  text-align: left;
+}
+
+.pricing-quote {
+  margin: 0;
+  padding: 0;
+}
+
+.pricing-quote p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text);
+  font-style: italic;
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.pricing-quote cite {
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+@media (max-width: 768px) {
+  .pricing-testimonials {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ========================================
    Training Page — Team Strip (compact)
    ======================================== */
