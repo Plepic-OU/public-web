@@ -256,17 +256,29 @@ async function main(): Promise<void> {
 
   const matchesExpected =
     channel.handle?.toLowerCase() === EXPECTED_CHANNEL_HANDLE.toLowerCase();
+  const assumeYes = process.argv.includes("--assume-yes");
+
   if (!matchesExpected) {
     console.log(
       `WARNING: handle does not match ${EXPECTED_CHANNEL_HANDLE}. ` +
         "If this is not the Plepic brand channel, answer N and rerun, " +
         "picking the correct brand account on the Google account picker."
     );
+    if (assumeYes) {
+      console.log("Aborted — --assume-yes refuses to persist on handle mismatch.");
+      process.exit(1);
+    }
   }
 
-  const confirmed = await promptYesNo(
-    `Persist this refresh token for "${channel.title}"? (y/N) `
-  );
+  let confirmed: boolean;
+  if (matchesExpected && assumeYes) {
+    console.log(`Handle matches ${EXPECTED_CHANNEL_HANDLE} — auto-confirming (--assume-yes).`);
+    confirmed = true;
+  } else {
+    confirmed = await promptYesNo(
+      `Persist this refresh token for "${channel.title}"? (y/N) `
+    );
+  }
   if (!confirmed) {
     console.log("Aborted — nothing written. Rerun and select the correct brand account.");
     process.exit(1);
