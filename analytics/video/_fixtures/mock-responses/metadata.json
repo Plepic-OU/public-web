@@ -1,0 +1,18 @@
+{
+  "title": "Claude Code multi-file refactors: the CLAUDE.md trick most devs skip",
+  "description": "Most developers hit a wall when Claude Code needs to touch more than three files at once. Context drops, edits drift, and you spend more time cleaning up than writing.\n\nThe fix is smaller than it looks: a tight CLAUDE.md that tells the agent which files matter and why. Not docs, not style guides — just the map.\n\nHere's the setup we use for 30-file TypeScript refactors that actually hold together.\n\n→ plepic.com/training?utm_source=youtube&utm_content=claude-code-multi-file-refactors\n\n#claudecode #agenticoding #typescript",
+  "tags": [
+    "claude code",
+    "claude code tutorial",
+    "agentic coding",
+    "CLAUDE.md",
+    "multi-file refactor",
+    "ai pair programming",
+    "anthropic",
+    "developer tools",
+    "typescript refactor"
+  ],
+  "chapters": [],
+  "pinnedComment": "What file are you always re-explaining to the model? Curious where the friction shows up first for you.",
+  "slug": "claude-code-multi-file-refactors"
+}
