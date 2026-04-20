@@ -38,8 +38,23 @@ interface CampaignData {
   conversions: number;
   conversions_value: number;
   average_cpc: number;
+  average_cpm: number;
   cost_per_conversion: number;
   roas: number;
+  // Awareness metrics (Search campaigns). Decimals 0–1; null if unavailable.
+  // Google caps reported values at 0.9 when actual > 90%.
+  search_impression_share: number | null;
+  search_budget_lost_impression_share: number | null;
+  search_rank_lost_impression_share: number | null;
+}
+
+interface GeoPerformance {
+  country_code: string;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+  cost: number;
+  average_cpm: number;
 }
 
 interface AdGroupData {
@@ -95,6 +110,7 @@ interface AdsReport {
     total_clicks: number;
     overall_ctr: number;
     average_cpc: number;
+    average_cpm: number;
     total_conversions: number;
     cost_per_conversion: number;
     conversion_value: number;
@@ -104,6 +120,7 @@ interface AdsReport {
   ad_groups: AdGroupData[];
   keywords: KeywordData[];
   search_terms: SearchTermData[];
+  geo: GeoPerformance[];
 }
 
 function loadCredentials(): AdsCredentials {
@@ -161,7 +178,11 @@ async function fetchCampaigns(
       metrics.cost_micros,
       metrics.conversions,
       metrics.conversions_value,
-      metrics.average_cpc
+      metrics.average_cpc,
+      metrics.average_cpm,
+      metrics.search_impression_share,
+      metrics.search_budget_lost_impression_share,
+      metrics.search_rank_lost_impression_share
     FROM campaign
     WHERE segments.date = '${date}'
     AND campaign.status != 'REMOVED'
@@ -189,8 +210,12 @@ async function fetchCampaigns(
         conversions,
         conversions_value: conversionsValue,
         average_cpc: microsToCurrency(row.metrics?.average_cpc || 0),
+        average_cpm: microsToCurrency(row.metrics?.average_cpm || 0),
         cost_per_conversion: conversions > 0 ? Number((cost / conversions).toFixed(2)) : 0,
         roas: cost > 0 ? Number((conversionsValue / cost).toFixed(2)) : 0,
+        search_impression_share: optionalShare(row.metrics?.search_impression_share),
+        search_budget_lost_impression_share: optionalShare(row.metrics?.search_budget_lost_impression_share),
+        search_rank_lost_impression_share: optionalShare(row.metrics?.search_rank_lost_impression_share),
       });
     }
   } catch (error) {
@@ -198,6 +223,59 @@ async function fetchCampaigns(
   }
 
   return campaigns;
+}
+
+// Impression-share fields return undefined / null for non-Search campaigns.
+// Google Ads caps reported values at 0.9 when true share > 90%.
+function optionalShare(v: unknown): number | null {
+  if (v === undefined || v === null) return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? Number(n.toFixed(4)) : null;
+}
+
+async function fetchGeoPerformance(
+  customer: any,
+  date: string
+): Promise<GeoPerformance[]> {
+  // user_location_view = where the user actually was (not where we targeted).
+  // Best for awareness: tells you reach by country regardless of targeting overlap.
+  const query = `
+    SELECT
+      user_location_view.country_criterion_id,
+      metrics.impressions,
+      metrics.clicks,
+      metrics.ctr,
+      metrics.cost_micros,
+      metrics.average_cpm
+    FROM user_location_view
+    WHERE segments.date = '${date}'
+    ORDER BY metrics.impressions DESC
+  `;
+
+  const geo: GeoPerformance[] = [];
+
+  try {
+    const response = await customer.query(query);
+
+    for (const row of response) {
+      // country_criterion_id maps to geo target constants:
+      // 2233 = Estonia, 2246 = Finland, 2276 = Germany, 2752 = Sweden, etc.
+      const code = String(row.user_location_view?.country_criterion_id || "unknown");
+
+      geo.push({
+        country_code: code,
+        impressions: row.metrics?.impressions || 0,
+        clicks: row.metrics?.clicks || 0,
+        ctr: Number(((row.metrics?.ctr || 0) * 100).toFixed(2)),
+        cost: microsToCurrency(row.metrics?.cost_micros || 0),
+        average_cpm: microsToCurrency(row.metrics?.average_cpm || 0),
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching geo performance:", error);
+  }
+
+  return geo;
 }
 
 async function fetchAdGroups(
@@ -374,6 +452,9 @@ function calculateSummary(
     average_cpc: totals.clicks > 0
       ? Number((totals.spend / totals.clicks).toFixed(2))
       : 0,
+    average_cpm: totals.impressions > 0
+      ? Number(((totals.spend / totals.impressions) * 1000).toFixed(2))
+      : 0,
     total_conversions: totals.conversions,
     cost_per_conversion: totals.conversions > 0
       ? Number((totals.spend / totals.conversions).toFixed(2))
@@ -426,6 +507,9 @@ async function exportAds(date?: string): Promise<void> {
     searchTermEndDate
   );
 
+  console.log("Fetching geo performance...");
+  const geo = await fetchGeoPerformance(customer, targetDate);
+
   // Calculate summary
   const summary = calculateSummary(campaigns);
 
@@ -440,6 +524,7 @@ async function exportAds(date?: string): Promise<void> {
     ad_groups: adGroups,
     keywords,
     search_terms: searchTerms,
+    geo,
   };
 
   // Ensure reports directory exists
@@ -458,9 +543,33 @@ async function exportAds(date?: string): Promise<void> {
   console.log(`Impressions: ${summary.total_impressions}`);
   console.log(`Clicks: ${summary.total_clicks}`);
   console.log(`CTR: ${summary.overall_ctr}%`);
+  console.log(`CPM: €${summary.average_cpm}`);
   console.log(`Conversions: ${summary.total_conversions}`);
   console.log(`CPA: €${summary.cost_per_conversion}`);
   console.log(`ROAS: ${summary.roas}:1`);
+
+  // Awareness metrics (per active Search campaign)
+  const active = campaigns.filter((c) => c.impressions > 0 && c.search_impression_share !== null);
+  if (active.length) {
+    console.log("\n--- Awareness (Search campaigns) ---");
+    for (const c of active) {
+      const is = c.search_impression_share!;
+      const lostBudget = c.search_budget_lost_impression_share ?? 0;
+      const lostRank = c.search_rank_lost_impression_share ?? 0;
+      console.log(
+        `  ${c.campaign_name}: IS=${(is * 100).toFixed(1)}% lost-budget=${(lostBudget * 100).toFixed(1)}% lost-rank=${(lostRank * 100).toFixed(1)}%`
+      );
+    }
+  }
+
+  // Geo (Estonia=2233, Finland=2246)
+  if (geo.length) {
+    console.log("\n--- Geo ---");
+    for (const g of geo.slice(0, 5)) {
+      console.log(`  country=${g.country_code} impr=${g.impressions} clicks=${g.clicks} cost=€${g.cost} CPM=€${g.average_cpm}`);
+    }
+  }
+
   console.log(`\nCampaigns: ${campaigns.length}`);
   console.log(`Keywords: ${keywords.length}`);
   console.log(`Search Terms: ${searchTerms.length}`);
