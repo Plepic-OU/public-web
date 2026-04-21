@@ -14,6 +14,7 @@
  *   npx ts-node scripts/video-publish.ts <file> --unlisted      (upload as unlisted)
  *   npx ts-node scripts/video-publish.ts <file> --force         (override idempotency)
  *   npx ts-node scripts/video-publish.ts <file> --no-captions   (skip caption burn-in)
+ *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
  *
  * Mock mode env switches (for contract tests + offline iteration):
  *   WHISPER_MOCK=1     read transcript from _fixtures/mock-responses/transcript.json
@@ -137,6 +138,7 @@ interface CliOptions {
   dryRun: boolean;
   force: boolean;
   noCaptions: boolean;
+  thumbnailTime: number | null;
 }
 
 // ---------- CLI parsing ----------
@@ -154,6 +156,11 @@ function parseArgs(): CliOptions {
     throw new Error(`Source video not found: ${sourceFile}`);
   }
   const planIdx = args.indexOf("--plan");
+  const thumbIdx = args.indexOf("--thumbnail-time");
+  const thumbnailTime = thumbIdx !== -1 ? parseFloat(args[thumbIdx + 1]) : null;
+  if (thumbnailTime !== null && !Number.isFinite(thumbnailTime)) {
+    throw new Error(`--thumbnail-time must be a number of seconds, got "${args[thumbIdx + 1]}"`);
+  }
   return {
     sourceFile,
     interactive: args.includes("--interactive"),
@@ -162,6 +169,7 @@ function parseArgs(): CliOptions {
     dryRun: args.includes("--dry-run"),
     force: args.includes("--force"),
     noCaptions: args.includes("--no-captions"),
+    thumbnailTime,
   };
 }
 
@@ -347,8 +355,8 @@ async function transcribe(
     return { words, language, duration, fullText, srtText };
   }
 
-  const audioFile = path.join(workDir, "audio.opus");
-  console.log("transcribe: extracting mono 16kHz opus...");
+  const audioFile = path.join(workDir, "audio.ogg");
+  console.log("transcribe: extracting mono 16kHz ogg/opus...");
   runFfmpeg(
     [
       "-i",
@@ -521,7 +529,7 @@ async function chunkAudio(
       start = end;
       continue;
     }
-    const file = path.join(chunksDir, `chunk-${String(i).padStart(3, "0")}.opus`);
+    const file = path.join(chunksDir, `chunk-${String(i).padStart(3, "0")}.ogg`);
     runFfmpeg(
       [
         "-ss",
@@ -780,64 +788,40 @@ async function generateMetadata(
     return JSON.parse(fs.readFileSync(mock, "utf8"));
   }
 
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) throw new Error("ANTHROPIC_API_KEY not set");
-
   const voice = readVoiceMd();
   const brandContext = readBrandContext();
 
-  const systemParts = [
-    { type: "text" as const, text: SYSTEM_PROMPT },
-    {
-      type: "text" as const,
-      text: `## Voice authority\n\n${voice}`,
-      cache_control: { type: "ephemeral" as const },
-    },
-    {
-      type: "text" as const,
-      text: `## Brand context\n\n${brandContext}`,
-      cache_control: { type: "ephemeral" as const },
-    },
-  ];
-
-  const userText = [
-    plan ? `## Workflow 11 plan (primary seed)\n\n${plan}` : "## No plan provided — generate from transcript only.",
+  // Use Claude Code CLI (`claude -p`) so we consume the user's Max subscription
+  // instead of requiring a separate ANTHROPIC_API_KEY. Model defaults to haiku
+  // for cost + latency; override via CLAUDE_MODEL env var if needed.
+  const model = process.env.CLAUDE_MODEL ?? "haiku";
+  const promptText = [
+    SYSTEM_PROMPT,
+    `\n## Voice authority\n\n${voice}`,
+    `\n## Brand context\n\n${brandContext}`,
+    plan ? `\n## Workflow 11 plan (primary seed)\n\n${plan}` : "\n## No plan provided — generate from transcript only.",
     `\n## Transcript (verbatim, noisy)\n\n${transcript.fullText.slice(0, 12000)}`,
     `\n## Detected language\n\n${transcript.language}`,
     `\n## Slug base\n\n${slug}`,
+    "\n\nReturn ONLY the JSON object described in the system prompt. No markdown fences, no commentary.",
   ].join("\n");
 
-  const r = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": key,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 1500,
-      system: systemParts,
-      messages: [{ role: "user", content: userText }],
-    }),
-  });
-  if (!r.ok) {
-    const msg = await r.text();
-    throw new Error(`Anthropic API ${r.status}: ${msg.slice(0, 500)}`);
-  }
-  const data = (await r.json()) as {
-    content: Array<{ type: string; text?: string }>;
-    usage?: { cache_read_input_tokens?: number; cache_creation_input_tokens?: number; input_tokens?: number; output_tokens?: number };
-  };
-  const text = data.content.find((c) => c.type === "text")?.text ?? "";
-  if (data.usage) {
-    console.log(
-      `generateMetadata: cache read ${data.usage.cache_read_input_tokens ?? 0}, ` +
-        `cache creation ${data.usage.cache_creation_input_tokens ?? 0}, ` +
-        `input ${data.usage.input_tokens ?? 0}, output ${data.usage.output_tokens ?? 0}`
+  console.log(`generateMetadata: calling claude -p --model ${model}...`);
+  const r = spawnSync(
+    "claude",
+    ["-p", "--output-format", "text", "--model", model],
+    {
+      input: promptText,
+      encoding: "utf8",
+      maxBuffer: 10 * 1024 * 1024,
+    }
+  );
+  if (r.status !== 0) {
+    throw new Error(
+      `claude -p failed (status ${r.status}): ${(r.stderr ?? "").slice(0, 500)}`
     );
   }
-
+  const text = r.stdout.trim();
   const parsed = parseMetadataResponse(text, slug);
   validateMetadata(parsed);
   return parsed;
@@ -945,38 +929,67 @@ function makeThumbnail(
   sourceFile: string,
   metadata: VideoMetadata,
   format: Format,
-  workDir: string
+  workDir: string,
+  opts: { timestamp: number | null } = { timestamp: null }
 ): string {
   const outPath = path.join(workDir, "thumbnail.png");
   const [width, height] = format === "vlog" ? [1080, 1920] : [1280, 720];
 
-  // Pick a candidate frame via thumbnail filter (ranks frames by how "interesting" they are).
+  // Either pick a candidate frame via thumbnail filter (ranks frames by how
+  // "interesting" they are) or seek to a specific timestamp when the caller
+  // provides one (useful when the auto-pick grabs the wrong face).
   const framePath = path.join(workDir, "thumbnail-frame.png");
-  runFfmpeg(
-    [
-      "-i",
-      sourceFile,
-      "-vf",
-      `thumbnail=n=100,scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}`,
-      "-frames:v",
-      "1",
-      framePath,
-    ],
-    { silent: true }
-  );
+  if (opts.timestamp !== null) {
+    console.log(`makeThumbnail: seeking to ${opts.timestamp}s for frame grab`);
+    runFfmpeg(
+      [
+        "-ss",
+        String(opts.timestamp),
+        "-i",
+        sourceFile,
+        "-vf",
+        `scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}`,
+        "-frames:v",
+        "1",
+        framePath,
+      ],
+      { silent: true }
+    );
+  } else {
+    runFfmpeg(
+      [
+        "-i",
+        sourceFile,
+        "-vf",
+        `thumbnail=n=100,scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height}`,
+        "-frames:v",
+        "1",
+        framePath,
+      ],
+      { silent: true }
+    );
+  }
 
-  // Overlay: darken bottom strip, then drawtext with brand color on cream background.
+  // Overlay: a cream-on-brand box near the bottom, padded symmetrically.
+  // Box height accounts for up to 2 lines of text + inner padding so the
+  // drawtext never overflows the drawbox.
   const text = shortenForThumbnail(metadata.title, format);
-  const fontSize = format === "vlog" ? 68 : 54;
-  const boxMargin = format === "vlog" ? 60 : 40;
-  const boxY = format === "vlog" ? height - 500 : height - 200;
-  const boxH = format === "vlog" ? 380 : 140;
+  const fontSize = format === "vlog" ? 64 : 50;
+  const boxMargin = format === "vlog" ? 60 : 50;
+  const innerPad = format === "vlog" ? 50 : 40;
+  const wrapChars = format === "vlog" ? 18 : 30;
+  const lineSpacing = 8;
+  const boxH = format === "vlog" ? 380 : 170;
+  const boxY = height - boxH - (format === "vlog" ? 140 : 50);
 
-  // drawtext has limited wrapping; pre-wrap manually.
-  const wrapped = wrapText(text, format === "vlog" ? 18 : 34);
-
-  const tempTxt = path.join(workDir, "thumb-text.txt");
-  fs.writeFileSync(tempTxt, wrapped);
+  // Render one drawtext filter per wrapped line. The textfile-with-newlines
+  // path renders `\n` as a tofu glyph in some ffmpeg builds, so we stack
+  // per-line filters instead and compute each y coordinate explicitly.
+  const lines = wrapText(text, wrapChars).split("\n");
+  const drawtextFilters = lines.map((line, i) => {
+    const y = boxY + innerPad + i * (fontSize + lineSpacing);
+    return `drawtext=fontfile='${FONT_PATH}':text='${escFfText(line)}':fontcolor=${BRAND_GREEN_DARK}:fontsize=${fontSize}:x=${boxMargin + innerPad}:y=${y}`;
+  });
 
   runFfmpeg(
     [
@@ -984,8 +997,8 @@ function makeThumbnail(
       framePath,
       "-vf",
       [
-        `drawbox=x=${boxMargin}:y=${boxY}:w=${width - boxMargin * 2}:h=${boxH}:color=${BRAND_CREAM}@0.92:t=fill`,
-        `drawtext=fontfile='${FONT_PATH}':textfile='${tempTxt}':fontcolor=${BRAND_GREEN_DARK}:fontsize=${fontSize}:x=${boxMargin + 30}:y=${boxY + 30}:line_spacing=8`,
+        `drawbox=x=${boxMargin}:y=${boxY}:w=${width - boxMargin * 2}:h=${boxH}:color=${BRAND_CREAM}@0.93:t=fill`,
+        ...drawtextFilters,
       ].join(","),
       "-frames:v",
       "1",
@@ -1003,6 +1016,18 @@ function shortenForThumbnail(title: string, format: Format): string {
   if (title.length <= cap) return title;
   const cut = title.lastIndexOf(" ", cap);
   return title.slice(0, cut > 20 ? cut : cap);
+}
+
+function escFfText(s: string): string {
+  // Escape characters that have special meaning inside an ffmpeg drawtext
+  // filter argument (the filter parser uses `\`, `:`, `,`, `'`, `[`, `]`).
+  return s
+    .replace(/\\/g, "\\\\")
+    .replace(/:/g, "\\:")
+    .replace(/'/g, "\\'")
+    .replace(/,/g, "\\,")
+    .replace(/\[/g, "\\[")
+    .replace(/\]/g, "\\]");
 }
 
 function wrapText(s: string, maxChars: number): string {
@@ -1091,8 +1116,10 @@ async function uploadToYoutube(
     media: { body: fs.createReadStream(thumbnailFile) },
   });
 
-  // Captions (long-form only — vlogs have burned-in captions)
-  if (opts.srtPath && opts.format === "long") {
+  // Captions (long-form only — vlogs have burned-in captions).
+  // Skipped silently if the SRT file is missing (user deleted it, or a
+  // language-detection concern means we'd rather let YouTube auto-caption).
+  if (opts.srtPath && opts.format === "long" && fs.existsSync(opts.srtPath)) {
     console.log("uploadToYoutube: uploading captions...");
     await youtube.captions.insert({
       part: ["snippet"],
@@ -1106,6 +1133,8 @@ async function uploadToYoutube(
       },
       media: { body: fs.createReadStream(opts.srtPath) },
     });
+  } else if (opts.format === "long") {
+    console.log("uploadToYoutube: no SRT present — YouTube will auto-caption.");
   }
 
   const url = `https://youtu.be/${videoId}`;
@@ -1312,7 +1341,9 @@ async function main(): Promise<void> {
     await pauseIfInteractive(opts.interactive, "metadata — review fields");
 
     // Phase: thumbnail
-    const thumbnail = makeThumbnail(editedFile, metadata, format, workDir);
+    const thumbnail = makeThumbnail(editedFile, metadata, format, workDir, {
+      timestamp: opts.thumbnailTime,
+    });
     log.phases_completed.push("thumbnail");
     writePublishLog(workDir, log);
     await pauseIfInteractive(opts.interactive, `thumbnail — open ${thumbnail}`);

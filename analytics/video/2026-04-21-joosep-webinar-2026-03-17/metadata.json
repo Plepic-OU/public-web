@@ -1,0 +1,19 @@
+{
+  "title": "How to Make Claude Understand Your Codebase",
+  "description": "When you're working with Claude Code on a larger project, context matters—how well Claude understands your architecture directly affects how useful its suggestions become. This session explores practical patterns for documenting that architecture in ways AI can navigate: C4 models that map your system structure, MCP servers that provide framework-specific knowledge, and test-driven workflows that keep the feedback loop tight.\n\nYou'll see a live walkthrough of preparing an end-to-end test suite with Claude Code, from initial architecture planning through implementation with Playwright. The goal isn't to show perfect code—it's to show how deliberate documentation and clear prompts reduce the back-and-forth and let AI contribute more meaningfully to your work.\n\nIf you're a developer or technical leader in an agency context, you'll recognize the workflow. If you're considering Claude Code for your team, you'll see concrete techniques you can adapt. Learn more at plepic.com/training?utm_source=youtube&utm_content=joosep-webinar-2026-03-17\n\n#ClaudeCode #Architecture #TestDrivenDevelopment #SoftwareDevelopment #AgenticCoding",
+  "tags": [
+    "Claude Code",
+    "software architecture",
+    "C4 models",
+    "Playwright",
+    "test-driven development",
+    "MCP servers",
+    "documentation",
+    "AI-assisted development",
+    "codebase understanding",
+    "developer workflow"
+  ],
+  "chapters": [],
+  "pinnedComment": "How do you currently brief Claude on your project structure? Do you find yourself repeating the same context across conversations?",
+  "slug": "joosep-webinar-2026-03-17"
+}

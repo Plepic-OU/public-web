@@ -1,0 +1,29 @@
+{
+  "slug": "joosep-webinar-2026-03-17",
+  "format": "long",
+  "source_path": "/Users/kaidokoort/plepic-video/inbox/joosep-webinar-2026-03-17.mp4",
+  "started_at": "2026-04-21T06:09:12.183Z",
+  "phases_completed": [
+    "transcribe",
+    "edit",
+    "metadata",
+    "thumbnail",
+    "linkedin-prep",
+    "youtube"
+  ],
+  "youtube": {
+    "video_id": "o7wlMIvUvlY",
+    "url": "https://youtu.be/o7wlMIvUvlY",
+    "studio_url": "https://studio.youtube.com/video/o7wlMIvUvlY/edit",
+    "upload_session_url": null,
+    "privacy": "unlisted"
+  },
+  "linkedin": {
+    "assets_path": "/Users/kaidokoort/plepic-video/work/2026-04-21-joosep-webinar-2026-03-17/linkedin",
+    "post_url": null
+  },
+  "quota_units_used": 1650,
+  "duration_seconds": 1093.459,
+  "errors": [],
+  "finished_at": "2026-04-21T06:49:26.529Z"
+}
