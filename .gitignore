@@ -18,3 +18,8 @@ scripts/dist/
 
 # Analytics credentials (NEVER commit)
 analytics/credentials/*.json
+
+# Ephemeral design/iteration artifacts
+screenshots/
+logo-prototype.html
+demo-tenders-screenshot.png

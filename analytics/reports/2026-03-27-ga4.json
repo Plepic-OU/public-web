@@ -1,0 +1,80 @@
+{
+  "date": "2026-03-27",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-03-27",
+    "end": "2026-03-27"
+  },
+  "summary": {
+    "sessions": 6,
+    "users": 5,
+    "new_users": 4,
+    "page_views": 5,
+    "avg_session_duration": 523.6082258333333,
+    "bounce_rate": 0.6666666666666666,
+    "pages_per_session": 0.8333333333333334
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 3,
+      "sessions": 3,
+      "bounce_rate": 1,
+      "avg_time_on_page": 6.481359666666666
+    },
+    {
+      "path": "/training/",
+      "page_views": 2,
+      "sessions": 3,
+      "bounce_rate": 0.3333333333333333,
+      "avg_time_on_page": 1040.7350920000001
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 5,
+      "users": 4,
+      "conversions": 1
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 1
+    },
+    {
+      "source": "linkedin.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 50,
+    "mobile": 33,
+    "tablet": 17
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 3,
+      "users": 2
+    },
+    {
+      "country": "Singapore",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "China",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [],
+  "total_conversion_value": 0
+}

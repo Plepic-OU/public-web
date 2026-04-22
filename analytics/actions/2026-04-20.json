@@ -1,0 +1,56 @@
+{
+  "date": "2026-04-20",
+  "actions": [
+    {
+      "timestamp": "2026-04-20T08:54:21.335Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "claude",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Generic Anthropic interest (107 impr/wk, high CPC, not training buyers). EXACT to avoid blocking multi-word relevant queries.",
+      "match_type": "EXACT",
+      "success": true
+    },
+    {
+      "timestamp": "2026-04-20T08:54:25.365Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "claude enterprise pricing",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Shopping for Anthropic enterprise plans, not Plepic training.",
+      "match_type": "PHRASE",
+      "success": true
+    },
+    {
+      "timestamp": "2026-04-20T08:54:25.730Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "claude code subscription",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Shopping for Claude product subscription, not training.",
+      "match_type": "PHRASE",
+      "success": true
+    },
+    {
+      "timestamp": "2026-04-20T08:54:26.073Z",
+      "action": "PAUSE_KEYWORD",
+      "keyword": "claude code",
+      "keyword_id": "2246481407233",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Awareness-mode pruning: €3 avg CPC, QS=3. Keep 'claude code training' phrase (QS=5) as the relevant match.",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 1,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 3,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}
