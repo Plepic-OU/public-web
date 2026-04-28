@@ -19,10 +19,13 @@ import * as path from "path";
 const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || "515893461"; // Numeric property ID
 const REPORTS_DIR = path.join(__dirname, "../analytics/reports");
 
-// Conversion event values (EUR)
+// EUR value assigned per conversion event. Events not listed here are still
+// captured in the report (with value 0) so the count remains truthful. The EUR
+// attribution is opt-in. Add a key here to start valuing a new event.
 const CONVERSION_VALUES: Record<string, number> = {
   form_submit: 504,
   google_form_signup: 504,
+  ads_conversion_Book_appointment_1: 50,
   calendar_click: 50,
   calendar_booking: 50,
   contact_click: 5,
@@ -260,20 +263,18 @@ async function fetchConversions(
   startDate: string,
   endDate: string
 ): Promise<{ conversions: GA4Report["conversions"]; total_value: number }> {
-  // Fetch key events (conversion events)
+  // Fetch all key events. Previously this filtered eventName on a hardcoded
+  // list, silently dropping events like ads_conversion_Book_appointment_1.
+  // The `keyEvents` metric returns the count for events flagged as Key Events
+  // in the GA4 property; rows with keyEvents=0 are filtered out client-side
+  // so non-conversion events do not pollute the report.
   const [response] = await client.runReport({
     property: `properties/${propertyId}`,
     dateRanges: [{ startDate, endDate }],
     dimensions: [{ name: "eventName" }],
-    metrics: [{ name: "eventCount" }],
-    dimensionFilter: {
-      filter: {
-        fieldName: "eventName",
-        inListFilter: {
-          values: Object.keys(CONVERSION_VALUES),
-        },
-      },
-    },
+    metrics: [{ name: "keyEvents" }],
+    orderBys: [{ metric: { metricName: "keyEvents" }, desc: true }],
+    limit: 50,
   });
 
   const conversions: GA4Report["conversions"] = [];
@@ -282,6 +283,7 @@ async function fetchConversions(
   response.rows?.forEach((row) => {
     const eventName = row.dimensionValues?.[0]?.value || "";
     const count = parseInt(row.metricValues?.[0]?.value || "0");
+    if (count <= 0) return;
     const value = (CONVERSION_VALUES[eventName] || 0) * count;
 
     conversions.push({
