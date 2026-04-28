@@ -467,7 +467,12 @@ function calculateSummary(
 }
 
 async function exportAds(date?: string): Promise<void> {
-  const targetDate = date || new Date().toISOString().split("T")[0];
+  // Default to YESTERDAY (UTC) so the export captures a fully-settled day.
+  // Google Ads data takes 24-48h to finalize; querying "today" at 04:00 UTC
+  // (when GHA runs) returns near-zero spend even on days with real spend.
+  const targetDate =
+    date ||
+    new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split("T")[0];
   console.log(`Exporting Google Ads data for ${targetDate}...`);
 
   const credentials = loadCredentials();

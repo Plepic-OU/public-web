@@ -299,7 +299,12 @@ async function fetchConversions(
 }
 
 async function exportAnalytics(date?: string): Promise<void> {
-  const targetDate = date || new Date().toISOString().split("T")[0];
+  // Default to YESTERDAY (UTC) so the export captures a fully-settled day.
+  // GHA runs this at 04:00 UTC; querying "today" returns only the first
+  // ~4 hours of data, which is why daily artifacts looked near-empty.
+  const targetDate =
+    date ||
+    new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split("T")[0];
   console.log(`Exporting GA4 data for ${targetDate}...`);
 
   const client = await initializeClient();
