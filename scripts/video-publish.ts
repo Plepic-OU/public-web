@@ -138,6 +138,10 @@ interface Cue {
   start: number;
   end: number;
   words: TranscriptWord[];
+  // Set of indices into `words` that should render in brand-green emphasis.
+  // Populated by alignTranscriptToScript when --plan is provided; absent
+  // for the Claude-chunking + heuristic-emphasis fallback path.
+  emphasisIndices?: Set<number>;
 }
 
 interface Transcript {
@@ -733,6 +737,254 @@ function groupCues(words: TranscriptWord[]): Cue[] {
   }
   flush();
   return cues;
+}
+
+// ---------- plan-aligned captions ----------
+
+interface ScriptToken {
+  text: string;
+  emphasized: boolean;
+  // Index of the spoken line this token belongs to (one cue candidate per line).
+  lineIdx: number;
+}
+
+// Walk the plan markdown, keep only spoken text, and tokenize line-by-line.
+// Tolerant: skips frontmatter, HTML comments, headings, code fences, italic
+// stage directions (`*[...]*`), and emphasized-but-bracketed beat marks. Also
+// skips body under non-speech headings (filming notes, "when done", pipeline
+// instructions) by matching common markers.
+// Bold spans (`**foo**`) survive as `emphasized` flags on their tokens.
+export function parseSpokenScriptTokens(planMarkdown: string): ScriptToken[] {
+  const lines = planMarkdown.split(/\r?\n/);
+  const out: ScriptToken[] = [];
+  let lineIdx = 0;
+  let inFrontmatter = false;
+  let inCodeFence = false;
+  // After we see a heading like "Filming notes" / "When done" / "What the
+  // pipeline...", every subsequent line is non-speech until either EOF or
+  // another `---` separator. The list mirrors the conventions in
+  // analytics/video-plans/. Add to it when new conventions emerge.
+  const nonSpeechHeading = /^#{1,6}\s+(filming|when done|what the pipeline|notes|instructions)/i;
+  let inNonSpeech = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    let raw = lines[i];
+
+    // Frontmatter: leading `---` opens, next bare `---` closes.
+    if (i === 0 && /^---\s*$/.test(raw)) {
+      inFrontmatter = true;
+      continue;
+    }
+    if (inFrontmatter) {
+      if (/^---\s*$/.test(raw)) inFrontmatter = false;
+      continue;
+    }
+
+    if (/^```/.test(raw)) {
+      inCodeFence = !inCodeFence;
+      continue;
+    }
+    if (inCodeFence) continue;
+
+    // Strip HTML comments inline (single-line). Multi-line comments are rare
+    // in plan markdown; not worth a state machine for one expected case.
+    raw = raw.replace(/<!--[\s\S]*?-->/g, "");
+
+    const trimmed = raw.trim();
+    if (!trimmed) continue;
+    // Plain `---` separator inside the body (not frontmatter): closes any
+    // active non-speech section. Otherwise skip.
+    if (/^---+\s*$/.test(trimmed)) {
+      inNonSpeech = false;
+      continue;
+    }
+    // Markdown headings: detect non-speech sections. Speech-side headings
+    // are also skipped, just don't flip the non-speech flag.
+    if (/^#{1,6}\s/.test(trimmed)) {
+      inNonSpeech = nonSpeechHeading.test(trimmed);
+      continue;
+    }
+    if (inNonSpeech) continue;
+    // Italic-bracketed stage directions, e.g. *[short beat]*, *[matter-of-fact]*.
+    if (/^\*\[[^\]]*\]\*\s*$/.test(trimmed)) continue;
+    // List items beginning with `- ` are filming-notes / pipeline-instructions
+    // boilerplate, not spoken content.
+    if (/^[-*]\s/.test(trimmed)) continue;
+
+    // Tokenize. Strip trailing markdown line-break markers (two spaces).
+    const text = trimmed.replace(/\s+$/, "");
+    // Split on bold markers, preserving them so we can flip emphasis as we go.
+    const segments = text.split(/(\*\*)/);
+    let emphasized = false;
+    const lineTokens: ScriptToken[] = [];
+    for (const seg of segments) {
+      if (seg === "**") {
+        emphasized = !emphasized;
+        continue;
+      }
+      if (!seg) continue;
+      const words = seg.split(/\s+/).filter(Boolean);
+      for (const w of words) {
+        // Skip pure-punctuation tokens that get orphaned when bold markers
+        // sit immediately before punctuation, e.g. `**Friday**.` -> "." alone.
+        if (!/[a-z0-9]/i.test(w)) continue;
+        lineTokens.push({ text: w, emphasized, lineIdx });
+      }
+    }
+    if (lineTokens.length > 0) {
+      out.push(...lineTokens);
+      lineIdx += 1;
+    }
+  }
+  return out;
+}
+
+// Normalize a token to lowercase alphanumerics for fuzzy matching against
+// Whisper output. Strips markdown/sentence punctuation but keeps internal
+// digits + decimals so "8.7" matches "8.7" and the percent suffix in "80%"
+// stays distinct from a bare "80".
+function normalizeForMatch(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9.%€$']/g, "")
+    .replace(/\.+$/, "");
+}
+
+// Sequential alignment with small Levenshtein-style cost. For each script
+// token, returns the matched Whisper word index or null if unmatched. We
+// allow Whisper to insert (skip Whisper words) and to drop (skip script
+// tokens) but penalize each non-equal step. The returned array has length
+// `scriptTokens.length`; alignment[i] = whisper-idx | null.
+export function alignScriptToWhisper(
+  scriptTokens: ScriptToken[],
+  whisperWords: TranscriptWord[]
+): Array<number | null> {
+  const n = scriptTokens.length;
+  const m = whisperWords.length;
+  if (n === 0 || m === 0) return new Array(n).fill(null);
+
+  const sNorm = scriptTokens.map((t) => normalizeForMatch(t.text));
+  const wNorm = whisperWords.map((w) => normalizeForMatch(w.text));
+
+  // Standard edit-distance DP, then backtrace. Costs: match=0, sub=1,
+  // skip-script=1, skip-whisper=1. n*m can be ~200*200=40k for a 30s vlog;
+  // negligible.
+  const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = 0; i <= n; i++) dp[i][0] = i;
+  for (let j = 0; j <= m; j++) dp[0][j] = j;
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      const matchCost = sNorm[i - 1] === wNorm[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j - 1] + matchCost,
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1
+      );
+    }
+  }
+
+  const alignment: Array<number | null> = new Array(n).fill(null);
+  let i = n;
+  let j = m;
+  while (i > 0 && j > 0) {
+    const matchCost = sNorm[i - 1] === wNorm[j - 1] ? 0 : 1;
+    if (dp[i][j] === dp[i - 1][j - 1] + matchCost && matchCost === 0) {
+      alignment[i - 1] = j - 1;
+      i--;
+      j--;
+    } else if (dp[i][j] === dp[i - 1][j - 1] + matchCost) {
+      // substitution: count as unmatched (text differed); preferring null
+      // is safer than fuzzy-mapping a wrong word onto an emphasis cue.
+      i--;
+      j--;
+    } else if (dp[i][j] === dp[i - 1][j] + 1) {
+      i--;
+    } else {
+      j--;
+    }
+  }
+  return alignment;
+}
+
+// Build cues from script lines, mapped onto Whisper words. Each script line
+// becomes one cue (split into 2 if >4 words, at the nearest comma boundary).
+// Emphasis indices are derived from the matched Whisper-word positions, so
+// `wordsToAss` only needs `cue.emphasisIndices.has(word_index_in_cue)`.
+export function alignTranscriptToScript(
+  whisperWords: TranscriptWord[],
+  planMarkdown: string
+): { cues: Cue[]; matchRatio: number } | null {
+  const scriptTokens = parseSpokenScriptTokens(planMarkdown);
+  if (scriptTokens.length === 0) return null;
+  const alignment = alignScriptToWhisper(scriptTokens, whisperWords);
+  const matched = alignment.filter((a) => a !== null).length;
+  const matchRatio = matched / scriptTokens.length;
+
+  // Group aligned script tokens by line. A cue's words = the Whisper words
+  // matched to that line, in order. Unmatched tokens drop (they didn't
+  // appear in the audio, e.g. trimmed by post-normalization).
+  const byLine = new Map<number, Array<{ scriptIdx: number; whisperIdx: number }>>();
+  for (let i = 0; i < scriptTokens.length; i++) {
+    const wIdx = alignment[i];
+    if (wIdx === null) continue;
+    const arr = byLine.get(scriptTokens[i].lineIdx) ?? [];
+    arr.push({ scriptIdx: i, whisperIdx: wIdx });
+    byLine.set(scriptTokens[i].lineIdx, arr);
+  }
+
+  const cues: Cue[] = [];
+  const lineOrder = [...byLine.keys()].sort((a, b) => a - b);
+  for (const lineIdx of lineOrder) {
+    const matches = byLine.get(lineIdx)!;
+    if (matches.length === 0) continue;
+    matches.sort((a, b) => a.whisperIdx - b.whisperIdx);
+
+    // Long lines (>4 words) split at the nearest comma in the script tokens.
+    const lineSplits: Array<typeof matches> =
+      matches.length > 4 ? splitAtComma(matches, scriptTokens) : [matches];
+
+    for (const group of lineSplits) {
+      if (group.length === 0) continue;
+      const words = group.map((g) => whisperWords[g.whisperIdx]);
+      const emphasisIndices = new Set<number>();
+      for (let k = 0; k < group.length; k++) {
+        if (scriptTokens[group[k].scriptIdx].emphasized) {
+          emphasisIndices.add(k);
+        }
+      }
+      cues.push({
+        start: words[0].start,
+        end: words[words.length - 1].end,
+        words,
+        emphasisIndices,
+      });
+    }
+  }
+
+  return { cues, matchRatio };
+}
+
+// Split a long matched group at the nearest script-side comma. Returns at
+// most two sub-groups; if no comma found, returns the original as a single
+// group (the wordsToAss path will still render it, just longer).
+function splitAtComma(
+  matches: Array<{ scriptIdx: number; whisperIdx: number }>,
+  scriptTokens: ScriptToken[]
+): Array<Array<{ scriptIdx: number; whisperIdx: number }>> {
+  const mid = Math.floor(matches.length / 2);
+  let bestSplit = -1;
+  let bestDist = Infinity;
+  for (let k = 0; k < matches.length - 1; k++) {
+    if (/,$/.test(scriptTokens[matches[k].scriptIdx].text)) {
+      const dist = Math.abs(k - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestSplit = k;
+      }
+    }
+  }
+  if (bestSplit === -1) return [matches];
+  return [matches.slice(0, bestSplit + 1), matches.slice(bestSplit + 1)];
 }
 
 // Ask Claude Haiku to chunk words into logical phrase cues (2-4 words each),
