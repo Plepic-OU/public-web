@@ -739,6 +739,124 @@ function groupCues(words: TranscriptWord[]): Cue[] {
   return cues;
 }
 
+// ---------- Whisper post-normalization ----------
+
+// Run once after Whisper, before any downstream phase, when a script is
+// available. Fixes the predictable Whisper artifacts: decimals split into two
+// digit tokens, percent/currency suffix dropped, off-script trailing improv.
+// Gating against the script means we never apply unconstrained merges (e.g.
+// merging stray `8` + `7` into `8.7` when the speaker just said two numbers).
+export function normalizeWhisperOutput(
+  words: TranscriptWord[],
+  scriptTokens: ScriptToken[]
+): TranscriptWord[] {
+  if (scriptTokens.length === 0) return words.slice();
+  // Coarse alignment to know which Whisper indices anchor to script positions.
+  const alignment = alignScriptToWhisper(scriptTokens, words);
+  // Reverse map: whisperIdx -> scriptIdx (first hit wins).
+  const whisperToScript = new Map<number, number>();
+  for (let i = 0; i < alignment.length; i++) {
+    const wIdx = alignment[i];
+    if (wIdx !== null && !whisperToScript.has(wIdx)) {
+      whisperToScript.set(wIdx, i);
+    }
+  }
+
+  // For each Whisper index, expectedScriptIdx is the script position it
+  // most plausibly fills — either the direct alignment hit, or the gap
+  // between the last-anchored and next-anchored script positions.
+  const expectedScript: Array<number | null> = new Array(words.length).fill(null);
+  let lastAnchorScript = -1;
+  for (let i = 0; i < words.length; i++) {
+    const direct = whisperToScript.get(i);
+    if (direct !== undefined) {
+      expectedScript[i] = direct;
+      lastAnchorScript = direct;
+      continue;
+    }
+    let nextAnchorScript: number | null = null;
+    for (let j = i + 1; j < words.length; j++) {
+      const a = whisperToScript.get(j);
+      if (a !== undefined) {
+        nextAnchorScript = a;
+        break;
+      }
+    }
+    const candidate =
+      nextAnchorScript === null
+        ? lastAnchorScript + 1
+        : Math.max(lastAnchorScript + 1, nextAnchorScript - (lastAnchorScript === -1 ? 0 : 1));
+    if (candidate >= 0 && candidate < scriptTokens.length) {
+      expectedScript[i] = candidate;
+    }
+  }
+
+  const result: TranscriptWord[] = [];
+  let i = 0;
+  while (i < words.length) {
+    const w = words[i];
+    const next = words[i + 1];
+    const scriptIdx = expectedScript[i];
+    const scriptText = scriptIdx !== null ? scriptTokens[scriptIdx].text : "";
+    const stripped = scriptText.replace(/[^a-z0-9.€$%]/gi, "").toLowerCase();
+    const wText = w.text.replace(/[.,!?]$/, "").trim();
+    const nextText = next ? next.text.replace(/[.,!?]$/, "").trim() : "";
+
+    // Decimal merge: Whisper "8" + "7" against script "8.7".
+    if (next && /^\d+$/.test(wText) && /^\d+$/.test(nextText)) {
+      const decimalMatch = stripped.match(/^(\d+)\.(\d+)$/);
+      if (decimalMatch && decimalMatch[1] === wText && decimalMatch[2] === nextText) {
+        result.push({
+          text: `${decimalMatch[1]}.${decimalMatch[2]}`,
+          start: w.start,
+          end: next.end,
+        });
+        i += 2;
+        continue;
+      }
+    }
+
+    // Percent append: Whisper "80" against script "80%".
+    if (/^\d+$/.test(wText) && /^\d+%$/.test(stripped)) {
+      const numPart = stripped.slice(0, -1);
+      if (numPart === wText) {
+        result.push({ text: `${wText}%`, start: w.start, end: w.end });
+        i += 1;
+        continue;
+      }
+    }
+
+    // Currency append: Whisper "500" against script "500€" or "500$".
+    const currencyMatch = stripped.match(/^(\d+)([€$])$/);
+    if (currencyMatch && /^\d+$/.test(wText) && currencyMatch[1] === wText) {
+      result.push({
+        text: `${currencyMatch[1]}${currencyMatch[2]}`,
+        start: w.start,
+        end: w.end,
+      });
+      i += 1;
+      continue;
+    }
+
+    result.push(w);
+    i += 1;
+  }
+
+  // Trailing improv trim: re-align the merged result against the script,
+  // then drop any words past the last matched index. Re-aligning lets the
+  // newly-merged tokens (8.7, 80%, 500€) anchor against their script
+  // positions; the original alignment couldn't see them.
+  const realignment = alignScriptToWhisper(scriptTokens, result);
+  let lastMatchedWhisper = -1;
+  for (const v of realignment) {
+    if (v !== null && v > lastMatchedWhisper) lastMatchedWhisper = v;
+  }
+  if (lastMatchedWhisper >= 0 && lastMatchedWhisper < result.length - 1) {
+    return result.slice(0, lastMatchedWhisper + 1);
+  }
+  return result;
+}
+
 // ---------- plan-aligned captions ----------
 
 interface ScriptToken {
@@ -1173,6 +1291,19 @@ async function edit(
   log: PublishLog
 ): Promise<string> {
   const duration = transcript.duration || probeVideoInfo(sourceFile).duration;
+  // When a plan is provided, normalize Whisper output against it before any
+  // downstream phase. Runs in-place on transcript.words so remap, captioning,
+  // and metadata all see the cleaned tokens.
+  if (opts.planMarkdown) {
+    const scriptTokens = parseSpokenScriptTokens(opts.planMarkdown);
+    if (scriptTokens.length > 0) {
+      const before = transcript.words.length;
+      transcript.words = normalizeWhisperOutput(transcript.words, scriptTokens);
+      console.log(
+        `edit: normalized Whisper output against plan (${before} → ${transcript.words.length} words)`
+      );
+    }
+  }
   const mergedKeeps = computeKeepRanges(transcript.words, duration);
   const noCuts = mergedKeeps.length === 1 &&
     mergedKeeps[0][0] === 0 && mergedKeeps[0][1] === duration;
@@ -2273,11 +2404,6 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
     errors: [],
   };
 
-  // Recompute the keeps used by the splice so we can remap word timestamps.
-  // The pre-recorded edited-no-captions.mp4 was produced from the same
-  // transcript, so the same keeps fall out (deterministic given inputs).
-  const keeps = computeKeepRanges(transcript.words, transcript.duration || editedDuration);
-
   // Reuse plan loading from the full pipeline. Explicit --plan wins; else
   // look up by slug. Captions-only is exactly the use case where plan
   // alignment matters most (you're iterating on caption styling).
@@ -2288,6 +2414,22 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
     const found = readPlanFile(slug);
     if (found) planContent = found.content;
   }
+
+  // Apply the same normalization the full pipeline does, before computing
+  // keeps. transcript.json on disk stays untouched (raw Whisper artifact);
+  // normalization runs in memory each re-run so a later plan edit picks up
+  // new corrections without re-running Whisper.
+  if (planContent) {
+    const scriptTokens = parseSpokenScriptTokens(planContent);
+    if (scriptTokens.length > 0) {
+      transcript.words = normalizeWhisperOutput(transcript.words, scriptTokens);
+    }
+  }
+
+  // Recompute the keeps used by the splice so we can remap word timestamps.
+  // The pre-recorded edited-no-captions.mp4 was produced from the same
+  // transcript, so the same keeps fall out (deterministic given inputs).
+  const keeps = computeKeepRanges(transcript.words, transcript.duration || editedDuration);
 
   let assPath: string | null = null;
   if (wantCaptions) {
