@@ -12,10 +12,12 @@
  *   npx ts-node scripts/video-publish.ts <file> --plan <path>   (explicit W11 plan)
  *   npx ts-node scripts/video-publish.ts <file> --dry-run       (skip YT upload)
  *   npx ts-node scripts/video-publish.ts <file> --unlisted      (upload as unlisted)
- *   npx ts-node scripts/video-publish.ts <file> --force         (override idempotency)
+ *   npx ts-node scripts/video-publish.ts <file> --force         (override idempotency; archive prior workdir)
  *   npx ts-node scripts/video-publish.ts <file> --no-captions   (skip caption burn-in)
  *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
  *   npx ts-node scripts/video-publish.ts <file> --captions-only (reuse existing workdir; re-burn captions + end card only)
+ *   npx ts-node scripts/video-publish.ts <file> --no-open       (suppress VLC preview at end)
+ *   npx ts-node scripts/video-publish.ts --clean                (archive workdirs older than 7 days; no source file needed)
  *
  * Mock mode env switches (for contract tests + offline iteration):
  *   WHISPER_MOCK=1         read transcript from _fixtures/mock-responses/transcript.json
@@ -124,6 +126,11 @@ const LI_TEASER_MAX_SEC = 120;
 const BRAND_GREEN_DARK = "#0d5822";
 const BRAND_CREAM = "#faf7f2";
 
+// Default macOS app for previewing the rendered video. VLC handles big 4K
+// vertical files without dropping frames; Quick Look stutters. String form so
+// future override (env var or per-platform) stays easy.
+const OPEN_PREVIEW_WITH = "VLC";
+
 // ---------- types ----------
 
 type Format = "vlog" | "long";
@@ -193,6 +200,8 @@ interface CliOptions {
   force: boolean;
   noCaptions: boolean;
   captionsOnly: boolean;
+  noOpen: boolean;
+  clean: boolean;
   thumbnailTime: number | null;
 }
 
@@ -200,12 +209,30 @@ interface CliOptions {
 
 function parseArgs(): CliOptions {
   const args = process.argv.slice(2);
+  const clean = args.includes("--clean");
   const captionsOnly = args.includes("--captions-only");
+
+  // --clean is standalone; needs no source file.
+  if (clean && args.length === 1) {
+    return {
+      sourceFile: "",
+      interactive: false,
+      planPath: null,
+      unlisted: false,
+      dryRun: false,
+      force: false,
+      noCaptions: false,
+      captionsOnly: false,
+      noOpen: false,
+      clean: true,
+      thumbnailTime: null,
+    };
+  }
 
   if (args.length === 0 || args[0].startsWith("--")) {
     throw new Error(
       "Usage: video-publish.ts <file> [--interactive] [--plan <path>] " +
-        "[--dry-run] [--unlisted] [--force] [--no-captions] [--captions-only]"
+        "[--dry-run] [--unlisted] [--force] [--no-captions] [--captions-only] [--no-open] | --clean"
     );
   }
   const sourceFile = path.resolve(args[0]);
@@ -230,6 +257,8 @@ function parseArgs(): CliOptions {
     force: args.includes("--force"),
     noCaptions: args.includes("--no-captions"),
     captionsOnly,
+    noOpen: args.includes("--no-open"),
+    clean,
     thumbnailTime,
   };
 }
@@ -2508,6 +2537,59 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
 
   console.log(`\n=== done (captions-only, ${((Date.now() - startedAt) / 1000).toFixed(1)}s) ===`);
   console.log(`edited: ${edited}`);
+  openInVlc(edited, opts);
+}
+
+// Open the rendered file in VLC (preferred — handles big 4K vertical files
+// without dropping frames). Falls back to macOS `open` (Quick Look) if VLC
+// isn't installed. Skipped in any mock env so test runs don't pop a player.
+function openInVlc(file: string, opts: CliOptions): void {
+  if (opts.noOpen) return;
+  if (
+    process.env.WHISPER_MOCK === "1" ||
+    process.env.CLAUDE_MOCK === "1" ||
+    process.env.CLAUDE_CHUNK_MOCK === "1" ||
+    process.env.YT_MOCK === "1" ||
+    process.env.LI_MOCK === "1"
+  ) {
+    return;
+  }
+  if (process.platform !== "darwin") return;
+  const vlc = spawnSync("open", ["-a", OPEN_PREVIEW_WITH, file], { encoding: "utf8" });
+  if (vlc.status !== 0) {
+    spawnSync("open", [file], { encoding: "utf8" });
+  }
+}
+
+// Archive workdirs with a `<YYYY-MM-DD>-` prefix older than 7 days into
+// `_archive/<dir>-<unix-ts>/`. Logs each move; never deletes.
+function cleanOldWorkDirs(): void {
+  if (!fs.existsSync(WORK_ROOT)) {
+    console.log(`clean: ${WORK_ROOT} does not exist; nothing to do.`);
+    return;
+  }
+  const archiveDir = path.join(WORK_ROOT, "_archive");
+  ensureDir(archiveDir);
+  const cutoffMs = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const candidates = fs
+    .readdirSync(WORK_ROOT)
+    .filter((d) => /^\d{4}-\d{2}-\d{2}-/.test(d) && d !== "_archive");
+  const moved: string[] = [];
+  for (const d of candidates) {
+    const datePart = d.slice(0, 10);
+    const dateMs = Date.parse(datePart);
+    if (!Number.isFinite(dateMs) || dateMs > cutoffMs) continue;
+    const src = path.join(WORK_ROOT, d);
+    const dest = path.join(archiveDir, `${d}-${Math.floor(Date.now() / 1000)}`);
+    fs.renameSync(src, dest);
+    moved.push(`${src} -> ${dest}`);
+  }
+  if (moved.length === 0) {
+    console.log("clean: no workdirs older than 7 days.");
+    return;
+  }
+  console.log(`clean: archived ${moved.length} workdir(s):`);
+  for (const m of moved) console.log(`  ${m}`);
 }
 
 // ---------- main orchestrator ----------
@@ -2520,6 +2602,11 @@ async function main(): Promise<void> {
   ensureDir(VIDEO_PLANS_DIR);
 
   const opts = parseArgs();
+
+  if (opts.clean) {
+    cleanOldWorkDirs();
+    return;
+  }
 
   if (opts.captionsOnly) {
     await runCaptionsOnly(opts);
@@ -2540,7 +2627,7 @@ async function main(): Promise<void> {
 
   // Derive initial slug from filename (will be replaced by metadata.slug)
   const initialSlug = slugify(path.basename(opts.sourceFile, path.extname(opts.sourceFile)));
-  const workDir = ensureWorkDir(today(), initialSlug);
+  const workDir = ensureWorkDir(today(), initialSlug, opts.force);
   console.log(`work: ${workDir}`);
 
   // Idempotency check
@@ -2724,6 +2811,7 @@ async function main(): Promise<void> {
     if (log.youtube?.url) console.log(`YouTube: ${log.youtube.url}`);
     if (log.youtube?.studio_url) console.log(`Studio:  ${log.youtube.studio_url}`);
     console.log(`LinkedIn assets: ${liPath}`);
+    openInVlc(editedFile, opts);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     log.errors.push(redactSecrets(msg));
@@ -2735,13 +2823,25 @@ async function main(): Promise<void> {
   }
 }
 
-function ensureWorkDir(date: string, slug: string): string {
-  let base = path.join(WORK_ROOT, `${date}-${slug}`);
+function ensureWorkDir(date: string, slug: string, force = false): string {
+  const base = path.join(WORK_ROOT, `${date}-${slug}`);
   if (!fs.existsSync(base)) {
     ensureDir(base);
     return base;
   }
-  // Collision: append -a, -b, ...
+  // --force: archive the existing same-slug workdir into _archive/ rather
+  // than letting `-a` ... `-z` collision suffixes accumulate. Keeps disk
+  // usage predictable; the archived copy is still recoverable.
+  if (force) {
+    const archiveRoot = path.join(WORK_ROOT, "_archive");
+    ensureDir(archiveRoot);
+    const dest = path.join(archiveRoot, `${date}-${slug}-${Math.floor(Date.now() / 1000)}`);
+    fs.renameSync(base, dest);
+    console.log(`force: archived prior workdir to ${dest}`);
+    ensureDir(base);
+    return base;
+  }
+  // Collision (no --force): append -a, -b, ...
   for (let c = "a".charCodeAt(0); c <= "z".charCodeAt(0); c++) {
     const suffix = String.fromCharCode(c);
     const candidate = `${base}-${suffix}`;
