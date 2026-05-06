@@ -12,9 +12,12 @@
  *   npx ts-node scripts/video-publish.ts <file> --plan <path>   (explicit W11 plan)
  *   npx ts-node scripts/video-publish.ts <file> --dry-run       (skip YT upload)
  *   npx ts-node scripts/video-publish.ts <file> --unlisted      (upload as unlisted)
- *   npx ts-node scripts/video-publish.ts <file> --force         (override idempotency)
+ *   npx ts-node scripts/video-publish.ts <file> --force         (override idempotency; archive prior workdir)
  *   npx ts-node scripts/video-publish.ts <file> --no-captions   (skip caption burn-in)
  *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
+ *   npx ts-node scripts/video-publish.ts <file> --captions-only (reuse existing workdir; re-burn captions + end card only)
+ *   npx ts-node scripts/video-publish.ts <file> --no-open       (suppress VLC preview at end)
+ *   npx ts-node scripts/video-publish.ts --clean                (archive workdirs older than 7 days; no source file needed)
  *
  * Mock mode env switches (for contract tests + offline iteration):
  *   WHISPER_MOCK=1         read transcript from _fixtures/mock-responses/transcript.json
@@ -123,6 +126,11 @@ const LI_TEASER_MAX_SEC = 120;
 const BRAND_GREEN_DARK = "#0d5822";
 const BRAND_CREAM = "#faf7f2";
 
+// Default macOS app for previewing the rendered video. VLC handles big 4K
+// vertical files without dropping frames; Quick Look stutters. String form so
+// future override (env var or per-platform) stays easy.
+const OPEN_PREVIEW_WITH = "VLC";
+
 // ---------- types ----------
 
 type Format = "vlog" | "long";
@@ -137,6 +145,10 @@ interface Cue {
   start: number;
   end: number;
   words: TranscriptWord[];
+  // Set of indices into `words` that should render in brand-green emphasis.
+  // Populated by alignTranscriptToScript when --plan is provided; absent
+  // for the Claude-chunking + heuristic-emphasis fallback path.
+  emphasisIndices?: Set<number>;
 }
 
 interface Transcript {
@@ -187,6 +199,9 @@ interface CliOptions {
   dryRun: boolean;
   force: boolean;
   noCaptions: boolean;
+  captionsOnly: boolean;
+  noOpen: boolean;
+  clean: boolean;
   thumbnailTime: number | null;
 }
 
@@ -194,14 +209,37 @@ interface CliOptions {
 
 function parseArgs(): CliOptions {
   const args = process.argv.slice(2);
+  const clean = args.includes("--clean");
+  const captionsOnly = args.includes("--captions-only");
+
+  // --clean is standalone; needs no source file.
+  if (clean && args.length === 1) {
+    return {
+      sourceFile: "",
+      interactive: false,
+      planPath: null,
+      unlisted: false,
+      dryRun: false,
+      force: false,
+      noCaptions: false,
+      captionsOnly: false,
+      noOpen: false,
+      clean: true,
+      thumbnailTime: null,
+    };
+  }
+
   if (args.length === 0 || args[0].startsWith("--")) {
     throw new Error(
       "Usage: video-publish.ts <file> [--interactive] [--plan <path>] " +
-        "[--dry-run] [--unlisted] [--force] [--no-captions]"
+        "[--dry-run] [--unlisted] [--force] [--no-captions] [--captions-only] [--no-open] | --clean"
     );
   }
   const sourceFile = path.resolve(args[0]);
-  if (!fs.existsSync(sourceFile)) {
+  // --captions-only typically targets a source whose original file has been
+  // archived by a prior full run, so the existence check is bypassed there
+  // (the workdir is found by basename, not by file contents).
+  if (!fs.existsSync(sourceFile) && !captionsOnly) {
     throw new Error(`Source video not found: ${sourceFile}`);
   }
   const planIdx = args.indexOf("--plan");
@@ -218,6 +256,9 @@ function parseArgs(): CliOptions {
     dryRun: args.includes("--dry-run"),
     force: args.includes("--force"),
     noCaptions: args.includes("--no-captions"),
+    captionsOnly,
+    noOpen: args.includes("--no-open"),
+    clean,
     thumbnailTime,
   };
 }
@@ -727,6 +768,372 @@ function groupCues(words: TranscriptWord[]): Cue[] {
   return cues;
 }
 
+// ---------- Whisper post-normalization ----------
+
+// Run once after Whisper, before any downstream phase, when a script is
+// available. Fixes the predictable Whisper artifacts: decimals split into two
+// digit tokens, percent/currency suffix dropped, off-script trailing improv.
+// Gating against the script means we never apply unconstrained merges (e.g.
+// merging stray `8` + `7` into `8.7` when the speaker just said two numbers).
+export function normalizeWhisperOutput(
+  words: TranscriptWord[],
+  scriptTokens: ScriptToken[]
+): TranscriptWord[] {
+  if (scriptTokens.length === 0) return words.slice();
+  // Coarse alignment to know which Whisper indices anchor to script positions.
+  const alignment = alignScriptToWhisper(scriptTokens, words);
+  // Reverse map: whisperIdx -> scriptIdx (first hit wins).
+  const whisperToScript = new Map<number, number>();
+  for (let i = 0; i < alignment.length; i++) {
+    const wIdx = alignment[i];
+    if (wIdx !== null && !whisperToScript.has(wIdx)) {
+      whisperToScript.set(wIdx, i);
+    }
+  }
+
+  // For each Whisper index, expectedScriptIdx is the script position it
+  // most plausibly fills — either the direct alignment hit, or the gap
+  // between the last-anchored and next-anchored script positions.
+  const expectedScript: Array<number | null> = new Array(words.length).fill(null);
+  let lastAnchorScript = -1;
+  for (let i = 0; i < words.length; i++) {
+    const direct = whisperToScript.get(i);
+    if (direct !== undefined) {
+      expectedScript[i] = direct;
+      lastAnchorScript = direct;
+      continue;
+    }
+    let nextAnchorScript: number | null = null;
+    for (let j = i + 1; j < words.length; j++) {
+      const a = whisperToScript.get(j);
+      if (a !== undefined) {
+        nextAnchorScript = a;
+        break;
+      }
+    }
+    const candidate =
+      nextAnchorScript === null
+        ? lastAnchorScript + 1
+        : Math.max(lastAnchorScript + 1, nextAnchorScript - (lastAnchorScript === -1 ? 0 : 1));
+    if (candidate >= 0 && candidate < scriptTokens.length) {
+      expectedScript[i] = candidate;
+    }
+  }
+
+  const result: TranscriptWord[] = [];
+  let i = 0;
+  while (i < words.length) {
+    const w = words[i];
+    const next = words[i + 1];
+    const scriptIdx = expectedScript[i];
+    const scriptText = scriptIdx !== null ? scriptTokens[scriptIdx].text : "";
+    const stripped = scriptText.replace(/[^a-z0-9.€$%]/gi, "").toLowerCase();
+    const wText = w.text.replace(/[.,!?]$/, "").trim();
+    const nextText = next ? next.text.replace(/[.,!?]$/, "").trim() : "";
+
+    // Decimal merge: Whisper "8" + "7" against script "8.7".
+    if (next && /^\d+$/.test(wText) && /^\d+$/.test(nextText)) {
+      const decimalMatch = stripped.match(/^(\d+)\.(\d+)$/);
+      if (decimalMatch && decimalMatch[1] === wText && decimalMatch[2] === nextText) {
+        result.push({
+          text: `${decimalMatch[1]}.${decimalMatch[2]}`,
+          start: w.start,
+          end: next.end,
+        });
+        i += 2;
+        continue;
+      }
+    }
+
+    // Percent append: Whisper "80" against script "80%".
+    if (/^\d+$/.test(wText) && /^\d+%$/.test(stripped)) {
+      const numPart = stripped.slice(0, -1);
+      if (numPart === wText) {
+        result.push({ text: `${wText}%`, start: w.start, end: w.end });
+        i += 1;
+        continue;
+      }
+    }
+
+    // Currency append: Whisper "500" against script "500€" or "500$".
+    const currencyMatch = stripped.match(/^(\d+)([€$])$/);
+    if (currencyMatch && /^\d+$/.test(wText) && currencyMatch[1] === wText) {
+      result.push({
+        text: `${currencyMatch[1]}${currencyMatch[2]}`,
+        start: w.start,
+        end: w.end,
+      });
+      i += 1;
+      continue;
+    }
+
+    result.push(w);
+    i += 1;
+  }
+
+  // Trailing improv trim: re-align the merged result against the script,
+  // then drop any words past the last matched index. Re-aligning lets the
+  // newly-merged tokens (8.7, 80%, 500€) anchor against their script
+  // positions; the original alignment couldn't see them.
+  const realignment = alignScriptToWhisper(scriptTokens, result);
+  let lastMatchedWhisper = -1;
+  for (const v of realignment) {
+    if (v !== null && v > lastMatchedWhisper) lastMatchedWhisper = v;
+  }
+  if (lastMatchedWhisper >= 0 && lastMatchedWhisper < result.length - 1) {
+    return result.slice(0, lastMatchedWhisper + 1);
+  }
+  return result;
+}
+
+// ---------- plan-aligned captions ----------
+
+interface ScriptToken {
+  text: string;
+  emphasized: boolean;
+  // Index of the spoken line this token belongs to (one cue candidate per line).
+  lineIdx: number;
+}
+
+// Walk the plan markdown, keep only spoken text, and tokenize line-by-line.
+// Tolerant: skips frontmatter, HTML comments, headings, code fences, italic
+// stage directions (`*[...]*`), and emphasized-but-bracketed beat marks. Also
+// skips body under non-speech headings (filming notes, "when done", pipeline
+// instructions) by matching common markers.
+// Bold spans (`**foo**`) survive as `emphasized` flags on their tokens.
+export function parseSpokenScriptTokens(planMarkdown: string): ScriptToken[] {
+  const lines = planMarkdown.split(/\r?\n/);
+  const out: ScriptToken[] = [];
+  let lineIdx = 0;
+  let inFrontmatter = false;
+  let inCodeFence = false;
+  // After we see a heading like "Filming notes" / "When done" / "What the
+  // pipeline...", every subsequent line is non-speech until either EOF or
+  // another `---` separator. The list mirrors the conventions in
+  // analytics/video-plans/. Add to it when new conventions emerge.
+  const nonSpeechHeading = /^#{1,6}\s+(filming|when done|what the pipeline|notes|instructions)/i;
+  let inNonSpeech = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    let raw = lines[i];
+
+    // Frontmatter: leading `---` opens, next bare `---` closes.
+    if (i === 0 && /^---\s*$/.test(raw)) {
+      inFrontmatter = true;
+      continue;
+    }
+    if (inFrontmatter) {
+      if (/^---\s*$/.test(raw)) inFrontmatter = false;
+      continue;
+    }
+
+    if (/^```/.test(raw)) {
+      inCodeFence = !inCodeFence;
+      continue;
+    }
+    if (inCodeFence) continue;
+
+    // Strip HTML comments inline (single-line). Multi-line comments are rare
+    // in plan markdown; not worth a state machine for one expected case.
+    raw = raw.replace(/<!--[\s\S]*?-->/g, "");
+
+    const trimmed = raw.trim();
+    if (!trimmed) continue;
+    // Plain `---` separator inside the body (not frontmatter): closes any
+    // active non-speech section. Otherwise skip.
+    if (/^---+\s*$/.test(trimmed)) {
+      inNonSpeech = false;
+      continue;
+    }
+    // Markdown headings: detect non-speech sections. Speech-side headings
+    // are also skipped, just don't flip the non-speech flag.
+    if (/^#{1,6}\s/.test(trimmed)) {
+      inNonSpeech = nonSpeechHeading.test(trimmed);
+      continue;
+    }
+    if (inNonSpeech) continue;
+    // Italic-bracketed stage directions, e.g. *[short beat]*, *[matter-of-fact]*.
+    if (/^\*\[[^\]]*\]\*\s*$/.test(trimmed)) continue;
+    // List items beginning with `- ` are filming-notes / pipeline-instructions
+    // boilerplate, not spoken content.
+    if (/^[-*]\s/.test(trimmed)) continue;
+
+    // Tokenize. Strip trailing markdown line-break markers (two spaces).
+    const text = trimmed.replace(/\s+$/, "");
+    // Split on bold markers, preserving them so we can flip emphasis as we go.
+    const segments = text.split(/(\*\*)/);
+    let emphasized = false;
+    const lineTokens: ScriptToken[] = [];
+    for (const seg of segments) {
+      if (seg === "**") {
+        emphasized = !emphasized;
+        continue;
+      }
+      if (!seg) continue;
+      const words = seg.split(/\s+/).filter(Boolean);
+      for (const w of words) {
+        // Skip pure-punctuation tokens that get orphaned when bold markers
+        // sit immediately before punctuation, e.g. `**Friday**.` -> "." alone.
+        if (!/[a-z0-9]/i.test(w)) continue;
+        lineTokens.push({ text: w, emphasized, lineIdx });
+      }
+    }
+    if (lineTokens.length > 0) {
+      out.push(...lineTokens);
+      lineIdx += 1;
+    }
+  }
+  return out;
+}
+
+// Normalize a token to lowercase alphanumerics for fuzzy matching against
+// Whisper output. Strips markdown/sentence punctuation but keeps internal
+// digits + decimals so "8.7" matches "8.7" and the percent suffix in "80%"
+// stays distinct from a bare "80".
+function normalizeForMatch(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9.%€$']/g, "")
+    .replace(/\.+$/, "");
+}
+
+// Sequential alignment with small Levenshtein-style cost. For each script
+// token, returns the matched Whisper word index or null if unmatched. We
+// allow Whisper to insert (skip Whisper words) and to drop (skip script
+// tokens) but penalize each non-equal step. The returned array has length
+// `scriptTokens.length`; alignment[i] = whisper-idx | null.
+export function alignScriptToWhisper(
+  scriptTokens: ScriptToken[],
+  whisperWords: TranscriptWord[]
+): Array<number | null> {
+  const n = scriptTokens.length;
+  const m = whisperWords.length;
+  if (n === 0 || m === 0) return new Array(n).fill(null);
+
+  const sNorm = scriptTokens.map((t) => normalizeForMatch(t.text));
+  const wNorm = whisperWords.map((w) => normalizeForMatch(w.text));
+
+  // Standard edit-distance DP, then backtrace. Costs: match=0, sub=1,
+  // skip-script=1, skip-whisper=1. n*m can be ~200*200=40k for a 30s vlog;
+  // negligible.
+  const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = 0; i <= n; i++) dp[i][0] = i;
+  for (let j = 0; j <= m; j++) dp[0][j] = j;
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      const matchCost = sNorm[i - 1] === wNorm[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j - 1] + matchCost,
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1
+      );
+    }
+  }
+
+  const alignment: Array<number | null> = new Array(n).fill(null);
+  let i = n;
+  let j = m;
+  while (i > 0 && j > 0) {
+    const matchCost = sNorm[i - 1] === wNorm[j - 1] ? 0 : 1;
+    if (dp[i][j] === dp[i - 1][j - 1] + matchCost && matchCost === 0) {
+      alignment[i - 1] = j - 1;
+      i--;
+      j--;
+    } else if (dp[i][j] === dp[i - 1][j - 1] + matchCost) {
+      // substitution: count as unmatched (text differed); preferring null
+      // is safer than fuzzy-mapping a wrong word onto an emphasis cue.
+      i--;
+      j--;
+    } else if (dp[i][j] === dp[i - 1][j] + 1) {
+      i--;
+    } else {
+      j--;
+    }
+  }
+  return alignment;
+}
+
+// Build cues from script lines, mapped onto Whisper words. Each script line
+// becomes one cue (split into 2 if >4 words, at the nearest comma boundary).
+// Emphasis indices are derived from the matched Whisper-word positions, so
+// `wordsToAss` only needs `cue.emphasisIndices.has(word_index_in_cue)`.
+export function alignTranscriptToScript(
+  whisperWords: TranscriptWord[],
+  planMarkdown: string
+): { cues: Cue[]; matchRatio: number } | null {
+  const scriptTokens = parseSpokenScriptTokens(planMarkdown);
+  if (scriptTokens.length === 0) return null;
+  const alignment = alignScriptToWhisper(scriptTokens, whisperWords);
+  const matched = alignment.filter((a) => a !== null).length;
+  const matchRatio = matched / scriptTokens.length;
+
+  // Group aligned script tokens by line. A cue's words = the Whisper words
+  // matched to that line, in order. Unmatched tokens drop (they didn't
+  // appear in the audio, e.g. trimmed by post-normalization).
+  const byLine = new Map<number, Array<{ scriptIdx: number; whisperIdx: number }>>();
+  for (let i = 0; i < scriptTokens.length; i++) {
+    const wIdx = alignment[i];
+    if (wIdx === null) continue;
+    const arr = byLine.get(scriptTokens[i].lineIdx) ?? [];
+    arr.push({ scriptIdx: i, whisperIdx: wIdx });
+    byLine.set(scriptTokens[i].lineIdx, arr);
+  }
+
+  const cues: Cue[] = [];
+  const lineOrder = [...byLine.keys()].sort((a, b) => a - b);
+  for (const lineIdx of lineOrder) {
+    const matches = byLine.get(lineIdx)!;
+    if (matches.length === 0) continue;
+    matches.sort((a, b) => a.whisperIdx - b.whisperIdx);
+
+    // Long lines (>4 words) split at the nearest comma in the script tokens.
+    const lineSplits: Array<typeof matches> =
+      matches.length > 4 ? splitAtComma(matches, scriptTokens) : [matches];
+
+    for (const group of lineSplits) {
+      if (group.length === 0) continue;
+      const words = group.map((g) => whisperWords[g.whisperIdx]);
+      const emphasisIndices = new Set<number>();
+      for (let k = 0; k < group.length; k++) {
+        if (scriptTokens[group[k].scriptIdx].emphasized) {
+          emphasisIndices.add(k);
+        }
+      }
+      cues.push({
+        start: words[0].start,
+        end: words[words.length - 1].end,
+        words,
+        emphasisIndices,
+      });
+    }
+  }
+
+  return { cues, matchRatio };
+}
+
+// Split a long matched group at the nearest script-side comma. Returns at
+// most two sub-groups; if no comma found, returns the original as a single
+// group (the wordsToAss path will still render it, just longer).
+function splitAtComma(
+  matches: Array<{ scriptIdx: number; whisperIdx: number }>,
+  scriptTokens: ScriptToken[]
+): Array<Array<{ scriptIdx: number; whisperIdx: number }>> {
+  const mid = Math.floor(matches.length / 2);
+  let bestSplit = -1;
+  let bestDist = Infinity;
+  for (let k = 0; k < matches.length - 1; k++) {
+    if (/,$/.test(scriptTokens[matches[k].scriptIdx].text)) {
+      const dist = Math.abs(k - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestSplit = k;
+      }
+    }
+  }
+  if (bestSplit === -1) return [matches];
+  return [matches.slice(0, bestSplit + 1), matches.slice(bestSplit + 1)];
+}
+
 // Ask Claude Haiku to chunk words into logical phrase cues (2-4 words each),
 // breaking on sentence ends, clause boundaries, and number-then-noun
 // transitions. Returns null on failure so the caller can fall back to the
@@ -863,7 +1270,12 @@ function wordsToAss(
     const parts = c.words.map((w, i) => {
       const text = escapeAssText(w.text);
       const sep = i === 0 ? "" : " ";
-      if (shouldEmphasize(w.text)) {
+      // Plan-aligned cues carry an explicit emphasis set from the markdown's
+      // bold markers; all other paths fall back to the heuristic.
+      const emphasized = c.emphasisIndices
+        ? c.emphasisIndices.has(i)
+        : shouldEmphasize(w.text);
+      if (emphasized) {
         return `${sep}{\\c${emphasisOverride}}${text}{\\c${bodyOverride}}`;
       }
       return `${sep}${text}`;
@@ -874,6 +1286,29 @@ function wordsToAss(
   return [...header, ...events, ""].join("\n");
 }
 
+// Compute the keep ranges that splice the source by removing fillers and long
+// pauses. Pulled out so --captions-only can recompute the same ranges from
+// the persisted transcript.json without re-running the splice.
+function computeKeepRanges(
+  words: TranscriptWord[],
+  duration: number
+): Array<[number, number]> {
+  const cuts: Array<[number, number]> = [];
+  for (const w of words) {
+    const token = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+    if (FILLER_WORDS.has(token)) {
+      cuts.push([w.start - 0.05, w.end + 0.05]);
+    }
+  }
+  for (let i = 1; i < words.length; i++) {
+    const gap = words[i].start - words[i - 1].end;
+    if (gap >= MIN_PAUSE_SEC) {
+      cuts.push([words[i - 1].end + 0.1, words[i].start - 0.1]);
+    }
+  }
+  return mergeAdjacent(invertCuts(cuts, duration), 0.05);
+}
+
 // ---------- phase: edit (filler removal + silence trim + splice) ----------
 
 async function edit(
@@ -881,43 +1316,33 @@ async function edit(
   transcript: Transcript,
   format: Format,
   workDir: string,
-  opts: { noCaptions: boolean },
+  opts: { noCaptions: boolean; planMarkdown: string | null },
   log: PublishLog
 ): Promise<string> {
-  // Compute keep-ranges by starting from the full video duration and cutting
-  // out filler-word spans and long pauses.
   const duration = transcript.duration || probeVideoInfo(sourceFile).duration;
-  const cuts: Array<[number, number]> = [];
-
-  // Filler words
-  for (let i = 0; i < transcript.words.length; i++) {
-    const w = transcript.words[i];
-    const token = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
-    if (FILLER_WORDS.has(token)) {
-      cuts.push([w.start - 0.05, w.end + 0.05]);
+  // When a plan is provided, normalize Whisper output against it before any
+  // downstream phase. Runs in-place on transcript.words so remap, captioning,
+  // and metadata all see the cleaned tokens.
+  if (opts.planMarkdown) {
+    const scriptTokens = parseSpokenScriptTokens(opts.planMarkdown);
+    if (scriptTokens.length > 0) {
+      const before = transcript.words.length;
+      transcript.words = normalizeWhisperOutput(transcript.words, scriptTokens);
+      console.log(
+        `edit: normalized Whisper output against plan (${before} → ${transcript.words.length} words)`
+      );
     }
   }
-
-  // Long pauses from word gaps
-  for (let i = 1; i < transcript.words.length; i++) {
-    const gap = transcript.words[i].start - transcript.words[i - 1].end;
-    if (gap >= MIN_PAUSE_SEC) {
-      cuts.push([
-        transcript.words[i - 1].end + 0.1,
-        transcript.words[i].start - 0.1,
-      ]);
-    }
-  }
-
-  const keeps = invertCuts(cuts, duration);
-  const mergedKeeps = mergeAdjacent(keeps, 0.05);
+  const mergedKeeps = computeKeepRanges(transcript.words, duration);
+  const noCuts = mergedKeeps.length === 1 &&
+    mergedKeeps[0][0] === 0 && mergedKeeps[0][1] === duration;
   console.log(
-    `edit: ${cuts.length} cut ranges → ${mergedKeeps.length} keep segments (${duration.toFixed(1)}s total)`
+    `edit: ${mergedKeeps.length} keep segments (${duration.toFixed(1)}s total)`
   );
 
   // If no cuts, just copy-remux the source.
   const edited = path.join(workDir, "edited.mp4");
-  if (mergedKeeps.length === 1 && cuts.length === 0) {
+  if (noCuts) {
     runFfmpeg(["-i", sourceFile, "-c", "copy", edited], { silent: true });
   } else {
     await spliceConcat(sourceFile, mergedKeeps, edited, workDir);
@@ -969,16 +1394,37 @@ async function edit(
         return !FILLER_WORDS.has(t);
       });
 
-      // LLM-based phrase chunking. Falls back to mechanical 3-word/1.0s
-      // grouping on any failure (offline, rate-limit, malformed JSON), so
-      // the pipeline still produces captions without a network round-trip.
-      let cues = chunkCuesViaClaude(captionableWords);
+      // Caption cue source, in priority order:
+      //  1. Plan-aligned (--plan present, ≥80% of script tokens matched).
+      //     Deterministic, emphasis comes straight from bold markers.
+      //  2. Claude-chunked (LLM groups Whisper words; heuristic emphasis).
+      //  3. Mechanical 3-word/1.0s grouping (offline / chunk failure).
+      let cues: Cue[] | null = null;
+      if (opts.planMarkdown) {
+        const aligned = alignTranscriptToScript(captionableWords, opts.planMarkdown);
+        if (aligned && aligned.matchRatio >= 0.8) {
+          cues = aligned.cues;
+          console.log(
+            `edit: plan-aligned ${aligned.cues.length} cues (${(aligned.matchRatio * 100).toFixed(0)}% script match)`
+          );
+        } else if (aligned) {
+          console.warn(
+            `edit: plan alignment only ${(aligned.matchRatio * 100).toFixed(0)}% — falling back to LLM chunker`
+          );
+          log.errors.push(
+            `plan-alignment-fallback: match ratio ${aligned.matchRatio.toFixed(2)} < 0.80`
+          );
+        }
+      }
       if (cues === null) {
-        console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
-        log.errors.push("caption-chunking-fallback: used mechanical groupCues");
-        cues = groupCues(captionableWords);
-      } else {
-        console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+        cues = chunkCuesViaClaude(captionableWords);
+        if (cues === null) {
+          console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
+          log.errors.push("caption-chunking-fallback: used mechanical groupCues");
+          cues = groupCues(captionableWords);
+        } else {
+          console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+        }
       }
 
       // Drop cues whose start is within the end-card window. Otherwise
@@ -1002,6 +1448,13 @@ async function edit(
     }
 
     if (wantCaptions || wantEndCard) {
+      // Preserve the un-captioned splice so --captions-only can re-burn
+      // captions later without re-running the concat. Copy (not rename) so
+      // edited.mp4 still exists as the in-progress target ffmpeg writes to.
+      const editedNoCaptions = path.join(workDir, "edited-no-captions.mp4");
+      if (!fs.existsSync(editedNoCaptions)) {
+        fs.copyFileSync(edited, editedNoCaptions);
+      }
       const captioned = path.join(workDir, "edited-captioned.mp4");
       const fontsDir = path.join(__dirname, "fonts");
 
@@ -1891,6 +2344,254 @@ function readPlanFile(slug: string): { content: string; format?: Format } | null
   };
 }
 
+// ---------- captions-only rerun ----------
+
+// Find an existing workdir for a source file. Prefers the most-recent plain
+// `<date>-<slug>` entry; falls back to the most-recent suffixed sibling
+// (`-z` ... `-a`) if no plain entry exists for any date.
+function findExistingWorkDir(sourceFile: string): string | null {
+  const slug = slugify(path.basename(sourceFile, path.extname(sourceFile)));
+  if (!fs.existsSync(WORK_ROOT)) return null;
+  const candidates = fs
+    .readdirSync(WORK_ROOT)
+    .filter((d) => {
+      const m = d.match(/^\d{4}-\d{2}-\d{2}-(.+?)(-[a-z])?$/);
+      return m !== null && m[1] === slug;
+    });
+  if (candidates.length === 0) return null;
+  const plainCandidates = candidates.filter((c) => !/-[a-z]$/.test(c)).sort();
+  if (plainCandidates.length > 0) {
+    return path.join(WORK_ROOT, plainCandidates[plainCandidates.length - 1]);
+  }
+  candidates.sort();
+  return path.join(WORK_ROOT, candidates[candidates.length - 1]);
+}
+
+async function runCaptionsOnly(opts: CliOptions): Promise<void> {
+  const startedAt = Date.now();
+  const workDir = findExistingWorkDir(opts.sourceFile);
+  const slug = slugify(path.basename(opts.sourceFile, path.extname(opts.sourceFile)));
+  if (!workDir) {
+    throw new Error(
+      `--captions-only: no existing workdir for "${slug}" under ${WORK_ROOT}; run a full pipeline first.`
+    );
+  }
+  console.log(`\n=== video-publish (captions-only) ===`);
+  console.log(`source slug: ${slug}`);
+  console.log(`reusing workdir: ${workDir}`);
+
+  const transcriptPath = path.join(workDir, "transcript.json");
+  if (!fs.existsSync(transcriptPath)) {
+    throw new Error(`--captions-only: ${transcriptPath} missing; cannot reuse without transcript.`);
+  }
+  const transcriptData = JSON.parse(fs.readFileSync(transcriptPath, "utf8")) as Transcript;
+  const transcript: Transcript = {
+    words: transcriptData.words,
+    language: transcriptData.language,
+    duration: transcriptData.duration,
+    fullText: transcriptData.fullText,
+    srtText: transcriptData.srtText ?? "",
+  };
+
+  // Source for the captioned render: edited-no-captions.mp4 if present
+  // (newer workdirs); else reconstruct it from the persisted concat-list.txt.
+  const editedNoCaptions = path.join(workDir, "edited-no-captions.mp4");
+  if (!fs.existsSync(editedNoCaptions)) {
+    const concatList = path.join(workDir, "concat-list.txt");
+    if (!fs.existsSync(concatList)) {
+      throw new Error(
+        `--captions-only: neither edited-no-captions.mp4 nor concat-list.txt present in ${workDir}; cannot rebuild splice.`
+      );
+    }
+    console.log("captions-only: rebuilding edited-no-captions.mp4 from concat-list.txt...");
+    runFfmpeg(
+      ["-f", "concat", "-safe", "0", "-i", concatList, "-c", "copy", editedNoCaptions],
+      { silent: true }
+    );
+  }
+
+  // Working copy that ffmpeg will write to (matching full-pipeline contract).
+  const edited = path.join(workDir, "edited.mp4");
+  fs.copyFileSync(editedNoCaptions, edited);
+
+  const editedInfo = probeVideoInfo(edited);
+  const editedDuration = editedInfo.duration || transcript.duration;
+  const wantCaptions = !opts.noCaptions;
+  const wantEndCard = editedDuration >= END_CARD_SECONDS + 2;
+  const endCardStart = Math.max(0, editedDuration - END_CARD_SECONDS);
+
+  const log: PublishLog = readPublishLogIfExists(workDir) ?? {
+    slug,
+    format: "vlog",
+    source_path: opts.sourceFile,
+    started_at: new Date(startedAt).toISOString(),
+    phases_completed: [],
+    youtube: null,
+    linkedin: null,
+    quota_units_used: 0,
+    duration_seconds: null,
+    errors: [],
+  };
+
+  // Reuse plan loading from the full pipeline. Explicit --plan wins; else
+  // look up by slug. Captions-only is exactly the use case where plan
+  // alignment matters most (you're iterating on caption styling).
+  let planContent: string | null = null;
+  if (opts.planPath && fs.existsSync(opts.planPath)) {
+    planContent = fs.readFileSync(opts.planPath, "utf8");
+  } else {
+    const found = readPlanFile(slug);
+    if (found) planContent = found.content;
+  }
+
+  // Apply the same normalization the full pipeline does, before computing
+  // keeps. transcript.json on disk stays untouched (raw Whisper artifact);
+  // normalization runs in memory each re-run so a later plan edit picks up
+  // new corrections without re-running Whisper.
+  if (planContent) {
+    const scriptTokens = parseSpokenScriptTokens(planContent);
+    if (scriptTokens.length > 0) {
+      transcript.words = normalizeWhisperOutput(transcript.words, scriptTokens);
+    }
+  }
+
+  // Recompute the keeps used by the splice so we can remap word timestamps.
+  // The pre-recorded edited-no-captions.mp4 was produced from the same
+  // transcript, so the same keeps fall out (deterministic given inputs).
+  const keeps = computeKeepRanges(transcript.words, transcript.duration || editedDuration);
+
+  let assPath: string | null = null;
+  if (wantCaptions) {
+    const fontSize = Math.max(
+      24,
+      Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
+    );
+    const editedWords = remapWordsToEdited(transcript.words, keeps);
+    const captionableWords = editedWords.filter((w) => {
+      const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+      return !FILLER_WORDS.has(t);
+    });
+    let cues: Cue[] | null = null;
+    if (planContent) {
+      const aligned = alignTranscriptToScript(captionableWords, planContent);
+      if (aligned && aligned.matchRatio >= 0.8) {
+        cues = aligned.cues;
+        console.log(
+          `captions-only: plan-aligned ${aligned.cues.length} cues (${(aligned.matchRatio * 100).toFixed(0)}% script match)`
+        );
+      }
+    }
+    if (cues === null) {
+      cues = chunkCuesViaClaude(captionableWords);
+      if (cues === null) {
+        console.warn("captions-only: chunking via Claude unavailable; using mechanical groupCues");
+        cues = groupCues(captionableWords);
+      }
+    }
+    if (wantEndCard) {
+      cues = cues.filter((c) => c.start < endCardStart);
+    }
+    assPath = path.join(workDir, "captions.ass");
+    fs.writeFileSync(assPath, wordsToAss(cues, editedInfo.height || 1920, fontSize));
+    console.log(`captions-only: wrote ${cues.length} cues to ${assPath}`);
+  }
+
+  if (wantCaptions || wantEndCard) {
+    const captioned = path.join(workDir, "edited-captioned.mp4");
+    const fontsDir = path.join(__dirname, "fonts");
+    let endCardPath: string | null = null;
+    if (wantEndCard) {
+      endCardPath = path.join(workDir, "end-card.png");
+      const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+      const ecWidth = editedInfo.width;
+      console.log(`captions-only: rendering end card ${ecWidth}×${ecHeight}...`);
+      await renderEndCard(ecWidth, ecHeight, endCardPath);
+    }
+    const ffArgs: string[] = ["-i", edited];
+    if (endCardPath) ffArgs.push("-i", endCardPath);
+    const assStep = assPath
+      ? `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
+      : null;
+    if (endCardPath) {
+      const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+      const ecY = editedInfo.height - ecHeight;
+      const filter = [
+        `[0:v]${assStep ?? "null"}[v0]`,
+        `[v0][1:v]overlay=0:${ecY}:enable='gte(t,${endCardStart.toFixed(2)})'[v]`,
+      ].join(";");
+      ffArgs.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
+    } else if (assStep) {
+      ffArgs.push("-vf", assStep);
+    }
+    ffArgs.push("-c:a", "copy", captioned);
+    runFfmpeg(ffArgs, { silent: true });
+    fs.renameSync(captioned, edited);
+  }
+
+  if (assPath) {
+    await verifySyncOrThrow(edited, assPath, workDir);
+  }
+
+  log.errors.push(`captions-only rerun at ${new Date().toISOString()}`);
+  writePublishLog(workDir, log);
+
+  console.log(`\n=== done (captions-only, ${((Date.now() - startedAt) / 1000).toFixed(1)}s) ===`);
+  console.log(`edited: ${edited}`);
+  openInVlc(edited, opts);
+}
+
+// Open the rendered file in VLC (preferred — handles big 4K vertical files
+// without dropping frames). Falls back to macOS `open` (Quick Look) if VLC
+// isn't installed. Skipped in any mock env so test runs don't pop a player.
+function openInVlc(file: string, opts: CliOptions): void {
+  if (opts.noOpen) return;
+  if (
+    process.env.WHISPER_MOCK === "1" ||
+    process.env.CLAUDE_MOCK === "1" ||
+    process.env.CLAUDE_CHUNK_MOCK === "1" ||
+    process.env.YT_MOCK === "1" ||
+    process.env.LI_MOCK === "1"
+  ) {
+    return;
+  }
+  if (process.platform !== "darwin") return;
+  const vlc = spawnSync("open", ["-a", OPEN_PREVIEW_WITH, file], { encoding: "utf8" });
+  if (vlc.status !== 0) {
+    spawnSync("open", [file], { encoding: "utf8" });
+  }
+}
+
+// Archive workdirs with a `<YYYY-MM-DD>-` prefix older than 7 days into
+// `_archive/<dir>-<unix-ts>/`. Logs each move; never deletes.
+function cleanOldWorkDirs(): void {
+  if (!fs.existsSync(WORK_ROOT)) {
+    console.log(`clean: ${WORK_ROOT} does not exist; nothing to do.`);
+    return;
+  }
+  const archiveDir = path.join(WORK_ROOT, "_archive");
+  ensureDir(archiveDir);
+  const cutoffMs = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const candidates = fs
+    .readdirSync(WORK_ROOT)
+    .filter((d) => /^\d{4}-\d{2}-\d{2}-/.test(d) && d !== "_archive");
+  const moved: string[] = [];
+  for (const d of candidates) {
+    const datePart = d.slice(0, 10);
+    const dateMs = Date.parse(datePart);
+    if (!Number.isFinite(dateMs) || dateMs > cutoffMs) continue;
+    const src = path.join(WORK_ROOT, d);
+    const dest = path.join(archiveDir, `${d}-${Math.floor(Date.now() / 1000)}`);
+    fs.renameSync(src, dest);
+    moved.push(`${src} -> ${dest}`);
+  }
+  if (moved.length === 0) {
+    console.log("clean: no workdirs older than 7 days.");
+    return;
+  }
+  console.log(`clean: archived ${moved.length} workdir(s):`);
+  for (const m of moved) console.log(`  ${m}`);
+}
+
 // ---------- main orchestrator ----------
 
 async function main(): Promise<void> {
@@ -1901,6 +2602,17 @@ async function main(): Promise<void> {
   ensureDir(VIDEO_PLANS_DIR);
 
   const opts = parseArgs();
+
+  if (opts.clean) {
+    cleanOldWorkDirs();
+    return;
+  }
+
+  if (opts.captionsOnly) {
+    await runCaptionsOnly(opts);
+    return;
+  }
+
   const startedAt = Date.now();
 
   console.log(`\n=== video-publish ===`);
@@ -1915,7 +2627,7 @@ async function main(): Promise<void> {
 
   // Derive initial slug from filename (will be replaced by metadata.slug)
   const initialSlug = slugify(path.basename(opts.sourceFile, path.extname(opts.sourceFile)));
-  const workDir = ensureWorkDir(today(), initialSlug);
+  const workDir = ensureWorkDir(today(), initialSlug, opts.force);
   console.log(`work: ${workDir}`);
 
   // Idempotency check
@@ -1949,20 +2661,8 @@ async function main(): Promise<void> {
       "transcribe — review transcript.json / transcript.srt"
     );
 
-    // Phase: edit
-    const editedFile = await edit(
-      opts.sourceFile,
-      transcript,
-      format,
-      workDir,
-      { noCaptions: opts.noCaptions },
-      log
-    );
-    log.phases_completed.push("edit");
-    writePublishLog(workDir, log);
-    await pauseIfInteractive(opts.interactive, `edit — inspect ${editedFile}`);
-
-    // Read plan if provided
+    // Read plan upfront — edit() needs it for plan-aligned cues, and metadata
+    // generation reads it later. Same source either way.
     let planContent: string | null = null;
     if (opts.planPath && fs.existsSync(opts.planPath)) {
       planContent = fs.readFileSync(opts.planPath, "utf8");
@@ -1971,6 +2671,19 @@ async function main(): Promise<void> {
       if (found) planContent = found.content;
       else console.log("generateMetadata: no plan found — degraded mode (transcript only)");
     }
+
+    // Phase: edit
+    const editedFile = await edit(
+      opts.sourceFile,
+      transcript,
+      format,
+      workDir,
+      { noCaptions: opts.noCaptions, planMarkdown: planContent },
+      log
+    );
+    log.phases_completed.push("edit");
+    writePublishLog(workDir, log);
+    await pauseIfInteractive(opts.interactive, `edit — inspect ${editedFile}`);
 
     // Phase: generate metadata
     const metadata = await generateMetadata(transcript, planContent, initialSlug);
@@ -2098,6 +2811,7 @@ async function main(): Promise<void> {
     if (log.youtube?.url) console.log(`YouTube: ${log.youtube.url}`);
     if (log.youtube?.studio_url) console.log(`Studio:  ${log.youtube.studio_url}`);
     console.log(`LinkedIn assets: ${liPath}`);
+    openInVlc(editedFile, opts);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     log.errors.push(redactSecrets(msg));
@@ -2109,13 +2823,25 @@ async function main(): Promise<void> {
   }
 }
 
-function ensureWorkDir(date: string, slug: string): string {
-  let base = path.join(WORK_ROOT, `${date}-${slug}`);
+function ensureWorkDir(date: string, slug: string, force = false): string {
+  const base = path.join(WORK_ROOT, `${date}-${slug}`);
   if (!fs.existsSync(base)) {
     ensureDir(base);
     return base;
   }
-  // Collision: append -a, -b, ...
+  // --force: archive the existing same-slug workdir into _archive/ rather
+  // than letting `-a` ... `-z` collision suffixes accumulate. Keeps disk
+  // usage predictable; the archived copy is still recoverable.
+  if (force) {
+    const archiveRoot = path.join(WORK_ROOT, "_archive");
+    ensureDir(archiveRoot);
+    const dest = path.join(archiveRoot, `${date}-${slug}-${Math.floor(Date.now() / 1000)}`);
+    fs.renameSync(base, dest);
+    console.log(`force: archived prior workdir to ${dest}`);
+    ensureDir(base);
+    return base;
+  }
+  // Collision (no --force): append -a, -b, ...
   for (let c = "a".charCodeAt(0); c <= "z".charCodeAt(0); c++) {
     const suffix = String.fromCharCode(c);
     const candidate = `${base}-${suffix}`;
@@ -2127,7 +2853,11 @@ function ensureWorkDir(date: string, slug: string): string {
   throw new Error(`Too many collisions for ${base}`);
 }
 
-main().catch((err) => {
-  console.error(redactSecrets(err instanceof Error ? err.message : String(err)));
-  process.exit(1);
-});
+// Only run main() when this file is the entrypoint. Lets tests import the
+// helpers without spawning the pipeline.
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(redactSecrets(err instanceof Error ? err.message : String(err)));
+    process.exit(1);
+  });
+}
