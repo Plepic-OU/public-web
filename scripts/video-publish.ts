@@ -17,10 +17,11 @@
  *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
  *
  * Mock mode env switches (for contract tests + offline iteration):
- *   WHISPER_MOCK=1     read transcript from _fixtures/mock-responses/transcript.json
- *   CLAUDE_MOCK=1      read metadata from _fixtures/mock-responses/metadata.json
- *   YT_MOCK=1          skip the YouTube upload, emit a fake video id
- *   LI_MOCK=1          prepareLinkedIn writes a minimal folder without trim
+ *   WHISPER_MOCK=1         read transcript from _fixtures/mock-responses/transcript.json
+ *   CLAUDE_MOCK=1          read metadata from _fixtures/mock-responses/metadata.json
+ *   CLAUDE_CHUNK_MOCK=1    read cue chunks from _fixtures/mock-responses/cue-chunks.json
+ *   YT_MOCK=1              skip the YouTube upload, emit a fake video id
+ *   LI_MOCK=1              prepareLinkedIn writes a minimal folder without trim
  *
  * Requires: ffmpeg + ffprobe on PATH (with drawtext, subtitles, silencedetect),
  * OPENAI_API_KEY, ANTHROPIC_API_KEY, YT_* env vars.
@@ -53,13 +54,28 @@ const FONT_PATH = path.join(__dirname, "fonts", "ZillaSlab-Bold.ttf");
 
 // Caption typography. Tuned for 1080×1920 vertical short-form: ~6% of width,
 // 18% from bottom to clear platform UI (Reels/Shorts/TikTok overlays).
-const CAPTION_COLOR_BODY = "#0a0a0a";
-const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand) — AA on cream/white
-const CAPTION_OUTLINE = "#ffffff";
-const CAPTION_FONT_SIZE_VLOG = 64;
+// Caption styling mirrors the public-web .badge-default pattern (css/styles.css):
+// var(--green-surface) pill behind, var(--text) body text on top, var(--green-brand)
+// emphasis. Mixing badge bg with body --text token gives strong text-vs-emphasis
+// contrast that --green-dark text alone wouldn't.
+const CAPTION_COLOR_BODY = "#1c1c1a";     // var(--text). Brand near-black. Strong contrast on green-surface, leaves room for green emphasis to pop.
+const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand). Same as .highlight on the site.
+const CAPTION_BG_COLOR = "#edfcf1";       // var(--green-surface). Light tinted pill behind text.
+const CAPTION_BORDER_COLOR = "#c5f6d3";   // var(--green-light). Soft shadow accent under the pill.
+const CAPTION_FONT_SIZE_VLOG = 80;        // base for 1920px-tall reference; scales with actual video height (160px on 3840-tall iPhone 4K).
+const CAPTION_BOX_PADDING = 28;           // ASS Outline value when BorderStyle=3. Pixels of pill around text on each side.
+const CAPTION_BOX_SHADOW = 6;             // subtle drop shadow under the pill. Separates from busy backgrounds.
 const CAPTION_MAX_WORDS_PER_CUE = 3;
 const CAPTION_MAX_CUE_DURATION = 1.0;
 const CAPTION_BOTTOM_MARGIN_PCT = 0.18;
+
+// End-card overlay (vlog only). Height fraction = bottom slice of frame
+// reserved for the wordmark + butterfly; 1/3 keeps the speaker's face clear
+// when the end card slides in. END_CARD_SECONDS = window during which the
+// overlay renders and captions are suppressed.
+const END_CARD_HEIGHT_FRACTION = 1 / 3;
+const END_CARD_SECONDS = 5;
+const END_CARD_LOGO_SVG = path.join(REPO_ROOT, "images", "favicon.svg");
 
 // Tokens that should pop in brand-green. Numerals are matched separately by
 // regex; this set covers spelled-out numbers + Plepic-specific brand vocab.
@@ -711,19 +727,107 @@ function groupCues(words: TranscriptWord[]): Cue[] {
   return cues;
 }
 
+// Ask Claude Haiku to chunk words into logical phrase cues (2-4 words each),
+// breaking on sentence ends, clause boundaries, and number-then-noun
+// transitions. Returns null on failure so the caller can fall back to the
+// mechanical chunker. The mock fixture keeps offline iteration deterministic.
+function chunkCuesViaClaude(words: TranscriptWord[]): Cue[] | null {
+  if (words.length === 0) return [];
+
+  if (process.env.CLAUDE_CHUNK_MOCK === "1") {
+    const mockPath = path.join(MOCKS_DIR, "cue-chunks.json");
+    if (!fs.existsSync(mockPath)) {
+      console.warn(`chunkCuesViaClaude: CLAUDE_CHUNK_MOCK=1 but ${mockPath} missing — falling back`);
+      return null;
+    }
+    try {
+      const parsed = JSON.parse(fs.readFileSync(mockPath, "utf8")) as {
+        cues: Array<{ start: number; end: number }>;
+      };
+      return materializeCues(words, parsed.cues);
+    } catch (err) {
+      console.warn(`chunkCuesViaClaude: mock parse failed: ${err instanceof Error ? err.message : err}`);
+      return null;
+    }
+  }
+
+  const indexed = words.map((w, idx) => `${idx}: ${w.text}`).join("\n");
+  // The number-then-noun rule (e.g. "10 Squad") is critical: without it
+  // Haiku tends to keep numerics attached to the following noun, which
+  // dilutes the green-emphasis effect.
+  const prompt = [
+    "You are chunking video captions for a vertical short-form video. Output JSON only, no commentary.",
+    "",
+    "Rules:",
+    "- Each cue is 2 to 4 words.",
+    "- Break on natural phrase boundaries: sentence ends, clause breaks, before new subjects.",
+    "- A number ending a clause (e.g. \"10\" finishing \"9 out of 10\") MUST end its cue. Never group \"10 Squad\" or similar number-then-noun crossings.",
+    "- Brand terms that start a new sentence (Squad 1, Squad 2, Plepic, Yesterday's, If, The, Six, Few) typically start a new cue.",
+    "- Every word must appear in exactly one cue. Cues must be in input order.",
+    "",
+    "Output schema:",
+    "{ \"cues\": [{ \"start\": <inclusive_word_idx>, \"end\": <inclusive_word_idx> }, ...] }",
+    "",
+    "Input words (idx-text):",
+    indexed,
+    "",
+    "Return ONLY the JSON object.",
+  ].join("\n");
+
+  const r = spawnSync("claude", ["-p", "--output-format", "text", "--model", "haiku"], {
+    input: prompt,
+    encoding: "utf8",
+    maxBuffer: 4 * 1024 * 1024,
+  });
+  if (r.status !== 0) {
+    console.warn(`chunkCuesViaClaude: claude -p failed (status ${r.status}): ${(r.stderr ?? "").slice(0, 300)}`);
+    return null;
+  }
+  const text = r.stdout.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  const firstBrace = text.indexOf("{");
+  const lastBrace = text.lastIndexOf("}");
+  if (firstBrace === -1 || lastBrace === -1) {
+    console.warn(`chunkCuesViaClaude: no JSON in response: ${text.slice(0, 200)}`);
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(text.slice(firstBrace, lastBrace + 1)) as {
+      cues: Array<{ start: number; end: number }>;
+    };
+    return materializeCues(words, parsed.cues);
+  } catch (err) {
+    console.warn(`chunkCuesViaClaude: parse failed: ${err instanceof Error ? err.message : err}`);
+    return null;
+  }
+}
+
+function materializeCues(
+  words: TranscriptWord[],
+  ranges: Array<{ start: number; end: number }>
+): Cue[] {
+  const cues: Cue[] = [];
+  for (const r of ranges) {
+    if (r.start < 0 || r.end >= words.length || r.end < r.start) continue;
+    const slice = words.slice(r.start, r.end + 1);
+    if (slice.length === 0) continue;
+    cues.push({ start: slice[0].start, end: slice[slice.length - 1].end, words: slice });
+  }
+  return cues;
+}
+
 function escapeAssText(s: string): string {
   // ASS treats `{` as override-block opener and `\N` as literal newline.
   return s.replace(/\\/g, "\\\\").replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 }
 
 function wordsToAss(
-  words: TranscriptWord[],
+  cues: Cue[],
   videoHeight: number,
   fontSize: number
 ): string {
-  const cues = groupCues(words);
-  const bodyStyle = hexToAssStyleColor(CAPTION_COLOR_BODY);
-  const outlineStyle = hexToAssStyleColor(CAPTION_OUTLINE);
+  const textStyle = hexToAssStyleColor(CAPTION_COLOR_BODY);
+  const boxFillStyle = hexToAssStyleColor(CAPTION_BG_COLOR);
+  const shadowStyle = hexToAssStyleColor(CAPTION_BORDER_COLOR);
   const bodyOverride = hexToAssOverride(CAPTION_COLOR_BODY);
   const emphasisOverride = hexToAssOverride(CAPTION_COLOR_EMPHASIS);
   const marginV = Math.round(CAPTION_BOTTOM_MARGIN_PCT * videoHeight);
@@ -744,10 +848,12 @@ function wordsToAss(
       "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, " +
       "ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, " +
       "MarginL, MarginR, MarginV, Encoding",
-    // Bold=-1 (true) + ExtraBold-leaning fontname; Outline=4 + BorderStyle=1
-    // gives a clean halo without the heavy box style.
-    `Style: Default,Plus Jakarta Sans,${fontSize},${bodyStyle},${bodyStyle},` +
-      `${outlineStyle},&H00000000,-1,0,0,0,100,100,0,0,1,4,0,2,40,40,${marginV},1`,
+    // BorderStyle=3 = opaque box. In libass, the box is filled with
+    // OutlineColour (slot 6), not BackColour. We put the green-surface pill
+    // there, the dark-green text in PrimaryColour, and a green-light shadow
+    // in BackColour to lift the pill off busy iPhone backgrounds.
+    `Style: Default,Plus Jakarta Sans,${fontSize},${textStyle},${textStyle},` +
+      `${boxFillStyle},${shadowStyle},-1,0,0,0,100,100,0,0,3,${CAPTION_BOX_PADDING},${CAPTION_BOX_SHADOW},2,80,80,${marginV},1`,
     "",
     "[Events]",
     "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
@@ -775,7 +881,8 @@ async function edit(
   transcript: Transcript,
   format: Format,
   workDir: string,
-  opts: { noCaptions: boolean }
+  opts: { noCaptions: boolean },
+  log: PublishLog
 ): Promise<string> {
   // Compute keep-ranges by starting from the full video duration and cutting
   // out filler-word spans and long pauses.
@@ -816,35 +923,132 @@ async function edit(
     await spliceConcat(sourceFile, mergedKeeps, edited, workDir);
   }
 
-  // Caption burn-in for vlogs only (long-form uses SRT upload to YouTube).
-  // ASS instead of SRT so per-word brand-green emphasis renders. SRT stays on
-  // disk for the long-form YouTube captions.insert path.
-  if (format === "vlog" && !opts.noCaptions) {
-    const captioned = path.join(workDir, "edited-captioned.mp4");
+  // Caption burn-in + end-card for vlogs only (long-form uses SRT upload to
+  // YouTube and has its own outro convention). ASS instead of SRT so per-word
+  // brand-green emphasis renders. SRT stays on disk for the long-form
+  // YouTube captions.insert path.
+  if (format === "vlog") {
     const editedInfo = probeVideoInfo(edited);
-    // Scale font from the 1080×1920 reference. Falls back gracefully on
-    // non-standard resolutions; height is the more stable axis for vertical.
-    const fontSize = Math.max(
-      24,
-      Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
-    );
-    const assPath = path.join(workDir, "captions.ass");
-    fs.writeFileSync(
-      assPath,
-      wordsToAss(transcript.words, editedInfo.height || 1920, fontSize)
-    );
-    console.log(
-      `edit: burning in captions (vlog, ${transcript.words.length} words → cues, font ${fontSize}px)...`
-    );
-    const fontsDir = path.join(__dirname, "fonts");
-    // Use ass= filter (not subtitles=) so per-word style overrides survive;
-    // fontsdir points libass at the bundled TTFs instead of system fontconfig.
-    const filter = `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`;
-    runFfmpeg(
-      ["-i", edited, "-vf", filter, "-c:a", "copy", captioned],
-      { silent: true }
-    );
-    fs.renameSync(captioned, edited);
+    const editedDuration = editedInfo.duration || duration;
+    const wantCaptions = !opts.noCaptions;
+    // End-card needs at least END_CARD_SECONDS + 2s of breathing room before
+    // it slides in. Anything shorter, skip — the overlay would devour the
+    // whole clip.
+    const wantEndCard = editedDuration >= END_CARD_SECONDS + 2;
+    const endCardStart = Math.max(0, editedDuration - END_CARD_SECONDS);
+
+    if (!wantEndCard) {
+      console.log(
+        `edit: skipping end card (edited duration ${editedDuration.toFixed(1)}s < ${END_CARD_SECONDS + 2}s minimum)`
+      );
+    }
+
+    let assPath: string | null = null;
+    if (wantCaptions) {
+      // Scale font from the 1080×1920 reference. Falls back gracefully on
+      // non-standard resolutions; height is the more stable axis for vertical.
+      const fontSize = Math.max(
+        24,
+        Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
+      );
+      // Remap source-time word timestamps onto the edited timeline. Without
+      // this, ASS cue starts reference uncut source positions while ffmpeg
+      // burns them onto the spliced (cut) video, and drift accumulates at
+      // every cut. Words that fall inside a cut range are dropped (filler
+      // pads, long-pause spans). This is the key correctness invariant.
+      const editedWords = remapWordsToEdited(transcript.words, mergedKeeps);
+      console.log(
+        `edit: remapped ${transcript.words.length} src-time words → ${editedWords.length} edited-time captionable words`
+      );
+
+      // Drop fillers before chunking so Claude doesn't waste tokens on words
+      // we'd discard from the cue text anyway. Remap already removed cuts;
+      // this catches fillers that fell outside any cut range.
+      const captionableWords = editedWords.filter((w) => {
+        const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+        return !FILLER_WORDS.has(t);
+      });
+
+      // LLM-based phrase chunking. Falls back to mechanical 3-word/1.0s
+      // grouping on any failure (offline, rate-limit, malformed JSON), so
+      // the pipeline still produces captions without a network round-trip.
+      let cues = chunkCuesViaClaude(captionableWords);
+      if (cues === null) {
+        console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
+        log.errors.push("caption-chunking-fallback: used mechanical groupCues");
+        cues = groupCues(captionableWords);
+      } else {
+        console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+      }
+
+      // Drop cues whose start is within the end-card window. Otherwise
+      // captions would render on top of the wordmark.
+      if (wantEndCard) {
+        const before = cues.length;
+        cues = cues.filter((c) => c.start < endCardStart);
+        if (before !== cues.length) {
+          console.log(`edit: dropped ${before - cues.length} cues overlapping end-card window`);
+        }
+      }
+
+      assPath = path.join(workDir, "captions.ass");
+      fs.writeFileSync(
+        assPath,
+        wordsToAss(cues, editedInfo.height || 1920, fontSize)
+      );
+      console.log(
+        `edit: burning in captions (vlog, ${cues.length} cues, font ${fontSize}px)...`
+      );
+    }
+
+    if (wantCaptions || wantEndCard) {
+      const captioned = path.join(workDir, "edited-captioned.mp4");
+      const fontsDir = path.join(__dirname, "fonts");
+
+      let endCardPath: string | null = null;
+      if (wantEndCard) {
+        endCardPath = path.join(workDir, "end-card.png");
+        const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+        const ecWidth = editedInfo.width;
+        console.log(`edit: rendering end card ${ecWidth}×${ecHeight}...`);
+        await renderEndCard(ecWidth, ecHeight, endCardPath);
+      }
+
+      // Build the filter graph. ass= goes first (on input 0), then a single
+      // overlay= applies the end-card on the bottom slice, gated by t.
+      // Per-word style overrides survive ass= (not subtitles=); fontsdir
+      // points libass at the bundled TTFs instead of system fontconfig.
+      const ffArgs: string[] = ["-i", edited];
+      if (endCardPath) ffArgs.push("-i", endCardPath);
+
+      const assStep = assPath
+        ? `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
+        : null;
+
+      if (endCardPath) {
+        const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+        const ecY = editedInfo.height - ecHeight;
+        const filter = [
+          `[0:v]${assStep ?? "null"}[v0]`,
+          `[v0][1:v]overlay=0:${ecY}:enable='gte(t,${endCardStart.toFixed(2)})'[v]`,
+        ].join(";");
+        ffArgs.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
+      } else if (assStep) {
+        ffArgs.push("-vf", assStep);
+      }
+      ffArgs.push("-c:a", "copy", captioned);
+
+      runFfmpeg(ffArgs, { silent: true });
+      fs.renameSync(captioned, edited);
+    }
+
+    // Sync gate: re-Whisper the rendered video and assert each ASS cue
+    // start matches the spoken word's audio time. Catches drift bugs that
+    // visually pass but are off by seconds. Only meaningful when captions
+    // are present.
+    if (assPath) {
+      await verifySyncOrThrow(edited, assPath, workDir);
+    }
   }
 
   return edited;
@@ -875,6 +1079,42 @@ function invertCuts(
   }
   if (cursor < duration) keeps.push([cursor, duration]);
   return keeps;
+}
+
+// Map source-time words onto the edited timeline. Each "keep" range is
+// concatenated tip-to-tail in the spliced output, so a word at source time t
+// inside keep i lands at editedStart[i] + (t - keepStart[i]). Words whose
+// start is inside a cut (no enclosing keep) are dropped — those are the
+// fillers and long-pause pads the editor removed.
+function remapWordsToEdited(
+  words: TranscriptWord[],
+  keeps: Array<[number, number]>
+): TranscriptWord[] {
+  if (keeps.length === 0) return [];
+  const editedStarts: number[] = [];
+  let acc = 0;
+  for (const [a, b] of keeps) {
+    editedStarts.push(acc);
+    acc += b - a;
+  }
+  const out: TranscriptWord[] = [];
+  for (const w of words) {
+    let mappedStart: number | null = null;
+    let mappedEnd: number | null = null;
+    for (let i = 0; i < keeps.length; i++) {
+      const [a, b] = keeps[i];
+      if (w.start >= a && w.start <= b) {
+        mappedStart = editedStarts[i] + (w.start - a);
+        // Clamp end to the keep's end if the word straddles a cut boundary.
+        const clampedEnd = Math.min(w.end, b);
+        mappedEnd = editedStarts[i] + (clampedEnd - a);
+        break;
+      }
+    }
+    if (mappedStart === null || mappedEnd === null) continue;
+    out.push({ text: w.text, start: mappedStart, end: mappedEnd });
+  }
+  return out;
 }
 
 function mergeAdjacent(
@@ -1012,15 +1252,16 @@ Return JSON only, matching this schema:
   "description": "string, <=4800 chars. First line = hook. Include 2-3 paragraphs with concrete value, followed by a single CTA pointing to plepic.com/training with ?utm_source=youtube&utm_content=<slug> appended. End with relevant hashtags.",
   "tags": ["<=15 tags, mixed long-tail + specific, total <=450 chars"],
   "chapters": [{"timestamp": "0:00", "title": "Intro"}, ...],  // only include for videos >3 min
-  "pinnedComment": "string, optional, <=500 chars — a single genuine question that invites discussion",
+  "pinnedComment": "string, optional, <=500 chars: a single genuine question that invites discussion",
   "slug": "kebab-case slug <=60 chars"
 }
 
 Constraints:
 - Never use "unleash", "game-changer", "revolutionize", "in this video", "don't forget to like and subscribe". Any of these fails immediately.
+- Never use em-dashes (—) anywhere in title, description, or pinnedComment. Use period, comma, or colon instead. Em-dashes read as AI-generated and fail Plepic's voice check.
 - Lead with the problem or the outcome, not with who Kaido is.
 - Voice is Kaido's: NVC/MI-grounded, observational, specific. Follow the voice authority rules exactly.
-- If a plan is provided, it is the primary seed. Transcript is secondary context — use it to ground claims but not to structure.
+- If a plan is provided, it is the primary seed. Transcript is secondary context. Use it to ground claims but not to structure.
 - Chapters: use real timestamps from the transcript's implicit structure. Skip for short vlogs.
 
 Return ONLY the JSON object. No markdown fences, no commentary.`;
@@ -1036,18 +1277,32 @@ function parseMetadataResponse(text: string, fallbackSlug: string): VideoMetadat
   const jsonStr = trimmed.slice(firstBrace, lastBrace + 1);
   const parsed = JSON.parse(jsonStr);
   return {
-    title: String(parsed.title ?? "").trim(),
-    description: String(parsed.description ?? "").trim(),
-    tags: Array.isArray(parsed.tags) ? parsed.tags.map((t: unknown) => String(t).trim()) : [],
+    title: stripEmDashes(String(parsed.title ?? "").trim()),
+    description: stripEmDashes(String(parsed.description ?? "").trim()),
+    tags: Array.isArray(parsed.tags) ? parsed.tags.map((t: unknown) => stripEmDashes(String(t).trim())) : [],
     chapters: Array.isArray(parsed.chapters)
       ? parsed.chapters.map((c: { timestamp?: string; title?: string }) => ({
           timestamp: String(c.timestamp ?? ""),
-          title: String(c.title ?? ""),
+          title: stripEmDashes(String(c.title ?? "")),
         }))
       : [],
-    pinnedComment: String(parsed.pinnedComment ?? "").trim(),
+    pinnedComment: stripEmDashes(String(parsed.pinnedComment ?? "").trim()),
     slug: slugify(String(parsed.slug ?? fallbackSlug)) || fallbackSlug,
   };
+}
+
+// Replace em-dashes with safer punctuation. ` — ` becomes `: ` (clause join);
+// bare `—` (no surrounding spaces or only one side) becomes `. ` (sentence
+// break). Plepic's house style bans em-dashes outright; we both prompt against
+// them and post-process to catch any that slip through.
+function stripEmDashes(s: string): string {
+  return s
+    .replace(/\s+—\s+/g, ": ")
+    .replace(/—\s+/g, ". ")
+    .replace(/\s+—/g, ".")
+    .replace(/—/g, ". ")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\.\s*\./g, ".");
 }
 
 function validateMetadata(m: VideoMetadata): void {
@@ -1074,6 +1329,11 @@ function validateMetadata(m: VideoMetadata): void {
       throw new Error(`Banned phrase "${b}" in metadata`);
     }
   }
+  // Em-dashes are auto-stripped in parseMetadataResponse, so any survivor here
+  // means a bug in stripEmDashes, not a model output we need to negotiate with.
+  if (`${m.title} ${m.description} ${m.pinnedComment}`.includes("—")) {
+    throw new Error("Em-dash leaked past stripEmDashes. Fix the helper.");
+  }
 }
 
 function readVoiceMd(): string {
@@ -1098,6 +1358,208 @@ function readBrandContext(): string {
     "CTA target: plepic.com/training. Always append ?utm_source=youtube&utm_content=<slug>.",
     "Banned marketing clichés: listed in system prompt. Hard fail.",
   ].join("\n");
+}
+
+// ---------- sync verification gate ----------
+
+// Re-Whisper the rendered video and compare each ASS cue's start time
+// against the audio word that should land there. Asserts avg drift < 300ms
+// and max drift < 1500ms; on failure writes sync-report.json and throws.
+// Costs ~30s + ~$0.005/run; skipped when WHISPER_MOCK=1 (don't burn API
+// budget in tests) and when there are no captions to verify.
+async function verifySyncOrThrow(
+  videoFile: string,
+  assPath: string,
+  workDir: string
+): Promise<void> {
+  if (process.env.WHISPER_MOCK === "1") {
+    console.log("verifySync: WHISPER_MOCK=1 — skipping sync gate");
+    return;
+  }
+  if (!fs.existsSync(assPath)) {
+    console.log("verifySync: no ASS file — nothing to verify");
+    return;
+  }
+
+  const audioPath = path.join(workDir, "edited-audio.ogg");
+  console.log("verifySync: extracting audio from rendered video...");
+  runFfmpeg(
+    [
+      "-i", videoFile,
+      "-vn", "-ac", "1", "-ar", "16000",
+      "-c:a", "libopus", "-b:a", "32k",
+      audioPath,
+    ],
+    { silent: true }
+  );
+
+  console.log("verifySync: re-transcribing rendered audio...");
+  const res = await callWhisper(audioPath);
+  const editedWords = res.words;
+
+  const ass = fs.readFileSync(assPath, "utf8");
+  const cueLines = ass.split("\n").filter((l) => l.startsWith("Dialogue:"));
+  const cues = cueLines.map((line) => {
+    const parts = line.replace(/^Dialogue:\s*/, "").split(",");
+    const start = parseAssTime(parts[1]);
+    const end = parseAssTime(parts[2]);
+    const text = stripAssOverrides(parts.slice(9).join(",")).trim();
+    return { start, end, text };
+  });
+
+  const norm = (s: string): string => s.toLowerCase().replace(/[^a-z0-9.]/g, "");
+  const drifts: number[] = [];
+  const matchDetails: Array<{ cue_t: number; audio_t: number; drift: number; word: string }> = [];
+  let unmatched = 0;
+
+  for (const cue of cues) {
+    const firstWord = cue.text.split(/\s+/)[0];
+    const target = norm(firstWord);
+    if (!target) continue;
+    let best: { word: typeof editedWords[number]; tdiff: number } | null = null;
+    for (const ew of editedWords) {
+      if (norm(ew.text) !== target) continue;
+      const tdiff = Math.abs(ew.start - cue.start);
+      if (!best || tdiff < best.tdiff) best = { word: ew, tdiff };
+    }
+    if (best && best.tdiff < 5) {
+      const drift = best.word.start - cue.start;
+      drifts.push(drift);
+      matchDetails.push({ cue_t: cue.start, audio_t: best.word.start, drift, word: firstWord });
+    } else {
+      unmatched++;
+    }
+  }
+
+  const avgDrift = drifts.length === 0 ? 0 : drifts.reduce((s, d) => s + Math.abs(d), 0) / drifts.length;
+  const maxDrift = drifts.length === 0 ? 0 : Math.max(...drifts.map((d) => Math.abs(d)));
+  const matched = drifts.length;
+
+  const report = {
+    video: videoFile,
+    ass: assPath,
+    cues_total: cues.length,
+    cues_matched: matched,
+    cues_unmatched: unmatched,
+    avg_drift_seconds: Number(avgDrift.toFixed(3)),
+    max_drift_seconds: Number(maxDrift.toFixed(3)),
+    avg_threshold: 0.3,
+    max_threshold: 1.5,
+    matches: matchDetails,
+  };
+
+  // Always write the report — we want it on disk on both pass and fail so
+  // failures are debuggable without rerunning Whisper.
+  const reportPath = path.join(workDir, "sync-report.json");
+  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+  console.log(
+    `verifySync: ${matched}/${cues.length} cues matched, avg |drift| ${avgDrift.toFixed(3)}s, max ${maxDrift.toFixed(3)}s`
+  );
+
+  if (avgDrift >= 0.3 || maxDrift >= 1.5) {
+    throw new Error(
+      `caption sync drift exceeds threshold (avg ${avgDrift.toFixed(2)}s, max ${maxDrift.toFixed(2)}s). See ${reportPath}.`
+    );
+  }
+  // Cues without any audio matches are also a failure mode — the rendered
+  // audio doesn't contain the spoken text, which usually means the splice
+  // dropped speech or the ASS file is for a different video.
+  if (cues.length > 0 && matched === 0) {
+    throw new Error(
+      `caption sync: 0 of ${cues.length} cues matched any audio word. See ${reportPath}.`
+    );
+  }
+}
+
+function parseAssTime(s: string): number {
+  const [h, m, sec] = s.split(":");
+  return parseInt(h) * 3600 + parseInt(m) * 60 + parseFloat(sec);
+}
+
+function stripAssOverrides(s: string): string {
+  return s.replace(/\{[^}]*\}/g, "");
+}
+
+// ---------- end-card render (Playwright one-shot) ----------
+
+// Render the end-card PNG (cream bg + butterfly + Plepic.com wordmark) at the
+// caller's exact width/height so ffmpeg overlays it 1:1 with no scaling.
+// Playwright is already a dev dep here (visual regression). One-shot launch
+// per pipeline invocation is fine — ~600ms overhead, runs once.
+async function renderEndCard(
+  width: number,
+  height: number,
+  outPath: string
+): Promise<void> {
+  if (!fs.existsSync(END_CARD_LOGO_SVG)) {
+    throw new Error(`end-card SVG not found: ${END_CARD_LOGO_SVG}`);
+  }
+  const svgRaw = fs.readFileSync(END_CARD_LOGO_SVG, "utf8");
+  // Strip width/height from the source SVG so CSS sizing wins.
+  const svgInline = svgRaw.replace(/\s(width|height)="[^"]*"/g, "");
+
+  // Scale typography off the rendered height so 1080-tall preview frames
+  // and 3840-tall iPhone-4K frames both look proportional.
+  const wordmarkPx = Math.round(height * 0.2);
+  const butterflyPx = Math.round(height * 0.25);
+  const gapPx = Math.round(height * 0.025);
+
+  const html = `<!doctype html><html><head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --green-brand: #137b30;
+    --text: #1c1c1a;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: ${width}px; height: ${height}px;
+    background: var(--bg);
+    display: flex; flex-direction: row;
+    align-items: center; justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text);
+    gap: ${gapPx}px;
+  }
+  .butterfly { width: ${butterflyPx}px; height: ${butterflyPx}px; flex-shrink: 0; }
+  .wordmark {
+    font-family: 'Zilla Slab', serif;
+    font-weight: 700;
+    font-size: ${wordmarkPx}px;
+    color: var(--green-brand);
+    letter-spacing: 0.005em;
+    line-height: 1;
+  }
+</style>
+</head><body>
+  <div class="butterfly">${svgInline}</div>
+  <div class="wordmark">Plepic.com</div>
+</body></html>`;
+
+  // Lazy-require so non-vlog runs don't pay Playwright's import cost.
+  const { chromium } = require("playwright") as typeof import("playwright");
+  const browser = await chromium.launch();
+  try {
+    const ctx = await browser.newContext({
+      viewport: { width, height },
+      deviceScaleFactor: 1,
+    });
+    const page = await ctx.newPage();
+    await page.setContent(html);
+    // page.evaluate runs in the browser context; cast through unknown so
+    // tsconfig (Node lib only) doesn't try to resolve `document` against
+    // Node's built-in types.
+    await page.evaluate(
+      "document.fonts.ready" as unknown as () => Promise<unknown>
+    );
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: outPath, fullPage: false });
+  } finally {
+    await browser.close();
+  }
 }
 
 // ---------- phase: makeThumbnail ----------
@@ -1488,9 +1950,14 @@ async function main(): Promise<void> {
     );
 
     // Phase: edit
-    const editedFile = await edit(opts.sourceFile, transcript, format, workDir, {
-      noCaptions: opts.noCaptions,
-    });
+    const editedFile = await edit(
+      opts.sourceFile,
+      transcript,
+      format,
+      workDir,
+      { noCaptions: opts.noCaptions },
+      log
+    );
     log.phases_completed.push("edit");
     writePublishLog(workDir, log);
     await pauseIfInteractive(opts.interactive, `edit — inspect ${editedFile}`);
