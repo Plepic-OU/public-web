@@ -838,10 +838,19 @@ async function edit(
       24,
       Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
     );
+    // Remap source-time word timestamps onto the edited timeline. Without
+    // this, ASS cue starts reference uncut source positions while ffmpeg
+    // burns them onto the spliced (cut) video, and drift accumulates at
+    // every cut. Words that fall inside a cut range are dropped (filler
+    // pads, long-pause spans). This is the key correctness invariant.
+    const editedWords = remapWordsToEdited(transcript.words, mergedKeeps);
+    console.log(
+      `edit: remapped ${transcript.words.length} src-time words → ${editedWords.length} edited-time captionable words`
+    );
     const assPath = path.join(workDir, "captions.ass");
     fs.writeFileSync(
       assPath,
-      wordsToAss(transcript.words, editedInfo.height || 1920, fontSize)
+      wordsToAss(editedWords, editedInfo.height || 1920, fontSize)
     );
     console.log(
       `edit: burning in captions (vlog, ${transcript.words.length} words → cues, font ${fontSize}px)...`
@@ -885,6 +894,42 @@ function invertCuts(
   }
   if (cursor < duration) keeps.push([cursor, duration]);
   return keeps;
+}
+
+// Map source-time words onto the edited timeline. Each "keep" range is
+// concatenated tip-to-tail in the spliced output, so a word at source time t
+// inside keep i lands at editedStart[i] + (t - keepStart[i]). Words whose
+// start is inside a cut (no enclosing keep) are dropped — those are the
+// fillers and long-pause pads the editor removed.
+function remapWordsToEdited(
+  words: TranscriptWord[],
+  keeps: Array<[number, number]>
+): TranscriptWord[] {
+  if (keeps.length === 0) return [];
+  const editedStarts: number[] = [];
+  let acc = 0;
+  for (const [a, b] of keeps) {
+    editedStarts.push(acc);
+    acc += b - a;
+  }
+  const out: TranscriptWord[] = [];
+  for (const w of words) {
+    let mappedStart: number | null = null;
+    let mappedEnd: number | null = null;
+    for (let i = 0; i < keeps.length; i++) {
+      const [a, b] = keeps[i];
+      if (w.start >= a && w.start <= b) {
+        mappedStart = editedStarts[i] + (w.start - a);
+        // Clamp end to the keep's end if the word straddles a cut boundary.
+        const clampedEnd = Math.min(w.end, b);
+        mappedEnd = editedStarts[i] + (clampedEnd - a);
+        break;
+      }
+    }
+    if (mappedStart === null || mappedEnd === null) continue;
+    out.push({ text: w.text, start: mappedStart, end: mappedEnd });
+  }
+  return out;
 }
 
 function mergeAdjacent(
