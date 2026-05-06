@@ -1041,6 +1041,14 @@ async function edit(
       runFfmpeg(ffArgs, { silent: true });
       fs.renameSync(captioned, edited);
     }
+
+    // Sync gate: re-Whisper the rendered video and assert each ASS cue
+    // start matches the spoken word's audio time. Catches drift bugs that
+    // visually pass but are off by seconds. Only meaningful when captions
+    // are present.
+    if (assPath) {
+      await verifySyncOrThrow(edited, assPath, workDir);
+    }
   }
 
   return edited;
@@ -1350,6 +1358,126 @@ function readBrandContext(): string {
     "CTA target: plepic.com/training. Always append ?utm_source=youtube&utm_content=<slug>.",
     "Banned marketing clichés: listed in system prompt. Hard fail.",
   ].join("\n");
+}
+
+// ---------- sync verification gate ----------
+
+// Re-Whisper the rendered video and compare each ASS cue's start time
+// against the audio word that should land there. Asserts avg drift < 300ms
+// and max drift < 1500ms; on failure writes sync-report.json and throws.
+// Costs ~30s + ~$0.005/run; skipped when WHISPER_MOCK=1 (don't burn API
+// budget in tests) and when there are no captions to verify.
+async function verifySyncOrThrow(
+  videoFile: string,
+  assPath: string,
+  workDir: string
+): Promise<void> {
+  if (process.env.WHISPER_MOCK === "1") {
+    console.log("verifySync: WHISPER_MOCK=1 — skipping sync gate");
+    return;
+  }
+  if (!fs.existsSync(assPath)) {
+    console.log("verifySync: no ASS file — nothing to verify");
+    return;
+  }
+
+  const audioPath = path.join(workDir, "edited-audio.ogg");
+  console.log("verifySync: extracting audio from rendered video...");
+  runFfmpeg(
+    [
+      "-i", videoFile,
+      "-vn", "-ac", "1", "-ar", "16000",
+      "-c:a", "libopus", "-b:a", "32k",
+      audioPath,
+    ],
+    { silent: true }
+  );
+
+  console.log("verifySync: re-transcribing rendered audio...");
+  const res = await callWhisper(audioPath);
+  const editedWords = res.words;
+
+  const ass = fs.readFileSync(assPath, "utf8");
+  const cueLines = ass.split("\n").filter((l) => l.startsWith("Dialogue:"));
+  const cues = cueLines.map((line) => {
+    const parts = line.replace(/^Dialogue:\s*/, "").split(",");
+    const start = parseAssTime(parts[1]);
+    const end = parseAssTime(parts[2]);
+    const text = stripAssOverrides(parts.slice(9).join(",")).trim();
+    return { start, end, text };
+  });
+
+  const norm = (s: string): string => s.toLowerCase().replace(/[^a-z0-9.]/g, "");
+  const drifts: number[] = [];
+  const matchDetails: Array<{ cue_t: number; audio_t: number; drift: number; word: string }> = [];
+  let unmatched = 0;
+
+  for (const cue of cues) {
+    const firstWord = cue.text.split(/\s+/)[0];
+    const target = norm(firstWord);
+    if (!target) continue;
+    let best: { word: typeof editedWords[number]; tdiff: number } | null = null;
+    for (const ew of editedWords) {
+      if (norm(ew.text) !== target) continue;
+      const tdiff = Math.abs(ew.start - cue.start);
+      if (!best || tdiff < best.tdiff) best = { word: ew, tdiff };
+    }
+    if (best && best.tdiff < 5) {
+      const drift = best.word.start - cue.start;
+      drifts.push(drift);
+      matchDetails.push({ cue_t: cue.start, audio_t: best.word.start, drift, word: firstWord });
+    } else {
+      unmatched++;
+    }
+  }
+
+  const avgDrift = drifts.length === 0 ? 0 : drifts.reduce((s, d) => s + Math.abs(d), 0) / drifts.length;
+  const maxDrift = drifts.length === 0 ? 0 : Math.max(...drifts.map((d) => Math.abs(d)));
+  const matched = drifts.length;
+
+  const report = {
+    video: videoFile,
+    ass: assPath,
+    cues_total: cues.length,
+    cues_matched: matched,
+    cues_unmatched: unmatched,
+    avg_drift_seconds: Number(avgDrift.toFixed(3)),
+    max_drift_seconds: Number(maxDrift.toFixed(3)),
+    avg_threshold: 0.3,
+    max_threshold: 1.5,
+    matches: matchDetails,
+  };
+
+  // Always write the report — we want it on disk on both pass and fail so
+  // failures are debuggable without rerunning Whisper.
+  const reportPath = path.join(workDir, "sync-report.json");
+  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+  console.log(
+    `verifySync: ${matched}/${cues.length} cues matched, avg |drift| ${avgDrift.toFixed(3)}s, max ${maxDrift.toFixed(3)}s`
+  );
+
+  if (avgDrift >= 0.3 || maxDrift >= 1.5) {
+    throw new Error(
+      `caption sync drift exceeds threshold (avg ${avgDrift.toFixed(2)}s, max ${maxDrift.toFixed(2)}s). See ${reportPath}.`
+    );
+  }
+  // Cues without any audio matches are also a failure mode — the rendered
+  // audio doesn't contain the spoken text, which usually means the splice
+  // dropped speech or the ASS file is for a different video.
+  if (cues.length > 0 && matched === 0) {
+    throw new Error(
+      `caption sync: 0 of ${cues.length} cues matched any audio word. See ${reportPath}.`
+    );
+  }
+}
+
+function parseAssTime(s: string): number {
+  const [h, m, sec] = s.split(":");
+  return parseInt(h) * 3600 + parseInt(m) * 60 + parseFloat(sec);
+}
+
+function stripAssOverrides(s: string): string {
+  return s.replace(/\{[^}]*\}/g, "");
 }
 
 // ---------- end-card render (Playwright one-shot) ----------
