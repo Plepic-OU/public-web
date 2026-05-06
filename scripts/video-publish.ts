@@ -69,6 +69,14 @@ const CAPTION_MAX_WORDS_PER_CUE = 3;
 const CAPTION_MAX_CUE_DURATION = 1.0;
 const CAPTION_BOTTOM_MARGIN_PCT = 0.18;
 
+// End-card overlay (vlog only). Height fraction = bottom slice of frame
+// reserved for the wordmark + butterfly; 1/3 keeps the speaker's face clear
+// when the end card slides in. END_CARD_SECONDS = window during which the
+// overlay renders and captions are suppressed.
+const END_CARD_HEIGHT_FRACTION = 1 / 3;
+const END_CARD_SECONDS = 5;
+const END_CARD_LOGO_SVG = path.join(REPO_ROOT, "images", "favicon.svg");
+
 // Tokens that should pop in brand-green. Numerals are matched separately by
 // regex; this set covers spelled-out numbers + Plepic-specific brand vocab.
 const NUMBER_WORDS = new Set([
@@ -915,65 +923,124 @@ async function edit(
     await spliceConcat(sourceFile, mergedKeeps, edited, workDir);
   }
 
-  // Caption burn-in for vlogs only (long-form uses SRT upload to YouTube).
-  // ASS instead of SRT so per-word brand-green emphasis renders. SRT stays on
-  // disk for the long-form YouTube captions.insert path.
-  if (format === "vlog" && !opts.noCaptions) {
-    const captioned = path.join(workDir, "edited-captioned.mp4");
+  // Caption burn-in + end-card for vlogs only (long-form uses SRT upload to
+  // YouTube and has its own outro convention). ASS instead of SRT so per-word
+  // brand-green emphasis renders. SRT stays on disk for the long-form
+  // YouTube captions.insert path.
+  if (format === "vlog") {
     const editedInfo = probeVideoInfo(edited);
-    // Scale font from the 1080×1920 reference. Falls back gracefully on
-    // non-standard resolutions; height is the more stable axis for vertical.
-    const fontSize = Math.max(
-      24,
-      Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
-    );
-    // Remap source-time word timestamps onto the edited timeline. Without
-    // this, ASS cue starts reference uncut source positions while ffmpeg
-    // burns them onto the spliced (cut) video, and drift accumulates at
-    // every cut. Words that fall inside a cut range are dropped (filler
-    // pads, long-pause spans). This is the key correctness invariant.
-    const editedWords = remapWordsToEdited(transcript.words, mergedKeeps);
-    console.log(
-      `edit: remapped ${transcript.words.length} src-time words → ${editedWords.length} edited-time captionable words`
-    );
+    const editedDuration = editedInfo.duration || duration;
+    const wantCaptions = !opts.noCaptions;
+    // End-card needs at least END_CARD_SECONDS + 2s of breathing room before
+    // it slides in. Anything shorter, skip — the overlay would devour the
+    // whole clip.
+    const wantEndCard = editedDuration >= END_CARD_SECONDS + 2;
+    const endCardStart = Math.max(0, editedDuration - END_CARD_SECONDS);
 
-    // Drop fillers before chunking so Claude doesn't waste tokens on words
-    // we'd discard from the cue text anyway. Remap already removed cuts;
-    // this catches fillers that fell outside any cut range.
-    const captionableWords = editedWords.filter((w) => {
-      const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
-      return !FILLER_WORDS.has(t);
-    });
-
-    // LLM-based phrase chunking. Falls back to mechanical 3-word/1.0s
-    // grouping on any failure (offline, rate-limit, malformed JSON), so
-    // the pipeline still produces captions without a network round-trip.
-    let cues = chunkCuesViaClaude(captionableWords);
-    if (cues === null) {
-      console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
-      log.errors.push("caption-chunking-fallback: used mechanical groupCues");
-      cues = groupCues(captionableWords);
-    } else {
-      console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+    if (!wantEndCard) {
+      console.log(
+        `edit: skipping end card (edited duration ${editedDuration.toFixed(1)}s < ${END_CARD_SECONDS + 2}s minimum)`
+      );
     }
 
-    const assPath = path.join(workDir, "captions.ass");
-    fs.writeFileSync(
-      assPath,
-      wordsToAss(cues, editedInfo.height || 1920, fontSize)
-    );
-    console.log(
-      `edit: burning in captions (vlog, ${transcript.words.length} words → cues, font ${fontSize}px)...`
-    );
-    const fontsDir = path.join(__dirname, "fonts");
-    // Use ass= filter (not subtitles=) so per-word style overrides survive;
-    // fontsdir points libass at the bundled TTFs instead of system fontconfig.
-    const filter = `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`;
-    runFfmpeg(
-      ["-i", edited, "-vf", filter, "-c:a", "copy", captioned],
-      { silent: true }
-    );
-    fs.renameSync(captioned, edited);
+    let assPath: string | null = null;
+    if (wantCaptions) {
+      // Scale font from the 1080×1920 reference. Falls back gracefully on
+      // non-standard resolutions; height is the more stable axis for vertical.
+      const fontSize = Math.max(
+        24,
+        Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
+      );
+      // Remap source-time word timestamps onto the edited timeline. Without
+      // this, ASS cue starts reference uncut source positions while ffmpeg
+      // burns them onto the spliced (cut) video, and drift accumulates at
+      // every cut. Words that fall inside a cut range are dropped (filler
+      // pads, long-pause spans). This is the key correctness invariant.
+      const editedWords = remapWordsToEdited(transcript.words, mergedKeeps);
+      console.log(
+        `edit: remapped ${transcript.words.length} src-time words → ${editedWords.length} edited-time captionable words`
+      );
+
+      // Drop fillers before chunking so Claude doesn't waste tokens on words
+      // we'd discard from the cue text anyway. Remap already removed cuts;
+      // this catches fillers that fell outside any cut range.
+      const captionableWords = editedWords.filter((w) => {
+        const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+        return !FILLER_WORDS.has(t);
+      });
+
+      // LLM-based phrase chunking. Falls back to mechanical 3-word/1.0s
+      // grouping on any failure (offline, rate-limit, malformed JSON), so
+      // the pipeline still produces captions without a network round-trip.
+      let cues = chunkCuesViaClaude(captionableWords);
+      if (cues === null) {
+        console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
+        log.errors.push("caption-chunking-fallback: used mechanical groupCues");
+        cues = groupCues(captionableWords);
+      } else {
+        console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+      }
+
+      // Drop cues whose start is within the end-card window. Otherwise
+      // captions would render on top of the wordmark.
+      if (wantEndCard) {
+        const before = cues.length;
+        cues = cues.filter((c) => c.start < endCardStart);
+        if (before !== cues.length) {
+          console.log(`edit: dropped ${before - cues.length} cues overlapping end-card window`);
+        }
+      }
+
+      assPath = path.join(workDir, "captions.ass");
+      fs.writeFileSync(
+        assPath,
+        wordsToAss(cues, editedInfo.height || 1920, fontSize)
+      );
+      console.log(
+        `edit: burning in captions (vlog, ${cues.length} cues, font ${fontSize}px)...`
+      );
+    }
+
+    if (wantCaptions || wantEndCard) {
+      const captioned = path.join(workDir, "edited-captioned.mp4");
+      const fontsDir = path.join(__dirname, "fonts");
+
+      let endCardPath: string | null = null;
+      if (wantEndCard) {
+        endCardPath = path.join(workDir, "end-card.png");
+        const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+        const ecWidth = editedInfo.width;
+        console.log(`edit: rendering end card ${ecWidth}×${ecHeight}...`);
+        await renderEndCard(ecWidth, ecHeight, endCardPath);
+      }
+
+      // Build the filter graph. ass= goes first (on input 0), then a single
+      // overlay= applies the end-card on the bottom slice, gated by t.
+      // Per-word style overrides survive ass= (not subtitles=); fontsdir
+      // points libass at the bundled TTFs instead of system fontconfig.
+      const ffArgs: string[] = ["-i", edited];
+      if (endCardPath) ffArgs.push("-i", endCardPath);
+
+      const assStep = assPath
+        ? `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
+        : null;
+
+      if (endCardPath) {
+        const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+        const ecY = editedInfo.height - ecHeight;
+        const filter = [
+          `[0:v]${assStep ?? "null"}[v0]`,
+          `[v0][1:v]overlay=0:${ecY}:enable='gte(t,${endCardStart.toFixed(2)})'[v]`,
+        ].join(";");
+        ffArgs.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
+      } else if (assStep) {
+        ffArgs.push("-vf", assStep);
+      }
+      ffArgs.push("-c:a", "copy", captioned);
+
+      runFfmpeg(ffArgs, { silent: true });
+      fs.renameSync(captioned, edited);
+    }
   }
 
   return edited;
@@ -1283,6 +1350,88 @@ function readBrandContext(): string {
     "CTA target: plepic.com/training. Always append ?utm_source=youtube&utm_content=<slug>.",
     "Banned marketing clichés: listed in system prompt. Hard fail.",
   ].join("\n");
+}
+
+// ---------- end-card render (Playwright one-shot) ----------
+
+// Render the end-card PNG (cream bg + butterfly + Plepic.com wordmark) at the
+// caller's exact width/height so ffmpeg overlays it 1:1 with no scaling.
+// Playwright is already a dev dep here (visual regression). One-shot launch
+// per pipeline invocation is fine — ~600ms overhead, runs once.
+async function renderEndCard(
+  width: number,
+  height: number,
+  outPath: string
+): Promise<void> {
+  if (!fs.existsSync(END_CARD_LOGO_SVG)) {
+    throw new Error(`end-card SVG not found: ${END_CARD_LOGO_SVG}`);
+  }
+  const svgRaw = fs.readFileSync(END_CARD_LOGO_SVG, "utf8");
+  // Strip width/height from the source SVG so CSS sizing wins.
+  const svgInline = svgRaw.replace(/\s(width|height)="[^"]*"/g, "");
+
+  // Scale typography off the rendered height so 1080-tall preview frames
+  // and 3840-tall iPhone-4K frames both look proportional.
+  const wordmarkPx = Math.round(height * 0.2);
+  const butterflyPx = Math.round(height * 0.25);
+  const gapPx = Math.round(height * 0.025);
+
+  const html = `<!doctype html><html><head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --green-brand: #137b30;
+    --text: #1c1c1a;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: ${width}px; height: ${height}px;
+    background: var(--bg);
+    display: flex; flex-direction: row;
+    align-items: center; justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text);
+    gap: ${gapPx}px;
+  }
+  .butterfly { width: ${butterflyPx}px; height: ${butterflyPx}px; flex-shrink: 0; }
+  .wordmark {
+    font-family: 'Zilla Slab', serif;
+    font-weight: 700;
+    font-size: ${wordmarkPx}px;
+    color: var(--green-brand);
+    letter-spacing: 0.005em;
+    line-height: 1;
+  }
+</style>
+</head><body>
+  <div class="butterfly">${svgInline}</div>
+  <div class="wordmark">Plepic.com</div>
+</body></html>`;
+
+  // Lazy-require so non-vlog runs don't pay Playwright's import cost.
+  const { chromium } = require("playwright") as typeof import("playwright");
+  const browser = await chromium.launch();
+  try {
+    const ctx = await browser.newContext({
+      viewport: { width, height },
+      deviceScaleFactor: 1,
+    });
+    const page = await ctx.newPage();
+    await page.setContent(html);
+    // page.evaluate runs in the browser context; cast through unknown so
+    // tsconfig (Node lib only) doesn't try to resolve `document` against
+    // Node's built-in types.
+    await page.evaluate(
+      "document.fonts.ready" as unknown as () => Promise<unknown>
+    );
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: outPath, fullPage: false });
+  } finally {
+    await browser.close();
+  }
 }
 
 // ---------- phase: makeThumbnail ----------
