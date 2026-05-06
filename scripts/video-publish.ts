@@ -53,10 +53,17 @@ const FONT_PATH = path.join(__dirname, "fonts", "ZillaSlab-Bold.ttf");
 
 // Caption typography. Tuned for 1080×1920 vertical short-form: ~6% of width,
 // 18% from bottom to clear platform UI (Reels/Shorts/TikTok overlays).
-const CAPTION_COLOR_BODY = "#0a0a0a";
-const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand) — AA on cream/white
-const CAPTION_OUTLINE = "#ffffff";
-const CAPTION_FONT_SIZE_VLOG = 64;
+// Caption styling mirrors the public-web .badge-default pattern (css/styles.css):
+// var(--green-surface) pill behind, var(--text) body text on top, var(--green-brand)
+// emphasis. Mixing badge bg with body --text token gives strong text-vs-emphasis
+// contrast that --green-dark text alone wouldn't.
+const CAPTION_COLOR_BODY = "#1c1c1a";     // var(--text). Brand near-black. Strong contrast on green-surface, leaves room for green emphasis to pop.
+const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand). Same as .highlight on the site.
+const CAPTION_BG_COLOR = "#edfcf1";       // var(--green-surface). Light tinted pill behind text.
+const CAPTION_BORDER_COLOR = "#c5f6d3";   // var(--green-light). Soft shadow accent under the pill.
+const CAPTION_FONT_SIZE_VLOG = 80;        // base for 1920px-tall reference; scales with actual video height (160px on 3840-tall iPhone 4K).
+const CAPTION_BOX_PADDING = 28;           // ASS Outline value when BorderStyle=3. Pixels of pill around text on each side.
+const CAPTION_BOX_SHADOW = 6;             // subtle drop shadow under the pill. Separates from busy backgrounds.
 const CAPTION_MAX_WORDS_PER_CUE = 3;
 const CAPTION_MAX_CUE_DURATION = 1.0;
 const CAPTION_BOTTOM_MARGIN_PCT = 0.18;
@@ -722,8 +729,9 @@ function wordsToAss(
   fontSize: number
 ): string {
   const cues = groupCues(words);
-  const bodyStyle = hexToAssStyleColor(CAPTION_COLOR_BODY);
-  const outlineStyle = hexToAssStyleColor(CAPTION_OUTLINE);
+  const textStyle = hexToAssStyleColor(CAPTION_COLOR_BODY);
+  const boxFillStyle = hexToAssStyleColor(CAPTION_BG_COLOR);
+  const shadowStyle = hexToAssStyleColor(CAPTION_BORDER_COLOR);
   const bodyOverride = hexToAssOverride(CAPTION_COLOR_BODY);
   const emphasisOverride = hexToAssOverride(CAPTION_COLOR_EMPHASIS);
   const marginV = Math.round(CAPTION_BOTTOM_MARGIN_PCT * videoHeight);
@@ -744,10 +752,12 @@ function wordsToAss(
       "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, " +
       "ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, " +
       "MarginL, MarginR, MarginV, Encoding",
-    // Bold=-1 (true) + ExtraBold-leaning fontname; Outline=4 + BorderStyle=1
-    // gives a clean halo without the heavy box style.
-    `Style: Default,Plus Jakarta Sans,${fontSize},${bodyStyle},${bodyStyle},` +
-      `${outlineStyle},&H00000000,-1,0,0,0,100,100,0,0,1,4,0,2,40,40,${marginV},1`,
+    // BorderStyle=3 = opaque box. In libass, the box is filled with
+    // OutlineColour (slot 6), not BackColour. We put the green-surface pill
+    // there, the dark-green text in PrimaryColour, and a green-light shadow
+    // in BackColour to lift the pill off busy iPhone backgrounds.
+    `Style: Default,Plus Jakarta Sans,${fontSize},${textStyle},${textStyle},` +
+      `${boxFillStyle},${shadowStyle},-1,0,0,0,100,100,0,0,3,${CAPTION_BOX_PADDING},${CAPTION_BOX_SHADOW},2,80,80,${marginV},1`,
     "",
     "[Events]",
     "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
