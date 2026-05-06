@@ -1012,15 +1012,16 @@ Return JSON only, matching this schema:
   "description": "string, <=4800 chars. First line = hook. Include 2-3 paragraphs with concrete value, followed by a single CTA pointing to plepic.com/training with ?utm_source=youtube&utm_content=<slug> appended. End with relevant hashtags.",
   "tags": ["<=15 tags, mixed long-tail + specific, total <=450 chars"],
   "chapters": [{"timestamp": "0:00", "title": "Intro"}, ...],  // only include for videos >3 min
-  "pinnedComment": "string, optional, <=500 chars — a single genuine question that invites discussion",
+  "pinnedComment": "string, optional, <=500 chars: a single genuine question that invites discussion",
   "slug": "kebab-case slug <=60 chars"
 }
 
 Constraints:
 - Never use "unleash", "game-changer", "revolutionize", "in this video", "don't forget to like and subscribe". Any of these fails immediately.
+- Never use em-dashes (—) anywhere in title, description, or pinnedComment. Use period, comma, or colon instead. Em-dashes read as AI-generated and fail Plepic's voice check.
 - Lead with the problem or the outcome, not with who Kaido is.
 - Voice is Kaido's: NVC/MI-grounded, observational, specific. Follow the voice authority rules exactly.
-- If a plan is provided, it is the primary seed. Transcript is secondary context — use it to ground claims but not to structure.
+- If a plan is provided, it is the primary seed. Transcript is secondary context. Use it to ground claims but not to structure.
 - Chapters: use real timestamps from the transcript's implicit structure. Skip for short vlogs.
 
 Return ONLY the JSON object. No markdown fences, no commentary.`;
@@ -1036,18 +1037,32 @@ function parseMetadataResponse(text: string, fallbackSlug: string): VideoMetadat
   const jsonStr = trimmed.slice(firstBrace, lastBrace + 1);
   const parsed = JSON.parse(jsonStr);
   return {
-    title: String(parsed.title ?? "").trim(),
-    description: String(parsed.description ?? "").trim(),
-    tags: Array.isArray(parsed.tags) ? parsed.tags.map((t: unknown) => String(t).trim()) : [],
+    title: stripEmDashes(String(parsed.title ?? "").trim()),
+    description: stripEmDashes(String(parsed.description ?? "").trim()),
+    tags: Array.isArray(parsed.tags) ? parsed.tags.map((t: unknown) => stripEmDashes(String(t).trim())) : [],
     chapters: Array.isArray(parsed.chapters)
       ? parsed.chapters.map((c: { timestamp?: string; title?: string }) => ({
           timestamp: String(c.timestamp ?? ""),
-          title: String(c.title ?? ""),
+          title: stripEmDashes(String(c.title ?? "")),
         }))
       : [],
-    pinnedComment: String(parsed.pinnedComment ?? "").trim(),
+    pinnedComment: stripEmDashes(String(parsed.pinnedComment ?? "").trim()),
     slug: slugify(String(parsed.slug ?? fallbackSlug)) || fallbackSlug,
   };
+}
+
+// Replace em-dashes with safer punctuation. ` — ` becomes `: ` (clause join);
+// bare `—` (no surrounding spaces or only one side) becomes `. ` (sentence
+// break). Plepic's house style bans em-dashes outright; we both prompt against
+// them and post-process to catch any that slip through.
+function stripEmDashes(s: string): string {
+  return s
+    .replace(/\s+—\s+/g, ": ")
+    .replace(/—\s+/g, ". ")
+    .replace(/\s+—/g, ".")
+    .replace(/—/g, ". ")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\.\s*\./g, ".");
 }
 
 function validateMetadata(m: VideoMetadata): void {
@@ -1073,6 +1088,11 @@ function validateMetadata(m: VideoMetadata): void {
     if (lower.includes(b)) {
       throw new Error(`Banned phrase "${b}" in metadata`);
     }
+  }
+  // Em-dashes are auto-stripped in parseMetadataResponse, so any survivor here
+  // means a bug in stripEmDashes, not a model output we need to negotiate with.
+  if (`${m.title} ${m.description} ${m.pinnedComment}`.includes("—")) {
+    throw new Error("Em-dash leaked past stripEmDashes. Fix the helper.");
   }
 }
 
