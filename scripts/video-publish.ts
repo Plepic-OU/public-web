@@ -15,6 +15,7 @@
  *   npx ts-node scripts/video-publish.ts <file> --force         (override idempotency)
  *   npx ts-node scripts/video-publish.ts <file> --no-captions   (skip caption burn-in)
  *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
+ *   npx ts-node scripts/video-publish.ts <file> --captions-only (reuse existing workdir; re-burn captions + end card only)
  *
  * Mock mode env switches (for contract tests + offline iteration):
  *   WHISPER_MOCK=1         read transcript from _fixtures/mock-responses/transcript.json
@@ -187,6 +188,7 @@ interface CliOptions {
   dryRun: boolean;
   force: boolean;
   noCaptions: boolean;
+  captionsOnly: boolean;
   thumbnailTime: number | null;
 }
 
@@ -194,14 +196,19 @@ interface CliOptions {
 
 function parseArgs(): CliOptions {
   const args = process.argv.slice(2);
+  const captionsOnly = args.includes("--captions-only");
+
   if (args.length === 0 || args[0].startsWith("--")) {
     throw new Error(
       "Usage: video-publish.ts <file> [--interactive] [--plan <path>] " +
-        "[--dry-run] [--unlisted] [--force] [--no-captions]"
+        "[--dry-run] [--unlisted] [--force] [--no-captions] [--captions-only]"
     );
   }
   const sourceFile = path.resolve(args[0]);
-  if (!fs.existsSync(sourceFile)) {
+  // --captions-only typically targets a source whose original file has been
+  // archived by a prior full run, so the existence check is bypassed there
+  // (the workdir is found by basename, not by file contents).
+  if (!fs.existsSync(sourceFile) && !captionsOnly) {
     throw new Error(`Source video not found: ${sourceFile}`);
   }
   const planIdx = args.indexOf("--plan");
@@ -218,6 +225,7 @@ function parseArgs(): CliOptions {
     dryRun: args.includes("--dry-run"),
     force: args.includes("--force"),
     noCaptions: args.includes("--no-captions"),
+    captionsOnly,
     thumbnailTime,
   };
 }
@@ -874,6 +882,29 @@ function wordsToAss(
   return [...header, ...events, ""].join("\n");
 }
 
+// Compute the keep ranges that splice the source by removing fillers and long
+// pauses. Pulled out so --captions-only can recompute the same ranges from
+// the persisted transcript.json without re-running the splice.
+function computeKeepRanges(
+  words: TranscriptWord[],
+  duration: number
+): Array<[number, number]> {
+  const cuts: Array<[number, number]> = [];
+  for (const w of words) {
+    const token = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+    if (FILLER_WORDS.has(token)) {
+      cuts.push([w.start - 0.05, w.end + 0.05]);
+    }
+  }
+  for (let i = 1; i < words.length; i++) {
+    const gap = words[i].start - words[i - 1].end;
+    if (gap >= MIN_PAUSE_SEC) {
+      cuts.push([words[i - 1].end + 0.1, words[i].start - 0.1]);
+    }
+  }
+  return mergeAdjacent(invertCuts(cuts, duration), 0.05);
+}
+
 // ---------- phase: edit (filler removal + silence trim + splice) ----------
 
 async function edit(
@@ -884,40 +915,17 @@ async function edit(
   opts: { noCaptions: boolean },
   log: PublishLog
 ): Promise<string> {
-  // Compute keep-ranges by starting from the full video duration and cutting
-  // out filler-word spans and long pauses.
   const duration = transcript.duration || probeVideoInfo(sourceFile).duration;
-  const cuts: Array<[number, number]> = [];
-
-  // Filler words
-  for (let i = 0; i < transcript.words.length; i++) {
-    const w = transcript.words[i];
-    const token = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
-    if (FILLER_WORDS.has(token)) {
-      cuts.push([w.start - 0.05, w.end + 0.05]);
-    }
-  }
-
-  // Long pauses from word gaps
-  for (let i = 1; i < transcript.words.length; i++) {
-    const gap = transcript.words[i].start - transcript.words[i - 1].end;
-    if (gap >= MIN_PAUSE_SEC) {
-      cuts.push([
-        transcript.words[i - 1].end + 0.1,
-        transcript.words[i].start - 0.1,
-      ]);
-    }
-  }
-
-  const keeps = invertCuts(cuts, duration);
-  const mergedKeeps = mergeAdjacent(keeps, 0.05);
+  const mergedKeeps = computeKeepRanges(transcript.words, duration);
+  const noCuts = mergedKeeps.length === 1 &&
+    mergedKeeps[0][0] === 0 && mergedKeeps[0][1] === duration;
   console.log(
-    `edit: ${cuts.length} cut ranges → ${mergedKeeps.length} keep segments (${duration.toFixed(1)}s total)`
+    `edit: ${mergedKeeps.length} keep segments (${duration.toFixed(1)}s total)`
   );
 
   // If no cuts, just copy-remux the source.
   const edited = path.join(workDir, "edited.mp4");
-  if (mergedKeeps.length === 1 && cuts.length === 0) {
+  if (noCuts) {
     runFfmpeg(["-i", sourceFile, "-c", "copy", edited], { silent: true });
   } else {
     await spliceConcat(sourceFile, mergedKeeps, edited, workDir);
@@ -1002,6 +1010,13 @@ async function edit(
     }
 
     if (wantCaptions || wantEndCard) {
+      // Preserve the un-captioned splice so --captions-only can re-burn
+      // captions later without re-running the concat. Copy (not rename) so
+      // edited.mp4 still exists as the in-progress target ffmpeg writes to.
+      const editedNoCaptions = path.join(workDir, "edited-no-captions.mp4");
+      if (!fs.existsSync(editedNoCaptions)) {
+        fs.copyFileSync(edited, editedNoCaptions);
+      }
       const captioned = path.join(workDir, "edited-captioned.mp4");
       const fontsDir = path.join(__dirname, "fonts");
 
@@ -1891,6 +1906,167 @@ function readPlanFile(slug: string): { content: string; format?: Format } | null
   };
 }
 
+// ---------- captions-only rerun ----------
+
+// Find an existing workdir for a source file. Prefers the most-recent plain
+// `<date>-<slug>` entry; falls back to the most-recent suffixed sibling
+// (`-z` ... `-a`) if no plain entry exists for any date.
+function findExistingWorkDir(sourceFile: string): string | null {
+  const slug = slugify(path.basename(sourceFile, path.extname(sourceFile)));
+  if (!fs.existsSync(WORK_ROOT)) return null;
+  const candidates = fs
+    .readdirSync(WORK_ROOT)
+    .filter((d) => {
+      const m = d.match(/^\d{4}-\d{2}-\d{2}-(.+?)(-[a-z])?$/);
+      return m !== null && m[1] === slug;
+    });
+  if (candidates.length === 0) return null;
+  const plainCandidates = candidates.filter((c) => !/-[a-z]$/.test(c)).sort();
+  if (plainCandidates.length > 0) {
+    return path.join(WORK_ROOT, plainCandidates[plainCandidates.length - 1]);
+  }
+  candidates.sort();
+  return path.join(WORK_ROOT, candidates[candidates.length - 1]);
+}
+
+async function runCaptionsOnly(opts: CliOptions): Promise<void> {
+  const startedAt = Date.now();
+  const workDir = findExistingWorkDir(opts.sourceFile);
+  const slug = slugify(path.basename(opts.sourceFile, path.extname(opts.sourceFile)));
+  if (!workDir) {
+    throw new Error(
+      `--captions-only: no existing workdir for "${slug}" under ${WORK_ROOT}; run a full pipeline first.`
+    );
+  }
+  console.log(`\n=== video-publish (captions-only) ===`);
+  console.log(`source slug: ${slug}`);
+  console.log(`reusing workdir: ${workDir}`);
+
+  const transcriptPath = path.join(workDir, "transcript.json");
+  if (!fs.existsSync(transcriptPath)) {
+    throw new Error(`--captions-only: ${transcriptPath} missing; cannot reuse without transcript.`);
+  }
+  const transcriptData = JSON.parse(fs.readFileSync(transcriptPath, "utf8")) as Transcript;
+  const transcript: Transcript = {
+    words: transcriptData.words,
+    language: transcriptData.language,
+    duration: transcriptData.duration,
+    fullText: transcriptData.fullText,
+    srtText: transcriptData.srtText ?? "",
+  };
+
+  // Source for the captioned render: edited-no-captions.mp4 if present
+  // (newer workdirs); else reconstruct it from the persisted concat-list.txt.
+  const editedNoCaptions = path.join(workDir, "edited-no-captions.mp4");
+  if (!fs.existsSync(editedNoCaptions)) {
+    const concatList = path.join(workDir, "concat-list.txt");
+    if (!fs.existsSync(concatList)) {
+      throw new Error(
+        `--captions-only: neither edited-no-captions.mp4 nor concat-list.txt present in ${workDir}; cannot rebuild splice.`
+      );
+    }
+    console.log("captions-only: rebuilding edited-no-captions.mp4 from concat-list.txt...");
+    runFfmpeg(
+      ["-f", "concat", "-safe", "0", "-i", concatList, "-c", "copy", editedNoCaptions],
+      { silent: true }
+    );
+  }
+
+  // Working copy that ffmpeg will write to (matching full-pipeline contract).
+  const edited = path.join(workDir, "edited.mp4");
+  fs.copyFileSync(editedNoCaptions, edited);
+
+  const editedInfo = probeVideoInfo(edited);
+  const editedDuration = editedInfo.duration || transcript.duration;
+  const wantCaptions = !opts.noCaptions;
+  const wantEndCard = editedDuration >= END_CARD_SECONDS + 2;
+  const endCardStart = Math.max(0, editedDuration - END_CARD_SECONDS);
+
+  const log: PublishLog = readPublishLogIfExists(workDir) ?? {
+    slug,
+    format: "vlog",
+    source_path: opts.sourceFile,
+    started_at: new Date(startedAt).toISOString(),
+    phases_completed: [],
+    youtube: null,
+    linkedin: null,
+    quota_units_used: 0,
+    duration_seconds: null,
+    errors: [],
+  };
+
+  // Recompute the keeps used by the splice so we can remap word timestamps.
+  // The pre-recorded edited-no-captions.mp4 was produced from the same
+  // transcript, so the same keeps fall out (deterministic given inputs).
+  const keeps = computeKeepRanges(transcript.words, transcript.duration || editedDuration);
+
+  let assPath: string | null = null;
+  if (wantCaptions) {
+    const fontSize = Math.max(
+      24,
+      Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
+    );
+    const editedWords = remapWordsToEdited(transcript.words, keeps);
+    const captionableWords = editedWords.filter((w) => {
+      const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+      return !FILLER_WORDS.has(t);
+    });
+    let cues = chunkCuesViaClaude(captionableWords);
+    if (cues === null) {
+      console.warn("captions-only: chunking via Claude unavailable; using mechanical groupCues");
+      cues = groupCues(captionableWords);
+    }
+    if (wantEndCard) {
+      cues = cues.filter((c) => c.start < endCardStart);
+    }
+    assPath = path.join(workDir, "captions.ass");
+    fs.writeFileSync(assPath, wordsToAss(cues, editedInfo.height || 1920, fontSize));
+    console.log(`captions-only: wrote ${cues.length} cues to ${assPath}`);
+  }
+
+  if (wantCaptions || wantEndCard) {
+    const captioned = path.join(workDir, "edited-captioned.mp4");
+    const fontsDir = path.join(__dirname, "fonts");
+    let endCardPath: string | null = null;
+    if (wantEndCard) {
+      endCardPath = path.join(workDir, "end-card.png");
+      const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+      const ecWidth = editedInfo.width;
+      console.log(`captions-only: rendering end card ${ecWidth}×${ecHeight}...`);
+      await renderEndCard(ecWidth, ecHeight, endCardPath);
+    }
+    const ffArgs: string[] = ["-i", edited];
+    if (endCardPath) ffArgs.push("-i", endCardPath);
+    const assStep = assPath
+      ? `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
+      : null;
+    if (endCardPath) {
+      const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
+      const ecY = editedInfo.height - ecHeight;
+      const filter = [
+        `[0:v]${assStep ?? "null"}[v0]`,
+        `[v0][1:v]overlay=0:${ecY}:enable='gte(t,${endCardStart.toFixed(2)})'[v]`,
+      ].join(";");
+      ffArgs.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
+    } else if (assStep) {
+      ffArgs.push("-vf", assStep);
+    }
+    ffArgs.push("-c:a", "copy", captioned);
+    runFfmpeg(ffArgs, { silent: true });
+    fs.renameSync(captioned, edited);
+  }
+
+  if (assPath) {
+    await verifySyncOrThrow(edited, assPath, workDir);
+  }
+
+  log.errors.push(`captions-only rerun at ${new Date().toISOString()}`);
+  writePublishLog(workDir, log);
+
+  console.log(`\n=== done (captions-only, ${((Date.now() - startedAt) / 1000).toFixed(1)}s) ===`);
+  console.log(`edited: ${edited}`);
+}
+
 // ---------- main orchestrator ----------
 
 async function main(): Promise<void> {
@@ -1901,6 +2077,12 @@ async function main(): Promise<void> {
   ensureDir(VIDEO_PLANS_DIR);
 
   const opts = parseArgs();
+
+  if (opts.captionsOnly) {
+    await runCaptionsOnly(opts);
+    return;
+  }
+
   const startedAt = Date.now();
 
   console.log(`\n=== video-publish ===`);
@@ -2127,7 +2309,11 @@ function ensureWorkDir(date: string, slug: string): string {
   throw new Error(`Too many collisions for ${base}`);
 }
 
-main().catch((err) => {
-  console.error(redactSecrets(err instanceof Error ? err.message : String(err)));
-  process.exit(1);
-});
+// Only run main() when this file is the entrypoint. Lets tests import the
+// helpers without spawning the pipeline.
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(redactSecrets(err instanceof Error ? err.message : String(err)));
+    process.exit(1);
+  });
+}
