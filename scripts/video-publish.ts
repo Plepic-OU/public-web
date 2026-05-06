@@ -46,7 +46,34 @@ const VIDEO_ARTIFACTS_ROOT = path.join(REPO_ROOT, "analytics", "video");
 const VIDEO_PLANS_DIR = path.join(REPO_ROOT, "analytics", "video-plans");
 const FIXTURES_DIR = path.join(VIDEO_ARTIFACTS_ROOT, "_fixtures");
 const MOCKS_DIR = path.join(FIXTURES_DIR, "mock-responses");
+// Zilla Slab is the heading face (used for thumbnail title cards). Body
+// captions use Plus Jakarta Sans Bold (shipped under scripts/fonts/) which
+// libass discovers via the fontsdir filter arg in edit().
 const FONT_PATH = path.join(__dirname, "fonts", "ZillaSlab-Bold.ttf");
+
+// Caption typography. Tuned for 1080×1920 vertical short-form: ~6% of width,
+// 18% from bottom to clear platform UI (Reels/Shorts/TikTok overlays).
+const CAPTION_COLOR_BODY = "#0a0a0a";
+const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand) — AA on cream/white
+const CAPTION_OUTLINE = "#ffffff";
+const CAPTION_FONT_SIZE_VLOG = 64;
+const CAPTION_MAX_WORDS_PER_CUE = 3;
+const CAPTION_MAX_CUE_DURATION = 1.0;
+const CAPTION_BOTTOM_MARGIN_PCT = 0.18;
+
+// Tokens that should pop in brand-green. Numerals are matched separately by
+// regex; this set covers spelled-out numbers + Plepic-specific brand vocab.
+const NUMBER_WORDS = new Set([
+  "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+  "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+  "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty",
+  "sixty", "seventy", "eighty", "ninety", "hundred", "thousand",
+]);
+const BRAND_EMPHASIS = new Set([
+  "squad", "plepic", "töötukassa", "claude", "friday", "september",
+  "august", "monday", "tuesday", "wednesday", "thursday", "saturday",
+  "sunday", "nps", "ai",
+]);
 
 const FILLER_WORDS = new Set([
   "um",
@@ -88,6 +115,12 @@ interface TranscriptWord {
   text: string;
   start: number;
   end: number;
+}
+
+interface Cue {
+  start: number;
+  end: number;
+  words: TranscriptWord[];
 }
 
 interface Transcript {
@@ -613,6 +646,128 @@ function wordsToSrt(words: TranscriptWord[]): string {
     .join("\n");
 }
 
+// ---------- ASS caption generation (vlog burn-in) ----------
+
+function fmtAssTime(seconds: number): string {
+  // ASS format: H:MM:SS.cc (centiseconds, no leading zero on hour).
+  const total = Math.max(0, seconds);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = Math.floor(total % 60);
+  const cs = Math.floor((total - Math.floor(total)) * 100);
+  return (
+    `${h}:${m.toString().padStart(2, "0")}:` +
+    `${s.toString().padStart(2, "0")}.${cs.toString().padStart(2, "0")}`
+  );
+}
+
+function hexToBgr(hex: string): string {
+  // BGR-ordered hex (no &H prefix). Used by both ASS style + override forms.
+  const m = hex.replace(/^#/, "").toUpperCase();
+  const r = m.slice(0, 2);
+  const g = m.slice(2, 4);
+  const b = m.slice(4, 6);
+  return `${b}${g}${r}`;
+}
+
+function hexToAssStyleColor(hex: string): string {
+  // Style block uses &HAABBGGRR (alpha 00 = opaque).
+  return `&H00${hexToBgr(hex)}`;
+}
+
+function hexToAssOverride(hex: string): string {
+  // Inline \c override uses &HBBGGRR& (no alpha, trailing `&`).
+  return `&H${hexToBgr(hex)}&`;
+}
+
+function shouldEmphasize(token: string): boolean {
+  const stripped = token.replace(/[^A-Za-zÀ-ÿ0-9%]/g, "").toLowerCase();
+  if (stripped.length === 0) return false;
+  if (/\d/.test(stripped)) return true;
+  if (NUMBER_WORDS.has(stripped)) return true;
+  if (BRAND_EMPHASIS.has(stripped)) return true;
+  return false;
+}
+
+function groupCues(words: TranscriptWord[]): Cue[] {
+  const cues: Cue[] = [];
+  let buf: TranscriptWord[] = [];
+  const flush = (): void => {
+    if (buf.length === 0) return;
+    cues.push({ start: buf[0].start, end: buf[buf.length - 1].end, words: buf });
+    buf = [];
+  };
+  for (const w of words) {
+    const wouldOverflow =
+      buf.length >= CAPTION_MAX_WORDS_PER_CUE ||
+      (buf.length > 0 && w.end - buf[0].start > CAPTION_MAX_CUE_DURATION);
+    if (wouldOverflow) flush();
+    buf.push(w);
+    // Sentence boundary: flush after the punctuated word so the next cue
+    // starts fresh, preventing run-on grouping across thoughts.
+    if (/[.!?]$/.test(w.text)) flush();
+  }
+  flush();
+  return cues;
+}
+
+function escapeAssText(s: string): string {
+  // ASS treats `{` as override-block opener and `\N` as literal newline.
+  return s.replace(/\\/g, "\\\\").replace(/\{/g, "\\{").replace(/\}/g, "\\}");
+}
+
+function wordsToAss(
+  words: TranscriptWord[],
+  videoHeight: number,
+  fontSize: number
+): string {
+  const cues = groupCues(words);
+  const bodyStyle = hexToAssStyleColor(CAPTION_COLOR_BODY);
+  const outlineStyle = hexToAssStyleColor(CAPTION_OUTLINE);
+  const bodyOverride = hexToAssOverride(CAPTION_COLOR_BODY);
+  const emphasisOverride = hexToAssOverride(CAPTION_COLOR_EMPHASIS);
+  const marginV = Math.round(CAPTION_BOTTOM_MARGIN_PCT * videoHeight);
+
+  // PlayResX/PlayResY define the coordinate system libass scales font sizes
+  // against. We pin to the actual video resolution so Fontsize is in pixels.
+  const playResX = Math.round((videoHeight * 9) / 16);
+  const header = [
+    "[Script Info]",
+    "ScriptType: v4.00+",
+    "WrapStyle: 2",
+    "ScaledBorderAndShadow: yes",
+    `PlayResX: ${playResX}`,
+    `PlayResY: ${videoHeight}`,
+    "",
+    "[V4+ Styles]",
+    "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, " +
+      "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, " +
+      "ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, " +
+      "MarginL, MarginR, MarginV, Encoding",
+    // Bold=-1 (true) + ExtraBold-leaning fontname; Outline=4 + BorderStyle=1
+    // gives a clean halo without the heavy box style.
+    `Style: Default,Plus Jakarta Sans,${fontSize},${bodyStyle},${bodyStyle},` +
+      `${outlineStyle},&H00000000,-1,0,0,0,100,100,0,0,1,4,0,2,40,40,${marginV},1`,
+    "",
+    "[Events]",
+    "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
+  ];
+
+  const events = cues.map((c) => {
+    const parts = c.words.map((w, i) => {
+      const text = escapeAssText(w.text);
+      const sep = i === 0 ? "" : " ";
+      if (shouldEmphasize(w.text)) {
+        return `${sep}{\\c${emphasisOverride}}${text}{\\c${bodyOverride}}`;
+      }
+      return `${sep}${text}`;
+    });
+    return `Dialogue: 0,${fmtAssTime(c.start)},${fmtAssTime(c.end)},Default,,0,0,0,,${parts.join("")}`;
+  });
+
+  return [...header, ...events, ""].join("\n");
+}
+
 // ---------- phase: edit (filler removal + silence trim + splice) ----------
 
 async function edit(
@@ -662,19 +817,31 @@ async function edit(
   }
 
   // Caption burn-in for vlogs only (long-form uses SRT upload to YouTube).
+  // ASS instead of SRT so per-word brand-green emphasis renders. SRT stays on
+  // disk for the long-form YouTube captions.insert path.
   if (format === "vlog" && !opts.noCaptions) {
     const captioned = path.join(workDir, "edited-captioned.mp4");
-    console.log("edit: burning in captions (vlog)...");
+    const editedInfo = probeVideoInfo(edited);
+    // Scale font from the 1080×1920 reference. Falls back gracefully on
+    // non-standard resolutions; height is the more stable axis for vertical.
+    const fontSize = Math.max(
+      24,
+      Math.round(CAPTION_FONT_SIZE_VLOG * (editedInfo.height / 1920))
+    );
+    const assPath = path.join(workDir, "captions.ass");
+    fs.writeFileSync(
+      assPath,
+      wordsToAss(transcript.words, editedInfo.height || 1920, fontSize)
+    );
+    console.log(
+      `edit: burning in captions (vlog, ${transcript.words.length} words → cues, font ${fontSize}px)...`
+    );
+    const fontsDir = path.join(__dirname, "fonts");
+    // Use ass= filter (not subtitles=) so per-word style overrides survive;
+    // fontsdir points libass at the bundled TTFs instead of system fontconfig.
+    const filter = `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`;
     runFfmpeg(
-      [
-        "-i",
-        edited,
-        "-vf",
-        `subtitles='${path.join(workDir, "transcript.srt").replace(/'/g, "\\'")}':force_style='FontName=Zilla Slab,Fontsize=24,PrimaryColour=&H00faf7f2,OutlineColour=&H00224a0d,BorderStyle=3'`,
-        "-c:a",
-        "copy",
-        captioned,
-      ],
+      ["-i", edited, "-vf", filter, "-c:a", "copy", captioned],
       { silent: true }
     );
     fs.renameSync(captioned, edited);
