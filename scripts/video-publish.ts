@@ -1123,7 +1123,12 @@ function wordsToAss(
     const parts = c.words.map((w, i) => {
       const text = escapeAssText(w.text);
       const sep = i === 0 ? "" : " ";
-      if (shouldEmphasize(w.text)) {
+      // Plan-aligned cues carry an explicit emphasis set from the markdown's
+      // bold markers; all other paths fall back to the heuristic.
+      const emphasized = c.emphasisIndices
+        ? c.emphasisIndices.has(i)
+        : shouldEmphasize(w.text);
+      if (emphasized) {
         return `${sep}{\\c${emphasisOverride}}${text}{\\c${bodyOverride}}`;
       }
       return `${sep}${text}`;
@@ -1164,7 +1169,7 @@ async function edit(
   transcript: Transcript,
   format: Format,
   workDir: string,
-  opts: { noCaptions: boolean },
+  opts: { noCaptions: boolean; planMarkdown: string | null },
   log: PublishLog
 ): Promise<string> {
   const duration = transcript.duration || probeVideoInfo(sourceFile).duration;
@@ -1229,16 +1234,37 @@ async function edit(
         return !FILLER_WORDS.has(t);
       });
 
-      // LLM-based phrase chunking. Falls back to mechanical 3-word/1.0s
-      // grouping on any failure (offline, rate-limit, malformed JSON), so
-      // the pipeline still produces captions without a network round-trip.
-      let cues = chunkCuesViaClaude(captionableWords);
+      // Caption cue source, in priority order:
+      //  1. Plan-aligned (--plan present, ≥80% of script tokens matched).
+      //     Deterministic, emphasis comes straight from bold markers.
+      //  2. Claude-chunked (LLM groups Whisper words; heuristic emphasis).
+      //  3. Mechanical 3-word/1.0s grouping (offline / chunk failure).
+      let cues: Cue[] | null = null;
+      if (opts.planMarkdown) {
+        const aligned = alignTranscriptToScript(captionableWords, opts.planMarkdown);
+        if (aligned && aligned.matchRatio >= 0.8) {
+          cues = aligned.cues;
+          console.log(
+            `edit: plan-aligned ${aligned.cues.length} cues (${(aligned.matchRatio * 100).toFixed(0)}% script match)`
+          );
+        } else if (aligned) {
+          console.warn(
+            `edit: plan alignment only ${(aligned.matchRatio * 100).toFixed(0)}% — falling back to LLM chunker`
+          );
+          log.errors.push(
+            `plan-alignment-fallback: match ratio ${aligned.matchRatio.toFixed(2)} < 0.80`
+          );
+        }
+      }
       if (cues === null) {
-        console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
-        log.errors.push("caption-chunking-fallback: used mechanical groupCues");
-        cues = groupCues(captionableWords);
-      } else {
-        console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+        cues = chunkCuesViaClaude(captionableWords);
+        if (cues === null) {
+          console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
+          log.errors.push("caption-chunking-fallback: used mechanical groupCues");
+          cues = groupCues(captionableWords);
+        } else {
+          console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+        }
       }
 
       // Drop cues whose start is within the end-card window. Otherwise
@@ -2252,6 +2278,17 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
   // transcript, so the same keeps fall out (deterministic given inputs).
   const keeps = computeKeepRanges(transcript.words, transcript.duration || editedDuration);
 
+  // Reuse plan loading from the full pipeline. Explicit --plan wins; else
+  // look up by slug. Captions-only is exactly the use case where plan
+  // alignment matters most (you're iterating on caption styling).
+  let planContent: string | null = null;
+  if (opts.planPath && fs.existsSync(opts.planPath)) {
+    planContent = fs.readFileSync(opts.planPath, "utf8");
+  } else {
+    const found = readPlanFile(slug);
+    if (found) planContent = found.content;
+  }
+
   let assPath: string | null = null;
   if (wantCaptions) {
     const fontSize = Math.max(
@@ -2263,10 +2300,22 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
       const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
       return !FILLER_WORDS.has(t);
     });
-    let cues = chunkCuesViaClaude(captionableWords);
+    let cues: Cue[] | null = null;
+    if (planContent) {
+      const aligned = alignTranscriptToScript(captionableWords, planContent);
+      if (aligned && aligned.matchRatio >= 0.8) {
+        cues = aligned.cues;
+        console.log(
+          `captions-only: plan-aligned ${aligned.cues.length} cues (${(aligned.matchRatio * 100).toFixed(0)}% script match)`
+        );
+      }
+    }
     if (cues === null) {
-      console.warn("captions-only: chunking via Claude unavailable; using mechanical groupCues");
-      cues = groupCues(captionableWords);
+      cues = chunkCuesViaClaude(captionableWords);
+      if (cues === null) {
+        console.warn("captions-only: chunking via Claude unavailable; using mechanical groupCues");
+        cues = groupCues(captionableWords);
+      }
     }
     if (wantEndCard) {
       cues = cues.filter((c) => c.start < endCardStart);
@@ -2383,20 +2432,8 @@ async function main(): Promise<void> {
       "transcribe — review transcript.json / transcript.srt"
     );
 
-    // Phase: edit
-    const editedFile = await edit(
-      opts.sourceFile,
-      transcript,
-      format,
-      workDir,
-      { noCaptions: opts.noCaptions },
-      log
-    );
-    log.phases_completed.push("edit");
-    writePublishLog(workDir, log);
-    await pauseIfInteractive(opts.interactive, `edit — inspect ${editedFile}`);
-
-    // Read plan if provided
+    // Read plan upfront — edit() needs it for plan-aligned cues, and metadata
+    // generation reads it later. Same source either way.
     let planContent: string | null = null;
     if (opts.planPath && fs.existsSync(opts.planPath)) {
       planContent = fs.readFileSync(opts.planPath, "utf8");
@@ -2405,6 +2442,19 @@ async function main(): Promise<void> {
       if (found) planContent = found.content;
       else console.log("generateMetadata: no plan found — degraded mode (transcript only)");
     }
+
+    // Phase: edit
+    const editedFile = await edit(
+      opts.sourceFile,
+      transcript,
+      format,
+      workDir,
+      { noCaptions: opts.noCaptions, planMarkdown: planContent },
+      log
+    );
+    log.phases_completed.push("edit");
+    writePublishLog(workDir, log);
+    await pauseIfInteractive(opts.interactive, `edit — inspect ${editedFile}`);
 
     // Phase: generate metadata
     const metadata = await generateMetadata(transcript, planContent, initialSlug);
