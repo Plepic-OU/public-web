@@ -291,15 +291,24 @@ function probeVideoInfo(
     "-select_streams",
     "v:0",
     "-show_entries",
-    "stream=width,height,duration:format=duration",
+    "stream=width,height,duration:stream_side_data=rotation:format=duration",
     "-of",
     "json",
     file,
   ]);
   const data = JSON.parse(out);
   const stream = data.streams?.[0] ?? {};
-  const width = stream.width ?? 0;
-  const height = stream.height ?? 0;
+  let width = stream.width ?? 0;
+  let height = stream.height ?? 0;
+  // iPhone vertical recordings store raw pixels as 3840×2160 with rotation=-90
+  // in side_data_list. Swap dims so downstream aspect-ratio detection sees
+  // the display orientation (2160×3840 = 9:16 vertical).
+  const rot = (stream.side_data_list ?? []).find(
+    (sd: { rotation?: number }) => sd.rotation !== undefined
+  )?.rotation;
+  if (typeof rot === "number" && Math.abs(rot) % 180 === 90) {
+    [width, height] = [height, width];
+  }
   const duration =
     parseFloat(stream.duration) ||
     parseFloat(data.format?.duration ?? "0");
@@ -441,6 +450,7 @@ async function callWhisper(
     path.basename(audioFile)
   );
   form.append("model", "whisper-1");
+  form.append("language", "en");
   form.append("response_format", "verbose_json");
   form.append("timestamp_granularities[]", "word");
 
@@ -1085,12 +1095,19 @@ async function uploadToYoutube(
   const privacy = opts.unlisted ? "unlisted" : "public";
   console.log(`uploadToYoutube: uploading (${privacy})...`);
 
+  // Vertical + short duration alone isn't a reliable Shorts-classification
+  // signal; the #Shorts hashtag is. Append it for vlogs.
+  const description =
+    opts.format === "vlog"
+      ? `${metadata.description.trimEnd()}\n\n#Shorts`
+      : metadata.description;
+
   const insertRes = await youtube.videos.insert({
     part: ["snippet", "status"],
     requestBody: {
       snippet: {
         title: metadata.title,
-        description: metadata.description,
+        description,
         tags: metadata.tags,
         categoryId: "28", // Science & Technology
       },
