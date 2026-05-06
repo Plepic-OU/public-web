@@ -17,10 +17,11 @@
  *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
  *
  * Mock mode env switches (for contract tests + offline iteration):
- *   WHISPER_MOCK=1     read transcript from _fixtures/mock-responses/transcript.json
- *   CLAUDE_MOCK=1      read metadata from _fixtures/mock-responses/metadata.json
- *   YT_MOCK=1          skip the YouTube upload, emit a fake video id
- *   LI_MOCK=1          prepareLinkedIn writes a minimal folder without trim
+ *   WHISPER_MOCK=1         read transcript from _fixtures/mock-responses/transcript.json
+ *   CLAUDE_MOCK=1          read metadata from _fixtures/mock-responses/metadata.json
+ *   CLAUDE_CHUNK_MOCK=1    read cue chunks from _fixtures/mock-responses/cue-chunks.json
+ *   YT_MOCK=1              skip the YouTube upload, emit a fake video id
+ *   LI_MOCK=1              prepareLinkedIn writes a minimal folder without trim
  *
  * Requires: ffmpeg + ffprobe on PATH (with drawtext, subtitles, silencedetect),
  * OPENAI_API_KEY, ANTHROPIC_API_KEY, YT_* env vars.
@@ -718,17 +719,104 @@ function groupCues(words: TranscriptWord[]): Cue[] {
   return cues;
 }
 
+// Ask Claude Haiku to chunk words into logical phrase cues (2-4 words each),
+// breaking on sentence ends, clause boundaries, and number-then-noun
+// transitions. Returns null on failure so the caller can fall back to the
+// mechanical chunker. The mock fixture keeps offline iteration deterministic.
+function chunkCuesViaClaude(words: TranscriptWord[]): Cue[] | null {
+  if (words.length === 0) return [];
+
+  if (process.env.CLAUDE_CHUNK_MOCK === "1") {
+    const mockPath = path.join(MOCKS_DIR, "cue-chunks.json");
+    if (!fs.existsSync(mockPath)) {
+      console.warn(`chunkCuesViaClaude: CLAUDE_CHUNK_MOCK=1 but ${mockPath} missing — falling back`);
+      return null;
+    }
+    try {
+      const parsed = JSON.parse(fs.readFileSync(mockPath, "utf8")) as {
+        cues: Array<{ start: number; end: number }>;
+      };
+      return materializeCues(words, parsed.cues);
+    } catch (err) {
+      console.warn(`chunkCuesViaClaude: mock parse failed: ${err instanceof Error ? err.message : err}`);
+      return null;
+    }
+  }
+
+  const indexed = words.map((w, idx) => `${idx}: ${w.text}`).join("\n");
+  // The number-then-noun rule (e.g. "10 Squad") is critical: without it
+  // Haiku tends to keep numerics attached to the following noun, which
+  // dilutes the green-emphasis effect.
+  const prompt = [
+    "You are chunking video captions for a vertical short-form video. Output JSON only, no commentary.",
+    "",
+    "Rules:",
+    "- Each cue is 2 to 4 words.",
+    "- Break on natural phrase boundaries: sentence ends, clause breaks, before new subjects.",
+    "- A number ending a clause (e.g. \"10\" finishing \"9 out of 10\") MUST end its cue. Never group \"10 Squad\" or similar number-then-noun crossings.",
+    "- Brand terms that start a new sentence (Squad 1, Squad 2, Plepic, Yesterday's, If, The, Six, Few) typically start a new cue.",
+    "- Every word must appear in exactly one cue. Cues must be in input order.",
+    "",
+    "Output schema:",
+    "{ \"cues\": [{ \"start\": <inclusive_word_idx>, \"end\": <inclusive_word_idx> }, ...] }",
+    "",
+    "Input words (idx-text):",
+    indexed,
+    "",
+    "Return ONLY the JSON object.",
+  ].join("\n");
+
+  const r = spawnSync("claude", ["-p", "--output-format", "text", "--model", "haiku"], {
+    input: prompt,
+    encoding: "utf8",
+    maxBuffer: 4 * 1024 * 1024,
+  });
+  if (r.status !== 0) {
+    console.warn(`chunkCuesViaClaude: claude -p failed (status ${r.status}): ${(r.stderr ?? "").slice(0, 300)}`);
+    return null;
+  }
+  const text = r.stdout.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  const firstBrace = text.indexOf("{");
+  const lastBrace = text.lastIndexOf("}");
+  if (firstBrace === -1 || lastBrace === -1) {
+    console.warn(`chunkCuesViaClaude: no JSON in response: ${text.slice(0, 200)}`);
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(text.slice(firstBrace, lastBrace + 1)) as {
+      cues: Array<{ start: number; end: number }>;
+    };
+    return materializeCues(words, parsed.cues);
+  } catch (err) {
+    console.warn(`chunkCuesViaClaude: parse failed: ${err instanceof Error ? err.message : err}`);
+    return null;
+  }
+}
+
+function materializeCues(
+  words: TranscriptWord[],
+  ranges: Array<{ start: number; end: number }>
+): Cue[] {
+  const cues: Cue[] = [];
+  for (const r of ranges) {
+    if (r.start < 0 || r.end >= words.length || r.end < r.start) continue;
+    const slice = words.slice(r.start, r.end + 1);
+    if (slice.length === 0) continue;
+    cues.push({ start: slice[0].start, end: slice[slice.length - 1].end, words: slice });
+  }
+  return cues;
+}
+
 function escapeAssText(s: string): string {
   // ASS treats `{` as override-block opener and `\N` as literal newline.
   return s.replace(/\\/g, "\\\\").replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 }
 
 function wordsToAss(
-  words: TranscriptWord[],
+  cues: Cue[],
   videoHeight: number,
   fontSize: number
 ): string {
-  const cues = groupCues(words);
   const textStyle = hexToAssStyleColor(CAPTION_COLOR_BODY);
   const boxFillStyle = hexToAssStyleColor(CAPTION_BG_COLOR);
   const shadowStyle = hexToAssStyleColor(CAPTION_BORDER_COLOR);
@@ -785,7 +873,8 @@ async function edit(
   transcript: Transcript,
   format: Format,
   workDir: string,
-  opts: { noCaptions: boolean }
+  opts: { noCaptions: boolean },
+  log: PublishLog
 ): Promise<string> {
   // Compute keep-ranges by starting from the full video duration and cutting
   // out filler-word spans and long pauses.
@@ -847,10 +936,31 @@ async function edit(
     console.log(
       `edit: remapped ${transcript.words.length} src-time words → ${editedWords.length} edited-time captionable words`
     );
+
+    // Drop fillers before chunking so Claude doesn't waste tokens on words
+    // we'd discard from the cue text anyway. Remap already removed cuts;
+    // this catches fillers that fell outside any cut range.
+    const captionableWords = editedWords.filter((w) => {
+      const t = w.text.toLowerCase().replace(/[^a-z\s']/g, "").trim();
+      return !FILLER_WORDS.has(t);
+    });
+
+    // LLM-based phrase chunking. Falls back to mechanical 3-word/1.0s
+    // grouping on any failure (offline, rate-limit, malformed JSON), so
+    // the pipeline still produces captions without a network round-trip.
+    let cues = chunkCuesViaClaude(captionableWords);
+    if (cues === null) {
+      console.warn("edit: caption chunking via Claude unavailable — falling back to mechanical grouping");
+      log.errors.push("caption-chunking-fallback: used mechanical groupCues");
+      cues = groupCues(captionableWords);
+    } else {
+      console.log(`edit: chunked ${captionableWords.length} words into ${cues.length} cues via Claude`);
+    }
+
     const assPath = path.join(workDir, "captions.ass");
     fs.writeFileSync(
       assPath,
-      wordsToAss(editedWords, editedInfo.height || 1920, fontSize)
+      wordsToAss(cues, editedInfo.height || 1920, fontSize)
     );
     console.log(
       `edit: burning in captions (vlog, ${transcript.words.length} words → cues, font ${fontSize}px)...`
@@ -1563,9 +1673,14 @@ async function main(): Promise<void> {
     );
 
     // Phase: edit
-    const editedFile = await edit(opts.sourceFile, transcript, format, workDir, {
-      noCaptions: opts.noCaptions,
-    });
+    const editedFile = await edit(
+      opts.sourceFile,
+      transcript,
+      format,
+      workDir,
+      { noCaptions: opts.noCaptions },
+      log
+    );
     log.phases_completed.push("edit");
     writePublishLog(workDir, log);
     await pauseIfInteractive(opts.interactive, `edit — inspect ${editedFile}`);

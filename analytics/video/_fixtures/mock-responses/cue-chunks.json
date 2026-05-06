@@ -1,0 +1,13 @@
+{
+  "_comment": "Mock cue-chunk response for the sample-vlog-10sec fixture (post filler-filter). 19 words: Hey, I, want, to, show, how, Claude, Code, handles, multi-file, refactors., The, trick, is, in, the, CLAUDE.md, file., Watch.",
+  "cues": [
+    { "start": 0, "end": 2 },
+    { "start": 3, "end": 5 },
+    { "start": 6, "end": 8 },
+    { "start": 9, "end": 10 },
+    { "start": 11, "end": 13 },
+    { "start": 14, "end": 16 },
+    { "start": 17, "end": 17 },
+    { "start": 18, "end": 18 }
+  ]
+}
