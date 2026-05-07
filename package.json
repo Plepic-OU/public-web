@@ -16,11 +16,7 @@
     "test:a11y": "playwright test --config=playwright.config.ts --grep @a11y",
     "test:security": "playwright test --config=playwright.config.ts --grep @security",
     "test:lighthouse": "lhci autorun",
-    "serve": "npx serve -l 8080 .",
-    "analytics:export": "ts-node scripts/export-analytics.ts && ts-node scripts/export-ads.ts",
-    "analytics:optimize": "ts-node scripts/optimize-ads.ts",
-    "analytics:optimize:dry": "ts-node scripts/optimize-ads.ts --dry-run",
-    "analytics:pipeline": "npm run analytics:export && npm run analytics:optimize"
+    "serve": "npx serve -l 8080 ."
   },
   "repository": {
     "type": "git",
