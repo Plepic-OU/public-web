@@ -75,11 +75,8 @@ docs/                   # Design documents and one-pagers
 
 ## Analytics-Driven Improvements
 
-### Data Location
-- GA4 reports: `analytics/reports/YYYY-MM-DD-ga4.json`
-- Ads reports: `analytics/reports/YYYY-MM-DD-ads.json`
-- Action logs: `analytics/actions/YYYY-MM-DD.json`
-- Optimization config: `analytics/ads-config.json`
+### Data Sources
+GA4 + Ads data is queried live on demand via the export scripts (`scripts/export-analytics.ts`, `scripts/export-ads.ts`). Each invocation overwrites a temp report at `analytics/reports/YYYY-MM-DD-{ga4,ads}.json`. No historical archive is maintained; query by `--date` for prior periods.
 
 ### Analytics IDs
 - GA4 Property: `G-65CCEV6RS9`
@@ -95,8 +92,8 @@ docs/                   # Design documents and one-pagers
 
 ### Weekly Review Process
 When asked to review analytics or improve the site:
-1. Read the most recent reports in `analytics/reports/`
-2. Compare to previous week's data
+1. Run the export scripts to pull current data
+2. Re-run with `--date` flag for prior week to compute deltas
 3. Generate review in `analytics/reviews/YYYY-MM-DD-review.md`
 4. Identify actionable improvements
 5. Implement high-priority fixes directly
@@ -152,11 +149,11 @@ When asked to review analytics or improve the site:
 
 ---
 
-## Autonomous Google Ads Operations
+## Google Ads Operations Guardrails
 
-User controls monthly spend limits directly via Google Ads. AI optimizes allocation within those limits. All actions are logged to `analytics/actions/`.
+User controls monthly spend limits directly via Google Ads. The marketing skill operates ad-hoc within these guardrails when invoked.
 
-### ALLOWED - AI Acts Immediately
+### Safe operations (skill executes after surfacing rationale)
 
 **Keyword Management:**
 - PAUSE keyword if: spend >€50 with 0 conversions
@@ -172,7 +169,7 @@ User controls monthly spend limits directly via Google Ads. AI optimizes allocat
 **Budget Redistribution:**
 - REDISTRIBUTE daily budget: from underperforming to top-performing campaigns
 
-### REQUIRES APPROVAL - AI Proposes, User Confirms
+### Requires explicit approval
 - Creating new campaigns
 - Creating new ad groups
 - Writing new ad copy
@@ -180,7 +177,7 @@ User controls monthly spend limits directly via Google Ads. AI optimizes allocat
 - Budget increases beyond current monthly limit
 - Enabling previously paused campaigns
 
-### NEVER ALLOWED
+### Never allowed
 - Deleting campaigns/ad groups (only pause)
 - Changing billing settings
 - Account-level settings
@@ -239,8 +236,7 @@ Before any PR, verify consistency with diff checks.
 |--------|---------|-------|
 | `export-analytics.ts` | Pull GA4 data | `npx ts-node scripts/export-analytics.ts` |
 | `export-ads.ts` | Pull Google Ads data | `npx ts-node scripts/export-ads.ts` |
-| `optimize-ads.ts` | Run autonomous optimization | `npx ts-node scripts/optimize-ads.ts` |
 
-Add `--test` flag to test API connections, `--dry-run` for optimize-ads to preview without changes.
+Add `--test` flag to test API connections.
 
 All scripts auto-load `.env` via `dotenv/config` — no manual `source .env` needed.
