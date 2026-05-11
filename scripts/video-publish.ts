@@ -7,7 +7,7 @@
  * LinkedIn handoff folder. Sub-project 2 of the YouTube automation spec.
  *
  * Usage:
- *   npx ts-node scripts/video-publish.ts ~/plepic-video/inbox/IMG_1234.MOV
+ *   npx ts-node scripts/video-publish.ts ~/Documents/plepic-video/inbox/IMG_1234.MOV
  *   npx ts-node scripts/video-publish.ts <file> --interactive   (pause between phases)
  *   npx ts-node scripts/video-publish.ts <file> --plan <path>   (explicit W11 plan)
  *   npx ts-node scripts/video-publish.ts <file> --dry-run       (skip YT upload)
@@ -40,7 +40,7 @@ import { google, youtube_v3 } from "googleapis";
 
 // ---------- constants & paths ----------
 
-const VIDEO_ROOT = path.join(os.homedir(), "plepic-video");
+const VIDEO_ROOT = path.join(os.homedir(), "Documents", "plepic-video");
 const INBOX_DIR = path.join(VIDEO_ROOT, "inbox");
 const WORK_ROOT = path.join(VIDEO_ROOT, "work");
 const ARCHIVE_DIR = path.join(VIDEO_ROOT, "archive");
@@ -2789,7 +2789,7 @@ async function main(): Promise<void> {
     writePublishLog(workDir, log);
 
     // Mirror text artifacts into the repo for historical record.
-    // (Raw / edited videos stay in ~/plepic-video/; they are not committed.)
+    // (Raw / edited videos stay in ~/Documents/plepic-video/; they are not committed.)
     const repoArtifactDir = path.join(
       VIDEO_ARTIFACTS_ROOT,
       `${today()}-${log.slug}`

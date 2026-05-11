@@ -1,0 +1,33 @@
+{
+  "slug": "2026-05-11-three-agents-walking",
+  "format": "vlog",
+  "source_path": "/Users/kaidokoort/Documents/plepic-video/inbox/2026-05-11-three-agents-walking.MOV",
+  "started_at": "2026-05-11T14:10:33.273Z",
+  "phases_completed": [
+    "transcribe",
+    "edit",
+    "metadata",
+    "thumbnail",
+    "upload",
+    "linkedin"
+  ],
+  "youtube": {
+    "video_id": "M9YegpJvImM",
+    "url": "https://youtu.be/M9YegpJvImM",
+    "studio_url": "https://studio.youtube.com/video/M9YegpJvImM/edit",
+    "privacy": "public"
+  },
+  "linkedin": {
+    "folder": "/Users/kaidokoort/Documents/plepic-video/work/2026-05-11-2026-05-11-three-agents-walking/linkedin",
+    "uploaded": false
+  },
+  "notes": [
+    "Pipeline metadata was overridden by hand: original Haiku output included a marketing CTA the plan explicitly forbade.",
+    "Uploaded via standalone uploader (scripts/_tmp-upload-vlog.ts, removed after run) because pipeline lacks resume-after-prompt support.",
+    "Plan alignment fell back to LLM chunker (match ratio 0.07) — captions chunked via Claude rather than plan-aligned, which is expected for an unscripted vlog.",
+    "Sync verification: 21/22 cues matched, avg drift 0.099s, max 0.680s."
+  ],
+  "errors": [
+    "plan-alignment-fallback: match ratio 0.07 < 0.80 (expected for unscripted vlog)"
+  ]
+}
