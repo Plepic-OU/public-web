@@ -270,11 +270,22 @@ function ensureDir(dir: string): void {
 }
 
 function slugify(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60);
+  return stripLeadingDate(
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60),
+  );
+}
+
+// Work dirs and repo artifact dirs already prepend today(), so a slug that
+// starts with YYYY-MM-DD- would produce a doubled date (e.g.
+// 2026-05-11-2026-05-11-three-agents-walking). Defensive: strip any leading
+// ISO date so the prefix only appears once regardless of how the source
+// filename or plan slug is written.
+function stripLeadingDate(slug: string): string {
+  return slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
 }
 
 function today(): string {
