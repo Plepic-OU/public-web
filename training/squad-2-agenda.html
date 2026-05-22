@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squad 2 · Days 1–3 Agenda — Plepic Agentic Coding Training</title>
+  <meta name="description" content="Visual agenda for the first three days of Plepic Agentic Coding Training Squad 2 — Fridays May 8, 15, and 22, 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* ===============================================
+       Squad 2 Agenda Infographic — local layout
+       Uses Plepic design tokens from ../css/styles.css
+       =============================================== */
+
+    body {
+      background:
+        radial-gradient(900px 600px at 8% -5%, rgba(0, 198, 56, 0.07), transparent 60%),
+        radial-gradient(700px 500px at 100% 5%, rgba(226, 108, 69, 0.04), transparent 60%),
+        var(--bg);
+    }
+
+    .info-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem) 5rem;
+    }
+
+    /* ----------- Hero ----------- */
+    .info-hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .info-hero::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -1px;
+      width: 120px; height: 3px;
+      background: var(--green-vivid);
+      border-radius: 2px;
+    }
+    .info-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .info-eyebrow .dot {
+      width: 8px; height: 8px;
+      background: var(--green-vivid);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .info-hero h1 {
+      font-size: clamp(2.4rem, 1.8rem + 3vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .info-hero h1 .highlight { color: var(--green-brand); }
+    .info-hero p.lede {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 56ch;
+      margin-bottom: 0;
+    }
+    .info-hero-mark {
+      display: grid;
+      gap: 0.75rem;
+      justify-items: end;
+      align-content: end;
+    }
+    .info-hero-mark .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--green-brand);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .info-hero-mark .mark-meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    /* ----------- Stat strip ----------- */
+    .info-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+    .info-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.35rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .info-stat::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--green-vivid);
+    }
+    .info-stat-num {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--green-brand);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+    }
+    .info-stat-label {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      line-height: 1.35;
+    }
+    .info-stat-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-top: 0.4rem;
+    }
+
+    /* ----------- Legend ----------- */
+    .info-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin-bottom: 2.5rem;
+      padding: 0.85rem 1.1rem;
+      background: var(--green-surface);
+      border: 1px solid var(--green-light);
+      border-radius: 12px;
+    }
+    .info-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--green-dark);
+    }
+    .info-legend-swatch {
+      width: 14px; height: 14px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .info-legend-icon {
+      width: 16px; height: 16px;
+      color: var(--green-brand);
+      flex-shrink: 0;
+    }
+
+    /* ----------- Day header ----------- */
+    .info-day {
+      margin-bottom: 4.5rem;
+      scroll-margin-top: 2rem;
+    }
+    .info-day-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.5rem 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .info-day-header::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 20px; bottom: 20px;
+      width: 4px;
+      background: var(--green-vivid);
+      border-radius: 0 2px 2px 0;
+    }
+    .info-day-num {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--green-brand);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      padding-left: 0.75rem;
+    }
+    .info-day-num span {
+      color: var(--text-3);
+      font-weight: 400;
+      margin-right: 0.15rem;
+    }
+    .info-day-meta h2 {
+      font-size: 1.65rem;
+      margin-bottom: 0.2rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .info-day-meta p {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .info-day-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-end;
+    }
+    .info-day-pill {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      background: var(--green-surface);
+      border: 1px solid var(--green-light);
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .info-day-pill--alt {
+      color: var(--text-2);
+      background: var(--bg-alt);
+      border-color: var(--border);
+    }
+
+    /* ----------- Timeline ----------- */
+    .info-timeline {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: relative;
+    }
+    .info-timeline::before {
+      content: "";
+      position: absolute;
+      left: 76px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(180deg,
+        var(--green-light) 0%,
+        var(--green-light) 50%,
+        var(--green-surface) 100%);
+      border-radius: 1px;
+    }
+    .info-block {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      padding-bottom: 1.1rem;
+      position: relative;
+    }
+    .info-block-time {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--green-brand);
+      padding-top: 0.65rem;
+      text-align: right;
+      letter-spacing: -0.01em;
+    }
+    .info-block-time small {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-3);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-top: 0.15rem;
+    }
+    .info-block-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.1rem 1.3rem 1.15rem;
+      margin-left: 2.25rem;
+    }
+    /* Timeline node */
+    .info-block-card::before {
+      content: "";
+      position: absolute;
+      left: -2.3rem;
+      top: 1.05rem;
+      width: 14px; height: 14px;
+      background: var(--surface);
+      border: 3px solid var(--green-vivid);
+      border-radius: 50%;
+      z-index: 2;
+    }
+    /* Connector */
+    .info-block-card::after {
+      content: "";
+      position: absolute;
+      left: -1.65rem;
+      top: 1.4rem;
+      width: 1.35rem;
+      height: 2px;
+      background: var(--green-light);
+      z-index: 1;
+    }
+    .info-block-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .info-block-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .info-block-meta svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .info-block-meta .duration {
+      color: var(--text-3);
+      font-weight: 500;
+    }
+    .info-block-meta .separator { color: var(--border); }
+    .info-block-body {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.55;
+    }
+    .info-block-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+      display: grid;
+      gap: 0.3rem;
+    }
+    .info-block-body li {
+      padding-left: 1.1rem;
+      position: relative;
+      font-size: 0.88rem;
+    }
+    .info-block-body li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.6rem;
+      width: 6px; height: 6px;
+      background: var(--green-vivid);
+      border-radius: 50%;
+    }
+    .info-block-body strong {
+      color: var(--green-brand);
+      font-weight: 600;
+    }
+    .info-block-body a {
+      color: var(--green-brand);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: var(--green-light);
+      transition: text-decoration-color var(--transition-fast);
+    }
+    .info-block-body a:hover { text-decoration-color: var(--green-brand); }
+
+    /* Variants */
+    .info-block--theory .info-block-card { border-left: 4px solid var(--green-brand); }
+    .info-block--workshop .info-block-card {
+      background: var(--green-surface);
+      border-color: var(--green-light);
+      border-left: 4px solid var(--green-vivid);
+    }
+    .info-block--workshop .info-block-card::before { background: var(--green-surface); }
+    .info-block--demo .info-block-card { border-left: 4px solid var(--green-vivid); }
+    .info-block--discuss .info-block-card { border-left: 4px solid var(--green-light); }
+    .info-block--wrap .info-block-card { border-left: 4px solid var(--green-brand); background: var(--green-surface); }
+    .info-block--wrap .info-block-card::before { background: var(--green-surface); }
+
+    /* Compact rows: break / lunch */
+    .info-block--break .info-block-card,
+    .info-block--lunch .info-block-card {
+      background: transparent;
+      border: 1px dashed var(--border);
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .info-block--break .info-block-card::before,
+    .info-block--lunch .info-block-card::before {
+      background: var(--bg);
+      border-color: var(--border);
+      width: 10px; height: 10px;
+      border-width: 2px;
+      top: 0.95rem;
+    }
+    .info-block--break .info-block-card::after,
+    .info-block--lunch .info-block-card::after {
+      background: var(--border);
+    }
+    .info-block--break .info-block-card h3,
+    .info-block--lunch .info-block-card h3 {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      font-weight: 600;
+      margin: 0;
+    }
+    .info-block--lunch .info-block-card { border-style: solid; border-color: var(--green-light); background: var(--green-surface); }
+    .info-block--lunch .info-block-card h3 { color: var(--green-dark); }
+    .info-block--lunch .info-block-card::before { background: var(--green-surface); border-color: var(--green-light); }
+    .info-block--lunch .info-block-card::after { background: var(--green-light); }
+
+    .info-icon {
+      width: 18px; height: 18px;
+      color: var(--green-brand);
+      flex-shrink: 0;
+    }
+
+    /* ----------- Homework callout ----------- */
+    .info-homework {
+      margin-top: 1.25rem;
+      margin-left: calc(76px + 1.5rem + 2.25rem);
+      background: var(--dark);
+      color: var(--text-on-dark);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .info-homework-icon {
+      width: 38px; height: 38px;
+      background: var(--green-vivid);
+      color: var(--dark);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .info-homework-icon svg { width: 20px; height: 20px; }
+    .info-homework-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-vivid);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .info-homework h4 {
+      font-size: 1.05rem;
+      color: var(--text-on-dark);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .info-homework p {
+      color: #c5c5ba;
+      font-size: 0.88rem;
+      margin: 0;
+    }
+    .info-homework a {
+      color: var(--green-vivid);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ----------- Footer ----------- */
+    .info-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-3);
+    }
+    .info-footer-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--text);
+      font-weight: 600;
+      padding: 0.65rem 1.2rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .info-footer-cta:hover { filter: brightness(0.92); color: var(--text); }
+
+    /* ----------- Responsive ----------- */
+    @media (max-width: 860px) {
+      .info-hero { grid-template-columns: 1fr; align-items: start; }
+      .info-hero-mark { justify-items: start; }
+      .info-stats { grid-template-columns: repeat(2, 1fr); }
+      .info-day-header { grid-template-columns: auto 1fr; row-gap: 0.75rem; }
+      .info-day-pills { grid-column: 1 / -1; flex-direction: row; align-items: flex-start; flex-wrap: wrap; }
+      .info-homework { margin-left: 0; }
+    }
+    @media (max-width: 600px) {
+      .info-timeline::before { left: 8px; }
+      .info-block { grid-template-columns: 1fr; gap: 0.4rem; }
+      .info-block-time { text-align: left; padding-top: 0; padding-left: 1.5rem; }
+      .info-block-time small { display: inline; margin-left: 0.4rem; }
+      .info-block-card { margin-left: 1.5rem; }
+      .info-block-card::before { left: -1.45rem; top: 1rem; }
+      .info-block-card::after { left: -0.75rem; width: 0.55rem; }
+      .info-stats { grid-template-columns: 1fr; }
+      .info-day-num { font-size: 2rem; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .info-block-card { box-shadow: none; }
+      .info-day { page-break-inside: avoid; }
+      .info-homework { background: var(--bg-alt); color: var(--text); }
+      .info-homework h4, .info-homework p { color: var(--text); }
+      .info-homework-label { color: var(--green-brand); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="info-wrap">
+
+  <!-- ======================= HERO ======================= -->
+  <header class="info-hero">
+    <div>
+      <span class="info-eyebrow"><span class="dot"></span>Squad 2 · Cohort agenda</span>
+      <h1>The first three days of <span class="highlight">agentic coding</span></h1>
+      <p class="lede">Six and a half hours per day, three consecutive Fridays. Set up Claude Code on a real 150k-line codebase, master hooks, map the project, validate a design doc, and ship measurable performance fixes through an implementation loop.</p>
+    </div>
+    <div class="info-hero-mark">
+      <span class="logo-wordmark">Plepic</span>
+      <span class="mark-meta">Agentic Coding · Squad 2</span>
+    </div>
+  </header>
+
+  <!-- ======================= STATS ======================= -->
+  <section class="info-stats" aria-label="At a glance">
+    <div class="info-stat">
+      <div class="info-stat-num">20<span style="color: var(--green-vivid);">h</span></div>
+      <div class="info-stat-label">Hands-on training across three Fridays</div>
+      <div class="info-stat-sub">May 8 · 15 · 22</div>
+    </div>
+    <div class="info-stat">
+      <div class="info-stat-num">6</div>
+      <div class="info-stat-label">Breakout workshops on the ClassroomIO codebase</div>
+      <div class="info-stat-sub">Teams of 3</div>
+    </div>
+    <div class="info-stat">
+      <div class="info-stat-num">150k</div>
+      <div class="info-stat-label">Lines of Svelte + TypeScript + Supabase to map and modify</div>
+      <div class="info-stat-sub">Real project</div>
+    </div>
+    <div class="info-stat">
+      <div class="info-stat-num">5</div>
+      <div class="info-stat-label">Claude Code features by the end of Day 3</div>
+      <div class="info-stat-sub">Hooks · Maps · Skills · Loops · Agents</div>
+    </div>
+  </section>
+
+  <!-- ======================= LEGEND ======================= -->
+  <div class="info-legend" aria-label="Session legend">
+    <span class="info-legend-item">
+      <svg class="info-legend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Theory &amp; slides
+    </span>
+    <span class="info-legend-item">
+      <svg class="info-legend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      Breakout workshop
+    </span>
+    <span class="info-legend-item">
+      <svg class="info-legend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Live demo
+    </span>
+    <span class="info-legend-item">
+      <svg class="info-legend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Discussion &amp; recap
+    </span>
+    <span class="info-legend-item">
+      <svg class="info-legend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      Break · 5 min
+    </span>
+    <span class="info-legend-item">
+      <svg class="info-legend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3V2"/><path d="M6 12v10"/><path d="M18 2c-2 0-3 1-3 3v6h3v11"/></svg>
+      Lunch · 45 min
+    </span>
+  </div>
+
+  <!-- =====================================================
+       DAY 1 — Friday, May 8, 2026
+       ===================================================== -->
+  <section class="info-day" id="day-1">
+
+    <header class="info-day-header">
+      <div class="info-day-num"><span>Day</span>01</div>
+      <div class="info-day-meta">
+        <h2>Friday · May 8, 2026</h2>
+        <p>Set up Claude Code on a real 150k-line codebase. Understand hooks. Ship your first workspace.</p>
+      </div>
+      <div class="info-day-pills">
+        <span class="info-day-pill">09:00 – 15:30</span>
+        <span class="info-day-pill info-day-pill--alt">6h 30m on the clock</span>
+      </div>
+    </header>
+
+    <ol class="info-timeline">
+
+      <!-- 09:00 Intro -->
+      <li class="info-block info-block--discuss">
+        <div class="info-block-time">09:00<small>60 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Introductions &amp; getting to know each other
+            <span class="separator">·</span><span class="duration">09:00 – 10:00</span>
+          </div>
+          <h3>Register GitHub users, map Claude Code plans, set expectations</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Each participant voices what they want from the training</li>
+              <li><strong>Self-assess</strong> across 3 axes — Autonomy, Parallelism, Skill Usage — at <a href="https://skill.plepic.com">skill.plepic.com</a> (10 min)</li>
+              <li>Share experience with AI coding tools — features liked, gaps felt</li>
+              <li><strong>Today's goal:</strong> CC running locally, the basics in your head, ClassroomIO bootstrapped</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 10:00 Project intro -->
+      <li class="info-block info-block--theory">
+        <div class="info-block-time">10:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            The example project — 4 weeks of training
+            <span class="separator">·</span><span class="duration">10:00 – 10:30</span>
+          </div>
+          <h3>Training information system: one product, every team builds the same features</h3>
+          <div class="info-block-body">
+            <p>Features are chosen democratically. Requirements span the full product surface:</p>
+            <ul>
+              <li><strong>Students:</strong> registration, waitlist, attendance, three achievements (Kahoot Kahoona · Class Clown · Top Gun)</li>
+              <li><strong>Certification:</strong> Agentic Mech style, morphed from dashboard over 6 weeks with the CC FE design skill</li>
+              <li><strong>Operations:</strong> instructor management, curriculum, homework tracking</li>
+              <li><strong>Non-functional:</strong> mobile-first web · GA + Ads · four nines · 300ms · security fixing</li>
+              <li><strong>Legal:</strong> GDPR · Täiskasvanute koolituse seadus · Täienduskoolituse standard</li>
+              <li>Platform reference — <a href="https://www.classroomio.com/">classroomio.com</a> for requirement mapping</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Break -->
+      <li class="info-block info-block--break">
+        <div class="info-block-time">10:30<small>5 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <h3>Quick break</h3>
+        </div>
+      </li>
+
+      <!-- 10:35 CC overview -->
+      <li class="info-block info-block--theory">
+        <div class="info-block-time">10:35<small>55 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Claude Code overview &amp; setup
+            <span class="separator">·</span><span class="duration">10:35 – 11:30</span>
+          </div>
+          <h3>What Claude Code is, with three live-tool examples</h3>
+          <div class="info-block-body">
+            <ul>
+              <li><strong>20–30 min slides + Q&amp;A</strong> — <a href="https://docs.google.com/presentation/d/19_r2loIGEiGERSC3wAP-5It54oUXH8rZK-8sbHezhQc/edit">CC overview deck</a></li>
+              <li><strong>Explore (4–5 min):</strong> "Create an overview, plan dev for changing student enrolment. Markdown + Mermaid graphs."</li>
+              <li><strong>Analyze (3–4 min):</strong> World Happiness Report 2025 — load, visualise, find correlations</li>
+              <li><strong>List tools:</strong> "List all tools available" — what ships in the box</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 11:30 Joosep presentation -->
+      <li class="info-block info-block--demo">
+        <div class="info-block-time">11:30<small>45 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Joosep presentation
+            <span class="separator">·</span><span class="duration">11:30 – 12:15</span>
+          </div>
+          <h3>How Plepic's primary instructor uses Claude Code in the field</h3>
+          <div class="info-block-body">
+            <p>Patterns, anti-patterns, and the specific moves that compound over a 6-week build cycle.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- Lunch -->
+      <li class="info-block info-block--lunch">
+        <div class="info-block-time">12:15<small>45 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3V2"/><path d="M6 12v10"/><path d="M18 2c-2 0-3 1-3 3v6h3v11"/></svg>
+          <h3>Lunch</h3>
+        </div>
+      </li>
+
+      <!-- 13:00 Workshop 1 -->
+      <li class="info-block info-block--workshop">
+        <div class="info-block-time">13:00<small>60 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Workshop 1 — Breakout (teams of 3)
+            <span class="separator">·</span><span class="duration">13:00 – 14:00</span>
+          </div>
+          <h3>Set up the project &amp; Claude Code on a real Svelte + Supabase codebase</h3>
+          <div class="info-block-body">
+            <ul>
+              <li><strong>Repo:</strong> <a href="https://github.com/Plepic-OU/classroomio/">Plepic-OU/classroomio</a> — fork of ClassroomIO</li>
+              <li><strong>Stack:</strong> Svelte · TypeScript · SQL (Supabase) · ~150k LoC</li>
+              <li><strong>Instructions:</strong> <a href="https://drive.google.com/file/d/1FjKIod_oJWjrTFBN2lpD87OZykxkKXSb">Day 1 — Workshop 1 brief</a></li>
+              <li>Each participant boots their own environment. Run long, ask for help in the room.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Break -->
+      <li class="info-block info-block--break">
+        <div class="info-block-time">14:00<small>5 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <h3>Quick break</h3>
+        </div>
+      </li>
+
+      <!-- 14:05 Workshop 2 / Hooks -->
+      <li class="info-block info-block--workshop">
+        <div class="info-block-time">14:05<small>55 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Workshop 2 — Hooks deep dive
+            <span class="separator">·</span><span class="duration">14:05 – 15:00</span>
+          </div>
+          <h3>The first advanced Claude Code feature: hooks</h3>
+          <div class="info-block-body">
+            <p>Joosep's <a href="https://docs.google.com/presentation/d/1XriJZ3nyJ-eGN1qgRZ5JgKSgVEMDNRb0hAnuYZ_J7CA">hooks deck</a> + 20–30 min live demo on ClassroomIO, then breakout build.</p>
+            <ul>
+              <li>Intro to hooks — when they fire, what they see</li>
+              <li>Add <code style="font-family:var(--font-mono);font-size:0.85em;background:var(--green-surface);padding:0 0.3rem;border-radius:3px;">gh</code> CLI to devcontainers</li>
+              <li>Catch-all hook — log every input so you can see what's flowing</li>
+              <li>Pre-tool hook — block Claude from reading the <code style="font-family:var(--font-mono);font-size:0.85em;background:var(--green-surface);padding:0 0.3rem;border-radius:3px;">github-token</code> file</li>
+              <li><strong>Brief:</strong> <a href="https://drive.google.com/file/d/1USJAVmvmAF3Lq6kOmpjTZZ5DerZ3NcNt">Day 1 — Workshop 2 instructions</a></li>
+              <li>Coming next week: skills, subagents, marketplace / plugin</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 15:00 Wrap -->
+      <li class="info-block info-block--wrap">
+        <div class="info-block-time">15:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Conclusions, Kahoot &amp; Q&amp;A
+            <span class="separator">·</span><span class="duration">15:00 – 15:30</span>
+          </div>
+          <h3>What we learned today — surface it, write it down, take it home</h3>
+        </div>
+      </li>
+
+    </ol>
+
+    <!-- Homework -->
+    <aside class="info-homework on-dark">
+      <div class="info-homework-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+      </div>
+      <div>
+        <div class="info-homework-label">Homework · for Day 2</div>
+        <h4>Watch the Claude Code keynote and come ready to discuss</h4>
+        <p><a href="https://www.youtube.com/watch?v=GMIWm5y90xA">youtube.com/watch?v=GMIWm5y90xA</a> — also finish your project setup if you hit blockers. We build on it next time.</p>
+      </div>
+    </aside>
+
+  </section>
+
+  <!-- =====================================================
+       DAY 2 — Friday, May 15, 2026
+       ===================================================== -->
+  <section class="info-day" id="day-2">
+
+    <header class="info-day-header">
+      <div class="info-day-num"><span>Day</span>02</div>
+      <div class="info-day-meta">
+        <h2>Friday · May 15, 2026</h2>
+        <p>Map the project end-to-end. Ship a validated design document. Pick the right model for the job.</p>
+      </div>
+      <div class="info-day-pills">
+        <span class="info-day-pill">09:00 – 15:30</span>
+        <span class="info-day-pill info-day-pill--alt">6h 30m on the clock</span>
+      </div>
+    </header>
+
+    <ol class="info-timeline">
+
+      <!-- 09:00 Recap -->
+      <li class="info-block info-block--discuss">
+        <div class="info-block-time">09:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Feedback, recap, homework check-in
+            <span class="separator">·</span><span class="duration">09:00 – 09:30</span>
+          </div>
+          <h3>Terminal paste-in to Discord: your feedback from Day 1</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Homework discussion — what landed in the Claude Code keynote</li>
+              <li>Invite participants to start thinking about their graduation project / topic</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 09:30 Where we are -->
+      <li class="info-block info-block--theory">
+        <div class="info-block-time">09:30<small>15 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Where we are, what's ahead
+            <span class="separator">·</span><span class="duration">09:30 – 09:45</span>
+          </div>
+          <h3>The arc of the next five weeks, in one slide</h3>
+          <div class="info-block-body">
+            <p><a href="https://docs.google.com/presentation/d/18DVjGSpWMeQA1zLRMq3_v1R7jVTc-TN9/edit">Roadmap deck</a> — what's been covered, what unlocks next, why the sequence matters.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- 09:45 Maps theory -->
+      <li class="info-block info-block--theory">
+        <div class="info-block-time">09:45<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Theory — maps of the project &amp; prompt caching
+            <span class="separator">·</span><span class="duration">09:45 – 10:15</span>
+          </div>
+          <h3>How to make a 150k-line repo legible to Claude</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Joosep demo: <strong>C4 model</strong> generated for ClassroomIO</li>
+              <li>Pro move: kick off the C4 skill prompt at the start of theory — it finishes when the theory does</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Break -->
+      <li class="info-block info-block--break">
+        <div class="info-block-time">10:15<small>5 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <h3>Quick break</h3>
+        </div>
+      </li>
+
+      <!-- 10:20 Workshop 1 -->
+      <li class="info-block info-block--workshop">
+        <div class="info-block-time">10:20<small>55 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Workshop 1 — Maps of the project
+            <span class="separator">·</span><span class="duration">10:20 – 11:15</span>
+          </div>
+          <h3>Produce a C4 model + database map. Link them from CLAUDE.md.</h3>
+          <div class="info-block-body">
+            <ul>
+              <li><strong>Goal:</strong> ClassroomIO is now navigable by Claude — and by you — at a glance</li>
+              <li><strong>Brief:</strong> <a href="https://drive.google.com/file/d/18K63BwETTTfG_sEJpOwXhBtBMo284FBz">Day 2 — Workshop 1 instructions</a></li>
+              <li>Teams of 3, breakout rooms, ask for help in the room</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 11:15 Discussion -->
+      <li class="info-block info-block--discuss">
+        <div class="info-block-time">11:15<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Discussion &amp; team presentations
+            <span class="separator">·</span><span class="duration">11:15 – 11:45</span>
+          </div>
+          <h3>What surprised you? Did anyone go off-script?</h3>
+          <div class="info-block-body">
+            <p>Show your map. Defend your choices. Steal what works from other teams.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- 11:45 Design docs theory -->
+      <li class="info-block info-block--demo">
+        <div class="info-block-time">11:45<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Demo — Design documents &amp; validation
+            <span class="separator">·</span><span class="duration">11:45 – 12:15</span>
+          </div>
+          <h3>From idea to validated SRD with the brainstorming + validate skills</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Joosep: design doc with the <strong>brainstorming</strong> skill</li>
+              <li>Joosep: validation with the <strong>validate-design-document</strong> skill</li>
+              <li><a href="https://docs.google.com/presentation/d/1Vuj54xUfjXLLD4DH2fBtrU-zsTMfq1qc/edit">Design doc deck</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Lunch -->
+      <li class="info-block info-block--lunch">
+        <div class="info-block-time">12:15<small>45 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3V2"/><path d="M6 12v10"/><path d="M18 2c-2 0-3 1-3 3v6h3v11"/></svg>
+          <h3>Lunch · regroup at 13:10</h3>
+        </div>
+      </li>
+
+      <!-- 13:10 Workshop 2 -->
+      <li class="info-block info-block--workshop">
+        <div class="info-block-time">13:10<small>60 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Workshop 2 — Design doc for end-to-end tests
+            <span class="separator">·</span><span class="duration">13:10 – 14:10</span>
+          </div>
+          <h3>Produce an SRD for adding BDD / Playwright tests to ClassroomIO — then validate it</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Apply the brainstorming + validate-design-document skills back-to-back</li>
+              <li><strong>Brief:</strong> <a href="https://drive.google.com/file/d/18VoBw9SMUrrcZq2lFUOXixftCPyHbxrM">Day 2 — Workshop 2 instructions</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Break -->
+      <li class="info-block info-block--break">
+        <div class="info-block-time">14:10<small>5 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <h3>Quick break</h3>
+        </div>
+      </li>
+
+      <!-- 14:15 Subagents -->
+      <li class="info-block info-block--theory">
+        <div class="info-block-time">14:15<small>45 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Subagents in detail
+            <span class="separator">·</span><span class="duration">14:15 – 15:00</span>
+          </div>
+          <h3>Parallelism: how to spin up specialised workers, when not to, and what they cost</h3>
+          <div class="info-block-body">
+            <p><strong>Optional Workshop 3</strong> if time allows — compare validation across <span style="font-family:var(--font-mono);font-size:0.9em;color:var(--green-brand);">haiku</span> · <span style="font-family:var(--font-mono);font-size:0.9em;color:var(--green-brand);">sonnet</span> · <span style="font-family:var(--font-mono);font-size:0.9em;color:var(--green-brand);">opus</span>. <a href="https://drive.google.com/file/d/1ddo87kX8azEA9d148y1CAojUEtjeKX1c">Workshop 3 brief</a>.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- 15:00 Wrap -->
+      <li class="info-block info-block--wrap">
+        <div class="info-block-time">15:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Wrap-up, Kahoot, Q&amp;A
+            <span class="separator">·</span><span class="duration">15:00 – 15:30</span>
+          </div>
+          <h3>What did we learn today &amp; feedback to Day 2</h3>
+        </div>
+      </li>
+
+    </ol>
+
+    <!-- Day 2 outcome callout -->
+    <aside class="info-homework on-dark">
+      <div class="info-homework-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div class="info-homework-label">By end of Day 2 · You have</div>
+        <h4>A mapped, validated, hook-aware codebase ready to extend</h4>
+        <p>Claude Code installed and tuned · C4 map + database map linked from <span style="font-family:var(--font-mono);color:var(--green-vivid);">CLAUDE.md</span> · a validated SRD for end-to-end tests · hands-on with three core CC features (hooks, maps, validation skills).</p>
+      </div>
+    </aside>
+
+  </section>
+
+  <!-- =====================================================
+       DAY 3 — Friday, May 22, 2026
+       ===================================================== -->
+  <section class="info-day" id="day-3">
+
+    <header class="info-day-header">
+      <div class="info-day-num"><span>Day</span>03</div>
+      <div class="info-day-meta">
+        <h2>Friday · May 22, 2026</h2>
+        <p>Wire up the implementation loop. Add a review agent. Fix a real performance bug.</p>
+      </div>
+      <div class="info-day-pills">
+        <span class="info-day-pill">09:00 – 15:30</span>
+        <span class="info-day-pill info-day-pill--alt">6h 30m on the clock</span>
+      </div>
+    </header>
+
+    <ol class="info-timeline">
+
+      <!-- 09:00 Homework -->
+      <li class="info-block info-block--discuss">
+        <div class="info-block-time">09:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Homework discussion
+            <span class="separator">·</span><span class="duration">09:00 – 09:30</span>
+          </div>
+          <h3>Where did your validated BDD design doc land?</h3>
+          <div class="info-block-body">
+            <p>Share what worked, what broke, what surprised you. Surface blockers before we go further.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- 09:30 Recap -->
+      <li class="info-block info-block--theory">
+        <div class="info-block-time">09:30<small>15 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Recap and the plan for today
+            <span class="separator">·</span><span class="duration">09:30 – 09:45</span>
+          </div>
+          <h3>Three moves today: BDD impl, the implementation loop, the review agent</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Actual implementation of the BDD tests we designed last week</li>
+              <li>Wiring an <strong>implementation loop</strong> + a <strong>review agent</strong></li>
+              <li>Running the loop on a real feature</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 09:45 Theory + demo: impl loop -->
+      <li class="info-block info-block--demo">
+        <div class="info-block-time">09:45<small>45 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Theory + demo · Implementation loop with validator
+            <span class="separator">·</span><span class="duration">09:45 – 10:30</span>
+          </div>
+          <h3>Joosep validates the impl against the plan, then runs the implementation live</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Slides &amp; tasks: <a href="https://docs.google.com/presentation/d/1dtGOflk_zp79zZUAWYuUliVY1Q8l0lQmU5qi7lpoidQ">Day 3 deck</a></li>
+              <li>Phase 1 implement-with-validator ran in roughly 18 min. Produced a skill, no new tests.</li>
+              <li>Each subsequent phase takes about 20 min. Plan your coffee accordingly.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 10:30 Workshop: students repeat -->
+      <li class="info-block info-block--workshop">
+        <div class="info-block-time">10:30<small>60 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Workshop 1 · Run the implementation loop
+            <span class="separator">·</span><span class="duration">10:30 – 11:30</span>
+          </div>
+          <h3>Each team wires the loop and a review agent on their own fork</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Validate that Claude's implementation matches the plan</li>
+              <li>Run the loop. Watch a phase end-to-end.</li>
+              <li>Long jobs are expected. Use the wait to compare notes between teams.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Break -->
+      <li class="info-block info-block--break">
+        <div class="info-block-time">11:30<small>10 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <h3>Quick break</h3>
+        </div>
+      </li>
+
+      <!-- 11:40 Brainstorm -->
+      <li class="info-block info-block--discuss">
+        <div class="info-block-time">11:40<small>35 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Brainstorm · Performance tuning, together
+            <span class="separator">·</span><span class="duration">11:40 – 12:15</span>
+          </div>
+          <h3>Pick the angle of attack. Joosep drives, the room contributes.</h3>
+          <div class="info-block-body">
+            <p>Today's chosen feature is performance tuning on ClassroomIO. We frame the problem, the constraints, and the first three moves before lunch.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- Lunch -->
+      <li class="info-block info-block--lunch">
+        <div class="info-block-time">12:15<small>45 min</small></div>
+        <div class="info-block-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3V2"/><path d="M6 12v10"/><path d="M18 2c-2 0-3 1-3 3v6h3v11"/></svg>
+          <h3>Lunch</h3>
+        </div>
+      </li>
+
+      <!-- 13:00 Setup demo -->
+      <li class="info-block info-block--demo">
+        <div class="info-block-time">13:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Demo · Joosep finishes the performance-tuning setup
+            <span class="separator">·</span><span class="duration">13:00 – 13:30</span>
+          </div>
+          <h3>Setup ends here. The fixes are yours.</h3>
+          <div class="info-block-body">
+            <p>Joosep wires the loop, the validator, and the agent harness for the performance-tuning feature. He does not fix the performance issues. That is the workshop.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- 13:30 Workshop 2 -->
+      <li class="info-block info-block--workshop">
+        <div class="info-block-time">13:30<small>90 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Workshop 2 · Fix performance, for real
+            <span class="separator">·</span><span class="duration">13:30 – 15:00</span>
+          </div>
+          <h3>Repeat the setup, then close performance tickets on ClassroomIO</h3>
+          <div class="info-block-body">
+            <ul>
+              <li>Each team mirrors Joosep's setup on their own fork</li>
+              <li>Then runs the loop against performance tickets and ships measurable wins</li>
+              <li>Bring numbers to the wrap-up: before / after</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 15:00 Wrap -->
+      <li class="info-block info-block--wrap">
+        <div class="info-block-time">15:00<small>30 min</small></div>
+        <div class="info-block-card">
+          <div class="info-block-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Kahoot &amp; wrap-up
+            <span class="separator">·</span><span class="duration">15:00 – 15:30</span>
+          </div>
+          <h3>What landed today. What you take into your team next week.</h3>
+        </div>
+      </li>
+
+    </ol>
+
+    <!-- Day 3 outcome callout -->
+    <aside class="info-homework on-dark">
+      <div class="info-homework-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div class="info-homework-label">By end of Day 3 · You have</div>
+        <h4>A running implementation loop, a review agent, and shipped performance fixes</h4>
+        <p>BDD tests implemented through the loop · validator agent reviewing every phase · performance tickets closed with before/after numbers on a real Svelte + Supabase codebase.</p>
+      </div>
+    </aside>
+
+  </section>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer class="info-footer">
+    <div>
+      <span style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3);">Plepic OÜ · Squad 2 · Spring 2026</span><br>
+      Agentic Coding Training · <a href="https://plepic.com" style="color: var(--green-brand); font-weight: 500;">plepic.com</a>
+    </div>
+    <a class="info-footer-cta" href="https://plepic.com/training/">View training programme →</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
