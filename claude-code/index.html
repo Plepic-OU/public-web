@@ -63,6 +63,78 @@
   }
   </script>
 
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Plepic",
+    "legalName": "Plepic OÜ",
+    "url": "https://plepic.com",
+    "logo": "https://plepic.com/images/plepic-logo.png",
+    "description": "Estonia's Claude Code experts. 300+ developers trained on the terminal coding agent since February 2025.",
+    "foundingDate": "2025",
+    "knowsAbout": ["Claude Code", "Agentic Coding", "AI Development", "Software Training", "Model Context Protocol"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Liivalaia 7",
+      "addressLocality": "Tallinn",
+      "postalCode": "10118",
+      "addressCountry": "EE"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+372-5077-333",
+      "contactType": "sales",
+      "email": "kaido@plepic.com"
+    },
+    "sameAs": [
+      "https://linkedin.com/in/kaidokoort/"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Kaido Koort",
+      "jobTitle": "Founder & CEO",
+      "sameAs": "https://linkedin.com/in/kaidokoort/",
+      "knowsAbout": ["Agentic Coding", "Incentive Alignment", "Product Strategy", "Software Development"]
+    }
+  }
+  </script>
+
+  <!-- Structured Data - FAQ (mirrors visible content on this page) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Claude Code and when was it released?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Claude Code is Anthropic's terminal-based agentic coding tool, released in February 2025. Unlike IDE plugins, it has full system access: read files, run commands, manage git, and integrate with any tool in your pipeline through MCP servers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Claude Code different from IDE plugins like Copilot or Cursor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Claude Code lives in your terminal with full bash, git, and filesystem access. It composes with the CLI tools you already use rather than running inside a walled-garden editor. Multi-step tasks (read code, plan, edit, test, commit) are native; autocomplete is not the goal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the agentic harness?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The agentic harness is the full extensibility layer around Claude Code: CLAUDE.md configuration, hooks, sub-agents, MCP servers, custom slash commands, skills. Together they make the tool work reliably on a real codebase rather than as a chat interface."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -226,7 +298,7 @@
       <div class="container">
         <div class="enlist-content reveal">
           <h2>Your team doesn't need to grow. It needs better tools.</h2>
-          <p>6 weeks of structured training, built around your codebase. Your team walks away with a working Claude Code harness tailored to your stack, your workflows, your deployment pipeline.</p>
+          <p>Six weeks on your real codebase. By the end your engineers can do what the labs and fast-moving agencies are now paying premium for: walk into unfamiliar code, work with an agent, ship.</p>
 
           <a href="/training/" class="btn-enlist">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">

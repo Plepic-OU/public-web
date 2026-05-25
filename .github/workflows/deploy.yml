@@ -28,6 +28,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Remove orphan files from deploy
+        run: |
+          # Internal-only / prototype / build-tooling files that should not
+          # be publicly reachable on plepic.com. Keep this list in sync with
+          # repo hygiene; if a file here gets a real public role, remove
+          # it from this list rather than working around the deploy.
+          rm -rf _archive playwright-report tests
+          rm -f  design-system.html font-compare.html demo-tenders.html
+          rm -rf docs/training-one-pager
+          rm -rf docs/specs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
