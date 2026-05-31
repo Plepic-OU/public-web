@@ -1722,7 +1722,8 @@ p:last-child {
 .scopeful-how { background: var(--bg); }
 .scopeful-flow { background: var(--bg-alt); }
 .scopeful-icp { background: var(--bg); }
-.scopeful-pilot { background: var(--bg-alt); }
+.scopeful-collab { background: var(--bg-alt); }
+.scopeful-pilot { background: var(--bg); }
 
 /* The squeeze — also reused (without arrow) for pilot stats */
 .squeeze-stats {
