@@ -9,7 +9,7 @@
   "scripts": {
     "test": "npm run lint && npm run test:a11y && npm run test:visual",
     "lint": "npm run lint:html && npm run lint:css",
-    "lint:html": "htmlhint '*.html' 'agent/*.html' 'training/*.html'",
+    "lint:html": "htmlhint '*.html' 'claude-code/*.html' 'training/*.html' 'scopeful/*.html' 'privacy/*.html'",
     "lint:css": "stylelint 'css/*.css'",
     "test:visual": "playwright test --config=playwright.config.ts",
     "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
