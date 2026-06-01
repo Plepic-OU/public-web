@@ -1767,6 +1767,60 @@ p:last-child {
   line-height: 1.3;
 }
 
+/* ========================================
+   Scopeful — de-templated editorial pass (scoped to .scopeful-page)
+   Left-aligns section intros, de-cards the stat trios, and flattens the
+   card grids into editorial columns with a green top-rule. Hero untouched.
+   ======================================== */
+
+/* Left-align every section intro + supporting copy */
+.scopeful-page .text-center { text-align: left; }
+.scopeful-page .mx-auto { margin-left: 0; }
+.scopeful-page .reflection-content { margin-left: 0; text-align: left; }
+
+/* De-card the stat trios (agency squeeze + pilot momentum) */
+.scopeful-page .squeeze-stats {
+  justify-content: flex-start;
+  max-width: none;
+  margin-left: 0;
+  gap: clamp(var(--space-lg), 4vw, var(--space-3xl));
+}
+.scopeful-page .big-stat {
+  flex: 0 0 auto;
+  max-width: none;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  text-align: left;
+}
+.scopeful-page .big-stat-value { font-size: clamp(2.75rem, 2rem + 3.5vw, 4.5rem); }
+.scopeful-page .squeeze-arrow { font-size: 2rem; }
+.scopeful-page .scopeful-pull {
+  text-align: left;
+  max-width: 720px;
+  margin: var(--space-2xl) 0 0;
+  padding-left: var(--space-lg);
+  border-left: 3px solid var(--green-light);
+}
+
+/* Flatten the card grids into editorial columns (green top-rule, no box) */
+.scopeful-page .terminal-grid,
+.scopeful-page .flow {
+  margin-left: 0;
+  max-width: none;
+  justify-content: flex-start;
+}
+.scopeful-page .terminal-card,
+.scopeful-page .flow-step {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: var(--space-md) 0 0;
+  border-top: 2px solid var(--green-light);
+}
+.scopeful-page .flow-badge { margin-left: 0; }
+
 /* Workflow — brief → measure → quote */
 .flow {
   display: flex;
