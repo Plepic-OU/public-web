@@ -648,24 +648,22 @@
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
-      nav.classList.toggle('active');
-      menuToggle.setAttribute('aria-expanded', nav.classList.contains('active'));
-    });
+    const setMenu = (open) => {
+      nav.classList.toggle('active', open);
+      menuToggle.setAttribute('aria-expanded', open);
+      menuToggle.textContent = open ? '✕' : '☰';
+    };
+    menuToggle.addEventListener('click', () => setMenu(!nav.classList.contains('active')));
 
     // Close mobile menu when clicking a link
     nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', () => setMenu(false));
     });
 
     // Close mobile menu with Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && nav.classList.contains('active')) {
-        nav.classList.remove('active');
-        menuToggle.setAttribute('aria-expanded', 'false');
+        setMenu(false);
         menuToggle.focus();
       }
     });
