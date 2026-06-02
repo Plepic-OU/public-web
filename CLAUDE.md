@@ -83,12 +83,17 @@ GA4 + Ads data is queried live on demand via the export scripts (`scripts/export
 - Google Ads: `AW-17874572217` (Customer ID: `178-7457-2217`)
 
 ### Conversion Values
-| Event | Value |
-|-------|-------|
-| Google Form signup | €504 |
-| Calendar booking | €50 |
-| Email/Phone contact | €5 |
-| LinkedIn click | €1 |
+Modeled values, not realized revenue. Clicks are intent (lead value), not sales. The site emits only click/intent events today (registration and booking happen on external Google Forms/Calendar), so the completion rows score only if real completion tracking is added later.
+
+| Event | Value | Type |
+|-------|-------|------|
+| `form_submit` (completed registration) | €2,520 | completion (net/seat, not currently emitted) |
+| `calendar_booking` (completed call) | €50 | completion (not currently emitted) |
+| `google_form_signup` (form click) | €50 | intent |
+| `calendar_click` (book-a-call click) | €25 | intent |
+| Email/Phone contact click | €5 | intent |
+| Discord click | €2 | intent |
+| LinkedIn click | €1 | intent |
 
 ### Weekly Review Process
 When asked to review analytics or improve the site:

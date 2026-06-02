@@ -23,15 +23,24 @@ const REPORTS_DIR = path.join(__dirname, "../analytics/reports");
 // captured in the report (with value 0) so the count remains truthful. The EUR
 // attribution is opt-in. Add a key here to start valuing a new event.
 const CONVERSION_VALUES: Record<string, number> = {
-  form_submit: 504,
-  google_form_signup: 504,
-  ads_conversion_Book_appointment_1: 50,
-  calendar_click: 50,
-  calendar_booking: 50,
+  // Real completions = full economic value. The site does NOT emit these today
+  // (registration is an external Google Form, booking an external Google
+  // Calendar), so they only score if real completion tracking is wired up later.
+  form_submit: 2520, // completed training registration = net revenue per seat
+  calendar_booking: 50, // completed discovery-call booking
+
+  // Intent / lead signals (clicks). Modeled lead values, NOT realized revenue:
+  // a click is interest, not a sale. Tune as real conversion data accrues.
+  google_form_signup: 50, // click to the registration Google Form (intent to enroll)
+  calendar_click: 25, // click to the "Talk to Kaido" calendar (intent to book a call)
   contact_click: 5,
   email_click: 5,
   phone_click: 5,
+  discord_click: 2,
   linkedin_click: 1,
+  // NOTE: ads_conversion_Book_appointment_1 removed 2026-06-02. It was a GA4
+  // event-create rule firing on every /training pageview (not a real booking);
+  // the rule was deleted and the event is no longer generated.
 };
 
 interface GA4Report {
