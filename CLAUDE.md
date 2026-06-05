@@ -46,22 +46,11 @@ docs/                   # Design documents and one-pagers
 
 **Deployment:** GitHub Pages from `main` branch. Merge PR = deploy. Custom domain: plepic.com
 
-**Design system:** `css/styles.css` is the single source of truth — it contains all tokens, base styles, components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.code-block-*`, `.label`, `.link`, `.logo-*`, `.highlight`, `.on-dark`, etc.) and all page-specific layout. `design-system.html` is the visual reference and loads `css/styles.css` directly.
+**Design system (single source of truth):** `design-system.html` is the canonical reference; `css/styles.css` holds all tokens, base styles, and components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.code-block-*`, `.label`, `.link`, `.logo-*`, `.highlight`, `.on-dark`, etc.). `design-system.html` Section 1 is the brand foundation (tagline, pillars, voice); Sections 2-9 cover palette, neutrals, type, spacing, components, hero, logo, and rules. The palette and butterfly mark are locked. **Read those two files before changing any color, font, or spacing value. Do not cite hex from memory.**
 
-**Locked palette (2026-04-01):** All greens at H=137°. System saturation S=73%, vivid exception S=100%. Accent S-matched.
-- `--green` (`#00c638`) — decorative: dots, fills, dark-mode headings. Not text on light.
-- `--green-brand` (`#137b30`) — logo, headings, links. AA on cream/white.
-- `--green-dark` (`#0d5822`) — body text. AAA on cream/white.
-- `--green-light` (`#c5f6d3`) — badge fills, borders.
-- `--green-surface` (`#edfcf1`) — tinted backgrounds.
-- `--accent` (`#e26c45`) — CTA buttons, urgency badges. One per viewport max.
-
-**Key CSS patterns:**
-- Nature-digital aesthetic with `Zilla Slab` (headings/logo), `Plus Jakarta Sans` (body), `JetBrains Mono` (code)
-- Light mode only. Warm cream background `#faf7f2`, no pure black/white
-- CSS grid layouts
-- All spacing uses `--space-*` tokens
+**Operational conventions (not derivable from the design system):**
 - Fonts loaded via `<link>` in HTML (not CSS @import) for faster discovery
+- All spacing via `--space-*` tokens; CSS grid for layout
 
 ## Content Notes
 
