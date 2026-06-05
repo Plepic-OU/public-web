@@ -22,10 +22,65 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 1. COLOR PALETTE -->
+  <!-- 1. BRAND FOUNDATION -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">1 — Color Palette <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label">1 — Brand Foundation</div>
+
+    <div class="ds-note">
+      <strong>The system exists to express this.</strong> Brand first, pixels second: every token, type
+      choice, and component below is in service of the identity stated here. This is the source of truth
+      for who Plepic is, in words; the rest of the page is how that shows up on screen.
+    </div>
+
+    <!-- Lockup + tagline + positioning -->
+    <div class="panel panel-cream" style="padding: var(--space-2xl);">
+      <div id="brandLockup" style="margin-bottom: 0.9rem;"></div>
+      <p style="font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); color: var(--green-brand); line-height: normal; margin: 0 0 0.6rem;">Curious play. Epic growth.</p>
+      <span class="label" style="color: var(--text-3);">Agentic coding training for software teams</span>
+    </div>
+
+    <!-- Three pillars: one positioning + two culture values -->
+    <div class="ds-grid-3" style="margin-top: var(--space-lg);">
+      <div class="panel panel-white">
+        <div class="label" style="color: var(--text-3); margin-bottom: 0.6rem;">// What we do</div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--green-brand);">Agentic coding</h4>
+        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">Developers direct AI agents (Claude Code) to ship production-grade code, not toy demos. It is what we teach and how we work.</p>
+      </div>
+      <div class="panel panel-white">
+        <div class="label" style="color: var(--text-3); margin-bottom: 0.6rem;">// Culture value</div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--green-brand);">Performance &#8596; learning</h4>
+        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">Two cultures held in conscious tension, never traded off. We ship fast and we get better at shipping. Drop either side and the other decays.</p>
+      </div>
+      <div class="panel panel-white">
+        <div class="label" style="color: var(--text-3); margin-bottom: 0.6rem;">// Culture value</div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--green-brand);">Aligned incentives</h4>
+        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">We structure engagements so we succeed only when clients do. We compete on outcomes, not hourly rates.</p>
+      </div>
+    </div>
+
+    <!-- Voice & personality -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 760px;">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Voice &amp; Personality</h4>
+      <p style="font-size: 0.9rem; color: var(--text-2); line-height: 1.65; margin: 0 0 0.85rem;">
+        <strong>Warm, grounded, distinctive.</strong> Credible and calm: expert without hype. The slab
+        serif, the single confident green, and the cream canvas all carry this. Warmth in service of
+        authority, never cuteness.
+      </p>
+      <ul class="ds-rules">
+        <li>Speak to developers as peers. They smell hype instantly.</li>
+        <li>Prove, don't claim. Numbers, demos, and shipped work over adjectives.</li>
+        <li>Plain language. Short sentences. No filler, no buzzword stacking.</li>
+        <li>No AI slop, in copy or visuals. If it could be any AI startup's template, it is wrong.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 2. COLOR PALETTE -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label">2 — Color Palette <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
       <strong>Strategy:</strong> Single hue (137°) for all greens. Saturation at 73% everywhere except vivid (100%). Accent at hue 15° with saturation matched to brand (73%). Simple rule: <em>73% is the system saturation, 100% is the decorative exception.</em>
@@ -98,10 +153,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 2. NEUTRALS -->
+  <!-- 3. NEUTRALS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">2 — Neutrals <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label">3 — Neutrals <span class="ds-locked">Locked</span></div>
 
     <div class="ds-swatch-strip">
       <div class="ds-sw" style="background: var(--bg); border: 1px solid var(--border);">
@@ -143,10 +198,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 3. TYPOGRAPHY -->
+  <!-- 4. TYPOGRAPHY -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">3 — Typography <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label">4 — Typography <span class="ds-locked">Locked</span></div>
 
     <div class="ds-grid-3">
       <div class="panel panel-white">
@@ -231,10 +286,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 4. SPACING -->
+  <!-- 5. SPACING -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">4 — Spacing</div>
+    <div class="ds-section-label">5 — Spacing</div>
 
     <div class="ds-spacing-row">
       <div class="ds-spacing-item">
@@ -277,10 +332,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 5. COMPONENTS — Light -->
+  <!-- 6. COMPONENTS — Light -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">5 — Components</div>
+    <div class="ds-section-label">6 — Components</div>
 
     <!-- Button system specimen -->
     <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
@@ -456,10 +511,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 6. HERO COMPOSITIONS -->
+  <!-- 7. HERO COMPOSITIONS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">6 — Hero Compositions</div>
+    <div class="ds-section-label">7 — Hero Compositions</div>
 
     <div class="ds-note">
       Accent appears once per viewport — in the hero body CTA. Nav CTA uses green outline. No urgency badges when the CTA is visible.
@@ -473,10 +528,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 7. LOGO & WORDMARK -->
+  <!-- 8. LOGO & WORDMARK -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">7 — Logo & Wordmark <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label">8 — Logo & Wordmark <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
       <strong>Crystalline butterfly with leaf body, locked 2026-04-07.</strong> Wordmark left, butterfly right;
@@ -650,10 +705,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 8. RULES & ANTI-PATTERNS -->
+  <!-- 9. RULES & ANTI-PATTERNS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">8 — Rules & Anti-Patterns</div>
+    <div class="ds-section-label">9 — Rules & Anti-Patterns</div>
 
     <div class="ds-grid-2">
       <div class="panel panel-white">
@@ -780,6 +835,11 @@
       wrap + body + ant + '</svg>';
   }
   // Locked wordmark text colors handled via CSS .logo-wordmark / .on-dark .logo-wordmark
+
+  // ── Brand foundation lockup ──
+  // Same lockup pattern as the specimens: wordmark + bf() butterfly as siblings in .logo-lockup.
+  document.getElementById('brandLockup').innerHTML =
+    '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:2.75rem;">Plepic</span>' + bf(52) + '</span>';
 
   // ── Hero light ──
   // Translucent cream nav (matches production's frosted-glass header).
