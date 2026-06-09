@@ -1,0 +1,29 @@
+{
+  "slug": "agentic-skill-map",
+  "format": "vlog",
+  "source_path": "/Users/kaidokoort/Documents/plepic-video/inbox/Teleprompter-2026-09-06_08-33-17.mp4",
+  "started_at": "2026-06-09T07:42:57.583Z",
+  "phases_completed": [
+    "transcribe",
+    "edit",
+    "metadata",
+    "thumbnail",
+    "youtube",
+    "linkedin-prep"
+  ],
+  "youtube": {
+    "video_id": "J4pVcvf4KXQ",
+    "url": "https://youtu.be/J4pVcvf4KXQ",
+    "studio_url": "https://studio.youtube.com/video/J4pVcvf4KXQ/edit",
+    "upload_session_url": null,
+    "privacy": "public"
+  },
+  "linkedin": {
+    "assets_path": "/Users/kaidokoort/Documents/plepic-video/work/2026-06-09-teleprompter-2026-09-06-08-33-17-b/linkedin",
+    "post_url": null
+  },
+  "quota_units_used": 2050,
+  "duration_seconds": 106.157,
+  "errors": [],
+  "finished_at": "2026-06-09T07:44:43.740Z"
+}
