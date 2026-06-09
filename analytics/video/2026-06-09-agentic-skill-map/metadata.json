@@ -1,0 +1,20 @@
+{
+  "title": "The 3 Axes of Agentic Skill: Know Where You Stand",
+  "description": "Most people can't articulate how good they are at AI coding. In our training cohorts, developers often describe feeling strong at one thing while stuck on another, but they can't quite name the gap. After working with hundreds of engineers, we've noticed agentic coding skill splits into three axes, not one: Autonomy (how independently your agent acts), Parallelism (how many tasks it handles concurrently), and Skill Usage (how well it picks the right tool). Most developers are strong on at least one axis while struggling on another. That asymmetry is the lever for improvement, but only if you can see it clearly. We built a free assessment map that lets you mark where you stand on each axis and explore what's next. It's at skill.plepic.com. If you're deepening your agentic skills, consider joining our next training cohort: plepic.com/training?utm_source=youtube&utm_content=agentic-skill-map #AgenticCoding #ClaudeCode #SoftwareDevelopment #AISkills #DeveloperTools #DeepWork",
+  "tags": [
+    "agentic coding",
+    "Claude Code",
+    "autonomy",
+    "parallelism",
+    "skill usage",
+    "software development",
+    "AI coding skills",
+    "developer tools",
+    "developer training",
+    "skill assessment",
+    "agency software"
+  ],
+  "chapters": [],
+  "pinnedComment": "If you're building agentic workflows with Claude Code, which axis feels like your bottleneck: autonomy, parallelism, or skill usage? That's usually where the next jump happens.",
+  "slug": "agentic-skill-map"
+}

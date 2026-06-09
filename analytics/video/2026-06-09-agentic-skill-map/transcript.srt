@@ -1,0 +1,63 @@
+1
+00:00:03,259 --> 00:00:05,760
+How good are you at AI coding
+
+2
+00:00:06,849 --> 00:00:08,859
+Most people can't really say
+
+3
+00:00:10,380 --> 00:00:13,319
+After training hundreds of developers we don't
+
+4
+00:00:13,319 --> 00:00:16,180
+think it's one skill It's actually three
+
+5
+00:00:16,180 --> 00:00:18,399
+skills autonomy
+
+6
+00:00:19,579 --> 00:00:22,739
+parallelism and skill usage
+
+7
+00:00:24,299 --> 00:00:25,920
+Most of us are strong on one
+
+8
+00:00:25,920 --> 00:00:29,040
+while stuck on another So we
+
+9
+00:00:29,040 --> 00:00:31,520
+built a map It allows you to
+
+10
+00:00:31,520 --> 00:00:33,759
+mark where you are and see what's
+
+11
+00:00:33,759 --> 00:00:36,779
+next It's free and
+
+12
+00:00:36,779 --> 00:00:39,979
+available at skill plepic
+
+13
+00:00:39,979 --> 00:00:41,020
+com
+
+14
+00:00:43,299 --> 00:00:46,459
+And if you're an agentic coding pioneer
+
+15
+00:00:46,759 --> 00:00:48,779
+we'd love your feedback on the application
+
+16
+00:00:48,779 --> 00:00:49,900
+to make it better

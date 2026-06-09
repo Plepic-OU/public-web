@@ -55,22 +55,22 @@ const MOCKS_DIR = path.join(FIXTURES_DIR, "mock-responses");
 // libass discovers via the fontsdir filter arg in edit().
 const FONT_PATH = path.join(__dirname, "fonts", "ZillaSlab-Bold.ttf");
 
-// Caption typography. Tuned for 1080×1920 vertical short-form: ~6% of width,
-// 18% from bottom to clear platform UI (Reels/Shorts/TikTok overlays).
-// Caption styling mirrors the public-web .badge-default pattern (css/styles.css):
-// var(--green-surface) pill behind, var(--text) body text on top, var(--green-brand)
-// emphasis. Mixing badge bg with body --text token gives strong text-vs-emphasis
+// Caption typography for 1080×1920 vertical short-form. Per-caption pill
+// positioned in the top third (Alignment=8). Caption styling mirrors the
+// public-web .badge-default pattern (css/styles.css): var(--bg) cream pill
+// behind, var(--text) body text on top, var(--green-brand) emphasis. Mixing
+// the cream pill with the body --text token gives strong text-vs-emphasis
 // contrast that --green-dark text alone wouldn't.
-const CAPTION_COLOR_BODY = "#1c1c1a";     // var(--text). Brand near-black. Strong contrast on green-surface, leaves room for green emphasis to pop.
-const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand). Same as .highlight on the site.
-const CAPTION_BG_COLOR = "#edfcf1";       // var(--green-surface). Light tinted pill behind text.
+const CAPTION_COLOR_BODY = "#1c1c1a";     // var(--text). Brand near-black. Strong contrast on the cream pill, leaves room for green emphasis to pop.
+const CAPTION_COLOR_EMPHASIS = "#137b30"; // var(--green-brand). Same as .highlight on the site. AA on cream.
+const CAPTION_BG_COLOR = "#faf7f2";       // var(--bg). Cream pill behind text.
 const CAPTION_BORDER_COLOR = "#c5f6d3";   // var(--green-light). Soft shadow accent under the pill.
-const CAPTION_FONT_SIZE_VLOG = 80;        // base for 1920px-tall reference; scales with actual video height (160px on 3840-tall iPhone 4K).
+const CAPTION_FONT_SIZE_VLOG = 100;       // base for 1920px-tall reference; scales with actual video height. Sized up to use the top-third room.
 const CAPTION_BOX_PADDING = 28;           // ASS Outline value when BorderStyle=3. Pixels of pill around text on each side.
 const CAPTION_BOX_SHADOW = 6;             // subtle drop shadow under the pill. Separates from busy backgrounds.
 const CAPTION_MAX_WORDS_PER_CUE = 3;
 const CAPTION_MAX_CUE_DURATION = 1.0;
-const CAPTION_BOTTOM_MARGIN_PCT = 0.18;
+const CAPTION_TOP_MARGIN_PCT = 0.14;      // caption top offset (fraction of height); places the pill in the top third with Alignment=8.
 
 // End-card overlay (vlog only). Height fraction = bottom slice of frame
 // reserved for the wordmark + butterfly; 1/3 keeps the speaker's face clear
@@ -78,6 +78,7 @@ const CAPTION_BOTTOM_MARGIN_PCT = 0.18;
 // overlay renders and captions are suppressed.
 const END_CARD_HEIGHT_FRACTION = 1 / 3;
 const END_CARD_SECONDS = 5;
+const OUTRO_SECONDS = 3;   // full-frame outro card (screenshot + logo + link) window when --outro-image is given.
 const END_CARD_LOGO_SVG = path.join(REPO_ROOT, "images", "favicon.svg");
 
 // Tokens that should pop in brand-green. Numerals are matched separately by
@@ -106,7 +107,8 @@ const FILLER_WORDS = new Set([
   "well",
 ]);
 
-const MIN_PAUSE_SEC = 1.5;
+const MIN_PAUSE_SEC = 2.0;    // only trim pauses longer than this; shorter "thinking" gaps stay (gentler cuts, avoids clipping words Whisper mis-timed).
+const PAUSE_KEEP_SEC = 0.6;   // breath retained on each side of a trimmed long pause, so big gaps don't hard-cut straight into the next line.
 const SILENCE_NOISE_DB = "-30dB";
 const SILENCE_MIN_DUR_SEC = 0.5;
 
@@ -203,6 +205,9 @@ interface CliOptions {
   noOpen: boolean;
   clean: boolean;
   thumbnailTime: number | null;
+  outroImage: string | null;   // screenshot -> full-frame outro card (with logo + link)
+  link: string | null;         // e.g. "skill.plepic.com" -> bottom URL strip + outro-card link
+  noCuts: boolean;             // keep the full take (no filler/pause trimming); still captions/strip/outro
 }
 
 // ---------- CLI parsing ----------
@@ -226,6 +231,9 @@ function parseArgs(): CliOptions {
       noOpen: false,
       clean: true,
       thumbnailTime: null,
+      outroImage: null,
+      link: null,
+      noCuts: false,
     };
   }
 
@@ -243,6 +251,8 @@ function parseArgs(): CliOptions {
     throw new Error(`Source video not found: ${sourceFile}`);
   }
   const planIdx = args.indexOf("--plan");
+  const outroIdx = args.indexOf("--outro-image");
+  const linkIdx = args.indexOf("--link");
   const thumbIdx = args.indexOf("--thumbnail-time");
   const thumbnailTime = thumbIdx !== -1 ? parseFloat(args[thumbIdx + 1]) : null;
   if (thumbnailTime !== null && !Number.isFinite(thumbnailTime)) {
@@ -260,6 +270,9 @@ function parseArgs(): CliOptions {
     noOpen: args.includes("--no-open"),
     clean,
     thumbnailTime,
+    outroImage: outroIdx !== -1 ? path.resolve(args[outroIdx + 1]) : null,
+    link: linkIdx !== -1 ? args[linkIdx + 1] : null,
+    noCuts: args.includes("--no-cuts"),
   };
 }
 
@@ -1103,7 +1116,13 @@ export function alignTranscriptToScript(
 
     for (const group of lineSplits) {
       if (group.length === 0) continue;
-      const words = group.map((g) => whisperWords[g.whisperIdx]);
+      // Display the plan's text (keeps the punctuation + capitalization the
+      // script was written with) but keep Whisper's timing for the cue.
+      const words = group.map((g) => ({
+        text: scriptTokens[g.scriptIdx].text,
+        start: whisperWords[g.whisperIdx].start,
+        end: whisperWords[g.whisperIdx].end,
+      }));
       const emphasisIndices = new Set<number>();
       for (let k = 0; k < group.length; k++) {
         if (scriptTokens[group[k].scriptIdx].emphasized) {
@@ -1248,7 +1267,7 @@ function wordsToAss(
   const shadowStyle = hexToAssStyleColor(CAPTION_BORDER_COLOR);
   const bodyOverride = hexToAssOverride(CAPTION_COLOR_BODY);
   const emphasisOverride = hexToAssOverride(CAPTION_COLOR_EMPHASIS);
-  const marginV = Math.round(CAPTION_BOTTOM_MARGIN_PCT * videoHeight);
+  const marginV = Math.round(CAPTION_TOP_MARGIN_PCT * videoHeight);
 
   // PlayResX/PlayResY define the coordinate system libass scales font sizes
   // against. We pin to the actual video resolution so Fontsize is in pixels.
@@ -1267,17 +1286,24 @@ function wordsToAss(
       "ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, " +
       "MarginL, MarginR, MarginV, Encoding",
     // BorderStyle=3 = opaque box. In libass, the box is filled with
-    // OutlineColour (slot 6), not BackColour. We put the green-surface pill
-    // there, the dark-green text in PrimaryColour, and a green-light shadow
+    // OutlineColour (slot 6), not BackColour. We put the cream pill there,
+    // the near-black body text in PrimaryColour, and a green-light shadow
     // in BackColour to lift the pill off busy iPhone backgrounds.
+    // Alignment=8 (top-center); with top alignment MarginV is from the top
+    // edge, placing the pill in the top third.
     `Style: Default,Plus Jakarta Sans,${fontSize},${textStyle},${textStyle},` +
-      `${boxFillStyle},${shadowStyle},-1,0,0,0,100,100,0,0,3,${CAPTION_BOX_PADDING},${CAPTION_BOX_SHADOW},2,80,80,${marginV},1`,
+      `${boxFillStyle},${shadowStyle},-1,0,0,0,100,100,0,0,3,${CAPTION_BOX_PADDING},${CAPTION_BOX_SHADOW},8,80,80,${marginV},1`,
     "",
     "[Events]",
     "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
   ];
 
   const events = cues.map((c) => {
+    // Spoken URL: render correctly punctuated (Whisper hears "skill plepic com").
+    const urlJoin = c.words.map((w) => w.text.toLowerCase().replace(/[^a-z0-9]/g, "")).join("");
+    if (urlJoin === "skillplepiccom") {
+      return `Dialogue: 0,${fmtAssTime(c.start)},${fmtAssTime(c.end)},Default,,0,0,0,,{\\c${emphasisOverride}}skill.plepic.com{\\c${bodyOverride}}`;
+    }
     const parts = c.words.map((w, i) => {
       const text = escapeAssText(w.text);
       const sep = i === 0 ? "" : " ";
@@ -1314,7 +1340,9 @@ function computeKeepRanges(
   for (let i = 1; i < words.length; i++) {
     const gap = words[i].start - words[i - 1].end;
     if (gap >= MIN_PAUSE_SEC) {
-      cuts.push([words[i - 1].end + 0.1, words[i].start - 0.1]);
+      // Keep a short breath on each side of a trimmed pause rather than
+      // cutting to ~0s, so a long gap doesn't slam the next line in.
+      cuts.push([words[i - 1].end + PAUSE_KEEP_SEC, words[i].start - PAUSE_KEEP_SEC]);
     }
   }
   return mergeAdjacent(invertCuts(cuts, duration), 0.05);
@@ -1327,7 +1355,7 @@ async function edit(
   transcript: Transcript,
   format: Format,
   workDir: string,
-  opts: { noCaptions: boolean; planMarkdown: string | null },
+  opts: { noCaptions: boolean; planMarkdown: string | null; outroImage: string | null; link: string | null; noCuts: boolean },
   log: PublishLog
 ): Promise<string> {
   const duration = transcript.duration || probeVideoInfo(sourceFile).duration;
@@ -1344,7 +1372,9 @@ async function edit(
       );
     }
   }
-  const mergedKeeps = computeKeepRanges(transcript.words, duration);
+  const mergedKeeps: Array<[number, number]> = opts.noCuts
+    ? [[0, duration]]
+    : computeKeepRanges(transcript.words, duration);
   const noCuts = mergedKeeps.length === 1 &&
     mergedKeeps[0][0] === 0 && mergedKeeps[0][1] === duration;
   console.log(
@@ -1370,8 +1400,9 @@ async function edit(
     // End-card needs at least END_CARD_SECONDS + 2s of breathing room before
     // it slides in. Anything shorter, skip — the overlay would devour the
     // whole clip.
-    const wantEndCard = editedDuration >= END_CARD_SECONDS + 2;
-    const endCardStart = Math.max(0, editedDuration - END_CARD_SECONDS);
+    const outroSecs = opts.outroImage ? OUTRO_SECONDS : END_CARD_SECONDS;
+    const wantEndCard = editedDuration >= outroSecs + 2;
+    const endCardStart = Math.max(0, editedDuration - outroSecs);
 
     if (!wantEndCard) {
       console.log(
@@ -1459,50 +1490,23 @@ async function edit(
     }
 
     if (wantCaptions || wantEndCard) {
-      // Preserve the un-captioned splice so --captions-only can re-burn
-      // captions later without re-running the concat. Copy (not rename) so
-      // edited.mp4 still exists as the in-progress target ffmpeg writes to.
+      // Preserve the un-captioned splice so --captions-only can re-burn later
+      // without re-running the concat.
       const editedNoCaptions = path.join(workDir, "edited-no-captions.mp4");
       if (!fs.existsSync(editedNoCaptions)) {
         fs.copyFileSync(edited, editedNoCaptions);
       }
       const captioned = path.join(workDir, "edited-captioned.mp4");
-      const fontsDir = path.join(__dirname, "fonts");
-
-      let endCardPath: string | null = null;
-      if (wantEndCard) {
-        endCardPath = path.join(workDir, "end-card.png");
-        const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
-        const ecWidth = editedInfo.width;
-        console.log(`edit: rendering end card ${ecWidth}×${ecHeight}...`);
-        await renderEndCard(ecWidth, ecHeight, endCardPath);
-      }
-
-      // Build the filter graph. ass= goes first (on input 0), then a single
-      // overlay= applies the end-card on the bottom slice, gated by t.
-      // Per-word style overrides survive ass= (not subtitles=); fontsdir
-      // points libass at the bundled TTFs instead of system fontconfig.
-      const ffArgs: string[] = ["-i", edited];
-      if (endCardPath) ffArgs.push("-i", endCardPath);
-
-      const assStep = assPath
-        ? `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
-        : null;
-
-      if (endCardPath) {
-        const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
-        const ecY = editedInfo.height - ecHeight;
-        const filter = [
-          `[0:v]${assStep ?? "null"}[v0]`,
-          `[v0][1:v]overlay=0:${ecY}:enable='gte(t,${endCardStart.toFixed(2)})'[v]`,
-        ].join(";");
-        ffArgs.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
-      } else if (assStep) {
-        ffArgs.push("-vf", assStep);
-      }
-      ffArgs.push("-c:a", "copy", captioned);
-
-      runFfmpeg(ffArgs, { silent: true });
+      await burnVlogOverlays(edited, captioned, {
+        assPath,
+        width: editedInfo.width,
+        height: editedInfo.height,
+        wantOutro: wantEndCard,
+        outroStart: endCardStart,
+        outroImage: opts.outroImage,
+        link: opts.link,
+        workDir,
+      });
       fs.renameSync(captioned, edited);
     }
 
@@ -2026,6 +2030,149 @@ async function renderEndCard(
   }
 }
 
+// Full-frame outro card: the result-card screenshot stacked over the Plepic
+// logo + a link line, on a cream background. Shown for the last OUTRO_SECONDS
+// when --outro-image is provided. Screenshot is embedded as a data URI so
+// paths with spaces don't matter.
+export async function renderOutroCard(
+  width: number,
+  height: number,
+  opts: { screenshotPath: string; link: string },
+  outPath: string
+): Promise<void> {
+  if (!fs.existsSync(END_CARD_LOGO_SVG)) {
+    throw new Error(`end-card SVG not found: ${END_CARD_LOGO_SVG}`);
+  }
+  if (!fs.existsSync(opts.screenshotPath)) {
+    throw new Error(`outro screenshot not found: ${opts.screenshotPath}`);
+  }
+  const svgInline = fs
+    .readFileSync(END_CARD_LOGO_SVG, "utf8")
+    .replace(/\s(width|height)="[^"]*"/g, "");
+  const ext = path.extname(opts.screenshotPath).slice(1).toLowerCase();
+  const mime = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/png";
+  const shotUrl = `data:${mime};base64,${fs.readFileSync(opts.screenshotPath).toString("base64")}`;
+
+  const butterflyPx = Math.round(height * 0.17);
+  const linkPx = Math.round(height * 0.044);
+  const gapPx = Math.round(height * 0.05);
+  const padY = Math.round(height * 0.08);
+
+  const html = `<!doctype html><html><head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #faf7f2; --green-brand: #137b30; --text: #1c1c1a; }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: ${width}px; height: ${height}px; background: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: ${gapPx}px; padding: ${padY}px 0; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text);
+  }
+  .butterfly { width: ${butterflyPx}px; height: ${butterflyPx}px; flex-shrink: 0; }
+  .shot { width: 86%; border-radius: ${Math.round(height * 0.02)}px;
+    box-shadow: 0 ${Math.round(height * 0.01)}px ${Math.round(height * 0.032)}px rgba(0,0,0,0.14); }
+  .link { font-size: ${linkPx}px; font-weight: 800; color: var(--green-brand); letter-spacing: 0.01em; }
+</style>
+</head><body>
+  <div class="butterfly">${svgInline}</div>
+  <img class="shot" src="${shotUrl}">
+  ${opts.link ? `<div class="link">${opts.link}</div>` : ""}
+</body></html>`;
+
+  const { chromium } = require("playwright") as typeof import("playwright");
+  const browser = await chromium.launch();
+  try {
+    const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1 });
+    const page = await ctx.newPage();
+    await page.setContent(html);
+    await page.evaluate("document.fonts.ready" as unknown as () => Promise<unknown>);
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: outPath, fullPage: false });
+  } finally {
+    await browser.close();
+  }
+}
+
+// Burn ASS captions + an optional bottom URL strip + the outro overlay onto a
+// vlog. Shared by edit() and runCaptionsOnly() so the two never diverge. The
+// outro is either a full-frame composed card (when outroImage is set) overlaid
+// at y=0, or the legacy logo end-card on the bottom third. The URL strip is
+// hidden once the outro takes over (enable lt(t,outroStart)).
+async function burnVlogOverlays(
+  inputVideo: string,
+  outVideo: string,
+  o: {
+    assPath: string | null;
+    width: number;
+    height: number;
+    wantOutro: boolean;
+    outroStart: number;
+    outroImage: string | null;
+    link: string | null;
+    workDir: string;
+  }
+): Promise<void> {
+  const fontsDir = path.join(__dirname, "fonts");
+
+  let overlayPng: string | null = null;
+  let overlayY = 0;
+  if (o.wantOutro) {
+    overlayPng = path.join(o.workDir, "end-card.png");
+    if (o.outroImage) {
+      console.log(`  rendering outro card (screenshot + logo + link) ${o.width}×${o.height}...`);
+      await renderOutroCard(o.width, o.height, { screenshotPath: o.outroImage, link: o.link ?? "" }, overlayPng);
+      overlayY = 0;
+    } else {
+      const ecHeight = Math.round(o.height * END_CARD_HEIGHT_FRACTION);
+      console.log(`  rendering end card ${o.width}×${ecHeight}...`);
+      await renderEndCard(o.width, ecHeight, overlayPng);
+      overlayY = o.height - ecHeight;
+    }
+  }
+
+  const assStep = o.assPath
+    ? `ass='${o.assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
+    : null;
+
+  let stripStep: string | null = null;
+  if (o.link) {
+    const fontFile = path.join(fontsDir, "ZillaSlab-Bold.ttf").replace(/'/g, "\\'");
+    const fontSize = Math.round(o.height * 0.04);
+    const barH = Math.round(o.height * 0.09);
+    const cream = CAPTION_BG_COLOR.replace("#", "0x");
+    const green = CAPTION_COLOR_EMPHASIS.replace("#", "0x");
+    // Full-width opaque cream bar pinned to the bottom for the whole video,
+    // with a thin green top rule so the strip edge reads on light backgrounds,
+    // and the link centered in green. The full-frame outro card covers it at
+    // the very end.
+    // NOTE: in drawbox expressions `h`/`w` mean the box's own size; the frame
+    // dimensions are `ih`/`iw`. (drawtext below uses `h` = frame height.)
+    const bar = `drawbox=x=0:y=ih-${barH}:w=iw:h=${barH}:color=${cream}:t=fill`;
+    const rule = `drawbox=x=0:y=ih-${barH}:w=iw:h=4:color=${green}:t=fill`;
+    const txt =
+      `drawtext=fontfile='${fontFile}':text='${o.link}':fontsize=${fontSize}:` +
+      `fontcolor=${green}:x=(w-text_w)/2:y=h-${barH}+(${barH}-text_h)/2`;
+    stripStep = `${bar},${rule},${txt}`;
+  }
+
+  const steps = [assStep, stripStep].filter(Boolean).join(",");
+  const args = ["-i", inputVideo];
+  if (overlayPng) args.push("-i", overlayPng);
+  if (overlayPng) {
+    const filter = [
+      `[0:v]${steps || "null"}[v0]`,
+      `[v0][1:v]overlay=0:${overlayY}:enable='gte(t,${o.outroStart.toFixed(2)})'[v]`,
+    ].join(";");
+    args.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
+  } else if (steps) {
+    args.push("-vf", steps);
+  }
+  args.push("-c:a", "copy", outVideo);
+  runFfmpeg(args, { silent: true });
+}
+
 // ---------- phase: makeThumbnail ----------
 
 function makeThumbnail(
@@ -2428,8 +2575,9 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
   const editedInfo = probeVideoInfo(edited);
   const editedDuration = editedInfo.duration || transcript.duration;
   const wantCaptions = !opts.noCaptions;
-  const wantEndCard = editedDuration >= END_CARD_SECONDS + 2;
-  const endCardStart = Math.max(0, editedDuration - END_CARD_SECONDS);
+  const outroSecs = opts.outroImage ? OUTRO_SECONDS : END_CARD_SECONDS;
+  const wantEndCard = editedDuration >= outroSecs + 2;
+  const endCardStart = Math.max(0, editedDuration - outroSecs);
 
   const log: PublishLog = readPublishLogIfExists(workDir) ?? {
     slug,
@@ -2469,7 +2617,9 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
   // Recompute the keeps used by the splice so we can remap word timestamps.
   // The pre-recorded edited-no-captions.mp4 was produced from the same
   // transcript, so the same keeps fall out (deterministic given inputs).
-  const keeps = computeKeepRanges(transcript.words, transcript.duration || editedDuration);
+  const keeps: Array<[number, number]> = opts.noCuts
+    ? [[0, transcript.duration || editedDuration]]
+    : computeKeepRanges(transcript.words, transcript.duration || editedDuration);
 
   let assPath: string | null = null;
   if (wantCaptions) {
@@ -2509,33 +2659,16 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
 
   if (wantCaptions || wantEndCard) {
     const captioned = path.join(workDir, "edited-captioned.mp4");
-    const fontsDir = path.join(__dirname, "fonts");
-    let endCardPath: string | null = null;
-    if (wantEndCard) {
-      endCardPath = path.join(workDir, "end-card.png");
-      const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
-      const ecWidth = editedInfo.width;
-      console.log(`captions-only: rendering end card ${ecWidth}×${ecHeight}...`);
-      await renderEndCard(ecWidth, ecHeight, endCardPath);
-    }
-    const ffArgs: string[] = ["-i", edited];
-    if (endCardPath) ffArgs.push("-i", endCardPath);
-    const assStep = assPath
-      ? `ass='${assPath.replace(/'/g, "\\'")}':fontsdir='${fontsDir.replace(/'/g, "\\'")}'`
-      : null;
-    if (endCardPath) {
-      const ecHeight = Math.round(editedInfo.height * END_CARD_HEIGHT_FRACTION);
-      const ecY = editedInfo.height - ecHeight;
-      const filter = [
-        `[0:v]${assStep ?? "null"}[v0]`,
-        `[v0][1:v]overlay=0:${ecY}:enable='gte(t,${endCardStart.toFixed(2)})'[v]`,
-      ].join(";");
-      ffArgs.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
-    } else if (assStep) {
-      ffArgs.push("-vf", assStep);
-    }
-    ffArgs.push("-c:a", "copy", captioned);
-    runFfmpeg(ffArgs, { silent: true });
+    await burnVlogOverlays(edited, captioned, {
+      assPath,
+      width: editedInfo.width,
+      height: editedInfo.height,
+      wantOutro: wantEndCard,
+      outroStart: endCardStart,
+      outroImage: opts.outroImage,
+      link: opts.link,
+      workDir,
+    });
     fs.renameSync(captioned, edited);
   }
 
@@ -2689,7 +2822,7 @@ async function main(): Promise<void> {
       transcript,
       format,
       workDir,
-      { noCaptions: opts.noCaptions, planMarkdown: planContent },
+      { noCaptions: opts.noCaptions, planMarkdown: planContent, outroImage: opts.outroImage, link: opts.link, noCuts: opts.noCuts },
       log
     );
     log.phases_completed.push("edit");
