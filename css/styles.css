@@ -801,7 +801,8 @@ p:last-child {
 }
 
 .shift-col--agent {
-  border-left: 3px solid var(--green-brand);
+  background: var(--green-surface);
+  border-color: var(--green-light);
 }
 
 .text-conversational,
@@ -810,25 +811,35 @@ p:last-child {
 }
 
 .perspective-shift-quote {
-  border-left: 3px solid var(--green);
-  padding-left: var(--space-xl);
   margin: var(--space-2xl) 0;
+  max-width: 56ch;
 }
 
 .perspective-shift-quote p {
-  font-size: 1.05rem;
-  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text);
   font-style: italic;
-  line-height: 1.7;
+  line-height: 1.45;
 }
 
 .perspective-shift-quote cite {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   margin-top: var(--space-sm);
   font-size: 0.85rem;
   color: var(--text-3);
   font-style: normal;
   font-weight: 600;
+}
+
+.perspective-shift-quote cite::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green-vivid);
 }
 
 /* ========================================
@@ -1354,10 +1365,6 @@ p:last-child {
   text-align: center;
 }
 
-.comparison-card--agent {
-  border-left: 3px solid var(--green-brand);
-}
-
 .comparison-visual {
   margin-bottom: var(--space-lg);
 }
@@ -1563,25 +1570,35 @@ p:last-child {
 }
 
 .reflection-story {
-  border-left: 3px solid var(--green);
-  padding-left: var(--space-xl);
   margin: 0;
+  max-width: 56ch;
 }
 
 .reflection-story p {
-  font-size: 1rem;
-  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text);
   font-style: italic;
-  line-height: 1.7;
+  line-height: 1.45;
 }
 
 .reflection-story cite {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   margin-top: var(--space-md);
   font-size: 0.85rem;
   color: var(--text-3);
   font-style: normal;
   font-weight: 600;
+}
+
+.reflection-story cite::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green-vivid);
 }
 
 /* ========================================
