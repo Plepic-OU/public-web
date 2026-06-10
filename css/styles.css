@@ -10,7 +10,6 @@
   /* Green system — H=137°, S=73% (vivid S=100%)
      Palette locked 2026-04-01. */
   --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
-  --green:         var(--green-vivid); /* back-compat alias */
   --green-brand:   #137b30;   /* S73%  L28% — logo, headings, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
   --green-light:   #c5f6d3;   /* S73%  L87% — badge fills, borders */
@@ -104,7 +103,7 @@ a:hover {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--green);
+  outline: 2px solid var(--green-vivid);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -437,8 +436,8 @@ p:last-child {
 .btn-pulse { animation: btn-pulse 3s ease-in-out infinite; }
 
 @keyframes btn-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 87, 0.3); }
-  50%      { box-shadow: 0 0 0 8px rgba(217, 119, 87, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(226, 108, 69, 0.3); }  /* --accent #e26c45 */
+  50%      { box-shadow: 0 0 0 8px rgba(226, 108, 69, 0); }
 }
 
 .btn-group {
@@ -470,7 +469,7 @@ p:last-child {
   content: '';
   width: 6px;
   height: 6px;
-  background: var(--green);
+  background: var(--green-vivid);
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -661,7 +660,7 @@ p:last-child {
   transform: translate(-50%, -50%);
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(34, 197, 94, 0.06) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(0, 198, 56, 0.06) 0%, transparent 60%);  /* --green-vivid #00c638 */
   pointer-events: none;
   z-index: -1;
 }
@@ -1103,7 +1102,7 @@ p:last-child {
 }
 
 .team-experience svg {
-  color: var(--green);
+  color: var(--green-vivid);
   flex-shrink: 0;
 }
 
@@ -1259,10 +1258,6 @@ p:last-child {
 
 .agent-hero-text h1 {
   margin-bottom: var(--space-lg);
-}
-
-.agent-hero-text .highlight {
-  color: var(--accent);
 }
 
 .agent-hero-description {
@@ -1486,7 +1481,7 @@ p:last-child {
   top: 6px;
   width: 10px;
   height: 10px;
-  background: var(--green);
+  background: var(--green-vivid);
   border-radius: 50%;
   border: 2px solid var(--bg);
 }
@@ -1706,7 +1701,7 @@ p:last-child {
 
 .value-bar-margin {
   flex: 1;
-  background: var(--green);
+  background: var(--green-vivid);
 }
 
 .value-bar-legend {
@@ -1733,7 +1728,7 @@ p:last-child {
 }
 
 .legend-swatch--cost { background: var(--green-brand); }
-.legend-swatch--margin { background: var(--green); }
+.legend-swatch--margin { background: var(--green-vivid); }
 
 .value-vis-caption {
   margin-top: var(--space-md);
@@ -1807,7 +1802,7 @@ p:last-child {
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--green);
+  color: var(--green-brand);
 }
 
 .flow-step h3 {
@@ -1963,7 +1958,7 @@ p:last-child {
 }
 
 .social-proof-line svg {
-  color: var(--green);
+  color: var(--green-vivid);
 }
 
 /* ========================================
@@ -2128,7 +2123,7 @@ p:last-child {
   top: 8px;
   width: 6px;
   height: 6px;
-  background: var(--green);
+  background: var(--green-vivid);
   border-radius: 50%;
 }
 
@@ -2215,8 +2210,8 @@ p:last-child {
 }
 
 .pricing-card-featured {
-  border-color: var(--green);
-  box-shadow: 0 4px 24px rgba(34, 197, 94, 0.1);
+  border-color: var(--green-vivid);
+  box-shadow: 0 4px 24px rgba(0, 198, 56, 0.1);  /* --green-vivid #00c638 */
   transform: scale(1.02);
 }
 
@@ -2272,7 +2267,7 @@ p:last-child {
   top: 7px;
   width: 6px;
   height: 6px;
-  background: var(--green);
+  background: var(--green-vivid);
   border-radius: 50%;
 }
 
@@ -2442,7 +2437,7 @@ p:last-child {
 .tooltip-trigger {
   position: relative;
   cursor: help;
-  border-bottom: 1.5px dashed var(--green);
+  border-bottom: 1.5px dashed var(--green-vivid);
 }
 
 .tooltip {
@@ -2567,7 +2562,7 @@ p:last-child {
 }
 
 .footer-tagline:hover {
-  color: var(--green);
+  color: var(--green-vivid);
 }
 
 /* ========================================
@@ -3018,7 +3013,7 @@ p:last-child {
 .faq-item summary::after {
   content: '+';
   font-size: 1.25rem;
-  color: var(--green);
+  color: var(--green-brand);
   flex-shrink: 0;
   font-weight: 400;
   line-height: 1;

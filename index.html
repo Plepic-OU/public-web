@@ -668,24 +668,26 @@
       }
     });
 
-    // Sticky CTA visibility
+    // Sticky CTA visibility: yields while the hero or any other primary CTA
+    // is on screen (one accent per viewport)
     const stickyCta = document.getElementById('stickyCta');
     const heroSection = document.querySelector('.hero');
 
     if (stickyCta && heroSection) {
+      const accentTargets = [heroSection, ...document.querySelectorAll('.btn-primary')]
+        .filter(el => !stickyCta.contains(el));
+      const onScreen = new Set();
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting) {
-            stickyCta.classList.add('visible');
-            document.body.classList.add('has-sticky-cta');
-          } else {
-            stickyCta.classList.remove('visible');
-            document.body.classList.remove('has-sticky-cta');
-          }
+          if (entry.isIntersecting) onScreen.add(entry.target);
+          else onScreen.delete(entry.target);
         });
+        const show = onScreen.size === 0;
+        stickyCta.classList.toggle('visible', show);
+        document.body.classList.toggle('has-sticky-cta', show);
       }, { threshold: 0 });
 
-      observer.observe(heroSection);
+      accentTargets.forEach(target => observer.observe(target));
     }
 
     // Scroll-triggered reveal animations
