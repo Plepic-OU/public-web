@@ -1,0 +1,18 @@
+{
+  "files": ["**/*.html"],
+  "exclude": [
+    "_archive/**",
+    "docs/**",
+    "playwright-report/**",
+    "test-results/**",
+    "screenshots/**",
+    "tests/**",
+    "butterfly-*.html",
+    "font-compare.html",
+    "logo-prototype.html",
+    "demo-tenders.html"
+  ],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}
