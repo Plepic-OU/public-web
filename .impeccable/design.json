@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-10T12:10:00Z",
+  "title": "Design System: Plepic Nature-Digital",
+  "extensions": {
+    "colorMeta": {
+      "green-vivid": { "role": "primary", "displayName": "Vivid Green", "canonical": "#00c638", "tonalRamp": ["#004d16", "#008526", "#00bd35", "#00f545", "#2eff69", "#66ff91", "#9effba", "#d6ffe2"] },
+      "green-brand": { "role": "primary", "displayName": "Brand Green", "canonical": "#137b30", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
+      "green-dark": { "role": "primary", "displayName": "Deep Green", "canonical": "#0d5822", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
+      "green-light": { "role": "primary", "displayName": "Light Green", "canonical": "#c5f6d3", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
+      "green-surface": { "role": "primary", "displayName": "Surface Green", "canonical": "#edfcf1", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
+      "accent": { "role": "secondary", "displayName": "Ember Orange", "canonical": "#e26c45", "tonalRamp": ["#42180a", "#732a12", "#a33c19", "#d44e21", "#e3704a", "#ea977b", "#f2bdab", "#f9e3dc"] },
+      "bg-cream": { "role": "neutral", "displayName": "Cream", "canonical": "#faf7f2", "tonalRamp": ["#292723", "#48443d", "#666157", "#847e71", "#9f998e", "#b9b5ac", "#d2d0cb", "#ecebe9"] },
+      "dark": { "role": "neutral", "displayName": "Ink", "canonical": "#1c1c1a", "tonalRamp": ["#292723", "#48443d", "#666157", "#847e71", "#9f998e", "#b9b5ac", "#d2d0cb", "#ecebe9"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Zilla Slab)", "purpose": "Hero headlines only; warm slab authority." },
+      "headline": { "displayName": "Headline", "purpose": "Section H2s, usually with one Brand Green .highlight span." },
+      "title": { "displayName": "Title", "purpose": "H3/H4 card and panel headings." },
+      "body": { "displayName": "Body (Plus Jakarta Sans)", "purpose": "Paragraphs at 1.7 line-height, 65-75ch cap." },
+      "label": { "displayName": "Label (JetBrains Mono)", "purpose": "Section kickers, spec annotations; the only sanctioned uppercase." }
+    },
+    "shadows": [
+      { "name": "code-ambient", "value": "0 2px 8px rgba(28, 28, 26, 0.04)", "purpose": "The one resting shadow, under inline code snippets." },
+      { "name": "hover-lift", "value": "0 8px 24px rgba(28, 28, 26, 0.06)", "purpose": "Interactive cards on hover, paired with translateY(-2px). Never at rest." },
+      { "name": "tooltip", "value": "0 8px 24px rgba(28, 28, 26, 0.1)", "purpose": "Floating layers only." },
+      { "name": "featured-glow", "value": "0 4px 24px rgba(0, 198, 56, 0.1)", "purpose": "Featured pricing card; at most one per page." },
+      { "name": "accent-pulse", "value": "0 0 0 8px rgba(226, 108, 69, 0)", "purpose": "CTA heartbeat keyframe endpoint (from 0 0 0 0 rgba(226,108,69,0.3)), 3s loop." }
+    ],
+    "motion": [
+      { "name": "transition-fast", "value": "150ms ease", "purpose": "Hovers, color and filter state changes." },
+      { "name": "transition-base", "value": "300ms ease", "purpose": "Header border, sticky CTA slide, general transitions." },
+      { "name": "transition-smooth", "value": "300ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Ease-out-expo entrances and lifts." },
+      { "name": "hero-entrance", "value": "staggered fade+rise on .hero-entrance-1..n", "purpose": "The one choreographed moment per page." },
+      { "name": "reveal", "value": "scroll-triggered .visible class via IntersectionObserver", "purpose": "Section entrances; content must be visible without JS." },
+      { "name": "wing-breathe", "value": "wing-breathe-left/right keyframes, subtle rotate+scaleX", "purpose": "Butterfly idle life; decorative only." },
+      { "name": "badge-pulse", "value": "opacity 1 to 0.3, 2s ease-in-out infinite", "purpose": "Badge dot heartbeat." },
+      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) disables all of the above", "purpose": "Mandatory alternative; not optional." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "600px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one warm action per viewport. Ember Orange with ink text.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Book a free call</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.95rem; line-height: normal; padding: 0.7rem 1.4rem; border-radius: 10px; border: 1.5px solid transparent; cursor: pointer; text-decoration: none; transition: filter 150ms ease, background 150ms ease; } .ds-btn:hover { filter: brightness(0.92); } .ds-btn:focus-visible { outline: 2px solid #00c638; outline-offset: 2px; } .ds-btn-primary { background: #e26c45; color: #1c1c1a; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action where no primary shares the row. Brand Green border and text.",
+      "html": "<button class=\"ds-btn ds-btn-outline\">View curriculum</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.95rem; line-height: normal; padding: 0.7rem 1.4rem; border-radius: 10px; border: 1.5px solid transparent; cursor: pointer; text-decoration: none; transition: background 150ms ease, color 150ms ease; } .ds-btn:focus-visible { outline: 2px solid #00c638; outline-offset: 2px; } .ds-btn-outline { background: transparent; border-color: #137b30; color: #137b30; } .ds-btn-outline:hover { background: #edfcf1; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "The 'or just look first' option; pairs with primary in heroes.",
+      "html": "<a class=\"ds-btn ds-btn-ghost\" href=\"#\">View curriculum &rarr;</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.95rem; line-height: normal; padding: 0.7rem 0.5rem; border-radius: 10px; border: 1.5px solid transparent; cursor: pointer; transition: filter 150ms ease; } .ds-btn-ghost { background: transparent; color: #137b30; text-decoration: underline; text-underline-offset: 3px; } .ds-btn-ghost:hover { filter: brightness(0.92); } .ds-btn-ghost:focus-visible { outline: 2px solid #00c638; outline-offset: 2px; }"
+    },
+    {
+      "name": "Default Badge",
+      "kind": "chip",
+      "refersTo": "badge-default",
+      "description": "Status chip with the signature asymmetric radius and pulsing vivid dot.",
+      "html": "<span class=\"ds-badge ds-badge-default\"><span class=\"ds-badge-dot\"></span> Squad 3 open</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.65rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem; font-weight: 600; line-height: normal; border-radius: 20px 4px 16px; } .ds-badge-default { background: #edfcf1; color: #0d5822; border: 1px solid #c5f6d3; } .ds-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #00c638; flex-shrink: 0; animation: ds-pulse 2s ease-in-out infinite; } @keyframes ds-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }"
+    },
+    {
+      "name": "Urgency Badge",
+      "kind": "chip",
+      "refersTo": "badge-urgency",
+      "description": "Counts as the viewport's accent element; never alongside a CTA.",
+      "html": "<span class=\"ds-badge ds-badge-urgency\"><span class=\"ds-badge-dot\"></span> 4 spots left</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.65rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem; font-weight: 600; line-height: normal; border-radius: 20px 4px 16px; } .ds-badge-urgency { background: #fdf0eb; color: #a3502e; border: 1px solid #f9d4c4; } .ds-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #e26c45; flex-shrink: 0; }"
+    },
+    {
+      "name": "Hero Badge",
+      "kind": "chip",
+      "refersTo": "badge-hero",
+      "description": "Hero-scale badge (.badge-base in production), one per hero.",
+      "html": "<div class=\"ds-badge-hero\">Squad 3: Q3 2026</div>",
+      "css": ".ds-badge-hero { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.9rem; background: #edfcf1; color: #137b30; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.78rem; font-weight: 600; line-height: normal; border-radius: 20px 4px 16px; border: 1px solid #c5f6d3; } .ds-badge-hero::before { content: ''; width: 6px; height: 6px; background: #00c638; border-radius: 50%; animation: ds-pulse 2s ease-in-out infinite; } @keyframes ds-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }"
+    },
+    {
+      "name": "Section Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "The mono kicker above section headings; the only sanctioned uppercase.",
+      "html": "<p class=\"ds-label\">The Shift</p>",
+      "css": ".ds-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: normal; text-transform: uppercase; letter-spacing: 0.12em; color: #0d5822; font-weight: 600; margin: 0; }"
+    },
+    {
+      "name": "Info Card",
+      "kind": "card",
+      "refersTo": "card-info",
+      "description": "Tinted compact card for facts (dates, capacity, score).",
+      "html": "<div class=\"ds-card-info\"><h4>Next squad: Q3 2026</h4><p>6 Fridays &middot; Online &middot; 8.7/10 score</p></div>",
+      "css": ".ds-card-info { background: #edfcf1; border: 1px solid #c5f6d3; border-radius: 10px; padding: 16px; font-family: 'Plus Jakarta Sans', sans-serif; } .ds-card-info h4 { color: #0d5822; font-family: 'Zilla Slab', Georgia, serif; font-size: 0.95rem; margin: 0 0 0.25rem; } .ds-card-info p { color: #137b30; font-size: 0.78rem; margin: 0; }"
+    },
+    {
+      "name": "Code Snippet",
+      "kind": "custom",
+      "refersTo": "code-snippet",
+      "description": "The loop pseudocode chip; carries the one resting shadow in the system.",
+      "html": "<div class=\"ds-code-snippet\"><code>while(task) { think &rarr; act &rarr; observe }</code></div>",
+      "css": ".ds-code-snippet { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: normal; color: #0d5822; background: #ffffff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #e5e2dc; box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04); } .ds-code-snippet code { font: inherit; }"
+    },
+    {
+      "name": "Pull Quote",
+      "kind": "custom",
+      "refersTo": "pull-quote",
+      "description": "Editorial quote: slab italic with a vivid dot before the cite. No border rules.",
+      "html": "<blockquote class=\"ds-quote\"><p>&ldquo;After writing my first LLM loop, I couldn't sleep.&rdquo;</p><cite>Kaido Koort</cite></blockquote>",
+      "css": ".ds-quote { margin: 0; max-width: 56ch; } .ds-quote p { font-family: 'Zilla Slab', Georgia, serif; font-size: 1.35rem; color: #1c1c1a; font-style: italic; line-height: 1.45; margin: 0 0 0.5rem; } .ds-quote cite { display: flex; align-items: center; gap: 0.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; color: #6b6b60; font-style: normal; font-weight: 600; } .ds-quote cite::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #00c638; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Curious Play, Epic Growth",
+    "overview": "The tagline is the design doctrine. Curious play is the saturated half: vivid green dots, the crystalline butterfly with its deliberately asymmetric wing, asymmetric badge corners, the console easter egg. Epic growth is the grown-up half: a single locked hue (137) at one system saturation (73%), AAA body text, full borders instead of decoration, one warm action per viewport. The audience is developers who smell hype instantly, so the system proves rather than claims: real pseudocode in heroes, visible arithmetic, contrast ratios computed live on the public reference page.",
+    "keyCharacteristics": [
+      "One green hue (137) in five locked steps; one orange accent, one per viewport",
+      "Slab-serif display warmth over geometric sans body",
+      "Flat surfaces, full borders, tint fills; shadows only as state response",
+      "Light mode only; dark sections are emphasis, never a theme",
+      "WCAG AA minimum, enforced in CI; AAA for body text",
+      "The crystalline butterfly mark is locked geometry, never recolored or re-faceted"
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Exactly one accent-colored element per viewport: a CTA button OR an urgency badge OR an accent dot, never two. The mobile sticky CTA yields whenever another primary action is on screen. No accent hover variants.", "section": "colors" },
+      { "name": "The 73% Rule", "body": "Every green except vivid shares S=73%. Vivid's S=100% is the lone decorative exception. New colors do not enter the system.", "section": "colors" },
+      { "name": "The Vivid Text Ban", "body": "#00c638 is never text on a light background (2.5:1). Always name tokens explicitly; the --green alias is retired.", "section": "colors" },
+      { "name": "The Two-Tier Green Rule", "body": "Headings and links get Brand Green (AA); body text needing green gets Deep Green (AAA). Highlights: Brand Green on light, Vivid Green on dark.", "section": "colors" },
+      { "name": "The Line-Height Trap Rule", "body": "Body's 1.7 line-height leaks into compact components by inheritance. Every compact component must set line-height: normal.", "section": "typography" },
+      { "name": "The Highlight Rule", "body": ".highlight is Brand Green on light and Vivid Green inside .on-dark. Never Deep Green: it disappears at heading sizes.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "If a resting element needs separation, give it a border or a tint, not a shadow. Shadows are state (hover, floating) or the one featured exception per page.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Brand Green (#137b30) for text on light and Deep Green (#0d5822) when body text needs AAA.",
+      "Do keep exactly one accent element per viewport; let the sticky CTA yield.",
+      "Do use asymmetric grids (1.4fr/0.6fr) and rhythm: tight groupings, generous separations.",
+      "Do set line-height: normal on every compact component.",
+      "Do give every animation a prefers-reduced-motion alternative.",
+      "Do copy the butterfly SVG verbatim from /design-system Section 8; the geometry is locked.",
+      "Do prove instead of claim in copy: numbers, pseudocode, shipped work."
+    ],
+    "donts": [
+      "Don't use Vivid Green (#00c638) as text on light backgrounds; it fails AA at 2.5:1.",
+      "Don't reintroduce the sci-fi mech era: no cyan, neon, glow effects, glassmorphism, or gradient text.",
+      "Don't use border-left or border-right thicker than 1px as a colored accent stripe.",
+      "Don't pair a 1px border with a wide soft shadow on a resting element (the ghost-card tell).",
+      "Don't add hero-metric stat-card templates, centered-everything desktop layouts, or all-caps headings (mono labels and trust bar excepted).",
+      "Don't use em-dashes in customer-facing copy.",
+      "Don't invent new colors, accent hover variants, or a dark theme; dark sections are emphasis, not a toggle.",
+      "Don't recolor, re-facet, mirror, or add effects to the butterfly mark.",
+      "Don't ship AI-slop aesthetics: if it could be any AI startup's template, it is wrong."
+    ]
+  }
+}
