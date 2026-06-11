@@ -12,10 +12,13 @@ Plepic is a static marketing website for an Estonian tech training company. The 
 
 ```
 index.html              # Homepage
-agent/index.html        # What is an AI Agent? (educational)
+claude-code/index.html  # Claude Code in Estonia (educational + track record)
 training/index.html     # Training program details & enrollment
+scopeful/index.html     # Scopeful product page
 css/styles.css          # Single stylesheet — production + design system (source of truth)
 design-system.html      # Visual reference page (loads css/styles.css)
+DESIGN.md               # Machine-readable design canon (tokens + named rules)
+PRODUCT.md              # Strategic design context (register, users, anti-references)
 images/                 # All static assets (logos, photos)
 docs/                   # Design documents and one-pagers
 ```
@@ -46,7 +49,16 @@ docs/                   # Design documents and one-pagers
 
 **Deployment:** GitHub Pages from `main` branch. Merge PR = deploy. Custom domain: plepic.com
 
-**Design system (single source of truth):** `design-system.html` is the canonical reference; `css/styles.css` holds all tokens, base styles, and components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.code-block-*`, `.label`, `.link`, `.logo-*`, `.highlight`, `.on-dark`, etc.). `design-system.html` Section 1 is the brand foundation (tagline, pillars, voice); Sections 2-9 cover palette, neutrals, type, spacing, components, hero, logo, and rules. The palette and butterfly mark are locked. **Read those two files before changing any color, font, or spacing value. Do not cite hex from memory.**
+**Design system (single source of truth):** The Plepic Design System is the DEFAULT for every visual created in this repo; never invent off-system colors, fonts, or components. Canon lives in three layers, kept in sync:
+- `design-system.html` — the public, human-readable reference (Sections 1-10: brand foundation, palette, neutrals, type, spacing, components, heroes, logo, rules, production component specimens). Live at plepic.com/design-system.
+- `DESIGN.md` — the machine-readable canon: token frontmatter + named rules (One Accent, 73%, Vivid Text Ban, Two-Tier Green, Green Payload, Line-Height Trap, Flat-By-Default). Read this FIRST for any design task.
+- `css/styles.css` — the implementation: all tokens, base styles, and components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.label`, `.highlight`, `.on-dark`, etc.).
+
+The palette, butterfly mark, and type stack are locked. **Read DESIGN.md + design-system.html before changing any color, font, or spacing value. Do not cite hex from memory.**
+
+**Design guard (machine enforcement):** `tests/design-guard.spec.ts` fails the suite on rule violations (side stripes, em-dashes in copy, retired tokens, off-system colors, broken mark geometry, multi-highlight headings). When it fails, follow the named rule or change the rule in DESIGN.md first; never silence the test.
+
+**Design health loop:** critique snapshots + score trend live in `.impeccable/critique/` (slug `design-system-html`). `$impeccable polish` reads the latest snapshot as its backlog; re-run `$impeccable critique design-system.html` after meaningful design pushes.
 
 **Operational conventions (not derivable from the design system):**
 - Fonts loaded via `<link>` in HTML (not CSS @import) for faster discovery
