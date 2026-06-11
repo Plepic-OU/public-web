@@ -1227,6 +1227,15 @@ p:last-child {
   font-weight: 600;
 }
 
+/* Privacy link sits on the dark footer — brand green fails there (2.7:1).
+   Vivid green is the on-dark link color (7.4:1); underline distinguishes
+   it from surrounding text independent of color. */
+.footer-company-info a {
+  color: var(--green-vivid);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ========================================
    Sticky CTA (Mobile)
    ======================================== */
