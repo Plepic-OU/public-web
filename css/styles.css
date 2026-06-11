@@ -1645,6 +1645,39 @@ p:last-child {
   color: var(--text);
 }
 
+/* Closing CTA — the homepage's single dark section */
+.closing-section {
+  background: var(--dark);
+}
+
+.closing-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.closing-content h2 {
+  color: var(--text-on-dark);
+  margin-bottom: var(--space-lg);
+}
+
+.closing-content > p {
+  font-size: 1.05rem;
+  color: #a3a39a;
+  margin-bottom: var(--space-2xl);
+}
+
+.closing-alt {
+  margin-top: var(--space-xl);
+  font-size: 0.9rem;
+}
+
+.closing-alt a {
+  color: var(--green-vivid);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ========================================
    Scopeful Page
    ======================================== */
