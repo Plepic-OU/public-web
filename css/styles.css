@@ -3351,9 +3351,42 @@ p:last-child {
   justify-content: flex-end;
   gap: 0.1rem;
 }
-.ds-sw-name { font-family: var(--font-mono); font-size: 0.5rem;  font-weight: 700; text-transform: uppercase; }
-.ds-sw-hex  { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; }
-.ds-sw-meta { font-family: var(--font-mono); font-size: 0.48rem; opacity: 0.65; }
+.ds-sw-name { font-family: var(--font-mono); font-size: 0.7rem;  font-weight: 700; text-transform: uppercase; }
+.ds-sw-hex  { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; }
+.ds-sw-meta { font-family: var(--font-mono); font-size: 0.7rem; opacity: 0.85; }
+
+/* Jump nav — sticky TOC for the (long) reference page */
+.ds-toc {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  padding: 0.6rem 0;
+  margin-bottom: var(--space-lg);
+  background: rgba(250, 247, 242, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.ds-toc a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--green-brand);
+  text-decoration: none;
+  padding: 0.35rem 0;
+}
+
+.ds-toc a:hover {
+  color: var(--green-dark);
+  text-decoration: underline;
+}
 
 .ds-token-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 .ds-token-table th {
