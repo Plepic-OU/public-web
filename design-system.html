@@ -21,11 +21,25 @@
     <p>Locked palette, typography, and component reference. Single source of truth. Interactive specimens with live contrast calculations.</p>
   </div>
 
+  <!-- Jump nav -->
+  <nav class="ds-toc" aria-label="Sections">
+    <a href="#s1">Brand</a>
+    <a href="#s2">Color</a>
+    <a href="#s3">Neutrals</a>
+    <a href="#s4">Type</a>
+    <a href="#s5">Spacing</a>
+    <a href="#s6">Components</a>
+    <a href="#s7">Heroes</a>
+    <a href="#s8">Logo</a>
+    <a href="#s9">Rules</a>
+    <a href="#s10">Production</a>
+  </nav>
+
   <!-- ============================================ -->
   <!-- 1. BRAND FOUNDATION -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">1 — Brand Foundation</div>
+    <div class="ds-section-label" id="s1">1 — Brand Foundation</div>
 
     <div class="ds-note">
       <strong>The system exists to express this.</strong> Brand first, pixels second: every token, type
@@ -84,7 +98,7 @@
   <!-- 2. COLOR PALETTE -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">2 — Color Palette <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label" id="s2">2 — Color Palette <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
       <strong>Strategy:</strong> Single hue (137°) for all greens. Saturation at 73% everywhere except vivid (100%). Accent at hue 15° with saturation matched to brand (73%). Simple rule: <em>73% is the system saturation, 100% is the decorative exception.</em>
@@ -160,7 +174,7 @@
   <!-- 3. NEUTRALS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">3 — Neutrals <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label" id="s3">3 — Neutrals <span class="ds-locked">Locked</span></div>
 
     <div class="ds-swatch-strip">
       <div class="ds-sw" style="background: var(--bg); border: 1px solid var(--border);">
@@ -205,7 +219,7 @@
   <!-- 4. TYPOGRAPHY -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">4 — Typography <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label" id="s4">4 — Typography <span class="ds-locked">Locked</span></div>
 
     <div class="ds-grid-3">
       <div class="panel panel-white">
@@ -293,7 +307,7 @@
   <!-- 5. SPACING -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">5 — Spacing</div>
+    <div class="ds-section-label" id="s5">5 — Spacing</div>
 
     <div class="ds-spacing-row">
       <div class="ds-spacing-item">
@@ -339,7 +353,7 @@
   <!-- 6. COMPONENTS — Light -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">6 — Components</div>
+    <div class="ds-section-label" id="s6">6 — Components</div>
 
     <!-- Button system specimen -->
     <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
@@ -522,7 +536,7 @@
   <!-- 7. HERO COMPOSITIONS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">7 — Hero Compositions</div>
+    <div class="ds-section-label" id="s7">7 — Hero Compositions</div>
 
     <div class="ds-note">
       Accent appears once per viewport — in the hero body CTA. Nav CTA uses green outline. No urgency badges when the CTA is visible.
@@ -539,7 +553,7 @@
   <!-- 8. LOGO & WORDMARK -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">8 — Logo & Wordmark <span class="ds-locked">Locked</span></div>
+    <div class="ds-section-label" id="s8">8 — Logo & Wordmark <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
       <strong>Crystalline butterfly with leaf body, locked 2026-04-07.</strong> Wordmark left, butterfly right;
@@ -716,7 +730,7 @@
   <!-- 9. RULES & ANTI-PATTERNS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label">9 — Rules & Anti-Patterns</div>
+    <div class="ds-section-label" id="s9">9 — Rules & Anti-Patterns</div>
 
     <div class="ds-grid-2">
       <div class="panel panel-white">
@@ -745,6 +759,196 @@
           <li>No AI slop aesthetics (2024-2025 generic look)</li>
           <li>No #8a8a80 as readable text — use --text-3 (#6b6b60) minimum</li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 10. PRODUCTION COMPONENTS -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label" id="s10">10 — Production Components</div>
+
+    <div class="ds-note">
+      Live specimens of components the production pages actually run, rendered from the same
+      <code>css/styles.css</code> classes. Machine-readable specs live in <code>DESIGN.md</code>
+      and <code>.impeccable/design.json</code>.
+    </div>
+
+    <!-- Pull quote -->
+    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Pull Quote — <code>.perspective-shift-quote</code> / <code>.reflection-story</code></div>
+      <blockquote class="perspective-shift-quote">
+        <p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p>
+        <cite>Kaido Koort</cite>
+      </blockquote>
+    </div>
+
+    <!-- Big stats -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Big Stats — <code>.hackathon-stats</code> &middot; <code>.big-stat</code></div>
+      <div class="hackathon-stats">
+        <div class="big-stat">
+          <div class="big-stat-value">8.7</div>
+          <div class="big-stat-label">Avg. Training Score</div>
+        </div>
+        <div class="big-stat">
+          <div class="big-stat-value">300+</div>
+          <div class="big-stat-label">Developers Trained</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison cards -->
+    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Comparison Cards — <code>.shift-col</code> &middot; <code>.shift-col--agent</code> (tinted favorite)</div>
+      <div class="perspective-shift-comparison">
+        <div class="shift-col shift-col--agent">
+          <h3 class="text-agent">Agent</h3>
+          <p>LLM + Tools + Loop + Context</p>
+          <div class="code-snippet"><code>while(task) { think &rarr; act &rarr; observe }</code></div>
+        </div>
+        <div class="shift-col shift-col--conversational">
+          <h3 class="text-conversational">Conversational AI</h3>
+          <p>Single prompt, single response</p>
+          <div class="code-snippet code-snippet--orange"><code>prompt &rarr; response &rarr; done</code></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow steps -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Flow Steps — <code>.flow</code> &middot; <code>.flow-step</code> (numbers earn their place: a real sequence)</div>
+      <div class="flow">
+        <div class="flow-step">
+          <span class="flow-step-num">01</span>
+          <h3>Project brief</h3>
+          <p>An RFP or a rough description. Whatever the client sends.</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">&rarr;</div>
+        <div class="flow-step">
+          <span class="flow-step-num">02</span>
+          <h3>Measure cost + value</h3>
+          <p>Agents attempt the real work; we quantify the value.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Timeline — <code>.timeline</code> &middot; <code>.timeline-item</code></div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Feb 2025</div>
+          <div class="timeline-content">
+            <p>Anthropic ships Claude Code. We adopt it immediately for our own product work.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Late 2025</div>
+          <div class="timeline-content">
+            <p>First hackathons: real projects, real codebases, real results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ accordion -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">FAQ Accordion — <code>.faq-list</code> &middot; <code>.faq-group-title</code> &middot; <code>.faq-item</code></div>
+      <div class="faq-list">
+        <h3 class="faq-group-title">The program</h3>
+        <details class="faq-item">
+          <summary>How long does the training program take?</summary>
+          <div class="faq-answer">
+            <p>The training runs over six Fridays, each a full day via Google Meet.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a certificate at the end?</summary>
+          <div class="faq-answer">
+            <p>Yes. Participants receive a Plepic Certificate of Completion in Agentic Development.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Pricing pair -->
+    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Pricing Pair — <code>.pricing-cards</code> &middot; <code>.pricing-card-featured</code> (one featured glow per page)</div>
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <div class="pricing-card-header">
+            <span class="pricing-tier">Standard</span>
+          </div>
+          <div class="pricing-card-price">&euro;2,520</div>
+          <p class="pricing-card-note">+VAT per developer</p>
+          <ul class="pricing-card-features">
+            <li>For development teams across Europe</li>
+            <li>Full 6-session program</li>
+          </ul>
+          <a href="#" class="btn btn-outline btn-lg">Reserve Your Spot</a>
+        </div>
+        <div class="pricing-card pricing-card-featured">
+          <div class="pricing-card-header">
+            <span class="pricing-tier">&#x1F1EA;&#x1F1EA; Estonian Subsidy</span>
+          </div>
+          <div class="pricing-card-price">&euro;504</div>
+          <p class="pricing-card-note">+VAT per developer</p>
+          <ul class="pricing-card-features">
+            <li>T&ouml;&ouml;tukassa subsidy covers 80%</li>
+            <li>Same full program</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-lg">Reserve Your Spot</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team card -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment)</div>
+      <article class="team-card" style="max-width: 520px;">
+        <div class="team-photo">
+          <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
+        </div>
+        <div class="team-info">
+          <h3>Joosep Simm</h3>
+          <p class="team-role">Developer, Architect &amp; AI Trainer</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Sticky CTA (static specimen) -->
+    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Mobile Sticky CTA — <code>.sticky-cta</code> (yields when any other primary CTA is on screen)</div>
+      <div class="sticky-cta visible" style="position: static; transform: none; display: block; max-width: 420px; border-radius: 10px; border: 1px solid var(--border);">
+        <a href="#" class="btn btn-primary">View Full Program</a>
+      </div>
+    </div>
+
+    <!-- Footer specimen -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Footer — <code>.footer-nav</code> &middot; <code>.footer-links</code> &middot; <code>.footer-company-info</code></div>
+      <div style="border-radius: 10px; overflow: hidden;">
+        <footer class="footer">
+          <div class="container">
+            <nav class="footer-nav" aria-label="Footer specimen">
+              <a href="#">Claude Code</a>
+              <a href="#">Training</a>
+              <a href="#">Scopeful</a>
+            </nav>
+            <div class="footer-inner">
+              <div class="footer-links">
+                <a href="#">LinkedIn</a>
+                <a href="#">kaido@plepic.com</a>
+              </div>
+              <div class="footer-company-info">
+                <strong>Plepic <span lang="et">O&Uuml;</span></strong> &middot; Reg. code 11275881<br>
+                &copy; 2026 Plepic &middot; <a href="#">Privacy</a>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   </div>
