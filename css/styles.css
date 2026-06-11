@@ -294,6 +294,14 @@ p:last-child {
   color: var(--text);
 }
 
+/* Current page — color + underline so the state isn't conveyed by color alone */
+.nav a[aria-current="page"] {
+  color: var(--green-brand);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+}
+
 /* External nav links (e.g. Skill Tree → skill.plepic.com) get an outbound affordance */
 .nav a[target="_blank"]:not(.nav-cta)::after {
   content: "\2197"; /* ↗ */
@@ -2441,6 +2449,7 @@ p:last-child {
   min-width: 56px;
   border-radius: 50%;
   object-fit: cover;
+  filter: grayscale(100%);
 }
 
 .team-member-info {
@@ -3048,6 +3057,12 @@ p:last-child {
 
 .faq-item summary::-webkit-details-marker {
   display: none;
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--green-vivid);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .faq-item summary::after {
