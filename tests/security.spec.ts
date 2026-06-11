@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
 
+// frame-src is per-page: claude-code embeds the webinar video from
+// youtube-nocookie.com; every other page locks frames out entirely.
 const pages = [
-  { name: 'homepage', path: '/' },
-  { name: 'claude-code', path: '/claude-code/' },
-  { name: 'training', path: '/training/' },
+  { name: 'homepage', path: '/', frameSrc: "frame-src 'none'" },
+  { name: 'claude-code', path: '/claude-code/', frameSrc: 'frame-src https://www.youtube-nocookie.com' },
+  { name: 'training', path: '/training/', frameSrc: "frame-src 'none'" },
 ];
 
 const expectedCSPDirectives = [
@@ -13,7 +15,6 @@ const expectedCSPDirectives = [
   "font-src 'self'",
   "img-src 'self'",
   "connect-src 'self'",
-  "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",
@@ -32,6 +33,7 @@ for (const page of pages) {
     for (const directive of expectedCSPDirectives) {
       expect(content).toContain(directive);
     }
+    expect(content).toContain(page.frameSrc);
   });
 
   test(`security headers - ${page.name} has referrer policy @security`, async ({ page: browserPage }) => {
