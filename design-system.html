@@ -286,11 +286,21 @@
       </div>
     </div>
 
-    <!-- Highlight rule note -->
+    <!-- The Green Payload Rule -->
     <div class="panel panel-white" style="margin-top: var(--space-md); max-width: 720px;">
-      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;">
-        <strong>Highlight rule:</strong> <code style="font-family: var(--font-mono); font-size: 0.8rem;">.highlight</code> uses <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-brand</code> on cream/white (5.03:1 AA) and <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-vivid</code> inside <code style="font-family: var(--font-mono); font-size: 0.8rem;">.on-dark</code> (7.42:1 AAA). <strong>Never use <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-dark</code> for highlights</strong> — it's reserved for body text and visually disappears at heading sizes (8.07:1 contrast vs 15.97:1 for body text is only a 2× difference, indistinguishable as a highlight).
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">The Green Payload Rule</h4>
+      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0 0 0.85rem;">
+        Headings are set in near-black ink (<code style="font-family: var(--font-mono); font-size: 0.8rem;">--text</code> #1c1c1a), with at most one green phrase marking
+        the <em>payload</em>: the word or phrase that carries the heading's claim ("value", "measure",
+        "LLM Loop", "your codebase"). The contrast between quiet ink and one green phrase is the
+        variety mechanism. Green is meaning, not decoration.
       </p>
+      <ul class="ds-rules">
+        <li><strong>One per heading, never two.</strong> A second green phrase splits the emphasis and kills both.</li>
+        <li><strong>No payload, no green.</strong> Plain headings ("Your Instructors", "Training Program") stay all-ink. Roughly a third of section headings should stay plain; the device works because it is not everywhere.</li>
+        <li><strong>1&ndash;3 words.</strong> Longer runs read as coloring, not emphasis. One exception: a definition heading may highlight the whole definition when the definition IS the payload ("An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span>").</li>
+        <li><strong>Color mechanics:</strong> <code style="font-family: var(--font-mono); font-size: 0.8rem;">.highlight</code> is <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-brand</code> on cream/white (5.03:1 AA) and <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-vivid</code> inside <code style="font-family: var(--font-mono); font-size: 0.8rem;">.on-dark</code> (7.42:1 AAA). Never <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-dark</code>: reserved for body text, it visually disappears at heading sizes.</li>
+      </ul>
     </div>
 
     <!-- Line-height warning -->

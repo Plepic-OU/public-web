@@ -169,7 +169,7 @@ A single-hue green system on a warm cream canvas, with one split-complementary o
 
 ### Hierarchy
 - **Display** (700, clamp(3rem, 2.5rem + 3.5vw, 4.8rem), 1.05, -0.025em): hero headlines only.
-- **Headline** (700, clamp(1.5rem, 1.25rem + 2vw, 2.25rem), 1.15): section H2s, usually with one `.highlight` span in Brand Green.
+- **Headline** (700, clamp(1.5rem, 1.25rem + 2vw, 2.25rem), 1.15): section H2s, often carrying one green payload phrase (see the Green Payload Rule).
 - **Title** (700, clamp(1.15rem, 1rem + 0.5vw, 1.5rem), 1.15): H3/H4, card and panel headings.
 - **Body** (400, 1rem to 1.1rem, 1.7): paragraphs, capped at 65 to 75ch line length.
 - **Label** (600, 0.75rem, 0.12em tracking, uppercase, mono): the section kicker (`.label`), spec annotations, and trust-bar text. The only sanctioned uppercase.
@@ -177,7 +177,7 @@ A single-hue green system on a warm cream canvas, with one split-complementary o
 ### Named Rules
 **The Line-Height Trap Rule.** Body's 1.7 line-height leaks into compact components by inheritance. Every compact component (logo, nav links, badges, buttons, labels, code blocks) must set `line-height: normal`.
 
-**The Highlight Rule.** `.highlight` is Brand Green on light and Vivid Green inside `.on-dark`. Never Deep Green: it disappears at heading sizes.
+**The Green Payload Rule.** Headings are near-black ink with at most one green phrase marking the payload: the word or phrase carrying the heading's claim ("value", "measure", "LLM Loop", "your codebase"). No payload, no green: roughly a third of headings stay plain, and the device works because it is not everywhere. Keep the phrase to 1 to 3 words; the one exception is a definition heading, which may highlight the whole definition when the definition is the payload. Color mechanics: `.highlight` is Brand Green on light and Vivid Green inside `.on-dark`. Never Deep Green: it disappears at heading sizes.
 
 ## 4. Elevation
 

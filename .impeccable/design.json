@@ -142,7 +142,7 @@
       { "name": "The Vivid Text Ban", "body": "#00c638 is never text on a light background (2.5:1). Always name tokens explicitly; the --green alias is retired.", "section": "colors" },
       { "name": "The Two-Tier Green Rule", "body": "Headings and links get Brand Green (AA); body text needing green gets Deep Green (AAA). Highlights: Brand Green on light, Vivid Green on dark.", "section": "colors" },
       { "name": "The Line-Height Trap Rule", "body": "Body's 1.7 line-height leaks into compact components by inheritance. Every compact component must set line-height: normal.", "section": "typography" },
-      { "name": "The Highlight Rule", "body": ".highlight is Brand Green on light and Vivid Green inside .on-dark. Never Deep Green: it disappears at heading sizes.", "section": "typography" },
+      { "name": "The Green Payload Rule", "body": "Headings are near-black ink with at most one green phrase marking the payload: the word or phrase carrying the heading's claim (value, measure, LLM Loop, your codebase). No payload, no green: roughly a third of headings stay plain. Keep the phrase to 1-3 words; a definition heading may highlight the whole definition. Mechanics: .highlight is Brand Green on light, Vivid Green inside .on-dark, never Deep Green (disappears at heading sizes).", "section": "typography" },
       { "name": "The Flat-By-Default Rule", "body": "If a resting element needs separation, give it a border or a tint, not a shadow. Shadows are state (hover, floating) or the one featured exception per page.", "section": "elevation" }
     ],
     "dos": [
