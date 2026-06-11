@@ -1003,6 +1003,13 @@ p:last-child {
   transition: filter var(--transition-base);
 }
 
+.logo-row-more {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-3);
+  margin-top: var(--space-xl);
+}
+
 .company-logo:hover {
   filter: none;
 }
@@ -1038,7 +1045,7 @@ p:last-child {
 }
 
 .experience-badge svg {
-  color: var(--accent);
+  color: var(--green-vivid);
 }
 
 .team-grid {
