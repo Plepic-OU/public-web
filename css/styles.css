@@ -1202,6 +1202,14 @@ p:last-child {
   color: #fff;
 }
 
+/* External footer nav links (Skill Tree -> skill.plepic.com) get an outbound affordance */
+.footer-nav a[target="_blank"]::after {
+  content: "\2197"; /* ↗ */
+  margin-left: 0.2em;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
 .footer-inner {
   display: flex;
   align-items: center;
@@ -1723,6 +1731,40 @@ p:last-child {
   color: var(--green-vivid);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* ========================================
+   Skill Tree band (cross-property bridge -> skill.plepic.com)
+   Quiet Surface-Green band between the closing CTA and the footer. A
+   secondary path, so it uses the outline CTA, never the orange accent:
+   the closing section above owns the one accent per viewport.
+   ======================================== */
+.skilltree-band {
+  background: var(--green-surface);
+}
+
+.skilltree-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.skilltree-inner h2 {
+  margin-bottom: var(--space-md);
+}
+
+.skilltree-desc {
+  font-size: 1.05rem;
+  color: var(--text-2);
+  margin-bottom: var(--space-xl);
+}
+
+/* Outbound affordance, mirroring header external nav links. */
+.skilltree-cta::after {
+  content: "\2197"; /* ↗ */
+  margin-left: 0.15em;
+  font-size: 0.9em;
+  opacity: 0.7;
 }
 
 /* ========================================
