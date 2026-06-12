@@ -2411,8 +2411,6 @@ async function uploadToYoutube(
 
 async function prepareLinkedIn(
   videoFile: string,
-  metadata: VideoMetadata,
-  format: Format,
   duration: number,
   workDir: string
 ): Promise<string> {
@@ -2425,7 +2423,6 @@ async function prepareLinkedIn(
 
   if (process.env.LI_MOCK === "1") {
     fs.copyFileSync(videoFile, path.join(liDir, "video.mp4"));
-    fs.writeFileSync(path.join(liDir, "caption.txt"), buildLinkedInCaption(metadata, format));
     return liDir;
   }
 
@@ -2458,15 +2455,13 @@ async function prepareLinkedIn(
     fs.copyFileSync(videoFile, path.join(liDir, "video.mp4"));
   }
 
-  fs.writeFileSync(path.join(liDir, "caption.txt"), buildLinkedInCaption(metadata, format));
   fs.writeFileSync(
     path.join(liDir, "INSTRUCTIONS.txt"),
     [
       "Manual LinkedIn upload (pre-API-approval):",
       "1. Open LinkedIn, create a new post",
       "2. Upload video.mp4 (or video-teaser.mp4 if present)",
-      "3. Paste the contents of caption.txt as the post text",
-      "4. Publish",
+      "3. Write your own post copy and publish (captions are burned into the video)",
       "",
       "Once LinkedIn Developer Platform approval lands, prepareLinkedIn will POST to the API and skip this folder.",
     ].join("\n")
@@ -2474,15 +2469,6 @@ async function prepareLinkedIn(
 
   console.log(`prepareLinkedIn: ${liDir}`);
   return liDir;
-}
-
-function buildLinkedInCaption(metadata: VideoMetadata, format: Format): string {
-  const firstLine = metadata.description.split("\n")[0];
-  const ytTeaser =
-    format === "long"
-      ? "Full video on YouTube: https://www.youtube.com/@plepic-agentic"
-      : "";
-  return [firstLine, "", ytTeaser].filter(Boolean).join("\n").trim();
 }
 
 // ---------- plan file helpers ----------
@@ -2909,8 +2895,6 @@ async function main(): Promise<void> {
     // Phase: LinkedIn handoff
     const liPath = await prepareLinkedIn(
       editedFile,
-      metadata,
-      format,
       transcript.duration,
       workDir
     );
