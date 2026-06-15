@@ -28,14 +28,21 @@
       { "name": "accent-pulse", "value": "0 0 0 8px rgba(226, 108, 69, 0)", "purpose": "CTA heartbeat keyframe endpoint (from 0 0 0 0 rgba(226,108,69,0.3)), 3s loop." }
     ],
     "motion": [
-      { "name": "transition-fast", "value": "150ms ease", "purpose": "Hovers, color and filter state changes." },
-      { "name": "transition-base", "value": "300ms ease", "purpose": "Header border, sticky CTA slide, general transitions." },
-      { "name": "transition-smooth", "value": "300ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Ease-out-expo entrances and lifts." },
-      { "name": "hero-entrance", "value": "staggered fade+rise on .hero-entrance-1..n", "purpose": "The one choreographed moment per page." },
-      { "name": "reveal", "value": "scroll-triggered .visible class via IntersectionObserver", "purpose": "Section entrances; content must be visible without JS." },
-      { "name": "wing-breathe", "value": "wing-breathe-left/right keyframes, subtle rotate+scaleX", "purpose": "Butterfly idle life; decorative only." },
-      { "name": "badge-pulse", "value": "opacity 1 to 0.3, 2s ease-in-out infinite", "purpose": "Badge dot heartbeat." },
-      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) disables all of the above", "purpose": "Mandatory alternative; not optional." }
+      { "name": "dur-fast", "value": "150ms", "purpose": "State response: color, opacity." },
+      { "name": "dur-base", "value": "300ms", "purpose": "Default transition and hover lift." },
+      { "name": "dur-settle", "value": "550ms", "purpose": "Crystalline Assembly facet settle and wing flap." },
+      { "name": "dur-entrance", "value": "700ms", "purpose": "Hero choreography." },
+      { "name": "ease-settle", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Signature ease-out-expo: arrives fast, settles soft. Anything that lands." },
+      { "name": "ease-calm", "value": "ease-in-out", "purpose": "Perpetual idle loops: breathe, light-shift." },
+      { "name": "transition-fast / base / smooth", "value": "built on the duration + easing tokens above", "purpose": "Aliases; new motion reaches for a token, never a raw value." },
+      { "name": "crystalline-assembly", "value": "facet-settle keyframe, scale 0.5 to 1 + opacity, symmetric outward stagger 0.10-0.50s; head + tips pop last", "purpose": "Signature: the hero butterfly builds itself on load." },
+      { "name": "light-shift", "value": "facet-shift keyframe, brightness 1 to 1.14 to 1 over 7s, staggered wave", "purpose": "Light catching a crystal; brightness only, never a glow." },
+      { "name": "wing-breathe", "value": "wing-breathe-left/right, 2deg rotate + scaleX, 4s, starts after assembly", "purpose": "Butterfly perpetual idle." },
+      { "name": "hero-choreography", "value": "staggered fade+rise on .hero-entrance-1..5", "purpose": "The one choreographed text entrance per page." },
+      { "name": "scroll-reveal", "value": "scroll-triggered .visible via IntersectionObserver, fade + 16px rise", "purpose": "Section entrances; content visible without JS." },
+      { "name": "hover-lift", "value": "translateY(-3px) + hover-lift shadow", "purpose": "Interactive cards only; the one resting-to-hover depth change." },
+      { "name": "accent-pulse", "value": "btn-pulse, 3s heartbeat ring", "purpose": "The one warm action per viewport." },
+      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) lands every animation on its static end state", "purpose": "Mandatory; reduced motion is still, not degraded." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "600px" },

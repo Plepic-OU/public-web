@@ -33,6 +33,7 @@
     <a href="#s8">Logo</a>
     <a href="#s9">Rules</a>
     <a href="#s10">Production</a>
+    <a href="#s11">Motion</a>
   </nav>
 
   <!-- ============================================ -->
@@ -694,7 +695,8 @@
         Grab-and-go files of the mark, exported from the locked geometry above. Use the
         <strong>SVG</strong> for web, print, and anywhere scalable; use the transparent
         <strong>PNG</strong> (1200&times;1120) for raster contexts like slide decks, social, and email signatures.
-        Do not recolour, re-facet, or apply effects — the geometry and palette are locked.
+        Do not recolour, re-facet, or apply static effects to the mark; the geometry and palette are
+        locked. Choreographed motion that resolves to the locked mark is the one exception (see Motion, Section 11).
       </p>
       <div style="display:flex; gap:2rem; align-items:center; flex-wrap:wrap;">
         <div style="padding:1.25rem 1.75rem; background:var(--bg); border-radius:10px;">
@@ -964,7 +966,94 @@
     </div>
   </div>
 
+  <!-- ============================================ -->
+  <!-- 11. MOTION -->
+  <!-- ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-label" id="s11">11 — Motion</div>
+
+    <div class="ds-note">
+      <strong>The moving half of "Curious Play."</strong> A flat, restrained system earns its life
+      through choreography, not decoration. Nothing pulses for attention; the things that move do so
+      with intent and one shared character. The signature is a single easing curve and the crystalline
+      assembly of the mark. Every animation lands on its static end state under reduced motion.
+    </div>
+
+    <!-- Signature moment: live crystalline assembly -->
+    <div class="panel panel-cream" style="padding: var(--space-2xl); text-align: center;">
+      <div class="panel-label" style="justify-content: center;">The Signature Moment</div>
+      <h3 style="font-size: 1.25rem; margin: 0.4rem 0 0.25rem;">Crystalline <span class="highlight">Assembly</span></h3>
+      <div id="motionDemo" style="width: 200px; height: 187px; margin: 1.25rem auto 1rem;"><svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="wing-left"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><g class="wing-right"><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></div>
+      <button id="replayAssembly" class="btn btn-outline btn-sm" type="button">Replay assembly</button>
+      <p style="font-size: 0.85rem; color: var(--text-2); line-height: 1.65; max-width: 60ch; margin: 1rem auto 0;">
+        On load the hero butterfly builds itself: each facet scales up from its own centre and settles
+        into the locked mark, staggered symmetrically from the body outward, the ember head and vivid
+        antenna tips last. Then it breathes, with a slow light-shift travelling across the facets. The
+        geometry and colour never change; only motion is added.
+      </p>
+    </div>
+
+    <!-- Tokens: easing + duration -->
+    <div class="ds-grid-2" style="margin-top: var(--space-lg);">
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Easing</h4>
+        <ul class="ds-rules">
+          <li><strong><code>--ease-settle</code></strong> cubic-bezier(0.16, 1, 0.3, 1). The signature: arrives fast, settles soft. Anything that lands (assembly, entrances, lifts).</li>
+          <li><strong><code>--ease-calm</code></strong> ease-in-out. Anything that loops (wing-breathe, light-shift), so it reads as breathing, not as an event.</li>
+        </ul>
+      </div>
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Duration</h4>
+        <ul class="ds-rules">
+          <li><strong><code>--dur-fast</code></strong> 150ms. State response: colour, opacity.</li>
+          <li><strong><code>--dur-base</code></strong> 300ms. Default transition and hover lift.</li>
+          <li><strong><code>--dur-settle</code></strong> 550ms. Crystalline assembly facet settle, wing flap.</li>
+          <li><strong><code>--dur-entrance</code></strong> 700ms. Hero choreography.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Named patterns -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Named Patterns</h4>
+      <ul class="ds-rules">
+        <li><strong>Crystalline Assembly</strong> &mdash; the signature. Facets settle into the locked mark on load, symmetric outward stagger.</li>
+        <li><strong>Wing-Breathe</strong> &mdash; perpetual 2deg wing idle over 4s, starting after the assembly.</li>
+        <li><strong>Light-Shift</strong> &mdash; a 7s brightness wave across the facets; brightness only, never a glow.</li>
+        <li><strong>Hero Choreography</strong> &mdash; the hero text enters in five rise-and-fade steps.</li>
+        <li><strong>Scroll Reveal</strong> &mdash; content fades and rises 16px as it enters the viewport, once.</li>
+        <li><strong>Hover Lift</strong> &mdash; interactive cards rise 3px onto a soft shadow; the only resting-to-hover depth change.</li>
+        <li><strong>Accent Pulse</strong> &mdash; the one warm action per viewport carries a 3s heartbeat ring.</li>
+      </ul>
+    </div>
+
+    <!-- Named rules -->
+    <div class="ds-grid-2" style="margin-top: var(--space-lg);">
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Mark-Motion Rule</h4>
+        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked mark is sanctioned and is the system's signature. Static effects on the mark (glow, gradient, drop-shadow, opacity-dimmed or outline-only wings) stay banned. Motion animates the mark; it never restyles it.</p>
+      </div>
+      <div class="panel panel-white">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Reduced-Motion Rule</h4>
+        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">Every animation has a prefers-reduced-motion branch that lands on the static end state instantly: the assembled mark, the entered hero, the revealed code. Reduced motion is never a degraded experience, only a still one. Shipping an animation without its reduced-motion branch is a defect, not a polish item.</p>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('replayAssembly');
+    var demo = document.getElementById('motionDemo');
+    if (!btn || !demo) return;
+    // Cloning and re-inserting the SVG restarts its CSS animations from frame 0.
+    btn.addEventListener('click', function () {
+      var svg = demo.querySelector('.butterfly-svg');
+      if (svg) demo.replaceChild(svg.cloneNode(true), svg);
+    });
+  })();
+</script>
 
 <script>
   // ── Contrast utilities ──
