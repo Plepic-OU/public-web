@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-21",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-21",
+    "end": "2026-05-21"
+  },
+  "summary": {
+    "sessions": 4,
+    "users": 4,
+    "new_users": 3,
+    "page_views": 5,
+    "avg_session_duration": 449.21869175,
+    "bounce_rate": 0.25,
+    "pages_per_session": 1.25
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 3,
+      "sessions": 3,
+      "bounce_rate": 0,
+      "avg_time_on_page": 598.0800056666667
+    },
+    {
+      "path": "/",
+      "page_views": 2,
+      "sessions": 2,
+      "bounce_rate": 0.5,
+      "avg_time_on_page": 1.317375
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 2
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(not set)",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 1
+    }
+  ],
+  "devices": {
+    "desktop": 25,
+    "mobile": 75,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Finland",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Japan",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 3,
+      "value": 150
+    }
+  ],
+  "total_conversion_value": 150
+}

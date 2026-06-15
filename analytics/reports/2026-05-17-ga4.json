@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-17",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-17",
+    "end": "2026-05-17"
+  },
+  "summary": {
+    "sessions": 4,
+    "users": 4,
+    "new_users": 3,
+    "page_views": 8,
+    "avg_session_duration": 42.6543965,
+    "bounce_rate": 0.5,
+    "pages_per_session": 2
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 4,
+      "sessions": 2,
+      "bounce_rate": 0,
+      "avg_time_on_page": 55.023607
+    },
+    {
+      "path": "/",
+      "page_views": 3,
+      "sessions": 3,
+      "bounce_rate": 0.6666666666666666,
+      "avg_time_on_page": 8.81112
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 34.137012
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 3,
+      "users": 3,
+      "conversions": 4
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(not set)",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 50,
+    "mobile": 25,
+    "tablet": 25
+  },
+  "countries": [
+    {
+      "country": "South Korea",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Estonia",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Italy",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 4,
+      "value": 200
+    }
+  ],
+  "total_conversion_value": 200
+}

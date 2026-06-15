@@ -1,0 +1,136 @@
+{
+  "date": "2026-05-11",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-11",
+    "end": "2026-05-11"
+  },
+  "summary": {
+    "sessions": 20,
+    "users": 18,
+    "new_users": 12,
+    "page_views": 34,
+    "avg_session_duration": 181.1444433,
+    "bounce_rate": 0.3,
+    "pages_per_session": 1.7
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 16,
+      "sessions": 14,
+      "bounce_rate": 0.42857142857142855,
+      "avg_time_on_page": 68.28181557142857
+    },
+    {
+      "path": "/training/",
+      "page_views": 16,
+      "sessions": 11,
+      "bounce_rate": 0,
+      "avg_time_on_page": 240.41037599999999
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 2,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 22.429312
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 10,
+      "users": 9,
+      "conversions": 9
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 3,
+      "users": 3,
+      "conversions": 4
+    },
+    {
+      "source": "linkedin.com",
+      "medium": "referral",
+      "sessions": 3,
+      "users": 2,
+      "conversions": 1
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    },
+    {
+      "source": "gemini.google.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    },
+    {
+      "source": "github.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 3
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 1
+    }
+  ],
+  "devices": {
+    "desktop": 70,
+    "mobile": 30,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 14,
+      "users": 12
+    },
+    {
+      "country": "South Korea",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "United States",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Canada",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Germany",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 16,
+      "value": 800
+    },
+    {
+      "event_name": "calendar_click",
+      "count": 2,
+      "value": 100
+    }
+  ],
+  "total_conversion_value": 900
+}

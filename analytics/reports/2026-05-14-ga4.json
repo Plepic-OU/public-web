@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-14",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-14",
+    "end": "2026-05-14"
+  },
+  "summary": {
+    "sessions": 8,
+    "users": 8,
+    "new_users": 6,
+    "page_views": 16,
+    "avg_session_duration": 459.379243375,
+    "bounce_rate": 0,
+    "pages_per_session": 2
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 12,
+      "sessions": 6,
+      "bounce_rate": 0,
+      "avg_time_on_page": 373.85210266666667
+    },
+    {
+      "path": "/training/",
+      "page_views": 4,
+      "sessions": 4,
+      "bounce_rate": 0,
+      "avg_time_on_page": 357.98033275
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 4,
+      "users": 4,
+      "conversions": 2
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 3,
+      "users": 3,
+      "conversions": 1
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 1
+    }
+  ],
+  "devices": {
+    "desktop": 100,
+    "mobile": 0,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 6,
+      "users": 6
+    },
+    {
+      "country": "(not set)",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Finland",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 4,
+      "value": 200
+    }
+  ],
+  "total_conversion_value": 200
+}

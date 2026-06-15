@@ -1,0 +1,107 @@
+{
+  "date": "2026-05-23",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-23",
+    "end": "2026-05-23"
+  },
+  "summary": {
+    "sessions": 9,
+    "users": 9,
+    "new_users": 8,
+    "page_views": 13,
+    "avg_session_duration": 87.42885088888889,
+    "bounce_rate": 0.6666666666666666,
+    "pages_per_session": 1.4444444444444444
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 6,
+      "sessions": 5,
+      "bounce_rate": 0.8,
+      "avg_time_on_page": 98.5656844
+    },
+    {
+      "path": "/training/",
+      "page_views": 4,
+      "sessions": 3,
+      "bounce_rate": 0,
+      "avg_time_on_page": 85.40277266666668
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 2,
+      "sessions": 2,
+      "bounce_rate": 0.5,
+      "avg_time_on_page": 17.840065
+    },
+    {
+      "path": "/privacy/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 1,
+      "avg_time_on_page": 2.142788
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 5,
+      "users": 5,
+      "conversions": 2
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(not set)",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 0
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    },
+    {
+      "source": "youtube.com",
+      "medium": "referral",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 2
+    }
+  ],
+  "devices": {
+    "desktop": 44,
+    "mobile": 33,
+    "tablet": 11
+  },
+  "countries": [
+    {
+      "country": "United States",
+      "sessions": 6,
+      "users": 6
+    },
+    {
+      "country": "Estonia",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Japan",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 4,
+      "value": 200
+    }
+  ],
+  "total_conversion_value": 200
+}

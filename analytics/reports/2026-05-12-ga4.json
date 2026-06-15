@@ -1,0 +1,81 @@
+{
+  "date": "2026-05-12",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-12",
+    "end": "2026-05-12"
+  },
+  "summary": {
+    "sessions": 10,
+    "users": 9,
+    "new_users": 7,
+    "page_views": 16,
+    "avg_session_duration": 173.0280521,
+    "bounce_rate": 0.3,
+    "pages_per_session": 1.6
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 8,
+      "sessions": 7,
+      "bounce_rate": 0.2857142857142857,
+      "avg_time_on_page": 228.956531
+    },
+    {
+      "path": "/",
+      "page_views": 7,
+      "sessions": 6,
+      "bounce_rate": 0.16666666666666666,
+      "avg_time_on_page": 20.986510666666668
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 1.66574
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 8,
+      "users": 7,
+      "conversions": 7
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 1
+    }
+  ],
+  "devices": {
+    "desktop": 90,
+    "mobile": 10,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 9,
+      "users": 8
+    },
+    {
+      "country": "Lithuania",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 8,
+      "value": 400
+    }
+  ],
+  "total_conversion_value": 400
+}
