@@ -54,10 +54,18 @@
   --max-width: 1120px;
   --header-height: 64px;
 
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-base: 300ms ease;
-  --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Motion — durations + the signature easing. See DESIGN.md Section 5. */
+  --dur-fast: 150ms;          /* state response: color, opacity */
+  --dur-base: 300ms;          /* default transition + hover lift */
+  --dur-settle: 550ms;        /* crystalline assembly, wing flap */
+  --dur-entrance: 700ms;      /* hero choreography */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);  /* signature ease-out-expo: arrives fast, settles soft */
+  --ease-calm: ease-in-out;   /* perpetual idle loops (breathe, shimmer) */
+
+  /* Transitions (built on the motion tokens above) */
+  --transition-fast: var(--dur-fast) ease;
+  --transition-base: var(--dur-base) ease;
+  --transition-smooth: var(--dur-base) var(--ease-settle);
 }
 
 /* ========================================
@@ -673,10 +681,15 @@ p:last-child {
   z-index: -1;
 }
 
+/* ── Hero butterfly: the crystalline mark, brought to life ──
+   Resting state is the locked mark at full presence (no opacity-dimmed wings).
+   On load it performs the Crystalline Assembly, then breathes perpetually with
+   a slow light-shift across the facets. Every layer collapses to the static
+   mark under prefers-reduced-motion. See DESIGN.md Section 5 (Motion). */
 .butterfly-svg {
   width: 100%;
   height: 100%;
-  opacity: 0.28;
+  opacity: 1;
 }
 
 .hero-visual { transform: translateY(0.75rem); }
@@ -690,18 +703,74 @@ p:last-child {
   padding: 0.5rem 0;
   white-space: nowrap;
   margin-top: -1.5rem;
-  opacity: 0.6;
+  opacity: 0;
+  animation: code-reveal var(--dur-base) var(--ease-settle) 0.95s forwards;
 }
 
-/* Butterfly idle breathing animation */
+@keyframes code-reveal { to { opacity: 0.6; } }
+
+/* Crystalline Assembly — each facet scales up from its own centre and settles.
+   The stagger is symmetric: both wings' Nth facet arrive together, building
+   outward from the body, so the mark crystallises rather than just fades in. */
+.butterfly-svg polygon {
+  opacity: 0;
+  transform: scale(0.5);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    facet-settle var(--dur-settle) var(--ease-settle) both,
+    facet-shift 7s var(--ease-calm) 1.4s infinite;
+}
+.butterfly-svg g polygon:nth-child(1)  { animation-delay: 0.10s, 1.40s; }
+.butterfly-svg g polygon:nth-child(2)  { animation-delay: 0.14s, 1.55s; }
+.butterfly-svg g polygon:nth-child(3)  { animation-delay: 0.18s, 1.70s; }
+.butterfly-svg g polygon:nth-child(4)  { animation-delay: 0.22s, 1.85s; }
+.butterfly-svg g polygon:nth-child(5)  { animation-delay: 0.26s, 2.00s; }
+.butterfly-svg g polygon:nth-child(6)  { animation-delay: 0.30s, 2.15s; }
+.butterfly-svg g polygon:nth-child(7)  { animation-delay: 0.34s, 2.30s; }
+.butterfly-svg g polygon:nth-child(8)  { animation-delay: 0.38s, 2.45s; }
+.butterfly-svg g polygon:nth-child(9)  { animation-delay: 0.42s, 2.60s; }
+.butterfly-svg g polygon:nth-child(10) { animation-delay: 0.46s, 2.75s; }
+.butterfly-svg g polygon:nth-child(11) { animation-delay: 0.50s, 2.90s; }
+
+/* Body + antennae settle early; the ember head and vivid antenna tips pop in
+   as the final beat. */
+.butterfly-svg > path {
+  opacity: 0;
+  animation: facet-fade var(--dur-settle) var(--ease-settle) 0.18s both;
+}
+.butterfly-svg > circle {
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: facet-pop var(--dur-base) var(--ease-settle) 0.62s both;
+}
+
+@keyframes facet-settle { to { opacity: 1; transform: scale(1); } }
+
+@keyframes facet-fade { to { opacity: 1; } }
+
+@keyframes facet-pop { to { opacity: 1; transform: scale(1); } }
+
+/* Light-shift — a slow brightness wave travelling outward across the facets.
+   Brightness only, no blur or added colour, so it reads as light catching a
+   crystal, not a glow (Flat-By-Default holds). */
+@keyframes facet-shift {
+  0%, 70%, 100% { filter: brightness(1); }
+  35% { filter: brightness(1.14); }
+}
+
+/* Wing-breathe — the perpetual idle, on the wing groups. Starts after the
+   assembly so the two motions never compete. */
 .butterfly-svg .wing-left {
   transform-origin: 150px 140px;
-  animation: wing-breathe-left 4s ease-in-out infinite;
+  animation: wing-breathe-left 4s var(--ease-calm) 0.7s infinite;
 }
 
 .butterfly-svg .wing-right {
   transform-origin: 150px 140px;
-  animation: wing-breathe-right 4s ease-in-out infinite;
+  animation: wing-breathe-right 4s var(--ease-calm) 0.7s infinite;
 }
 
 @keyframes wing-breathe-left {
@@ -712,6 +781,20 @@ p:last-child {
 @keyframes wing-breathe-right {
   0%, 100% { transform: rotate(0deg) scaleX(1); }
   50% { transform: rotate(2deg) scaleX(0.97); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .butterfly-svg polygon,
+  .butterfly-svg > path,
+  .butterfly-svg > circle,
+  .butterfly-svg .wing-left,
+  .butterfly-svg .wing-right {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+  .hero-code { opacity: 0.6; animation: none; }
 }
 
 .butterfly-container:hover .wing-left {

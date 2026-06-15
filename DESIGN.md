@@ -66,6 +66,23 @@ spacing:
   2xl: "48px"
   3xl: "64px"
   4xl: "96px"
+motion:
+  duration:
+    fast: "150ms"
+    base: "300ms"
+    settle: "550ms"
+    entrance: "700ms"
+  easing:
+    settle: "cubic-bezier(0.16, 1, 0.3, 1)"
+    calm: "ease-in-out"
+  patterns:
+    crystalline-assembly: "facets scale up from centre and settle into the locked mark on load; symmetric outward stagger; settle easing"
+    wing-breathe: "4s perpetual wing idle, +/-2deg rotate"
+    light-shift: "7s brightness-only wave across facets; light catching a crystal, never a glow"
+    hero-choreography: "five-step staggered hero entrance, rise + fade"
+    scroll-reveal: "intersection-triggered fade + 16px rise"
+    hover-lift: "translateY(-3px) + soft shadow, interactive cards only"
+    accent-pulse: "3s CTA heartbeat ring (the one accent)"
 components:
   button-primary:
     backgroundColor: "{colors.accent}"
@@ -193,7 +210,28 @@ Flat by default. Surfaces are flat at rest; structure comes from 1px or 1.5px fu
 ### Named Rules
 **The Flat-By-Default Rule.** If a resting element needs separation, give it a border or a tint, not a shadow. Shadows are state (hover, floating) or the one featured exception.
 
-## 5. Components
+## 5. Motion
+
+Motion is the moving half of "Curious Play." A flat, restrained system earns its life through choreography, not decoration: nothing pulses for attention, but the things that move do so with intent and one shared character. The signature is a single easing curve, `cubic-bezier(0.16, 1, 0.3, 1)` (`--ease-settle`): motion arrives fast and settles soft, like a crystal locking into place. Perpetual idles use plain ease-in-out (`--ease-calm`) so they read as breathing, not as events.
+
+### Duration and Easing
+Four duration steps, all tokenized: 150ms (`--dur-fast`, state response: colour, opacity), 300ms (`--dur-base`, the default transition and hover lift), 550ms (`--dur-settle`, the crystalline assembly and wing flap), 700ms (`--dur-entrance`, the hero choreography). The three `--transition-*` aliases are built on these tokens. Two easings: `--ease-settle` for anything that arrives and lands, `--ease-calm` for anything that loops. New motion reaches for a token, never a raw value.
+
+### Named Patterns
+- **Crystalline Assembly** (signature): on load the hero butterfly builds itself. Each facet scales up from its own centre and settles into the locked mark, staggered symmetrically so both wings' Nth facet arrive together, building outward from the body; the ember head and vivid antenna tips pop last. About 1.3s on the settle curve. The mark crystallises rather than fades, making "crystalline precision in organic material" literal.
+- **Wing-Breathe**: the perpetual idle, a 2deg rotation on the wing groups over 4s, starting after the assembly so the two never compete.
+- **Light-Shift**: a slow brightness wave travelling outward across the facets every 7s, brightness only, no blur or added colour, so it reads as light catching a crystal.
+- **Hero Choreography**: the hero text enters in five rise-and-fade steps (badge, headline, subhead, CTA, qualifier).
+- **Scroll Reveal**: content fades and rises 16px as it enters the viewport, once.
+- **Hover Lift**: interactive cards rise 3px onto a soft shadow; the only resting-to-hover depth change (see Elevation).
+- **Accent Pulse**: the one warm action per viewport carries a 3s heartbeat ring.
+
+### Named Rules
+**The Mark-Motion Rule.** The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked static mark (Crystalline Assembly, Wing-Breathe, Light-Shift) is sanctioned and is the system's signature moment. It is distinct from the still-banned static effects on the mark: glow, gradient, drop-shadow, opacity-dimmed or outline-only wings. Motion animates the mark; it never restyles it.
+
+**The Reduced-Motion Rule.** Every animation has a `prefers-reduced-motion: reduce` branch that lands on the static end state instantly: the assembled mark, the entered hero, the revealed code. Reduced motion is never a degraded experience, only a still one. Shipping an animation without its reduced-motion branch is a defect, not a polish item.
+
+## 6. Components
 
 Calm and grounded: quiet bordered surfaces, one warm action, nothing shouts.
 
@@ -233,7 +271,7 @@ The site has no forms by design (conversion happens via external calendar and Go
 ### Sticky CTA (mobile)
 - Bottom-fixed frosted bar with a full-width primary button; appears only below 768px, and yields whenever the hero or any other primary CTA is on screen (the One Accent Rule, enforced in JS).
 
-## 6. Do's and Don'ts
+## 7. Do's and Don'ts
 
 ### Do:
 - **Do** use Brand Green (#137b30) for text on light and Deep Green (#0d5822) when body text needs AAA.
@@ -252,5 +290,5 @@ The site has no forms by design (conversion happens via external calendar and Go
 - **Don't** add hero-metric stat-card templates, centered-everything desktop layouts, or all-caps headings (mono labels and trust bar excepted).
 - **Don't** use em-dashes in customer-facing copy; periods, commas, colons.
 - **Don't** invent new colors, accent hover variants, or a dark theme; dark sections are emphasis, not a toggle.
-- **Don't** recolor, re-facet, mirror, or add effects to the butterfly mark; no opacity-based or outline-only wings.
+- **Don't** recolor, re-facet, mirror, or add static effects (glow, gradient, drop-shadow) to the butterfly mark, and never render the wings opacity-dimmed or outline-only at rest. Choreographed motion that resolves to the locked mark is the one sanctioned exception (Section 5, The Mark-Motion Rule).
 - **Don't** ship AI-slop aesthetics: if it could be any AI startup's template, it is wrong (PRODUCT.md, verbatim).
