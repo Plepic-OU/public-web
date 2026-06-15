@@ -682,14 +682,21 @@ p:last-child {
 }
 
 /* ── Hero butterfly: the crystalline mark, brought to life ──
-   Resting state is the locked mark at full presence (no opacity-dimmed wings).
-   On load it performs the Crystalline Assembly, then breathes perpetually with
-   a slow light-shift across the facets. Every layer collapses to the static
-   mark under prefers-reduced-motion. See DESIGN.md Section 5 (Motion). */
+   In the hero the locked mark sits as an ambient watermark (low group opacity,
+   solid facets); the logo lockup and the /design-system specimen render it at
+   full presence. On load it performs the Crystalline Assembly, then breathes
+   perpetually with a slow light-shift across the facets. Every layer collapses
+   to the static mark under prefers-reduced-motion. See DESIGN.md Section 5. */
 .butterfly-svg {
   width: 100%;
   height: 100%;
   opacity: 1;
+}
+
+/* Hero context: the mark is an ambient watermark, not the full logo lockup.
+   This is a low group opacity on the complete solid mark, not dimmed facets. */
+.hero-visual .butterfly-svg {
+  opacity: 0.28;
 }
 
 .hero-visual { transform: translateY(0.75rem); }

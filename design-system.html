@@ -725,7 +725,7 @@
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Anti-Patterns (rejected variants)</h4>
         <ul class="ds-rules">
-          <li><strong>No opacity-based wings</strong> — earlier prototypes used <code>fill="#00c638" opacity="0.19"</code> with brand-green strokes. Looked washed-out and required a coloured background to read. Solid fills only.</li>
+          <li><strong>Solid facet fills</strong> — never per-facet fill opacity. Earlier prototypes used <code>fill="#00c638" opacity="0.19"</code> with brand-green strokes; they looked washed-out and needed a coloured background. The complete solid mark may still be placed as an ambient watermark at a low group opacity (the hero; see Motion, Section 11): that is a background treatment of the whole mark, not a dimmed wing.</li>
           <li><strong>No outlined-only wings</strong> — pure stroke designs read as wireframe, not crystalline. Always filled triangles.</li>
           <li><strong>No mirrored geometry</strong> — perfectly symmetrical wings looked machine-generated. The slot-6 asymmetry is intentional and locked.</li>
           <li><strong>No gradient fills</strong> — the DK-B-V neighbour rule replaces gradients. Three flat colours create depth without rendering cost.</li>
@@ -989,7 +989,8 @@
         On load the hero butterfly builds itself: each facet scales up from its own centre and settles
         into the locked mark, staggered symmetrically from the body outward, the ember head and vivid
         antenna tips last. Then it breathes, with a slow light-shift travelling across the facets. The
-        geometry and colour never change; only motion is added.
+        geometry and colour never change; only motion is added. Shown here at full presence; in the
+        hero the same mark sits as an ambient watermark at low opacity.
       </p>
     </div>
 
@@ -1031,7 +1032,7 @@
     <div class="ds-grid-2" style="margin-top: var(--space-lg);">
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Mark-Motion Rule</h4>
-        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked mark is sanctioned and is the system's signature. Static effects on the mark (glow, gradient, drop-shadow, opacity-dimmed or outline-only wings) stay banned. Motion animates the mark; it never restyles it.</p>
+        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked mark is sanctioned and is the system's signature. Static effects on the mark (glow, gradient, drop-shadow, per-facet opacity or outline-only wings) stay banned; the hero ambient watermark is a placement of the whole solid mark, not an effect. Motion animates the mark; it never restyles it.</p>
       </div>
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Reduced-Motion Rule</h4>

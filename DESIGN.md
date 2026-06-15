@@ -290,5 +290,5 @@ The site has no forms by design (conversion happens via external calendar and Go
 - **Don't** add hero-metric stat-card templates, centered-everything desktop layouts, or all-caps headings (mono labels and trust bar excepted).
 - **Don't** use em-dashes in customer-facing copy; periods, commas, colons.
 - **Don't** invent new colors, accent hover variants, or a dark theme; dark sections are emphasis, not a toggle.
-- **Don't** recolor, re-facet, mirror, or add static effects (glow, gradient, drop-shadow) to the butterfly mark, and never render the wings opacity-dimmed or outline-only at rest. Choreographed motion that resolves to the locked mark is the one sanctioned exception (Section 5, The Mark-Motion Rule).
+- **Don't** recolor, re-facet, mirror, or add static effects (glow, gradient, drop-shadow) to the butterfly mark, and never give facets per-facet fill opacity or outline-only wings. Two placements are sanctioned: the complete solid mark as an ambient watermark at a low group opacity (the hero), and choreographed motion that resolves to the locked mark (Section 5, The Mark-Motion Rule).
 - **Don't** ship AI-slop aesthetics: if it could be any AI startup's template, it is wrong (PRODUCT.md, verbatim).
