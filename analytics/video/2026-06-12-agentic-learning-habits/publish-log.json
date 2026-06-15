@@ -1,0 +1,28 @@
+{
+  "slug": "agentic-learning-habits",
+  "format": "vlog",
+  "source_path": "/Users/kaidokoort/Documents/plepic-video/inbox/IMG_1225.MOV",
+  "started_at": "2026-06-12T05:43:16.552Z",
+  "phases_completed": [
+    "transcribe",
+    "edit",
+    "metadata",
+    "thumbnail",
+    "linkedin-prep"
+  ],
+  "youtube": {
+    "video_id": null,
+    "url": null,
+    "studio_url": null,
+    "upload_session_url": null,
+    "privacy": "public"
+  },
+  "linkedin": {
+    "assets_path": "/Users/kaidokoort/Documents/plepic-video/work/2026-06-12-img-1225/linkedin",
+    "post_url": null
+  },
+  "quota_units_used": 0,
+  "duration_seconds": 2052.263,
+  "errors": [],
+  "finished_at": "2026-06-12T06:17:28.815Z"
+}

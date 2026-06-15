@@ -1,0 +1,110 @@
+{
+  "date": "2026-05-15",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-15",
+    "end": "2026-05-15"
+  },
+  "summary": {
+    "sessions": 8,
+    "users": 8,
+    "new_users": 6,
+    "page_views": 8,
+    "avg_session_duration": 5.147724,
+    "bounce_rate": 0.375,
+    "pages_per_session": 1
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 4,
+      "sessions": 4,
+      "bounce_rate": 0,
+      "avg_time_on_page": 6.08754525
+    },
+    {
+      "path": "/",
+      "page_views": 2,
+      "sessions": 2,
+      "bounce_rate": 0.5,
+      "avg_time_on_page": 5.9159785
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 1,
+      "avg_time_on_page": 0
+    },
+    {
+      "path": "/privacy/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 1,
+      "avg_time_on_page": 4.999654
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 4,
+      "users": 4,
+      "conversions": 2
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(not set)",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 0
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 2
+    }
+  ],
+  "devices": {
+    "desktop": 75,
+    "mobile": 25,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Estonia",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Finland",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Taiwan",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Japan",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Singapore",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 4,
+      "value": 200
+    }
+  ],
+  "total_conversion_value": 200
+}

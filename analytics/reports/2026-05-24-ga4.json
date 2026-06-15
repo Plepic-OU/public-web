@@ -1,0 +1,100 @@
+{
+  "date": "2026-05-24",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-24",
+    "end": "2026-05-24"
+  },
+  "summary": {
+    "sessions": 6,
+    "users": 6,
+    "new_users": 5,
+    "page_views": 11,
+    "avg_session_duration": 15.904977,
+    "bounce_rate": 0.16666666666666666,
+    "pages_per_session": 1.8333333333333333
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 5,
+      "sessions": 5,
+      "bounce_rate": 0,
+      "avg_time_on_page": 4.8579592
+    },
+    {
+      "path": "/",
+      "page_views": 4,
+      "sessions": 3,
+      "bounce_rate": 0.3333333333333333,
+      "avg_time_on_page": 16.85622066666667
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 18.624645
+    },
+    {
+      "path": "/privacy/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 1.946759
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 3,
+      "users": 3,
+      "conversions": 3
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 2
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(not set)",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 67,
+    "mobile": 33,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Finland",
+      "sessions": 4,
+      "users": 4
+    },
+    {
+      "country": "Germany",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "South Korea",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 5,
+      "value": 250
+    }
+  ],
+  "total_conversion_value": 250
+}

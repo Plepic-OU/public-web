@@ -1,0 +1,74 @@
+{
+  "date": "2026-05-18",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-05-18",
+    "end": "2026-05-18"
+  },
+  "summary": {
+    "sessions": 4,
+    "users": 3,
+    "new_users": 2,
+    "page_views": 3,
+    "avg_session_duration": 2.34205825,
+    "bounce_rate": 0.25,
+    "pages_per_session": 0.75
+  },
+  "pages": [
+    {
+      "path": "/training/",
+      "page_views": 3,
+      "sessions": 3,
+      "bounce_rate": 0,
+      "avg_time_on_page": 3.1227443333333333
+    },
+    {
+      "path": "/claude-code/",
+      "page_views": 0,
+      "sessions": 1,
+      "bounce_rate": 1,
+      "avg_time_on_page": 0
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 3,
+      "users": 2,
+      "conversions": 3
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 50,
+    "mobile": 50,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "Finland",
+      "sessions": 3,
+      "users": 2
+    },
+    {
+      "country": "Estonia",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [
+    {
+      "event_name": "ads_conversion_Book_appointment_1",
+      "count": 3,
+      "value": 150
+    }
+  ],
+  "total_conversion_value": 150
+}
