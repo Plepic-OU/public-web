@@ -2616,6 +2616,24 @@ p:last-child {
   filter: grayscale(100%);
 }
 
+/* Open-seat placeholder tile: same footprint as a headshot, reads as a vacancy */
+.team-member-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  min-width: 56px;
+  max-width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--green-surface);
+  border: 1.5px dashed var(--green-brand);
+  color: var(--green-brand);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: normal;
+}
+
 .team-member-info {
   display: flex;
   flex-direction: column;
