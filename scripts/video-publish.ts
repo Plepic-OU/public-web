@@ -30,6 +30,7 @@
  *   npx ts-node scripts/video-publish.ts <file> --no-captions   (skip caption burn-in)
  *   npx ts-node scripts/video-publish.ts <file> --thumbnail-time 2047   (grab thumbnail frame at 2047s)
  *   npx ts-node scripts/video-publish.ts <file> --captions-only (reuse existing workdir; re-burn captions + end card only)
+ *   npx ts-node scripts/video-publish.ts <file> --opening-image <path> [--opening-image-at <sec>]  (top-right photo insert; 4.5s window starting at <sec>, default 0)
  *   npx ts-node scripts/video-publish.ts <file> --no-open       (suppress VLC preview at end)
  *   npx ts-node scripts/video-publish.ts --clean                (archive workdirs older than 7 days; no source file needed)
  *
@@ -223,6 +224,8 @@ interface CliOptions {
   clean: boolean;
   thumbnailTime: number | null;
   outroImage: string | null;   // screenshot -> full-frame outro card (with logo + link)
+  openingImage: string | null; // photo -> top-right insert card overlaid for a ~4.5s window
+  openingImageAt: number;      // start (seconds) of the insert window; fade/enable offset by this. Default 0.
   link: string | null;         // e.g. "skill.plepic.com" -> bottom URL strip + outro-card link
   noCuts: boolean;             // keep the full take (no filler/pause trimming); still captions/strip/outro
 }
@@ -249,6 +252,8 @@ function parseArgs(): CliOptions {
       clean: true,
       thumbnailTime: null,
       outroImage: null,
+      openingImage: null,
+      openingImageAt: 0,
       link: null,
       noCuts: false,
     };
@@ -269,6 +274,14 @@ function parseArgs(): CliOptions {
   }
   const planIdx = args.indexOf("--plan");
   const outroIdx = args.indexOf("--outro-image");
+  const openingIdx = args.indexOf("--opening-image");
+  const openingAtIdx = args.indexOf("--opening-image-at");
+  const openingImageAt = openingAtIdx !== -1 ? parseFloat(args[openingAtIdx + 1]) : 0;
+  if (!Number.isFinite(openingImageAt) || openingImageAt < 0) {
+    throw new Error(
+      `--opening-image-at must be a non-negative number of seconds, got "${args[openingAtIdx + 1]}"`
+    );
+  }
   const linkIdx = args.indexOf("--link");
   const thumbIdx = args.indexOf("--thumbnail-time");
   const thumbnailTime = thumbIdx !== -1 ? parseFloat(args[thumbIdx + 1]) : null;
@@ -288,6 +301,8 @@ function parseArgs(): CliOptions {
     clean,
     thumbnailTime,
     outroImage: outroIdx !== -1 ? path.resolve(args[outroIdx + 1]) : null,
+    openingImage: openingIdx !== -1 ? path.resolve(args[openingIdx + 1]) : null,
+    openingImageAt,
     link: linkIdx !== -1 ? args[linkIdx + 1] : null,
     noCuts: args.includes("--no-cuts"),
   };
@@ -1372,7 +1387,7 @@ async function edit(
   transcript: Transcript,
   format: Format,
   workDir: string,
-  opts: { noCaptions: boolean; planMarkdown: string | null; outroImage: string | null; link: string | null; noCuts: boolean },
+  opts: { noCaptions: boolean; planMarkdown: string | null; outroImage: string | null; openingImage: string | null; openingImageAt: number; link: string | null; noCuts: boolean },
   log: PublishLog
 ): Promise<string> {
   const duration = transcript.duration || probeVideoInfo(sourceFile).duration;
@@ -1506,7 +1521,7 @@ async function edit(
       );
     }
 
-    if (wantCaptions || wantEndCard) {
+    if (wantCaptions || wantEndCard || opts.openingImage) {
       // Preserve the un-captioned splice so --captions-only can re-burn later
       // without re-running the concat.
       const editedNoCaptions = path.join(workDir, "edited-no-captions.mp4");
@@ -1521,6 +1536,8 @@ async function edit(
         wantOutro: wantEndCard,
         outroStart: endCardStart,
         outroImage: opts.outroImage,
+        openingImage: opts.openingImage,
+        openingImageAt: opts.openingImageAt,
         link: opts.link,
         workDir,
       });
@@ -2127,6 +2144,8 @@ async function burnVlogOverlays(
     wantOutro: boolean;
     outroStart: number;
     outroImage: string | null;
+    openingImage: string | null;
+    openingImageAt: number;
     link: string | null;
     workDir: string;
   }
@@ -2175,13 +2194,99 @@ async function burnVlogOverlays(
   }
 
   const steps = [assStep, stripStep].filter(Boolean).join(",");
+
+  // Inputs: [0]=video, then (if present) the outro PNG, then (if present) the
+  // raw opening image. Track each input's index so the filtergraph references
+  // the right stream regardless of which overlays are active.
   const args = ["-i", inputVideo];
-  if (overlayPng) args.push("-i", overlayPng);
+  let nextInputIdx = 1;
+  let outroInputIdx: number | null = null;
   if (overlayPng) {
-    const filter = [
-      `[0:v]${steps || "null"}[v0]`,
-      `[v0][1:v]overlay=0:${overlayY}:enable='gte(t,${o.outroStart.toFixed(2)})'[v]`,
-    ].join(";");
+    args.push("-i", overlayPng);
+    outroInputIdx = nextInputIdx++;
+  }
+  let openingInputIdx: number | null = null;
+  if (o.openingImage) {
+    // -loop 1 turns the still into a continuous frame stream at the input
+    // framerate so the alpha `fade` filter has frames to ramp across (a single
+    // still frame would give fade nothing to animate). The overlay's base
+    // input [0:v] bounds the output length, so the infinite loop is safe.
+    args.push("-loop", "1", "-i", o.openingImage);
+    openingInputIdx = nextInputIdx++;
+  }
+
+  // Opening insert: a square "here's me" photo card overlaid top-right for the
+  // first ~4.5s, built inline from the raw image (no pre-baked PNG) —
+  //   center-crop to square -> scale -> warm grade -> cream border -> fade.
+  // Sizing is derived from the ACTUAL frame so it works for both vertical
+  // vlogs (1080x1920) and landscape long-form (e.g. 3840x2160): the side is
+  // 0.72*height, clamped to 0.5*width so a tall vertical frame doesn't get an
+  // oversized card. Placed top-right with a small margin (not flush to edge).
+  // Shadow: skipped — a purely-ffmpeg drop shadow (blurred offset box behind an
+  // rgba card) noticeably complicates the filtergraph for a subtle effect; the
+  // cream border alone gives clean separation from the footage. Border is the
+  // must-have per the recipe; shadow was the nice-to-have.
+  let insertLabel: string | null = null;
+  let insertChain = "";
+  let insertEnable = "";
+  let insertX = 0;
+  let insertY = 0;
+  if (openingInputIdx !== null) {
+    const BORDER = 30; // cream border width per side (px)
+    const MARGIN = 40; // gap from the top/right frame edges (px)
+    const side = Math.round(Math.min(0.72 * o.height, 0.5 * o.width));
+    const cardW = side + BORDER * 2; // overlaid card includes the border pad
+    const cream = BRAND_CREAM.replace("#", "0x");
+    insertX = o.width - cardW - MARGIN;
+    insertY = MARGIN;
+    insertLabel = "ins";
+    // Fade/enable window is offset by openingImageAt (default 0) so the insert
+    // can be timed to a spoken moment. The 4.5s window: fade in over
+    // start..start+0.5, hold, fade out over start+4.0..start+4.5; the overlay
+    // is only enabled within between(t, start, start+4.5).
+    const start = o.openingImageAt;
+    const fadeInSt = start.toFixed(2);
+    const fadeOutSt = (start + 4.0).toFixed(2);
+    const winStart = start.toFixed(2);
+    const winEnd = (start + 4.5).toFixed(2);
+    // Warm grade approximates the one-off PIL card: +6% saturation, slight
+    // brightness lift, R up ~6% / B down ~4%.
+    insertChain =
+      `[${openingInputIdx}:v]` +
+      `crop=min(iw\\,ih):min(iw\\,ih),` +
+      `scale=${side}:${side},` +
+      `eq=saturation=1.06:brightness=0.02,` +
+      `colorchannelmixer=rr=1.06:bb=0.96,` +
+      `pad=iw+${BORDER * 2}:ih+${BORDER * 2}:${BORDER}:${BORDER}:color=${cream},` +
+      `format=rgba,` +
+      `fade=t=in:st=${fadeInSt}:d=0.5:alpha=1,fade=t=out:st=${fadeOutSt}:d=0.5:alpha=1` +
+      `[${insertLabel}]`;
+    // Overlay enable window computed from the same start (used below).
+    insertEnable = `between(t,${winStart},${winEnd})`;
+  }
+
+  if (outroInputIdx !== null || insertLabel !== null) {
+    // Filtergraph pipeline: base (captions + strip) -> optional outro overlay
+    // -> optional opening-insert overlay. Each stage renames the label it
+    // consumes so stages compose in any combination.
+    const parts: string[] = [`[0:v]${steps || "null"}[v0]`];
+    let cur = "v0";
+    if (outroInputIdx !== null) {
+      parts.push(
+        `[${cur}][${outroInputIdx}:v]overlay=0:${overlayY}:enable='gte(t,${o.outroStart.toFixed(2)})'[vo]`
+      );
+      cur = "vo";
+    }
+    if (insertLabel !== null) {
+      parts.push(insertChain);
+      parts.push(
+        `[${cur}][${insertLabel}]overlay=${insertX}:${insertY}:enable='${insertEnable}'[v]`
+      );
+      cur = "v";
+    }
+    // Ensure the terminal label is [v] (outro-only path ends at [vo]).
+    const filter =
+      cur === "v" ? parts.join(";") : parts.join(";").replace(/\[vo\]$/, "[v]");
     args.push("-filter_complex", filter, "-map", "[v]", "-map", "0:a");
   } else if (steps) {
     args.push("-vf", steps);
@@ -2653,7 +2758,7 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
     console.log(`captions-only: wrote ${cues.length} cues to ${assPath}`);
   }
 
-  if (wantCaptions || wantEndCard) {
+  if (wantCaptions || wantEndCard || opts.openingImage) {
     const captioned = path.join(workDir, "edited-captioned.mp4");
     await burnVlogOverlays(edited, captioned, {
       assPath,
@@ -2662,6 +2767,8 @@ async function runCaptionsOnly(opts: CliOptions): Promise<void> {
       wantOutro: wantEndCard,
       outroStart: endCardStart,
       outroImage: opts.outroImage,
+      openingImage: opts.openingImage,
+      openingImageAt: opts.openingImageAt,
       link: opts.link,
       workDir,
     });
@@ -2818,7 +2925,7 @@ async function main(): Promise<void> {
       transcript,
       format,
       workDir,
-      { noCaptions: opts.noCaptions, planMarkdown: planContent, outroImage: opts.outroImage, link: opts.link, noCuts: opts.noCuts },
+      { noCaptions: opts.noCaptions, planMarkdown: planContent, outroImage: opts.outroImage, openingImage: opts.openingImage, openingImageAt: opts.openingImageAt, link: opts.link, noCuts: opts.noCuts },
       log
     );
     log.phases_completed.push("edit");
