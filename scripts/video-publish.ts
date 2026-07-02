@@ -3,8 +3,22 @@
  *
  * Single-file pipeline that takes a raw video (iPhone vlog or Mac screen-recorded
  * tutorial), transcribes it, removes filler words and long pauses, generates
- * SEO-ready metadata and a thumbnail, and publishes to YouTube + prepares a
- * LinkedIn handoff folder. Sub-project 2 of the YouTube automation spec.
+ * SEO-ready metadata and a thumbnail, and publishes to YouTube + drops the
+ * finished video in the outbox for manual LinkedIn upload. Sub-project 2 of the
+ * YouTube automation spec.
+ *
+ * Folder convention (~/Documents/plepic-video/):
+ *   inbox/   raw source only — the original camera/screen file goes here.
+ *   work/    per-video processing scratch (transcripts, cuts, thumbnails).
+ *   outbox/  finished deliverables ONLY, named <name>_edited.<ext>. One file
+ *            per video, no sidecar text/instructions. YouTube uploads
+ *            automatically; LinkedIn is a manual drag from here. Iterating on a
+ *            video OVERWRITES its outbox file — no version accumulation.
+ *   archive/ retired sources.
+ *
+ * Ad-hoc edits done outside this script (e.g. hand-built ffmpeg one-offs) follow
+ * the same rule: finished file lands in outbox/ as <name>_edited.<ext>, nothing
+ * else beside it.
  *
  * Usage:
  *   npx ts-node scripts/video-publish.ts ~/Documents/plepic-video/inbox/IMG_1234.MOV
@@ -24,7 +38,7 @@
  *   CLAUDE_MOCK=1          read metadata from _fixtures/mock-responses/metadata.json
  *   CLAUDE_CHUNK_MOCK=1    read cue chunks from _fixtures/mock-responses/cue-chunks.json
  *   YT_MOCK=1              skip the YouTube upload, emit a fake video id
- *   LI_MOCK=1              prepareLinkedIn writes a minimal folder without trim
+ *   LI_MOCK=1              writeToOutbox copies to outbox without trim/re-encode
  *
  * Requires: ffmpeg + ffprobe on PATH (with drawtext, subtitles, silencedetect),
  * OPENAI_API_KEY, ANTHROPIC_API_KEY, YT_* env vars.
@@ -43,6 +57,9 @@ import { google, youtube_v3 } from "googleapis";
 const VIDEO_ROOT = path.join(os.homedir(), "Documents", "plepic-video");
 const INBOX_DIR = path.join(VIDEO_ROOT, "inbox");
 const WORK_ROOT = path.join(VIDEO_ROOT, "work");
+// Finished deliverables land here as <slug>_edited.<ext>, one file per video
+// (written by writeToOutbox). Manual LinkedIn upload / auto YouTube both from here.
+const OUTBOX_DIR = path.join(VIDEO_ROOT, "outbox");
 const ARCHIVE_DIR = path.join(VIDEO_ROOT, "archive");
 
 const REPO_ROOT = path.join(__dirname, "..");
@@ -2407,30 +2424,35 @@ async function uploadToYoutube(
   };
 }
 
-// ---------- phase: prepareLinkedIn ----------
+// ---------- phase: writeToOutbox ----------
 
-async function prepareLinkedIn(
+async function writeToOutbox(
   videoFile: string,
   duration: number,
-  workDir: string
+  slug: string
 ): Promise<string> {
-  const liDir = path.join(workDir, "linkedin");
-  ensureDir(liDir);
+  ensureDir(OUTBOX_DIR);
 
   const size = fs.statSync(videoFile).size;
   const tooLong = duration > LI_MAX_MINUTES * 60;
   const tooBig = size > LI_MAX_BYTES;
 
+  // A too-big/too-long source ships as a re-encoded teaser (.mp4 = h264);
+  // otherwise the edited source ships as-is with its original extension.
+  // Either way it's one file: <slug>_edited.<ext>. Re-editing overwrites it.
+  const outExt = tooLong || tooBig ? ".mp4" : path.extname(videoFile);
+  const outFile = path.join(OUTBOX_DIR, `${slug}_edited${outExt}`);
+
   if (process.env.LI_MOCK === "1") {
-    fs.copyFileSync(videoFile, path.join(liDir, "video.mp4"));
-    return liDir;
+    fs.copyFileSync(videoFile, outFile);
+    console.log(`writeToOutbox: ${outFile}`);
+    return outFile;
   }
 
   if (tooLong || tooBig) {
     console.log(
-      `prepareLinkedIn: source too long/big (${duration.toFixed(1)}s, ${(size / 1024 / 1024).toFixed(1)}MB) — producing teaser`
+      `writeToOutbox: source too long/big (${duration.toFixed(1)}s, ${(size / 1024 / 1024).toFixed(1)}MB) — producing teaser`
     );
-    const teaser = path.join(liDir, "video-teaser.mp4");
     runFfmpeg(
       [
         "-i",
@@ -2447,28 +2469,16 @@ async function prepareLinkedIn(
         "aac",
         "-b:a",
         "128k",
-        teaser,
+        outFile,
       ],
       { silent: true }
     );
   } else {
-    fs.copyFileSync(videoFile, path.join(liDir, "video.mp4"));
+    fs.copyFileSync(videoFile, outFile);
   }
 
-  fs.writeFileSync(
-    path.join(liDir, "INSTRUCTIONS.txt"),
-    [
-      "Manual LinkedIn upload (pre-API-approval):",
-      "1. Open LinkedIn, create a new post",
-      "2. Upload video.mp4 (or video-teaser.mp4 if present)",
-      "3. Write your own post copy and publish (captions are burned into the video)",
-      "",
-      "Once LinkedIn Developer Platform approval lands, prepareLinkedIn will POST to the API and skip this folder.",
-    ].join("\n")
-  );
-
-  console.log(`prepareLinkedIn: ${liDir}`);
-  return liDir;
+  console.log(`writeToOutbox: ${outFile}`);
+  return outFile;
 }
 
 // ---------- plan file helpers ----------
@@ -2892,14 +2902,14 @@ async function main(): Promise<void> {
       writePublishLog(workDir, log);
     }
 
-    // Phase: LinkedIn handoff
-    const liPath = await prepareLinkedIn(
+    // Phase: write finished video to outbox (for manual LinkedIn upload)
+    const outboxPath = await writeToOutbox(
       editedFile,
       transcript.duration,
-      workDir
+      log.slug
     );
-    log.linkedin = { assets_path: liPath, post_url: null };
-    log.phases_completed.push("linkedin-prep");
+    log.linkedin = { assets_path: outboxPath, post_url: null };
+    log.phases_completed.push("write-outbox");
 
     // Archive source
     if (!opts.dryRun && !process.env.YT_MOCK) {
@@ -2938,7 +2948,7 @@ async function main(): Promise<void> {
     console.log(`\n=== done (${log.duration_seconds?.toFixed(1)}s) ===`);
     if (log.youtube?.url) console.log(`YouTube: ${log.youtube.url}`);
     if (log.youtube?.studio_url) console.log(`Studio:  ${log.youtube.studio_url}`);
-    console.log(`LinkedIn assets: ${liPath}`);
+    console.log(`Outbox: ${outboxPath}`);
     openInVlc(editedFile, opts);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
