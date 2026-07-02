@@ -23,3 +23,7 @@ analytics/credentials/*.json
 screenshots/
 logo-prototype.html
 demo-tenders-screenshot.png
+# impeccable/critique screenshot output + live-server runtime state
+# (.impeccable/critique/ and live/config.json stay tracked)
+.critique-shots/
+.impeccable/live/server.json
