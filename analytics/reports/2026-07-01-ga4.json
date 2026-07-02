@@ -1,0 +1,116 @@
+{
+  "date": "2026-07-01",
+  "property_id": "515893461",
+  "date_range": {
+    "start": "2026-07-01",
+    "end": "2026-07-01"
+  },
+  "summary": {
+    "sessions": 14,
+    "users": 14,
+    "new_users": 12,
+    "page_views": 18,
+    "avg_session_duration": 45.07594064285714,
+    "bounce_rate": 0.7857142857142857,
+    "pages_per_session": 1.2857142857142858
+  },
+  "pages": [
+    {
+      "path": "/",
+      "page_views": 12,
+      "sessions": 12,
+      "bounce_rate": 0.9166666666666666,
+      "avg_time_on_page": 5.676965833333334
+    },
+    {
+      "path": "/training/",
+      "page_views": 4,
+      "sessions": 2,
+      "bounce_rate": 0,
+      "avg_time_on_page": 249.207124
+    },
+    {
+      "path": "/jobs/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 57.76207
+    },
+    {
+      "path": "/scopeful/",
+      "page_views": 1,
+      "sessions": 1,
+      "bounce_rate": 0,
+      "avg_time_on_page": 6.763261
+    }
+  ],
+  "traffic_sources": [
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 6,
+      "users": 6,
+      "conversions": 0
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 5,
+      "users": 5,
+      "conversions": 0
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "ai-assistant",
+      "sessions": 2,
+      "users": 2,
+      "conversions": 0
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 1,
+      "users": 1,
+      "conversions": 0
+    }
+  ],
+  "devices": {
+    "desktop": 79,
+    "mobile": 21,
+    "tablet": 0
+  },
+  "countries": [
+    {
+      "country": "United States",
+      "sessions": 7,
+      "users": 7
+    },
+    {
+      "country": "Estonia",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "Japan",
+      "sessions": 2,
+      "users": 2
+    },
+    {
+      "country": "China",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "Finland",
+      "sessions": 1,
+      "users": 1
+    },
+    {
+      "country": "South Korea",
+      "sessions": 1,
+      "users": 1
+    }
+  ],
+  "conversions": [],
+  "total_conversion_value": 0
+}

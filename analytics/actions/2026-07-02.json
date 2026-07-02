@@ -1,0 +1,149 @@
+{
+  "date": "2026-07-02",
+  "actions": [
+    {
+      "timestamp": "2026-07-02T14:02:51.258Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "agentic ai course",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:52.394Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "agentic coding",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:53.083Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "learn agentic ai",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:53.726Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "agentic engineering course",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:54.313Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "agentic engineering training",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:55.071Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "claude skills",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:55.844Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "claude code course",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:56.468Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "claude training",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:02:56.919Z",
+      "action": "ADD_KEYWORD",
+      "keyword": "claude certification",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Squad 3 (Sep 4) expansion. Approved by Kaido 2026-07-02: remove blanket negative-broad \"claude\" (keep specific claude negatives), add 9 PHRASE keywords covering agentic-ai + claude-skills clusters.",
+      "match_type": "PHRASE",
+      "new_state": "ENABLED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:05:10.866Z",
+      "action": "PAUSE_KEYWORD",
+      "keyword": "claude code course",
+      "keyword_id": "2430431911619",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Exact-text duplicate: PHRASE \"claude code course\" now carries this query; pause BROAD twin to avoid internal competition. Approved by Kaido 2026-07-02.",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:08:11.606Z",
+      "action": "PAUSE_KEYWORD",
+      "keyword": "agentic coding course",
+      "keyword_id": "2447197933904",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Overlaps new PHRASE set, carried old QS=3; consolidate on phrase match. Approved by Kaido 2026-07-02.",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-07-02T14:08:13.063Z",
+      "action": "PAUSE_KEYWORD",
+      "keyword": "claude courses",
+      "keyword_id": "2316135482291",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "Overlaps new PHRASE set, carried old QS=3; consolidate on phrase match. Approved by Kaido 2026-07-02.",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 3,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 0,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}
