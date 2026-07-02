@@ -1551,6 +1551,45 @@ async function edit(
     if (assPath) {
       await verifySyncOrThrow(edited, assPath, workDir);
     }
+  } else if (format === "long" && (opts.openingImage || opts.outroImage)) {
+    // Long-form insert pass (Option A: reuse burnVlogOverlays with captions
+    // disabled). Landscape long-form keeps its SRT-to-YouTube caption flow
+    // untouched — it never burns captions. But the opening-image insert (and
+    // an explicit --outro-image card) are visual overlays that must be burned
+    // into the pixels, so we run the same overlay-applying function the vlog
+    // path uses, passing assPath: null so the caption step is skipped. The
+    // insert sizing math inside burnVlogOverlays already keys off the real
+    // frame w/h, so it's correct at 3840×2160. Output replaces edited.mp4 in
+    // place, exactly like the vlog path, so the returned file (used for
+    // thumbnail + upload + outbox) carries the insert. The auto end-card
+    // wordmark is deliberately NOT applied here (that's a vlog convention);
+    // only an explicit --outro-image is honored, mirroring long-form's "own
+    // outro convention". The bottom link strip is coupled to that outro card
+    // (it's covered by the full-frame card at the end), so link is passed only
+    // when an outro image is present — long-form insert-only gains no
+    // persistent bottom bar it never had before.
+    const editedInfo = probeVideoInfo(edited);
+    const editedDuration = editedInfo.duration || duration;
+    const wantOutro = !!opts.outroImage && editedDuration >= OUTRO_SECONDS + 2;
+    const outroStart = Math.max(0, editedDuration - OUTRO_SECONDS);
+
+    const overlaid = path.join(workDir, "edited-insert.mp4");
+    await burnVlogOverlays(edited, overlaid, {
+      assPath: null, // no caption burn — long-form captions ride SRT to YouTube
+      width: editedInfo.width,
+      height: editedInfo.height,
+      wantOutro,
+      outroStart,
+      outroImage: opts.outroImage,
+      openingImage: opts.openingImage,
+      openingImageAt: opts.openingImageAt,
+      link: wantOutro ? opts.link : null,
+      workDir,
+    });
+    fs.renameSync(overlaid, edited);
+    console.log(
+      `edit: applied opening-image insert${wantOutro ? " + outro card" : ""} to long-form (captions untouched)`
+    );
   }
 
   return edited;
@@ -2279,8 +2318,16 @@ async function burnVlogOverlays(
     }
     if (insertLabel !== null) {
       parts.push(insertChain);
+      // shortest=1 bounds the output to the base video. The opening image is a
+      // `-loop 1` (infinite) input, and overlay's default eof_action keeps
+      // emitting frames as long as ANY input has frames — so without this the
+      // render never terminates once the base video ends (the [enable] window
+      // only gates compositing, not stream length). shortest=1 makes overlay
+      // stop at the base's EOF. Harmless when no opening image is present:
+      // this branch only builds when insertLabel is set, so non-insert renders
+      // (the common vlog path) are byte-identical.
       parts.push(
-        `[${cur}][${insertLabel}]overlay=${insertX}:${insertY}:enable='${insertEnable}'[v]`
+        `[${cur}][${insertLabel}]overlay=${insertX}:${insertY}:enable='${insertEnable}':shortest=1[v]`
       );
       cur = "v";
     }
