@@ -1766,6 +1766,14 @@ p:last-child {
   margin-bottom: var(--space-2xl);
 }
 
+/* Exit-cue qualifier keeps its small muted scale inside the enlist section
+   (out-specificities .enlist-content > p above). */
+.enlist-content > .hero-qualifier {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  margin-bottom: 0;
+}
+
 /* Enlist CTA — equivalent to .btn.btn-primary.btn-lg */
 .btn-enlist {
   display: inline-flex;
