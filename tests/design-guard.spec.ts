@@ -91,9 +91,9 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  // Enable after the training-hero stat cards are recast (critique P1):
+  // Enabled after the training-hero stat cards were recast (critique P1):
   // the mech-* class family is the rejected pre-2026 era and must not grow.
-  test.fixme('no mech-* legacy class names', () => {
+  test('no mech-* legacy class names', () => {
     const sources = ['css/styles.css', ...PRODUCTION_PAGES];
     for (const src of sources) {
       expect(read(src).includes('mech-'), `${src} uses mech-* legacy naming`).toBe(false);
