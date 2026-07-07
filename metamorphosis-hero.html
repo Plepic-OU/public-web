@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Crystalline Metamorphosis: 3D Hero Prototype</title>
+
+  <!-- Fonts (same loading strategy as production) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Pinned, import-mapped Three.js. No addons, no build step.
+       three.module.min.js ~ 87 KB gzipped over the wire; the scene module
+       itself is procedural (zero textures, models, or images). -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.min.js"
+      }
+    }
+  </script>
+
+  <style>
+    /* Prototype-page shell. Everything on-system: tokens from css/styles.css. */
+    .meta-hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; }
+
+    /* The stage: poster SVG and WebGL canvas share one box.
+       Poster is visible by default (zero-JS correct state); the module
+       cross-fades it out only after the first WebGL frame has rendered. */
+    .meta-stage {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      aspect-ratio: 32 / 23;
+      margin-inline: auto;
+    }
+    .meta-stage .meta-poster {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity var(--dur-base, 300ms) var(--ease-calm, ease-in-out);
+    }
+    /* Poster mark sizes to exactly match the WebGL rest pose: the canvas
+       frustum is 380 design-units tall (VIEW_H in the module) with the
+       280-unit mark centered, so the poster svg is 280/380 = 73.68% of
+       stage height, centered. Keep in lockstep with VIEW_H. */
+    .meta-stage .meta-poster svg { height: 73.68%; width: auto; }
+    .meta-stage canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity var(--dur-base, 300ms) var(--ease-calm, ease-in-out);
+      pointer-events: none;
+    }
+    .meta-stage.is-live .meta-poster { opacity: 0; }
+    .meta-stage.is-live canvas { opacity: 1; }
+
+    /* Reduced motion: the poster IS the experience. The module also checks
+       this in JS and never starts the loop; this CSS branch is belt and
+       braces so even a mis-fired swap cannot hide the mark. */
+    @media (prefers-reduced-motion: reduce) {
+      .meta-stage .meta-poster { opacity: 1 !important; transition: none; }
+      .meta-stage canvas { opacity: 0 !important; transition: none; }
+    }
+
+    /* Stacked layout (≤900px): keep the stage compact so hero copy stays
+       near the fold, mirroring production's .butterfly-container cap. */
+    @media (max-width: 900px) {
+      .meta-stage { max-width: min(78vw, 420px); }
+    }
+
+    .meta-controls { text-align: center; margin-top: 0.75rem; }
+    .meta-replay {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: normal;
+      color: var(--green-brand, #137b30);
+      background: none;
+      border: none;
+      padding: 0.35rem 0.5rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .meta-replay:hover { color: var(--green-dark, #0d5822); }
+    .meta-replay:focus-visible { outline: 2px solid var(--green-vivid, #00c638); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      .meta-controls { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Simplified header: logo lockup only, so hero spacing reads true -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo-lockup" aria-label="Plepic home"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero meta-hero">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="badge-base">
+            <span>300+ Developers Trained &middot; Squad 3 starts Sep 4</span>
+          </div>
+
+          <h1>Claude Code Training for<br><span class="highlight">Dev Teams</span></h1>
+
+          <p class="hero-desc">
+            6 Fridays building real software with senior developers.
+            Ship faster without shipping slop.<br>
+            <strong>&euro;2,520</strong>/dev &middot; &#x1F1EA;&#x1F1EA; Estonian subsidy: just <strong>&euro;504</strong>.
+          </p>
+
+          <a href="/training/" class="btn btn-primary btn-lg">View Full Program &rarr;</a>
+
+          <p class="hero-qualifier">For developers with 2+ years experience &middot; Max 20 per squad</p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="meta-stage" id="metaStage">
+            <!-- Static poster: the exact locked mark. Correct with zero JS. -->
+            <div class="meta-poster" aria-hidden="true">
+              <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg>
+            </div>
+            <!-- The module inserts its canvas here (aria-hidden, pointer-events: none) -->
+          </div>
+          <div class="meta-controls">
+            <button type="button" class="meta-replay" id="metaReplay" hidden>Replay metamorphosis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    const stage = document.getElementById('metaStage');
+    const replayBtn = document.getElementById('metaReplay');
+
+    // Gate BEFORE importing so reduced-motion / save-data / weak devices
+    // never download three.js (~87 KB gzip). The module re-checks all of
+    // these internally (defense in depth).
+    const skip =
+      matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      (navigator.connection && navigator.connection.saveData) ||
+      (navigator.deviceMemory && navigator.deviceMemory < 2) ||
+      !document.createElement('canvas').getContext('webgl2');
+
+    if (!skip) {
+      const { init } = await import('./js/crystalline-metamorphosis.js');
+      const hero = init(stage, {
+        onLive() { stage.classList.add('is-live'); replayBtn.hidden = false; },
+        onFallback(reason) {
+          // restore the poster: a dead canvas must never stay frontmost
+          stage.classList.remove('is-live');
+          replayBtn.hidden = true;
+          console.info('[metamorphosis] poster fallback:', reason);
+        }
+      });
+      replayBtn.addEventListener('click', () => hero.replay());
+      window.__metaHero = hero; // test hook (harmless in production)
+    }
+  </script>
+</body>
+</html>
