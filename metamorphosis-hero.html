@@ -231,11 +231,11 @@
                aria-hidden: 13s of text mutation must never be announced;
                the visually-hidden static copy below carries the text. -->
           <p class="hero-code meta-code" id="metaCode" data-phase="rest" aria-hidden="true">
-            <span class="meta-code-line"><span class="t">while(task) { think &rarr; act &rarr; observe }</span><span class="hero-cursor"></span></span>
+            <span class="meta-code-line"><span class="t">while(task) { explore &rarr; act &rarr; observe }</span><span class="hero-cursor"></span></span>
             <span class="meta-code-line"><span class="t"></span></span>
             <span class="meta-code-line"><span class="t"></span></span>
           </p>
-          <span class="visually-hidden-static">while(task) { think &rarr; act &rarr; observe }</span>
+          <span class="visually-hidden-static">while(task) { explore &rarr; act &rarr; observe }</span>
 
           <div class="meta-controls">
             <button type="button" class="meta-replay" id="metaReplay" hidden>Replay metamorphosis</button>
@@ -280,8 +280,8 @@
       // the agentic loop. All text state derives from the module's
       // phase/tPhase, never wall clock, so creature and code cannot desync
       // (and replay() is handled for free).
-      const UNROLLED = 'think(); act(); observe();';
-      const COLLAPSED = '{ think → act → observe }';
+      const UNROLLED = 'explore(); act(); observe();';
+      const COLLAPSED = '{ explore → act → observe }';
       const PREFIX = 'while(task) ';
       const FINAL = PREFIX + COLLAPSED;
       const PHASE_NAMES = ['crawl', 'gather', 'chrysalis', 'unfurl', 'rest'];

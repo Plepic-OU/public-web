@@ -137,7 +137,7 @@ test.describe('metamorphosis hero @metamorphosis', () => {
     expect(await page.locator('#metaReplay').isHidden()).toBe(true);
     // the code line shows its canonical form with no choreography
     expect(await page.locator('#metaCode .meta-code-line .t').first().textContent())
-      .toBe('while(task) { think → act → observe }');
+      .toBe('while(task) { explore → act → observe }');
     await page.close();
   });
 
@@ -148,17 +148,17 @@ test.describe('metamorphosis hero @metamorphosis', () => {
     // crawl: hand-unrolled calls typing in
     await page.waitForFunction(() => {
       const t = document.querySelector('#metaCode .meta-code-line .t')?.textContent || '';
-      return t.startsWith('think();') || t === 'think(); act(); observe();';
+      return t.startsWith('explore();') || t === 'explore(); act(); observe();';
     }, null, { timeout: 15_000 });
     // chrysalis: the collapsed block, held
     await page.waitForFunction(
       () => document.getElementById('metaCode')?.dataset.phase === 'chrysalis', null, { timeout: 20_000 });
-    expect(await line1.textContent()).toBe('{ think → act → observe }');
+    expect(await line1.textContent()).toBe('{ explore → act → observe }');
     expect(await page.locator('#metaCode.is-held').count()).toBe(1);
     // rest: byte-identical to the production hero-code line
     await page.waitForFunction(
       () => document.getElementById('metaCode')?.dataset.phase === 'rest', null, { timeout: 30_000 });
-    expect(await line1.textContent()).toBe('while(task) { think → act → observe }');
+    expect(await line1.textContent()).toBe('while(task) { explore → act → observe }');
     expect(await page.locator('#metaCode.is-held').count()).toBe(0);
     await page.close();
   });

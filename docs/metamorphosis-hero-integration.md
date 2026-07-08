@@ -40,11 +40,11 @@ progression, claude.com/blog/getting-started-with-loops):
 
 | Movement | Line 1 (slots 2–3 during crawl) |
 | --- | --- |
-| Crawl | `think(); act(); observe();` typed once per gait cycle, three lines |
-| Gather | lines fold up; survivor swaps to `{ think → act → observe }`, cursor freezes solid |
+| Crawl | `explore(); act(); observe();` typed once per gait cycle, three lines |
+| Gather | lines fold up; survivor swaps to `{ explore → act → observe }`, cursor freezes solid |
 | Chrysalis | the braced block breathes (opacity 0.45↔0.55, 3s) |
 | Unfurl | `while(task) ` types in as pressure rises; brightness tick at the overshoot-relax beat |
-| Rest | `while(task) { think → act → observe }` — byte-identical to production — cursor blinking, 7s light wave |
+| Rest | `while(task) { explore → act → observe }` — byte-identical to production — cursor blinking, 7s light wave |
 
 All text state derives from `hero.phaseInfo()` (`{phase, tPhase}`), never wall
 clock, so creature and code cannot desync and `replay()` needs no extra wiring.
