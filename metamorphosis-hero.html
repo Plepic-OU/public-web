@@ -29,6 +29,15 @@
     /* Prototype-page shell. Everything on-system: tokens from css/styles.css. */
     .meta-hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; }
 
+    /* Wider visual column than production's 1.4fr/0.6fr: the resting mark
+       was ~163px tall in a 307px column ("a bit too small" - founder).
+       1.15fr/0.85fr keeps the asymmetric-grid doctrine and yields a
+       ~435px column -> ~258px mark. Scoped to >900px so the stacked
+       mobile layout (1fr) is untouched. */
+    @media (min-width: 901px) {
+      .meta-hero .hero-grid { grid-template-columns: 1.15fr 0.85fr; }
+    }
+
     /* The stage: poster SVG and WebGL canvas share one box.
        Poster is visible by default (zero-JS correct state); the module
        cross-fades it out only after the first WebGL frame has rendered. */
@@ -49,10 +58,10 @@
       transition: opacity var(--dur-base, 300ms) var(--ease-calm, ease-in-out);
     }
     /* Poster mark sizes to exactly match the WebGL rest pose: the canvas
-       frustum is 380 design-units tall (VIEW_H in the module) with the
-       280-unit mark centered, so the poster svg is 280/380 = 73.68% of
+       frustum is 340 design-units tall (VIEW_H in the module) with the
+       280-unit mark centered, so the poster svg is 280/340 = 82.35% of
        stage height, centered. Keep in lockstep with VIEW_H. */
-    .meta-stage .meta-poster svg { height: 73.68%; width: auto; }
+    .meta-stage .meta-poster svg { height: 82.35%; width: auto; }
     .meta-stage canvas {
       position: absolute;
       inset: 0;
@@ -76,7 +85,81 @@
     /* Stacked layout (≤900px): keep the stage compact so hero copy stays
        near the fold, mirroring production's .butterfly-container cap. */
     @media (max-width: 900px) {
-      .meta-stage { max-width: min(78vw, 420px); }
+      .meta-stage { max-width: min(84vw, 440px); }
+      .meta-code { font-size: 0.72rem; }
+    }
+
+    /* ------------------------------------------------------------------
+       The Refactor: the agent-loop snippet evolves with the creature.
+       Real DOM text (selectable), reserved 3-line block (zero CLS),
+       state driven by the module's phase/tPhase, never wall clock.
+       Reuses production .hero-code grammar; overrides its entrance
+       animation (the choreography script owns visibility here). */
+    .meta-code {
+      font-size: 0.8rem;
+      margin: -0.25rem 0 0;
+      opacity: 1;                        /* production .hero-code fades in */
+      animation: none;
+      text-align: center;
+      min-height: 3.9em;                 /* 3 slots reserved for the arc */
+    }
+    .meta-code .meta-code-line {
+      display: block;
+      line-height: 1.3;
+      opacity: 0.6;
+      transition:
+        opacity var(--dur-base, 300ms) var(--ease-settle, ease-out),
+        transform var(--dur-base, 300ms) var(--ease-settle, ease-out);
+    }
+    .meta-code .meta-code-line:empty { opacity: 0; }
+    /* gather: lines 2-3 fold upward into the surviving top line */
+    .meta-code[data-phase="gather"] .meta-code-line + .meta-code-line {
+      opacity: 0;
+      transform: translateY(-0.35em);
+    }
+    .meta-code[data-phase="gather"] .meta-code-line + .meta-code-line + .meta-code-line {
+      transition-delay: 80ms;
+    }
+    /* chrysalis: dimmed, breathing with the module's pulse */
+    .meta-code[data-phase="chrysalis"] .meta-code-line:first-child {
+      animation: meta-code-breathe 3s var(--ease-calm, ease-in-out) infinite;
+    }
+    @keyframes meta-code-breathe {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.55; }
+    }
+    .meta-code.is-dim .meta-code-line:first-child { opacity: 0.45; }
+    /* unfurl settle: one brightness tick as the wings relax past overshoot */
+    .meta-code.is-settled .meta-code-line:first-child {
+      animation: meta-code-tick var(--dur-settle, 550ms) var(--ease-settle, ease-out) 1;
+    }
+    @keyframes meta-code-tick {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.14); }
+    }
+    /* rest: the light-shift wave exits the crystal through the text
+       (brightness only, per the Light-Shift pattern) */
+    .meta-code[data-phase="rest"] .meta-code-line:first-child {
+      animation: meta-code-wave 7s var(--ease-calm, ease-in-out) 0.3s infinite;
+    }
+    @keyframes meta-code-wave {
+      0%, 70%, 100% { filter: brightness(1); }
+      35% { filter: brightness(1.14); }
+    }
+    /* cursor: frozen solid = held breath (never hidden: a vanished
+       cursor reads as broken) */
+    .meta-code.is-held .hero-cursor { animation: none; opacity: 1; }
+    .visually-hidden-static {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .meta-code .meta-code-line,
+      .meta-code[data-phase] .meta-code-line { animation: none; opacity: 0.6; transform: none; }
+      .meta-code .hero-cursor { animation: none; opacity: 1; }
     }
 
     .meta-controls { text-align: center; margin-top: 0.75rem; }
@@ -140,6 +223,20 @@
             </div>
             <!-- The module inserts its canvas here (aria-hidden, pointer-events: none) -->
           </div>
+
+          <!-- The agentic loop, evolving with the creature ("The Refactor").
+               Default DOM = the canonical production line: correct with zero
+               JS, under reduced motion, and on the poster fallback. The
+               choreography script rewrites it only while the WebGL arc runs.
+               aria-hidden: 13s of text mutation must never be announced;
+               the visually-hidden static copy below carries the text. -->
+          <p class="hero-code meta-code" id="metaCode" data-phase="rest" aria-hidden="true">
+            <span class="meta-code-line"><span class="t">while(task) { think &rarr; act &rarr; observe }</span><span class="hero-cursor"></span></span>
+            <span class="meta-code-line"><span class="t"></span></span>
+            <span class="meta-code-line"><span class="t"></span></span>
+          </p>
+          <span class="visually-hidden-static">while(task) { think &rarr; act &rarr; observe }</span>
+
           <div class="meta-controls">
             <button type="button" class="meta-replay" id="metaReplay" hidden>Replay metamorphosis</button>
           </div>
@@ -163,17 +260,91 @@
 
     if (!skip) {
       const { init } = await import('./js/crystalline-metamorphosis.js');
+      let choreoOn = true;
       const hero = init(stage, {
         onLive() { stage.classList.add('is-live'); replayBtn.hidden = false; },
         onFallback(reason) {
-          // restore the poster: a dead canvas must never stay frontmost
+          // restore the poster: a dead canvas must never stay frontmost.
+          // The code line resets to its canonical form for the same reason.
           stage.classList.remove('is-live');
           replayBtn.hidden = true;
+          choreoOn = false;
           console.info('[metamorphosis] poster fallback:', reason);
         }
       });
       replayBtn.addEventListener('click', () => hero.replay());
       window.__metaHero = hero; // test hook (harmless in production)
+
+      // --- The Refactor: code choreography ------------------------------
+      // Manual repetition (turn-based: a human drives every cycle) becomes
+      // the agentic loop. All text state derives from the module's
+      // phase/tPhase, never wall clock, so creature and code cannot desync
+      // (and replay() is handled for free).
+      const UNROLLED = 'think(); act(); observe();';
+      const COLLAPSED = '{ think → act → observe }';
+      const PREFIX = 'while(task) ';
+      const FINAL = PREFIX + COLLAPSED;
+      const PHASE_NAMES = ['crawl', 'gather', 'chrysalis', 'unfurl', 'rest'];
+      // one typed line per gait cycle (windows in seconds of CRAWL tPhase)
+      const LINE_WINDOWS = [[0.18, 1.38], [1.70, 2.90], [3.22, 4.42]];
+
+      const code = document.getElementById('metaCode');
+      const slots = [...code.querySelectorAll('.meta-code-line .t')];
+      const cursor = code.querySelector('.hero-cursor');
+      const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+      const typed = (s, k) => s.slice(0, Math.round(clamp01(k) * s.length));
+
+      function codeState(phase, t) {
+        if (phase === 0) {
+          const texts = LINE_WINDOWS.map(([a, b]) => typed(UNROLLED, (t - a) / (b - a)));
+          let active = 0;
+          for (let i = 0; i < 3; i++) if (t >= LINE_WINDOWS[i][0]) active = i;
+          return { texts, held: false, dim: false, settled: false, cur: active };
+        }
+        if (phase === 1) {
+          const swapped = t >= 0.35;    // fold lands, then one calm swap
+          return {
+            texts: swapped ? [COLLAPSED, '', ''] : [UNROLLED, UNROLLED, UNROLLED],
+            held: true, dim: swapped, settled: false, cur: 0,
+          };
+        }
+        if (phase === 2) return { texts: [COLLAPSED, '', ''], held: true, dim: true, settled: false, cur: 0 };
+        if (phase === 3) {
+          const n = typed(PREFIX, (t - 0.51) / 0.66); // types as pressure rises
+          const settled = t >= 2.89;                  // the overshoot-relax beat
+          return { texts: [n + COLLAPSED, '', ''], held: !settled, dim: !settled, settled, cur: 0 };
+        }
+        return { texts: [FINAL, '', ''], held: false, dim: false, settled: false, cur: 0 };
+      }
+
+      let lastKey = '';
+      function applyCode() {
+        if (!choreoOn) {
+          if (lastKey !== 'off') {
+            lastKey = 'off';
+            slots[0].textContent = FINAL; slots[1].textContent = ''; slots[2].textContent = '';
+            code.dataset.phase = 'rest';
+            code.classList.remove('is-held', 'is-dim', 'is-settled');
+            slots[0].parentElement.appendChild(cursor);
+          }
+          return;
+        }
+        const { phase, tPhase } = hero.phaseInfo();
+        const s = codeState(phase, tPhase);
+        const key = phase + '|' + s.texts.join(' ') + '|' + s.held + s.dim + s.settled + s.cur;
+        if (key === lastKey) return;
+        lastKey = key;
+        for (let i = 0; i < 3; i++) {
+          if (slots[i].textContent !== s.texts[i]) slots[i].textContent = s.texts[i];
+        }
+        code.dataset.phase = PHASE_NAMES[phase];
+        code.classList.toggle('is-held', s.held);
+        code.classList.toggle('is-dim', s.dim);
+        code.classList.toggle('is-settled', s.settled);
+        const host = slots[s.cur].parentElement;
+        if (cursor.parentElement !== host) host.appendChild(cursor);
+      }
+      (function codeLoop() { applyCode(); requestAnimationFrame(codeLoop); })();
     }
   </script>
 </body>

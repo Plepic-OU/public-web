@@ -25,9 +25,33 @@ Spec: [metamorphosis-hero-prompt.md](metamorphosis-hero-prompt.md). CI: `tests/m
 </script>
 ```
 
-Copy `.meta-stage` / `.meta-poster` CSS from the demo page. Stage aspect is 32/23;
-the poster svg is 66.67% of stage height, centered, so the poster and the WebGL
-rest pose align pixel-for-pixel at swap.
+Copy `.meta-stage` / `.meta-poster` / `.meta-code` CSS from the demo page. Stage
+aspect is 32/23; the poster svg is 280/VIEW_H = 82.35% of stage height, centered,
+so the poster and the WebGL rest pose align pixel-for-pixel at swap. **VIEW_H
+(module) and the poster height % move in lockstep.** On this page the hero grid
+is 1.15fr/0.85fr above 900px (production's 0.6fr column rendered the mark too
+small).
+
+## The Refactor: the code snippet choreography
+
+The agent-loop snippet (production `.hero-code`) evolves with the creature —
+manual repetition becomes the agentic loop (Anthropic's turn-based → goal-based
+progression, claude.com/blog/getting-started-with-loops):
+
+| Movement | Line 1 (slots 2–3 during crawl) |
+| --- | --- |
+| Crawl | `think(); act(); observe();` typed once per gait cycle, three lines |
+| Gather | lines fold up; survivor swaps to `{ think → act → observe }`, cursor freezes solid |
+| Chrysalis | the braced block breathes (opacity 0.45↔0.55, 3s) |
+| Unfurl | `while(task) ` types in as pressure rises; brightness tick at the overshoot-relax beat |
+| Rest | `while(task) { think → act → observe }` — byte-identical to production — cursor blinking, 7s light wave |
+
+All text state derives from `hero.phaseInfo()` (`{phase, tPhase}`), never wall
+clock, so creature and code cannot desync and `replay()` needs no extra wiring.
+The DOM default is the canonical line: correct with zero JS, on the poster
+fallback, and under reduced motion. The animated block is `aria-hidden`; a
+visually-hidden static copy carries the text (13s of mutations must never be
+announced).
 
 ## DOM/ARIA contract
 

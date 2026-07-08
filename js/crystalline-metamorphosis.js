@@ -135,9 +135,12 @@ const HEAD_REST = { x: HEAD.x, y: dY(HEAD.y) };      // (150, 190)
 // The crawl ground sits at the level where the butterfly's body will end
 // (design y=200 → world 80), so the caterpillar crawls along the line it
 // will eventually rest on. The silk drops in from beyond the top edge.
-const VIEW_CY = 140, VIEW_H = 380;
+// VIEW_H is mirrored by the poster CSS: .meta-poster svg height must equal
+// 280/VIEW_H of stage height (82.35% at 340) or the swap shows a scale pop.
+const VIEW_CY = 140, VIEW_H = 340;
 const GROUND_Y = 58;
 const SILK_ANCHOR = { x: 150, y: 336 };
+const CRAWL_START = 128;               // head x at t=0; tail stays in frame
 
 // Timeline (seconds)
 const T_CRAWL = 4.6, T_GATHER = 2.6, T_CHRYS = 3.0, T_UNFURL = 3.4;
@@ -304,7 +307,7 @@ function createRig() {
     head: new SpringField(1, 10, 0.75),
     ant: [new SpringField(4, 6, 0.35), new SpringField(4, 6, 0.35)],
     // gait state
-    gait: { headS: 118, tailS: 118 - BODY_LEN, phase: 0.001, A: new Float32Array(N_POOL) },
+    gait: { headS: CRAWL_START, tailS: CRAWL_START - BODY_LEN, phase: 0.001, A: new Float32Array(N_POOL) },
     allowPin: true,   // false during resetRig so pins never grab stale positions
     // pendulum (chrysalis sway about the head pin), ICs inherited from the drop
     pend: { on: false, ang: 0, vel: 0 },
@@ -723,7 +726,7 @@ function resetRig(rig, startAtRest) {
   rig.consolidate = 0; rig.breathKick = 0;
   rig.pend.on = false; rig.pend.ang = 0; rig.pend.vel = 0;
   rig.twitchTimes = [0.9, 2.1];
-  rig.gait.phase = 0.001; rig.gait.headS = 118; rig.gait.tailS = 118 - BODY_LEN;
+  rig.gait.phase = 0.001; rig.gait.headS = CRAWL_START; rig.gait.tailS = CRAWL_START - BODY_LEN;
   rig.corners.pinned.fill(0);
   rig.corners.wake(); rig.body.wake();
   rig.silkA = 0; rig.silkTarget = 0; rig.shadowA = 0; rig.shadowTarget = 0;
@@ -1390,6 +1393,10 @@ export function init(stage, opts = {}) {
 
   // --- Public API ---------------------------------------------------------------
   const api = {
+    /** Current movement + seconds into it. phase: 0 crawl, 1 gather,
+        2 chrysalis, 3 unfurl, 4 rest. For host-side choreography (the
+        code snippet derives its text from this, never from wall clock). */
+    phaseInfo() { return { phase: rig.phase, tPhase: rig.tPhase, time: rig.time }; },
     replay() {
       if (dead) return;
       canvas.style.transition = 'opacity 200ms ease-in-out';

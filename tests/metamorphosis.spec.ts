@@ -89,13 +89,14 @@ test.describe('metamorphosis hero @metamorphosis', () => {
         c2.width = img.width; c2.height = img.height;
         const ctx = c2.getContext('2d', { willReadFrequently: true })!;
         ctx.drawImage(img, 0, 0);
+        // frustum mapping mirrors the module: VIEW_H=340, top=VIEW_CY+170=310
         const canvas = document.querySelector('#metaStage canvas') as HTMLCanvasElement;
         const W = canvas.clientWidth, H = canvas.clientHeight;
         const sx = img.width / W, sy = img.height / H;
-        const hw = (380 * (W / H)) / 2;
+        const hw = (340 * (W / H)) / 2;
         const px = (dx: number, dy: number) => [
           ((dx - 150 + hw) / (2 * hw)) * W * sx,
-          ((330 - (280 - dy)) / 380) * H * sy,
+          ((310 - (280 - dy)) / 340) * H * sy,
         ];
         const sample = (dx: number, dy: number) => {
           const [x, y] = px(dx, dy);
@@ -134,6 +135,31 @@ test.describe('metamorphosis hero @metamorphosis', () => {
     expect(await page.locator('#metaStage canvas').count()).toBe(0);
     await expect(page.locator('.meta-poster')).toHaveCSS('opacity', '1');
     expect(await page.locator('#metaReplay').isHidden()).toBe(true);
+    // the code line shows its canonical form with no choreography
+    expect(await page.locator('#metaCode .meta-code-line .t').first().textContent())
+      .toBe('while(task) { think → act → observe }');
+    await page.close();
+  });
+
+  test('code snippet evolves with the phases and resolves to the canonical line', async () => {
+    test.setTimeout(120_000);
+    const page = await openHero();
+    const line1 = page.locator('#metaCode .meta-code-line .t').first();
+    // crawl: hand-unrolled calls typing in
+    await page.waitForFunction(() => {
+      const t = document.querySelector('#metaCode .meta-code-line .t')?.textContent || '';
+      return t.startsWith('think();') || t === 'think(); act(); observe();';
+    }, null, { timeout: 15_000 });
+    // chrysalis: the collapsed block, held
+    await page.waitForFunction(
+      () => document.getElementById('metaCode')?.dataset.phase === 'chrysalis', null, { timeout: 20_000 });
+    expect(await line1.textContent()).toBe('{ think → act → observe }');
+    expect(await page.locator('#metaCode.is-held').count()).toBe(1);
+    // rest: byte-identical to the production hero-code line
+    await page.waitForFunction(
+      () => document.getElementById('metaCode')?.dataset.phase === 'rest', null, { timeout: 30_000 });
+    expect(await line1.textContent()).toBe('while(task) { think → act → observe }');
+    expect(await page.locator('#metaCode.is-held').count()).toBe(0);
     await page.close();
   });
 

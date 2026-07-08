@@ -802,6 +802,7 @@ p:last-child {
     animation: none;
   }
   .hero-code { opacity: 0.6; animation: none; }
+  .hero-cursor { animation: none; opacity: 1; }
 }
 
 .butterfly-container:hover .wing-left {
