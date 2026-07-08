@@ -266,7 +266,7 @@ The site has no forms by design (conversion happens via external calendar and Go
 - Zilla Slab italic at 1.35rem, ink text, max 56ch, with a 7px Vivid Green dot before the cite. No border rules, no background.
 
 ### Code Snippet (signature)
-- JetBrains Mono 0.8rem, Deep Green on white, 8px radius, 1px border, the one ambient shadow. Used for loop pseudocode (`while(task) { think → act → observe }`) in heroes and comparisons.
+- JetBrains Mono 0.8rem, Deep Green on white, 8px radius, 1px border, the one ambient shadow. Used for loop pseudocode (`while(task) { explore → act → observe }`) in heroes and comparisons. "Explore" is the canonical first verb (2026-07-08): it is the curiosity word of "curious play", matches the agentic loop's gather-act-check anatomy, and is native Claude Code vocabulary (explore-plan-code); only an agent explores, scripts merely fetch.
 
 ### Sticky CTA (mobile)
 - Bottom-fixed frosted bar with a full-width primary button; appears only below 768px, and yields whenever the hero or any other primary CTA is on screen (the One Accent Rule, enforced in JS).
