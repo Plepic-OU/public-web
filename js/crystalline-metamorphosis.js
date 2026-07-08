@@ -19,9 +19,13 @@
  *
  * INTEGRATION CONTRACT
  *   import { init } from './js/crystalline-metamorphosis.js';
- *   const hero = init(stageEl, { onLive, onFallback });
+ *   const hero = init(stageEl, { onLive, onFallback, startAtRest });
  *   hero.replay();   // explicit user trigger only — no auto-replay
  *   hero.destroy();  // full teardown, releases all GPU resources
+ *
+ *   opts.startAtRest: true → mount at the settled breathing butterfly and
+ *     never auto-play the arc; the host drives it via replay() (e.g. after
+ *     a delay so the visitor reads the headline first).
  *
  *   - stageEl contains the static poster (the exact mark SVG), visible by
  *     default. onLive() fires one frame AFTER the first presented WebGL
@@ -1227,10 +1231,25 @@ export function init(stage, opts = {}) {
 
   // --- Rig --------------------------------------------------------------------
   const rig = createRig();
+  // Start at rest when the host asks (e.g. to hold the finished mark and
+  // play the arc later via replay()), or on slow loads so the poster→canvas
+  // swap doesn't regress butterfly→caterpillar. Fresh fast loads play the
+  // full arc immediately unless startAtRest is set.
   const fresh = performance.now() < 2500;
-  resetRig(rig, !fresh);
+  const startAtRest = opts.startAtRest === true || !fresh;
+  resetRig(rig, startAtRest);
 
   // --- Sizing -------------------------------------------------------------------
+  // Framing controls (all optional; defaults reproduce the original full-frame
+  // centred mark). The mark spans design 0..300 wide, 0..280 tall.
+  //   markPx: target on-screen mark WIDTH in CSS px. The frustum zooms so the
+  //     300-unit mark renders at exactly this width, however wide the canvas
+  //     box is. Lets a wide box (crawl room) hold a small resting mark.
+  //   markRightPx: distance in CSS px from the canvas RIGHT edge to the mark's
+  //     right edge. With markPx this fully places the mark; the extra canvas
+  //     to the left renders opaque cream (= page bg) and is invisible.
+  const markPx = opts.markPx > 0 ? opts.markPx : 0;
+  const markRightPx = typeof opts.markRightPx === 'number' ? opts.markRightPx : 0;
   let tier = 0;
   function applySize() {
     const w = stage.clientWidth || 640, h = stage.clientHeight || 460;
@@ -1238,11 +1257,25 @@ export function init(stage, opts = {}) {
     const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, dprCap) * tierScale);
     renderer.setPixelRatio(dpr);
     renderer.setSize(w, h, false);
-    const aspect = w / h;
-    const hw = (VIEW_H * aspect) / 2;
-    // frustum is camera-relative; the camera sits at (150, VIEW_CY)
-    camera.left = -hw; camera.right = hw;
-    camera.top = VIEW_H / 2; camera.bottom = -VIEW_H / 2;
+    let hw, viewH;
+    if (markPx > 0) {
+      // px per design unit so the 300-wide mark == markPx on screen
+      const pxPerUnit = markPx / 300;
+      hw = (w / 2) / pxPerUnit;                 // half frustum width, design units
+      viewH = h / pxPerUnit;                    // frustum height matches box aspect
+      // mark right edge (design x=300) should sit markRightPx from canvas right;
+      // canvas right maps to camera.right (relative to camera at x=150).
+      const rightUnits = markRightPx / pxPerUnit;   // gap in design units
+      camera.right = 150 + rightUnits;
+      camera.left = camera.right - 2 * hw;
+      camera.top = viewH / 2; camera.bottom = -viewH / 2;
+    } else {
+      const aspect = w / h;
+      hw = (VIEW_H * aspect) / 2;
+      camera.left = -hw; camera.right = hw;
+      camera.top = VIEW_H / 2; camera.bottom = -VIEW_H / 2;
+      viewH = VIEW_H;
+    }
     camera.updateProjectionMatrix();
   }
   applySize();
