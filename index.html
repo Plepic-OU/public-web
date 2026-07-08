@@ -253,12 +253,27 @@
 
     /* The Refactor: the agent-loop snippet evolves with the creature.
        Reuses .hero-code grammar; overrides its one-shot entrance so the
-       phase-driven choreography owns visibility. Reserved 3-slot block =
-       zero layout shift across the arc. */
+       phase-driven choreography owns visibility.
+
+       Two invariants held together:
+       (a) ZERO layout shift: the block reserves a constant 3-line height
+           in every phase, so nothing above it (the butterfly) ever moves.
+       (b) BASELINE LOCK: at rest the visible line is the last of the three
+           slots, bottom-anchored (justify-content:flex-end), so its text
+           baseline sits on the left column's qualifier baseline (both
+           columns bottom-align via the grid's align-items:end). The
+           crawl's three lines fill upward from that same bottom line.
+       The margin-bottom nudge is tuned by in-browser measurement so the
+       two baselines match to the sub-pixel. */
     .hero-visual .hero-code {
       opacity: 1;
       animation: none;
-      min-height: 3.9em;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 5.3em;   /* holds all 3 crawl lines at once: constant
+                              height in every phase, zero butterfly shift */
+      margin-bottom: 3px;  /* baseline lock, measured against qualifier */
     }
     .hero-code .meta-code-line {
       display: block;
@@ -269,22 +284,21 @@
         transform var(--dur-base) var(--ease-settle);
     }
     .hero-code .meta-code-line:empty { opacity: 0; }
-    .hero-code[data-phase="gather"] .meta-code-line + .meta-code-line {
+    /* gather: the two upper crawl lines fold down into the bottom survivor */
+    .hero-code[data-phase="gather"] .meta-code-line:nth-child(1),
+    .hero-code[data-phase="gather"] .meta-code-line:nth-child(2) {
       opacity: 0;
-      transform: translateY(-0.35em);
+      transform: translateY(0.35em);
     }
-    .hero-code[data-phase="gather"] .meta-code-line + .meta-code-line + .meta-code-line {
-      transition-delay: 80ms;
-    }
-    .hero-code[data-phase="chrysalis"] .meta-code-line:first-child {
+    .hero-code[data-phase="chrysalis"] .meta-code-line:last-child {
       animation: meta-code-breathe 3s var(--ease-calm) infinite;
     }
     @keyframes meta-code-breathe {
       0%, 100% { opacity: 0.45; }
       50% { opacity: 0.55; }
     }
-    .hero-code.is-dim .meta-code-line:first-child { opacity: 0.45; }
-    .hero-code.is-settled .meta-code-line:first-child {
+    .hero-code.is-dim .meta-code-line:last-child { opacity: 0.45; }
+    .hero-code.is-settled .meta-code-line:last-child {
       animation: meta-code-tick var(--dur-settle) var(--ease-settle) 1;
     }
     @keyframes meta-code-tick {
@@ -293,7 +307,7 @@
     }
     /* rest: the light-shift wave exits the crystal through the text
        (brightness only, per the Light-Shift pattern) */
-    .hero-code[data-phase="rest"] .meta-code-line:first-child {
+    .hero-code[data-phase="rest"] .meta-code-line:last-child {
       animation: meta-code-wave 7s var(--ease-calm) 0.3s infinite;
     }
     @keyframes meta-code-wave {
@@ -375,11 +389,11 @@
                aria-hidden: 13s of text mutation must never be announced; the
                visually-hidden static copy carries the text for readers. -->
           <p class="hero-code" id="metaCode" data-phase="rest" aria-hidden="true">
-            <span class="meta-code-line"><span class="t">while(task) { explore &rarr; act &rarr; observe }</span><span class="hero-cursor"></span></span>
             <span class="meta-code-line"><span class="t"></span></span>
             <span class="meta-code-line"><span class="t"></span></span>
+            <span class="meta-code-line"><span class="t">while(task) { explore &rarr; act &rarr; verify }</span><span class="hero-cursor"></span></span>
           </p>
-          <span class="metamorphosis-sr">while(task) { explore &rarr; act &rarr; observe }</span>
+          <span class="metamorphosis-sr">while(task) { explore &rarr; act &rarr; verify }</span>
         </div>
       </div>
 
@@ -405,7 +419,7 @@
             <div class="shift-col shift-col--agent">
               <h3 class="text-agent">Agent</h3>
               <p>LLM + Tools + Loop + Context</p>
-              <div class="code-snippet" tabindex="0"><code class="language-pseudocode">while(task) { explore &rarr; act &rarr; observe }</code></div>
+              <div class="code-snippet" tabindex="0"><code class="language-pseudocode">while(task) { explore &rarr; act &rarr; verify }</code></div>
             </div>
             <div class="shift-col shift-col--conversational">
               <h3 class="text-conversational">Conversational AI</h3>
@@ -938,8 +952,8 @@
         // Manual repetition (turn-based: a human drives every cycle) becomes
         // the agentic loop. All text state derives from the module's
         // phase/tPhase, never wall clock, so creature and code cannot desync.
-        const UNROLLED = 'explore(); act(); observe();';
-        const COLLAPSED = '{ explore → act → observe }';
+        const UNROLLED = 'explore(); act(); verify();';
+        const COLLAPSED = '{ explore → act → verify }';
         const FINAL = 'while(task) ' + COLLAPSED;
         const PREFIX = 'while(task) ';
         const PHASE_NAMES = ['crawl', 'gather', 'chrysalis', 'unfurl', 'rest'];
@@ -949,6 +963,10 @@
         const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
         const typed = (s, k) => s.slice(0, Math.round(clamp01(k) * s.length));
 
+        // The block is bottom-anchored with a constant 3-line height, so the
+        // resting line lives in the LAST slot (index 2). Crawl fills all three
+        // top-to-bottom; every single-line state (gather onward) sits in slot 2
+        // so its baseline locks to the qualifier and the butterfly never shifts.
         function codeState(phase, t) {
           if (phase === 0) {
             const texts = LINE_WINDOWS.map(([a, b]) => typed(UNROLLED, (t - a) / (b - a)));
@@ -959,17 +977,17 @@
           if (phase === 1) {
             const swapped = t >= 0.35;
             return {
-              texts: swapped ? [COLLAPSED, '', ''] : [UNROLLED, UNROLLED, UNROLLED],
-              held: true, dim: swapped, settled: false, cur: 0,
+              texts: swapped ? ['', '', COLLAPSED] : [UNROLLED, UNROLLED, UNROLLED],
+              held: true, dim: swapped, settled: false, cur: 2,
             };
           }
-          if (phase === 2) return { texts: [COLLAPSED, '', ''], held: true, dim: true, settled: false, cur: 0 };
+          if (phase === 2) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
           if (phase === 3) {
             const n = typed(PREFIX, (t - 0.51) / 0.66);
             const settled = t >= 2.89;
-            return { texts: [n + COLLAPSED, '', ''], held: !settled, dim: !settled, settled, cur: 0 };
+            return { texts: ['', '', n + COLLAPSED], held: !settled, dim: !settled, settled, cur: 2 };
           }
-          return { texts: [FINAL, '', ''], held: false, dim: false, settled: false, cur: 0 };
+          return { texts: ['', '', FINAL], held: false, dim: false, settled: false, cur: 2 };
         }
 
         let lastKey = '';
@@ -977,10 +995,10 @@
           if (!choreoOn) {
             if (lastKey !== 'off') {
               lastKey = 'off';
-              slots[0].textContent = FINAL; slots[1].textContent = ''; slots[2].textContent = '';
+              slots[0].textContent = ''; slots[1].textContent = ''; slots[2].textContent = FINAL;
               code.dataset.phase = 'rest';
               code.classList.remove('is-held', 'is-dim', 'is-settled');
-              slots[0].parentElement.appendChild(cursor);
+              slots[2].parentElement.appendChild(cursor);
             }
             return;
           }
