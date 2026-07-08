@@ -192,6 +192,128 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Pinned Three.js r0.185.1, vendored locally (vendor/three.module.min.js)
+       so it loads under the site's strict same-origin CSP with no CDN and no
+       third-party runtime dependency. ~87 KB gzip; no addons, no build step;
+       the scene module is procedural (zero textures, models, images). Gated
+       in JS so reduced-motion / save-data / weak devices never download it. -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/vendor/three.module.min.js"
+      }
+    }
+  </script>
+
+  <style>
+    /* Metamorphosis hero: the 3D crystalline arc replaces the static
+       watermark in .hero-visual. Poster-first so the mark is correct with
+       zero JS; the module cross-fades canvas in only after its first frame.
+       Homepage-scoped; the design system lives in css/styles.css. */
+    .hero-visual .meta-stage {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      aspect-ratio: 32 / 23;
+      margin-inline: auto;
+    }
+    .meta-stage .meta-poster {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity var(--dur-base) var(--ease-calm);
+    }
+    /* Poster mark = 280/VIEW_H of stage height (VIEW_H 340 in the module),
+       so poster and WebGL rest pose align pixel-for-pixel at the swap. */
+    .meta-stage .meta-poster .butterfly-svg { height: 82.35%; width: auto; }
+    .meta-stage canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity var(--dur-base) var(--ease-calm);
+      pointer-events: none;
+    }
+    .meta-stage.is-live .meta-poster { opacity: 0; }
+    .meta-stage.is-live canvas { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .meta-stage .meta-poster { opacity: 1 !important; transition: none; }
+      .meta-stage canvas { opacity: 0 !important; transition: none; }
+    }
+
+    /* Wider visual column than the default 0.6fr so the mark reads large. */
+    @media (min-width: 901px) {
+      .hero .hero-grid:has(.meta-stage) { grid-template-columns: 1.15fr 0.85fr; }
+    }
+
+    /* The Refactor: the agent-loop snippet evolves with the creature.
+       Reuses .hero-code grammar; overrides its one-shot entrance so the
+       phase-driven choreography owns visibility. Reserved 3-slot block =
+       zero layout shift across the arc. */
+    .hero-visual .hero-code {
+      opacity: 1;
+      animation: none;
+      min-height: 3.9em;
+    }
+    .hero-code .meta-code-line {
+      display: block;
+      line-height: 1.3;
+      opacity: 0.6;
+      transition:
+        opacity var(--dur-base) var(--ease-settle),
+        transform var(--dur-base) var(--ease-settle);
+    }
+    .hero-code .meta-code-line:empty { opacity: 0; }
+    .hero-code[data-phase="gather"] .meta-code-line + .meta-code-line {
+      opacity: 0;
+      transform: translateY(-0.35em);
+    }
+    .hero-code[data-phase="gather"] .meta-code-line + .meta-code-line + .meta-code-line {
+      transition-delay: 80ms;
+    }
+    .hero-code[data-phase="chrysalis"] .meta-code-line:first-child {
+      animation: meta-code-breathe 3s var(--ease-calm) infinite;
+    }
+    @keyframes meta-code-breathe {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.55; }
+    }
+    .hero-code.is-dim .meta-code-line:first-child { opacity: 0.45; }
+    .hero-code.is-settled .meta-code-line:first-child {
+      animation: meta-code-tick var(--dur-settle) var(--ease-settle) 1;
+    }
+    @keyframes meta-code-tick {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.14); }
+    }
+    /* rest: the light-shift wave exits the crystal through the text
+       (brightness only, per the Light-Shift pattern) */
+    .hero-code[data-phase="rest"] .meta-code-line:first-child {
+      animation: meta-code-wave 7s var(--ease-calm) 0.3s infinite;
+    }
+    @keyframes meta-code-wave {
+      0%, 70%, 100% { filter: brightness(1); }
+      35% { filter: brightness(1.14); }
+    }
+    /* cursor frozen solid = held breath (never hidden: reads as broken) */
+    .hero-code.is-held .hero-cursor { animation: none; opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-code .meta-code-line,
+      .hero-code[data-phase] .meta-code-line { animation: none; opacity: 0.6; transform: none; }
+    }
+    .metamorphosis-sr {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -236,10 +358,28 @@
         </div>
 
         <div class="hero-visual">
-          <div class="butterfly-container">
-            <svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="wing-left"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><g class="wing-right"><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg>
+          <div class="meta-stage" id="metaStage">
+            <!-- Static poster: the exact locked mark. Correct with zero JS,
+                 under reduced motion, and if WebGL is unavailable. The module
+                 cross-fades it out only after its first rendered frame. -->
+            <div class="meta-poster" aria-hidden="true">
+              <svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg>
+            </div>
+            <!-- The module inserts its canvas here (aria-hidden, pointer-events: none) -->
           </div>
-          <div class="hero-code">while(task) { explore &rarr; act &rarr; observe }<span class="hero-cursor" aria-hidden="true"></span></div>
+
+          <!-- The agentic loop, evolving with the creature ("The Refactor").
+               Default DOM = the canonical production line: correct with zero
+               JS, under reduced motion, and on the poster fallback. The
+               choreography script rewrites it only while the WebGL arc runs.
+               aria-hidden: 13s of text mutation must never be announced; the
+               visually-hidden static copy carries the text for readers. -->
+          <p class="hero-code" id="metaCode" data-phase="rest" aria-hidden="true">
+            <span class="meta-code-line"><span class="t">while(task) { explore &rarr; act &rarr; observe }</span><span class="hero-cursor"></span></span>
+            <span class="meta-code-line"><span class="t"></span></span>
+            <span class="meta-code-line"><span class="t"></span></span>
+          </p>
+          <span class="metamorphosis-sr">while(task) { explore &rarr; act &rarr; observe }</span>
         </div>
       </div>
 
@@ -765,6 +905,103 @@
       '%cWe teach developers to build with AI agents. plepic.com/training',
       'color: #4a4a45; font-size: 11px;'
     );
+  </script>
+
+  <!-- Metamorphosis hero: the crystalline caterpillar -> butterfly arc, with
+       the agent-loop snippet evolving alongside it ("The Refactor"). Gated
+       BEFORE the dynamic import so reduced-motion / save-data / weak devices
+       download no Three.js and keep the static poster + canonical line. -->
+  <script type="module">
+    const stage = document.getElementById('metaStage');
+    const code = document.getElementById('metaCode');
+    if (stage && code) {
+      const skip =
+        matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        (navigator.connection && navigator.connection.saveData) ||
+        (navigator.deviceMemory && navigator.deviceMemory < 2) ||
+        !document.createElement('canvas').getContext('webgl2');
+
+      if (!skip) {
+        const { init } = await import('/js/crystalline-metamorphosis.js');
+        let choreoOn = true;
+        const hero = init(stage, {
+          onLive() { stage.classList.add('is-live'); },
+          onFallback() {
+            // restore the poster + canonical line: a dead canvas must never
+            // stay frontmost, and the code must not freeze mid-refactor
+            stage.classList.remove('is-live');
+            choreoOn = false;
+          }
+        });
+
+        // --- The Refactor: code choreography ----------------------------
+        // Manual repetition (turn-based: a human drives every cycle) becomes
+        // the agentic loop. All text state derives from the module's
+        // phase/tPhase, never wall clock, so creature and code cannot desync.
+        const UNROLLED = 'explore(); act(); observe();';
+        const COLLAPSED = '{ explore → act → observe }';
+        const FINAL = 'while(task) ' + COLLAPSED;
+        const PREFIX = 'while(task) ';
+        const PHASE_NAMES = ['crawl', 'gather', 'chrysalis', 'unfurl', 'rest'];
+        const LINE_WINDOWS = [[0.18, 1.38], [1.70, 2.90], [3.22, 4.42]];
+        const slots = [...code.querySelectorAll('.meta-code-line .t')];
+        const cursor = code.querySelector('.hero-cursor');
+        const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+        const typed = (s, k) => s.slice(0, Math.round(clamp01(k) * s.length));
+
+        function codeState(phase, t) {
+          if (phase === 0) {
+            const texts = LINE_WINDOWS.map(([a, b]) => typed(UNROLLED, (t - a) / (b - a)));
+            let active = 0;
+            for (let i = 0; i < 3; i++) if (t >= LINE_WINDOWS[i][0]) active = i;
+            return { texts, held: false, dim: false, settled: false, cur: active };
+          }
+          if (phase === 1) {
+            const swapped = t >= 0.35;
+            return {
+              texts: swapped ? [COLLAPSED, '', ''] : [UNROLLED, UNROLLED, UNROLLED],
+              held: true, dim: swapped, settled: false, cur: 0,
+            };
+          }
+          if (phase === 2) return { texts: [COLLAPSED, '', ''], held: true, dim: true, settled: false, cur: 0 };
+          if (phase === 3) {
+            const n = typed(PREFIX, (t - 0.51) / 0.66);
+            const settled = t >= 2.89;
+            return { texts: [n + COLLAPSED, '', ''], held: !settled, dim: !settled, settled, cur: 0 };
+          }
+          return { texts: [FINAL, '', ''], held: false, dim: false, settled: false, cur: 0 };
+        }
+
+        let lastKey = '';
+        function applyCode() {
+          if (!choreoOn) {
+            if (lastKey !== 'off') {
+              lastKey = 'off';
+              slots[0].textContent = FINAL; slots[1].textContent = ''; slots[2].textContent = '';
+              code.dataset.phase = 'rest';
+              code.classList.remove('is-held', 'is-dim', 'is-settled');
+              slots[0].parentElement.appendChild(cursor);
+            }
+            return;
+          }
+          const { phase, tPhase } = hero.phaseInfo();
+          const s = codeState(phase, tPhase);
+          const key = phase + '|' + s.texts.join(' ') + '|' + s.held + s.dim + s.settled + s.cur;
+          if (key === lastKey) return;
+          lastKey = key;
+          for (let i = 0; i < 3; i++) {
+            if (slots[i].textContent !== s.texts[i]) slots[i].textContent = s.texts[i];
+          }
+          code.dataset.phase = PHASE_NAMES[phase];
+          code.classList.toggle('is-held', s.held);
+          code.classList.toggle('is-dim', s.dim);
+          code.classList.toggle('is-settled', s.settled);
+          const host = slots[s.cur].parentElement;
+          if (cursor.parentElement !== host) host.appendChild(cursor);
+        }
+        (function codeLoop() { applyCode(); requestAnimationFrame(codeLoop); })();
+      }
+    }
   </script>
 </body>
 </html>

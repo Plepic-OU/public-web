@@ -18,7 +18,15 @@ for (const page of pages) {
     // Wait for fonts to fully render (Google Fonts may have slight delays)
     await browserPage.waitForTimeout(1000);
 
-    const screenshot = await browserPage.screenshot({ fullPage: true });
+    // The homepage hero is a live WebGL animation (non-deterministic per
+    // frame). Mask its stage so the snapshot guards the rest of the page
+    // without flaking on the moving butterfly; the metamorphosis suite
+    // covers the hero's correctness (byte-exact rest pose, fallbacks).
+    const mask = page.name === 'homepage'
+      ? [browserPage.locator('.hero-visual')]
+      : [];
+
+    const screenshot = await browserPage.screenshot({ fullPage: true, mask });
 
     await expect(screenshot).toMatchSnapshot(`${page.name}-${testInfo.project.name}.png`, {
       maxDiffPixelRatio: 0.05,
