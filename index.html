@@ -230,6 +230,12 @@
     /* Poster mark = 280/VIEW_H of stage height (VIEW_H 340 in the module),
        so poster and WebGL rest pose align pixel-for-pixel at the swap. */
     .meta-stage .meta-poster .butterfly-svg { height: 82.35%; width: auto; }
+    /* When the canvas anchors the mark to the box's right edge (wide box for
+       crawl room), the poster must match so the pre-canvas / reduced-motion
+       state sits in the same place. */
+    @media (min-width: 901px) {
+      .hero-visual .meta-stage .meta-poster { justify-content: flex-end; }
+    }
     .meta-stage canvas {
       position: absolute;
       inset: 0;
@@ -249,6 +255,18 @@
     /* Wider visual column than the default 0.6fr so the mark reads large. */
     @media (min-width: 901px) {
       .hero .hero-grid:has(.meta-stage) { grid-template-columns: 1.15fr 0.85fr; }
+      /* Right-align the whole visual (butterfly + code) to the column's
+         right edge, which is the page content margin: the same vertical
+         line as the "Talk to Kaido" button and the "...Rethinkers" text.
+         The code cursor and the butterfly's right edge both land there. */
+      .hero-visual:has(.meta-stage) { align-items: flex-end; }
+      /* The stage box is wider than the resting butterfly so the crawling
+         caterpillar has room (it clips in a tight box). The butterfly is
+         pinned to the box's RIGHT edge by the module (markAnchorRight), and
+         the extra width to the left renders opaque cream (= page bg), so it
+         is invisible. Box right edge sits on the page margin; butterfly and
+         code-loop end both land there, butterfly centred over the loop. */
+      .hero-visual .meta-stage { width: 440px; max-width: 440px; margin-inline: 0; }
     }
 
     /* The Refactor: the agent-loop snippet evolves with the creature.
@@ -274,6 +292,11 @@
       min-height: 5.3em;   /* holds all 3 crawl lines at once: constant
                               height in every phase, zero butterfly shift */
       margin-bottom: 3px;  /* baseline lock, measured against qualifier */
+    }
+    /* Right-align every code line so the cursor (line end) pins to the
+       page margin; crawl lines share that right edge as they type. */
+    @media (min-width: 901px) {
+      .hero-visual .hero-code { width: fit-content; text-align: right; }
     }
     .hero-code .meta-code-line {
       display: block;
@@ -938,7 +961,13 @@
       if (!skip) {
         const { init } = await import('/js/crystalline-metamorphosis.js');
         let choreoOn = true;
+        // Hold the finished butterfly + code loop on load; play the
+        // metamorphosis once after a delay so it doesn't pull the eye off
+        // the headline the visitor should read first. Rests forever after.
         const hero = init(stage, {
+          startAtRest: true,
+          markPx: 296,        // resting mark width ≈ code-loop width
+          markRightPx: -15,   // visible right wing (design ~285) to the margin
           onLive() { stage.classList.add('is-live'); },
           onFallback() {
             // restore the poster + canonical line: a dead canvas must never
@@ -947,6 +976,17 @@
             choreoOn = false;
           }
         });
+        const METAMORPHOSIS_DELAY = 5000;
+        let played = false;
+        function playOnce() {
+          if (played || !choreoOn) return;
+          played = true;
+          hero.replay();
+        }
+        // fire once, whichever comes first: the timer, or a scroll (if the
+        // visitor scrolls away the delayed motion would play unseen anyway,
+        // but the timer is the primary path). A single setTimeout is enough.
+        setTimeout(playOnce, METAMORPHOSIS_DELAY);
 
         // --- The Refactor: code choreography ----------------------------
         // Manual repetition (turn-based: a human drives every cycle) becomes
