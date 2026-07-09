@@ -256,10 +256,15 @@
       }
       .hero-visual .meta-stage .meta-poster .butterfly-svg {
         height: auto; width: 296px;
-        /* the SVG viewBox pads the visible mark ~5% each side; shift right
-           so the visible right wing lands on the margin (matches the canvas
-           markRightPx offset) and the mark centres over the code loop. */
-        transform: translateX(15px);
+        /* The SVG viewBox (0 0 300 280) has empty space around the visible
+           mark: ~5% each side horizontally, and ~14% below (the lowest wing
+           is at design y=240, not 280). Without correction the poster's
+           VISIBLE butterfly sits ~40px higher than the WebGL rest pose
+           (which is anchored by its visible wing tips), causing a jump when
+           the canvas fades in. translateX(15px) lands the right wing on the
+           margin; translateY(40px) drops the visible mark to match the
+           canvas bottom, so the poster→canvas swap has no vertical shift. */
+        transform: translate(15px, 40px);
       }
     }
     .meta-stage canvas {
