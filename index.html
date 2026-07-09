@@ -304,13 +304,16 @@
        the laptop proportion; (b) hold the content nearer the top on tall
        viewports so it reads as intentional, not adrift. 1440 is unchanged
        (below the 1600px threshold), so the good laptop layout is preserved. */
-    @media (min-width: 1600px) {
+    /* Keep the two columns tight and related on large screens: cap the grid
+       near the laptop proportion so the 1.15/0.85fr columns don't spread
+       apart with a wide empty gap between the headline and the butterfly.
+       Capped at all widths >=1300px, the layout composes exactly like the
+       (good) laptop layout instead of stretching. The stage stays its
+       laptop size (440px box / markPx 296) so box and mark keep matching.
+       Trust bar tracks the same cap. */
+    @media (min-width: 1300px) {
       .hero .hero-grid:has(.meta-stage),
-      .hero:has(.meta-stage) .hero-bottom { max-width: 1400px; }
-    }
-    @media (min-width: 2100px) {
-      .hero .hero-grid:has(.meta-stage),
-      .hero:has(.meta-stage) .hero-bottom { max-width: 1560px; }
+      .hero:has(.meta-stage) .hero-bottom { max-width: 1180px; }
     }
     /* Tall viewports: cap the vertical span so the content sits toward the top
        instead of floating in the middle of a very tall cream field. The trust
@@ -434,13 +437,20 @@
        hierarchy: badge + H1 + subhead + CTA first, a SMALLER butterfly+code
        lockup after, and the mark centred on the column (over the code). */
     @media (max-width: 900px) {
+      /* Badge clip: the base .hero-grid has margin:-5vh auto 0 which, on the
+         stacked mobile layout, pulls the first item (the badge) up UNDER the
+         fixed 64px header so its top ~21px is hidden. Neutralise the negative
+         pull here so the value prop clears the header. */
+      .hero:has(.meta-stage) .hero-grid { margin-top: 0; }
+
       /* M6: value prop leads, visual follows. .hero-text/.hero-visual are the
          two grid children; explicit order beats the css/styles.css order:-1. */
       .hero .hero-grid:has(.meta-stage) .hero-text { order: 0; }
-      .hero .hero-grid:has(.meta-stage) .hero-visual { order: 1; margin-top: 2rem; }
+      .hero .hero-grid:has(.meta-stage) .hero-visual { order: 1; margin-top: 1rem; }
 
-      /* M6: shrink the lockup so it supports, not dominates, the headline. */
-      .hero-visual .meta-stage { max-width: 300px; }
+      /* M6: shrink the lockup so it supports, not dominates, the headline, and
+         close the gap between the qualifier and the butterfly. */
+      .hero-visual .meta-stage { max-width: 240px; }
 
       /* M4 + M8: on stacked layouts the WebGL mark is framed (markRightPx /
          markBottomPx, tuned for the desktop box) ~17px to the RIGHT of and
