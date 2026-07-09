@@ -327,13 +327,11 @@
       .hero .hero-grid:has(.meta-stage),
       .hero:has(.meta-stage) .hero-bottom { max-width: 1180px; }
     }
-    /* Tall viewports: cap the vertical span so the content sits toward the top
-       instead of floating in the middle of a very tall cream field. The trust
-       bar stays pinned to the hero bottom (its own absolute rule). */
-    @media (min-width: 1200px) and (min-height: 960px) {
-      .hero:has(.meta-stage) { min-height: 0; height: 900px; align-items: flex-start; }
-      .hero:has(.meta-stage) .hero-grid { margin-top: 0; padding-top: 4vh; }
-    }
+    /* NOTE: the hero keeps its base min-height:100vh (fills the fold, content
+       vertically centred). An earlier fixed height:900px cap was reverted: on
+       tall viewports it cut the hero short and let the next (darker cream)
+       section intrude into the opening fold, and it shifted the carefully
+       tuned vertical position of the butterfly+code lockup. */
 
     /* The Refactor: the agent-loop snippet evolves with the creature.
        Reuses .hero-code grammar; overrides its one-shot entrance so the
