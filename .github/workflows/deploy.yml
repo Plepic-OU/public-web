@@ -39,6 +39,14 @@ jobs:
           rm -rf docs/training-one-pager
           rm -rf docs/specs
 
+      - name: Cache-bust asset URLs
+        # Stamp a content hash onto css/js URLs in the HTML so returning
+        # visitors get fresh assets after a deploy instead of a stale copy
+        # (GitHub Pages serves max-age=600). Runs on the artifact only; the
+        # committed source stays clean. Unchanged assets keep their hash and
+        # stay cached; only changed files bust.
+        run: node scripts/cache-bust.mjs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
