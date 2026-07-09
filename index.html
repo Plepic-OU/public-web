@@ -297,13 +297,11 @@
          "...Rethinkers" line). align-items (the flex CROSS axis, here
          horizontal) pins the stage+code right; gap:0 keeps them tight. */
       .hero-visual:has(.meta-stage) { align-items: flex-end; gap: 0; }
-      /* Vertical balance: the base .hero-visual has align-self:end, which
-         bottom-anchors the whole lockup in the grid row so it sinks ~150px
-         below the headline and leaves the upper-right quadrant empty
-         (worst on desktop/wide, permanent for reduced-motion). Centre the
-         visual column against the headline instead; the right-edge pin is
-         unaffected (that's the cross axis). polish.md vertical balance. */
-      .hero-visual:has(.meta-stage) { align-self: center; }
+      /* Vertical alignment: keep the base align-self:end (grid align-items:end
+         bottom-aligns both columns) so the code block's bottom BASELINE sits
+         on the left qualifier line ("For developers with 2+ years...") — a
+         deliberate, pixel-tuned lock (commit c539c6a). Do NOT centre the
+         column: that lifts the lockup off the qualifier baseline. */
     }
 
     /* ── Large screens (M5 + M7) ────────────────────────────────────────────
@@ -368,7 +366,8 @@
         text-align: right;
         min-height: 0;
         margin-top: -0.6em;
-        margin-bottom: 0;
+        margin-bottom: 3px;   /* baseline lock: code baseline on the qualifier
+                                 line, measured (delta -0px). See c539c6a. */
         /* Optical centre: the code string is left-heavy ("while(task) {
            explore" outweighs "verify }"), so its ink centroid sits ~8px
            left of its geometric centre. Nudge right by that much so the
