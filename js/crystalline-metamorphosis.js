@@ -1248,8 +1248,13 @@ export function init(stage, opts = {}) {
   //   markRightPx: distance in CSS px from the canvas RIGHT edge to the mark's
   //     right edge. With markPx this fully places the mark; the extra canvas
   //     to the left renders opaque cream (= page bg) and is invisible.
+  //   markBottomPx: distance in CSS px from the canvas BOTTOM edge to the
+  //     mark's bottom (design y=0). Anchors the resting butterfly to the box
+  //     bottom so the code loop can sit snug beneath it; extra canvas above
+  //     renders cream and is invisible.
   const markPx = opts.markPx > 0 ? opts.markPx : 0;
   const markRightPx = typeof opts.markRightPx === 'number' ? opts.markRightPx : 0;
+  const markBottomPx = typeof opts.markBottomPx === 'number' ? opts.markBottomPx : null;
   let tier = 0;
   function applySize() {
     const w = stage.clientWidth || 640, h = stage.clientHeight || 460;
@@ -1268,7 +1273,16 @@ export function init(stage, opts = {}) {
       const rightUnits = markRightPx / pxPerUnit;   // gap in design units
       camera.right = 150 + rightUnits;
       camera.left = camera.right - 2 * hw;
-      camera.top = viewH / 2; camera.bottom = -viewH / 2;
+      if (markBottomPx !== null) {
+        // Frustum top/bottom are relative to the camera (world-Y VIEW_CY).
+        // The mark's bottom is world-Y 0, i.e. camera-relative (0 - VIEW_CY).
+        // Pin that markBottomPx above the canvas bottom (= camera.bottom).
+        const bottomUnits = markBottomPx / pxPerUnit;
+        camera.bottom = (0 - VIEW_CY) - bottomUnits;
+        camera.top = camera.bottom + viewH;
+      } else {
+        camera.top = viewH / 2; camera.bottom = -viewH / 2;
+      }
     } else {
       const aspect = w / h;
       hw = (VIEW_H * aspect) / 2;
