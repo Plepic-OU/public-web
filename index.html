@@ -325,6 +325,11 @@
         min-height: 0;
         margin-top: -0.6em;
         margin-bottom: 0;
+        /* Optical centre: the code string is left-heavy ("while(task) {
+           explore" outweighs "verify }"), so its ink centroid sits ~8px
+           left of its geometric centre. Nudge right by that much so the
+           text mass, not the box, centres under the butterfly body axis. */
+        transform: translateX(8px);
       }
     }
     .hero-code .meta-code-line {
