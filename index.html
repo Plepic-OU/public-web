@@ -238,7 +238,11 @@
       align-items: center;
       justify-content: center;
       opacity: 1;
-      transition: opacity var(--dur-base) var(--ease-calm);
+      /* Short fade (150ms) onto an already-solid canvas, not a 300ms
+         cross-dissolve. Two layers fading over the same duration superimpose
+         at the midpoint (a faint double-exposure). The canvas renders one
+         full frame before onLive, so it's solid underneath. */
+      transition: opacity var(--dur-fast) var(--ease-calm);
     }
     /* Poster mark = 280/VIEW_H of stage height (VIEW_H 340 in the module),
        so poster and WebGL rest pose align pixel-for-pixel at the swap. */
@@ -273,7 +277,9 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity var(--dur-base) var(--ease-calm);
+      /* No transition: the canvas snaps to opaque under the poster, then the
+         poster fades off it (above). Avoids the mid-crossfade double-exposure. */
+      transition: none;
       pointer-events: none;
     }
     .meta-stage.is-live .meta-poster { opacity: 0; }
@@ -288,10 +294,16 @@
       .hero .hero-grid:has(.meta-stage) { grid-template-columns: 1.15fr 0.85fr; }
       /* Right-align the whole lockup (butterfly + code) to the column's
          right edge = the page content margin (the "Talk to Kaido" /
-         "...Rethinkers" line). The code cursor and the butterfly's right
-         edge both land there; the wide stage's extra width renders cream
-         (= page bg) so the butterfly reads as right-aligned and small. */
+         "...Rethinkers" line). align-items (the flex CROSS axis, here
+         horizontal) pins the stage+code right; gap:0 keeps them tight. */
       .hero-visual:has(.meta-stage) { align-items: flex-end; gap: 0; }
+      /* Vertical balance: the base .hero-visual has align-self:end, which
+         bottom-anchors the whole lockup in the grid row so it sinks ~150px
+         below the headline and leaves the upper-right quadrant empty
+         (worst on desktop/wide, permanent for reduced-motion). Centre the
+         visual column against the headline instead; the right-edge pin is
+         unaffected (that's the cross axis). polish.md vertical balance. */
+      .hero-visual:has(.meta-stage) { align-self: center; }
     }
 
     /* ── Large screens (M5 + M7) ────────────────────────────────────────────
