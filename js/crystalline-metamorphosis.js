@@ -1274,11 +1274,16 @@ export function init(stage, opts = {}) {
       camera.right = 150 + rightUnits;
       camera.left = camera.right - 2 * hw;
       if (markBottomPx !== null) {
-        // Frustum top/bottom are relative to the camera (world-Y VIEW_CY).
-        // The mark's bottom is world-Y 0, i.e. camera-relative (0 - VIEW_CY).
-        // Pin that markBottomPx above the canvas bottom (= camera.bottom).
+        // Anchor the VISIBLE mark bottom to the canvas bottom. The mark's
+        // lowest painted point is the lowest wing tip: design y≈240 →
+        // world-Y = dY(240) = 40 (NOT 0; the antennae push the design box to
+        // y=41 but nothing paints below y≈240). Frustum edges are relative to
+        // the camera at world-Y VIEW_CY; the canvas bottom shows world-Y
+        // (VIEW_CY + camera.bottom). Put the visible bottom markBottomPx above
+        // that. MARK_BOTTOM_WORLD is derived from Appendix A, not assumed.
+        const MARK_BOTTOM_WORLD = 40;
         const bottomUnits = markBottomPx / pxPerUnit;
-        camera.bottom = (0 - VIEW_CY) - bottomUnits;
+        camera.bottom = (MARK_BOTTOM_WORLD - VIEW_CY) - bottomUnits;
         camera.top = camera.bottom + viewH;
       } else {
         camera.top = viewH / 2; camera.bottom = -viewH / 2;
