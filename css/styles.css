@@ -699,6 +699,15 @@ p:last-child {
   opacity: 0.28;
 }
 
+/* Metamorphosis hero poster: the poster IS the mark at first paint, under
+   reduced motion, and on the WebGL fallback, so it must render at full
+   presence (the WebGL canvas is opacity 1). The 0.28 ambient watermark above
+   is a legacy rule for the old static hero; scope it out of the poster with a
+   higher-specificity override rather than deleting it. */
+.hero-visual .meta-poster .butterfly-svg {
+  opacity: 1;
+}
+
 .hero-visual { transform: translateY(0.75rem); }
 
 .hero-code {
@@ -3160,23 +3169,42 @@ p:last-child {
 .reveal-delay-3 { transition-delay: 300ms; }
 .reveal-delay-4 { transition-delay: 400ms; }
 
-/* Hero entrance — staggered on page load */
+/* Hero entrance — staggered on page load.
+   The conversion-critical hero content (badge, H1, subhead, CTA, qualifier)
+   must be PRESENT and readable at first paint: no load-bearing element may
+   start at opacity 0. The entrance is a subtle settle only, a small upward
+   slide with the content already legible, so a slow first frame or a paused
+   animation never hides the value prop or the CTA (FOUC). */
 .hero-entrance {
-  opacity: 0;
-  transform: translateY(16px);
-  animation: hero-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 1;
+  transform: translateY(10px);
+  animation: hero-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-entrance-1 { animation-delay: 0.1s; }
-.hero-entrance-2 { animation-delay: 0.2s; }
-.hero-entrance-3 { animation-delay: 0.35s; }
-.hero-entrance-4 { animation-delay: 0.5s; }
-.hero-entrance-5 { animation-delay: 0.65s; }
+.hero-entrance-1 { animation-delay: 0.05s; }
+.hero-entrance-2 { animation-delay: 0.1s; }
+.hero-entrance-3 { animation-delay: 0.2s; }
+.hero-entrance-4 { animation-delay: 0.3s; }
+.hero-entrance-5 { animation-delay: 0.4s; }
 
 @keyframes hero-enter {
+  from {
+    opacity: 0.85;
+    transform: translateY(10px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Reduced motion: land on the entered state instantly (The Reduced-Motion
+   Rule). No slide, full presence. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-entrance {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }
 

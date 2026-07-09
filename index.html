@@ -238,7 +238,11 @@
       align-items: center;
       justify-content: center;
       opacity: 1;
-      transition: opacity var(--dur-base) var(--ease-calm);
+      /* Short fade (150ms) onto an already-solid canvas, not a 300ms
+         cross-dissolve. Two layers fading over the same duration superimpose
+         at the midpoint (a faint double-exposure). The canvas renders one
+         full frame before onLive, so it's solid underneath. */
+      transition: opacity var(--dur-fast) var(--ease-calm);
     }
     /* Poster mark = 280/VIEW_H of stage height (VIEW_H 340 in the module),
        so poster and WebGL rest pose align pixel-for-pixel at the swap. */
@@ -273,7 +277,9 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity var(--dur-base) var(--ease-calm);
+      /* No transition: the canvas snaps to opaque under the poster, then the
+         poster fades off it (above). Avoids the mid-crossfade double-exposure. */
+      transition: none;
       pointer-events: none;
     }
     .meta-stage.is-live .meta-poster { opacity: 0; }
@@ -288,10 +294,45 @@
       .hero .hero-grid:has(.meta-stage) { grid-template-columns: 1.15fr 0.85fr; }
       /* Right-align the whole lockup (butterfly + code) to the column's
          right edge = the page content margin (the "Talk to Kaido" /
-         "...Rethinkers" line). The code cursor and the butterfly's right
-         edge both land there; the wide stage's extra width renders cream
-         (= page bg) so the butterfly reads as right-aligned and small. */
+         "...Rethinkers" line). align-items (the flex CROSS axis, here
+         horizontal) pins the stage+code right; gap:0 keeps them tight. */
       .hero-visual:has(.meta-stage) { align-items: flex-end; gap: 0; }
+      /* Vertical balance: the base .hero-visual has align-self:end, which
+         bottom-anchors the whole lockup in the grid row so it sinks ~150px
+         below the headline and leaves the upper-right quadrant empty
+         (worst on desktop/wide, permanent for reduced-motion). Centre the
+         visual column against the headline instead; the right-edge pin is
+         unaffected (that's the cross axis). polish.md vertical balance. */
+      .hero-visual:has(.meta-stage) { align-self: center; }
+    }
+
+    /* ── Large screens (M5 + M7) ────────────────────────────────────────────
+       The hero grid is capped at --max-width (1120px) and vertically centred
+       in a 100vh hero. On 1920/2560 that leaves the butterfly stranded in the
+       centred band with a wide cream void to its right, and pushes the badge
+       ~1/3 down between tall empty cream bands. Two homepage-scoped fixes:
+       (a) widen the hero content band (grid + trust bar together) so the
+       columns stay related to the viewport and the right void shrinks toward
+       the laptop proportion; (b) hold the content nearer the top on tall
+       viewports so it reads as intentional, not adrift. 1440 is unchanged
+       (below the 1600px threshold), so the good laptop layout is preserved. */
+    /* Keep the two columns tight and related on large screens: cap the grid
+       near the laptop proportion so the 1.15/0.85fr columns don't spread
+       apart with a wide empty gap between the headline and the butterfly.
+       Capped at all widths >=1300px, the layout composes exactly like the
+       (good) laptop layout instead of stretching. The stage stays its
+       laptop size (440px box / markPx 296) so box and mark keep matching.
+       Trust bar tracks the same cap. */
+    @media (min-width: 1300px) {
+      .hero .hero-grid:has(.meta-stage),
+      .hero:has(.meta-stage) .hero-bottom { max-width: 1180px; }
+    }
+    /* Tall viewports: cap the vertical span so the content sits toward the top
+       instead of floating in the middle of a very tall cream field. The trust
+       bar stays pinned to the hero bottom (its own absolute rule). */
+    @media (min-width: 1200px) and (min-height: 960px) {
+      .hero:has(.meta-stage) { min-height: 0; height: 900px; align-items: flex-start; }
+      .hero:has(.meta-stage) .hero-grid { margin-top: 0; padding-top: 4vh; }
     }
 
     /* The Refactor: the agent-loop snippet evolves with the creature.
@@ -335,6 +376,22 @@
            left of its geometric centre. Nudge right by that much so the
            text mass, not the box, centres under the butterfly body axis. */
         transform: translateX(8px);
+      }
+      /* Phase-scoped anchoring (fixes the crawl detach). RIGHT-anchor only at
+         rest/unfurl, when the full production line is wide enough that its
+         centre lands under the butterfly body axis (optical 8px nudge kept).
+         During crawl/gather/chrysalis the line collapses to a short fragment
+         ("explore(); act(...", "{ explore ...}"); a fit-content block would
+         keep that fragment pinned to the page margin, floating ~160px right
+         of the leftward-crawling caterpillar. So for those phases the block
+         goes full-width and centre-aligns, keeping the short fragment under
+         the creature. */
+      .hero-visual .hero-code[data-phase="crawl"],
+      .hero-visual .hero-code[data-phase="gather"],
+      .hero-visual .hero-code[data-phase="chrysalis"] {
+        width: 100%;
+        text-align: center;
+        transform: none;
       }
     }
     .hero-code .meta-code-line {
@@ -382,6 +439,44 @@
       .hero-code .meta-code-line,
       .hero-code[data-phase] .meta-code-line { animation: none; opacity: 0.6; transform: none; }
     }
+
+    /* ── Stacked layout (mobile + tablet, <=900px) ──────────────────────────
+       Fixes the inverted hierarchy (M6), the ember-vs-code offset (M4), and
+       the poster/canvas crossfade offset (M8). css/styles.css stacks the grid
+       to one column here and puts .hero-visual first (order:-1) so the
+       decorative butterfly led the fold above the value prop and pushed the
+       CTA off-screen. Homepage-scoped overrides below restore a conversion
+       hierarchy: badge + H1 + subhead + CTA first, a SMALLER butterfly+code
+       lockup after, and the mark centred on the column (over the code). */
+    @media (max-width: 900px) {
+      /* Badge clip: the base .hero-grid has margin:-5vh auto 0 which, on the
+         stacked mobile layout, pulls the first item (the badge) up UNDER the
+         fixed 64px header so its top ~21px is hidden. Neutralise the negative
+         pull here so the value prop clears the header. */
+      .hero:has(.meta-stage) .hero-grid { margin-top: 0; }
+
+      /* M6: value prop leads, visual follows. .hero-text/.hero-visual are the
+         two grid children; explicit order beats the css/styles.css order:-1. */
+      .hero .hero-grid:has(.meta-stage) .hero-text { order: 0; }
+      .hero .hero-grid:has(.meta-stage) .hero-visual { order: 1; margin-top: 1rem; }
+
+      /* M6: shrink the lockup so it supports, not dominates, the headline, and
+         close the gap between the qualifier and the butterfly. */
+      .hero-visual .meta-stage { max-width: 240px; }
+
+      /* M4 + M8: on stacked layouts the WebGL mark is framed (markRightPx /
+         markBottomPx, tuned for the desktop box) ~17px to the RIGHT of and
+         ABOVE the centred poster, so the live ember lands right of the code
+         and the poster->canvas crossfade double-exposes. The poster sits
+         correctly over the code centre, so nudge only the CANVAS to coincide
+         with it: this centres the live ember on the column (M4) and makes
+         poster + canvas overlap for a clean dissolve (M8). Because the stage
+         is capped at one width (300px) across the whole stacked range, the
+         offset is uniform, so one percentage nudge holds. Measured with
+         scripts/capture-states.mjs (poster vs canvas ember centroid). */
+      .hero-visual .meta-stage canvas { transform: translate(-5.6%, 7.6%); }
+    }
+
     .metamorphosis-sr {
       position: absolute;
       width: 1px; height: 1px;
