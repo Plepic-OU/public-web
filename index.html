@@ -460,26 +460,17 @@
          pull here so the value prop clears the header. */
       .hero:has(.meta-stage) .hero-grid { margin-top: 0; }
 
-      /* M6: value prop leads, visual follows. .hero-text/.hero-visual are the
-         two grid children; explicit order beats the css/styles.css order:-1. */
-      .hero .hero-grid:has(.meta-stage) .hero-text { order: 0; }
-      .hero .hero-grid:has(.meta-stage) .hero-visual { order: 1; margin-top: 1rem; }
-
-      /* M6: shrink the lockup so it supports, not dominates, the headline, and
-         close the gap between the qualifier and the butterfly. */
-      .hero-visual .meta-stage { max-width: 240px; }
-
-      /* M4 + M8: on stacked layouts the WebGL mark is framed (markRightPx /
-         markBottomPx, tuned for the desktop box) ~17px to the RIGHT of and
-         ABOVE the centred poster, so the live ember lands right of the code
-         and the poster->canvas crossfade double-exposes. The poster sits
-         correctly over the code centre, so nudge only the CANVAS to coincide
-         with it: this centres the live ember on the column (M4) and makes
-         poster + canvas overlap for a clean dissolve (M8). Because the stage
-         is capped at one width (300px) across the whole stacked range, the
-         offset is uniform, so one percentage nudge holds. Measured with
-         scripts/capture-states.mjs (poster vs canvas ember centroid). */
-      .hero-visual .meta-stage canvas { transform: translate(-5.6%, 7.6%); }
+      /* Mobile: DROP the metamorphosis visual entirely. It is a desktop
+         delight; stacked below the value prop it added ~213px, pushing the
+         hero to ~914px — taller than a phone fold — so the "View Full Program"
+         CTA and the qualifier line fell to/below the fold (founder saw the CTA
+         cut off on iOS Safari). Hiding it lets badge + H1 + subhead + CTA +
+         qualifier all sit clearly on one mobile screen (hero ~654px, fits a
+         ~664px Safari content area). The brand mark still shows in the header
+         logo, so the butterfly identity is not lost on mobile. The WebGL arc
+         also never boots without a visible stage, saving the mobile the
+         Three.js work. */
+      .hero-visual:has(.meta-stage) { display: none; }
     }
 
     .metamorphosis-sr {
@@ -1093,6 +1084,10 @@
     if (stage && code) {
       const skip =
         matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        // Mobile (<=900px) hides .hero-visual (display:none) for a clean fold,
+        // so the stage has zero size — don't boot Three.js against a hidden box
+        // (wasted work + zero-rect framing). Mirrors the CSS breakpoint.
+        matchMedia('(max-width: 900px)').matches ||
         (navigator.connection && navigator.connection.saveData) ||
         (navigator.deviceMemory && navigator.deviceMemory < 2) ||
         !document.createElement('canvas').getContext('webgl2');
