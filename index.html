@@ -438,6 +438,46 @@
       0%, 70%, 100% { filter: brightness(1); }
       35% { filter: brightness(1.14); }
     }
+    /* ── Biomimetic writing cursor ──────────────────────────────────────────
+       The cursor is the PEN, the text is the INK that follows it. Instead of
+       pinning to the end of the line (the old inline-flow child), it sits at
+       the live INSERTION POINT and, crucially, LEADS the typing: JS sets its
+       target x to the position the text will reach ~1s in the FUTURE, and this
+       CSS transition glides it there — so the pen reaches a spot first, then
+       the letters fill in toward it. Most visible at crawl→unfurl, where the
+       cursor travels from the right end of "{ … }" all the way to the FRONT
+       (where "while" will begin) ~1s before the first "w" is typed.
+       The survivor line becomes the positioning context; the cursor is
+       absolute so its x is driven purely by transform (independent of the
+       ever-changing text width). translateX is set by JS in char-cell units. */
+    .hero-code .meta-code-line.has-cursor { position: relative; }
+    .hero-code .meta-code-line.has-cursor .hero-cursor {
+      position: absolute;
+      /* DEFAULT (no-JS / reduced-motion / skip path): anchor to the RIGHT edge
+         of the fit-content line = end of the text, exactly like the old inline
+         after-text cursor. Once the choreography boots it adds .is-driven,
+         which flips the anchor to the left edge so translateX (set per frame in
+         char-cell units from the line's left) fully controls x. */
+      left: 100%;
+      top: 0;
+      margin-left: 1px;
+      vertical-align: baseline;
+    }
+    .hero-code .meta-code-line.has-cursor .hero-cursor.is-driven {
+      left: 0;
+      margin-left: 0;         /* x comes entirely from translateX (+cell nudge in JS) */
+      /* GLIDE: when JS updates translateX to the leading insertion x, ease the
+         pen there over ~0.9s — this is what produces the ~1s lead/travel and
+         the smooth crawl-end→front sweep. Blink is a separate opacity
+         animation (inherited from the base rule) and runs alongside untouched. */
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      /* no glide: the pen snaps to its target instantly, matching the rest of
+         the reduced-motion handling (text is static FINAL, cursor at end). */
+      .hero-code .meta-code-line.has-cursor .hero-cursor { transition: none; }
+    }
     /* cursor frozen solid = held breath (never hidden: reads as broken) */
     .hero-code.is-held .hero-cursor { animation: none; opacity: 1; }
     @media (prefers-reduced-motion: reduce) {
@@ -544,7 +584,7 @@
           <p class="hero-code" id="metaCode" data-phase="rest" aria-hidden="true">
             <span class="meta-code-line"><span class="t"></span></span>
             <span class="meta-code-line"><span class="t"></span></span>
-            <span class="meta-code-line"><span class="t">while(task) { explore &rarr; act &rarr; verify }</span><span class="hero-cursor"></span></span>
+            <span class="meta-code-line has-cursor"><span class="t">while(task) { explore &rarr; act &rarr; verify }</span><span class="hero-cursor"></span></span>
           </p>
           <span class="metamorphosis-sr">while(task) { explore &rarr; act &rarr; verify }</span>
         </div>
@@ -1140,23 +1180,72 @@
         const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
         const typed = (s, k) => s.slice(0, Math.round(clamp01(k) * s.length));
 
+        // Monospace cell width, measured live (never hardcoded — it scales with
+        // font-size/zoom). Lazily captured from the first rendered slot-2 text:
+        // full rendered width / char count = one glyph advance. The cursor's x
+        // for character index i is then i * chWidth (a small optical nudge is
+        // added so the bar sits just AFTER char i, not overlapping it).
+        let chWidth = 0;
+        const CURSOR_NUDGE = 2;   // px, so the pen sits just past the last glyph
+        function measureCh() {
+          if (chWidth) return true;
+          const txt = slots[2].textContent;
+          if (!txt.length) return false;
+          const w = slots[2].getBoundingClientRect().width;
+          if (w <= 0) return false;
+          chWidth = w / txt.length;
+          return true;
+        }
+        // Set the cursor's target x (in char-cells). Only write the style when
+        // the target actually changes, so we never restart the 0.9s CSS glide
+        // mid-transition by re-setting the same value every frame.
+        let lastCursorPx = -1;
+        let cursorDriven = false;
+        function setCursorIdx(idx) {
+          if (!measureCh()) return;
+          // Flip the anchor from the static right-edge default to left-edge +
+          // translateX the first time JS drives it (idempotent).
+          if (!cursorDriven) { cursor.classList.add('is-driven'); cursorDriven = true; }
+          const px = Math.round(idx * chWidth + CURSOR_NUDGE);
+          if (px === lastCursorPx) return;
+          lastCursorPx = px;
+          cursor.style.transform = 'translateX(' + px + 'px)';
+        }
+
         // The block is bottom-anchored with a constant 3-line height, so the
         // resting line lives in the LAST slot (index 2). EVERY state — crawl
         // included — draws its text into slot 2 only (slots 0/1 stay empty), so
         // the code sits on the SAME baseline throughout and the butterfly never
         // shifts. Crawl grows COLLAPSED left-to-right (the caterpillar drawing
         // the loop out beneath it); unfurl types PREFIX in front to complete it.
+        //
+        // curIdx = the character index of the CURRENT insertion point (where the
+        // next glyph lands right now). The cursor RIDES this during typing — the
+        // pen sits where the ink is landing, not ahead of it (a continuous lead
+        // made the bar float in the middle of the text). The "reach the spot
+        // BEFORE writing" beat is produced structurally, not by a future offset:
+        // when a new typing burst starts at a new place, curIdx jumps there and
+        // the cursor's 0.9s CSS glide carries the pen over ~1s while the text's
+        // own lead-in (0.25s) holds the first glyph back — so the pen arrives
+        // first, then the letters follow. Most visible at crawl→unfurl: curIdx
+        // drops from the right end of "{ … }" to 0 (the FRONT, where "while"
+        // begins) the instant unfurl starts; the pen glides to the front and the
+        // first "w" only lands after the 0.25s hold, i.e. once the pen is there.
         function codeState(phase, t) {
           if (phase === 0) {
             // Crawl: draw '{ explore → act → verify }' rightward, char by char,
             // synced to the crawl clock. By phase end the loop is fully written.
-            const drawn = typed(COLLAPSED, t / T_CRAWL_APPROX);
-            return { texts: ['', '', drawn], held: false, dim: false, settled: false, cur: 2 };
+            const kDraw = clamp01(t / T_CRAWL_APPROX);
+            const drawn = typed(COLLAPSED, kDraw);
+            // Pen rides the growing RIGHT end (the current insertion point).
+            const curIdx = Math.round(kDraw * COLLAPSED.length);
+            return { texts: ['', '', drawn], held: false, dim: false, settled: false, cur: 2, curIdx };
           }
           // Gather + chrysalis: the loop is already fully drawn from crawl —
-          // just hold it (dim), no swap, no sudden appearance.
-          if (phase === 1) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
-          if (phase === 2) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
+          // just hold it (dim), no swap. The pen rests at the right end of
+          // COLLAPSED (from where it will glide to the front when unfurl starts).
+          if (phase === 1) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2, curIdx: COLLAPSED.length };
+          if (phase === 2) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2, curIdx: COLLAPSED.length };
           if (phase === 3) {
             // Unfurl: type "while(task) " letter-by-letter in FRONT of the
             // already-drawn "{ explore → act → verify }". The line is left-
@@ -1170,9 +1259,17 @@
             const n = typed(PREFIX, k);
             const done = kRaw >= 1;
             const settled = t >= 2.89;
-            return { texts: ['', '', n + COLLAPSED], held: !done, dim: !done, settled, cur: 2 };
+            // Pen rides the END of the grown prefix (the current insertion point,
+            // just before "{"). At t=0 the prefix is empty → curIdx=0 = the
+            // FRONT: the cursor glides from the far-right "}" (where the prior
+            // phase left it) to the front during the 0.25s text hold, arriving
+            // before the first "w" — the reach-then-write beat. As the prefix
+            // grows, the pen advances with it, pushing COLLAPSED right.
+            const curIdx = Math.round(k * PREFIX.length);
+            return { texts: ['', '', n + COLLAPSED], held: !done, dim: !done, settled, cur: 2, curIdx };
           }
-          return { texts: ['', '', FINAL], held: false, dim: false, settled: false, cur: 2 };
+          // Rest: full line; the pen has finished at the end of FINAL.
+          return { texts: ['', '', FINAL], held: false, dim: false, settled: false, cur: 2, curIdx: FINAL.length };
         }
 
         let lastKey = '';
@@ -1183,12 +1280,20 @@
               slots[0].textContent = ''; slots[1].textContent = ''; slots[2].textContent = FINAL;
               code.dataset.phase = 'rest';
               code.classList.remove('is-held', 'is-dim', 'is-settled');
-              slots[2].parentElement.appendChild(cursor);
             }
+            // Cursor is a static child of slot 2 now (no relocation): just park
+            // the pen at the end of the finished line.
+            setCursorIdx(FINAL.length);
             return;
           }
           const { phase, tPhase } = hero.phaseInfo();
           const s = codeState(phase, tPhase);
+          // Drive the cursor EVERY frame — its target (curIdx, the current
+          // insertion point) moves continuously, unlike the TEXT, which we still
+          // dedup by key so it isn't rewritten each frame. setCursorIdx only
+          // touches the DOM when the rounded px changes, so it won't restart the
+          // 0.9s CSS glide midway.
+          setCursorIdx(s.curIdx);
           const key = phase + '|' + s.texts.join(' ') + '|' + s.held + s.dim + s.settled + s.cur;
           if (key === lastKey) return;
           lastKey = key;
@@ -1199,8 +1304,6 @@
           code.classList.toggle('is-held', s.held);
           code.classList.toggle('is-dim', s.dim);
           code.classList.toggle('is-settled', s.settled);
-          const host = slots[s.cur].parentElement;
-          if (cursor.parentElement !== host) host.appendChild(cursor);
         }
         (function codeLoop() { applyCode(); requestAnimationFrame(codeLoop); })();
       }
