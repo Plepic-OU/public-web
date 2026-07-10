@@ -374,21 +374,26 @@
            text mass, not the box, centres under the butterfly body axis. */
         transform: translateX(8px);
       }
-      /* Phase-scoped anchoring (fixes the crawl detach). RIGHT-anchor only at
-         rest/unfurl, when the full production line is wide enough that its
-         centre lands under the butterfly body axis (optical 8px nudge kept).
-         During crawl/gather/chrysalis the line collapses to a short fragment
-         ("explore(); act(...", "{ explore ...}"); a fit-content block would
-         keep that fragment pinned to the page margin, floating ~160px right
-         of the leftward-crawling caterpillar. So for those phases the block
-         goes full-width and centre-aligns, keeping the short fragment under
-         the creature. */
+      /* Phase-scoped anchoring. RIGHT-anchor only at rest/unfurl, when the full
+         production line is wide enough that its centre lands under the butterfly
+         body axis (optical 8px nudge kept). During crawl/gather/chrysalis the
+         line is a growing fragment ("{ e", "{ explore → a", ...). It must read
+         as drawn LEFT-TO-RIGHT, the SAME direction the caterpillar crawls (it
+         crawls rightward): the fragment's LEFT edge is pinned and it EXTENDS
+         rightward (right edge + cursor sweeping right, tracking the creature).
+         So reserve the full production-line width (38ch of fixed-size mono,
+         ≈263px) and LEFT-align: the fragment starts at the same left edge the
+         final "while(task)" will occupy and grows right, instead of expanding
+         outward from a centre (the old text-align:center, which read as growth
+         from the middle, against the crawl direction). fit-content is avoided
+         so the box doesn't collapse and re-anchor as the text lengthens. */
       .hero-visual .hero-code[data-phase="crawl"],
       .hero-visual .hero-code[data-phase="gather"],
       .hero-visual .hero-code[data-phase="chrysalis"] {
-        width: 100%;
-        text-align: center;
-        transform: none;
+        width: fit-content;
+        min-width: 38ch;
+        text-align: left;
+        transform: translateX(8px);
       }
     }
     .hero-code .meta-code-line {
