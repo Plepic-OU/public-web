@@ -366,8 +366,8 @@
         text-align: right;
         min-height: 0;
         margin-top: -0.6em;
-        margin-bottom: 3px;   /* baseline lock: code baseline on the qualifier
-                                 line, measured (delta -0px). See c539c6a. */
+        margin-bottom: -4px;  /* code bottom sits on the qualifier's lower half,
+                                 a few px below its bottom edge — measured. */
         /* Optical centre: the code string is left-heavy ("while(task) {
            explore" outweighs "verify }"), so its ink centroid sits ~8px
            left of its geometric centre. Nudge right by that much so the
@@ -1124,35 +1124,35 @@
         // Manual repetition (turn-based: a human drives every cycle) becomes
         // the agentic loop. All text state derives from the module's
         // phase/tPhase, never wall clock, so creature and code cannot desync.
-        const UNROLLED = 'explore(); act(); verify();';
         const COLLAPSED = '{ explore → act → verify }';
         const FINAL = 'while(task) ' + COLLAPSED;
         const PREFIX = 'while(task) ';
         const PHASE_NAMES = ['crawl', 'gather', 'chrysalis', 'unfurl', 'rest'];
-        const LINE_WINDOWS = [[0.18, 1.38], [1.70, 2.90], [3.22, 4.42]];
+        // Crawl duration in the module timeline (T_CRAWL). The COLLAPSED string is
+        // drawn out over this window; a slight undershoot finishes it a touch
+        // before gather begins, so the line is fully present when it dims.
+        const T_CRAWL_APPROX = 4.6;
         const slots = [...code.querySelectorAll('.meta-code-line .t')];
         const cursor = code.querySelector('.hero-cursor');
         const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
         const typed = (s, k) => s.slice(0, Math.round(clamp01(k) * s.length));
 
         // The block is bottom-anchored with a constant 3-line height, so the
-        // resting line lives in the LAST slot (index 2). Crawl fills all three
-        // top-to-bottom; every single-line state (gather onward) sits in slot 2
-        // so its baseline locks to the qualifier and the butterfly never shifts.
+        // resting line lives in the LAST slot (index 2). EVERY state — crawl
+        // included — draws its text into slot 2 only (slots 0/1 stay empty), so
+        // the code sits on the SAME baseline throughout and the butterfly never
+        // shifts. Crawl grows COLLAPSED left-to-right (the caterpillar drawing
+        // the loop out beneath it); unfurl types PREFIX in front to complete it.
         function codeState(phase, t) {
           if (phase === 0) {
-            const texts = LINE_WINDOWS.map(([a, b]) => typed(UNROLLED, (t - a) / (b - a)));
-            let active = 0;
-            for (let i = 0; i < 3; i++) if (t >= LINE_WINDOWS[i][0]) active = i;
-            return { texts, held: false, dim: false, settled: false, cur: active };
+            // Crawl: draw '{ explore → act → verify }' rightward, char by char,
+            // synced to the crawl clock. By phase end the loop is fully written.
+            const drawn = typed(COLLAPSED, t / T_CRAWL_APPROX);
+            return { texts: ['', '', drawn], held: false, dim: false, settled: false, cur: 2 };
           }
-          if (phase === 1) {
-            const swapped = t >= 0.35;
-            return {
-              texts: swapped ? ['', '', COLLAPSED] : [UNROLLED, UNROLLED, UNROLLED],
-              held: true, dim: swapped, settled: false, cur: 2,
-            };
-          }
+          // Gather + chrysalis: the loop is already fully drawn from crawl —
+          // just hold it (dim), no swap, no sudden appearance.
+          if (phase === 1) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
           if (phase === 2) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
           if (phase === 3) {
             const n = typed(PREFIX, (t - 0.51) / 0.66);
