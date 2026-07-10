@@ -374,22 +374,25 @@
            text mass, not the box, centres under the butterfly body axis. */
         transform: translateX(8px);
       }
-      /* Phase-scoped anchoring. RIGHT-anchor only at rest/unfurl, when the full
-         production line is wide enough that its centre lands under the butterfly
-         body axis (optical 8px nudge kept). During crawl/gather/chrysalis the
-         line is a growing fragment ("{ e", "{ explore → a", ...). It must read
-         as drawn LEFT-TO-RIGHT, the SAME direction the caterpillar crawls (it
-         crawls rightward): the fragment's LEFT edge is pinned and it EXTENDS
-         rightward (right edge + cursor sweeping right, tracking the creature).
-         So reserve the full production-line width (38ch of fixed-size mono,
-         ≈263px) and LEFT-align: the fragment starts at the same left edge the
-         final "while(task)" will occupy and grows right, instead of expanding
-         outward from a centre (the old text-align:center, which read as growth
-         from the middle, against the crawl direction). fit-content is avoided
-         so the box doesn't collapse and re-anchor as the text lengthens. */
+      /* Phase-scoped anchoring — LEFT-anchored in EVERY phase so the line is one
+         continuous left-to-right build with no mid-arc jump. The block reserves
+         the full production-line width (38ch of fixed-size mono, ≈263px) and
+         text starts at a fixed left edge (x≈1020, where the final "while(task)"
+         begins). Crawl draws COLLAPSED rightward under the rightward-crawling
+         caterpillar; unfurl then types "while(task) " letter-by-letter IN FRONT,
+         which PUSHES "{ explore → act → verify }" rightward to make room (a
+         continuous shift, not a teleport). Earlier this switched to text-align:
+         right at unfurl, which snapped the whole fragment to the page margin the
+         instant unfurl began — the "explore jumped right" defect. Keeping every
+         phase left-anchored at the same x removes that discontinuity; at rest
+         the full line fills the reserved width, so left-anchored looks identical
+         to the old right-anchored rest. fit-content + min-width keeps the box
+         from collapsing/re-anchoring as the text length changes. */
       .hero-visual .hero-code[data-phase="crawl"],
       .hero-visual .hero-code[data-phase="gather"],
-      .hero-visual .hero-code[data-phase="chrysalis"] {
+      .hero-visual .hero-code[data-phase="chrysalis"],
+      .hero-visual .hero-code[data-phase="unfurl"],
+      .hero-visual .hero-code[data-phase="rest"] {
         width: fit-content;
         min-width: 38ch;
         text-align: left;
@@ -1160,9 +1163,19 @@
           if (phase === 1) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
           if (phase === 2) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2 };
           if (phase === 3) {
-            const n = typed(PREFIX, (t - 0.51) / 0.66);
+            // Unfurl: type "while(task) " letter-by-letter in FRONT of the
+            // already-drawn "{ explore → act → verify }". The line is left-
+            // anchored, so each new prefix char pushes COLLAPSED rightward — a
+            // continuous shift, not a jump. Small lead-in (0.25s) so the prefix
+            // starts as the wings open, then a calm ~1.5s reveal (ease-out on
+            // the fraction so it decelerates into place), then the completed
+            // FINAL line holds through the rest of unfurl before settling.
+            const kRaw = clamp01((t - 0.25) / 1.5);
+            const k = 1 - (1 - kRaw) * (1 - kRaw);   // ease-out quad
+            const n = typed(PREFIX, k);
+            const done = kRaw >= 1;
             const settled = t >= 2.89;
-            return { texts: ['', '', n + COLLAPSED], held: !settled, dim: !settled, settled, cur: 2 };
+            return { texts: ['', '', n + COLLAPSED], held: !done, dim: !done, settled, cur: 2 };
           }
           return { texts: ['', '', FINAL], held: false, dim: false, settled: false, cur: 2 };
         }
