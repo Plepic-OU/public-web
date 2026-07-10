@@ -27,6 +27,14 @@ const PRODUCTION_PAGES = [
 const read = (rel: string) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 const stripComments = (html: string) => html.replace(/<!--[\s\S]*?-->/g, '');
 
+// For copy-voice checks: reduce the page to what a visitor actually reads.
+// Strips HTML comments AND <script>/<style> blocks, so punctuation inside
+// code (JS/CSS comments, animation logic) never trips a customer-facing rule.
+const visibleCopy = (html: string) =>
+  stripComments(html)
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '');
+
 test.describe('design guard @design-guard', () => {
   test('no side-stripe accent borders (The Flat-By-Default Rule)', () => {
     const css = read('css/styles.css');
@@ -36,7 +44,7 @@ test.describe('design guard @design-guard', () => {
 
   test('no em-dashes in customer-facing copy (brand voice rule)', () => {
     for (const page of PRODUCTION_PAGES) {
-      const visible = stripComments(read(page));
+      const visible = visibleCopy(read(page));
       const hits = visible.match(/—|&mdash;/g) || [];
       expect(hits, `${page} contains ${hits.length} em-dash(es); use commas, colons, or periods`).toEqual([]);
     }
