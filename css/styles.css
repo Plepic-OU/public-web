@@ -553,11 +553,17 @@ p:last-child {
    Hero Section (Homepage)
    ======================================== */
 
+/* Top-anchor the hero below the fixed header rather than vertically centering it.
+   Centering a min-height:100vh hero (align-items:center + the old -5vh grid pull)
+   let the top badge slip under the fixed nav whenever hero content height >=
+   viewport height, at every width. Anchoring from the top with a header-height
+   allowance keeps the badge clear on any viewport height. No fixed height cap
+   (a prior cap attempt was reverted: see the 914px hero comment in index.html). */
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 60px 0;
+  align-items: flex-start;
+  padding: calc(var(--header-height) + var(--space-lg)) 0 60px;
   position: relative;
   overflow: hidden;
 }
@@ -568,7 +574,7 @@ p:last-child {
   gap: 2rem;
   max-width: var(--max-width);
   padding: 0 2rem;
-  margin: -5vh auto 0;
+  margin: 0 auto;
   align-items: end;
   width: 100%;
   position: relative;
@@ -621,6 +627,16 @@ p:last-child {
   letter-spacing: 0.01em;
 }
 
+/* Hero proof line: mono label voice, muted-neutral, AA on cream (text-2 ~8.3:1) */
+.hero-proof {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: normal;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  margin: 0 0 1.5rem;
+}
+
 /* Trust bar at bottom of hero */
 .hero-bottom {
   position: absolute;
@@ -633,12 +649,14 @@ p:last-child {
   display: flex;
   align-items: center;
   gap: 1rem;
-  opacity: 0.65;
 }
 
+/* text-2 (#4a4a45, ~8.3:1 on cream) passes AA at this size; the old
+   opacity:0.65 over text-3 dropped it to ~2.6:1. Opacity now scoped to the
+   divider hairline only, so the label text stays fully legible. */
 .hero-bottom span {
   font-size: 0.72rem;
-  color: var(--text-3);
+  color: var(--text-2);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -649,6 +667,7 @@ p:last-child {
   flex: 1;
   height: 1px;
   background: var(--border);
+  opacity: 0.65;
 }
 
 /* Butterfly visual */
