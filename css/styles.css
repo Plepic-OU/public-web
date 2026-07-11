@@ -553,11 +553,17 @@ p:last-child {
    Hero Section (Homepage)
    ======================================== */
 
+/* Top-anchor the hero below the fixed header rather than vertically centering it.
+   Centering a min-height:100vh hero (align-items:center + the old -5vh grid pull)
+   let the top badge slip under the fixed nav whenever hero content height >=
+   viewport height, at every width. Anchoring from the top with a header-height
+   allowance keeps the badge clear on any viewport height. No fixed height cap
+   (a prior cap attempt was reverted: see the 914px hero comment in index.html). */
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 60px 0;
+  align-items: flex-start;
+  padding: calc(var(--header-height) + var(--space-lg)) 0 60px;
   position: relative;
   overflow: hidden;
 }
@@ -568,25 +574,10 @@ p:last-child {
   gap: 2rem;
   max-width: var(--max-width);
   padding: 0 2rem;
-  margin: -5vh auto 0;
+  margin: 0 auto;
   align-items: end;
   width: 100%;
   position: relative;
-}
-
-/* Desktop: top-anchor the hero below the fixed header instead of centering it.
-   Centering (align-items:center + the -5vh grid pull) let the top badge slip
-   under the nav when hero content height approached the viewport height. Anchor
-   from the top with a header-height allowance; no fixed height cap (a prior cap
-   attempt was reverted: see the 914px hero comment in index.html). */
-@media (min-width: 901px) {
-  .hero {
-    align-items: flex-start;
-    padding-top: calc(var(--header-height) + var(--space-lg));
-  }
-  .hero-grid {
-    margin-top: 0;
-  }
 }
 
 .hero-text {
