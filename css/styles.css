@@ -574,6 +574,21 @@ p:last-child {
   position: relative;
 }
 
+/* Desktop: top-anchor the hero below the fixed header instead of centering it.
+   Centering (align-items:center + the -5vh grid pull) let the top badge slip
+   under the nav when hero content height approached the viewport height. Anchor
+   from the top with a header-height allowance; no fixed height cap (a prior cap
+   attempt was reverted: see the 914px hero comment in index.html). */
+@media (min-width: 901px) {
+  .hero {
+    align-items: flex-start;
+    padding-top: calc(var(--header-height) + var(--space-lg));
+  }
+  .hero-grid {
+    margin-top: 0;
+  }
+}
+
 .hero-text {
   max-width: 580px;
 }
@@ -621,6 +636,16 @@ p:last-child {
   letter-spacing: 0.01em;
 }
 
+/* Hero proof line: mono label voice, muted-neutral, AA on cream (text-2 ~8.3:1) */
+.hero-proof {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: normal;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  margin: 0 0 1.5rem;
+}
+
 /* Trust bar at bottom of hero */
 .hero-bottom {
   position: absolute;
@@ -633,12 +658,14 @@ p:last-child {
   display: flex;
   align-items: center;
   gap: 1rem;
-  opacity: 0.65;
 }
 
+/* text-2 (#4a4a45, ~8.3:1 on cream) passes AA at this size; the old
+   opacity:0.65 over text-3 dropped it to ~2.6:1. Opacity now scoped to the
+   divider hairline only, so the label text stays fully legible. */
 .hero-bottom span {
   font-size: 0.72rem;
-  color: var(--text-3);
+  color: var(--text-2);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -649,6 +676,7 @@ p:last-child {
   flex: 1;
   height: 1px;
   background: var(--border);
+  opacity: 0.65;
 }
 
 /* Butterfly visual */
