@@ -553,16 +553,15 @@ p:last-child {
    Hero Section (Homepage)
    ======================================== */
 
-/* Top-anchor the hero below the fixed header rather than vertically centering it.
-   Centering a min-height:100vh hero (align-items:center + the old -5vh grid pull)
-   let the top badge slip under the fixed nav whenever hero content height >=
-   viewport height, at every width. Anchoring from the top with a header-height
-   allowance keeps the badge clear on any viewport height. No fixed height cap
-   (a prior cap attempt was reverted: see the 914px hero comment in index.html). */
+/* Center the hero content within a top-padded box. align-items:center centers
+   within the PADDING box, so the header-height top padding acts as a floor the
+   content cannot rise above: the badge stays clear of the fixed nav even when
+   content height approaches viewport height, while tall viewports keep the
+   content centered (no bottom void above the trust bar). */
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: calc(var(--header-height) + var(--space-lg)) 0 60px;
   position: relative;
   overflow: hidden;
