@@ -627,16 +627,6 @@ p:last-child {
   letter-spacing: 0.01em;
 }
 
-/* Hero proof line: mono label voice, muted-neutral, AA on cream (text-2 ~8.3:1) */
-.hero-proof {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  line-height: normal;
-  letter-spacing: 0.04em;
-  color: var(--text-2);
-  margin: 0 0 1.5rem;
-}
-
 /* Trust bar at bottom of hero */
 .hero-bottom {
   position: absolute;
