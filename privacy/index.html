@@ -11,15 +11,14 @@
   <title>Privacy Policy | Plepic</title>
 
   <!-- Google Analytics + Google Ads -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9"></script>
   <script src="/scripts/tracking.js"></script>
 
-  <meta name="description" content="Privacy policy for Plepic OÜ — what data we collect through plepic.com and our YouTube automation tooling, how we use it, how to contact us.">
+  <meta name="description" content="Privacy policy for Plepic OÜ: what data we collect through plepic.com, the Skill Tree app, and our YouTube automation tooling, how we use it, and how to contact us.">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Privacy Policy | Plepic">
-  <meta property="og:description" content="How Plepic handles data on plepic.com and through internal automation tooling.">
+  <meta property="og:description" content="How Plepic handles data on plepic.com, the Skill Tree app, and through internal automation tooling.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://plepic.com/privacy/">
 
@@ -68,7 +67,7 @@
     <section class="section">
       <div class="container" style="max-width: 780px;">
         <h1>Privacy Policy</h1>
-        <p><em>Last updated: 20 April 2026</em></p>
+        <p><em>Last updated: 17 July 2026</em></p>
 
         <h2>Who we are</h2>
         <p>
@@ -93,9 +92,33 @@
         <p>We set cookies only for analytics and ads measurement (<code>_ga</code>, <code>_gid</code>, <code>_gcl_au</code>). No advertising profile is built for you on our side; Google manages its own cookie lifecycles.</p>
 
         <h3>Legal basis</h3>
-        <p>Legitimate interest (Article 6(1)(f) GDPR) in measuring and improving our own site and advertising. For visitors in the EU, we respect browser-level signals like Do Not Track and do not combine analytics identifiers with any personal profile held elsewhere.</p>
+        <p>Legitimate interest (Article 6(1)(f) GDPR) in measuring and improving our own site and advertising. For visitors in the EU, we respect browser-level signals like Do Not Track and do not combine analytics identifiers with any personal profile held elsewhere. When your browser sends a Do Not Track signal, no analytics or advertising tag is loaded at all: we make no request to Google, set no cookies, and record no events.</p>
 
-        <h2>2. YouTube automation tooling</h2>
+        <h2>2. The Skill Tree app (skill.plepic.com)</h2>
+        <p>skill.plepic.com is a self-assessment tool for agentic coding skills. It runs in two modes, and what we hold depends on which one you use.</p>
+
+        <h3>Without signing in</h3>
+        <p>Your skill selections stay in your browser's local storage. No account exists and none of your selections reach us.</p>
+
+        <h3>If you sign in</h3>
+        <p>Signing in is optional and uses Google. It stores a single record in Google Firestore, keyed to your Google account ID:</p>
+        <ul>
+          <li><strong>Display name and avatar URL</strong>, as supplied by your Google account</li>
+          <li><strong>Your claimed levels</strong> on the three skill axes (autonomy, parallelism, skill usage)</li>
+          <li><strong>Your chosen stakes setting</strong> and the time you last updated the assessment</li>
+        </ul>
+        <p><strong>Every synced profile is public.</strong> Anyone with the link can read yours at <code>skill.plepic.com/profile/&lt;id&gt;</code>, and there is no private mode. Please sign in only if you are comfortable with that record being public. Profile data is stored in Firestore's <code>eur3</code> European multi-region.</p>
+
+        <h3>Usage analytics</h3>
+        <p>The same Google Analytics 4 property as plepic.com (<code>G-65CCEV6RS9</code>): pages viewed, approximate country and city, device and browser, referring source. Profile URLs are normalised to <code>/profile/:userId</code> before they reach Analytics, so display names and account IDs are never sent to it. As on plepic.com, a Do Not Track signal means no tag is loaded at all. There is no advertising tag on this subdomain.</p>
+
+        <h3>Legal basis</h3>
+        <p>Legitimate interest (Article 6(1)(f) GDPR) for usage analytics. For the optional account, your consent (Article 6(1)(a) GDPR), given by choosing to sign in and withdrawn whenever you ask us to delete the profile.</p>
+
+        <h3>Deleting your profile</h3>
+        <p>The app has no self-service delete yet. Email <a href="mailto:kaido@plepic.com">kaido@plepic.com</a> and we will remove the record. You can also revoke the app's access to your Google account from your Google security settings, though that on its own does not erase a profile we already hold.</p>
+
+        <h2>3. YouTube automation tooling</h2>
         <p>Plepic operates the YouTube channel <a href="https://www.youtube.com/@plepic-agentic" target="_blank" rel="noopener noreferrer">@plepic-agentic</a>. We build and run an internal pipeline (the "YouTube Pipeline") that helps us publish, edit metadata on, and analyse performance of videos we produce ourselves. The pipeline is run only by Plepic's channel owner on a personal workstation.</p>
 
         <h3>YouTube API scopes we request</h3>
@@ -118,10 +141,10 @@
         <h3>Compliance with YouTube API Services</h3>
         <p>Our use of YouTube APIs complies with the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" target="_blank" rel="noopener noreferrer">YouTube API Services Terms of Service</a> and Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. Data obtained through YouTube APIs is not shared, sold, or transferred to third parties, used for independent analysis outside the stated purposes, or used to build user profiles.</p>
 
-        <h2>3. Email and CRM</h2>
+        <h2>4. Email and CRM</h2>
         <p>When you email us, book a meeting, or engage in a sales conversation, we store your message and basic contact details in Google Workspace (Gmail, Google Calendar) and Pipedrive CRM to respond and maintain the relationship. We do not use this data for targeted advertising.</p>
 
-        <h2>4. Your GDPR rights</h2>
+        <h2>5. Your GDPR rights</h2>
         <p>You have the right to:</p>
         <ul>
           <li>Access the personal data we hold about you</li>
@@ -132,10 +155,10 @@
         </ul>
         <p>To exercise any right, email <a href="mailto:kaido@plepic.com">kaido@plepic.com</a>. We respond within 30 days.</p>
 
-        <h2>5. Retention</h2>
-        <p>Analytics data is retained according to GA4's default 14-month window. Email and CRM records are retained for as long as the relationship is active and for up to 7 years afterwards to meet Estonian accounting-law retention requirements. Local YouTube analytics JSON reports are retained in our internal repository indefinitely for trend analysis, and contain no third-party personal data.</p>
+        <h2>6. Retention</h2>
+        <p>Analytics data is retained according to GA4's default 14-month window. Skill Tree profiles are kept until you ask us to delete them, since the profile is the product: an assessment you can return to and update. Email and CRM records are retained for as long as the relationship is active and for up to 7 years afterwards to meet Estonian accounting-law retention requirements. Local YouTube analytics JSON reports are retained in our internal repository indefinitely for trend analysis, and contain no third-party personal data.</p>
 
-        <h2>6. Changes</h2>
+        <h2>7. Changes</h2>
         <p>When we update this policy materially we will update the "Last updated" date at the top of this page and, if the change is significant, note it on the homepage.</p>
       </div>
     </section>

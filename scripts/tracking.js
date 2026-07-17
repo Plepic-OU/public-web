@@ -1,4 +1,17 @@
 // GA4 + Google Ads init
+(function() {
+
+// The privacy policy commits us to honouring Do Not Track, so the tag is injected
+// here rather than in the page head: when the signal is set we make no request to
+// Google at all, set no cookies, and bind no listeners.
+var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+if (dnt === '1' || dnt === 'yes') return;
+
+var tag = document.createElement('script');
+tag.async = true;
+tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9';
+document.head.appendChild(tag);
+
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
@@ -81,4 +94,6 @@ document.addEventListener('click', function(e) {
     });
   }, { threshold: 0.5 });
   observer.observe(pricingSection);
+})();
+
 })();
