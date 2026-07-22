@@ -262,6 +262,11 @@ The site has no forms by design (conversion happens via external calendar and Go
 ### Navigation
 - Fixed header, frosted cream (rgba(250,247,242,0.9) + 12px blur), bottom border appears on scroll. Logo lockup left, text links + green outline CTA right. Mobile: hamburger to full overlay, Escape closes. Body links 500 weight; nav must set `line-height: normal`.
 
+### Logo & Wordmark (signature)
+- **Wordmark** (`.logo-wordmark`): "Plepic" in Zilla Slab 600, 0.01em tracking, Brand Green (#137b30); Vivid Green inside `.on-dark`, ink on a brand-green fill (`.on-brand`). In domain or marketing contexts it reads "Plepic.com" with ".com" in Secondary Text (#4a4a45), so the name leads and the TLD recedes.
+- **Lockup** (`.logo-lockup`): wordmark + the crystalline butterfly, `gap: 0.5rem`, vertically centered. The canonical marketing and social order is butterfly first (left), wordmark second: the mark leads the name. A stacked variant (`.logo-lockup--stacked`, butterfly above wordmark) is sanctioned for square or centered placements such as social cards. Known inconsistency: the site header currently renders wordmark then butterfly, the reverse of canonical; reconcile in a follow-up, not here.
+- **Tagline**: the canonical on-screen form is exactly `Curious play. Epic growth.` (sentence case, two periods), the shipped footer form. Use it verbatim; never re-case or re-punctuate the on-screen tagline. This supersedes the title-case "Curious Play, Epic Growth" wherever the tagline is literal on-screen text; that title-case form survives only as the Section 1 doctrine North Star in prose.
+
 ### Pull Quote (signature)
 - Zilla Slab italic at 1.35rem, ink text, max 56ch, with a 7px Vivid Green dot before the cite. No border rules, no background.
 
