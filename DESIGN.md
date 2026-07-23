@@ -77,6 +77,7 @@ motion:
     calm: "ease-in-out"
   patterns:
     crystalline-assembly: "facets scale up from centre and settle into the locked mark on load; symmetric outward stagger; settle easing"
+    metamorphosis-refactor: "homepage hero signature: the crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the synced code line evolves into while(task) { explore → act → verify }; spring physics, 13.6s arc (crawl 4.6 + gather 2.6 + chrysalis 3.0 + unfurl 3.4), plays once 5s after hero boot, desktop motion-enabled only; creature and code are one locked unit"
     wing-breathe: "4s perpetual wing idle, +/-2deg rotate"
     light-shift: "7s brightness-only wave across facets; light catching a crystal, never a glow"
     hero-choreography: "five-step staggered hero entrance, rise + fade"
@@ -221,12 +222,31 @@ Four duration steps, all tokenized: 150ms (`--dur-fast`, state response: colour,
 
 ### Named Patterns
 - **Crystalline Assembly** (signature): on load the hero butterfly builds itself. Each facet scales up from its own centre and settles into the locked mark, staggered symmetrically so both wings' Nth facet arrive together, building outward from the body; the ember head and vivid antenna tips pop last. About 1.3s on the settle curve. The mark crystallises rather than fades, making "crystalline precision in organic material" literal.
+- **Metamorphosis Refactor** (hero signature): the homepage hero arc. A crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath it evolves in lockstep from the manual loop body into the agentic loop; canonized in full below.
 - **Wing-Breathe**: the perpetual idle, a 2deg rotation on the wing groups over 4s, starting after the assembly so the two never compete.
 - **Light-Shift**: a slow brightness wave travelling outward across the facets every 7s, brightness only, no blur or added colour, so it reads as light catching a crystal.
 - **Hero Choreography**: the hero text enters in five rise-and-fade steps (badge, headline, subhead, CTA, qualifier).
 - **Scroll Reveal**: content fades and rises 16px as it enters the viewport, once.
 - **Hover Lift**: interactive cards rise 3px onto a soft shadow; the only resting-to-hover depth change (see Elevation).
 - **Accent Pulse**: the one warm action per viewport carries a 3s heartbeat ring.
+
+### The Metamorphosis Refactor (signature)
+
+The manual workflow metamorphoses into the agentic loop as the caterpillar becomes the butterfly: "developer becomes agentic engineer" told twice at once, in creature and in code. The synchronized code line is what converts the butterfly from a transformation cliché into a domain claim; without it the arc is decoration.
+
+**Trigger.** The hero mounts at rest: the static poster shows first, the WebGL canvas cross-fades in at the settled mark after its first rendered frame, the finished canonical line beneath. A single 5000ms timer, started when the hero module boots after its dynamic import, fires one `replay()`: the arc plays exactly once, so the visitor reads the headline first, then rests forever. No scroll trigger, no auto-loop.
+
+**The four movements.** Module timeline: crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest indefinitely; 13.6s of story. The 22 facets are the constant: nothing fades in or out, matter reorganizes. Motion is forces, never tweens: every corner is a damped spring particle, and gravity, ground pins, a silk constraint, a pendulum, and under-damped wing pressure do the moving, so there is no easing curve to retime; the arc's feel lives in the module's spring constants. The mark is where the physics settles: a deadband snap lands the particles on the exact locked coordinates and a shader rest gate collapses lighting to the exact locked hexes, byte-exact against the mark. Rest then breathes per Wing-Breathe with the 7s Light-Shift.
+
+**The Refactor (code sync).** The code block derives every beat from the module's phase clock (`phaseInfo()`: phase + seconds into it), never wall clock, so creature and code cannot desync. Crawl draws the loop body `{ explore → act → verify }` character by character beneath the crawling caterpillar; gather and chrysalis hold it dimmed and breathing, cursor frozen (held breath); unfurl types `while(task) ` letter by letter in front as the wings pump (0.25s hold, ~1.5s ease-out reveal, one settle tick at the overshoot-relax beat); rest holds the canonical line. The pen-cursor glides ahead to each new insertion point and the ink follows. Verbs are the Code Snippet canon: explore → act → verify.
+
+**Gating and fallback (as shipped).** Before the Three.js import, any of prefers-reduced-motion, viewport at or under 900px (mobile hides the hero visual; the header lockup carries the mark), Save-Data, deviceMemory under 2, or missing WebGL2 skips everything: zero download, static poster plus the finished canonical line. The module re-checks the same gates and additionally falls back on init failure, GPU context loss, and sustained slow frames (the quality ladder's last tier); every fallback restores the poster and snaps the code to the finished line, never freezing mid-refactor. The render loop pauses offscreen and on hidden tabs; loads started over 2.5s in mount directly at rest.
+
+**Locked assets.** `js/crystalline-metamorphosis.js` (the physics rig and choreography module), the `index.html` hero (stage, inline poster SVG, Refactor block, gate script and code choreography), `metamorphosis-hero.html` (the lab reference: full arc on load plus a replay control), `docs/metamorphosis-hero-prompt.md` (the design intent), `tests/metamorphosis.spec.ts` (enforces the byte-exact rest pose, the reduced-motion poster, the code line's resolution, DPR clamps, offscreen pause, teardown).
+
+**Rules.** (a) The animation and its synced code block are one locked unit: never ship one without the other, never retime one side alone. (b) The sequence resolves to the locked butterfly mark per the Mark-Motion Rule; the metamorphosis is that rule's fullest sanctioned expression.
+
+Open follow-up: the pattern currently reaches desktop motion-enabled visitors only; a static or small-viewport telling of the same story is an open design task.
 
 ### Named Rules
 **The Mark-Motion Rule.** The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked static mark (Crystalline Assembly, Wing-Breathe, Light-Shift) is sanctioned and is the system's signature moment. It is distinct from the still-banned static effects on the mark: glow, gradient, drop-shadow, opacity-dimmed or outline-only wings. Motion animates the mark; it never restyles it.
