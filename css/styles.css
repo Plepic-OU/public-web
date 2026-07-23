@@ -980,23 +980,10 @@ p:last-child {
   color: var(--green-brand);
 }
 
-.hackathon-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: var(--space-2xl);
-  align-items: start;
-}
-
 .hackathon-message {
   font-size: 1rem;
   color: var(--text-2);
   line-height: 1.7;
-}
-
-.hackathon-stats {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
 }
 
 .big-stat {
@@ -1847,17 +1834,36 @@ p:last-child {
   font-size: 0.9rem;
 }
 
-.closing-alt a {
+.closing-alt a,
+.closing-guarantee a {
   color: var(--green-vivid);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
+/* Refund reassurance beside the closing CTA; links to the FAQ conditions. */
+.closing-content > .closing-guarantee {
+  margin: var(--space-lg) auto 0;
+  font-size: 0.9rem;
+  max-width: 48ch;
+}
+
+/* Tagline sign-off, the last line of the page: quiet, no accent, true italic. */
+.closing-content > .closing-tagline {
+  margin: var(--space-2xl) auto 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: normal;
+  color: var(--text-on-dark);
+}
+
 /* ========================================
    Skill Tree band (cross-property bridge -> skill.plepic.com)
-   Quiet Surface-Green band between the closing CTA and the footer. A
+   Quiet Surface-Green band between the FAQ and the closing CTA. A
    secondary path, so it uses the outline CTA, never the orange accent:
-   the closing section above owns the one accent per viewport.
+   the closing section below owns the one accent per viewport.
    ======================================== */
 .skilltree-band {
   background: var(--green-surface);
@@ -2959,10 +2965,6 @@ p:last-child {
   }
 
   .perspective-shift-comparison {
-    grid-template-columns: 1fr;
-  }
-
-  .hackathon-grid {
     grid-template-columns: 1fr;
   }
 

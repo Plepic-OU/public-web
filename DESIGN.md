@@ -130,6 +130,8 @@ components:
 
 **Creative North Star: "Curious Play, Epic Growth"**
 
+The tagline is also the name's decoder ring: PLEPIC = PL(ay) + EPIC. "Curious play" names the PL, "Epic growth" names the EPIC.
+
 The tagline is the design doctrine. Curious play is the saturated half: the vivid green that flashes in dots, antenna tips, and dark-mode headings; the crystalline butterfly with its deliberately swapped wing fills; the asymmetric badge corners; the console easter egg. Epic growth is the grown-up half: a single locked hue (137) at a single system saturation (73%), AAA body text, full borders instead of decoration, one warm action per viewport. Every surface holds both. Play without the discipline is noise; discipline without the play is any other B2B site.
 
 The audience is developers and CTOs who smell hype instantly, so the system proves rather than claims: real pseudocode in heroes, visible subsidy arithmetic, contrast ratios computed live on the public reference page (/design-system). Density is calm and editorial: cream canvas, generous section spacing with tight internal groupings, asymmetric grids (1.4fr/0.6fr) over 50/50.
