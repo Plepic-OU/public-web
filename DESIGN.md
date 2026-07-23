@@ -130,7 +130,7 @@ components:
 
 **Creative North Star: "Curious Play, Epic Growth"**
 
-The tagline is the design doctrine. Curious play is the saturated half: the vivid green that flashes in dots, antenna tips, and dark-mode headings; the crystalline butterfly with its deliberately asymmetric wing; the asymmetric badge corners; the console easter egg. Epic growth is the grown-up half: a single locked hue (137) at a single system saturation (73%), AAA body text, full borders instead of decoration, one warm action per viewport. Every surface holds both. Play without the discipline is noise; discipline without the play is any other B2B site.
+The tagline is the design doctrine. Curious play is the saturated half: the vivid green that flashes in dots, antenna tips, and dark-mode headings; the crystalline butterfly with its deliberately swapped wing fills; the asymmetric badge corners; the console easter egg. Epic growth is the grown-up half: a single locked hue (137) at a single system saturation (73%), AAA body text, full borders instead of decoration, one warm action per viewport. Every surface holds both. Play without the discipline is noise; discipline without the play is any other B2B site.
 
 The audience is developers and CTOs who smell hype instantly, so the system proves rather than claims: real pseudocode in heroes, visible subsidy arithmetic, contrast ratios computed live on the public reference page (/design-system). Density is calm and editorial: cream canvas, generous section spacing with tight internal groupings, asymmetric grids (1.4fr/0.6fr) over 50/50.
 
@@ -244,7 +244,7 @@ Calm and grounded: quiet bordered surfaces, one warm action, nothing shouts.
 - **Pairing:** a hero pairs primary + ghost. Two solid buttons side by side are prohibited; outline appears only where no primary shares the row.
 
 ### Badges
-- **Shape:** the signature asymmetric radius (20px 4px 16px), a deliberate organic imperfection echoing the butterfly's asymmetric wing.
+- **Shape:** the signature asymmetric radius (20px 4px 16px), a deliberate organic imperfection echoing the butterfly's swapped wing fills.
 - **Default:** Surface Green fill, Deep Green text, Light Green border, pulsing Vivid Green dot.
 - **Urgency:** warm tint (#fdf0eb), rust text (#a3502e), Ember dot; counts as the viewport's accent element.
 - **Hero variant** (`.badge-base`): same anatomy at larger padding (0.3rem 0.9rem) with the dot animated; one per hero.
@@ -264,7 +264,7 @@ The site has no forms by design (conversion happens via external calendar and Go
 
 ### Logo & Wordmark (signature)
 - **Wordmark** (`.logo-wordmark`): "Plepic" in Zilla Slab 600, 0.01em tracking, Brand Green (#137b30); Vivid Green inside `.on-dark`, ink on a brand-green fill (`.on-brand`). In domain or marketing contexts it reads "Plepic.com" with ".com" in Secondary Text (#4a4a45), so the name leads and the TLD recedes.
-- **Lockup** (`.logo-lockup`): wordmark + the crystalline butterfly, `gap: 0.5rem`, vertically centered. The canonical marketing and social order is butterfly first (left), wordmark second: the mark leads the name. A stacked variant (`.logo-lockup--stacked`, butterfly above wordmark) is sanctioned for square or centered placements such as social cards. Known inconsistency: the site header currently renders wordmark then butterfly, the reverse of canonical; reconcile in a follow-up, not here.
+- **Lockup** (`.logo-lockup`): wordmark + the crystalline butterfly, `gap: 0.5rem`, vertically centered. The canonical horizontal order is wordmark first, butterfly to the right of the name: the name leads, the mark punctuates. Every shipped instance (site headers, design-system specimens) renders this order. A stacked variant (`.logo-lockup--stacked`, butterfly above wordmark via `column-reverse`) is sanctioned for square or centered placements such as social cards.
 - **Tagline**: the canonical on-screen form is exactly `Curious play. Epic growth.` (sentence case, two periods), the shipped footer form. Use it verbatim; never re-case or re-punctuate the on-screen tagline. This supersedes the title-case "Curious Play, Epic Growth" wherever the tagline is literal on-screen text; that title-case form survives only as the Section 1 doctrine North Star in prose.
 
 ### Pull Quote (signature)
@@ -284,7 +284,7 @@ The site has no forms by design (conversion happens via external calendar and Go
 - **Do** use asymmetric grids (1.4fr/0.6fr) and rhythm: tight groupings, generous separations.
 - **Do** set `line-height: normal` on every compact component.
 - **Do** give every animation a `prefers-reduced-motion` alternative.
-- **Do** copy the butterfly SVG verbatim from /design-system Section 8; geometry, facet colors, and the slot-6 asymmetry are locked.
+- **Do** copy the butterfly SVG verbatim from /design-system Section 8; geometry, facet colors, and the slot-6/7 fill swap are locked. The wing outlines are exact mirrors; the asymmetry is in the fills.
 - **Do** prove instead of claim in copy: numbers, pseudocode, shipped work.
 
 ### Don't:

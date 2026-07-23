@@ -623,7 +623,8 @@
       <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
         No two adjacent facets share a color. Pattern uses <strong>DK</strong> (<code>--green-dark</code>),
         <strong>B</strong> (<code>--green-brand</code>), and <strong>V</strong> (<code>--green-vivid</code>).
-        The right wing has a deliberate asymmetry at <strong>position 6</strong> (V → DK), giving the mark a hand-crafted feel.
+        The wing outlines are exact mirrors around x=150; the deliberate asymmetry lives in the <strong>fills</strong>:
+        on the right wing, slots <strong>6 and 7</strong> swap B and DK (B → DK, DK → B), giving the mark a hand-crafted feel.
       </p>
       <table class="ds-token-table" style="margin-top: 0.5rem;">
         <thead>
@@ -636,8 +637,8 @@
           <tr><td>3</td><td>V</td><td>V</td></tr>
           <tr><td>4</td><td>DK</td><td>DK</td></tr>
           <tr><td>5</td><td>V</td><td>V</td></tr>
-          <tr><td><strong>6</strong></td><td>B</td><td><strong>DK</strong> ← asymmetry exception</td></tr>
-          <tr><td>7</td><td>DK</td><td>B</td></tr>
+          <tr><td><strong>6</strong></td><td>B</td><td><strong>DK</strong> ← fill swap</td></tr>
+          <tr><td><strong>7</strong></td><td>DK</td><td><strong>B</strong> ← fill swap</td></tr>
           <tr><td>8</td><td>V</td><td>V</td></tr>
           <tr><td>9</td><td>B</td><td>B</td></tr>
           <tr><td>10</td><td>DK</td><td>DK</td></tr>
@@ -666,7 +667,7 @@
   &lt;polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
   &lt;polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
   &lt;polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
-  &lt;!-- Right wing — note asymmetry on slot 6 (DK instead of B) --&gt;
+  &lt;!-- Right wing — mirrored outlines; fills swap B and DK on slots 6/7 --&gt;
   &lt;polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
   &lt;polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
   &lt;polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
@@ -718,7 +719,7 @@
           <li><strong>Leaf body</strong> ties the mark to the nature-digital fusion theme. The body is darker than wings to read as anatomy, not just a stripe.</li>
           <li><strong>Orange head</strong> is the only accent in the mark — one accent per element, matching the system rule. Visually, it terminates the body and gives the eye a focal point.</li>
           <li><strong>Vivid antenna tips</strong> mirror the hero "vivid green dot" pattern — small bursts of saturation as accent dots, never as text.</li>
-          <li><strong>Asymmetry at slot 6</strong> prevents the mark from looking machine-generated. A perfectly mirrored butterfly reads as clip-art; the right-wing exception gives it a hand-drawn quality.</li>
+          <li><strong>Fill asymmetry at slots 6/7</strong> keeps the mark from feeling machine-generated. The wing geometry is an exact mirror; the right wing swaps the B and DK fills on one facet pair, a deliberate imperfection in color, not in shape.</li>
           <li><strong>DK-B-V rule</strong> is what gives the wings depth without using opacity or gradients. Three solid greens, never adjacent same-color, creates faceted shading.</li>
         </ul>
       </div>
@@ -727,7 +728,7 @@
         <ul class="ds-rules">
           <li><strong>Solid facet fills</strong> — never per-facet fill opacity. Earlier prototypes used <code>fill="#00c638" opacity="0.19"</code> with brand-green strokes; they looked washed-out and needed a coloured background. The complete solid mark may still be placed as an ambient watermark at a low group opacity (the hero; see Motion, Section 11): that is a background treatment of the whole mark, not a dimmed wing.</li>
           <li><strong>No outlined-only wings</strong> — pure stroke designs read as wireframe, not crystalline. Always filled triangles.</li>
-          <li><strong>No mirrored geometry</strong> — perfectly symmetrical wings looked machine-generated. The slot-6 asymmetry is intentional and locked.</li>
+          <li><strong>No fully symmetric fills</strong> — the wing geometry is an exact mirror, and with mirrored fills too the mark looked machine-generated. The slot-6/7 fill swap is intentional and locked.</li>
           <li><strong>No gradient fills</strong> — the DK-B-V neighbour rule replaces gradients. Three flat colours create depth without rendering cost.</li>
           <li><strong>No <code>stroke="none"</code> on facets</strong> — without the 0.5px fill-matched seam stroke, browser anti-aliasing creates visible white seams between adjacent triangles. The stroke is invisible (same colour as fill) but eliminates the artifact.</li>
           <li><strong>No <code>shape-rendering="auto"</code></strong> — diagonal edges pixelate at small sizes. <code>crispEdges</code> is locked.</li>

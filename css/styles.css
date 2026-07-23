@@ -895,12 +895,14 @@ p:last-child {
   padding: var(--space-xl);
 }
 
+/* Column kickers follow the mono-label grammar (the one sanctioned uppercase). */
 .shift-col h3 {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: normal;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   margin-bottom: var(--space-sm);
 }
 
@@ -1013,13 +1015,15 @@ p:last-child {
   line-height: 1;
 }
 
+/* Stat captions follow the mono-label grammar (the one sanctioned uppercase). */
 .big-stat-label {
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   line-height: normal;
   color: var(--text-3);
   margin-top: var(--space-xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   font-weight: 600;
 }
 
