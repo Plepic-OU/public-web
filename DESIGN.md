@@ -17,6 +17,7 @@ colors:
   text-secondary: "#4a4a45"
   text-muted: "#6b6b60"
   text-on-dark: "#e5e2dc"
+  text-on-dark-2: "#a3a39a"
   border: "#e5e2dc"
   border-dark: "#3a3a38"
 typography:
@@ -167,7 +168,8 @@ A single-hue green system on a warm cream canvas, with one split-complementary o
 - **White** (#ffffff): card and panel surfaces on cream.
 - **Ink** (#1c1c1a): default text and the dark section background.
 - **Secondary Text** (#4a4a45) and **Muted Text** (#6b6b60): supporting copy; #6b6b60 is the floor, nothing lighter may carry text.
-- **On-Dark Text** (#e5e2dc): body text inside dark sections; vivid green is for emphasis there, not paragraphs.
+- **On-Dark Text** (#e5e2dc): headings and lead lines inside dark sections, including the tagline sign-off. Not paragraphs.
+- **On-Dark Body** (#a3a39a): paragraph text inside dark sections, one step dimmer than headings to avoid glare (6.7:1 AA on ink); vivid green is for emphasis there, not paragraphs.
 - **Border** (#e5e2dc) and **Dark Border** (#3a3a38): the structural lines that replace shadows.
 
 ### Named Rules

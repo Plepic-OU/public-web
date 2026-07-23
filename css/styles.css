@@ -30,6 +30,7 @@
   --text-2: #4a4a45;
   --text-3: #6b6b60;
   --text-on-dark: #e5e2dc;
+  --text-on-dark-2: #a3a39a;
 
   /* Borders */
   --border: #e5e2dc;
@@ -1825,7 +1826,7 @@ p:last-child {
 
 .closing-content > p {
   font-size: 1.05rem;
-  color: #a3a39a;
+  color: var(--text-on-dark-2);
   margin-bottom: var(--space-2xl);
 }
 
@@ -3514,7 +3515,7 @@ p:last-child {
 .on-dark h2,
 .on-dark h3,
 .on-dark h4 { color: #e5e2dc; }
-.on-dark p { color: #a3a39a; }
+.on-dark p { color: var(--text-on-dark-2); }
 
 
 /* ================================================================
