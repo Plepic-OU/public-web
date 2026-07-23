@@ -157,7 +157,7 @@ p:last-child {
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--green-dark);
+  color: var(--text);
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);

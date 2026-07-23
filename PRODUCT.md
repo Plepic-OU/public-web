@@ -26,7 +26,7 @@ Warm, grounded, distinctive. Credible and calm: expert without hype. Warmth in s
 ## Design Principles
 
 1. Brand first, pixels second. Every token, type choice, and component exists to express the identity stated in design-system.html Section 1.
-2. The palette (green H137 at S73, vivid S100 exception, accent H15), the crystalline butterfly mark, and the type stack (Zilla Slab / Plus Jakarta Sans / JetBrains Mono) are locked. Improvements work within them; identity preservation beats novelty.
+2. The palette (green H137 at S73, vivid S100 exception, accent H15), the crystalline butterfly mark, and the type stack (Bitter / Hanken Grotesk / JetBrains Mono, faces revised by founder decision 2026-07-23) are locked. Improvements work within them; identity preservation beats novelty.
 3. One accent per viewport: a single orange element (CTA button or urgency badge), never two.
 4. Nature-digital fusion means organic shapes and asymmetric layouts (1.4fr / 0.6fr grids), not token swaps.
 5. Prove, don't claim: numbers, demos, and shipped work over adjectives.

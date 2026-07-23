@@ -22,24 +22,24 @@ colors:
   border-dark: "#3a3a38"
 typography:
   display:
-    fontFamily: "Zilla Slab, Georgia, serif"
+    fontFamily: "Bitter, Georgia, serif"
     fontSize: "clamp(3rem, 2.5rem + 3.5vw, 4.8rem)"
     fontWeight: 700
     lineHeight: 1.05
     letterSpacing: "-0.025em"
   headline:
-    fontFamily: "Zilla Slab, Georgia, serif"
+    fontFamily: "Bitter, Georgia, serif"
     fontSize: "clamp(1.5rem, 1.25rem + 2vw, 2.25rem)"
     fontWeight: 700
     lineHeight: 1.15
     letterSpacing: "-0.01em"
   title:
-    fontFamily: "Zilla Slab, Georgia, serif"
+    fontFamily: "Bitter, Georgia, serif"
     fontSize: "clamp(1.15rem, 1rem + 0.5vw, 1.5rem)"
     fontWeight: 700
     lineHeight: 1.15
   body:
-    fontFamily: "Plus Jakarta Sans, -apple-system, sans-serif"
+    fontFamily: "Hanken Grotesk, -apple-system, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.7
@@ -142,7 +142,7 @@ Motion follows the same split: a choreographed hero entrance and butterfly wing-
 
 **Key Characteristics:**
 - One green hue (137) in five locked steps; one orange accent, one per viewport
-- Slab-serif display warmth over geometric sans body
+- Slab-serif display warmth over humanist grotesque body
 - Flat surfaces, full borders, tint fills; shadows only as state response
 - Light mode only; dark sections are emphasis, never a theme
 - WCAG AA minimum, enforced in CI; AAA for body text
@@ -153,7 +153,7 @@ Motion follows the same split: a choreographed hero entrance and butterfly wing-
 A single-hue green system on a warm cream canvas, with one split-complementary orange that is rationed like a scarce resource.
 
 ### Primary
-- **Brand Green** (#137b30): the identity workhorse. Logo, headings, links, labels, outline buttons. AA on cream and white (5.0:1). When in doubt, this is the green.
+- **Brand Green** (#137b30): the identity workhorse. Logo, headings, links, outline buttons. AA on cream and white (5.0:1). When in doubt, this is the green.
 - **Deep Green** (#0d5822): high-contrast body text and the butterfly's leaf body. AAA on cream and white (8.1:1). Never use it as a highlight; at heading sizes it is indistinguishable from ink.
 - **Vivid Green** (#00c638): the play color, S=100% exception. Decorative only on light backgrounds: dots, icons, chart bars, borders, focus rings. On dark it is promoted to text duty (7.4:1 AAA): headings, links, labels.
 - **Light Green** (#c5f6d3): badge fills and borders around tinted panels.
@@ -183,18 +183,18 @@ A single-hue green system on a warm cream canvas, with one split-complementary o
 
 ## 3. Typography
 
-**Display Font:** Zilla Slab (with Georgia, serif)
-**Body Font:** Plus Jakarta Sans (with -apple-system, sans-serif)
+**Display Font:** Bitter (with Georgia, serif)
+**Body Font:** Hanken Grotesk (with -apple-system, sans-serif)
 **Label/Mono Font:** JetBrains Mono (with monospace)
 
-**Character:** A warm slab serif gives the headings their grounded, bookish authority; the geometric sans keeps body copy modern and quiet; the mono carries the developer-native voice in labels and code. Warmth in service of authority, never cuteness.
+**Character:** Bitter, a contemporary screen-bred slab, keeps the headings' grounded, bookish authority; Hanken Grotesk, a humanist grotesque, keeps body copy quiet and warmer than the geometric sans it replaced; the mono carries the developer-native voice in labels and code. Warmth in service of authority, never cuteness.
 
 ### Hierarchy
 - **Display** (700, clamp(3rem, 2.5rem + 3.5vw, 4.8rem), 1.05, -0.025em): hero headlines only.
 - **Headline** (700, clamp(1.5rem, 1.25rem + 2vw, 2.25rem), 1.15): section H2s, often carrying one green payload phrase (see the Green Payload Rule).
 - **Title** (700, clamp(1.15rem, 1rem + 0.5vw, 1.5rem), 1.15): H3/H4, card and panel headings.
 - **Body** (400, 1rem to 1.1rem, 1.7): paragraphs, capped at 65 to 75ch line length.
-- **Label** (600, 0.75rem, 0.12em tracking, uppercase, mono): the section kicker (`.label`), spec annotations, and trust-bar text. The only sanctioned uppercase.
+- **Label** (600, 0.75rem, 0.12em tracking, uppercase, mono): the section kicker (`.label`), spec annotations, and trust-bar text; ink on light, Vivid Green inside `.on-dark`, `.label-muted` in Muted Text. The only sanctioned uppercase.
 
 ### Named Rules
 **The Line-Height Trap Rule.** Body's 1.7 line-height leaks into compact components by inheritance. Every compact component (logo, nav links, badges, buttons, labels, code blocks) must set `line-height: normal`.
@@ -288,13 +288,13 @@ The site has no forms by design (conversion happens via external calendar and Go
 - Fixed header, frosted cream (rgba(250,247,242,0.9) + 12px blur), bottom border appears on scroll. Logo lockup left, text links + green outline CTA right. Mobile: hamburger to full overlay, Escape closes. Body links 500 weight; nav must set `line-height: normal`.
 
 ### Logo & Wordmark (signature)
-- **Wordmark** (`.logo-wordmark`): "Plepic" in Zilla Slab 600, 0.01em tracking, Brand Green (#137b30); Vivid Green inside `.on-dark`, ink on a brand-green fill (`.on-brand`). In domain or marketing contexts it reads "Plepic.com" with ".com" in Secondary Text (#4a4a45), so the name leads and the TLD recedes.
+- **Wordmark** (`.logo-wordmark`): "Plepic" in Bitter 600, 0.01em tracking, Brand Green (#137b30); Vivid Green inside `.on-dark`, ink on a brand-green fill (`.on-brand`). In domain or marketing contexts it reads "Plepic.com" with ".com" in Secondary Text (#4a4a45), so the name leads and the TLD recedes.
 - **Lockup** (`.logo-lockup`): wordmark + the crystalline butterfly, `gap: 0.5rem`, vertically centered. The canonical horizontal order is wordmark first, butterfly to the right of the name: the name leads, the mark punctuates. Every shipped instance (site headers, design-system specimens) renders this order. A stacked variant (`.logo-lockup--stacked`, butterfly above wordmark via `column-reverse`) is sanctioned for square or centered placements such as social cards.
 - **Mark sizes**: two locked cuts. The 22-facet master renders at 48px and above (heroes, posters, downloads). Below 48px (nav lockups, favicon, compact badges) use the 8-facet small mark from /design-system Section 8: the same outer silhouette built by merging adjacent master facets, no antennae, head r=12, `shape-rendering="geometricPrecision"`. Both cuts are locked geometry; copy verbatim, never re-derive.
 - **Tagline**: the canonical on-screen form is exactly `Curious play. Epic growth.` (sentence case, two periods), the shipped footer form. Use it verbatim; never re-case or re-punctuate the on-screen tagline. This supersedes the title-case "Curious Play, Epic Growth" wherever the tagline is literal on-screen text; that title-case form survives only as the Section 1 doctrine North Star in prose.
 
 ### Pull Quote (signature)
-- Zilla Slab italic at 1.35rem, ink text, max 56ch, with a 7px Vivid Green dot before the cite. No border rules, no background.
+- Bitter italic at 1.35rem, ink text, max 56ch, with a 7px Vivid Green dot before the cite. No border rules, no background.
 
 ### Code Snippet (signature)
 - JetBrains Mono 0.8rem, Deep Green on white, 8px radius, 1px border, the one ambient shadow. Used for loop pseudocode (`while(task) { explore → act → verify }`) in heroes and comparisons. Canonical verbs (2026-07-08): **explore** (the curiosity word of "curious play"; native Claude Code vocabulary, explore-plan-code; only an agent explores, scripts merely fetch) and **verify** (the loop's quality lever per Anthropic's "Getting started with loops"; the word behind "ship faster without shipping slop"; distinguishes an agent from blind automation).
