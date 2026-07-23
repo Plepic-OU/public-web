@@ -276,6 +276,7 @@ Calm and grounded: quiet bordered surfaces, one warm action, nothing shouts.
 ### Cards / Containers
 - **Corner Style:** panels 14px, content cards up to 16px; never beyond.
 - **Background:** white on cream, cream on white, Surface Green when one card is the favored option (with Light Green border), ink (#1c1c1a) for dark emphasis panels via `.on-dark`.
+- **Reference-page grammar:** design-system.html presents specimens inside white panels; a cream panel appears there only as the demonstrated variant sitting on a white surface.
 - **Shadow Strategy:** none at rest (see Elevation); hover lift only on interactive cards.
 - **Border:** always a full 1px border; side-stripe accent borders are prohibited.
 - **Internal Padding:** 32px panels, 16px compact info cards.

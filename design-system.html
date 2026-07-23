@@ -49,7 +49,7 @@
     </div>
 
     <!-- Lockup + tagline + positioning -->
-    <div class="panel panel-cream" style="padding: var(--space-2xl);">
+    <div class="panel panel-white" style="padding: var(--space-2xl);">
       <div id="brandLockup" style="margin-bottom: 0.9rem;"></div>
       <p style="font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); color: var(--green-brand); line-height: normal; margin: 0 0 0.6rem;">Curious play. Epic growth.</p>
       <p style="font-size: 0.8rem; color: var(--text-3); line-height: 1.55; margin: 0 0 0.75rem; max-width: 60ch;">The tagline is the name's decoder ring: PLEPIC = PL(ay) + EPIC. "Curious play" names the PL, "Epic growth" names the EPIC.</p>
@@ -270,8 +270,8 @@
 
     <!-- Heading highlights — light + dark -->
     <div class="ds-grid-2" style="margin-top: var(--space-lg);">
-      <div class="panel panel-cream">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Cream — .highlight = brand green</div>
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Light — .highlight = brand green</div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0;">Build production <span class="highlight">AI agents</span> in 6 weeks</h1>
           <h2 style="margin: 0;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
@@ -306,7 +306,7 @@
     </div>
 
     <!-- Line-height warning -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg); max-width: 700px;">
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 700px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text);">Line-Height Trap</h4>
       <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;">
         Body has <code style="font-family: var(--font-mono); font-size: 0.8rem;">line-height: 1.7</code>. This leaks into compact components via inheritance.
@@ -411,7 +411,7 @@
       </p>
 
       <div class="ds-grid-2">
-        <div class="panel-cream" style="padding: 1.5rem; border-radius: 10px;">
+        <div style="padding: 1.5rem; border-radius: 10px; background: var(--bg); border: 1px solid var(--border);">
           <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Cream</span>
           <div class="ds-btn-row">
             <button class="btn btn-primary">Book a free call</button>
@@ -432,11 +432,36 @@
       </p>
     </div>
 
+    <!-- Panel variants — surface pairing per the Cards canon -->
+    <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
+      <div class="panel-label">Panel Variants — <code>.panel-white</code> · <code>.panel-cream</code></div>
+      <p class="ds-note" style="margin-bottom: var(--space-md);">
+        Surface pairing is never same-on-same: <strong>white on cream, cream on white</strong>, Surface Green when one card is the favored option, ink via <code>.on-dark</code> for dark emphasis. Always a full 1px border. This page presents every specimen inside white panels; the cream panel appears only here, as the demonstrated variant on a white surface.
+      </p>
+      <div class="ds-grid-2">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">Panel on white: cream variant</span>
+          <div class="panel panel-cream" data-demo="panel-cream" style="padding: var(--space-md);">
+            <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;"><code>.panel-cream</code> — cream fill (#faf7f2) on the white surface.</p>
+          </div>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">Panel on cream: white variant</span>
+          <div style="padding: 1rem; background: var(--bg); border-radius: 10px;">
+            <div class="panel panel-white" style="padding: var(--space-md);">
+              <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;"><code>.panel-white</code> — the default card on the cream canvas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="ds-grid-2">
 
       <!-- Light context — with CTA (no urgency badge) -->
-      <div class="panel panel-cream">
+      <div class="panel panel-white">
         <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with CTA</div>
+        <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
 
         <!-- Badges — default only, no urgency when CTA is present -->
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
@@ -468,6 +493,7 @@
         <div class="code-block code-block-default">
           <span class="comment">// Install</span><br>
           <span class="keyword">npm install</span> -g @anthropic-ai/claude-code
+        </div>
         </div>
       </div>
 
@@ -514,8 +540,9 @@
     </div>
     <div class="ds-grid-2">
       <!-- Light — urgency badge without CTA -->
-      <div class="panel panel-cream">
+      <div class="panel panel-white">
         <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with urgency badge (no CTA)</div>
+        <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
           <span class="badge badge-default"><span class="badge-dot"></span> Squad 3 open</span>
           <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
@@ -523,6 +550,7 @@
         <div class="ds-btn-row">
           <button class="btn btn-outline btn-sm">View curriculum</button>
           <button class="btn btn-ghost btn-sm">Learn more</button>
+        </div>
         </div>
       </div>
       <!-- Dark — urgency badge without CTA -->
@@ -822,7 +850,7 @@
     </div>
 
     <!-- Pull quote -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Pull Quote — <code>.perspective-shift-quote</code> / <code>.reflection-story</code></div>
       <blockquote class="perspective-shift-quote">
         <p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p>
@@ -832,7 +860,8 @@
 
     <!-- Big stats -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Big Stats — <code>.hackathon-stats</code> &middot; <code>.big-stat</code></div>
+      <div class="panel-label">Big Stats — <code>.hackathon-stats</code> &middot; <code>.big-stat</code> &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <div class="hackathon-stats">
         <div class="big-stat">
           <div class="big-stat-value">8.7</div>
@@ -843,12 +872,14 @@
           <div class="big-stat-label">Developers Trained</div>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Comparison cards -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Comparison Cards — <code>.shift-col</code> &middot; <code>.shift-col--agent</code> (tinted favorite)</div>
-      <div class="perspective-shift-comparison">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Comparison Cards — <code>.shift-col</code> &middot; <code>.shift-col--agent</code> (tinted favorite) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
+      <div class="perspective-shift-comparison" style="margin: 0;">
         <div class="shift-col shift-col--agent">
           <h3 class="text-agent">Agent</h3>
           <p>LLM + Tools + Loop + Context</p>
@@ -860,11 +891,13 @@
           <div class="code-snippet code-snippet--orange"><code>prompt &rarr; response &rarr; done</code></div>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Flow steps -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Flow Steps — <code>.flow</code> &middot; <code>.flow-step</code> (numbers earn their place: a real sequence)</div>
+      <div class="panel-label">Flow Steps — <code>.flow</code> &middot; <code>.flow-step</code> (numbers earn their place: a real sequence) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <div class="flow">
         <div class="flow-step">
           <span class="flow-step-num">01</span>
@@ -878,10 +911,11 @@
           <p>Agents attempt the real work; we quantify the value.</p>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Timeline -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Timeline — <code>.timeline</code> &middot; <code>.timeline-item</code></div>
       <div class="timeline">
         <div class="timeline-item">
@@ -920,8 +954,9 @@
     </div>
 
     <!-- Pricing pair -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Pricing Pair — <code>.pricing-cards</code> &middot; <code>.pricing-card-featured</code> (one featured glow per page)</div>
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Pricing Pair — <code>.pricing-cards</code> &middot; <code>.pricing-card-featured</code> (one featured glow per page) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <div class="pricing-cards">
         <div class="pricing-card">
           <div class="pricing-card-header">
@@ -948,11 +983,13 @@
           <a href="#" class="btn btn-primary btn-lg">Reserve Your Spot</a>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Team card -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment)</div>
+      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <article class="team-card" style="max-width: 520px;">
         <div class="team-photo">
           <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
@@ -962,10 +999,11 @@
           <p class="team-role">Developer, Architect &amp; AI Trainer</p>
         </div>
       </article>
+      </div>
     </div>
 
     <!-- Sticky CTA (static specimen) -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Mobile Sticky CTA — <code>.sticky-cta</code> (yields when any other primary CTA is on screen)</div>
       <div class="sticky-cta visible" style="position: static; transform: none; display: block; max-width: 420px; border-radius: 10px; border: 1px solid var(--border);">
         <a href="#" class="btn btn-primary">View Full Program</a>
@@ -1014,7 +1052,7 @@
     </div>
 
     <!-- Signature moment: live crystalline assembly -->
-    <div class="panel panel-cream" style="padding: var(--space-2xl); text-align: center;">
+    <div class="panel panel-white" style="padding: var(--space-2xl); text-align: center;">
       <div class="panel-label" style="justify-content: center;">The Signature Moment</div>
       <h3 style="font-size: 1.25rem; margin: 0.4rem 0 0.25rem;">Crystalline <span class="highlight">Assembly</span></h3>
       <div id="motionDemo" style="width: 200px; height: 187px; margin: 1.25rem auto 1rem;"><svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="wing-left"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><g class="wing-right"><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></div>
