@@ -2122,6 +2122,9 @@ p:last-child {
 
 .training-hero h1 {
   margin-bottom: var(--space-xl);
+  /* Display-spec tracking (DESIGN.md Display: -0.025em): keeps the hero line
+     from wrapping into a widow; Bitter runs wider than the prior display face. */
+  letter-spacing: -0.025em;
 }
 
 .training-hero .highlight {
