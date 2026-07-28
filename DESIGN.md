@@ -134,192 +134,149 @@ components:
 
 The tagline is also the name's decoder ring: PLEPIC = PL(ay) + EPIC. "Curious play" names the PL, "Epic growth" names the EPIC.
 
-The tagline is the design doctrine. Curious play is the saturated half: the vivid green that flashes in dots, antenna tips, and dark-mode headings; the crystalline butterfly with its deliberately swapped wing fills; the asymmetric badge corners; the console easter egg. Epic growth is the grown-up half: a single locked hue (137) at a single system saturation (73%), AAA body text, full borders instead of decoration, one warm action per viewport. Every surface holds both. Play without the discipline is noise; discipline without the play is any other B2B site.
-
-The audience is developers and CTOs who smell hype instantly, so the system proves rather than claims: real pseudocode in heroes, visible subsidy arithmetic, contrast ratios computed live on the public reference page (/design-system). Density is calm and editorial: cream canvas, generous section spacing with tight internal groupings, asymmetric grids (1.4fr/0.6fr) over 50/50.
-
-Motion follows the same split: a choreographed hero entrance and butterfly wing-breathe carry the play; everything else is restrained state response (300ms ease-out transitions, scroll reveals). Every animation has a `prefers-reduced-motion` alternative; that is not optional. This system explicitly rejects its own pre-2026 sci-fi mech era (cyan, neon, glow, glassmorphism, gradient text) and the generic AI-startup template look: if it could be any AI startup's page, it is wrong.
-
-**Key Characteristics:**
-- One green hue (137) in five locked steps; one orange accent, one per viewport
-- Slab-serif display warmth over humanist grotesque body
-- Flat surfaces, full borders, tint fills; shadows only as state response
-- Light mode only; dark sections are emphasis, never a theme
-- WCAG AA minimum, enforced in CI; AAA for body text
-- The crystalline butterfly mark is locked geometry, never recolored or re-faceted
+Play is the saturated half: vivid green dots and antenna tips, the butterfly's swapped wing fills, asymmetric badge corners. Growth is the discipline: one hue (137) at one saturation (73%), AAA body text, full borders, one warm action per viewport. Prove rather than claim: real pseudocode, visible subsidy arithmetic, live contrast ratios on /design-system. Density is calm and editorial: cream canvas, tight groupings, generous separations, asymmetric grids (1.4fr/0.6fr). Light mode only; dark sections are emphasis, never a theme. WCAG AA minimum, CI-enforced; AAA for body text. The pre-2026 sci-fi mech era (cyan, neon, glow, glassmorphism, gradient text) is rejected: if it could be any AI startup's page, it is wrong.
 
 ## 2. Colors
 
-A single-hue green system on a warm cream canvas, with one split-complementary orange that is rationed like a scarce resource.
-
 ### Primary
-- **Brand Green** (#137b30): the identity workhorse. Logo, headings, links, outline buttons. AA on cream and white (5.0:1). When in doubt, this is the green.
-- **Deep Green** (#0d5822): high-contrast body text and the butterfly's leaf body. AAA on cream and white (8.1:1). Never use it as a highlight; at heading sizes it is indistinguishable from ink.
-- **Vivid Green** (#00c638): the play color, S=100% exception. Decorative only on light backgrounds: dots, icons, chart bars, borders, focus rings. On dark it is promoted to text duty (7.4:1 AAA): headings, links, labels.
-- **Light Green** (#c5f6d3): badge fills and borders around tinted panels.
+- **Brand Green** (#137b30): logo, headings, links, outline buttons. AA on cream and white (5.0:1). The default green.
+- **Deep Green** (#0d5822): AAA body text (8.1:1) and the butterfly's leaf body. Never a highlight; it disappears at heading sizes.
+- **Vivid Green** (#00c638): the play color, S=100% exception. Decorative only on light (dots, icons, chart bars, borders, focus rings); on dark it is text (7.4:1 AAA): headings, links, labels.
+- **Light Green** (#c5f6d3): badge fills, borders around tinted panels.
 - **Surface Green** (#edfcf1): tinted backgrounds for favored cards and info panels.
 
 ### Secondary
-- **Ember Orange** (#e26c45): action and urgency, nothing else. CTA buttons (with dark ink text, 5.3:1), urgency badges, the butterfly's head. Hue 15, saturation-matched to the greens at 73%.
+- **Ember Orange** (#e26c45): action and urgency, nothing else. CTA buttons (ink text, 5.3:1), urgency badges, the butterfly's head. Hue 15, S=73%.
 
 ### Neutral
-- **Cream** (#faf7f2): the body canvas. Locked brand decision; warmth lives here, in the type, and in the mark.
+- **Cream** (#faf7f2): the body canvas, locked.
 - **Alt Cream** (#f3efe7): alternating section backgrounds.
 - **White** (#ffffff): card and panel surfaces on cream.
 - **Ink** (#1c1c1a): default text and the dark section background.
-- **Secondary Text** (#4a4a45) and **Muted Text** (#6b6b60): supporting copy; #6b6b60 is the floor, nothing lighter may carry text.
-- **On-Dark Text** (#e5e2dc): headings and lead lines inside dark sections, including the tagline sign-off. Not paragraphs.
-- **On-Dark Body** (#a3a39a): paragraph text inside dark sections, one step dimmer than headings to avoid glare (6.7:1 AA on ink); vivid green is for emphasis there, not paragraphs.
-- **Border** (#e5e2dc) and **Dark Border** (#3a3a38): the structural lines that replace shadows.
+- **Secondary Text** (#4a4a45), **Muted Text** (#6b6b60): supporting copy; #6b6b60 is the floor for text.
+- **On-Dark Text** (#e5e2dc): headings and lead lines in dark sections, not paragraphs.
+- **On-Dark Body** (#a3a39a): dark-section paragraphs (6.7:1 AA); vivid is emphasis there, not paragraphs.
+- **Border** (#e5e2dc), **Dark Border** (#3a3a38).
 
 ### Named Rules
-**The One Accent Rule.** Exactly one accent-colored element per viewport: a CTA button OR an urgency badge OR an accent dot, never two. The mobile sticky CTA yields (hides) whenever another primary action is on screen. No accent hover variants; states use opacity or brightness.
+**The One Accent Rule.** Exactly one accent-colored element per viewport (CTA button OR urgency badge OR accent dot); the mobile sticky CTA yields; states use opacity or brightness, never accent variants.
 
-**The 73% Rule.** Every green except vivid shares S=73%. Vivid's S=100% is the lone decorative exception. New colors do not enter the system; new needs are met by the existing steps.
+**The 73% Rule.** Every green except vivid shares S=73%; vivid's S=100% is the lone decorative exception; new needs are met by existing steps, never new colors.
 
-**The Vivid Text Ban.** #00c638 is never text on a light background (2.5:1). The retired `--green` alias pointed here; always name tokens explicitly.
+**The Vivid Text Ban.** #00c638 is never text on a light background (2.5:1); the retired `--green` alias stays retired, name tokens explicitly.
 
-**The Two-Tier Green Rule.** Headings and links get Brand Green (AA); body text that needs green gets Deep Green (AAA). Highlights use Brand Green on light, Vivid Green inside `.on-dark`.
+**The Two-Tier Green Rule.** Headings and links get Brand Green (AA); green body text gets Deep Green (AAA); highlights are Brand Green on light, Vivid Green inside `.on-dark`.
 
 ## 3. Typography
 
-**Display Font:** Bitter (with Georgia, serif)
-**Body Font:** Hanken Grotesk (with -apple-system, sans-serif)
-**Label/Mono Font:** JetBrains Mono (with monospace)
-
-**Character:** Bitter, a contemporary screen-bred slab, keeps the headings' grounded, bookish authority; Hanken Grotesk, a humanist grotesque, keeps body copy quiet and warmer than the geometric sans it replaced; the mono carries the developer-native voice in labels and code. Warmth in service of authority, never cuteness.
+**Display:** Bitter (Georgia, serif) · **Body:** Hanken Grotesk (-apple-system, sans-serif) · **Label/Mono:** JetBrains Mono (monospace). Warmth in service of authority, never cuteness.
 
 ### Hierarchy
-- **Display** (700, clamp(3rem, 2.5rem + 3.5vw, 4.8rem), 1.05, -0.025em): hero headlines only.
-- **Headline** (700, clamp(1.5rem, 1.25rem + 2vw, 2.25rem), 1.15): section H2s, often carrying one green payload phrase (see the Green Payload Rule).
-- **Title** (700, clamp(1.15rem, 1rem + 0.5vw, 1.5rem), 1.15): H3/H4, card and panel headings.
-- **Body** (400, 1rem to 1.1rem, 1.7): paragraphs, capped at 65 to 75ch line length.
-- **Label** (600, 0.75rem, 0.12em tracking, uppercase, mono): the section kicker (`.label`), spec annotations, and trust-bar text; ink on light, Vivid Green inside `.on-dark`, `.label-muted` in Muted Text. The only sanctioned uppercase.
+Metrics per frontmatter `typography`.
+- **Display**: hero headlines only.
+- **Headline**: section H2s, at most one green payload phrase (Green Payload Rule).
+- **Title**: H3/H4, card and panel headings.
+- **Body**: 1rem to 1.1rem, 65 to 75ch line length.
+- **Label**: section kickers, spec annotations, trust-bar text; ink on light, Vivid Green inside `.on-dark`, `.label-muted` in Muted Text. The only sanctioned uppercase.
 
 ### Named Rules
-**The Line-Height Trap Rule.** Body's 1.7 line-height leaks into compact components by inheritance. Every compact component (logo, nav links, badges, buttons, labels, code blocks) must set `line-height: normal`.
+**The Line-Height Trap Rule.** Body's 1.7 line-height leaks into compact components by inheritance; every compact component (logo, nav links, badges, buttons, labels, code blocks) sets `line-height: normal`.
 
-**The Green Payload Rule.** Headings are near-black ink with at most one green phrase marking the payload: the word or phrase carrying the heading's claim ("value", "measure", "LLM Loop", "your codebase"). No payload, no green: roughly a third of headings stay plain, and the device works because it is not everywhere. Keep the phrase to 1 to 3 words; the one exception is a definition heading, which may highlight the whole definition when the definition is the payload. Color mechanics: `.highlight` is Brand Green on light and Vivid Green inside `.on-dark`. Never Deep Green: it disappears at heading sizes.
+**The Green Payload Rule.** Headings are near-black ink with at most one green phrase (1 to 3 words) marking the payload, the word carrying the heading's claim; no payload, no green, and roughly a third of headings stay plain. One exception: a definition heading may highlight the whole definition. `.highlight` is Brand Green on light, Vivid Green inside `.on-dark`, never Deep Green (it disappears at heading sizes).
 
 ## 4. Elevation
 
-Flat by default. Surfaces are flat at rest; structure comes from 1px or 1.5px full borders (#e5e2dc on light, #3a3a38 on dark) and tint fills (Surface Green for favored panels), never from decoration shadows. Depth appears only as a response to state or as a single featured exception per page. The ghost-card pattern (1px border plus a wide soft shadow on the same resting element) is prohibited.
+Flat by default: structure from 1px or 1.5px full borders (#e5e2dc light, #3a3a38 dark) and tint fills; depth only as state response or one featured exception per page. The ghost-card pattern (1px border plus wide soft shadow at rest) is prohibited.
 
 ### Shadow Vocabulary
-- **Code ambient** (`box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04)`): the one resting shadow, under inline code snippets; barely there.
+- **Code ambient** (`box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04)`): the one resting shadow, under inline code snippets.
 - **Hover lift** (`box-shadow: 0 8px 24px rgba(28, 28, 26, 0.06)` with `translateY(-2px)`): cards on hover only.
-- **Tooltip** (`box-shadow: 0 8px 24px rgba(28, 28, 26, 0.1)`): floating layers earn a real shadow.
+- **Tooltip** (`box-shadow: 0 8px 24px rgba(28, 28, 26, 0.1)`): floating layers.
 - **Featured glow** (`box-shadow: 0 4px 24px rgba(0, 198, 56, 0.1)`): the featured pricing card; at most one per page.
 - **Accent pulse** (`box-shadow: 0 0 0 8px rgba(226, 108, 69, 0)` keyframed from 0.3 opacity): the CTA heartbeat, 3s loop.
 
 ### Named Rules
-**The Flat-By-Default Rule.** If a resting element needs separation, give it a border or a tint, not a shadow. Shadows are state (hover, floating) or the one featured exception.
+**The Flat-By-Default Rule.** A resting element that needs separation gets a border or a tint, never a shadow; shadows are state (hover, floating) or the one featured exception.
 
 ## 5. Motion
 
-Motion is the moving half of "Curious Play." A flat, restrained system earns its life through choreography, not decoration: nothing pulses for attention, but the things that move do so with intent and one shared character. The signature is a single easing curve, `cubic-bezier(0.16, 1, 0.3, 1)` (`--ease-settle`): motion arrives fast and settles soft, like a crystal locking into place. Perpetual idles use plain ease-in-out (`--ease-calm`) so they read as breathing, not as events.
-
-### Duration and Easing
-Four duration steps, all tokenized: 150ms (`--dur-fast`, state response: colour, opacity), 300ms (`--dur-base`, the default transition and hover lift), 550ms (`--dur-settle`, the crystalline assembly and wing flap), 700ms (`--dur-entrance`, the hero choreography). The three `--transition-*` aliases are built on these tokens. Two easings: `--ease-settle` for anything that arrives and lands, `--ease-calm` for anything that loops. New motion reaches for a token, never a raw value.
+One signature easing: `--ease-settle` for anything that arrives and lands; `--ease-calm` for anything that loops, so it reads as breathing. Durations: `--dur-fast` (colour, opacity), `--dur-base` (default transition, hover lift), `--dur-settle` (assembly, wing flap), `--dur-entrance` (hero choreography); the `--transition-*` aliases build on these. New motion reaches for a token, never a raw value.
 
 ### Named Patterns
-- **Crystalline Assembly** (signature): on load the hero butterfly builds itself. Each facet scales up from its own centre and settles into the locked mark, staggered symmetrically so both wings' Nth facet arrive together, building outward from the body; the ember head and vivid antenna tips pop last. About 1.3s on the settle curve. The mark crystallises rather than fades, making "crystalline precision in organic material" literal.
-- **Metamorphosis Refactor** (hero signature): the homepage hero arc. A crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath it evolves in lockstep from the manual loop body into the agentic loop; canonized in full below.
-- **Wing-Breathe**: the perpetual idle, a 2deg rotation on the wing groups over 4s, starting after the assembly so the two never compete.
-- **Light-Shift**: a slow brightness wave travelling outward across the facets every 7s, brightness only, no blur or added colour, so it reads as light catching a crystal.
-- **Hero Choreography**: the hero text enters in five rise-and-fade steps (badge, headline, subhead, CTA, qualifier).
-- **Scroll Reveal**: content fades and rises 16px as it enters the viewport, once.
-- **Hover Lift**: interactive cards rise 3px onto a soft shadow; the only resting-to-hover depth change (see Elevation).
-- **Accent Pulse**: the one warm action per viewport carries a 3s heartbeat ring.
+Definitions are tokenized in the frontmatter (`motion.patterns`). Beyond those: Crystalline Assembly staggers symmetrically so both wings' Nth facets arrive together, body outward, ember head and vivid antenna tips last, ~1.3s; Wing-Breathe starts only after the assembly; Hero Choreography's five steps are badge, headline, subhead, CTA, qualifier.
 
 ### The Metamorphosis Refactor (signature)
 
-The manual workflow metamorphoses into the agentic loop as the caterpillar becomes the butterfly: "developer becomes agentic engineer" told twice at once, in creature and in code. The synchronized code line is what converts the butterfly from a transformation cliché into a domain claim; without it the arc is decoration.
+Developer becomes agentic engineer, told twice at once: the caterpillar becomes the butterfly while the code line beneath evolves into `while(task) { explore → act → verify }`. The synced code line is what makes the arc a domain claim instead of a transformation cliché.
 
-**Trigger.** The hero mounts at rest: the static poster shows first, the WebGL canvas cross-fades in at the settled mark after its first rendered frame, the finished canonical line beneath. A single 5000ms timer, started when the hero module boots after its dynamic import, fires one `replay()`: the arc plays exactly once, so the visitor reads the headline first, then rests forever. No scroll trigger, no auto-loop.
+**Trigger.** The hero mounts at rest; a single 5000ms timer after module boot fires one `replay()`; the arc plays exactly once. No scroll trigger, no auto-loop.
 
-**The four movements.** Module timeline: crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest indefinitely; 13.6s of story. The 22 facets are the constant: nothing fades in or out, matter reorganizes. Motion is forces, never tweens: every corner is a damped spring particle, and gravity, ground pins, a silk constraint, a pendulum, and under-damped wing pressure do the moving, so there is no easing curve to retime; the arc's feel lives in the module's spring constants. The mark is where the physics settles: a deadband snap lands the particles on the exact locked coordinates and a shader rest gate collapses lighting to the exact locked hexes, byte-exact against the mark. Rest then breathes per Wing-Breathe with the 7s Light-Shift.
+**Movements.** Crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest; 13.6s. The 22 facets are constant; matter reorganizes. Motion is spring forces, never tweens; the feel lives in the module's spring constants. A deadband snap and shader rest gate land the rest pose byte-exact on the locked mark; rest then breathes per Wing-Breathe and Light-Shift.
 
-**The Refactor (code sync).** The code block derives every beat from the module's phase clock (`phaseInfo()`: phase + seconds into it), never wall clock, so creature and code cannot desync. Crawl draws the loop body `{ explore → act → verify }` character by character beneath the crawling caterpillar; gather and chrysalis hold it dimmed and breathing, cursor frozen (held breath); unfurl types `while(task) ` letter by letter in front as the wings pump (0.25s hold, ~1.5s ease-out reveal, one settle tick at the overshoot-relax beat); rest holds the canonical line. The pen-cursor glides ahead to each new insertion point and the ink follows. Verbs are the Code Snippet canon: explore → act → verify.
+**Code sync.** The code block derives every beat from the module's phase clock (`phaseInfo()`), never wall clock, so creature and code cannot desync. Crawl types the loop body; gather and chrysalis hold it dimmed, cursor frozen; unfurl types `while(task) `; rest holds the canonical line.
 
-**Gating and fallback (as shipped).** Before the Three.js import, any of prefers-reduced-motion, viewport at or under 900px (mobile hides the hero visual; the header lockup carries the mark), Save-Data, deviceMemory under 2, or missing WebGL2 skips everything: zero download, static poster plus the finished canonical line. The module re-checks the same gates and additionally falls back on init failure, GPU context loss, and sustained slow frames (the quality ladder's last tier); every fallback restores the poster and snaps the code to the finished line, never freezing mid-refactor. The render loop pauses offscreen and on hidden tabs; loads started over 2.5s in mount directly at rest.
+**Gating and fallback (as shipped).** Reduced motion, viewport at or under 900px, Save-Data, deviceMemory under 2, or missing WebGL2: no download, static poster plus finished line. Init failure, GPU context loss, sustained slow frames: same fallback, never freezing mid-refactor. The render loop pauses offscreen and on hidden tabs; loads over 2.5s mount at rest.
 
-**Locked assets.** `js/crystalline-metamorphosis.js` (the physics rig and choreography module), the `index.html` hero (stage, inline poster SVG, Refactor block, gate script and code choreography), `metamorphosis-hero.html` (the lab reference: full arc on load plus a replay control), `docs/metamorphosis-hero-prompt.md` (the design intent), `tests/metamorphosis.spec.ts` (enforces the byte-exact rest pose, the reduced-motion poster, the code line's resolution, DPR clamps, offscreen pause, teardown).
+**Locked assets.** `js/crystalline-metamorphosis.js` (physics rig and choreography), the `index.html` hero (stage, inline poster SVG, Refactor block, gate script), `metamorphosis-hero.html` (lab reference: full arc on load, replay control), `docs/metamorphosis-hero-prompt.md` (design intent), `tests/metamorphosis.spec.ts` (byte-exact rest pose, reduced-motion poster, code resolution, DPR clamps, offscreen pause, teardown).
 
-**Rules.** (a) The animation and its synced code block are one locked unit: never ship one without the other, never retime one side alone. (b) The sequence resolves to the locked butterfly mark per the Mark-Motion Rule; the metamorphosis is that rule's fullest sanctioned expression.
+**Rules.** (a) The animation and its synced code block are one locked unit: never ship or retime one side alone. (b) The sequence resolves to the locked mark per the Mark-Motion Rule.
 
-Open follow-up: the pattern currently reaches desktop motion-enabled visitors only; a static or small-viewport telling of the same story is an open design task.
+Open follow-up: a static or small-viewport telling of the story; the pattern reaches desktop motion-enabled visitors only.
 
 ### Named Rules
-**The Mark-Motion Rule.** The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked static mark (Crystalline Assembly, Wing-Breathe, Light-Shift) is sanctioned and is the system's signature moment. It is distinct from the still-banned static effects on the mark: glow, gradient, drop-shadow, opacity-dimmed or outline-only wings. Motion animates the mark; it never restyles it.
+**The Mark-Motion Rule.** Choreographed motion that resolves to the locked static mark is sanctioned; static effects (glow, gradient, drop-shadow, opacity-dimmed or outline-only wings) stay banned. Motion animates the mark, never restyles it.
 
-**The Reduced-Motion Rule.** Every animation has a `prefers-reduced-motion: reduce` branch that lands on the static end state instantly: the assembled mark, the entered hero, the revealed code. Reduced motion is never a degraded experience, only a still one. Shipping an animation without its reduced-motion branch is a defect, not a polish item.
+**The Reduced-Motion Rule.** Every animation has a `prefers-reduced-motion: reduce` branch that lands on the static end state instantly; shipping without one is a defect, not a polish item.
 
 ## 6. Components
 
-Calm and grounded: quiet bordered surfaces, one warm action, nothing shouts.
-
 ### Buttons
-- **Shape:** softly rounded (10px default; 12px for `.btn-lg` in heroes, 8px for `.btn-sm` in nav and dense rows). 1.5px border slot on all variants so sizes never shift between variants.
-- **Primary:** Ember Orange fill with ink text (#1c1c1a on #e26c45, 5.3:1), weight 600. One per viewport, no exceptions.
-- **Outline:** transparent with Brand Green border and text; hover fills with Surface Green. On dark, border and text switch to Vivid Green.
-- **Ghost:** underlined text link with arrow, Brand Green; the "or just look first" option.
-- **Hover / Focus:** `filter: brightness(0.92)` on fills, 150ms; focus ring is a 2px Vivid Green outline offset 2px.
-- **Pairing:** a hero pairs primary + ghost. Two solid buttons side by side are prohibited; outline appears only where no primary shares the row.
+Colors and padding per frontmatter `components`.
+- **Sizes:** 10px radius default, 12px `.btn-lg` (heroes), 8px `.btn-sm` (nav, dense rows); 1.5px border slot on all variants so sizes never shift.
+- **Primary:** weight 600; one per viewport, no exceptions.
+- **Outline:** on dark, border and text switch to Vivid Green.
+- **Ghost:** underlined text link with arrow.
+- **Hover / Focus:** `filter: brightness(0.92)` on fills, 150ms; focus ring 2px Vivid Green outline offset 2px.
+- **Pairing:** heroes pair primary + ghost; two solid buttons side by side are prohibited; outline only where no primary shares the row.
 
 ### Badges
-- **Shape:** the signature asymmetric radius (20px 4px 16px), a deliberate organic imperfection echoing the butterfly's swapped wing fills.
-- **Default:** Surface Green fill, Deep Green text, Light Green border, pulsing Vivid Green dot.
-- **Urgency:** warm tint (#fdf0eb), rust text (#a3502e), Ember dot; counts as the viewport's accent element.
-- **Hero variant** (`.badge-base`): same anatomy at larger padding (0.3rem 0.9rem) with the dot animated; one per hero.
+Fills per frontmatter; the asymmetric radius (20px 4px 16px) is a locked signature.
+- **Default:** Light Green border, pulsing Vivid Green dot.
+- **Urgency:** Ember dot; counts as the viewport's accent.
+- **Hero variant** (`.badge-base`): same anatomy, animated dot; one per hero.
 
 ### Cards / Containers
-- **Corner Style:** panels 14px, content cards up to 16px; never beyond.
-- **Background:** white on cream, cream on white, Surface Green when one card is the favored option (with Light Green border), ink (#1c1c1a) for dark emphasis panels via `.on-dark`.
-- **Reference-page grammar:** design-system.html presents specimens inside white panels; a cream panel appears there only as the demonstrated variant sitting on a white surface.
-- **Shadow Strategy:** none at rest (see Elevation); hover lift only on interactive cards.
-- **Border:** always a full 1px border; side-stripe accent borders are prohibited.
-- **Internal Padding:** 32px panels, 16px compact info cards.
+- **Corners:** panels 14px, content cards up to 16px, never beyond.
+- **Background:** white on cream, cream on white, Surface Green for the favored option (Light Green border), ink via `.on-dark`.
+- **Reference-page grammar:** design-system.html presents specimens in white panels; a cream panel appears there only as the demonstrated variant on a white surface.
+- **Border:** always a full 1px border; side-stripe accents prohibited. No shadow at rest; hover lift on interactive cards only.
+- **Padding:** 32px panels, 16px compact info cards.
 
 ### Inputs / Fields
-The site has no forms by design (conversion happens via external calendar and Google Forms links). If an input ever ships, it inherits the panel grammar: white fill, 1px border, 10px radius, focus ring per buttons.
+No forms by design (conversion via external links). Any future input inherits the panel grammar: white fill, 1px border, 10px radius, focus ring per buttons.
 
 ### Navigation
-- Fixed header, frosted cream (rgba(250,247,242,0.9) + 12px blur), bottom border appears on scroll. Logo lockup left, text links + green outline CTA right. Mobile: hamburger to full overlay, Escape closes. Body links 500 weight; nav must set `line-height: normal`.
+Fixed header, frosted cream (rgba(250,247,242,0.9) + 12px blur), bottom border on scroll; lockup left, text links + green outline CTA right. Mobile: hamburger to full overlay, Escape closes. Links weight 500; nav sets `line-height: normal`.
 
 ### Logo & Wordmark (signature)
-- **Wordmark** (`.logo-wordmark`): "Plepic" in Bitter 600, 0.01em tracking, Brand Green (#137b30); Vivid Green inside `.on-dark`, ink on a brand-green fill (`.on-brand`). In domain or marketing contexts it reads "Plepic.com" with ".com" in Secondary Text (#4a4a45), so the name leads and the TLD recedes.
-- **Lockup** (`.logo-lockup`): wordmark + the crystalline butterfly, `gap: 0.5rem`, vertically centered. The canonical horizontal order is wordmark first, butterfly to the right of the name: the name leads, the mark punctuates. Every shipped instance (site headers, design-system specimens) renders this order. A stacked variant (`.logo-lockup--stacked`, butterfly above wordmark via `column-reverse`) is sanctioned for square or centered placements such as social cards.
-- **Mark sizes**: two locked cuts. The 22-facet master renders at 48px and above (heroes, posters, downloads). Below 48px (nav lockups, favicon, compact badges) use the 8-facet small mark from /design-system Section 8: the same outer silhouette built by merging adjacent master facets, no antennae, head r=12, `shape-rendering="geometricPrecision"`. Both cuts are locked geometry; copy verbatim, never re-derive.
-- **Tagline**: the canonical on-screen form is exactly `Curious play. Epic growth.` (sentence case, two periods), the shipped footer form. Use it verbatim; never re-case or re-punctuate the on-screen tagline. This supersedes the title-case "Curious Play, Epic Growth" wherever the tagline is literal on-screen text; that title-case form survives only as the Section 1 doctrine North Star in prose.
+- **Wordmark** (`.logo-wordmark`): "Plepic" in Bitter 600, 0.01em tracking, Brand Green (#137b30); Vivid Green inside `.on-dark`, ink on `.on-brand`. Domain or marketing contexts read "Plepic.com" with ".com" in Secondary Text (#4a4a45).
+- **Lockup** (`.logo-lockup`): wordmark + butterfly, `gap: 0.5rem`, vertically centered; canonical order is wordmark first, butterfly to the right. Stacked variant (`.logo-lockup--stacked`, butterfly above via `column-reverse`) for square or centered placements such as social cards.
+- **Mark sizes:** two locked cuts. The 22-facet master at 48px and above (heroes, posters, downloads); below 48px (nav lockups, favicon, compact badges) the 8-facet small mark from /design-system Section 8: same outer silhouette from merged master facets, no antennae, head r=12, `shape-rendering="geometricPrecision"`. Both locked; copy verbatim, never re-derive.
+- **Tagline:** the canonical on-screen form is exactly `Curious play. Epic growth.` (sentence case, two periods); never re-case or re-punctuate. The title-case form survives only as the Section 1 North Star in prose.
 
 ### Pull Quote (signature)
-- Bitter italic at 1.35rem, ink text, max 56ch, with a 7px Vivid Green dot before the cite. No border rules, no background.
+Bitter italic 1.35rem, ink, max 56ch, 7px Vivid Green dot before the cite. No border rules, no background.
 
 ### Code Snippet (signature)
-- JetBrains Mono 0.8rem, Deep Green on white, 8px radius, 1px border, the one ambient shadow. Used for loop pseudocode (`while(task) { explore → act → verify }`) in heroes and comparisons. Canonical verbs (2026-07-08): **explore** (the curiosity word of "curious play"; native Claude Code vocabulary, explore-plan-code; only an agent explores, scripts merely fetch) and **verify** (the loop's quality lever per Anthropic's "Getting started with loops"; the word behind "ship faster without shipping slop"; distinguishes an agent from blind automation).
+JetBrains Mono 0.8rem, Deep Green on white, 8px radius, 1px border, the one ambient shadow. Loop pseudocode `while(task) { explore → act → verify }`. Canonical verbs (2026-07-08): **explore** (only an agent explores; scripts fetch) and **verify** (what separates an agent from blind automation).
 
 ### Sticky CTA (mobile)
-- Bottom-fixed frosted bar with a full-width primary button; appears only below 768px, and yields whenever the hero or any other primary CTA is on screen (the One Accent Rule, enforced in JS).
+Bottom-fixed frosted bar with a full-width primary button; below 768px only; yields whenever another primary CTA is on screen (One Accent Rule, enforced in JS).
 
 ## 7. Do's and Don'ts
 
-### Do:
-- **Do** use Brand Green (#137b30) for text on light and Deep Green (#0d5822) when body text needs AAA.
-- **Do** keep exactly one accent element per viewport; let the sticky CTA yield.
-- **Do** use asymmetric grids (1.4fr/0.6fr) and rhythm: tight groupings, generous separations.
-- **Do** set `line-height: normal` on every compact component.
-- **Do** give every animation a `prefers-reduced-motion` alternative.
-- **Do** copy the butterfly SVG verbatim from /design-system Section 8; geometry, facet colors, and the slot-6/7 fill swap are locked. The wing outlines are exact mirrors; the asymmetry is in the fills.
-- **Do** prove instead of claim in copy: numbers, pseudocode, shipped work.
-
-### Don't:
-- **Don't** use Vivid Green (#00c638) as text on light backgrounds; it fails AA at 2.5:1.
-- **Don't** reintroduce the sci-fi mech era: no cyan, neon, glow effects, glassmorphism, or gradient text (PRODUCT.md anti-reference, by name).
-- **Don't** use `border-left` or `border-right` thicker than 1px as a colored accent stripe; full borders, tints, or nothing.
-- **Don't** pair a 1px border with a wide soft shadow on a resting element (the ghost-card tell).
+The named rules above are the canon. Not stated elsewhere:
+- **Do** copy the butterfly SVG verbatim from /design-system Section 8; geometry, facet colors, and the slot-6/7 fill swap are locked.
 - **Don't** add hero-metric stat-card templates, centered-everything desktop layouts, or all-caps headings (mono labels and trust bar excepted).
 - **Don't** use em-dashes in customer-facing copy; periods, commas, colons.
-- **Don't** invent new colors, accent hover variants, or a dark theme; dark sections are emphasis, not a toggle.
-- **Don't** recolor, re-facet, mirror, or add static effects (glow, gradient, drop-shadow) to the butterfly mark, and never give facets per-facet fill opacity or outline-only wings. The 8-facet small mark (below 48px, Section 8 of /design-system) is the one sanctioned re-facet and is itself locked. Two placements are sanctioned: the complete solid mark as an ambient watermark at a low group opacity (the hero), and choreographed motion that resolves to the locked mark (Section 5, The Mark-Motion Rule).
-- **Don't** ship AI-slop aesthetics: if it could be any AI startup's template, it is wrong (PRODUCT.md, verbatim).
+- **Don't** recolor, re-facet, mirror, or add static effects to the butterfly mark. Sanctioned: the locked 8-facet small mark below 48px, the complete solid mark as a low-opacity ambient watermark, and motion per the Mark-Motion Rule.
