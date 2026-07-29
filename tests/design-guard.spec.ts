@@ -107,13 +107,23 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  test('green payload: at most one highlight per heading (The Green Payload Rule)', () => {
+  test('headings are ink: no green heading styling (The Green Payload Rule, L3)', () => {
+    // Headings are ink everywhere. .highlight markup spans stay (reversibility)
+    // but every .highlight rule must resolve to `color: inherit` — never green —
+    // and production headings must not inline green text color.
+    const css = read('css/styles.css');
+    const highlightRules = css.match(/[^{}/]*\.highlight[^{}]*\{[^}]*\}/g) || [];
+    expect(highlightRules.length, 'expected .highlight rules to exist in styles.css').toBeGreaterThanOrEqual(2);
+    for (const rule of highlightRules) {
+      expect(/color:\s*inherit/.test(rule), `.highlight must be color: inherit (ink):\n${rule}`).toBe(true);
+      expect(/--green|#00c638|#137b30|#0d5822/i.test(rule), `.highlight rule reintroduces green:\n${rule}`).toBe(false);
+    }
     for (const page of PRODUCTION_PAGES) {
       const html = stripComments(read(page));
-      const headings = html.match(/<h[123][^>]*>[\s\S]*?<\/h[123]>/g) || [];
+      const headings = html.match(/<h[1-4][^>]*>[\s\S]*?<\/h[1-4]>/g) || [];
       for (const h of headings) {
-        const count = (h.match(/class="highlight"/g) || []).length;
-        expect(count, `${page}: a heading carries ${count} highlights; one green phrase max:\n${h.slice(0, 120)}`).toBeLessThanOrEqual(1);
+        const greenInline = /style="[^"]*color:\s*(var\(--green|#00c638|#137b30|#0d5822)/i.test(h);
+        expect(greenInline, `${page}: heading carries inline green; headings are ink:\n${h.slice(0, 120)}`).toBe(false);
       }
     }
   });

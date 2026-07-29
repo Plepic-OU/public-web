@@ -9,8 +9,8 @@
 :root {
   /* Green system — H=137°, S=73% (vivid S=100%)
      Palette locked 2026-04-01. */
-  --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
-  --green-brand:   #137b30;   /* S73%  L28% — logo, headings, links. AA on cream/white. */
+  --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
+  --green-brand:   #137b30;   /* S73%  L28% — logo, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
   --green-light:   #c5f6d3;   /* S73%  L87% — badge fills, borders */
   --green-surface: #edfcf1;   /* S73%  L96% — tinted backgrounds */
@@ -277,9 +277,10 @@ p:last-child {
   .logo-butterfly--hero .wing-right { animation: none; }
 }
 
-/* Heading highlight — brand green on light, vivid on dark. Never --green-dark (reserved for body text). */
-.highlight { color: var(--green-brand); }
-.on-dark .highlight { color: var(--green-vivid); }
+/* Heading highlight — ink everywhere (Green Rationing L3, 2026-07). Markup
+   spans stay for reversibility; green is never heading decoration. */
+.highlight { color: inherit; }
+.on-dark .highlight { color: inherit; }
 
 .nav {
   display: flex;
@@ -319,15 +320,15 @@ p:last-child {
   opacity: 0.55;
 }
 
-/* Nav CTA — matches design system .btn-outline.btn-sm */
+/* Nav CTA — matches design system .btn-outline.btn-sm (ink per Green Rationing L3) */
 .nav-cta {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-body);
   padding: 0.75rem 1rem !important;
   min-height: 44px;
-  border: 1.5px solid var(--green-brand) !important;
-  color: var(--green-brand) !important;
+  border: 1.5px solid var(--text) !important;
+  color: var(--text) !important;
   border-radius: 8px !important;
   font-weight: 600 !important;
   font-size: 0.8rem !important;
@@ -340,7 +341,7 @@ p:last-child {
 .nav-cta:hover {
   opacity: 0.85;
   background: transparent !important;
-  color: var(--green-brand) !important;
+  color: var(--text) !important;
   box-shadow: none !important;
   transform: none !important;
 }
@@ -411,18 +412,19 @@ p:last-child {
 }
 .btn-primary:hover { background: var(--accent); color: var(--text); }
 
-/* Outline — green brand border + text */
+/* Outline — ink border + text on light (Green Rationing L3); green appears on hover fill only */
 .btn-outline,
 .btn-secondary {
   background: transparent;
-  border-color: var(--green-brand);
-  color: var(--green-brand);
+  border-color: var(--text);
+  color: var(--text);
 }
 /* Outline hover — fill with surface tint since brightness filter is invisible on transparent */
 .btn-outline:hover,
 .btn-secondary:hover {
   background: var(--green-surface);
-  color: var(--green-brand);
+  border-color: var(--green-brand);
+  color: var(--green-dark);
   filter: none;
 }
 .on-dark .btn-outline:hover,
@@ -431,24 +433,33 @@ p:last-child {
   color: var(--green-vivid);
 }
 
-/* Ghost — underlined link-style */
+/* Ghost — underlined link-style; ink on light (Green Rationing L3) */
 .btn-ghost {
   background: transparent;
-  color: var(--green-brand);
+  color: var(--text);
   border-color: transparent;
   text-decoration: underline;
   text-underline-offset: 3px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.btn-ghost:hover {
+  background: var(--green-surface);
+  color: var(--green-dark);
+  filter: none;
+}
 
-/* Dark context overrides */
+/* Dark context overrides — dark sections keep vivid (CTA-context exception) */
 .on-dark .btn-outline,
 .on-dark .btn-secondary {
   border-color: var(--green-vivid);
   color: var(--green-vivid);
 }
 .on-dark .btn-ghost { color: var(--green-vivid); }
+.on-dark .btn-ghost:hover {
+  background: transparent;
+  color: var(--green-vivid);
+}
 
 .btn-pulse { animation: btn-pulse 3s ease-in-out infinite; }
 
@@ -585,7 +596,7 @@ p:last-child {
 }
 
 .hero h1 .highlight {
-  color: var(--green-brand);
+  color: inherit;
 }
 
 .hero-desc {
@@ -872,7 +883,7 @@ p:last-child {
 }
 
 .perspective-shift-content .highlight {
-  color: var(--green-brand);
+  color: inherit;
 }
 
 .perspective-shift-desc {
@@ -978,7 +989,7 @@ p:last-child {
 }
 
 .hackathon-content .highlight {
-  color: var(--green-brand);
+  color: inherit;
 }
 
 .hackathon-message {
@@ -2128,7 +2139,7 @@ p:last-child {
 }
 
 .training-hero .highlight {
-  color: var(--green-brand);
+  color: inherit;
 }
 
 .training-hero-subtitle {
@@ -3294,7 +3305,7 @@ p:last-child {
 }
 
 .faq-section .highlight {
-  color: var(--green-brand);
+  color: inherit;
 }
 
 .faq-list {

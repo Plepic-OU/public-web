@@ -49,7 +49,7 @@
     <!-- Lockup + tagline + positioning -->
     <div class="panel panel-white" style="padding: var(--space-2xl);">
       <div id="brandLockup" style="margin-bottom: 0.9rem;"></div>
-      <p style="font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); color: var(--green-brand); line-height: normal; margin: 0 0 0.6rem;">Curious play. Epic growth.</p>
+      <p style="font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); color: var(--text); line-height: normal; margin: 0 0 0.6rem;">Curious play. Epic growth.</p>
       <p style="font-size: 0.8rem; color: var(--text-3); line-height: 1.55; margin: 0 0 0.75rem; max-width: 60ch;">The tagline is the name's decoder ring: PLEPIC = PL(ay) + EPIC. "Curious play" names the PL, "Epic growth" names the EPIC.</p>
       <span class="label" style="color: var(--text-3);">EN &middot; Agentic coding for dev teams</span>
       <span class="label" style="color: var(--text-3); display: block; margin-top: 0.4rem;">ET &middot; Tulemuspõhine digimuutus</span>
@@ -152,7 +152,7 @@
       <ul class="ds-rules">
         <li><strong>One accent per viewport.</strong> A CTA button and an urgency badge are never visible simultaneously.</li>
         <li><strong>No accent variants.</strong> Opacity for hover/active states.</li>
-        <li><strong>Green = structural identity</strong> (logo, headings, navigation, badges, links); <strong>orange = action</strong> (CTA buttons, urgency) only.</li>
+        <li><strong>Green = structural identity</strong> (logo, navigation, badges, links); <strong>orange = action</strong> (CTA buttons, urgency) only.</li>
         <li><strong>Vivid is never text on light.</strong></li>
       </ul>
     </div>
@@ -257,7 +257,7 @@
     <!-- Heading highlights — light + dark -->
     <div class="ds-grid-2" style="margin-top: var(--space-lg);">
       <div class="panel panel-white">
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Light — .highlight = brand green</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Light — ink</div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0;">Build production <span class="highlight">AI agents</span> in 6 weeks</h1>
           <h2 style="margin: 0;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
@@ -265,7 +265,7 @@
         </div>
       </div>
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — .highlight = vivid green</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — ink (off-white)</div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0; color: #e5e2dc;">Build production <span class="highlight">AI agents</span> in 6 weeks</h1>
           <h2 style="margin: 0; color: #e5e2dc;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
@@ -277,15 +277,9 @@
     <!-- The Green Payload Rule -->
     <div class="panel panel-white" style="margin-top: var(--space-md); max-width: 720px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">The Green Payload Rule</h4>
-      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0 0 0.85rem;">
-        Headings are near-black ink with at most one green phrase marking the <em>payload</em>: the word carrying the heading's claim. Green is meaning, not decoration.
+      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;">
+        Headings are ink. Green is never heading decoration; it lives in the mark, links, and badges.
       </p>
-      <ul class="ds-rules">
-        <li><strong>One per heading, never two.</strong></li>
-        <li><strong>No payload, no green.</strong> Roughly a third of headings stay plain; the device works because it is not everywhere.</li>
-        <li><strong>1&ndash;3 words.</strong> One exception: a definition heading may highlight the whole definition when the definition IS the payload ("An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span>").</li>
-        <li><strong>Color mechanics:</strong> <code style="font-family: var(--font-mono); font-size: 0.8rem;">.highlight</code> is <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-brand</code> on cream/white (5.03:1 AA), <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-vivid</code> inside <code style="font-family: var(--font-mono); font-size: 0.8rem;">.on-dark</code> (7.42:1 AAA), never <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-dark</code> (disappears at heading sizes).</li>
-      </ul>
     </div>
 
     <!-- Line-height warning -->
@@ -354,7 +348,7 @@
     <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
       <div class="panel-label">Button System</div>
       <p class="ds-note" style="margin-bottom: var(--space-md);">
-        Three sizes (<code>.btn</code>, <code>.btn-sm</code>, <code>.btn-lg</code>) × three variants (<code>.btn-primary</code>, <code>.btn-outline</code>, <code>.btn-ghost</code>). <strong>Variants set color only, never size.</strong>
+        Three sizes (<code>.btn</code>, <code>.btn-sm</code>, <code>.btn-lg</code>) × three variants (<code>.btn-primary</code>, <code>.btn-outline</code>, <code>.btn-ghost</code>). <strong>Variants set color only, never size.</strong> On light, outline and ghost are ink; hover fills Surface Green with Deep Green text. On dark they stay Vivid Green.
       </p>
 
       <div style="display: grid; grid-template-columns: 80px 1fr; gap: 1rem 1.5rem; align-items: center; padding: 1.5rem; background: var(--bg); border-radius: 10px;">
@@ -562,7 +556,7 @@
     <div class="ds-section-label" id="s7">7 — Hero Compositions</div>
 
     <div class="ds-note">
-      Accent appears once per viewport — in the hero body CTA. Nav CTA uses green outline. No urgency badges when the CTA is visible.
+      Accent appears once per viewport — in the hero body CTA. Nav CTA uses ink outline. No urgency badges when the CTA is visible.
     </div>
 
     <!-- Light hero -->
@@ -783,7 +777,7 @@
         <ul class="ds-rules">
           <li>Use <strong>--green-brand</strong> for text on light backgrounds (AA)</li>
           <li>Use <strong>--green-dark</strong> for body text needing AAA</li>
-          <li>Use <strong>--green-vivid</strong> for decorative elements and dark-mode headings</li>
+          <li>Use <strong>--green-vivid</strong> for decorative elements and dark-mode links and labels</li>
           <li>Use <strong>--accent</strong> for exactly one element per viewport — a CTA button OR an urgency badge, never both</li>
           <li>Use asymmetric grids (1.4fr / 0.6fr), not 50/50</li>
           <li>Use spacing rhythm — tight groupings, generous separations</li>
@@ -1132,8 +1126,8 @@
   var tokens = [
     { token: '--green-surface', hex: '#edfcf1', role: 'Tinted backgrounds, card fills. Decorative only.' },
     { token: '--green-light',   hex: '#c5f6d3', role: 'Badge fills, borders, subtle highlights. Decorative only.' },
-    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative on light (dots, icons, borders). On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. NOT body text on dark — that uses off-white #e5e2dc. NOT text on light.' },
-    { token: '--green-brand',   hex: '#137b30', role: 'Logo, headings, links. Primary brand identity.' },
+    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative on light (dots, icons, borders). On dark (7.42:1 AAA): links, labels, inline emphasis. NOT body text on dark — that uses off-white #e5e2dc. NOT text on light.' },
+    { token: '--green-brand',   hex: '#137b30', role: 'Logo, links. Primary brand identity.' },
     { token: '--green-dark',    hex: '#0d5822', role: 'High-contrast body text on light. AAA on cream/white.' },
     { token: '--accent',        hex: '#e26c45', role: 'CTA button, urgency badges. One per viewport.' },
   ];
