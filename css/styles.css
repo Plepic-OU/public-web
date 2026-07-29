@@ -1286,8 +1286,8 @@ p:last-child {
    ======================================== */
 
 .footer {
-  background: #2a2a25;
-  color: #d4d4c8;
+  background: var(--dark-surface);
+  color: var(--text-on-dark);
   padding: var(--space-xl) 0;
 }
 
@@ -1297,14 +1297,14 @@ p:last-child {
   gap: var(--space-sm) var(--space-lg);
   padding-bottom: var(--space-sm);
   margin-bottom: var(--space-md);
-  border-bottom: 1px solid #3a3a38;
+  border-bottom: 1px solid var(--border-dark);
 }
 
 .footer-nav a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: #b0b0a5;
+  color: var(--text-on-dark-2);
   font-size: 0.85rem;
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -1343,7 +1343,7 @@ p:last-child {
   gap: 0.35rem;
   min-height: 44px;
   padding-block: 0.5rem;
-  color: #b0b0a5;
+  color: var(--text-on-dark-2);
   font-size: 0.85rem;
   transition: color var(--transition-fast);
   text-decoration: none;
@@ -1361,12 +1361,12 @@ p:last-child {
 .footer-company-info {
   text-align: right;
   font-size: 0.75rem;
-  color: #9a9a90;
+  color: var(--text-on-dark-2);
   line-height: 1.5;
 }
 
 .footer-company-info strong {
-  color: #d4d4c8;
+  color: var(--text-on-dark);
   font-weight: 600;
 }
 
@@ -2412,8 +2412,8 @@ p:last-child {
 }
 
 .cert-line:hover .cert-icon {
-  color: #d4a017;
-  filter: drop-shadow(0 0 4px rgba(212, 160, 23, 0.4));
+  color: var(--accent);
+  filter: drop-shadow(0 0 4px rgba(226, 108, 69, 0.4));
 }
 
 /* ========================================
@@ -3407,7 +3407,7 @@ p:last-child {
 .badge-urgency {
   background: #fdf0eb;
   color: #a3502e;
-  border: 1px solid #f9d4c4;
+  border: 1px solid rgba(226, 108, 69, 0.3);  /* --accent tint, matches the retired peach border */
 }
 .badge-dot {
   width: 6px;
@@ -3419,7 +3419,7 @@ p:last-child {
 .badge-urgency .badge-dot { background: var(--accent); }
 .on-dark .badge-default {
   background: rgba(0, 198, 56, 0.12);
-  color: #cdeed6;
+  color: var(--green-light);
   border-color: rgba(0, 198, 56, 0.2);
 }
 .on-dark .badge-urgency {
@@ -3460,7 +3460,7 @@ p:last-child {
   border-color: rgba(0, 198, 56, 0.18);
 }
 .on-dark .card-info h4 { color: var(--green-vivid); }
-.on-dark .card-info p  { color: #cdeed6; }
+.on-dark .card-info p  { color: var(--green-light); }
 
 /* ── Code blocks ────────────────────────────────────────────── */
 .code-block {
@@ -3578,8 +3578,8 @@ p:last-child {
   margin-left: var(--space-sm);
   vertical-align: middle;
 }
-.ds-locked { background: #dcfce7; color: #065f28; }
-.ds-wip    { background: #fefce8; color: #854d0e; }
+.ds-locked { background: var(--green-surface); color: var(--green-dark); }
+.ds-wip    { background: #fdf0eb; color: #a3502e; }
 
 .ds-swatch-strip {
   display: flex;
@@ -3668,9 +3668,9 @@ p:last-child {
   padding: 2px 5px;
   border-radius: 3px;
 }
-.ds-ct-pass { background: #dcfce7; color: #065f28; }
-.ds-ct-warn { background: #fefce8; color: #854d0e; }
-.ds-ct-fail { background: #fef2f2; color: #991b1b; }
+.ds-ct-pass { background: var(--green-surface); color: var(--green-dark); }
+.ds-ct-warn { background: var(--bg-alt); color: var(--text-3); }
+.ds-ct-fail { background: #fdf0eb; color: #a3502e; }
 
 .ds-grid-2 { display: grid; grid-template-columns: 1fr 1fr;        gap: var(--space-lg); }
 .ds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }

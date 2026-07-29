@@ -128,6 +128,37 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
+  test('no off-canon colors: every 6-digit hex belongs to the canon list', () => {
+    // The palette is closed. Canon = the token palette + the badge-urgency
+    // pair; any other 6-digit hex in the stylesheet or in production page
+    // styles is a leak. Tints of canon colors use rgba(), never new hex.
+    const CANON = new Set([
+      // Greens
+      '#00c638', '#137b30', '#0d5822', '#c5f6d3', '#edfcf1',
+      // Accent + badge-urgency pair
+      '#e26c45', '#fdf0eb', '#a3502e',
+      // Backgrounds / surfaces
+      '#faf7f2', '#f3efe7', '#ffffff', '#1c1c1a', '#262624',
+      // Text
+      '#4a4a45', '#6b6b60', '#e5e2dc', '#a3a39a',
+      // Borders
+      '#3a3a38',
+    ]);
+    const checkHexes = (label: string, text: string) => {
+      const hexes = text.match(/#[0-9a-f]{6}\b/gi) || [];
+      for (const hex of hexes) {
+        expect(CANON.has(hex.toLowerCase()), `${label} contains off-canon color ${hex}`).toBe(true);
+      }
+    };
+    checkHexes('css/styles.css', read('css/styles.css'));
+    for (const page of PRODUCTION_PAGES) {
+      const html = stripComments(read(page));
+      const styleAttrs = [...html.matchAll(/style="([^"]*)"/g)].map((m) => m[1]).join('\n');
+      const styleBlocks = (html.match(/<style[\s\S]*?<\/style>/gi) || []).join('\n');
+      checkHexes(`${page} inline styles`, styleAttrs + '\n' + styleBlocks);
+    }
+  });
+
   // Enabled after the training-hero stat cards were recast (critique P1):
   // the mech-* class family is the rejected pre-2026 era and must not grow.
   test('no mech-* legacy class names', () => {
