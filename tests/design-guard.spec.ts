@@ -4,11 +4,11 @@ import * as path from 'path';
 
 /**
  * Design Guard — machine-enforced rules from the Plepic Design System.
- * Canon: DESIGN.md + design-system.html (the public reference page).
+ * Canon: design-system.html (reference + named rules) + css/styles.css (tokens).
  *
  * These are static source checks (no browser). When one fails, the fix is
- * either to follow the named rule or to change the rule in DESIGN.md first;
- * never to silence the test.
+ * either to follow the named rule or to change the rule on design-system.html
+ * first; never to silence the test.
  */
 
 const ROOT = path.resolve(__dirname, '..');

@@ -51,11 +51,21 @@
   --space-3xl: 4rem;
   --space-4xl: 6rem;
 
+  /* Rounded scale (canon: panels 14px, content cards cap at 16px) */
+  --rounded-xs: 4px;
+  --rounded-sm: 8px;
+  --rounded-md: 10px;
+  --rounded-lg: 12px;
+  --rounded-xl: 14px;
+  --rounded-2xl: 16px;
+  --rounded-badge: 20px 4px 16px;
+  --rounded-pill: 99px;
+
   /* Layout */
   --max-width: 1120px;
   --header-height: 64px;
 
-  /* Motion — durations + the signature easing. See DESIGN.md Section 5. */
+  /* Motion — durations + the signature easing. See design-system.html Section 11. */
   --dur-fast: 150ms;          /* state response: color, opacity */
   --dur-base: 300ms;          /* default transition + hover lift */
   --dur-settle: 550ms;        /* crystalline assembly, wing flap */
@@ -707,7 +717,8 @@ p:last-child {
    solid facets); the logo lockup and the /design-system specimen render it at
    full presence. On load it performs the Crystalline Assembly, then breathes
    perpetually with a slow light-shift across the facets. Every layer collapses
-   to the static mark under prefers-reduced-motion. See DESIGN.md Section 5. */
+   to the static mark under prefers-reduced-motion. See design-system.html
+   Section 11. */
 .butterfly-svg {
   width: 100%;
   height: 100%;
@@ -2134,7 +2145,7 @@ p:last-child {
 
 .training-hero h1 {
   margin-bottom: var(--space-xl);
-  /* Display-spec tracking (DESIGN.md Display: -0.025em): keeps the hero line
+  /* Display-spec tracking (-0.025em, design-system.html Section 4): keeps the hero line
      from wrapping into a widow; Bitter runs wider than the prior display face. */
   letter-spacing: -0.025em;
 }

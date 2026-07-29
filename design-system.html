@@ -99,7 +99,7 @@
     <div class="ds-section-label" id="s2">2 — Color Palette <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
-      Single hue (137°) for all greens; S=73% everywhere except vivid (100%), the decorative exception. Accent at hue 15°, saturation matched (73%).
+      <strong>The 73% Rule.</strong> Single hue (137°) for all greens; S=73% everywhere except vivid (100%), the lone decorative exception. Accent at hue 15°, saturation matched (73%). New needs are met by existing steps, never new colors.
     </div>
 
     <div class="ds-swatch-strip">
@@ -150,10 +150,11 @@
     <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 700px;">
       <h3 style="font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.75rem;">Design Decisions</h3>
       <ul class="ds-rules">
-        <li><strong>One accent per viewport.</strong> A CTA button and an urgency badge are never visible simultaneously.</li>
+        <li><strong>The One Accent Rule.</strong> Exactly one accent element per viewport: a CTA button OR an urgency badge OR an accent dot; the mobile sticky CTA yields.</li>
         <li><strong>No accent variants.</strong> Opacity for hover/active states.</li>
         <li><strong>Green = structural identity</strong> (logo, navigation, badges, links); <strong>orange = action</strong> (CTA buttons, urgency) only.</li>
-        <li><strong>Vivid is never text on light.</strong></li>
+        <li><strong>The Vivid Text Ban.</strong> #00c638 is never text on light (2.5:1); the retired <code>--green</code> alias stays retired, name tokens explicitly.</li>
+        <li><strong>The Two-Tier Green Rule.</strong> Links get Brand Green (AA); green body text gets Deep Green (AAA).</li>
       </ul>
     </div>
   </div>
@@ -201,6 +202,10 @@
         <div class="ds-sw-meta" style="color: #a3a39a;">--dark</div>
       </div>
     </div>
+
+    <p class="ds-note" style="margin-top: var(--space-md); margin-bottom: 0;">
+      <strong>On-dark hierarchy, two steps:</strong> #e5e2dc for headings and lead lines, #a3a39a for paragraphs (6.7:1 AA); vivid is emphasis there, never paragraphs.
+    </p>
   </div>
 
   <!-- ============================================ -->
@@ -252,6 +257,9 @@
           <span class="label">// Training module</span>
         </div>
       </div>
+      <p class="ds-note" style="margin-top: var(--space-md); margin-bottom: 0; font-size: 0.78rem;">
+        Display is hero-only; non-hero h1s use clamp(2rem, 2rem + 3vw, 3.5rem).
+      </p>
     </div>
 
     <!-- Heading highlights — light + dark -->
@@ -800,6 +808,21 @@
         </ul>
       </div>
     </div>
+
+    <!-- The Flat-By-Default Rule + shadow vocabulary -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 720px;">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Flat-By-Default Rule</h4>
+      <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem;">
+        A resting element that needs separation gets a 1px or 1.5px full border or a tint, never a shadow; shadows are state (hover, floating) or the one featured exception per page. The ghost-card pattern (border plus wide resting shadow) is prohibited. The whole shadow vocabulary:
+      </p>
+      <ul class="ds-rules">
+        <li><strong>Code ambient</strong> &mdash; 0 2px 8px rgba(28,28,26,0.04): the one resting shadow, under inline code snippets.</li>
+        <li><strong>Hover lift</strong> &mdash; 0 8px 24px rgba(28,28,26,0.06) with translateY(-2px): interactive cards on hover only.</li>
+        <li><strong>Tooltip</strong> &mdash; 0 8px 24px rgba(28,28,26,0.1): floating layers.</li>
+        <li><strong>Featured glow</strong> &mdash; 0 4px 24px rgba(0,198,56,0.1): the featured pricing card; at most one per page.</li>
+        <li><strong>Accent pulse</strong> &mdash; a ring keyframed from rgba(226,108,69,0.3) to transparent: the CTA heartbeat, 3s loop.</li>
+      </ul>
+    </div>
   </div>
 
   <!-- ============================================ -->
@@ -810,7 +833,7 @@
 
     <div class="ds-note">
       Live specimens rendered from the same <code>css/styles.css</code> classes production runs.
-      Machine-readable specs: <code>DESIGN.md</code>, <code>.impeccable/design.json</code>.
+      Tokens and implementation: <code>css/styles.css</code>. Machine context: <code>.impeccable/design.json</code>.
     </div>
 
     <!-- Pull quote -->
@@ -1061,15 +1084,17 @@
       </ul>
     </div>
 
-    <!-- Signature pattern: the metamorphosis refactor -->
+    <!-- Signature pattern: the metamorphosis refactor (verified spec) -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Metamorphosis Refactor &mdash; the hero signature</h4>
-      <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem;">On the <a href="/">homepage hero</a>, a crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath evolves into <code>while(task) { explore &rarr; act &rarr; verify }</code>: developer becomes agentic engineer, told twice at once. Loads at rest; a 5s timer plays the arc exactly once. Spring physics, never tweens: crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, 13.6s in all, settling byte-exact onto the mark. The code derives every beat from the animation's phase clock, never wall clock.</p>
+      <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem;">On the <a href="/">homepage hero</a>, a crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath evolves into <code>while(task) { explore &rarr; act &rarr; verify }</code>: developer becomes agentic engineer, told twice at once. The synced code line is what makes the arc a domain claim instead of a transformation clich&eacute;.</p>
       <ul class="ds-rules">
-        <li><strong>One locked unit</strong> &mdash; the animation and its synced code block ship together and are retimed together, never one side alone.</li>
-        <li><strong>Resolves to the mark</strong> &mdash; the sequence ends on the locked butterfly per the Mark-Motion Rule; rest then breathes (Wing-Breathe, Light-Shift).</li>
-        <li><strong>Gating</strong> &mdash; desktop motion-enabled visitors only: reduced motion, small viewports, Save-Data, weak devices, and missing WebGL2 all keep the static poster and the finished line. A static or small-viewport telling of the same story is an open design task.</li>
-        <li><strong>Reference</strong> &mdash; live on the <a href="/">homepage</a>; full arc on load at the <a href="/metamorphosis-hero.html">lab page</a>; enforced by <code>tests/metamorphosis.spec.ts</code>.</li>
+        <li><strong>Trigger</strong> &mdash; the hero mounts at rest; a single 5000ms timer after module boot fires one <code>replay()</code>; the arc plays exactly once. No scroll trigger, no auto-loop.</li>
+        <li><strong>Movements</strong> &mdash; crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest; 13.6s. The 22 facets are constant; matter reorganizes. Motion is spring forces, never tweens; a deadband snap and shader rest gate land the rest pose byte-exact on the locked mark, which then breathes (Wing-Breathe, Light-Shift).</li>
+        <li><strong>Code sync</strong> &mdash; the code block derives every beat from the module's phase clock (<code>phaseInfo()</code>), never wall clock, so creature and code cannot desync. Crawl types the loop body; gather and chrysalis hold it dimmed, cursor frozen; unfurl types <code>while(task) </code>; rest holds the canonical line.</li>
+        <li><strong>Gating and fallback</strong> &mdash; reduced motion, viewport at or under 900px, Save-Data, deviceMemory under 2, or missing WebGL2: no download, static poster plus finished line. Init failure, GPU context loss, sustained slow frames: same fallback, never freezing mid-refactor. The render loop pauses offscreen and on hidden tabs; loads over 2.5s mount at rest. A static or small-viewport telling of the same story is an open design task.</li>
+        <li><strong>Locked assets</strong> &mdash; <code>js/crystalline-metamorphosis.js</code> (physics rig and choreography), the <code>index.html</code> hero (stage, inline poster SVG, Refactor block, gate script), <code>metamorphosis-hero.html</code> (lab: full arc on load, replay control), <code>docs/metamorphosis-hero-prompt.md</code> (design intent), <code>tests/metamorphosis.spec.ts</code> (byte-exact rest pose, reduced-motion poster, code resolution, DPR clamps, offscreen pause, teardown).</li>
+        <li><strong>One locked unit</strong> &mdash; the animation and its synced code block ship together and are retimed together, never one side alone; the sequence resolves to the locked mark per the Mark-Motion Rule.</li>
       </ul>
     </div>
 

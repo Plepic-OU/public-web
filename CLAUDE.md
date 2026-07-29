@@ -49,14 +49,13 @@ docs/                   # Design documents and one-pagers
 
 **Deployment:** GitHub Pages from `main` branch. Merge PR = deploy. Custom domain: plepic.com
 
-**Design system (single source of truth):** The Plepic Design System is the DEFAULT for every visual created in this repo; never invent off-system colors, fonts, or components. Canon lives in three layers, kept in sync:
-- `design-system.html` — the public, human-readable reference (Sections 1-10: brand foundation, palette, neutrals, type, spacing, components, heroes, logo, rules, production component specimens). Live at plepic.com/design-system.
-- `DESIGN.md` — the machine-readable canon: token frontmatter + named rules (One Accent, 73%, Vivid Text Ban, Two-Tier Green, Green Payload, Line-Height Trap, Flat-By-Default). Read this FIRST for any design task.
-- `css/styles.css` — the implementation: all tokens, base styles, and components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.label`, `.highlight`, `.on-dark`, etc.).
+**Design system (single source of truth):** The Plepic Design System is the DEFAULT for every visual created in this repo; never invent off-system colors, fonts, or components. Canon lives in two layers, kept in sync:
+- `design-system.html` — the reference + rules (Sections 1-11: brand foundation, palette, neutrals, type, spacing, components, heroes, logo, named rules, production specimens, motion). Live at plepic.com/design-system.
+- `css/styles.css` — tokens + implementation: all custom properties, base styles, and components (`.btn`, `.badge`, `.panel-*`, `.card-info`, `.label`, `.highlight`, `.on-dark`, etc.).
 
-The palette, butterfly mark, and type stack are locked. **Read DESIGN.md + design-system.html before changing any color, font, or spacing value. Do not cite hex from memory.**
+The palette, butterfly mark, and type stack are locked. **Read both before changing any color, font, or spacing value. Do not cite hex from memory.**
 
-**Design guard (machine enforcement):** `tests/design-guard.spec.ts` fails the suite on rule violations (side stripes, em-dashes in copy, retired tokens, off-system colors, broken mark geometry, multi-highlight headings). When it fails, follow the named rule or change the rule in DESIGN.md first; never silence the test.
+**Design guard (machine enforcement):** `tests/design-guard.spec.ts` fails the suite on rule violations (side stripes, em-dashes in copy, retired tokens, off-canon colors, broken mark geometry, green heading styling). When it fails, follow the named rule or change the rule on design-system.html first; never silence the test.
 
 **Design health loop:** critique snapshots + score trend live in `.impeccable/critique/` (slug `design-system-html`). `$impeccable polish` reads the latest snapshot as its backlog; re-run `$impeccable critique design-system.html` after meaningful design pushes.
 
