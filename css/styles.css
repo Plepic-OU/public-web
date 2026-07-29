@@ -3561,7 +3561,7 @@ p:last-child {
 .ds-section { margin-bottom: var(--space-3xl); }
 .ds-section-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -3571,7 +3571,7 @@ p:last-child {
   border-bottom: 1px solid var(--border);
 }
 .ds-note {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--text-2);
   line-height: 1.6;
   max-width: 640px;
@@ -3609,9 +3609,9 @@ p:last-child {
   justify-content: flex-end;
   gap: 0.1rem;
 }
-.ds-sw-name { font-family: var(--font-mono); font-size: 0.7rem;  font-weight: 700; text-transform: uppercase; }
+.ds-sw-name { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
 .ds-sw-hex  { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; }
-.ds-sw-meta { font-family: var(--font-mono); font-size: 0.7rem; opacity: 0.85; }
+.ds-sw-meta { font-family: var(--font-mono); font-size: 0.75rem; opacity: 0.85; }
 
 /* Jump nav — sticky TOC for the (long) reference page */
 .ds-toc {
@@ -3631,7 +3631,7 @@ p:last-child {
 
 .ds-toc a {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -3646,7 +3646,7 @@ p:last-child {
   text-decoration: underline;
 }
 
-.ds-token-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.ds-token-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
 .ds-token-table th {
   text-align: left;
   font-family: var(--font-mono);
@@ -3661,7 +3661,7 @@ p:last-child {
   padding: 0.6rem 0.5rem;
   border-bottom: 1px solid var(--bg);
 }
-.ds-token-table code { font-family: var(--font-mono); font-size: 0.78rem; }
+.ds-token-table code { font-family: var(--font-mono); font-size: 0.9rem; }
 .ds-swatch-dot {
   display: inline-block;
   width: 18px;
@@ -3692,7 +3692,7 @@ p:last-child {
   .ds-grid-5 { grid-template-columns: 1fr 1fr; }
 }
 
-.ds-rules { font-size: 0.85rem; color: var(--text-2); line-height: 1.8; padding-left: 1.25rem; }
+.ds-rules { font-size: 1rem; color: var(--text-2); line-height: 1.8; padding-left: 1.25rem; }
 .ds-rules strong { color: var(--text); }
 
 .ds-btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
