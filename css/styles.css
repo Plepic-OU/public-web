@@ -2563,7 +2563,7 @@ p:last-child {
 }
 
 .pricing-card-explainer {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--text-3);
   line-height: 1.5;
   margin-bottom: var(--space-xl);
