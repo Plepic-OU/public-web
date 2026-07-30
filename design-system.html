@@ -1169,7 +1169,7 @@
       '<td>' + ctBadge(onCream) + '</td>' +
       '<td>' + ctBadge(onWhite) + '</td>' +
       '<td>' + ctBadge(onDark) + '</td>' +
-      '<td style="font-size:0.78rem;color:var(--text-2);">' + t.role + '</td>';
+      '<td style="color:var(--text-2);">' + t.role + '</td>';
     tbody.appendChild(tr);
   });
 
@@ -1325,7 +1325,7 @@
     card.style.cssText = 'background:' + b.bg + ';border:1px solid ' + b.border + ';border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:0.75rem;';
     card.innerHTML =
       '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.25rem;">Plepic</span>' + bfSmall(24) + '</span>' +
-      '<span style="font-family:var(--font-mono);font-size:0.7rem;color:' + b.lc + ';text-transform:uppercase;letter-spacing:0.06em;">' + b.label + '</span>';
+      '<span style="font-family:var(--font-mono);font-size:0.75rem;color:' + b.lc + ';text-transform:uppercase;letter-spacing:0.06em;">' + b.label + '</span>';
     logoGrid.appendChild(card);
   });
 
@@ -1338,12 +1338,12 @@
     var mark = s >= 48 ? bf(s) : bfSmall(s);
     var itemL = document.createElement('div');
     itemL.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    itemL.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
+    itemL.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
     lLight.appendChild(itemL);
 
     var itemD = document.createElement('div');
     itemD.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    itemD.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
+    itemD.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
     lDark.appendChild(itemD);
   });
 
@@ -1352,7 +1352,7 @@
   [16, 24, 30, 32].forEach(function(s) {
     var item = document.createElement('div');
     item.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    item.innerHTML = bfSmall(s) + '<div style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
+    item.innerHTML = bfSmall(s) + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
     smRow.appendChild(item);
   });
 
