@@ -290,8 +290,8 @@ p:last-child {
 
 /* Heading highlight — ink everywhere (Green Rationing L3, 2026-07). Markup
    spans stay for reversibility; green is never heading decoration. */
-.highlight { color: inherit; }
-.on-dark .highlight { color: inherit; }
+.highlight { color: var(--green-brand); }
+.on-dark .highlight { color: var(--green-vivid); }
 
 .nav {
   display: flex;
@@ -606,9 +606,6 @@ p:last-child {
   max-width: 580px;
 }
 
-.hero h1 .highlight {
-  color: inherit;
-}
 
 .hero-desc {
   font-size: 1.1rem;
@@ -894,9 +891,6 @@ p:last-child {
   margin-bottom: var(--space-lg);
 }
 
-.perspective-shift-content .highlight {
-  color: inherit;
-}
 
 .perspective-shift-desc {
   font-size: 1.05rem;
@@ -938,7 +932,7 @@ p:last-child {
 
 .text-agent,
 .shift-col--agent h4 {
-  color: var(--green-brand) !important;
+  color: var(--text) !important;
 }
 
 .shift-col--agent {
@@ -1000,9 +994,6 @@ p:last-child {
   margin-bottom: var(--space-xl);
 }
 
-.hackathon-content .highlight {
-  color: inherit;
-}
 
 .hackathon-message {
   font-size: 1rem;
@@ -1714,7 +1705,7 @@ p:last-child {
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
-  color: var(--green-dark);
+  color: var(--text);
   margin-bottom: var(--space-sm);
 }
 
@@ -2047,7 +2038,7 @@ p:last-child {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
   font-weight: 600;
-  color: var(--green-brand);
+  color: var(--text);
   line-height: 1.3;
 }
 
@@ -2080,7 +2071,7 @@ p:last-child {
 .flow-step h3 {
   font-family: var(--font-display);
   font-size: 1.05rem;
-  color: var(--green-dark);
+  color: var(--text);
   margin: var(--space-sm) 0;
 }
 
@@ -2150,9 +2141,6 @@ p:last-child {
   letter-spacing: -0.025em;
 }
 
-.training-hero .highlight {
-  color: inherit;
-}
 
 .training-hero-subtitle {
   font-size: 1.05rem;
@@ -3316,9 +3304,6 @@ p:last-child {
   background: var(--bg);
 }
 
-.faq-section .highlight {
-  color: inherit;
-}
 
 .faq-list {
   margin-top: var(--space-2xl);
@@ -3333,7 +3318,7 @@ p:last-child {
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--green-dark);
+  color: var(--text);
   font-weight: 600;
   margin: var(--space-2xl) 0 var(--space-sm);
 }
@@ -3464,13 +3449,13 @@ p:last-child {
   border-radius: 10px;
   padding: var(--space-md);
 }
-.card-info h4 { color: var(--green-dark); }
+.card-info h4 { color: var(--text); }
 .card-info p  { color: var(--green-brand); font-size: 0.78rem; }
 .on-dark .card-info {
   background: rgba(0, 198, 56, 0.1);
   border-color: rgba(0, 198, 56, 0.18);
 }
-.on-dark .card-info h4 { color: var(--green-vivid); }
+.on-dark .card-info h4 { color: var(--text-on-dark); }
 .on-dark .card-info p  { color: var(--green-light); }
 
 /* ── Code blocks ────────────────────────────────────────────── */

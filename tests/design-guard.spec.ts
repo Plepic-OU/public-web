@@ -107,23 +107,26 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  test('headings are ink: no green heading styling (The Green Payload Rule, L3)', () => {
-    // Headings are ink everywhere. .highlight markup spans stay (reversibility)
-    // but every .highlight rule must resolve to `color: inherit` — never green —
-    // and production headings must not inline green text color.
+  test('green payload rule: ink headings, one green payload phrase max', () => {
+    // Headings are ink with at most one load-bearing green phrase via .highlight.
+    // Only two .highlight color rules exist (brand on light, vivid on dark);
+    // full-green headings — inline or via heading-level CSS — are banned.
     const css = read('css/styles.css');
     const highlightRules = css.match(/[^{}/]*\.highlight[^{}]*\{[^}]*\}/g) || [];
-    expect(highlightRules.length, 'expected .highlight rules to exist in styles.css').toBeGreaterThanOrEqual(2);
-    for (const rule of highlightRules) {
-      expect(/color:\s*inherit/.test(rule), `.highlight must be color: inherit (ink):\n${rule}`).toBe(true);
-      expect(/--green|#00c638|#137b30|#0d5822/i.test(rule), `.highlight rule reintroduces green:\n${rule}`).toBe(false);
-    }
+    expect(highlightRules.length, 'exactly two .highlight color rules (light + on-dark)').toBe(2);
+    expect(highlightRules.some(r => /--green-brand/.test(r)), '.highlight must be brand green on light').toBe(true);
+    expect(highlightRules.some(r => /--green-vivid/.test(r)), '.on-dark .highlight must be vivid green').toBe(true);
+    const headingGreenRules = (css.match(/^[^{}/@]*\bh[1-4][^{}]*\{[^}]*--green[^}]*\}/gm) || [])
+      .filter(r => !/\.brand|\.logo-wordmark/.test(r));
+    expect(headingGreenRules, 'heading-level CSS rules must not set green (wordmark exempt)').toEqual([]);
     for (const page of PRODUCTION_PAGES) {
       const html = stripComments(read(page));
       const headings = html.match(/<h[1-4][^>]*>[\s\S]*?<\/h[1-4]>/g) || [];
       for (const h of headings) {
         const greenInline = /style="[^"]*color:\s*(var\(--green|#00c638|#137b30|#0d5822)/i.test(h);
-        expect(greenInline, `${page}: heading carries inline green; headings are ink:\n${h.slice(0, 120)}`).toBe(false);
+        expect(greenInline, `${page}: heading carries inline green; use one .highlight payload:\n${h.slice(0, 120)}`).toBe(false);
+        const payloads = (h.match(/class="[^"]*highlight/g) || []).length;
+        expect(payloads <= 1, `${page}: heading has ${payloads} payload phrases, max is one:\n${h.slice(0, 120)}`).toBe(true);
       }
     }
   });
