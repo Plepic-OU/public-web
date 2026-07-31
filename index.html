@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <title>Claude Code Training for Dev Teams | Plepic</title>
@@ -26,9 +26,9 @@
   <meta property="og:image:alt" content="Plepic: crystalline butterfly mark with the Plepic.com wordmark and the tagline Curious play. Epic growth.">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg?v=3">
-  <link rel="icon" type="image/png" href="images/favicon.png?v=3">
-  <link rel="apple-touch-icon" href="images/favicon.png?v=3">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg?v=4">
+  <link rel="icon" type="image/png" href="images/favicon.png?v=4">
+  <link rel="apple-touch-icon" href="images/favicon.png?v=4">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://plepic.com/">
@@ -187,10 +187,10 @@
   }
   </script>
 
-  <!-- Fonts — preconnect for early DNS/TLS, then load as render-blocking stylesheet (prevents CLS from font swap) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+  <!-- Fonts: self-hosted (@font-face in css/styles.css); preload the above-the-fold critical files -->
+  <link rel="preload" href="fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/hanken.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
@@ -306,27 +306,6 @@
          column: that lifts the lockup off the qualifier baseline. */
     }
 
-    /* ── Large screens (M5 + M7) ────────────────────────────────────────────
-       The hero grid is capped at --max-width (1120px) and vertically centred
-       in a 100vh hero. On 1920/2560 that leaves the butterfly stranded in the
-       centred band with a wide cream void to its right, and pushes the badge
-       ~1/3 down between tall empty cream bands. Two homepage-scoped fixes:
-       (a) widen the hero content band (grid + trust bar together) so the
-       columns stay related to the viewport and the right void shrinks toward
-       the laptop proportion; (b) hold the content nearer the top on tall
-       viewports so it reads as intentional, not adrift. 1440 is unchanged
-       (below the 1600px threshold), so the good laptop layout is preserved. */
-    /* Keep the two columns tight and related on large screens: cap the grid
-       near the laptop proportion so the 1.15/0.85fr columns don't spread
-       apart with a wide empty gap between the headline and the butterfly.
-       Capped at all widths >=1300px, the layout composes exactly like the
-       (good) laptop layout instead of stretching. The stage stays its
-       laptop size (440px box / markPx 296) so box and mark keep matching.
-       Trust bar tracks the same cap. */
-    @media (min-width: 1300px) {
-      .hero .hero-grid:has(.meta-stage),
-      .hero:has(.meta-stage) .hero-bottom { max-width: 1180px; }
-    }
     /* NOTE: the hero keeps its base min-height:100vh (fills the fold, content
        vertically centred). An earlier fixed height:900px cap was reverted: on
        tall viewports it cut the hero short and let the next (darker cream)
@@ -530,7 +509,7 @@
   <!-- Header -->
   <header class="header" id="header">
     <div class="header-inner">
-      <a href="/" class="logo-lockup" aria-label="Plepic home" aria-current="page"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></a>
+      <a href="/" class="logo-lockup" aria-label="Plepic home" aria-current="page"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></a>
       <nav class="nav">
         <a href="/claude-code/">Claude Code</a>
         <a href="/training/">Training</a>
@@ -550,7 +529,7 @@
       <div class="hero-grid">
         <div class="hero-text">
           <div class="badge-base hero-entrance hero-entrance-1">
-            <span>300+ trained &middot; 8.7/10 avg &middot; Squad 3 starts Sep 4</span>
+            <span>300+ trained &middot; 8.7/10 avg &middot; Squad 3 sold out</span>
           </div>
 
           <h1 class="hero-entrance hero-entrance-2">Claude Code Training for<br><span class="highlight">Dev Teams</span></h1>
@@ -561,7 +540,7 @@
           </p>
 
           <div class="btn-group hero-entrance hero-entrance-4">
-            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Talk to Kaido about Squad 3</a>
+            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Talk to Kaido</a>
             <a href="/training/" class="btn btn-ghost btn-lg">View the full program &rarr;</a>
           </div>
 

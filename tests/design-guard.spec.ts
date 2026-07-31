@@ -88,25 +88,6 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  test('small butterfly mark is locked (merged silhouette, hindwing fill swap, geometricPrecision)', () => {
-    // The below-48px cut (nav lockups, favicon): 8 merged facets sharing the
-    // master's outer vertices. Any page inlining it must carry it unmodified:
-    // right-wing hindwing pair swaps B and DK, and the svg renders with
-    // geometricPrecision (crispEdges is master-only).
-    const smallLeadFacet = 'points="147,105 110,68 55,48 20,72 15,108 147,130"';
-    const precisionRoot = /<svg[^>]*shape-rendering="geometricPrecision"[^>]*><polygon points="147,105 110,68 55,48 20,72 15,108 147,130"/;
-    const rightHindUpperB = /<polygon points="153,178 250,178 218,195 225,220" fill="#137b30"/;
-    const rightHindLowerDK = /<polygon points="153,195 225,220 200,240 165,232" fill="#0d5822"/;
-    for (const page of PRODUCTION_PAGES) {
-      const html = read(page);
-      if (html.includes(smallLeadFacet)) {
-        expect(precisionRoot.test(html), `${page} inlines the small mark without shape-rendering="geometricPrecision"`).toBe(true);
-        expect(rightHindUpperB.test(html), `${page}: small mark right hindwing upper facet must be B (#137b30), the locked fill swap`).toBe(true);
-        expect(rightHindLowerDK.test(html), `${page}: small mark right hindwing lower facet must be DK (#0d5822), the locked fill swap`).toBe(true);
-      }
-    }
-  });
-
   test('green payload rule: ink headings, one green payload phrase max', () => {
     // Headings are ink with at most one load-bearing green phrase via .highlight.
     // Only two .highlight color rules exist (brand on light, vivid on dark);

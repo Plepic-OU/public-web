@@ -3,6 +3,124 @@
    ======================================== */
 
 /* ========================================
+   Self-hosted webfonts
+   ========================================
+   Latin-subset variable WOFF2 files from Google Fonts, served same-origin
+   (CSP font-src 'self'; no third-party request). One file per family+style
+   covers the whole weight range in use. Pages preload the three
+   above-the-fold-critical files (bitter, hanken, jetbrains-mono). */
+
+@font-face {
+  font-family: Bitter;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/bitter.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Bitter;
+  font-style: italic;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("../fonts/bitter-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/hanken.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/hanken-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched local fallbacks: pre-swap text occupies the same space as
+   the webfont (ascent/descent/line-gap mirror the webfont's hhea metrics;
+   size-adjust matches advance widths), so the swap causes zero layout shift.
+   Values tuned empirically in-browser (fonts blocked vs loaded, delta <1px). */
+@font-face {
+  font-family: "Bitter Fallback";
+  font-style: normal;
+  font-weight: 400 500;
+  src: local("Georgia");
+  size-adjust: 102.71%;
+  ascent-override: 91.03%;
+  descent-override: 25.8%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Bitter Fallback";
+  font-style: normal;
+  font-weight: 600 700;
+  src: local("Georgia Bold"), local("Georgia-Bold");
+  size-adjust: 90.38%;
+  ascent-override: 103.45%;
+  descent-override: 29.32%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Hanken Fallback";
+  font-style: normal;
+  font-weight: 400 500;
+  src: local("Arial");
+  size-adjust: 100.32%;
+  ascent-override: 99.68%;
+  descent-override: 30.2%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  /* Arial Bold's caps run ~4% wider than Hanken's relative to lowercase, so
+     one size-adjust could not hold the mixed-case hero buttons, the uppercase
+     skill tags, and the uppercase book caption on their webfont wrap/size
+     points at once. Avenir Next Bold's caps/lowercase proportion tracks
+     Hanken's (1.787 vs 1.796); s=92% holds all three on the webfont side of
+     their wrap points. Arial Bold is the non-macOS second choice. */
+  font-family: "Hanken Fallback";
+  font-style: normal;
+  font-weight: 600 700;
+  src: local("Avenir Next Bold"), local("AvenirNext-Bold"), local("Arial Bold"), local("Arial-BoldMT");
+  size-adjust: 92%;
+  ascent-override: 108.7%;
+  descent-override: 32.93%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Mono Fallback";
+  font-style: normal;
+  font-weight: 400 700;
+  src: local("Courier New");
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+
+/* ========================================
    Design Tokens
    ======================================== */
 
@@ -37,9 +155,9 @@
   --border-dark: #3a3a38;
 
   /* Typography */
-  --font-display: 'Bitter', Georgia, serif;
-  --font-body: 'Hanken Grotesk', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+  --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -3208,6 +3326,15 @@ p:last-child {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Print: reveals must never hide content on paper; force full visibility. */
+@media print {
   .js-reveal .reveal {
     opacity: 1;
     transform: none;
