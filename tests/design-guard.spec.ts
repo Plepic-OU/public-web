@@ -4,11 +4,11 @@ import * as path from 'path';
 
 /**
  * Design Guard — machine-enforced rules from the Plepic Design System.
- * Canon: DESIGN.md + design-system.html (the public reference page).
+ * Canon: design-system.html (reference + named rules) + css/styles.css (tokens).
  *
  * These are static source checks (no browser). When one fails, the fix is
- * either to follow the named rule or to change the rule in DESIGN.md first;
- * never to silence the test.
+ * either to follow the named rule or to change the rule on design-system.html
+ * first; never to silence the test.
  */
 
 const ROOT = path.resolve(__dirname, '..');
@@ -88,14 +88,77 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  test('green payload: at most one highlight per heading (The Green Payload Rule)', () => {
+  test('small butterfly mark is locked (merged silhouette, hindwing fill swap, geometricPrecision)', () => {
+    // The below-48px cut (nav lockups, favicon): 8 merged facets sharing the
+    // master's outer vertices. Any page inlining it must carry it unmodified:
+    // right-wing hindwing pair swaps B and DK, and the svg renders with
+    // geometricPrecision (crispEdges is master-only).
+    const smallLeadFacet = 'points="147,105 110,68 55,48 20,72 15,108 147,130"';
+    const precisionRoot = /<svg[^>]*shape-rendering="geometricPrecision"[^>]*><polygon points="147,105 110,68 55,48 20,72 15,108 147,130"/;
+    const rightHindUpperB = /<polygon points="153,178 250,178 218,195 225,220" fill="#137b30"/;
+    const rightHindLowerDK = /<polygon points="153,195 225,220 200,240 165,232" fill="#0d5822"/;
+    for (const page of PRODUCTION_PAGES) {
+      const html = read(page);
+      if (html.includes(smallLeadFacet)) {
+        expect(precisionRoot.test(html), `${page} inlines the small mark without shape-rendering="geometricPrecision"`).toBe(true);
+        expect(rightHindUpperB.test(html), `${page}: small mark right hindwing upper facet must be B (#137b30), the locked fill swap`).toBe(true);
+        expect(rightHindLowerDK.test(html), `${page}: small mark right hindwing lower facet must be DK (#0d5822), the locked fill swap`).toBe(true);
+      }
+    }
+  });
+
+  test('green payload rule: ink headings, one green payload phrase max', () => {
+    // Headings are ink with at most one load-bearing green phrase via .highlight.
+    // Only two .highlight color rules exist (brand on light, vivid on dark);
+    // full-green headings — inline or via heading-level CSS — are banned.
+    const css = read('css/styles.css');
+    const highlightRules = css.match(/[^{}/]*\.highlight[^{}]*\{[^}]*\}/g) || [];
+    expect(highlightRules.length, 'exactly two .highlight color rules (light + on-dark)').toBe(2);
+    expect(highlightRules.some(r => /--green-brand/.test(r)), '.highlight must be brand green on light').toBe(true);
+    expect(highlightRules.some(r => /--green-vivid/.test(r)), '.on-dark .highlight must be vivid green').toBe(true);
+    const headingGreenRules = (css.match(/^[^{}/@]*\bh[1-4][^{}]*\{[^}]*--green[^}]*\}/gm) || [])
+      .filter(r => !/\.brand|\.logo-wordmark/.test(r));
+    expect(headingGreenRules, 'heading-level CSS rules must not set green (wordmark exempt)').toEqual([]);
     for (const page of PRODUCTION_PAGES) {
       const html = stripComments(read(page));
-      const headings = html.match(/<h[123][^>]*>[\s\S]*?<\/h[123]>/g) || [];
+      const headings = html.match(/<h[1-4][^>]*>[\s\S]*?<\/h[1-4]>/g) || [];
       for (const h of headings) {
-        const count = (h.match(/class="highlight"/g) || []).length;
-        expect(count, `${page}: a heading carries ${count} highlights; one green phrase max:\n${h.slice(0, 120)}`).toBeLessThanOrEqual(1);
+        const greenInline = /style="[^"]*color:\s*(var\(--green|#00c638|#137b30|#0d5822)/i.test(h);
+        expect(greenInline, `${page}: heading carries inline green; use one .highlight payload:\n${h.slice(0, 120)}`).toBe(false);
+        const payloads = (h.match(/class="[^"]*highlight/g) || []).length;
+        expect(payloads <= 1, `${page}: heading has ${payloads} payload phrases, max is one:\n${h.slice(0, 120)}`).toBe(true);
       }
+    }
+  });
+
+  test('no off-canon colors: every 6-digit hex belongs to the canon list', () => {
+    // The palette is closed. Canon = the token palette + the badge-urgency
+    // pair; any other 6-digit hex in the stylesheet or in production page
+    // styles is a leak. Tints of canon colors use rgba(), never new hex.
+    const CANON = new Set([
+      // Greens
+      '#00c638', '#137b30', '#0d5822', '#c5f6d3', '#edfcf1',
+      // Accent + badge-urgency pair
+      '#e26c45', '#fdf0eb', '#a3502e',
+      // Backgrounds / surfaces
+      '#faf7f2', '#f3efe7', '#ffffff', '#1c1c1a', '#262624',
+      // Text
+      '#4a4a45', '#6b6b60', '#e5e2dc', '#a3a39a',
+      // Borders
+      '#3a3a38',
+    ]);
+    const checkHexes = (label: string, text: string) => {
+      const hexes = text.match(/#[0-9a-f]{6}\b/gi) || [];
+      for (const hex of hexes) {
+        expect(CANON.has(hex.toLowerCase()), `${label} contains off-canon color ${hex}`).toBe(true);
+      }
+    };
+    checkHexes('css/styles.css', read('css/styles.css'));
+    for (const page of PRODUCTION_PAGES) {
+      const html = stripComments(read(page));
+      const styleAttrs = [...html.matchAll(/style="([^"]*)"/g)].map((m) => m[1]).join('\n');
+      const styleBlocks = (html.match(/<style[\s\S]*?<\/style>/gi) || []).join('\n');
+      checkHexes(`${page} inline styles`, styleAttrs + '\n' + styleBlocks);
     }
   });
 
@@ -106,5 +169,17 @@ test.describe('design guard @design-guard', () => {
     for (const src of sources) {
       expect(read(src).includes('mech-'), `${src} uses mech-* legacy naming`).toBe(false);
     }
+  });
+
+  test('design-system page: cream panels only as the demonstrated variant (Cards canon)', () => {
+    // The reference page presents specimens inside white panels (white on
+    // cream); .panel-cream appears only as the demonstrated variant on a white
+    // surface, tagged data-demo="panel-cream". Cream-on-cream furniture is banned.
+    const html = stripComments(read('design-system.html'));
+    const tags = html.match(/<[^>]*class="[^"]*\bpanel-cream\b[^"]*"[^>]*>/g) || [];
+    for (const tag of tags) {
+      expect(tag.includes('data-demo="panel-cream"'), `design-system.html: unsanctioned .panel-cream (cream furniture is banned; only the tagged variant demo may use it):\n${tag.slice(0, 160)}`).toBe(true);
+    }
+    expect(tags.length, 'design-system.html: exactly one demonstrative .panel-cream specimen is sanctioned').toBe(1);
   });
 });

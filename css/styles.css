@@ -9,8 +9,8 @@
 :root {
   /* Green system — H=137°, S=73% (vivid S=100%)
      Palette locked 2026-04-01. */
-  --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
-  --green-brand:   #137b30;   /* S73%  L28% — logo, headings, links. AA on cream/white. */
+  --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
+  --green-brand:   #137b30;   /* S73%  L28% — logo, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
   --green-light:   #c5f6d3;   /* S73%  L87% — badge fills, borders */
   --green-surface: #edfcf1;   /* S73%  L96% — tinted backgrounds */
@@ -30,14 +30,15 @@
   --text-2: #4a4a45;
   --text-3: #6b6b60;
   --text-on-dark: #e5e2dc;
+  --text-on-dark-2: #a3a39a;
 
   /* Borders */
   --border: #e5e2dc;
   --border-dark: #3a3a38;
 
   /* Typography */
-  --font-display: 'Zilla Slab', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-display: 'Bitter', Georgia, serif;
+  --font-body: 'Hanken Grotesk', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Spacing */
@@ -50,11 +51,21 @@
   --space-3xl: 4rem;
   --space-4xl: 6rem;
 
+  /* Rounded scale (canon: panels 14px, content cards cap at 16px) */
+  --rounded-xs: 4px;
+  --rounded-sm: 8px;
+  --rounded-md: 10px;
+  --rounded-lg: 12px;
+  --rounded-xl: 14px;
+  --rounded-2xl: 16px;
+  --rounded-badge: 20px 4px 16px;
+  --rounded-pill: 99px;
+
   /* Layout */
   --max-width: 1120px;
   --header-height: 64px;
 
-  /* Motion — durations + the signature easing. See DESIGN.md Section 5. */
+  /* Motion — durations + the signature easing. See design-system.html Section 11. */
   --dur-fast: 150ms;          /* state response: color, opacity */
   --dur-base: 300ms;          /* default transition + hover lift */
   --dur-settle: 550ms;        /* crystalline assembly, wing flap */
@@ -86,6 +97,7 @@ html {
 body {
   font-family: var(--font-body);
   font-weight: 400;
+  font-size: 1.15rem;
   line-height: 1.7;
   color: var(--text);
   background: var(--bg);
@@ -156,7 +168,7 @@ p:last-child {
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--green-dark);
+  color: var(--text);
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
@@ -276,7 +288,8 @@ p:last-child {
   .logo-butterfly--hero .wing-right { animation: none; }
 }
 
-/* Heading highlight — brand green on light, vivid on dark. Never --green-dark (reserved for body text). */
+/* Heading highlight — ink everywhere (Green Rationing L3, 2026-07). Markup
+   spans stay for reversibility; green is never heading decoration. */
 .highlight { color: var(--green-brand); }
 .on-dark .highlight { color: var(--green-vivid); }
 
@@ -287,7 +300,7 @@ p:last-child {
 }
 
 .nav a {
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: normal;
   color: var(--text-2);
   text-decoration: none;
@@ -318,18 +331,18 @@ p:last-child {
   opacity: 0.55;
 }
 
-/* Nav CTA — matches design system .btn-outline.btn-sm */
+/* Nav CTA — matches design system .btn-outline.btn-sm (ink per Green Rationing L3) */
 .nav-cta {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-body);
   padding: 0.75rem 1rem !important;
   min-height: 44px;
-  border: 1.5px solid var(--green-brand) !important;
-  color: var(--green-brand) !important;
+  border: 1.5px solid var(--text) !important;
+  color: var(--text) !important;
   border-radius: 8px !important;
   font-weight: 600 !important;
-  font-size: 0.8rem !important;
+  font-size: 0.9rem !important;
   background: transparent !important;
   box-shadow: none !important;
   text-decoration: none;
@@ -339,7 +352,7 @@ p:last-child {
 .nav-cta:hover {
   opacity: 0.85;
   background: transparent !important;
-  color: var(--green-brand) !important;
+  color: var(--text) !important;
   box-shadow: none !important;
   transform: none !important;
 }
@@ -364,9 +377,9 @@ p:last-child {
 /* ========================================
    Buttons — design system v2 (locked)
    System:
-   - Default:  font 0.95rem · padding 0.7rem 1.4rem · radius 10px
-   - .btn-lg:  font 1.05rem · padding 0.95rem 1.9rem · radius 12px (heroes only)
-   - .btn-sm:  font 0.8rem  · padding 0.5rem 1rem    · radius 8px
+   - Default:  font 1.05rem · padding 0.7rem 1.4rem · radius 10px
+   - .btn-lg:  font 1.15rem · padding 0.95rem 1.9rem · radius 12px (heroes only)
+   - .btn-sm:  font 0.9rem  · padding 0.5rem 1rem    · radius 8px
    Variants add color only; never change size.
    ======================================== */
 
@@ -377,7 +390,7 @@ p:last-child {
   gap: 0.5rem;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: normal;
   padding: 0.7rem 1.4rem;
   border-radius: 10px;
@@ -393,12 +406,12 @@ p:last-child {
 }
 
 .btn-lg {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   padding: 0.95rem 1.9rem;
   border-radius: 12px;
 }
 .btn-sm {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
   border-radius: 8px;
 }
@@ -410,18 +423,19 @@ p:last-child {
 }
 .btn-primary:hover { background: var(--accent); color: var(--text); }
 
-/* Outline — green brand border + text */
+/* Outline — ink border + text on light (Green Rationing L3); green appears on hover fill only */
 .btn-outline,
 .btn-secondary {
   background: transparent;
-  border-color: var(--green-brand);
-  color: var(--green-brand);
+  border-color: var(--text);
+  color: var(--text);
 }
 /* Outline hover — fill with surface tint since brightness filter is invisible on transparent */
 .btn-outline:hover,
 .btn-secondary:hover {
   background: var(--green-surface);
-  color: var(--green-brand);
+  border-color: var(--green-brand);
+  color: var(--green-dark);
   filter: none;
 }
 .on-dark .btn-outline:hover,
@@ -430,24 +444,33 @@ p:last-child {
   color: var(--green-vivid);
 }
 
-/* Ghost — underlined link-style */
+/* Ghost — underlined link-style; ink on light (Green Rationing L3) */
 .btn-ghost {
   background: transparent;
-  color: var(--green-brand);
+  color: var(--text);
   border-color: transparent;
   text-decoration: underline;
   text-underline-offset: 3px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.btn-ghost:hover {
+  background: var(--green-surface);
+  color: var(--green-dark);
+  filter: none;
+}
 
-/* Dark context overrides */
+/* Dark context overrides — dark sections keep vivid (CTA-context exception) */
 .on-dark .btn-outline,
 .on-dark .btn-secondary {
   border-color: var(--green-vivid);
   color: var(--green-vivid);
 }
 .on-dark .btn-ghost { color: var(--green-vivid); }
+.on-dark .btn-ghost:hover {
+  background: transparent;
+  color: var(--green-vivid);
+}
 
 .btn-pulse { animation: btn-pulse 3s ease-in-out infinite; }
 
@@ -473,7 +496,7 @@ p:last-child {
   padding: 0.3rem 0.9rem;
   background: var(--green-surface);
   color: var(--green-brand);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 600;
   line-height: normal;
   border-radius: 20px 4px 16px;
@@ -541,7 +564,7 @@ p:last-child {
 
 .panel-header {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--green-dark);
@@ -583,12 +606,9 @@ p:last-child {
   max-width: 580px;
 }
 
-.hero h1 .highlight {
-  color: var(--green-brand);
-}
 
 .hero-desc {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   color: var(--text-2);
   margin-bottom: 2.5rem;
@@ -601,7 +621,7 @@ p:last-child {
 }
 
 .hero-price {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   line-height: normal;
   color: var(--text-2);
   margin-bottom: 2rem;
@@ -620,7 +640,7 @@ p:last-child {
 
 .hero-qualifier {
   margin-top: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: normal;
   color: var(--text-3);
   letter-spacing: 0.01em;
@@ -644,7 +664,7 @@ p:last-child {
    opacity:0.65 over text-3 dropped it to ~2.6:1. Opacity now scoped to the
    divider hairline only, so the label text stays fully legible. */
 .hero-bottom span {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--text-2);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -694,7 +714,8 @@ p:last-child {
    solid facets); the logo lockup and the /design-system specimen render it at
    full presence. On load it performs the Crystalline Assembly, then breathes
    perpetually with a slow light-shift across the facets. Every layer collapses
-   to the static mark under prefers-reduced-motion. See DESIGN.md Section 5. */
+   to the static mark under prefers-reduced-motion. See design-system.html
+   Section 11. */
 .butterfly-svg {
   width: 100%;
   height: 100%;
@@ -720,7 +741,7 @@ p:last-child {
 
 .hero-code {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   line-height: normal;
   color: var(--green-dark);
   background: transparent;
@@ -870,12 +891,9 @@ p:last-child {
   margin-bottom: var(--space-lg);
 }
 
-.perspective-shift-content .highlight {
-  color: var(--green-brand);
-}
 
 .perspective-shift-desc {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   margin-bottom: var(--space-2xl);
   line-height: 1.7;
@@ -895,24 +913,26 @@ p:last-child {
   padding: var(--space-xl);
 }
 
+/* Column kickers follow the mono-label grammar (the one sanctioned uppercase). */
 .shift-col h3 {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: normal;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   margin-bottom: var(--space-sm);
 }
 
 .shift-col p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-2);
   margin-bottom: var(--space-md);
 }
 
 .text-agent,
 .shift-col--agent h4 {
-  color: var(--green-brand) !important;
+  color: var(--text) !important;
 }
 
 .shift-col--agent {
@@ -943,7 +963,7 @@ p:last-child {
   align-items: center;
   gap: var(--space-sm);
   margin-top: var(--space-sm);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-3);
   font-style: normal;
   font-weight: 600;
@@ -974,27 +994,11 @@ p:last-child {
   margin-bottom: var(--space-xl);
 }
 
-.hackathon-content .highlight {
-  color: var(--green-brand);
-}
-
-.hackathon-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: var(--space-2xl);
-  align-items: start;
-}
 
 .hackathon-message {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--text-2);
   line-height: 1.7;
-}
-
-.hackathon-stats {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
 }
 
 .big-stat {
@@ -1013,13 +1017,15 @@ p:last-child {
   line-height: 1;
 }
 
+/* Stat captions follow the mono-label grammar (the one sanctioned uppercase). */
 .big-stat-label {
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   line-height: normal;
   color: var(--text-3);
   margin-top: var(--space-xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   font-weight: 600;
 }
 
@@ -1045,7 +1051,7 @@ p:last-child {
 }
 
 .incentive-text p {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   line-height: 1.7;
 }
@@ -1121,7 +1127,7 @@ p:last-child {
 
 .logo-row-more {
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-3);
   margin-top: var(--space-xl);
 }
@@ -1155,7 +1161,7 @@ p:last-child {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-2);
   font-weight: 500;
 }
@@ -1209,7 +1215,7 @@ p:last-child {
 }
 
 .team-role {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-2);
   margin-bottom: var(--space-md);
 }
@@ -1218,7 +1224,7 @@ p:last-child {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--green-dark);
   font-weight: 600;
   margin-bottom: var(--space-md);
@@ -1237,7 +1243,7 @@ p:last-child {
 }
 
 .skill-tag {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: normal;
   padding: 0.2rem 0.6rem;
@@ -1249,7 +1255,7 @@ p:last-child {
 }
 
 .team-bio {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-3);
   line-height: 1.5;
 }
@@ -1269,7 +1275,7 @@ p:last-child {
 }
 
 .book-caption {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--text-3);
   text-align: center;
   font-weight: 600;
@@ -1282,8 +1288,8 @@ p:last-child {
    ======================================== */
 
 .footer {
-  background: #2a2a25;
-  color: #d4d4c8;
+  background: var(--dark-surface);
+  color: var(--text-on-dark);
   padding: var(--space-xl) 0;
 }
 
@@ -1293,15 +1299,15 @@ p:last-child {
   gap: var(--space-sm) var(--space-lg);
   padding-bottom: var(--space-sm);
   margin-bottom: var(--space-md);
-  border-bottom: 1px solid #3a3a38;
+  border-bottom: 1px solid var(--border-dark);
 }
 
 .footer-nav a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: #b0b0a5;
-  font-size: 0.85rem;
+  color: var(--text-on-dark-2);
+  font-size: 0.95rem;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
@@ -1339,8 +1345,8 @@ p:last-child {
   gap: 0.35rem;
   min-height: 44px;
   padding-block: 0.5rem;
-  color: #b0b0a5;
-  font-size: 0.85rem;
+  color: var(--text-on-dark-2);
+  font-size: 0.95rem;
   transition: color var(--transition-fast);
   text-decoration: none;
 }
@@ -1357,12 +1363,12 @@ p:last-child {
 .footer-company-info {
   text-align: right;
   font-size: 0.75rem;
-  color: #9a9a90;
+  color: var(--text-on-dark-2);
   line-height: 1.5;
 }
 
 .footer-company-info strong {
-  color: #d4d4c8;
+  color: var(--text-on-dark);
   font-weight: 600;
 }
 
@@ -1424,7 +1430,7 @@ p:last-child {
 }
 
 .agent-hero-description {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   line-height: 1.7;
   margin-bottom: var(--space-xl);
@@ -1535,7 +1541,7 @@ p:last-child {
 
 .comparison-title {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1551,7 +1557,7 @@ p:last-child {
 }
 
 .comparison-desc {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-2);
   margin-bottom: var(--space-md);
 }
@@ -1599,7 +1605,7 @@ p:last-child {
 
 .single-shot-label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--text-3);
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -1667,7 +1673,7 @@ p:last-child {
 }
 
 .timeline-content p {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--text-2);
   line-height: 1.6;
 }
@@ -1699,12 +1705,12 @@ p:last-child {
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
-  color: var(--green-dark);
+  color: var(--text);
   margin-bottom: var(--space-sm);
 }
 
 .terminal-card-desc {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-2);
   line-height: 1.6;
 }
@@ -1745,7 +1751,7 @@ p:last-child {
   align-items: center;
   gap: var(--space-sm);
   margin-top: var(--space-md);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-3);
   font-style: normal;
   font-weight: 600;
@@ -1779,7 +1785,7 @@ p:last-child {
 }
 
 .enlist-content > p {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   margin-bottom: var(--space-2xl);
 }
@@ -1787,7 +1793,7 @@ p:last-child {
 /* Exit-cue qualifier keeps its small muted scale inside the enlist section
    (out-specificities .enlist-content > p above). */
 .enlist-content > .hero-qualifier {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-3);
   margin-bottom: 0;
 }
@@ -1799,7 +1805,7 @@ p:last-child {
   justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-body);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 600;
   line-height: normal;
   padding: 0.95rem 1.9rem;
@@ -1833,27 +1839,46 @@ p:last-child {
 }
 
 .closing-content > p {
-  font-size: 1.05rem;
-  color: #a3a39a;
+  font-size: 1.15rem;
+  color: var(--text-on-dark-2);
   margin-bottom: var(--space-2xl);
 }
 
 .closing-alt {
   margin-top: var(--space-xl);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
-.closing-alt a {
+.closing-alt a,
+.closing-guarantee a {
   color: var(--green-vivid);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
+/* Refund reassurance beside the closing CTA; links to the FAQ conditions. */
+.closing-content > .closing-guarantee {
+  margin: var(--space-lg) auto 0;
+  font-size: 1rem;
+  max-width: 48ch;
+}
+
+/* Tagline sign-off, the last line of the page: quiet, no accent, true italic. */
+.closing-content > .closing-tagline {
+  margin: var(--space-2xl) auto 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: normal;
+  color: var(--text-on-dark);
+}
+
 /* ========================================
    Skill Tree band (cross-property bridge -> skill.plepic.com)
-   Quiet Surface-Green band between the closing CTA and the footer. A
+   Quiet Surface-Green band between the FAQ and the closing CTA. A
    secondary path, so it uses the outline CTA, never the orange accent:
-   the closing section above owns the one accent per viewport.
+   the closing section below owns the one accent per viewport.
    ======================================== */
 .skilltree-band {
   background: var(--green-surface);
@@ -1870,7 +1895,7 @@ p:last-child {
 }
 
 .skilltree-desc {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   margin-bottom: var(--space-xl);
 }
@@ -1905,7 +1930,7 @@ p:last-child {
 }
 
 .scopeful-hero-description {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   line-height: 1.7;
   margin-bottom: var(--space-xl);
@@ -1953,7 +1978,7 @@ p:last-child {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-2);
   line-height: normal;
@@ -1970,7 +1995,7 @@ p:last-child {
 
 .value-vis-caption {
   margin-top: var(--space-md);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-3);
   line-height: 1.6;
 }
@@ -2013,7 +2038,7 @@ p:last-child {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
   font-weight: 600;
-  color: var(--green-brand);
+  color: var(--text);
   line-height: 1.3;
 }
 
@@ -2046,12 +2071,12 @@ p:last-child {
 .flow-step h3 {
   font-family: var(--font-display);
   font-size: 1.05rem;
-  color: var(--green-dark);
+  color: var(--text);
   margin: var(--space-sm) 0;
 }
 
 .flow-step p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-2);
   line-height: 1.6;
 }
@@ -2111,14 +2136,14 @@ p:last-child {
 
 .training-hero h1 {
   margin-bottom: var(--space-xl);
+  /* Display-spec tracking (-0.025em, design-system.html Section 4): keeps the hero line
+     from wrapping into a widow; Bitter runs wider than the prior display face. */
+  letter-spacing: -0.025em;
 }
 
-.training-hero .highlight {
-  color: var(--green-brand);
-}
 
 .training-hero-subtitle {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-2);
   line-height: 1.7;
   max-width: 640px;
@@ -2183,7 +2208,7 @@ p:last-child {
 
 .hero-stat-label {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   line-height: normal;
   color: var(--text-2);
   text-transform: uppercase;
@@ -2213,7 +2238,7 @@ p:last-child {
 }
 
 .curriculum-section .section-subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-2);
 }
 
@@ -2221,7 +2246,7 @@ p:last-child {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-2);
 }
@@ -2270,7 +2295,7 @@ p:last-child {
 
 .curriculum-week {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--green-dark);
   text-transform: uppercase;
@@ -2287,7 +2312,7 @@ p:last-child {
 }
 
 .curriculum-tagline {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-3);
   flex: 1;
 }
@@ -2303,7 +2328,7 @@ p:last-child {
 }
 
 .curriculum-desc {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-2);
   line-height: 1.6;
   padding: 0 var(--space-xl) var(--space-lg);
@@ -2315,7 +2340,7 @@ p:last-child {
 
 .curriculum-sessions-badge {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--green-dark);
   background: var(--green-light);
@@ -2352,7 +2377,7 @@ p:last-child {
 }
 
 .detail-list li {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-2);
   line-height: 1.5;
   padding-left: var(--space-lg);
@@ -2386,8 +2411,8 @@ p:last-child {
 }
 
 .cert-line:hover .cert-icon {
-  color: #d4a017;
-  filter: drop-shadow(0 0 4px rgba(212, 160, 23, 0.4));
+  color: var(--accent);
+  filter: drop-shadow(0 0 4px rgba(226, 108, 69, 0.4));
 }
 
 /* ========================================
@@ -2414,7 +2439,7 @@ p:last-child {
 }
 
 .stats-message {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--text-2);
   line-height: 1.7;
 }
@@ -2480,7 +2505,7 @@ p:last-child {
 }
 
 .pricing-card-note {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-3);
   margin-top: var(--space-xs);
   margin-bottom: var(--space-lg);
@@ -2497,7 +2522,7 @@ p:last-child {
 }
 
 .pricing-card-features li {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-2);
   padding-left: var(--space-lg);
   position: relative;
@@ -2522,7 +2547,7 @@ p:last-child {
 .breakdown-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   padding: var(--space-xs) 0;
   color: var(--text-2);
 }
@@ -2538,7 +2563,7 @@ p:last-child {
 }
 
 .pricing-card-explainer {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--text-3);
   line-height: 1.5;
   margin-bottom: var(--space-xl);
@@ -2595,7 +2620,7 @@ p:last-child {
 }
 
 .pricing-quote p {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1.6;
   color: var(--text);
   font-style: italic;
@@ -2603,7 +2628,7 @@ p:last-child {
 }
 
 .pricing-quote cite {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-style: normal;
   font-weight: 600;
   color: var(--text-2);
@@ -2678,12 +2703,12 @@ p:last-child {
 }
 
 .team-member-role {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-2);
 }
 
 .team-book-note {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-3);
 }
 
@@ -2711,7 +2736,7 @@ p:last-child {
   padding: 0.75rem 1rem;
   background: var(--surface);
   color: var(--text-2);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   text-align: left;
@@ -2748,7 +2773,7 @@ p:last-child {
 
 .text-center { text-align: center; }
 .text-dim { color: var(--text-2); }
-.text-sm { font-size: 0.85rem; }
+.text-sm { font-size: 0.95rem; }
 .text-void { color: var(--text); }
 .text-opacity-70 { color: var(--text-3); }
 
@@ -2923,7 +2948,7 @@ p:last-child {
   .hero-desc {
     /* Tighter type + leading so the description holds fewer, shorter lines,
        and less bottom gap before the CTA. */
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.45;
     max-width: 500px;
     margin-left: auto;
@@ -2955,10 +2980,6 @@ p:last-child {
   }
 
   .perspective-shift-comparison {
-    grid-template-columns: 1fr;
-  }
-
-  .hackathon-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3283,9 +3304,6 @@ p:last-child {
   background: var(--bg);
 }
 
-.faq-section .highlight {
-  color: var(--green-brand);
-}
 
 .faq-list {
   margin-top: var(--space-2xl);
@@ -3300,7 +3318,7 @@ p:last-child {
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--green-dark);
+  color: var(--text);
   font-weight: 600;
   margin: var(--space-2xl) 0 var(--space-sm);
 }
@@ -3321,7 +3339,7 @@ p:last-child {
   padding: var(--space-lg) 0;
   cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--text);
   list-style: none;
   user-select: none;
@@ -3372,7 +3390,7 @@ p:last-child {
   align-items: center;
   gap: 0.35rem;
   padding: 0.2rem 0.65rem;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: normal;
   border-radius: 20px 4px 16px;
@@ -3385,7 +3403,7 @@ p:last-child {
 .badge-urgency {
   background: #fdf0eb;
   color: #a3502e;
-  border: 1px solid #f9d4c4;
+  border: 1px solid rgba(226, 108, 69, 0.3);  /* --accent tint, matches the retired peach border */
 }
 .badge-dot {
   width: 6px;
@@ -3397,7 +3415,7 @@ p:last-child {
 .badge-urgency .badge-dot { background: var(--accent); }
 .on-dark .badge-default {
   background: rgba(0, 198, 56, 0.12);
-  color: #cdeed6;
+  color: var(--green-light);
   border-color: rgba(0, 198, 56, 0.2);
 }
 .on-dark .badge-urgency {
@@ -3431,14 +3449,14 @@ p:last-child {
   border-radius: 10px;
   padding: var(--space-md);
 }
-.card-info h4 { color: var(--green-dark); }
-.card-info p  { color: var(--green-brand); font-size: 0.78rem; }
+.card-info h4 { color: var(--text); }
+.card-info p  { color: var(--green-brand); font-size: 0.85rem; }
 .on-dark .card-info {
   background: rgba(0, 198, 56, 0.1);
   border-color: rgba(0, 198, 56, 0.18);
 }
-.on-dark .card-info h4 { color: var(--green-vivid); }
-.on-dark .card-info p  { color: #cdeed6; }
+.on-dark .card-info h4 { color: var(--text-on-dark); }
+.on-dark .card-info p  { color: var(--green-light); }
 
 /* ── Code blocks ────────────────────────────────────────────── */
 .code-block {
@@ -3477,7 +3495,7 @@ p:last-child {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 .link-separator {
   color: var(--text-3);
@@ -3508,7 +3526,7 @@ p:last-child {
 .on-dark h2,
 .on-dark h3,
 .on-dark h4 { color: #e5e2dc; }
-.on-dark p { color: #a3a39a; }
+.on-dark p { color: var(--text-on-dark-2); }
 
 
 /* ================================================================
@@ -3521,14 +3539,14 @@ p:last-child {
 .ds-header h1 .brand { color: var(--green-brand); }
 .ds-header p {
   color: var(--text-2);
-  font-size: 1rem;
+  font-size: 1.125rem;
   max-width: 640px;
   line-height: 1.6;
 }
 .ds-section { margin-bottom: var(--space-3xl); }
 .ds-section-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -3538,7 +3556,7 @@ p:last-child {
   border-bottom: 1px solid var(--border);
 }
 .ds-note {
-  font-size: 0.85rem;
+  font-size: 1.125rem;
   color: var(--text-2);
   line-height: 1.6;
   max-width: 640px;
@@ -3548,7 +3566,7 @@ p:last-child {
 .ds-wip {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   padding: 2px 7px;
@@ -3556,8 +3574,8 @@ p:last-child {
   margin-left: var(--space-sm);
   vertical-align: middle;
 }
-.ds-locked { background: #dcfce7; color: #065f28; }
-.ds-wip    { background: #fefce8; color: #854d0e; }
+.ds-locked { background: var(--green-surface); color: var(--green-dark); }
+.ds-wip    { background: #fdf0eb; color: #a3502e; }
 
 .ds-swatch-strip {
   display: flex;
@@ -3576,9 +3594,9 @@ p:last-child {
   justify-content: flex-end;
   gap: 0.1rem;
 }
-.ds-sw-name { font-family: var(--font-mono); font-size: 0.7rem;  font-weight: 700; text-transform: uppercase; }
+.ds-sw-name { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
 .ds-sw-hex  { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; }
-.ds-sw-meta { font-family: var(--font-mono); font-size: 0.7rem; opacity: 0.85; }
+.ds-sw-meta { font-family: var(--font-mono); font-size: 0.75rem; opacity: 0.85; }
 
 /* Jump nav — sticky TOC for the (long) reference page */
 .ds-toc {
@@ -3598,7 +3616,7 @@ p:last-child {
 
 .ds-toc a {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -3613,11 +3631,11 @@ p:last-child {
   text-decoration: underline;
 }
 
-.ds-token-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.ds-token-table { width: 100%; border-collapse: collapse; font-size: 1.125rem; }
 .ds-token-table th {
   text-align: left;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-3);
@@ -3628,7 +3646,7 @@ p:last-child {
   padding: 0.6rem 0.5rem;
   border-bottom: 1px solid var(--bg);
 }
-.ds-token-table code { font-family: var(--font-mono); font-size: 0.78rem; }
+.ds-token-table code { font-family: var(--font-mono); font-size: 0.9rem; }
 .ds-swatch-dot {
   display: inline-block;
   width: 18px;
@@ -3641,14 +3659,14 @@ p:last-child {
 
 .ds-ct {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 2px 5px;
   border-radius: 3px;
 }
-.ds-ct-pass { background: #dcfce7; color: #065f28; }
-.ds-ct-warn { background: #fefce8; color: #854d0e; }
-.ds-ct-fail { background: #fef2f2; color: #991b1b; }
+.ds-ct-pass { background: var(--green-surface); color: var(--green-dark); }
+.ds-ct-warn { background: var(--bg-alt); color: var(--text-3); }
+.ds-ct-fail { background: #fdf0eb; color: #a3502e; }
 
 .ds-grid-2 { display: grid; grid-template-columns: 1fr 1fr;        gap: var(--space-lg); }
 .ds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
@@ -3659,7 +3677,7 @@ p:last-child {
   .ds-grid-5 { grid-template-columns: 1fr 1fr; }
 }
 
-.ds-rules { font-size: 0.85rem; color: var(--text-2); line-height: 1.8; padding-left: 1.25rem; }
+.ds-rules { font-size: 1.125rem; color: var(--text-2); line-height: 1.8; padding-left: 1.25rem; max-width: 70ch; }
 .ds-rules strong { color: var(--text); }
 
 .ds-btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
@@ -3681,7 +3699,7 @@ p:last-child {
   border: 1px solid var(--green-brand);
   border-radius: 4px;
 }
-.ds-spacing-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-3); }
+.ds-spacing-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); }
 
 
 /* ================================================================

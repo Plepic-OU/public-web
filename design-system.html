@@ -6,7 +6,7 @@
   <title>Plepic Design System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
   <!-- ============================================ -->
   <div class="ds-header ds-section">
     <h1><span class="brand">Plepic</span> Design System</h1>
-    <p>Locked palette, typography, and component reference. Single source of truth. Interactive specimens with live contrast calculations.</p>
+    <p>Locked palette, typography, and component reference. Single source of truth.</p>
   </div>
 
   <!-- Jump nav -->
@@ -43,55 +43,52 @@
     <div class="ds-section-label" id="s1">1 — Brand Foundation</div>
 
     <div class="ds-note">
-      <strong>The system exists to express this.</strong> Brand first, pixels second: every token, type
-      choice, and component below is in service of the identity stated here. This is the source of truth
-      for who Plepic is, in words; the rest of the page is how that shows up on screen.
+      Plepic helps a software engineer become an agent engineer. Everything below serves that: brand first, pixels second.
     </div>
 
     <!-- Lockup + tagline + positioning -->
-    <div class="panel panel-cream" style="padding: var(--space-2xl);">
+    <div class="panel panel-white" style="padding: var(--space-2xl);">
       <div id="brandLockup" style="margin-bottom: 0.9rem;"></div>
       <p style="font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); color: var(--green-brand); line-height: normal; margin: 0 0 0.6rem;">Curious play. Epic growth.</p>
+      <p style="font-size: 1.125rem; color: var(--text-3); line-height: 1.55; margin: 0 0 0.75rem; max-width: 60ch;">The tagline is the name's decoder ring: PLEPIC = PL(ay) + EPIC. "Curious play" names the PL, "Epic growth" names the EPIC.</p>
       <span class="label" style="color: var(--text-3);">EN &middot; Agentic coding for dev teams</span>
       <span class="label" style="color: var(--text-3); display: block; margin-top: 0.4rem;">ET &middot; Tulemuspõhine digimuutus</span>
-      <p style="font-size: 0.8rem; color: var(--text-3); line-height: 1.55; margin: 0.75rem 0 0; max-width: 60ch;">The two lines are complementary by design, not translations: the English names the category (the practice Plepic operates in), the Estonian names the outcome. The tagline itself is an English wordplay that does not translate, so Estonian materials and signatures use <em style="font-style: normal; font-weight: 600; color: var(--text-2);">"tulemuspõhine digimuutus"</em> (outcome-based digital change), which ties to the Aligned-incentives pillar.</p>
+      <p style="font-size: 1.125rem; color: var(--text-3); line-height: 1.55; margin: 0.75rem 0 0; max-width: 60ch;">Complementary lines, not translations: English names the category, Estonian the outcome. The tagline's wordplay does not translate; Estonian materials use <em style="font-style: normal; font-weight: 600; color: var(--text-2);">"tulemuspõhine digimuutus"</em>.</p>
     </div>
 
     <!-- Three pillars: one positioning + two culture values -->
     <div class="ds-grid-3" style="margin-top: var(--space-lg);">
       <div class="panel panel-white">
         <div class="label" style="color: var(--text-3); margin-bottom: 0.6rem;">// What we do</div>
-        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--green-brand);">Agentic coding</h4>
-        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">Developers direct AI agents (Claude Code) to ship production-grade code, not toy demos. It is what we teach and how we work.</p>
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem;">Agentic coding</h4>
+        <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0;">Developers direct AI agents (Claude Code) to ship production-grade code. What we teach and how we work.</p>
       </div>
       <div class="panel panel-white">
         <div class="label" style="color: var(--text-3); margin-bottom: 0.6rem;">// Culture value</div>
-        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--green-brand);">Performance &#8596; learning</h4>
-        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">Two cultures held in conscious tension, never traded off. We ship fast and we get better at shipping. Drop either side and the other decays.</p>
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem;">Performance &#8596; learning</h4>
+        <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0;">We ship fast and we get better at shipping. Drop either side and the other decays.</p>
       </div>
       <div class="panel panel-white">
         <div class="label" style="color: var(--text-3); margin-bottom: 0.6rem;">// Culture value</div>
-        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--green-brand);">Aligned incentives</h4>
-        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">We structure engagements so we succeed only when clients do. We compete on outcomes, not hourly rates.</p>
+        <h4 style="font-size: 1.05rem; margin-bottom: 0.4rem;">Aligned incentives</h4>
+        <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0;">We succeed only when clients do. Outcomes, not hourly rates.</p>
       </div>
     </div>
 
     <!-- Voice & personality -->
     <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 760px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Voice &amp; Personality</h4>
-      <p style="font-size: 0.9rem; color: var(--text-2); line-height: 1.65; margin: 0 0 0.85rem;">
-        <strong>Warm, grounded, distinctive.</strong> Credible and calm: expert without hype. The slab
-        serif, the single confident green, and the cream canvas all carry this. Warmth in service of
-        authority, never cuteness.
+      <p style="font-size: 1rem; color: var(--text-2); line-height: 1.65; margin: 0 0 0.85rem;">
+        <strong>Warm, grounded, distinctive.</strong> Expert without hype; warmth in service of authority, never cuteness.
       </p>
       <ul class="ds-rules">
-        <li>Speak to developers as peers. They smell hype instantly.</li>
-        <li>Prove, don't claim. Numbers, demos, and shipped work over adjectives.</li>
-        <li>Plain language, minimal filler, no buzzword stacking. Keep messages short (5 to 10 sentences). Short sentences in English; in Estonian, comma-rich subordination reads native, while staccato lines read as machine-translated.</li>
-        <li>No em-dashes in customer-facing copy (site, email, decks, social). Use periods, commas, colons, or <code>|</code>. This reference page uses <code>&mdash;</code> internally as a label separator only; that exception never reaches customer copy.</li>
+        <li>Speak to developers as peers.</li>
+        <li>Prove, don't claim: numbers, demos, shipped work over adjectives.</li>
+        <li>Plain language, short messages (5 to 10 sentences). Short sentences in English; in Estonian, comma-rich subordination reads native.</li>
+        <li>No em-dashes in customer-facing copy (site, email, decks, social); periods, commas, colons, or <code>|</code>. This reference page uses <code>&mdash;</code> internally as a label separator only.</li>
         <li>No AI slop, in copy or visuals. If it could be any AI startup's template, it is wrong.</li>
       </ul>
-      <p style="font-size: 0.8rem; color: var(--text-3); line-height: 1.55; margin: 0.85rem 0 0; max-width: 60ch;">This is brand voice (how Plepic sounds describing itself). For relational writing (emails, outreach, replies), the <code>invitational-communication</code> skill and its <code>VOICE.md</code> govern tone: NVC/MI and tactical empathy.</p>
+      <p style="font-size: 1.125rem; color: var(--text-3); line-height: 1.55; margin: 0.85rem 0 0; max-width: 60ch;">Brand voice only. Relational writing (emails, outreach, replies) is governed by the <code>invitational-communication</code> skill's <code>VOICE.md</code>.</p>
     </div>
   </div>
 
@@ -102,44 +99,38 @@
     <div class="ds-section-label" id="s2">2 — Color Palette <span class="ds-locked">Locked</span></div>
 
     <div class="ds-note">
-      <strong>Strategy:</strong> Single hue (137°) for all greens. Saturation at 73% everywhere except vivid (100%). Accent at hue 15° with saturation matched to brand (73%). Simple rule: <em>73% is the system saturation, 100% is the decorative exception.</em>
+      <strong>The 73% Rule.</strong> Single hue (137°) for all greens; S=73% everywhere except vivid (100%), the lone decorative exception. Accent at hue 15°, saturation matched (73%). New needs are met by existing steps, never new colors.
     </div>
 
     <div class="ds-swatch-strip">
       <div class="ds-sw" style="background: var(--green-surface);">
         <div class="ds-sw-name" style="color: rgba(0,0,0,0.65);">Surface</div>
         <div class="ds-sw-hex" style="color: rgba(0,0,0,0.85);">#edfcf1</div>
-        <div class="ds-sw-meta" style="color: rgba(0,0,0,0.65);">S73% L96%</div>
       </div>
       <div class="ds-sw" style="background: var(--green-light);">
         <div class="ds-sw-name" style="color: rgba(0,0,0,0.65);">Light</div>
         <div class="ds-sw-hex" style="color: rgba(0,0,0,0.85);">#c5f6d3</div>
-        <div class="ds-sw-meta" style="color: rgba(0,0,0,0.65);">S73% L87%</div>
       </div>
       <div class="ds-sw" style="background: var(--green-vivid);">
         <div class="ds-sw-name" style="color: rgba(0,0,0,0.7);">Vivid</div>
         <div class="ds-sw-hex" style="color: rgba(0,0,0,0.85);">#00c638</div>
-        <div class="ds-sw-meta" style="color: rgba(0,0,0,0.7);">S100% L39%</div>
       </div>
       <div class="ds-sw" style="background: var(--green-brand);">
         <div class="ds-sw-name" style="color: rgba(255,255,255,0.95);">Brand</div>
         <div class="ds-sw-hex" style="color: #fff;">#137b30</div>
-        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.85);">S73% L28%</div>
       </div>
       <div class="ds-sw" style="background: var(--green-dark);">
         <div class="ds-sw-name" style="color: rgba(255,255,255,0.95);">Dark</div>
         <div class="ds-sw-hex" style="color: #fff;">#0d5822</div>
-        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.85);">S73% L20%</div>
       </div>
       <div class="ds-sw" style="background: var(--accent);">
         <div class="ds-sw-name" style="color: rgba(28,28,26,0.8);">Accent</div>
         <div class="ds-sw-hex" style="color: #1c1c1a;">#e26c45</div>
-        <div class="ds-sw-meta" style="color: rgba(28,28,26,0.8);">H15° S73%</div>
       </div>
     </div>
 
     <!-- Token reference table — populated by JS -->
-    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg); overflow-x: auto;">
       <table class="ds-token-table">
         <thead>
           <tr>
@@ -159,14 +150,11 @@
     <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 700px;">
       <h3 style="font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.75rem;">Design Decisions</h3>
       <ul class="ds-rules">
-        <li><strong>Single hue (137°)</strong> for all greens — no hue drift between shades.</li>
-        <li><strong>System saturation: 73%.</strong> Surface, light, brand, and dark all share S=73%.</li>
-        <li><strong>Vivid exception: S=100%.</strong> Decorative punch only — dots, fills, dark-mode headings. Never as text on light.</li>
-        <li><strong>Accent at H=15°, S=73%</strong> — split-complementary of 137°, saturation matched.</li>
-        <li><strong>One accent per viewport.</strong> A CTA button and an urgency badge must never be visible simultaneously.</li>
-        <li><strong>No accent variants.</strong> Use opacity for hover/active states.</li>
-        <li><strong>Green = structural identity.</strong> Logo, headings, navigation, badges, links.</li>
-        <li><strong>Orange = action warmth.</strong> CTA buttons and urgency indicators only.</li>
+        <li><strong>The One Accent Rule.</strong> Exactly one accent element per viewport: a CTA button OR an urgency badge OR an accent dot; the mobile sticky CTA yields.</li>
+        <li><strong>No accent variants.</strong> Opacity for hover/active states.</li>
+        <li><strong>Green = structural identity</strong> (logo, navigation, badges, links); <strong>orange = action</strong> (CTA buttons, urgency) only.</li>
+        <li><strong>The Vivid Text Ban.</strong> #00c638 is never text on light (2.5:1); the retired <code>--green</code> alias stays retired, name tokens explicitly.</li>
+        <li><strong>The Two-Tier Green Rule.</strong> Links get Brand Green (AA); green body text gets Deep Green (AAA).</li>
       </ul>
     </div>
   </div>
@@ -214,6 +202,10 @@
         <div class="ds-sw-meta" style="color: #a3a39a;">--dark</div>
       </div>
     </div>
+
+    <p class="ds-note" style="margin-top: var(--space-md); margin-bottom: 0;">
+      <strong>On-dark hierarchy, two steps:</strong> #e5e2dc for headings and lead lines, #a3a39a for paragraphs (6.7:1 AA); vivid is emphasis there, never paragraphs.
+    </p>
   </div>
 
   <!-- ============================================ -->
@@ -224,53 +216,56 @@
 
     <div class="ds-grid-3">
       <div class="panel panel-white">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Display — Zilla Slab</div>
-        <h2 style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--green-brand); margin-bottom: 0.5rem;">Build production AI agents</h2>
-        <p style="font-size: 0.78rem; color: var(--text-3); margin: 0;">Slab serif. Warm, grounded, distinctive. Headings, hero text, wordmark.</p>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Display — Bitter</div>
+        <h2 style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">Build production <span class="highlight">AI agents</span></h2>
+        <p style="font-size: 1.125rem; color: var(--text-3); margin: 0;">Slab serif. Warm, grounded, distinctive. Headings, hero text, wordmark.</p>
       </div>
       <div class="panel panel-white">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Body — Plus Jakarta Sans</div>
-        <p style="font-size: 0.95rem; color: var(--text); line-height: 1.65; margin-bottom: 0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>
-        <p style="font-size: 0.78rem; color: var(--text-3); margin: 0;">Geometric sans. Body, nav, buttons, labels.</p>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Body — Hanken Grotesk</div>
+        <p style="font-size: 1.05rem; color: var(--text); line-height: 1.65; margin-bottom: 0.5rem;">Hands-on training for developers with 2+ years experience. Ship real agents with Claude Code, not toy demos.</p>
+        <p style="font-size: 1.125rem; color: var(--text-3); margin: 0;">Humanist grotesque. Body, nav, buttons, labels.</p>
       </div>
       <div class="panel panel-white">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Mono — JetBrains Mono</div>
-        <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--green-brand); line-height: 1.65; margin-bottom: 0.5rem;">claude "build me a REST API"<br>npm install @anthropic-ai/sdk</p>
-        <p style="font-size: 0.78rem; color: var(--text-3); margin: 0;">Code, technical labels, hex values.</p>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Mono — JetBrains Mono</div>
+        <p style="font-family: var(--font-mono); font-size: 1rem; color: var(--green-brand); line-height: 1.65; margin-bottom: 0.5rem;">claude "build me a REST API"<br>npm install @anthropic-ai/sdk</p>
+        <p style="font-size: 1.125rem; color: var(--text-3); margin: 0;">Code, technical labels, hex values.</p>
       </div>
     </div>
 
     <!-- Type scale specimens -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Type Scale</div>
+      <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Type Scale</div>
       <div style="display: flex; flex-direction: column; gap: 1.25rem;">
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3);">Hero — clamp(3rem, 2.5rem + 3.5vw, 4.8rem) / 700 / 1.05</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">Hero — clamp(3rem, 2.5rem + 3.5vw, 4.8rem) / 700 / 1.05</span>
           <h1 style="font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem); line-height: 1.05; letter-spacing: -0.025em;">Build production</h1>
         </div>
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3);">H2 — clamp(1.5rem, 1.25rem + 2vw, 2.25rem) / 600 / 1.15</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">H2 — clamp(1.5rem, 1.25rem + 2vw, 2.25rem) / 600 / 1.15</span>
           <h2>What you'll learn</h2>
         </div>
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3);">H3 — clamp(1.15rem, 1rem + 0.5vw, 1.5rem) / 700 / 1.15</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">H3 — clamp(1.15rem, 1rem + 0.5vw, 1.5rem) / 700 / 1.15</span>
           <h3>Agentic patterns</h3>
         </div>
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3);">Body — 1.1rem / 400 / 1.7</span>
-          <p style="font-size: 1.1rem; margin: 0;">Hands-on training that bridges the gap between toy demos and production AI agents.</p>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">Body — 1.15rem / 400 / 1.7</span>
+          <p style="font-size: 1.15rem; margin: 0;">Hands-on training that bridges the gap between toy demos and production AI agents.</p>
         </div>
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3);">Label — 0.75rem mono / 600 / normal / uppercase</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">Label — 0.75rem mono / 600 / normal / uppercase</span>
           <span class="label">// Training module</span>
         </div>
       </div>
+      <p class="ds-note" style="margin-top: var(--space-md); margin-bottom: 0; font-size: 1.125rem;">
+        Display is hero-only; non-hero h1s use clamp(2rem, 2rem + 3vw, 3.5rem).
+      </p>
     </div>
 
     <!-- Heading highlights — light + dark -->
     <div class="ds-grid-2" style="margin-top: var(--space-lg);">
-      <div class="panel panel-cream">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Cream — .highlight = brand green</div>
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Headings on Light — ink</div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0;">Build production <span class="highlight">AI agents</span> in 6 weeks</h1>
           <h2 style="margin: 0;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
@@ -278,7 +273,7 @@
         </div>
       </div>
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — .highlight = vivid green</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — ink (off-white)</div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0; color: #e5e2dc;">Build production <span class="highlight">AI agents</span> in 6 weeks</h1>
           <h2 style="margin: 0; color: #e5e2dc;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
@@ -290,26 +285,17 @@
     <!-- The Green Payload Rule -->
     <div class="panel panel-white" style="margin-top: var(--space-md); max-width: 720px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">The Green Payload Rule</h4>
-      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0 0 0.85rem;">
-        Headings are set in near-black ink (<code style="font-family: var(--font-mono); font-size: 0.8rem;">--text</code> #1c1c1a), with at most one green phrase marking
-        the <em>payload</em>: the word or phrase that carries the heading's claim ("value", "measure",
-        "LLM Loop", "your codebase"). The contrast between quiet ink and one green phrase is the
-        variety mechanism. Green is meaning, not decoration.
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0;">
+        Headings are ink with at most one green load-bearing phrase (the payload). Most headings stay plain; green is never full-heading decoration.
       </p>
-      <ul class="ds-rules">
-        <li><strong>One per heading, never two.</strong> A second green phrase splits the emphasis and kills both.</li>
-        <li><strong>No payload, no green.</strong> Plain headings ("Your Instructors", "Training Program") stay all-ink. Roughly a third of section headings should stay plain; the device works because it is not everywhere.</li>
-        <li><strong>1&ndash;3 words.</strong> Longer runs read as coloring, not emphasis. One exception: a definition heading may highlight the whole definition when the definition IS the payload ("An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span>").</li>
-        <li><strong>Color mechanics:</strong> <code style="font-family: var(--font-mono); font-size: 0.8rem;">.highlight</code> is <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-brand</code> on cream/white (5.03:1 AA) and <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-vivid</code> inside <code style="font-family: var(--font-mono); font-size: 0.8rem;">.on-dark</code> (7.42:1 AAA). Never <code style="font-family: var(--font-mono); font-size: 0.8rem;">--green-dark</code>: reserved for body text, it visually disappears at heading sizes.</li>
-      </ul>
     </div>
 
     <!-- Line-height warning -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg); max-width: 700px;">
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 700px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text);">Line-Height Trap</h4>
-      <p style="font-size: 0.85rem; color: var(--text-2); margin: 0;">
-        Body has <code style="font-family: var(--font-mono); font-size: 0.8rem;">line-height: 1.7</code>. This leaks into compact components via inheritance.
-        Every compact component (.logo, .nav a, .badge, .btn-*, .label, code blocks) must set <code style="font-family: var(--font-mono); font-size: 0.8rem;">line-height: normal</code>.
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0;">
+        Body's <code style="font-family: var(--font-mono); font-size: 0.9rem;">line-height: 1.7</code> leaks into compact components via inheritance.
+        Every compact component (.logo, .nav a, .badge, .btn-*, .label, code blocks) sets <code style="font-family: var(--font-mono); font-size: 0.9rem;">line-height: normal</code>.
       </p>
     </div>
   </div>
@@ -356,7 +342,7 @@
     </div>
 
     <p class="ds-note" style="margin-top: var(--space-lg);">
-      <strong>Rhythm:</strong> Use tight groupings + generous separations. Not same spacing everywhere. Related elements close, sections far apart.
+      <strong>Rhythm:</strong> tight groupings, generous separations. Never the same spacing everywhere.
     </p>
   </div>
 
@@ -370,25 +356,25 @@
     <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
       <div class="panel-label">Button System</div>
       <p class="ds-note" style="margin-bottom: var(--space-md);">
-        Three sizes (<code>.btn</code> default, <code>.btn-sm</code>, <code>.btn-lg</code>) × three variants (<code>.btn-primary</code>, <code>.btn-outline</code>, <code>.btn-ghost</code>). <strong>Variants set color only, never size</strong>; size modifiers are independent. Padding and border-radius scale together.
+        Three sizes (<code>.btn</code>, <code>.btn-sm</code>, <code>.btn-lg</code>) × three variants (<code>.btn-primary</code>, <code>.btn-outline</code>, <code>.btn-ghost</code>). <strong>Variants set color only, never size.</strong> On light, outline and ghost are ink; hover fills Surface Green with Deep Green text. On dark they stay Vivid Green.
       </p>
 
       <div style="display: grid; grid-template-columns: 80px 1fr; gap: 1rem 1.5rem; align-items: center; padding: 1.5rem; background: var(--bg); border-radius: 10px;">
-        <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn-lg</span>
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn-lg</span>
         <div class="ds-btn-row">
           <button class="btn btn-primary btn-lg">Book a free call</button>
           <button class="btn btn-outline btn-lg">View curriculum</button>
           <button class="btn btn-ghost btn-lg">Learn more</button>
         </div>
 
-        <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn (default)</span>
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn (default)</span>
         <div class="ds-btn-row">
           <button class="btn btn-primary">Book a free call</button>
           <button class="btn btn-outline">View curriculum</button>
           <button class="btn btn-ghost">Learn more</button>
         </div>
 
-        <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn-sm</span>
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;">.btn-sm</span>
         <div class="ds-btn-row">
           <button class="btn btn-primary btn-sm">Book a call</button>
           <button class="btn btn-outline btn-sm">Curriculum</button>
@@ -396,29 +382,29 @@
         </div>
       </div>
 
-      <p class="ds-note" style="margin-top: var(--space-md); font-size: 0.78rem;">
+      <p class="ds-note" style="margin-top: var(--space-md); font-size: 1.125rem;">
         <strong>Specs:</strong>
-        <code>.btn-lg</code> 1.05rem · 0.95rem 1.9rem · radius 12px (heroes) ·
-        <code>.btn</code> 0.95rem · 0.7rem 1.4rem · radius 10px (default) ·
-        <code>.btn-sm</code> 0.8rem · 0.5rem 1rem · radius 8px (nav, dense UIs)
+        <code>.btn-lg</code> 1.15rem · 0.95rem 1.9rem · radius 12px (heroes) ·
+        <code>.btn</code> 1.05rem · 0.7rem 1.4rem · radius 10px (default) ·
+        <code>.btn-sm</code> 0.9rem · 0.5rem 1rem · radius 8px (nav, dense UIs)
       </p>
 
       <!-- Pairing patterns — the right way to put primary + secondary together -->
       <div class="panel-label" style="margin-top: var(--space-lg);">Pairing Pattern — Primary + Ghost Link</div>
-      <p class="ds-note" style="margin-bottom: var(--space-md); font-size: 0.78rem;">
-        Hero CTAs should pair a solid <code>.btn-primary</code> (orange, the action) with a <code>.btn-ghost</code> text link (the alternative). Two solid buttons compete for attention; a button + link reads as <em>"do this, or just look first"</em> — clearer hierarchy, fewer competing colors. The arrow makes the link unmistakably interactive.
+      <p class="ds-note" style="margin-bottom: var(--space-md); font-size: 1.125rem;">
+        Hero CTAs pair a solid <code>.btn-primary</code> with a <code>.btn-ghost</code> text link: <em>"do this, or just look first"</em>. Two solid buttons compete.
       </p>
 
       <div class="ds-grid-2">
-        <div class="panel-cream" style="padding: 1.5rem; border-radius: 10px;">
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Cream</span>
+        <div style="padding: 1.5rem; border-radius: 10px; background: var(--bg); border: 1px solid var(--border);">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Cream</span>
           <div class="ds-btn-row">
             <button class="btn btn-primary">Book a free call</button>
             <a class="btn btn-ghost" href="#">View curriculum &rarr;</a>
           </div>
         </div>
         <div class="on-dark panel-dark" style="padding: 1.5rem; border-radius: 10px; background: var(--dark);">
-          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: #6b6b60; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Dark</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #6b6b60; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Dark</span>
           <div class="ds-btn-row">
             <button class="btn btn-primary">Book a free call</button>
             <a class="btn btn-ghost" href="#">View curriculum &rarr;</a>
@@ -426,16 +412,41 @@
         </div>
       </div>
 
-      <p class="ds-note" style="margin-top: var(--space-md); font-size: 0.78rem;">
-        <strong>Avoid:</strong> Two solid buttons next to a primary CTA (e.g. <code>.btn-primary</code> + <code>.btn-outline</code>) — they compete and dilute the action. Use <code>.btn-outline</code> only in secondary contexts where there's no primary CTA on the same row (cards listing options, dialogs, empty states).
+      <p class="ds-note" style="margin-top: var(--space-md); font-size: 1.125rem;">
+        <strong>Avoid:</strong> a second solid button next to a primary CTA. <code>.btn-outline</code> only where no primary shares the row.
       </p>
+    </div>
+
+    <!-- Panel variants — surface pairing per the Cards canon -->
+    <div class="panel panel-white" style="margin-bottom: var(--space-lg);">
+      <div class="panel-label">Panel Variants — <code>.panel-white</code> · <code>.panel-cream</code></div>
+      <p class="ds-note" style="margin-bottom: var(--space-md);">
+        Never same-on-same: <strong>white on cream, cream on white</strong>, Surface Green for the favored option, ink via <code>.on-dark</code>. Always a full 1px border. The cream panel appears only here, as the demonstrated variant on a white surface.
+      </p>
+      <div class="ds-grid-2">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">Panel on white: cream variant</span>
+          <div class="panel panel-cream" data-demo="panel-cream" style="padding: var(--space-md);">
+            <p style="font-size: 1.125rem; color: var(--text-2); margin: 0;"><code>.panel-cream</code> — cream fill (#faf7f2) on the white surface.</p>
+          </div>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">Panel on cream: white variant</span>
+          <div style="padding: 1rem; background: var(--bg); border-radius: 10px;">
+            <div class="panel panel-white" style="padding: var(--space-md);">
+              <p style="font-size: 1.125rem; color: var(--text-2); margin: 0;"><code>.panel-white</code> — the default card on the cream canvas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="ds-grid-2">
 
       <!-- Light context — with CTA (no urgency badge) -->
-      <div class="panel panel-cream">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with CTA</div>
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with CTA</div>
+        <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
 
         <!-- Badges — default only, no urgency when CTA is present -->
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
@@ -468,11 +479,12 @@
           <span class="comment">// Install</span><br>
           <span class="keyword">npm install</span> -g @anthropic-ai/claude-code
         </div>
+        </div>
       </div>
 
       <!-- Dark context — with CTA (no urgency badge) -->
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with CTA</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with CTA</div>
 
         <!-- Badges — default only -->
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
@@ -509,12 +521,13 @@
 
     <!-- Accent exclusivity demo -->
     <div class="ds-note" style="margin-top: var(--space-lg);">
-      <strong>Accent rule:</strong> Only one accent-colored element per viewport — whether it's a CTA button, urgency badge, or any other element using <code style="font-family: var(--font-mono); font-size: 0.8rem;">--accent</code>. The urgency badge below appears without a CTA button:
+      <strong>Accent rule:</strong> one accent-colored element per viewport. The urgency badge below appears without a CTA button:
     </div>
     <div class="ds-grid-2">
       <!-- Light — urgency badge without CTA -->
-      <div class="panel panel-cream">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with urgency badge (no CTA)</div>
+      <div class="panel panel-white">
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">On Cream — with urgency badge (no CTA)</div>
+        <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
           <span class="badge badge-default"><span class="badge-dot"></span> Squad 3 open</span>
           <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
@@ -523,10 +536,11 @@
           <button class="btn btn-outline btn-sm">View curriculum</button>
           <button class="btn btn-ghost btn-sm">Learn more</button>
         </div>
+        </div>
       </div>
       <!-- Dark — urgency badge without CTA -->
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with urgency badge (no CTA)</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with urgency badge (no CTA)</div>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
           <span class="badge badge-default"><span class="badge-dot"></span> Squad 3 open</span>
           <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
@@ -539,7 +553,7 @@
     </div>
 
     <div class="ds-note" style="margin-top: var(--space-lg);">
-      <strong>Hero badge variant:</strong> production heroes use <code>.badge-base</code>, the same anatomy and asymmetric radius (20px 4px 16px) at larger padding (0.3rem 0.9rem), with the dot pulsing via <code>::before</code>. One per hero. Defined in <code>css/styles.css</code> alongside <code>.badge</code>.
+      <strong>Hero badge variant:</strong> <code>.badge-base</code>, same anatomy and radius (20px 4px 16px) at 0.3rem 0.9rem padding, dot pulsing via <code>::before</code>. One per hero.
     </div>
   </div>
 
@@ -550,7 +564,7 @@
     <div class="ds-section-label" id="s7">7 — Hero Compositions</div>
 
     <div class="ds-note">
-      Accent appears once per viewport — in the hero body CTA. Nav CTA uses green outline. No urgency badges when the CTA is visible.
+      Accent appears once per viewport — in the hero body CTA. Nav CTA uses ink outline. No urgency badges when the CTA is visible.
     </div>
 
     <!-- Light hero -->
@@ -568,9 +582,8 @@
 
     <div class="ds-note">
       <strong>Crystalline butterfly with leaf body, locked 2026-04-07.</strong> Wordmark left, butterfly right;
-      icon ≈ ascender height of text. CSS classes: <code>.logo-lockup</code>, <code>.logo-wordmark</code>,
-      <code>.logo-butterfly</code> (all defined in <code>css/styles.css</code>). The butterfly geometry below
-      is the single source of truth — copy from this section when inlining anywhere new.
+      icon ≈ ascender height. Copy the geometry from this section when inlining anywhere new. Two locked cuts:
+      the 22-facet master at 48px and above, the 8-facet small mark below 48px (nav, favicon).
     </div>
 
     <!-- Lockup specimens on all background contexts -->
@@ -589,10 +602,8 @@
     <!-- Stacked / vertical lockup variant -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Stacked Lockup — <code>.logo-lockup--stacked</code></div>
-      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
-        Vertical variant — butterfly above wordmark. Use in narrow contexts (mobile splash, footer columns,
-        social avatars) where the horizontal lockup would feel cramped. Same SVG geometry, same colors;
-        only the layout changes via <code>flex-direction: column-reverse</code>.
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        Butterfly above wordmark, for narrow or centered contexts. Same geometry and colors; layout via <code>flex-direction: column-reverse</code>.
       </p>
       <div style="display:flex; gap:3rem; align-items:center; flex-wrap:wrap;">
         <div id="stackedLight" style="padding:1.5rem 2rem; background:var(--bg); border-radius:10px;"></div>
@@ -620,10 +631,11 @@
     <!-- Wing facet color table -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Wing Facet Colors (DK-B-V Neighbour Rule)</div>
-      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
-        No two adjacent facets share a color. Pattern uses <strong>DK</strong> (<code>--green-dark</code>),
-        <strong>B</strong> (<code>--green-brand</code>), and <strong>V</strong> (<code>--green-vivid</code>).
-        The right wing has a deliberate asymmetry at <strong>position 6</strong> (V → DK), giving the mark a hand-crafted feel.
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        No two adjacent facets share a color: <strong>DK</strong> (<code>--green-dark</code>),
+        <strong>B</strong> (<code>--green-brand</code>), <strong>V</strong> (<code>--green-vivid</code>).
+        Wing outlines are exact mirrors around x=150; the asymmetry lives in the <strong>fills</strong>:
+        right-wing slots <strong>6 and 7</strong> swap B and DK.
       </p>
       <table class="ds-token-table" style="margin-top: 0.5rem;">
         <thead>
@@ -636,8 +648,8 @@
           <tr><td>3</td><td>V</td><td>V</td></tr>
           <tr><td>4</td><td>DK</td><td>DK</td></tr>
           <tr><td>5</td><td>V</td><td>V</td></tr>
-          <tr><td><strong>6</strong></td><td>B</td><td><strong>DK</strong> ← asymmetry exception</td></tr>
-          <tr><td>7</td><td>DK</td><td>B</td></tr>
+          <tr><td><strong>6</strong></td><td>B</td><td><strong>DK</strong> ← fill swap</td></tr>
+          <tr><td><strong>7</strong></td><td>DK</td><td><strong>B</strong> ← fill swap</td></tr>
           <tr><td>8</td><td>V</td><td>V</td></tr>
           <tr><td>9</td><td>B</td><td>B</td></tr>
           <tr><td>10</td><td>DK</td><td>DK</td></tr>
@@ -648,10 +660,8 @@
     <!-- Final SVG markup -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Final SVG Markup (copy-paste for new locations)</div>
-      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
-        This is the exact markup inlined into <code>images/favicon.svg</code> and the nav lockup on
-        every production page. Resize via <code>width</code> / <code>height</code> attributes; the
-        viewBox is fixed.
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        Master markup for 48px and above. Resize via <code>width</code> / <code>height</code>; the viewBox is fixed.
       </p>
       <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
   &lt;!-- Left wing — 11 facets, DK-B-V pattern --&gt;
@@ -666,7 +676,7 @@
   &lt;polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
   &lt;polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
   &lt;polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
-  &lt;!-- Right wing — note asymmetry on slot 6 (DK instead of B) --&gt;
+  &lt;!-- Right wing — mirrored outlines; fills swap B and DK on slots 6/7 --&gt;
   &lt;polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
   &lt;polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
   &lt;polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
@@ -688,15 +698,40 @@
 &lt;/svg&gt;</pre>
     </div>
 
+    <!-- Small mark (below-48px cut) -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Small Mark — &le;32px <span class="ds-locked">Locked</span></div>
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        Below 48px the 22 facets collapse into banding, so small placements use this 8-facet cut: the master's
+        exact outer silhouette from merged adjacent facets. 4 facets per wing (V over B forewing both wings;
+        hindwing DK/B left, B/DK right, keeping the fill swap), no antennae, head r=12.
+        <code>shape-rendering="geometricPrecision"</code>, never <code>crispEdges</code>.
+        <strong>Master at 48px and above; small mark below 48px.</strong> Locked geometry: never recolor, re-facet, or restyle.
+      </p>
+      <div id="smallMarkRow" style="display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--bg);border-radius:10px;"></div>
+      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto; margin-top: var(--space-md);">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"&gt;
+  &lt;!-- Left wing — 4 merged facets --&gt;
+  &lt;polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;!-- Right wing — mirrored outlines; hindwing pair swaps B and DK --&gt;
+  &lt;polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
+  &lt;polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
+  &lt;!-- Body and head (no antennae at this size) --&gt;
+  &lt;path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/&gt;
+  &lt;circle cx="150" cy="90" r="12" fill="#e26c45"/&gt;
+&lt;/svg&gt;</pre>
+    </div>
+
     <!-- Downloadable assets -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Downloadable Assets</div>
-      <p style="font-size: 0.8rem; color: var(--text-2); margin: 0.5rem 0 1rem;">
-        Grab-and-go files of the mark, exported from the locked geometry above. Use the
-        <strong>SVG</strong> for web, print, and anywhere scalable; use the transparent
-        <strong>PNG</strong> (1200&times;1120) for raster contexts like slide decks, social, and email signatures.
-        Do not recolour, re-facet, or apply static effects to the mark; the geometry and palette are
-        locked. Choreographed motion that resolves to the locked mark is the one exception (see Motion, Section 11).
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        <strong>SVG</strong> for anywhere scalable; transparent <strong>PNG</strong> (1200&times;1120) for raster
+        (decks, social, signatures). Geometry and palette locked; choreographed motion is the one exception (Section 11).
       </p>
       <div style="display:flex; gap:2rem; align-items:center; flex-wrap:wrap;">
         <div style="padding:1.25rem 1.75rem; background:var(--bg); border-radius:10px;">
@@ -714,25 +749,25 @@
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Design Rationale</h4>
         <ul class="ds-rules">
-          <li><strong>Crystalline triangles</strong> echo the "agentic, structured, decomposable" nature of Claude Code workflows — facets that fit together precisely.</li>
-          <li><strong>Leaf body</strong> ties the mark to the nature-digital fusion theme. The body is darker than wings to read as anatomy, not just a stripe.</li>
-          <li><strong>Orange head</strong> is the only accent in the mark — one accent per element, matching the system rule. Visually, it terminates the body and gives the eye a focal point.</li>
-          <li><strong>Vivid antenna tips</strong> mirror the hero "vivid green dot" pattern — small bursts of saturation as accent dots, never as text.</li>
-          <li><strong>Asymmetry at slot 6</strong> prevents the mark from looking machine-generated. A perfectly mirrored butterfly reads as clip-art; the right-wing exception gives it a hand-drawn quality.</li>
-          <li><strong>DK-B-V rule</strong> is what gives the wings depth without using opacity or gradients. Three solid greens, never adjacent same-color, creates faceted shading.</li>
+          <li><strong>Crystalline triangles:</strong> agentic, structured, decomposable.</li>
+          <li><strong>Leaf body:</strong> nature-digital; darker than the wings to read as anatomy.</li>
+          <li><strong>Orange head:</strong> the mark's one accent and focal point.</li>
+          <li><strong>Vivid antenna tips:</strong> saturation as dots, never as text.</li>
+          <li><strong>Slot-6/7 fill asymmetry:</strong> a deliberate imperfection in color, not shape.</li>
+          <li><strong>DK-B-V rule:</strong> faceted depth from three solid greens, no opacity or gradients.</li>
         </ul>
       </div>
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Anti-Patterns (rejected variants)</h4>
         <ul class="ds-rules">
-          <li><strong>Solid facet fills</strong> — never per-facet fill opacity. Earlier prototypes used <code>fill="#00c638" opacity="0.19"</code> with brand-green strokes; they looked washed-out and needed a coloured background. The complete solid mark may still be placed as an ambient watermark at a low group opacity (the hero; see Motion, Section 11): that is a background treatment of the whole mark, not a dimmed wing.</li>
-          <li><strong>No outlined-only wings</strong> — pure stroke designs read as wireframe, not crystalline. Always filled triangles.</li>
-          <li><strong>No mirrored geometry</strong> — perfectly symmetrical wings looked machine-generated. The slot-6 asymmetry is intentional and locked.</li>
-          <li><strong>No gradient fills</strong> — the DK-B-V neighbour rule replaces gradients. Three flat colours create depth without rendering cost.</li>
-          <li><strong>No <code>stroke="none"</code> on facets</strong> — without the 0.5px fill-matched seam stroke, browser anti-aliasing creates visible white seams between adjacent triangles. The stroke is invisible (same colour as fill) but eliminates the artifact.</li>
-          <li><strong>No <code>shape-rendering="auto"</code></strong> — diagonal edges pixelate at small sizes. <code>crispEdges</code> is locked.</li>
-          <li><strong>No round head</strong> below r=8 — smaller heads look like a dot, larger looks like a balloon. r=8 is locked.</li>
-          <li><strong>No mono-colour butterflies</strong> — single-green versions lose all crystalline depth. The DK-B-V triad is the identity.</li>
+          <li><strong>No per-facet fill opacity</strong> (washed-out). The complete solid mark as a low-opacity ambient watermark is sanctioned: a whole-mark background treatment, not a dimmed wing.</li>
+          <li><strong>No outlined-only wings</strong> (wireframe, not crystalline).</li>
+          <li><strong>No fully symmetric fills</strong>; the slot-6/7 swap is locked.</li>
+          <li><strong>No gradient fills</strong>; DK-B-V replaces them.</li>
+          <li><strong>No <code>stroke="none"</code> on facets</strong>; the 0.5px fill-matched stroke kills anti-aliasing seams between triangles.</li>
+          <li><strong>No <code>shape-rendering="auto"</code></strong>; <code>crispEdges</code> is locked on the master.</li>
+          <li><strong>Head r=8 locked</strong>; smaller reads as a dot, larger as a balloon.</li>
+          <li><strong>No mono-colour butterflies</strong>; the DK-B-V triad is the identity.</li>
         </ul>
       </div>
     </div>
@@ -750,11 +785,11 @@
         <ul class="ds-rules">
           <li>Use <strong>--green-brand</strong> for text on light backgrounds (AA)</li>
           <li>Use <strong>--green-dark</strong> for body text needing AAA</li>
-          <li>Use <strong>--green-vivid</strong> for decorative elements and dark-mode headings</li>
+          <li>Use <strong>--green-vivid</strong> for decorative elements and dark-mode links and labels</li>
           <li>Use <strong>--accent</strong> for exactly one element per viewport — a CTA button OR an urgency badge, never both</li>
           <li>Use asymmetric grids (1.4fr / 0.6fr), not 50/50</li>
           <li>Use spacing rhythm — tight groupings, generous separations</li>
-          <li>Set <code style="font-family: var(--font-mono); font-size: 0.78rem;">line-height: normal</code> on compact components</li>
+          <li>Set <code style="font-family: var(--font-mono); font-size: 1rem;">line-height: normal</code> on compact components</li>
           <li>Light mode only. Dark sections for emphasis, not a toggle.</li>
         </ul>
       </div>
@@ -773,6 +808,21 @@
         </ul>
       </div>
     </div>
+
+    <!-- The Flat-By-Default Rule + shadow vocabulary -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 720px;">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Flat-By-Default Rule</h4>
+      <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem;">
+        A resting element that needs separation gets a 1px or 1.5px full border or a tint, never a shadow; shadows are state (hover, floating) or the one featured exception per page. The ghost-card pattern (border plus wide resting shadow) is prohibited. The whole shadow vocabulary:
+      </p>
+      <ul class="ds-rules">
+        <li><strong>Code ambient</strong> &mdash; 0 2px 8px rgba(28,28,26,0.04): the one resting shadow, under inline code snippets.</li>
+        <li><strong>Hover lift</strong> &mdash; 0 8px 24px rgba(28,28,26,0.06) with translateY(-2px): interactive cards on hover only.</li>
+        <li><strong>Tooltip</strong> &mdash; 0 8px 24px rgba(28,28,26,0.1): floating layers.</li>
+        <li><strong>Featured glow</strong> &mdash; 0 4px 24px rgba(0,198,56,0.1): the featured pricing card; at most one per page.</li>
+        <li><strong>Accent pulse</strong> &mdash; a ring keyframed from rgba(226,108,69,0.3) to transparent: the CTA heartbeat, 3s loop.</li>
+      </ul>
+    </div>
   </div>
 
   <!-- ============================================ -->
@@ -782,13 +832,12 @@
     <div class="ds-section-label" id="s10">10 — Production Components</div>
 
     <div class="ds-note">
-      Live specimens of components the production pages actually run, rendered from the same
-      <code>css/styles.css</code> classes. Machine-readable specs live in <code>DESIGN.md</code>
-      and <code>.impeccable/design.json</code>.
+      Live specimens rendered from the same <code>css/styles.css</code> classes production runs.
+      Tokens and implementation: <code>css/styles.css</code>. Machine context: <code>.impeccable/design.json</code>.
     </div>
 
     <!-- Pull quote -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Pull Quote — <code>.perspective-shift-quote</code> / <code>.reflection-story</code></div>
       <blockquote class="perspective-shift-quote">
         <p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p>
@@ -798,8 +847,9 @@
 
     <!-- Big stats -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Big Stats — <code>.hackathon-stats</code> &middot; <code>.big-stat</code></div>
-      <div class="hackathon-stats">
+      <div class="panel-label">Big Stats — <code>.squeeze-stats</code> &middot; <code>.big-stat</code> &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
+      <div class="squeeze-stats">
         <div class="big-stat">
           <div class="big-stat-value">8.7</div>
           <div class="big-stat-label">Avg. Training Score</div>
@@ -809,12 +859,14 @@
           <div class="big-stat-label">Developers Trained</div>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Comparison cards -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Comparison Cards — <code>.shift-col</code> &middot; <code>.shift-col--agent</code> (tinted favorite)</div>
-      <div class="perspective-shift-comparison">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Comparison Cards — <code>.shift-col</code> &middot; <code>.shift-col--agent</code> (tinted favorite) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
+      <div class="perspective-shift-comparison" style="margin: 0;">
         <div class="shift-col shift-col--agent">
           <h3 class="text-agent">Agent</h3>
           <p>LLM + Tools + Loop + Context</p>
@@ -826,11 +878,13 @@
           <div class="code-snippet code-snippet--orange"><code>prompt &rarr; response &rarr; done</code></div>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Flow steps -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Flow Steps — <code>.flow</code> &middot; <code>.flow-step</code> (numbers earn their place: a real sequence)</div>
+      <div class="panel-label">Flow Steps — <code>.flow</code> &middot; <code>.flow-step</code> (numbers earn their place: a real sequence) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <div class="flow">
         <div class="flow-step">
           <span class="flow-step-num">01</span>
@@ -844,10 +898,11 @@
           <p>Agents attempt the real work; we quantify the value.</p>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Timeline -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Timeline — <code>.timeline</code> &middot; <code>.timeline-item</code></div>
       <div class="timeline">
         <div class="timeline-item">
@@ -886,8 +941,9 @@
     </div>
 
     <!-- Pricing pair -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Pricing Pair — <code>.pricing-cards</code> &middot; <code>.pricing-card-featured</code> (one featured glow per page)</div>
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <div class="panel-label">Pricing Pair — <code>.pricing-cards</code> &middot; <code>.pricing-card-featured</code> (one featured glow per page) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <div class="pricing-cards">
         <div class="pricing-card">
           <div class="pricing-card-header">
@@ -914,11 +970,13 @@
           <a href="#" class="btn btn-primary btn-lg">Reserve Your Spot</a>
         </div>
       </div>
+      </div>
     </div>
 
     <!-- Team card -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment)</div>
+      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment) &middot; cream canvas</div>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <article class="team-card" style="max-width: 520px;">
         <div class="team-photo">
           <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
@@ -928,10 +986,11 @@
           <p class="team-role">Developer, Architect &amp; AI Trainer</p>
         </div>
       </article>
+      </div>
     </div>
 
     <!-- Sticky CTA (static specimen) -->
-    <div class="panel panel-cream" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Mobile Sticky CTA — <code>.sticky-cta</code> (yields when any other primary CTA is on screen)</div>
       <div class="sticky-cta visible" style="position: static; transform: none; display: block; max-width: 420px; border-radius: 10px; border: 1px solid var(--border);">
         <a href="#" class="btn btn-primary">View Full Program</a>
@@ -973,24 +1032,20 @@
     <div class="ds-section-label" id="s11">11 — Motion</div>
 
     <div class="ds-note">
-      <strong>The moving half of "Curious Play."</strong> A flat, restrained system earns its life
-      through choreography, not decoration. Nothing pulses for attention; the things that move do so
-      with intent and one shared character. The signature is a single easing curve and the crystalline
-      assembly of the mark. Every animation lands on its static end state under reduced motion.
+      <strong>The moving half of "Curious Play":</strong> choreography, not decoration. One signature
+      easing curve; every animation lands on its static end state under reduced motion.
     </div>
 
     <!-- Signature moment: live crystalline assembly -->
-    <div class="panel panel-cream" style="padding: var(--space-2xl); text-align: center;">
+    <div class="panel panel-white" style="padding: var(--space-2xl); text-align: center;">
       <div class="panel-label" style="justify-content: center;">The Signature Moment</div>
       <h3 style="font-size: 1.25rem; margin: 0.4rem 0 0.25rem;">Crystalline <span class="highlight">Assembly</span></h3>
       <div id="motionDemo" style="width: 200px; height: 187px; margin: 1.25rem auto 1rem;"><svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><g class="wing-left"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><g class="wing-right"><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></g><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></div>
       <button id="replayAssembly" class="btn btn-outline btn-sm" type="button">Replay assembly</button>
-      <p style="font-size: 0.85rem; color: var(--text-2); line-height: 1.65; max-width: 60ch; margin: 1rem auto 0;">
-        On load the hero butterfly builds itself: each facet scales up from its own centre and settles
-        into the locked mark, staggered symmetrically from the body outward, the ember head and vivid
-        antenna tips last. Then it breathes, with a slow light-shift travelling across the facets. The
-        geometry and colour never change; only motion is added. Shown here at full presence; in the
-        hero the same mark sits as an ambient watermark at low opacity.
+      <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.65; max-width: 60ch; margin: 1rem auto 0;">
+        Each facet scales up from its own centre and settles into the locked mark, staggered outward from
+        the body, head and antenna tips last; then wing-breathe and the light-shift. Geometry and colour
+        never change. In the hero the same mark sits as a low-opacity ambient watermark.
       </p>
     </div>
 
@@ -1019,6 +1074,7 @@
       <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Named Patterns</h4>
       <ul class="ds-rules">
         <li><strong>Crystalline Assembly</strong> &mdash; the signature. Facets settle into the locked mark on load, symmetric outward stagger.</li>
+        <li><strong>Metamorphosis Refactor</strong> &mdash; the hero signature. The crystalline caterpillar becomes the locked mark while the synced code line becomes the agentic loop; detailed below.</li>
         <li><strong>Wing-Breathe</strong> &mdash; perpetual 2deg wing idle over 4s, starting after the assembly.</li>
         <li><strong>Light-Shift</strong> &mdash; a 7s brightness wave across the facets; brightness only, never a glow.</li>
         <li><strong>Hero Choreography</strong> &mdash; the hero text enters in five rise-and-fade steps.</li>
@@ -1028,15 +1084,29 @@
       </ul>
     </div>
 
+    <!-- Signature pattern: the metamorphosis refactor (verified spec) -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Metamorphosis Refactor &mdash; the hero signature</h4>
+      <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem; max-width: 70ch;">On the <a href="/">homepage hero</a>, a crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath evolves into <code>while(task) { explore &rarr; act &rarr; verify }</code>: developer becomes agentic engineer, told twice at once. The synced code line is what makes the arc a domain claim instead of a transformation clich&eacute;.</p>
+      <ul class="ds-rules">
+        <li><strong>Trigger</strong> &mdash; the hero mounts at rest; a single 5000ms timer after module boot fires one <code>replay()</code>; the arc plays exactly once. No scroll trigger, no auto-loop.</li>
+        <li><strong>Movements</strong> &mdash; crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest; 13.6s. The 22 facets are constant; matter reorganizes. Motion is spring forces, never tweens; a deadband snap and shader rest gate land the rest pose byte-exact on the locked mark, which then breathes (Wing-Breathe, Light-Shift).</li>
+        <li><strong>Code sync</strong> &mdash; the code block derives every beat from the module's phase clock (<code>phaseInfo()</code>), never wall clock, so creature and code cannot desync. Crawl types the loop body; gather and chrysalis hold it dimmed, cursor frozen; unfurl types <code>while(task) </code>; rest holds the canonical line.</li>
+        <li><strong>Gating and fallback</strong> &mdash; reduced motion, viewport at or under 900px, Save-Data, deviceMemory under 2, or missing WebGL2: no download, static poster plus finished line. Init failure, GPU context loss, sustained slow frames: same fallback, never freezing mid-refactor. The render loop pauses offscreen and on hidden tabs; loads over 2.5s mount at rest. A static or small-viewport telling of the same story is an open design task.</li>
+        <li><strong>Locked assets</strong> &mdash; <code>js/crystalline-metamorphosis.js</code> (physics rig and choreography), the <code>index.html</code> hero (stage, inline poster SVG, Refactor block, gate script), <code>metamorphosis-hero.html</code> (lab: full arc on load, replay control), <code>docs/metamorphosis-hero-prompt.md</code> (design intent), <code>tests/metamorphosis.spec.ts</code> (byte-exact rest pose, reduced-motion poster, code resolution, DPR clamps, offscreen pause, teardown).</li>
+        <li><strong>One locked unit</strong> &mdash; the animation and its synced code block ship together and are retimed together, never one side alone; the sequence resolves to the locked mark per the Mark-Motion Rule.</li>
+      </ul>
+    </div>
+
     <!-- Named rules -->
     <div class="ds-grid-2" style="margin-top: var(--space-lg);">
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Mark-Motion Rule</h4>
-        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">The butterfly is locked geometry and locked colour, but it may move. Choreographed motion that resolves to the locked mark is sanctioned and is the system's signature. Static effects on the mark (glow, gradient, drop-shadow, per-facet opacity or outline-only wings) stay banned; the hero ambient watermark is a placement of the whole solid mark, not an effect. Motion animates the mark; it never restyles it.</p>
+        <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0;">Choreographed motion that resolves to the locked mark is sanctioned; static effects (glow, gradient, drop-shadow, per-facet opacity, outline-only wings) stay banned. Motion animates the mark; it never restyles it.</p>
       </div>
       <div class="panel panel-white">
         <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Reduced-Motion Rule</h4>
-        <p style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6; margin: 0;">Every animation has a prefers-reduced-motion branch that lands on the static end state instantly: the assembled mark, the entered hero, the revealed code. Reduced motion is never a degraded experience, only a still one. Shipping an animation without its reduced-motion branch is a defect, not a polish item.</p>
+        <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0;">Every animation has a prefers-reduced-motion branch that lands on the static end state instantly. Shipping without one is a defect, not a polish item.</p>
       </div>
     </div>
   </div>
@@ -1081,8 +1151,8 @@
   var tokens = [
     { token: '--green-surface', hex: '#edfcf1', role: 'Tinted backgrounds, card fills. Decorative only.' },
     { token: '--green-light',   hex: '#c5f6d3', role: 'Badge fills, borders, subtle highlights. Decorative only.' },
-    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative on light (dots, icons, borders). On dark (7.42:1 AAA): headings, highlights, links, labels, inline emphasis. NOT body text on dark — that uses off-white #e5e2dc. NOT text on light.' },
-    { token: '--green-brand',   hex: '#137b30', role: 'Logo, headings, links, labels. Primary brand identity.' },
+    { token: '--green-vivid',   hex: '#00c638', role: 'Decorative on light (dots, icons, borders). On dark (7.42:1 AAA): links, labels, inline emphasis. NOT body text on dark — that uses off-white #e5e2dc. NOT text on light.' },
+    { token: '--green-brand',   hex: '#137b30', role: 'Logo, links. Primary brand identity.' },
     { token: '--green-dark',    hex: '#0d5822', role: 'High-contrast body text on light. AAA on cream/white.' },
     { token: '--accent',        hex: '#e26c45', role: 'CTA button, urgency badges. One per viewport.' },
   ];
@@ -1099,7 +1169,7 @@
       '<td>' + ctBadge(onCream) + '</td>' +
       '<td>' + ctBadge(onWhite) + '</td>' +
       '<td>' + ctBadge(onDark) + '</td>' +
-      '<td style="font-size:0.78rem;color:var(--text-2);">' + t.role + '</td>';
+      '<td style="color:var(--text-2);">' + t.role + '</td>';
     tbody.appendChild(tr);
   });
 
@@ -1107,7 +1177,7 @@
   // Production wing geometry, viewBox 0 0 300 280. Crystalline DK-B-V pattern.
   // Wider leaf body, circle head r=8 (orange), vivid antenna tips r=3.5.
   // 0.5px fill-matched seam strokes + crispEdges = no pixelation.
-  // Subtle asymmetry: right wing position 6 differs (DK→DK same, see fillsR).
+  // Wing outlines are exact mirrors; fills swap B and DK on slots 6/7 (see FILLS_R).
   var V_='#00c638', B_='#137b30', DK_='#0d5822', AC_='#e26c45';
   var FILLS_L = [DK_,V_,B_,V_,DK_,V_,B_,DK_,V_,B_,DK_];
   var FILLS_R = [DK_,V_,B_,V_,DK_,V_,DK_,B_,V_,B_,DK_];
@@ -1149,6 +1219,37 @@
   }
   // Locked wordmark text colors handled via CSS .logo-wordmark / .on-dark .logo-wordmark
 
+  // ── Small mark (below-48px cut, locked) ─────────────────────────
+  // Same outer silhouette as the master: each facet is a merge of adjacent
+  // master facets (identical outer vertices). 4 facets per wing, no antennae,
+  // head r=12 so the ember reads. Hindwing pair keeps the right-wing B/DK
+  // fill swap. geometricPrecision, never crispEdges, at these sizes.
+  var SPTS_L = [
+    "147,105 110,68 55,48 20,72 15,108 147,130",
+    "147,130 15,108 28,150 50,178 147,165",
+    "147,178 50,178 82,195 75,220",
+    "147,195 75,220 100,240 135,232"
+  ];
+  var SPTS_R = [
+    "153,105 190,68 245,48 280,72 285,108 153,130",
+    "153,130 285,108 272,150 250,178 153,165",
+    "153,178 250,178 218,195 225,220",
+    "153,195 225,220 200,240 165,232"
+  ];
+  var SFILLS_L = [V_, B_, DK_, B_];
+  var SFILLS_R = [V_, B_, B_, DK_];
+  function bfSmall(sz) {
+    var h = Math.round(sz * 280/300);
+    var w = '', i;
+    for (i = 0; i < 4; i++) {
+      w += '<polygon points="' + SPTS_L[i] + '" fill="' + SFILLS_L[i] + '" stroke="' + SFILLS_L[i] + '" stroke-width="0.5"/>';
+      w += '<polygon points="' + SPTS_R[i] + '" fill="' + SFILLS_R[i] + '" stroke="' + SFILLS_R[i] + '" stroke-width="0.5"/>';
+    }
+    return '<svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="' + sz + '" height="' + h + '" shape-rendering="geometricPrecision">' +
+      w + '<path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="' + DK_ + '"/>' +
+      '<circle cx="150" cy="90" r="12" fill="' + AC_ + '"/></svg>';
+  }
+
   // ── Brand foundation lockup ──
   // Same lockup pattern as the specimens: wordmark + bf() butterfly as siblings in .logo-lockup.
   document.getElementById('brandLockup').innerHTML =
@@ -1160,7 +1261,7 @@
   // CTA at default size — orange already attracts attention, no need for .btn-lg.
   document.getElementById('heroLight').innerHTML =
     '<div style="padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);">' +
-      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bf(22) + '</span>' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bfSmall(22) + '</span>' +
       '<div style="display:flex;align-items:center;gap:1.5rem;">' +
         '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">Training</a>' +
         '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">About</a>' +
@@ -1188,7 +1289,7 @@
   // competing for attention in one viewport.
   document.getElementById('heroDark').innerHTML =
     '<div class="on-dark" style="padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--dark);border-bottom:1px solid var(--border-dark);">' +
-      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bf(22) + '</span>' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bfSmall(22) + '</span>' +
       '<div style="display:flex;align-items:center;gap:1.5rem;">' +
         '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">Training</a>' +
         '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">About</a>' +
@@ -1223,26 +1324,36 @@
     card.className = b.cls;
     card.style.cssText = 'background:' + b.bg + ';border:1px solid ' + b.border + ';border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:0.75rem;';
     card.innerHTML =
-      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.25rem;">Plepic</span>' + bf(24) + '</span>' +
-      '<span style="font-family:var(--font-mono);font-size:0.7rem;color:' + b.lc + ';text-transform:uppercase;letter-spacing:0.06em;">' + b.label + '</span>';
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.25rem;">Plepic</span>' + bfSmall(24) + '</span>' +
+      '<span style="font-family:var(--font-mono);font-size:0.75rem;color:' + b.lc + ';text-transform:uppercase;letter-spacing:0.06em;">' + b.label + '</span>';
     logoGrid.appendChild(card);
   });
 
   // ── Size stress tests ──
+  // Follows the size rule: master at 48px and above, small mark below.
   var sizeRows = [120, 64, 32, 24, 16];
   var lLight = document.getElementById('logoSizesLight');
   var lDark  = document.getElementById('logoSizesDark');
   sizeRows.forEach(function(s) {
-    var label = '<div style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.3rem;text-align:center;">' + s + 'px</div>';
+    var mark = s >= 48 ? bf(s) : bfSmall(s);
     var itemL = document.createElement('div');
     itemL.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    itemL.innerHTML = bf(s) + '<div style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
+    itemL.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
     lLight.appendChild(itemL);
 
     var itemD = document.createElement('div');
     itemD.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    itemD.innerHTML = bf(s) + '<div style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
+    itemD.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
     lDark.appendChild(itemD);
+  });
+
+  // ── Small mark specimen row ──
+  var smRow = document.getElementById('smallMarkRow');
+  [16, 24, 30, 32].forEach(function(s) {
+    var item = document.createElement('div');
+    item.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
+    item.innerHTML = bfSmall(s) + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
+    smRow.appendChild(item);
   });
 
   // ── Stacked lockup variant ──

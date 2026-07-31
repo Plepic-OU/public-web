@@ -24,7 +24,7 @@ const RUBRIC = `GROUND YOUR JUDGEMENT IN THE IMPECCABLE DESIGN RUBRIC — read t
 - ${IMPECCABLE}/critique.md — score all 10 Nielsen heuristics 0-4, cognitive load, emotional journey, AI-slop verdict.
 - ${IMPECCABLE}/audit.md — the 5 technical dimensions (a11y, performance, theming, responsive, code quality), score 0-4.
 - ${IMPECCABLE}/polish.md — the final-pass bar (alignment, spacing, consistency, detail).
-- /Users/kaidokoort/Documents/Plepic Business/public-web/DESIGN.md — the LOCKED Plepic design system (palette, type, motion tokens, named rules).
+- /Users/kaidokoort/Documents/Plepic Business/public-web/design-system.html — the LOCKED Plepic design system reference (palette, type, motion, named rules); tokens in css/styles.css.
 - /Users/kaidokoort/Documents/Plepic Business/public-web/PRODUCT.md — register, users, anti-references.
 A defect is anything that fails this rubric OR that a demanding studio art director would not ship. The AI-slop test is mandatory: if a visitor could say "AI made this," that is a blocking defect.`
 
@@ -47,7 +47,7 @@ const SCHEMA = {
       severity: { enum: ['blocking', 'major', 'minor'] },
       evidence: { type: 'string', description: 'screenshot file(s) + what you saw' },
       state: { type: 'string' }, viewport: { type: 'string' },
-      rubric: { type: 'string', description: 'which impeccable/DESIGN.md rule or heuristic it violates' },
+      rubric: { type: 'string', description: 'which impeccable/design-system rule or heuristic it violates' },
     } } } },
 }
 const VERDICT = { type: 'object', required: ['confirmed', 'reason'],
@@ -55,12 +55,12 @@ const VERDICT = { type: 'object', required: ['confirmed', 'reason'],
 
 phase('Inspect')
 const DIMENSIONS = [
-  { key: 'load-consistency', brief: 'LOAD SEQUENCE + STATE CONSISTENCY. Per viewport, compare 1-initial vs 2-settled vs 4-restfinal: the butterfly AND code must sit at the SAME position and size in all three resting frames. Any vertical jump, size pop, colour shift, or flash on the poster->canvas swap or when the arc resolves is a defect (impeccable polish.md: no layout shift; DESIGN.md Mark-Motion Rule). Founder specifically reported the initial butterfly sitting higher than the final one.' },
+  { key: 'load-consistency', brief: 'LOAD SEQUENCE + STATE CONSISTENCY. Per viewport, compare 1-initial vs 2-settled vs 4-restfinal: the butterfly AND code must sit at the SAME position and size in all three resting frames. Any vertical jump, size pop, colour shift, or flash on the poster->canvas swap or when the arc resolves is a defect (impeccable polish.md: no layout shift; the design system's Mark-Motion Rule). Founder specifically reported the initial butterfly sitting higher than the final one.' },
   { key: 'lockup-composition', brief: 'LOCKUP + COMPOSITION at rest (2-settled full page). Butterfly<->code must read as ONE tight lockup (small caption gap, not a void). The right-column visual must be balanced against the left headline column — not floating high/low, not lost in whitespace. Judge the gestalt against impeccable brand.md (studio bar) + polish.md (spacing/alignment). Run the AI-slop test on the whole fold.' },
   { key: 'centering-alignment', brief: 'CENTERING + ALIGNMENT at rest and crawl. Code centered under the butterfly BODY axis (code is left-heavy — judge optical centre). Caterpillar centered over the code in 3-crawl. Right edges (cursor, wing, CTA line) consistent. Any drift at any width. (polish.md alignment.)' },
   { key: 'responsive', brief: 'RESPONSIVE across mobile/tablet/laptop/desktop/wide (2-settled). Does it COMPOSE at each width or just shrink/stretch (impeccable adapt.md)? TABLET 820 is just below the 901 desktop breakpoint — inspect hardest: does the stacked layout put a giant butterfly above the headline, or leave awkward gaps? Any overflow, clipping, cramping, tiny/huge visual.' },
-  { key: 'brand-a11y-motion', brief: 'BRAND LOCKS + A11Y + REDUCED MOTION + CONSOLE. Off-palette colours, more than ONE ember/orange element per viewport, banned effects (cyan/neon/glow/gradient-text) per DESIGN.md + brand.md. reduced-motion.png: static butterfly+code, on-brand, not blank/broken — judge whether the pale 0.28-opacity poster reads as intentional or washed-out/broken. metrics.json consoleErrors must be empty. Contrast per audit.md a11y.' },
-  { key: 'motion-arc', brief: 'THE ANIMATION (3-crawl + reasoning about the ~13s arc). Legible caterpillar (not clipped/blob), sensibly placed, code showing the evolving snippet. Motion must fit DESIGN.md motion tokens + animate.md (no jank, purposeful). Flag anything that reads broken during the arc.' },
+  { key: 'brand-a11y-motion', brief: 'BRAND LOCKS + A11Y + REDUCED MOTION + CONSOLE. Off-palette colours, more than ONE ember/orange element per viewport, banned effects (cyan/neon/glow/gradient-text) per the design-system canon + brand.md. reduced-motion.png: static butterfly+code, on-brand, not blank/broken — judge whether the pale 0.28-opacity poster reads as intentional or washed-out/broken. metrics.json consoleErrors must be empty. Contrast per audit.md a11y.' },
+  { key: 'motion-arc', brief: 'THE ANIMATION (3-crawl + reasoning about the ~13s arc). Legible caterpillar (not clipped/blob), sensibly placed, code showing the evolving snippet. Motion must fit the design system's motion tokens + animate.md (no jank, purposeful). Flag anything that reads broken during the arc.' },
 ]
 const inspections = await parallel(DIMENSIONS.map(d => () =>
   agent(CONTEXT + '\n\nYOUR DIMENSION: ' + d.brief + '\n\nRead the impeccable references above, then Read the relevant PNGs and LOOK. Report every defect tied to specific file(s)+state+viewport+rubric. Demanding studio art director standard; do not invent, do not rubber-stamp. Empty only if truly clean.',
@@ -77,5 +77,5 @@ const confirmed = verified.filter(Boolean).filter(f => f.verdict && f.verdict.co
 
 phase('Synthesize')
 const merged = JSON.stringify(confirmed.map(f => ({ title: f.title, detail: f.detail, severity: f.severity, state: f.state, viewport: f.viewport, rubric: f.rubric, dim: f.dim })))
-const summary = await agent(CONTEXT + '\n\nConfirmed defects (each seen by two agents): ' + merged + '\n\nSynthesize the fix list: (1) dedupe across dimensions/viewports; (2) rank blocking->major->minor; (3) concrete fix per defect (file + CSS/JS change + value) — the hero is index.html inline styles + js/crystalline-metamorphosis.js (Three.js, framing opts markPx/markRightPx/markBottomPx, poster SVG). (4) State explicitly whether these are CONFIRMED: initial-vs-final jump, rest-state gap, tablet-820 layout. Cite the impeccable/DESIGN.md rule each fix satisfies. Terse, implementable, plain text.', { label: 'synthesize', phase: 'Synthesize', effort: 'xhigh' })
+const summary = await agent(CONTEXT + '\n\nConfirmed defects (each seen by two agents): ' + merged + '\n\nSynthesize the fix list: (1) dedupe across dimensions/viewports; (2) rank blocking->major->minor; (3) concrete fix per defect (file + CSS/JS change + value) — the hero is index.html inline styles + js/crystalline-metamorphosis.js (Three.js, framing opts markPx/markRightPx/markBottomPx, poster SVG). (4) State explicitly whether these are CONFIRMED: initial-vs-final jump, rest-state gap, tablet-820 layout. Cite the impeccable/design-system rule each fix satisfies. Terse, implementable, plain text.', { label: 'synthesize', phase: 'Synthesize', effort: 'xhigh' })
 return { confirmedCount: confirmed.length, rawCount: raw.length, summary }
