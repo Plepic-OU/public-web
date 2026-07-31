@@ -582,8 +582,8 @@
 
     <div class="ds-note">
       <strong>Crystalline butterfly with leaf body, locked 2026-04-07.</strong> Wordmark left, butterfly right;
-      icon ≈ ascender height. Copy the geometry from this section when inlining anywhere new. Two locked cuts:
-      the 22-facet master at 48px and above, the 8-facet small mark below 48px (nav, favicon).
+      icon ≈ ascender height. Copy the geometry from this section when inlining anywhere new. One locked cut:
+      the 22-facet master, at every size.
     </div>
 
     <!-- Lockup specimens on all background contexts -->
@@ -661,7 +661,7 @@
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Final SVG Markup (copy-paste for new locations)</div>
       <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
-        Master markup for 48px and above. Resize via <code>width</code> / <code>height</code>; the viewBox is fixed.
+        Master markup for all placements. Resize via <code>width</code> / <code>height</code>; the viewBox is fixed.
       </p>
       <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
   &lt;!-- Left wing — 11 facets, DK-B-V pattern --&gt;
@@ -695,34 +695,6 @@
   &lt;circle cx="136" cy="41" r="3.5" fill="#00c638"/&gt;
   &lt;circle cx="164" cy="41" r="3.5" fill="#00c638"/&gt;
   &lt;circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/&gt;
-&lt;/svg&gt;</pre>
-    </div>
-
-    <!-- Small mark (below-48px cut) -->
-    <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Small Mark — &le;32px <span class="ds-locked">Locked</span></div>
-      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
-        Below 48px the 22 facets collapse into banding, so small placements use this 8-facet cut: the master's
-        exact outer silhouette from merged adjacent facets. 4 facets per wing (V over B forewing both wings;
-        hindwing DK/B left, B/DK right, keeping the fill swap), no antennae, head r=12.
-        <code>shape-rendering="geometricPrecision"</code>, never <code>crispEdges</code>.
-        <strong>Master at 48px and above; small mark below 48px.</strong> Locked geometry: never recolor, re-facet, or restyle.
-      </p>
-      <div id="smallMarkRow" style="display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--bg);border-radius:10px;"></div>
-      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto; margin-top: var(--space-md);">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"&gt;
-  &lt;!-- Left wing — 4 merged facets --&gt;
-  &lt;polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
-  &lt;polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
-  &lt;polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
-  &lt;polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
-  &lt;!-- Right wing — mirrored outlines; hindwing pair swaps B and DK --&gt;
-  &lt;polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
-  &lt;polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
-  &lt;polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/&gt;
-  &lt;polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
-  &lt;!-- Body and head (no antennae at this size) --&gt;
-  &lt;path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/&gt;
-  &lt;circle cx="150" cy="90" r="12" fill="#e26c45"/&gt;
 &lt;/svg&gt;</pre>
     </div>
 
@@ -1219,37 +1191,6 @@
   }
   // Locked wordmark text colors handled via CSS .logo-wordmark / .on-dark .logo-wordmark
 
-  // ── Small mark (below-48px cut, locked) ─────────────────────────
-  // Same outer silhouette as the master: each facet is a merge of adjacent
-  // master facets (identical outer vertices). 4 facets per wing, no antennae,
-  // head r=12 so the ember reads. Hindwing pair keeps the right-wing B/DK
-  // fill swap. geometricPrecision, never crispEdges, at these sizes.
-  var SPTS_L = [
-    "147,105 110,68 55,48 20,72 15,108 147,130",
-    "147,130 15,108 28,150 50,178 147,165",
-    "147,178 50,178 82,195 75,220",
-    "147,195 75,220 100,240 135,232"
-  ];
-  var SPTS_R = [
-    "153,105 190,68 245,48 280,72 285,108 153,130",
-    "153,130 285,108 272,150 250,178 153,165",
-    "153,178 250,178 218,195 225,220",
-    "153,195 225,220 200,240 165,232"
-  ];
-  var SFILLS_L = [V_, B_, DK_, B_];
-  var SFILLS_R = [V_, B_, B_, DK_];
-  function bfSmall(sz) {
-    var h = Math.round(sz * 280/300);
-    var w = '', i;
-    for (i = 0; i < 4; i++) {
-      w += '<polygon points="' + SPTS_L[i] + '" fill="' + SFILLS_L[i] + '" stroke="' + SFILLS_L[i] + '" stroke-width="0.5"/>';
-      w += '<polygon points="' + SPTS_R[i] + '" fill="' + SFILLS_R[i] + '" stroke="' + SFILLS_R[i] + '" stroke-width="0.5"/>';
-    }
-    return '<svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="' + sz + '" height="' + h + '" shape-rendering="geometricPrecision">' +
-      w + '<path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="' + DK_ + '"/>' +
-      '<circle cx="150" cy="90" r="12" fill="' + AC_ + '"/></svg>';
-  }
-
   // ── Brand foundation lockup ──
   // Same lockup pattern as the specimens: wordmark + bf() butterfly as siblings in .logo-lockup.
   document.getElementById('brandLockup').innerHTML =
@@ -1261,7 +1202,7 @@
   // CTA at default size — orange already attracts attention, no need for .btn-lg.
   document.getElementById('heroLight').innerHTML =
     '<div style="padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);">' +
-      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bfSmall(22) + '</span>' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bf(22) + '</span>' +
       '<div style="display:flex;align-items:center;gap:1.5rem;">' +
         '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">Training</a>' +
         '<a href="#" style="font-size:0.8rem;color:var(--text-2);text-decoration:none;font-weight:500;">About</a>' +
@@ -1289,7 +1230,7 @@
   // competing for attention in one viewport.
   document.getElementById('heroDark').innerHTML =
     '<div class="on-dark" style="padding:0.75rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--dark);border-bottom:1px solid var(--border-dark);">' +
-      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bfSmall(22) + '</span>' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.1rem;">Plepic</span>' + bf(22) + '</span>' +
       '<div style="display:flex;align-items:center;gap:1.5rem;">' +
         '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">Training</a>' +
         '<a href="#" style="font-size:0.8rem;color:#a3a39a;text-decoration:none;font-weight:500;">About</a>' +
@@ -1324,18 +1265,17 @@
     card.className = b.cls;
     card.style.cssText = 'background:' + b.bg + ';border:1px solid ' + b.border + ';border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:0.75rem;';
     card.innerHTML =
-      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.25rem;">Plepic</span>' + bfSmall(24) + '</span>' +
+      '<span class="logo-lockup"><span class="logo-wordmark" style="font-size:1.25rem;">Plepic</span>' + bf(24) + '</span>' +
       '<span style="font-family:var(--font-mono);font-size:0.75rem;color:' + b.lc + ';text-transform:uppercase;letter-spacing:0.06em;">' + b.label + '</span>';
     logoGrid.appendChild(card);
   });
 
   // ── Size stress tests ──
-  // Follows the size rule: master at 48px and above, small mark below.
   var sizeRows = [120, 64, 32, 24, 16];
   var lLight = document.getElementById('logoSizesLight');
   var lDark  = document.getElementById('logoSizesDark');
   sizeRows.forEach(function(s) {
-    var mark = s >= 48 ? bf(s) : bfSmall(s);
+    var mark = bf(s);
     var itemL = document.createElement('div');
     itemL.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
     itemL.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
@@ -1345,15 +1285,6 @@
     itemD.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
     itemD.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
     lDark.appendChild(itemD);
-  });
-
-  // ── Small mark specimen row ──
-  var smRow = document.getElementById('smallMarkRow');
-  [16, 24, 30, 32].forEach(function(s) {
-    var item = document.createElement('div');
-    item.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    item.innerHTML = bfSmall(s) + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.3rem;">' + s + 'px</div>';
-    smRow.appendChild(item);
   });
 
   // ── Stacked lockup variant ──
