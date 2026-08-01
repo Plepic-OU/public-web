@@ -194,6 +194,9 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Entrance gate: hold .hero-entrance until webfonts are in (1.5s cap) so
+       the Bitter/Hanken glyph swap never repaints mid-rise. -->
+  <script>(function(g){document.fonts.ready.then(g);setTimeout(g,1500)})(function(){document.documentElement.classList.add('fonts-in')});</script>
 
   <!-- Pinned Three.js r0.185.1, vendored locally (vendor/three.module.min.js)
        so it loads under the site's strict same-origin CSP with no CDN and no
@@ -532,7 +535,7 @@
             <span>300+ trained &middot; 8.7/10 avg &middot; Squad 3 sold out</span>
           </div>
 
-          <h1 class="hero-entrance hero-entrance-2">Claude Code Training for<br><span class="highlight">Dev Teams</span></h1>
+          <h1 class="hero-entrance hero-entrance-2">Claude Code Training<br>for <span class="highlight">Dev Teams</span></h1>
 
           <p class="hero-desc hero-entrance hero-entrance-3">
             Six Fridays, senior engineers beside you, your real codebase. You direct the agent, it ships production code.<br>

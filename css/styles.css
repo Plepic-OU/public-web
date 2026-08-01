@@ -262,7 +262,10 @@ h1 { font-size: clamp(2rem, 2rem + 3vw, 3.5rem); }
 
 /* Hero heading override — matches prototype exactly */
 .hero h1 {
-  font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem);
+  /* Cap chosen so "Claude Code Training" holds one line in the 580px hero
+     column (fits to 60.5px, measured 2026-08-01); the founder wants exactly
+     two lines: "Claude Code Training" / "for Dev Teams". */
+  font-size: clamp(2.5rem, 2rem + 2vw, 3.7rem);
   line-height: 1.05;
   letter-spacing: -0.025em;
   margin-bottom: 2rem;
@@ -3356,20 +3359,27 @@ p:last-child {
    animation never hides the value prop or the CTA (FOUC). */
 .hero-entrance {
   opacity: 1;
-  transform: translateY(10px);
-  animation: hero-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform: translateY(6px);
+  animation: hero-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* Paused until <html>.fonts-in (set by the inline head script on
+     document.fonts.ready, 1.5s fallback) so the glyph swap never repaints
+     mid-rise — the swap landing during the settle read as a letter bounce
+     (founder report 2026-08-01). Without JS the hero simply holds this
+     from-state: 6px low at 0.85 opacity, fully legible. */
+  animation-play-state: paused;
 }
+html.fonts-in .hero-entrance { animation-play-state: running; }
 
 .hero-entrance-1 { animation-delay: 0.05s; }
-.hero-entrance-2 { animation-delay: 0.1s; }
-.hero-entrance-3 { animation-delay: 0.2s; }
-.hero-entrance-4 { animation-delay: 0.3s; }
-.hero-entrance-5 { animation-delay: 0.4s; }
+.hero-entrance-2 { animation-delay: 0.08s; }
+.hero-entrance-3 { animation-delay: 0.14s; }
+.hero-entrance-4 { animation-delay: 0.2s; }
+.hero-entrance-5 { animation-delay: 0.26s; }
 
 @keyframes hero-enter {
   from {
     opacity: 0.85;
-    transform: translateY(10px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
