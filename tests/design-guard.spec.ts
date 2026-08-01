@@ -113,13 +113,15 @@ test.describe('design guard @design-guard', () => {
   });
 
   test('no off-canon colors: every 6-digit hex belongs to the canon list', () => {
-    // The palette is closed. Canon = the token palette + the badge-urgency
-    // pair; any other 6-digit hex in the stylesheet or in production page
-    // styles is a leak. Tints of canon colors use rgba(), never new hex.
+    // The palette is closed. Canon = the token palette + the peach status
+    // pair (now used only by the design-system page's own ds-wip / ds-ct-fail
+    // pills; badges went neutral 2026-08-01). Any other 6-digit hex in the
+    // stylesheet or in production page styles is a leak. Tints of canon
+    // colors use rgba(), never new hex.
     const CANON = new Set([
       // Greens
       '#00c638', '#137b30', '#0d5822', '#c5f6d3', '#edfcf1',
-      // Accent + badge-urgency pair
+      // Accent + peach status-pill pair (ds-wip / ds-ct-fail)
       '#e26c45', '#fdf0eb', '#a3502e',
       // Backgrounds / surfaces
       '#faf7f2', '#f3efe7', '#ffffff', '#1c1c1a', '#262624',
