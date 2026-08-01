@@ -158,6 +158,12 @@ const BODY_LEN = 205;                   // caterpillar rest arc length
 const WAVE_AMP = 0.4;                   // local compression depth
 const ARCH_H = 17;                      // hump lift under the wave
 const PRESS = { omega: 1.55, zeta: 0.62, rightDelay: 0.35 };
+// Staged hatching (founder pick 2026-08-02): the emergence channels
+// de-synchronize on the SAME pressure spring — the abdomen reads it with a
+// gain so it hatches ahead of the wings, and the antennae ease over a wide
+// band instead of snapping through 0.45..0.75 in ~0.4s. At pressL.x → 1
+// every channel is exactly 1, so the byte-exact rest landing is unaffected.
+const HATCH = { bodyGain: 1.6, antLo: 0.30, antHi: 0.95 };
 const CRUMPLE = { foldDeg: 62, jitter: 0.35, wrinklePx: 10 };
 const BLOOM_MAX = 5 * Math.PI / 180;    // cap past-flat bloom at 5°
 const BREATHE_AMP = 2.1 * Math.PI / 180;
@@ -621,6 +627,8 @@ function targetsButterfly(rig, dt, t, resting) {
   // pressure spring, so nothing about the creature steps at t=0. pw=0
   // reproduces the chrysalis pose exactly; pw=1 lands on the exact leaf.
   const pwB = resting ? 1 : clamp01(rig.pressL.x);
+  // the abdomen leads the wings on an accelerated read of the same spring
+  const pwBody = resting ? 1 : clamp01(rig.pressL.x * HATCH.bodyGain);
   // the cocoon's pulse continues on the chrysalis clock and is retired by
   // the same spring, instead of being dropped to 1 in a single frame.
   // breathKick is deliberately not carried: twitches fire at 0.9/2.1s and
@@ -655,23 +663,23 @@ function targetsButterfly(rig, dt, t, resting) {
   for (let j = 0; j < BODY_N; j++) {
     const a = j / (BODY_N - 1);
     const rx = 150, ry = dY(lerp(BODY_TOP, BODY_BOT, a));
-    if (pwB > 0.98 && !P.on) {
+    if (pwBody > 0.98 && !P.on) {
       setV3(rig.body.target, j, rx, ry, 1.5);         // exact landing
     } else {
       const ly = (-10 - a * 34) * breath;             // chrysalis seam
       setV3(rig.body.target, j,
-        lerp(hxB - ly * spn, rx, pwB),
-        lerp(hyB + ly * cpn, ry, pwB),
-        lerp(-2, 1.5, pwB));
+        lerp(hxB - ly * spn, rx, pwBody),
+        lerp(hyB + ly * cpn, ry, pwBody),
+        lerp(-2, 1.5, pwBody));
     }
   }
   // the silhouette re-profiles on the same spring; a raw 1 → 2 write swapped
   // the seam strip for the rest leaf in a single frame
-  rig.bodyWidthMode = resting ? 2 : 1 + pwB;
+  rig.bodyWidthMode = resting ? 2 : 1 + pwBody;
   setV3(rig.head.target, 0, HEAD_REST.x, HEAD_REST.y, 3.5);
 
-  // antennae deploy when pressure crosses 0.5 — their own springs bounce once
-  const deploy = resting ? 1 : sstep(0.45, 0.75, rig.pressL.x);
+  // antennae ease out across the wide HATCH band — their own springs bounce once
+  const deploy = resting ? 1 : sstep(HATCH.antLo, HATCH.antHi, rig.pressL.x);
   antennaDeploy(rig, deploy, hxB, hyB);
 
   rig.shadowTarget = 0;
