@@ -130,7 +130,7 @@
   --green-vivid:   #00c638;   /* S100% L39% — decorative on light. On dark (7.42:1 AAA): links, labels, inline emphasis. Body text on dark uses off-white #e5e2dc, not vivid. NOT text on light. */
   --green-brand:   #137b30;   /* S73%  L28% — logo, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
-  --green-light:   #c5f6d3;   /* S73%  L87% — badge fills, borders */
+  --green-light:   #c5f6d3;   /* S73%  L87% — light fills, borders */
   --green-surface: #edfcf1;   /* S73%  L96% — tinted backgrounds */
 
   /* Accent — H=15°, S=73% (saturation-matched). One per viewport. */
@@ -612,13 +612,13 @@ p:last-child {
   align-items: center;
   gap: 0.5rem;
   padding: 0.3rem 0.9rem;
-  background: var(--green-surface);
-  color: var(--green-brand);
+  background: var(--surface);
+  color: var(--text-2);
   font-size: 0.85rem;
   font-weight: 600;
   line-height: normal;
   border-radius: 20px 4px 16px;
-  border: 1px solid var(--green-light);
+  border: 1px solid var(--border);
   margin-bottom: 0.75rem;
 }
 
@@ -3522,15 +3522,13 @@ p:last-child {
   line-height: normal;
   border-radius: 20px 4px 16px;
 }
-.badge-default {
-  background: var(--green-surface);
-  color: var(--green-dark);
-  border: 1px solid var(--green-light);
-}
+/* Neutral chrome on both variants (founder decision 2026-08-01); the dot
+   alone carries state — green = default, accent = urgency. */
+.badge-default,
 .badge-urgency {
-  background: #fdf0eb;
-  color: #a3502e;
-  border: 1px solid rgba(226, 108, 69, 0.3);  /* --accent tint, matches the retired peach border */
+  background: var(--surface);
+  color: var(--text-2);
+  border: 1px solid var(--border);
 }
 .badge-dot {
   width: 6px;
@@ -3540,15 +3538,11 @@ p:last-child {
   flex-shrink: 0;
 }
 .badge-urgency .badge-dot { background: var(--accent); }
-.on-dark .badge-default {
-  background: rgba(0, 198, 56, 0.12);
-  color: var(--green-light);
-  border-color: rgba(0, 198, 56, 0.2);
-}
+.on-dark .badge-default,
 .on-dark .badge-urgency {
-  background: rgba(226, 108, 69, 0.15);
-  color: var(--accent);
-  border-color: rgba(226, 108, 69, 0.25);
+  background: var(--dark-surface);
+  color: var(--text-on-dark-2);
+  border-color: var(--border-dark);
 }
 
 /* ── Panel variants (production .panel base remains above) ──── */
