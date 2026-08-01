@@ -18,23 +18,25 @@ gtag('js', new Date());
 gtag('config', 'G-65CCEV6RS9');
 gtag('config', 'AW-17874572217');
 
-// Conversion tracking (GA4 events + Google Ads conversions)
+// Conversion tracking (GA4 events + Google Ads conversions).
+// Values are modeled intent, ranked by how close the click sits to revenue:
+// the booked call is the primary conversion, the form is a waitlist signal.
 document.addEventListener('click', function(e) {
   var link = e.target.closest('a');
   if (!link) return;
   var href = link.href || '';
 
   if (href.indexOf('forms.gle/3M7XrK845svufeFn6') !== -1) {
-    gtag('event', 'google_form_signup', { value: 504, currency: 'EUR' });
+    gtag('event', 'google_form_signup', { value: 50, currency: 'EUR' });
     gtag('event', 'conversion', {
       'send_to': 'AW-17874572217/1kJMCIeh7vEbELmnoctC',
-      'value': 504, 'currency': 'EUR'
+      'value': 50, 'currency': 'EUR'
     });
   } else if (href.indexOf('calendar.app.google') !== -1) {
-    gtag('event', 'calendar_click', { value: 50, currency: 'EUR' });
+    gtag('event', 'calendar_click', { value: 504, currency: 'EUR' });
     gtag('event', 'conversion', {
       'send_to': 'AW-17874572217/o9b0CIqh7vEbELmnoctC',
-      'value': 50, 'currency': 'EUR'
+      'value': 504, 'currency': 'EUR'
     });
   } else if (href.indexOf('mailto:kaido@plepic.com') !== -1) {
     gtag('event', 'email_click', { value: 5, currency: 'EUR' });

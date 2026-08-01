@@ -323,7 +323,7 @@ p:last-child {
   display: inline-flex;
   align-items: center;
   background: var(--green-brand);
-  color: #fff;
+  color: var(--surface);
   font-weight: 600;
   z-index: 200;
   border-radius: 4px;
@@ -1389,7 +1389,7 @@ p:last-child {
 .book-divider img {
   width: 80px;
   border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(28, 28, 26, 0.1);
 }
 
 .book-caption {
@@ -1431,7 +1431,7 @@ p:last-child {
 }
 
 .footer-nav a:hover {
-  color: #fff;
+  color: var(--text-on-dark);
 }
 
 /* External footer nav links (Skill Tree -> skill.plepic.com) get an outbound affordance */
@@ -1470,7 +1470,7 @@ p:last-child {
 }
 
 .footer-links a:hover {
-  color: #fff;
+  color: var(--text-on-dark);
 }
 
 .footer-links svg {
@@ -2530,7 +2530,6 @@ p:last-child {
 
 .cert-line:hover .cert-icon {
   color: var(--accent);
-  filter: drop-shadow(0 0 4px rgba(226, 108, 69, 0.4));
 }
 
 /* ========================================
