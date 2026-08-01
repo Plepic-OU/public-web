@@ -1134,14 +1134,19 @@
       if (!skip) {
         const { init } = await import('/js/crystalline-metamorphosis.js');
         let choreoOn = true;
+        // Mark framing. One source for two consumers: the module's camera and
+        // the replay hit-box below, which must land on the same pixels.
+        const MARK_PX = 296;         // resting mark width ≈ code-loop width
+        const MARK_RIGHT_PX = -15;   // visible right wing (design ~285) to the margin
+        const MARK_BOTTOM_PX = 8;    // mark bottom near the box bottom → code sits snug
         // Hold the finished butterfly + code loop on load; play the
         // metamorphosis once after a delay so it doesn't pull the eye off
-        // the headline the visitor should read first. Rests forever after.
+        // the headline the visitor should read first. Rests until asked again.
         const hero = init(stage, {
           startAtRest: true,
-          markPx: 296,        // resting mark width ≈ code-loop width
-          markRightPx: -15,   // visible right wing (design ~285) to the margin
-          markBottomPx: 8,    // mark bottom near the box bottom → code sits snug
+          markPx: MARK_PX,
+          markRightPx: MARK_RIGHT_PX,
+          markBottomPx: MARK_BOTTOM_PX,
           onLive() { stage.classList.add('is-live'); },
           onFallback() {
             // restore the poster + canonical line: a dead canvas must never
@@ -1150,17 +1155,70 @@
             choreoOn = false;
           }
         });
-        const METAMORPHOSIS_DELAY = 5000;
-        let played = false;
-        function playOnce() {
-          if (played || !choreoOn) return;
-          played = true;
+        const METAMORPHOSIS_DELAY = 3000;
+        const PHASE_REST = 4;
+        // The one gate for every play, auto or on demand: only from rest, so
+        // the arc is never restarted mid-flight and nothing is ever queued.
+        function playArc() {
+          if (!choreoOn || hero.phaseInfo().phase !== PHASE_REST) return;
           hero.replay();
         }
-        // fire once, whichever comes first: the timer, or a scroll (if the
-        // visitor scrolls away the delayed motion would play unseen anyway,
-        // but the timer is the primary path). A single setTimeout is enough.
-        setTimeout(playOnce, METAMORPHOSIS_DELAY);
+        // A single timer is the auto-play. No scroll trigger, no auto-loop.
+        setTimeout(playArc, METAMORPHOSIS_DELAY);
+
+        // --- Replay on demand: hover or tap the resting mark ----------------
+        // The trigger is the MARK, never the stage box: the box is 440x300 to
+        // give the caterpillar a crawl runway, and a hover over that empty
+        // runway must do nothing. The hit-box is derived from the same three
+        // framing constants the camera uses, plus the mark's painted extent in
+        // design units (Appendix A: wings span x 15..285, the lowest wing tip
+        // is y 240, the antenna tips reach y 37.5) — so it tracks the mark
+        // through any resize instead of being eyeballed once.
+        const D_LEFT = 15, D_RIGHT = 285, D_TOP = 37.5, D_BOTTOM = 240;
+        function inMarkRegion(clientX, clientY) {
+          const r = stage.getBoundingClientRect();
+          const u = MARK_PX / 300;                        // px per design unit
+          const originX = r.right - MARK_RIGHT_PX - MARK_PX;   // design x = 0
+          const originY = r.bottom - MARK_BOTTOM_PX;           // design y = D_BOTTOM
+          return clientX >= originX + D_LEFT * u &&
+                 clientX <= originX + D_RIGHT * u &&
+                 clientY >= originY - (D_BOTTOM - D_TOP) * u &&
+                 clientY <= originY;
+        }
+        // Set by the binding path below; a no-op for gated visitors.
+        let syncMarkCursor = () => {};
+        // Bind only where the rig actually booted: a gated visitor (reduced
+        // motion, save-data, weak device, no WebGL2, init failure) has already
+        // had onFallback flip choreoOn, and their static poster gets no trigger.
+        if (choreoOn) {
+          // mouseenter semantics off mousemove, because the region is a box
+          // inside an element, not an element: fire on the outside→inside edge
+          // only, so sitting on the mark does not re-fire and leaving mid-arc
+          // does not stop anything.
+          let inMark = false;
+          stage.addEventListener('mousemove', (e) => {
+            const inside = inMarkRegion(e.clientX, e.clientY);
+            if (inside === inMark) return;
+            inMark = inside;
+            if (inside) playArc();
+          });
+          stage.addEventListener('mouseleave', () => { inMark = false; });
+          // Coarse pointers get no hover, so a tap is the same gesture. (Under
+          // 901px the whole visual is hidden, so this is tablets and up.)
+          stage.addEventListener('click', (e) => {
+            if (inMarkRegion(e.clientX, e.clientY)) playArc();
+          });
+          // The only visible affordance: the pen turns to a pointer over the
+          // mark while it is resting, and nowhere else. Driven from the render
+          // loop below because rest is a clock state, not a mouse state.
+          let cursorOn = false;
+          syncMarkCursor = function () {
+            const want = inMark && choreoOn && hero.phaseInfo().phase === PHASE_REST;
+            if (want === cursorOn) return;
+            cursorOn = want;
+            stage.style.cursor = want ? 'pointer' : '';
+          };
+        }
 
         // --- The Refactor: code choreography ----------------------------
         // Manual repetition (turn-based: a human drives every cycle) becomes
@@ -1304,7 +1362,7 @@
           code.classList.toggle('is-dim', s.dim);
           code.classList.toggle('is-settled', s.settled);
         }
-        (function codeLoop() { applyCode(); requestAnimationFrame(codeLoop); })();
+        (function codeLoop() { applyCode(); syncMarkCursor(); requestAnimationFrame(codeLoop); })();
       }
     }
   </script>

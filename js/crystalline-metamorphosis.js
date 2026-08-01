@@ -617,6 +617,16 @@ function targetsButterfly(rig, dt, t, resting) {
     if (Math.abs(P.ang) < 0.002 && Math.abs(P.vel) < 0.004) { P.on = false; P.ang = 0; P.vel = 0; }
   }
   rig.gScale = resting ? 0 : Math.max(0, 1 - t / 1.5);
+  // Emergence continuity: every handoff from the cocoon rides the wing
+  // pressure spring, so nothing about the creature steps at t=0. pw=0
+  // reproduces the chrysalis pose exactly; pw=1 lands on the exact leaf.
+  const pwB = resting ? 1 : clamp01(rig.pressL.x);
+  // the cocoon's pulse continues on the chrysalis clock and is retired by
+  // the same spring, instead of being dropped to 1 in a single frame.
+  // breathKick is deliberately not carried: twitches fire at 0.9/2.1s and
+  // decay at 2.0/s, so it is provably 0 by T_CHRYS. If twitchTimes ever move
+  // past ~2.5s, carry rig.breathKick here or the step reopens.
+  const breath = resting ? 1 : 1 + 0.016 * Math.sin((T_CHRYS + t) * 1.75) * (1 - pwB);
 
   const T = rig.corners.target;
   for (let p = 0; p < N_POOL; p++) {
@@ -627,7 +637,7 @@ function targetsButterfly(rig, dt, t, resting) {
       T[p * 3] = c.x; T[p * 3 + 1] = c.yw; T[p * 3 + 2] = 0;
       continue;
     }
-    wrapCrumple(rig, c, T, p * 3, pw, HEAD_REST.x, HEAD_REST.y, P.ang, 1);
+    wrapCrumple(rig, c, T, p * 3, pw, HEAD_REST.x, HEAD_REST.y, P.ang, breath);
     // as fill completes the crumple formula converges to the rest pose;
     // blend the last 2% to the EXACT coordinates so the snap lands true
     const fill = sstep(c.lag, 1, Math.min(pw, 1));
@@ -636,17 +646,33 @@ function targetsButterfly(rig, dt, t, resting) {
     }
   }
 
-  // body: the exact leaf
+  // body: the seam extends into the exact leaf on the pressure spring.
+  // A straight write of the leaf teleported the abdomen 67u downward in one
+  // frame (the largest target step in the arc) and popped it in front of the
+  // wings; blending from the swung seam makes the abdomen emerge instead.
+  const cpn = Math.cos(P.ang), spn = Math.sin(P.ang);
+  const hxB = rig.head.pos[0], hyB = rig.head.pos[1];
   for (let j = 0; j < BODY_N; j++) {
     const a = j / (BODY_N - 1);
-    setV3(rig.body.target, j, 150, dY(lerp(BODY_TOP, BODY_BOT, a)), 1.5);
+    const rx = 150, ry = dY(lerp(BODY_TOP, BODY_BOT, a));
+    if (pwB > 0.98 && !P.on) {
+      setV3(rig.body.target, j, rx, ry, 1.5);         // exact landing
+    } else {
+      const ly = (-10 - a * 34) * breath;             // chrysalis seam
+      setV3(rig.body.target, j,
+        lerp(hxB - ly * spn, rx, pwB),
+        lerp(hyB + ly * cpn, ry, pwB),
+        lerp(-2, 1.5, pwB));
+    }
   }
-  rig.bodyWidthMode = 2;
+  // the silhouette re-profiles on the same spring; a raw 1 → 2 write swapped
+  // the seam strip for the rest leaf in a single frame
+  rig.bodyWidthMode = resting ? 2 : 1 + pwB;
   setV3(rig.head.target, 0, HEAD_REST.x, HEAD_REST.y, 3.5);
 
   // antennae deploy when pressure crosses 0.5 — their own springs bounce once
   const deploy = resting ? 1 : sstep(0.45, 0.75, rig.pressL.x);
-  antennaDeploy(rig, deploy);
+  antennaDeploy(rig, deploy, hxB, hyB);
 
   rig.shadowTarget = 0;
   rig.silkTarget = resting ? 0 : Math.max(0, 0.35 - t * 0.45);
@@ -665,17 +691,23 @@ function antennaHorns(rig, hx, hy, time, len = 1) {
   }
 }
 
-/** Antenna targets: exact rest beziers, scaled by deploy. */
-function antennaDeploy(rig, deploy) {
+/**
+ * Antenna targets: exact rest beziers, scaled by deploy.
+ * deploy=0 reproduces the chrysalis horn pose (antennaHorns at len 0.15)
+ * exactly, so the unfurl handoff blends the horns open instead of swapping
+ * target families and whipping the ω6/ζ0.35 springs.
+ */
+function antennaDeploy(rig, deploy, hx = HEAD_REST.x, hy = HEAD_REST.y, hornLen = 0.15) {
   for (let side = 0; side < 2; side++) {
     const B = side === 0 ? ANT_L : ANT_R;
+    const dzs = side === 0 ? 2 : -2;
     for (let cp = 0; cp < 4; cp++) {
       const rx = B[cp * 2], ry = dY(B[cp * 2 + 1]);
-      // fold toward the head when not deployed
+      const ext = (cp / 3) * (4 + 8 * hornLen);
       setV3(rig.ant[side].target, cp,
-        lerp(HEAD_REST.x + (side === 0 ? -2 : 2), rx, deploy),
-        lerp(HEAD_REST.y + 4, ry, deploy),
-        2.5);
+        lerp(hx + 2 + ext, rx, deploy),
+        lerp(hy + 2 + ext * 0.8, ry, deploy),
+        lerp(3.5 + dzs * (cp / 3), 2.5, deploy));
     }
   }
 }
