@@ -536,7 +536,7 @@
     const heroSection = document.querySelector('.training-hero');
 
     if (stickyCta && heroSection) {
-      const accentTargets = [heroSection, ...document.querySelectorAll('.btn-primary')]
+      const accentTargets = [heroSection, ...document.querySelectorAll('.btn-primary, .btn-enlist')]
         .filter(el => !stickyCta.contains(el));
       const onScreen = new Set();
       const observer = new IntersectionObserver((entries) => {
