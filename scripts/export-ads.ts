@@ -84,6 +84,13 @@ interface KeywordData {
   conversions: number;
   average_cpc: number;
   quality_score: number | null;
+  // Historical Quality Score as of the report date, plus the three components
+  // Google scores it from. The composite is 1-10; components are buckets
+  // (BELOW_AVERAGE / AVERAGE / ABOVE_AVERAGE). Null when Google has no data.
+  historical_quality_score: number | null;
+  historical_creative_quality_score: string | null;
+  historical_landing_page_quality_score: string | null;
+  historical_search_predicted_ctr: string | null;
 }
 
 interface SearchTermData {
@@ -344,7 +351,11 @@ async function fetchKeywords(
       metrics.cost_micros,
       metrics.conversions,
       metrics.average_cpc,
-      ad_group_criterion.quality_info.quality_score
+      ad_group_criterion.quality_info.quality_score,
+      metrics.historical_quality_score,
+      metrics.historical_creative_quality_score,
+      metrics.historical_landing_page_quality_score,
+      metrics.historical_search_predicted_ctr
     FROM keyword_view
     WHERE segments.date = '${date}'
     AND ad_group_criterion.status != 'REMOVED'
@@ -372,6 +383,10 @@ async function fetchKeywords(
         conversions: row.metrics?.conversions || 0,
         average_cpc: microsToCurrency(row.metrics?.average_cpc || 0),
         quality_score: row.ad_group_criterion?.quality_info?.quality_score || null,
+        historical_quality_score: row.metrics?.historical_quality_score ?? null,
+        historical_creative_quality_score: qualityBucket(row.metrics?.historical_creative_quality_score),
+        historical_landing_page_quality_score: qualityBucket(row.metrics?.historical_landing_page_quality_score),
+        historical_search_predicted_ctr: qualityBucket(row.metrics?.historical_search_predicted_ctr),
       });
     }
   } catch (error) {
@@ -379,6 +394,15 @@ async function fetchKeywords(
   }
 
   return keywords;
+}
+
+// QualityScoreBucket metrics arrive as numeric enum values; name them so the
+// report reads ABOVE_AVERAGE instead of 4. UNSPECIFIED/UNKNOWN mean Google has
+// no verdict yet, which is not the same as "average", so they become null.
+function qualityBucket(v: unknown): string | null {
+  const n = Number(v);
+  if (!Number.isFinite(n) || n <= enums.QualityScoreBucket.UNKNOWN) return null;
+  return enums.QualityScoreBucket[n] ?? null;
 }
 
 async function fetchSearchTerms(
