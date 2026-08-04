@@ -97,7 +97,10 @@ const CAPTION_TOP_MARGIN_PCT = 0.14;      // caption top offset (fraction of hei
 const END_CARD_HEIGHT_FRACTION = 1 / 3;
 const END_CARD_SECONDS = 5;
 const OUTRO_SECONDS = 3;   // full-frame outro card (screenshot + logo + link) window when --outro-image is given.
-const END_CARD_LOGO_SVG = path.join(REPO_ROOT, "images", "favicon.svg");
+// Full-geometry mark. design-system.html Section 8 reserves the 8-facet
+// favicon cut for marks under 48px; both cards render it far larger than that
+// (0.17-0.25 of frame height). Same viewBox, so this is a drop-in.
+const END_CARD_LOGO_SVG = path.join(REPO_ROOT, "images", "butterfly.svg");
 
 // Tokens that should pop in brand-green. Numerals are matched separately by
 // regex; this set covers spelled-out numbers + Plepic-specific brand vocab.
@@ -2023,6 +2026,25 @@ function stripAssOverrides(s: string): string {
 
 // ---------- end-card render (Playwright one-shot) ----------
 
+// Design-system faces embedded as data URIs. Canon is css/styles.css:
+// --font-display Bitter, --font-body Hanken Grotesk. Embedding the repo's own
+// woff2 (rather than fetching Google's cut) keeps the card identical to the
+// site and makes the render work offline. Weight ranges mirror the @font-face
+// blocks in styles.css; only the upright cuts are used by these cards.
+function brandFontCss(): string {
+  const face = (family: string, file: string, weights: string): string => {
+    const b64 = fs.readFileSync(path.join(REPO_ROOT, "fonts", file)).toString("base64");
+    return (
+      `@font-face{font-family:'${family}';font-style:normal;font-weight:${weights};` +
+      `font-display:block;src:url(data:font/woff2;base64,${b64}) format('woff2');}`
+    );
+  };
+  return (
+    face("Bitter", "bitter.woff2", "400 700") +
+    face("Hanken Grotesk", "hanken.woff2", "400 700")
+  );
+}
+
 // Render the end-card PNG (cream bg + butterfly + Plepic.com wordmark) at the
 // caller's exact width/height so ffmpeg overlays it 1:1 with no scaling.
 // Playwright is already a dev dep here (visual regression). One-shot launch
@@ -2046,10 +2068,8 @@ async function renderEndCard(
   const gapPx = Math.round(height * 0.025);
 
   const html = `<!doctype html><html><head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${brandFontCss()}
   :root {
     --bg: #faf7f2;
     --green-brand: #137b30;
@@ -2061,13 +2081,13 @@ async function renderEndCard(
     background: var(--bg);
     display: flex; flex-direction: row;
     align-items: center; justify-content: center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Hanken Grotesk', sans-serif;
     color: var(--text);
     gap: ${gapPx}px;
   }
   .butterfly { width: ${butterflyPx}px; height: ${butterflyPx}px; flex-shrink: 0; }
   .wordmark {
-    font-family: 'Zilla Slab', serif;
+    font-family: 'Bitter', serif;
     font-weight: 700;
     font-size: ${wordmarkPx}px;
     color: var(--green-brand);
@@ -2132,16 +2152,14 @@ export async function renderOutroCard(
   const padY = Math.round(height * 0.08);
 
   const html = `<!doctype html><html><head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
 <style>
+  ${brandFontCss()}
   :root { --bg: #faf7f2; --green-brand: #137b30; --text: #1c1c1a; }
   * { margin: 0; box-sizing: border-box; }
   body {
     width: ${width}px; height: ${height}px; background: var(--bg);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: ${gapPx}px; padding: ${padY}px 0; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text);
+    gap: ${gapPx}px; padding: ${padY}px 0; font-family: 'Hanken Grotesk', sans-serif; color: var(--text);
   }
   .butterfly { width: ${butterflyPx}px; height: ${butterflyPx}px; flex-shrink: 0; }
   .shot { width: 86%; border-radius: ${Math.round(height * 0.02)}px;
