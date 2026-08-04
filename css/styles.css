@@ -1261,6 +1261,16 @@ p:last-child {
   height: 26px;
 }
 
+/* Companies with no SVG asset yet render as typographic wordmarks */
+.company-logo--word {
+  height: auto;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: normal;
+}
+
 /* ========================================
    Team Section
    ======================================== */
@@ -1815,6 +1825,11 @@ p:last-child {
   margin: 0 auto;
 }
 
+.terminal-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1080px;
+}
+
 .terminal-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2057,79 +2072,130 @@ p:last-child {
   margin-bottom: var(--space-xl);
 }
 
-/* Value-to-client visual: a single bar split into measured cost + margin */
-.value-vis {
+/* Proposal excerpt (hero) + proposal document (centerpiece): typeset paper,
+   not product UI — no chrome, no buttons, no inputs. Bitter title, mono figures. */
+.proposal-excerpt,
+.proposal-doc {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--rounded-xs);
   padding: var(--space-xl);
-  width: 100%;
 }
 
-.value-vis .label {
+.proposal-doc-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
   margin-bottom: var(--space-md);
 }
 
-.value-bar {
+.proposal-ledger {
+  margin: 0;
+}
+
+.proposal-row {
   display: flex;
-  height: 72px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--green-light);
-}
-
-.value-bar-cost {
-  flex: 0 0 64%;
-  background: var(--green-brand);
-}
-
-.value-bar-margin {
-  flex: 1;
-  background: var(--green-vivid);
-}
-
-.value-bar-legend {
-  display: flex;
-  gap: var(--space-lg);
-  margin-top: var(--space-md);
-  flex-wrap: wrap;
-}
-
-.legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--border);
   font-size: 0.9rem;
-  font-weight: 600;
+}
+
+.proposal-row dt {
+  flex: 0 0 auto;
+  white-space: nowrap;
   color: var(--text-2);
-  line-height: normal;
 }
 
-.legend-swatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
+.proposal-row dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
 }
 
-.legend-swatch--cost { background: var(--green-brand); }
-.legend-swatch--margin { background: var(--green-vivid); }
-
-.value-vis-caption {
+.proposal-caption {
   margin-top: var(--space-md);
+  font-size: 0.9rem;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+
+.proposal-doc {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+}
+
+.proposal-doc-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.35;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.proposal-doc-rows {
+  margin: 0;
+}
+
+.proposal-doc-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+}
+
+.proposal-doc-row + .proposal-doc-row {
+  border-top: 1px solid var(--border);
+}
+
+.proposal-doc-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green-brand);
+  padding-top: 0.25rem;
+}
+
+.proposal-doc-row dd {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.proposal-fig {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.proposal-variant {
+  max-width: 720px;
+  margin: var(--space-lg) auto 0;
   font-size: 0.95rem;
   color: var(--text-3);
   line-height: 1.6;
 }
 
 /* Section backgrounds — alternating rhythm */
-.scopeful-problem { background: var(--bg-alt); }
-.scopeful-how { background: var(--bg); }
-.scopeful-flow { background: var(--bg-alt); }
-.scopeful-icp { background: var(--bg); }
+.scopeful-method { background: var(--bg-alt); }
+.scopeful-proposals { background: var(--bg); }
 .scopeful-collab { background: var(--bg-alt); }
-.scopeful-pilot { background: var(--bg); }
 
-/* The squeeze — also reused (without arrow) for pilot stats */
+/* Stat strip — founding-agencies proof block */
 .squeeze-stats {
   display: flex;
   align-items: center;
@@ -2145,11 +2211,17 @@ p:last-child {
   max-width: 260px;
 }
 
-.squeeze-arrow {
-  font-family: var(--font-mono);
-  font-size: 1.5rem;
-  color: var(--green-dark);
-  line-height: normal;
+/* Method bridge: incentive paradox above the pull quote and H2 */
+.method-bridge {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.scopeful-method .scopeful-pull {
+  margin: var(--space-md) auto var(--space-2xl);
 }
 
 .scopeful-pull {
@@ -2202,6 +2274,10 @@ p:last-child {
   line-height: 1.6;
 }
 
+.flow-step p + p {
+  margin-top: var(--space-sm);
+}
+
 .flow-arrow {
   display: flex;
   align-items: center;
@@ -2238,6 +2314,19 @@ p:last-child {
   .flow-arrow {
     justify-content: center;
     transform: rotate(90deg);
+  }
+
+  .proposal-doc {
+    padding: var(--space-xl);
+  }
+
+  .proposal-doc-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+
+  .terminal-grid--3 {
+    grid-template-columns: 1fr;
   }
 }
 
