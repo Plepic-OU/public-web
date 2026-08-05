@@ -1825,11 +1825,6 @@ p:last-child {
   margin: 0 auto;
 }
 
-.terminal-grid--3 {
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 1080px;
-}
-
 .terminal-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2063,6 +2058,7 @@ p:last-child {
 
 .scopeful-hero-text h1 {
   margin-bottom: var(--space-lg);
+  text-wrap: balance;
 }
 
 .scopeful-hero-description {
@@ -2134,10 +2130,15 @@ p:last-child {
   padding: var(--space-2xl);
 }
 
+.proposal-doc .label {
+  color: var(--text-3);
+}
+
 .proposal-doc-title {
   font-family: var(--font-display);
   font-size: 1.35rem;
   line-height: 1.35;
+  text-wrap: balance;
   margin-bottom: var(--space-lg);
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--border);
@@ -2323,10 +2324,6 @@ p:last-child {
   .proposal-doc-row {
     grid-template-columns: 1fr;
     gap: var(--space-xs);
-  }
-
-  .terminal-grid--3 {
-    grid-template-columns: 1fr;
   }
 }
 
