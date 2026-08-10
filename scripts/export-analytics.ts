@@ -52,6 +52,11 @@ interface GA4Report {
   };
   summary: {
     sessions: number;
+    // Sessions that lasted 10s+, hit a conversion, or viewed 2+ pages. Raw
+    // `sessions` on this property is roughly two thirds crawler traffic
+    // (5.3s average, US/KR/SG/CN/JP), so engaged_sessions is the honest
+    // headline and raw sessions only matter as the denominator.
+    engaged_sessions: number;
     users: number;
     new_users: number;
     page_views: number;
@@ -70,6 +75,7 @@ interface GA4Report {
     source: string;
     medium: string;
     sessions: number;
+    engaged_sessions: number;
     users: number;
     conversions: number;
   }>;
@@ -119,6 +125,7 @@ async function fetchSummaryMetrics(
       { name: "averageSessionDuration" },
       { name: "bounceRate" },
       { name: "screenPageViewsPerSession" },
+      { name: "engagedSessions" },
     ],
   });
 
@@ -126,6 +133,7 @@ async function fetchSummaryMetrics(
   if (!row?.metricValues) {
     return {
       sessions: 0,
+      engaged_sessions: 0,
       users: 0,
       new_users: 0,
       page_views: 0,
@@ -143,6 +151,7 @@ async function fetchSummaryMetrics(
     avg_session_duration: parseFloat(row.metricValues[4]?.value || "0"),
     bounce_rate: parseFloat(row.metricValues[5]?.value || "0"),
     pages_per_session: parseFloat(row.metricValues[6]?.value || "0"),
+    engaged_sessions: parseInt(row.metricValues[7]?.value || "0"),
   };
 }
 
@@ -191,6 +200,7 @@ async function fetchTrafficSources(
       { name: "sessions" },
       { name: "totalUsers" },
       { name: "conversions" },
+      { name: "engagedSessions" },
     ],
     orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
     limit: 15,
@@ -203,6 +213,7 @@ async function fetchTrafficSources(
       sessions: parseInt(row.metricValues?.[0]?.value || "0"),
       users: parseInt(row.metricValues?.[1]?.value || "0"),
       conversions: parseInt(row.metricValues?.[2]?.value || "0"),
+      engaged_sessions: parseInt(row.metricValues?.[3]?.value || "0"),
     })) || []
   );
 }
