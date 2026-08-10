@@ -1303,10 +1303,10 @@ p:last-child {
 
 .team-grid {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-xl);
   align-items: start;
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
@@ -1393,10 +1393,10 @@ p:last-child {
 
 .book-divider {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
-  align-self: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
 }
 
 .book-divider img {
@@ -1405,13 +1405,12 @@ p:last-child {
   box-shadow: 0 4px 12px rgba(28, 28, 26, 0.1);
 }
 
+/* Sentence, not label: it names which two of the three instructors wrote the
+   book, so uppercase tracking no longer applies. */
 .book-caption {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: var(--text-3);
   text-align: center;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 /* ========================================
@@ -2856,9 +2855,10 @@ p:last-child {
 
 .team-inline {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--space-2xl);
+  gap: var(--space-lg) var(--space-2xl);
   margin: var(--space-lg) 0;
 }
 
@@ -2866,6 +2866,9 @@ p:last-child {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  /* Caps the row so three instructors fit one line at laptop width; the role
+     wraps instead of pushing the third member onto an orphan second row. */
+  max-width: 300px;
 }
 
 .team-strip img.team-member-photo {
@@ -3204,7 +3207,8 @@ p:last-child {
   }
 
   .book-divider {
-    order: -1;
+    flex-direction: column;
+    text-align: center;
   }
 
   .footer-inner {
@@ -3367,8 +3371,6 @@ p:last-child {
   }
 
   .book-divider {
-    grid-column: span 2;
-    flex-direction: row;
     gap: var(--space-md);
   }
 
