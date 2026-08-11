@@ -1,30 +1,39 @@
 /**
- * Demote 8 junk primary conversion actions to secondary. Approved by Kaido 2026-08-10.
+ * Make "Conversions" mean something on the search campaign. Approved by Kaido 2026-08-10.
  *
- * These are Smart-campaign / local-business / YouTube defaults that can never fire
- * for a search campaign selling training, yet all are primary_for_goal=true, which
- * makes every conversion report meaningless. Under Target Impression Share bidding
- * this does not corrupt bidding; it blocks any future move to conversion bidding.
+ * FIRST ATTEMPT FAILED, AND THE REASON MATTERS. The obvious lever —
+ * conversion_action.primary_for_goal = false on the 8 Smart-campaign / local /
+ * YouTube defaults — is rejected by the API: "Mutates are not allowed for the
+ * requested resource" / "The field attempted to be mutated is immutable".
+ * Google generates those actions itself (origin 3/5/7) and will not let an API
+ * client edit them. Do not retry that approach.
  *
- * Demotes only — never deletes (repo doctrine: pause, don't delete). Fully
- * reversible by setting primary_for_goal back to true. Dry-run unless --apply.
+ * The lever that works is campaign_conversion_goal: per campaign, per
+ * (category, origin) pair, with a biddable flag. Narrowing it to the two real
+ * goals makes the campaign count only conversions it can actually earn.
+ *
+ * The category/origin pairs are not guessed. conversion_action reports
+ * Training Registration Click as (13, 2) and Strategy Session Booking as
+ * (14, 2); everything else belongs to a Smart-campaign, local-action, call or
+ * YouTube surface this search campaign does not run.
+ *
+ * Note the campaign bids on Target Impression Share, which ignores conversions
+ * entirely, so this changes reporting today and bidding only if the strategy
+ * ever changes. Fully reversible: set biddable back to true.
+ *
+ * Dry-run unless --apply. --validate runs a validate-only mutate (writes nothing).
  */
 import "dotenv/config";
 import { GoogleAdsApi } from "google-ads-api";
 
 const APPLY = process.argv.includes("--apply");
+const VALIDATE = process.argv.includes("--validate");
 
-const DEMOTE = new Set([
-  "Smart campaign map directions",
-  "Clicks to call",
-  "Calls from Smart Campaign Ads",
-  "Smart campaign ad clicks to call",
-  "Smart campaign map clicks to call",
-  "Local actions - Directions",
-  "YouTube follow-on views",
-  "YouTube channel subscriptions",
+// Verified against conversion_action, not assumed.
+const KEEP = new Map([
+  ["13:2", "Training Registration Click"],
+  ["14:2", "Strategy Session Booking"],
 ]);
-const KEEP_PRIMARY = ["Training Registration Click", "Strategy Session Booking"];
 
 async function main() {
   const client = new GoogleAdsApi({
@@ -35,36 +44,57 @@ async function main() {
     customer_id: process.env.ADS_CUSTOMER_ID!.replace(/-/g, ""), refresh_token: process.env.ADS_REFRESH_TOKEN!,
   });
 
-  const actions = await customer.query(`
-    SELECT conversion_action.resource_name, conversion_action.name, conversion_action.primary_for_goal
-    FROM conversion_action WHERE conversion_action.status != 'REMOVED'`) as any[];
+  // Guard: refuse to run if the two real goals are not both present and biddable.
+  // Without them, turning everything else off would leave the campaign with no
+  // conversion goal at all.
+  const rows = await customer.query(`
+    SELECT campaign.id, campaign_conversion_goal.resource_name, campaign_conversion_goal.category,
+           campaign_conversion_goal.origin, campaign_conversion_goal.biddable
+    FROM campaign_conversion_goal WHERE campaign.status='ENABLED'`) as any[];
 
-  // Abort rather than demote the wrong thing if an action was renamed.
-  const names = new Set(actions.map((r) => r.conversion_action?.name));
-  const missing = [...DEMOTE].filter((n) => !names.has(n));
-  if (missing.length) throw new Error(`ABORT — expected conversion actions not found: ${missing.join(", ")}`);
-
-  const todo = actions.filter((r) => DEMOTE.has(r.conversion_action?.name) && r.conversion_action?.primary_for_goal === true);
-  console.log(`${todo.length} to demote:`);
-  todo.forEach((r) => console.log(`  - ${r.conversion_action.name}`));
-  for (const k of KEEP_PRIMARY) {
-    const a = actions.find((r) => r.conversion_action?.name === k);
-    console.log(`  keeping primary: ${k} (primary=${a?.conversion_action?.primary_for_goal})`);
+  const key = (g: any) => `${g.category}:${g.origin}`;
+  for (const [k, name] of KEEP) {
+    const found = rows.find((r) => key(r.campaign_conversion_goal) === k);
+    if (!found?.campaign_conversion_goal?.biddable) {
+      throw new Error(`ABORT — goal ${k} (${name}) is missing or already non-biddable; refusing to leave the campaign with no goal`);
+    }
   }
+
+  const todo = rows.filter((r) => {
+    const g = r.campaign_conversion_goal;
+    return !KEEP.has(key(g)) && g.biddable === true;
+  });
+
+  console.log(`${todo.length} goal(s) to set biddable=false:`);
+  todo.forEach((r) => console.log(`  category=${r.campaign_conversion_goal.category} origin=${r.campaign_conversion_goal.origin}`));
+  for (const [k, name] of KEEP) console.log(`  keeping biddable: ${k} (${name})`);
+
   if (!todo.length) { console.log("Nothing to do."); return; }
-  if (!APPLY) { console.log("DRY RUN — nothing written. Re-run with --apply."); return; }
 
-  await customer.conversionActions.update(
-    todo.map((r) => ({ resource_name: r.conversion_action.resource_name, primary_for_goal: false })) as any,
-  );
+  const ops = todo.map((r) => ({ resource_name: r.campaign_conversion_goal.resource_name, biddable: false }));
 
-  const stillPrimary = (await customer.query(`
-    SELECT conversion_action.name, conversion_action.primary_for_goal FROM conversion_action
-    WHERE conversion_action.status != 'REMOVED'`) as any[])
-    .filter((r) => r.conversion_action?.primary_for_goal === true).map((r) => r.conversion_action.name);
-  console.log(`\nVERIFY still primary: ${stillPrimary.join(", ") || "(none)"}`);
-  const leftovers = stillPrimary.filter((n) => DEMOTE.has(n));
-  if (leftovers.length) throw new Error(`still junk-primary: ${leftovers.join(", ")}`);
-  console.log("Done. Only the two real conversion actions remain primary.");
+  if (!APPLY && !VALIDATE) { console.log("DRY RUN — nothing written. Re-run with --apply (or --validate)."); return; }
+  if (VALIDATE) {
+    await customer.campaignConversionGoals.update(ops as any, { validate_only: true } as any);
+    console.log("VALIDATE-ONLY PASSED — permitted. Nothing written.");
+    return;
+  }
+
+  await customer.campaignConversionGoals.update(ops as any);
+
+  const after = (await customer.query(`
+    SELECT campaign_conversion_goal.category, campaign_conversion_goal.origin,
+           campaign_conversion_goal.biddable FROM campaign_conversion_goal
+    WHERE campaign.status='ENABLED'`) as any[])
+    .filter((r) => r.campaign_conversion_goal?.biddable === true)
+    .map((r) => key(r.campaign_conversion_goal));
+  console.log(`\nVERIFY biddable goals now: ${after.join(", ") || "(none)"}`);
+  const strays = after.filter((k) => !KEEP.has(k));
+  if (strays.length) throw new Error(`unexpected goals still biddable: ${strays.join(", ")}`);
+  if (after.length !== KEEP.size) throw new Error(`expected ${KEEP.size} biddable goals, found ${after.length}`);
+  console.log("Done. The campaign now counts only the two conversions it can actually earn.");
 }
-main().catch((e) => { console.error("ERR", e?.message || e); process.exit(1); });
+main().catch((e) => {
+  console.error("ERR", e?.errors ? JSON.stringify(e.errors.map((x: any) => x.message)) : (e?.message || e));
+  process.exit(1);
+});
