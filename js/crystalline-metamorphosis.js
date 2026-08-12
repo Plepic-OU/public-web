@@ -62,8 +62,11 @@
  *   T1  DPR × 0.8
  *   T2  DPR × 0.66 (min 1), 1 substep (60 Hz), dispersion off
  *   T3  tremor off, light sweep off
- *   T4  stop the loop, restore the poster (onFallback('perf'))
- *   Trigger: frame-time EMA > 21 ms sustained ~90 frames.
+ *   T4  stop the loop, restore the poster (onFallback('perf')) — HELD until
+ *       the rig reaches REST, so the poster never cuts over a live cocoon
+ *   Trigger: frame-time EMA > 21 ms sustained ~90 frames, AND the previous
+ *   rung actually bought frame time. The rAF interval belongs to the display,
+ *   so a cadence we cannot raise stalls the ladder instead of marching it.
  *
  * SPEC DEVIATIONS (owner sign-offs, see integration note)
  *   (a) ACES → NoToneMapping (above). (b) Prisms are shallow (depth 5) and
@@ -157,13 +160,27 @@ const GAIT_T = 1.55;                    // seconds per gait cycle
 const BODY_LEN = 205;                   // caterpillar rest arc length
 const WAVE_AMP = 0.4;                   // local compression depth
 const ARCH_H = 17;                      // hump lift under the wave
-const PRESS = { omega: 1.55, zeta: 0.62, rightDelay: 0.35 };
+// release/kick: a step target alone starts at zero velocity, so the wings hung
+// still while the spring wound up. Shell-split is an impulse, not a squeeze —
+// release the pressure early and WITH velocity, once. omega is soft so the
+// travel then spans most of the phase; zeta keeps the past-flat bloom.
+const PRESS = { omega: 0.65, zeta: 0.70, rightDelay: 0.35, release: 0.10, kick: 0.6 };
 // Staged hatching (founder pick 2026-08-02): the emergence channels
 // de-synchronize on the SAME pressure spring — the abdomen reads it with a
 // gain so it hatches ahead of the wings, and the antennae ease over a wide
 // band instead of snapping through 0.45..0.75 in ~0.4s. At pressL.x → 1
 // every channel is exactly 1, so the byte-exact rest landing is unaffected.
 const HATCH = { bodyGain: 1.6, antLo: 0.30, antHi: 0.95 };
+// Per-corner emergence: a corner opens LINEARLY across its band [lag, 1] of
+// wing pressure. All the easing comes from the pressure spring, once.
+// Measured 2026-08-12: the old smoothstep eased a second time on top of the
+// spring's own flat start, and lags reaching 0.85 packed the outer corners
+// into the last 15% of the rise — so the silhouette held still for 1.44s and
+// then swept its entire 3.6x spread in 0.90s. An emergence you can blink and
+// miss reads as instant, which is how it was reported.
+// fill(0) === 0 (the cocoon pose in gather/chrysalis is untouched) and
+// fill(1) === 1 for EVERY lag (the byte-exact rest landing still holds).
+const wingFill = (lag, P) => clamp01((Math.min(P, 1) - lag) / (1 - lag));
 const CRUMPLE = { foldDeg: 62, jitter: 0.35, wrinklePx: 10 };
 const BLOOM_MAX = 5 * Math.PI / 180;    // cap past-flat bloom at 5°
 const BREATHE_AMP = 2.1 * Math.PI / 180;
@@ -287,7 +304,10 @@ for (let f = 0; f < N_FACETS; f++) {
       poolIdx.set(key, pool.length);
       pool.push({
         x, yw: dY(y), left, hingeX, r, a, hind,
-        lag: Math.min(0.85, r * 0.5 + (hind ? 0.3 : 0)),
+        // root before margin, forewing before hind — the stagger is the point,
+        // but capped at 0.25 so even the last corner still travels over 75% of
+        // the pressure rise instead of snapping through the final sliver
+        lag: Math.min(0.25, r * 0.15 + (hind ? 0.09 : 0)),
         wrinklePhase: rand() * Math.PI * 2,
         wrinkleSign: pool.length % 2 === 0 ? 1 : -1,
         foldJitter: 1 + CRUMPLE.jitter * (rand() * 2 - 1),
@@ -423,7 +443,7 @@ function wrapCrawl(rig, c, out, o, waveC) {
  * ax/ay: assembly anchor (head pin), pendAng: swung frame angle.
  */
 function wrapCrumple(rig, c, out, o, P, ax, ay, pendAng, breathS) {
-  const fill = sstep(c.lag, 1, Math.min(P, 1));
+  const fill = wingFill(c.lag, P);
   const inv = 1 - fill;
   // radial compression toward the hinge line + vertical squeeze to ovoid;
   // unfilled regions stay small so the pump reads as real inflation
@@ -611,8 +631,8 @@ function kickSprings(field, amp) {
 function targetsButterfly(rig, dt, t, resting) {
   // pressure springs: left leads, right a beat later
   if (!resting) {
-    if (t > 0.35) rig.pressL.t = 1;
-    if (t > 0.35 + PRESS.rightDelay) rig.pressR.t = 1;
+    if (t > PRESS.release && rig.pressL.t === 0) { rig.pressL.t = 1; rig.pressL.v = PRESS.kick; }
+    if (t > PRESS.release + PRESS.rightDelay && rig.pressR.t === 0) { rig.pressR.t = 1; rig.pressR.v = PRESS.kick; }
   }
   rig.pressL.step(dt); rig.pressR.step(dt);
   // pendulum decays hard once the wings pump (silk released)
@@ -648,7 +668,7 @@ function targetsButterfly(rig, dt, t, resting) {
     wrapCrumple(rig, c, T, p * 3, pw, HEAD_REST.x, HEAD_REST.y, P.ang, breath);
     // as fill completes the crumple formula converges to the rest pose;
     // blend the last 2% to the EXACT coordinates so the snap lands true
-    const fill = sstep(c.lag, 1, Math.min(pw, 1));
+    const fill = wingFill(c.lag, pw);
     if (fill > 0.98 && Math.abs(pw - 1) < 0.02 && !P.on) {
       T[p * 3] = c.x; T[p * 3 + 1] = c.yw; T[p * 3 + 2] = 0;
     }
@@ -1344,6 +1364,9 @@ export function init(stage, opts = {}) {
   // --- Loop ------------------------------------------------------------------
   let raf = 0, running = false, visible = false, pageVisible = !document.hidden;
   let last = 0, acc = 0, emaFrame = 16, badFrames = 0, presented = false, dead = false;
+  let emaBefore = 0;             // frame EMA that bought the previous rung
+  let ladderStalled = false;     // demoting stopped helping — we are not the cost
+  let pendingFallback = false;   // ladder bottomed out; waiting for REST to swap
   const perf = { phys: 0, geom: 0, render: 0, n: 0 };   // EMA-free budget probes
   const silkCtrl = new Float32Array(12);
   const antCtrl = new Float32Array(12);
@@ -1361,6 +1384,11 @@ export function init(stage, opts = {}) {
     acc = Math.min(acc + dt, stepSize * 5);
     while (acc >= stepSize) { stepRig(rig, stepSize); acc -= stepSize; }
     const tp1 = performance.now();
+
+    // a held fallback lands the moment the mark is the mark again
+    if (pendingFallback && rig.phase === PHASE.REST) {
+      stop(); dead = true; onFallback('perf'); return;
+    }
 
     // post-spring display transforms (exact at zero crossings, 0 when off)
     const resting = rig.phase === PHASE.REST;
@@ -1446,7 +1474,7 @@ export function init(stage, opts = {}) {
     const gapMs = rawDt * 1000;
     if (gapMs < 80) {
       emaFrame = emaFrame * 0.95 + gapMs * 0.05;
-      if (emaFrame > 21) { if (++badFrames > 90) { badFrames = 0; stepDown(); } }
+      if (emaFrame > 21 && !ladderStalled) { if (++badFrames > 90) { badFrames = 0; stepDown(); } }
       else badFrames = 0;
     }
 
@@ -1454,8 +1482,25 @@ export function init(stage, opts = {}) {
   }
 
   function stepDown() {
+    if (pendingFallback) return;
+    // Demote only while demoting HELPS. The rAF interval belongs to the
+    // display, not to us: Low Power Mode, a busy main thread and adaptive
+    // refresh panels all park it inside the counted band. Measured
+    // 2026-08-12 at a 45fps cadence, this module cost 0.14ms a frame and
+    // still marched all four rungs, killing the canvas mid-cocoon. If the
+    // previous rung bought no frame time, the next one cannot either.
+    if (tier > 0 && emaFrame > emaBefore - 1.5) { ladderStalled = true; return; }
+    emaBefore = emaFrame;
     tier++;
-    if (tier >= 4) { stop(); dead = true; onFallback('perf'); return; }
+    if (tier >= 4) {
+      // The poster is the FINISHED mark. Dropping it over a hanging cocoon is
+      // a jump cut straight to the butterfly — the arc appears to skip its own
+      // emergence. Hold the last rung until REST, where the canvas already
+      // shows that same mark and the swap is invisible. Same reasoning as the
+      // slow-load startAtRest path.
+      if (rig.phase !== PHASE.REST) { tier = 3; pendingFallback = true; return; }
+      stop(); dead = true; onFallback('perf'); return;
+    }
     if (tier <= 2) applySize();
     rig.tremorOn = tier < 3;
     emaFrame = 16;
