@@ -164,7 +164,11 @@ const ARCH_H = 17;                      // hump lift under the wave
 // still while the spring wound up. Shell-split is an impulse, not a squeeze —
 // release the pressure early and WITH velocity, once. omega is soft so the
 // travel then spans most of the phase; zeta keeps the past-flat bloom.
-const PRESS = { omega: 0.65, zeta: 0.70, rightDelay: 0.35, release: 0.10, kick: 0.6 };
+// 2026-08-12: emergence rescaled 1.3x faster on the founder's call. A spring's
+// timescale is 1/omega and a velocity is per-second, so omega and kick scale UP
+// by 1.3 while the two time offsets scale DOWN by it. zeta is dimensionless and
+// stays, which keeps the curve shape and the past-flat bloom bit-for-bit.
+const PRESS = { omega: 0.85, zeta: 0.70, rightDelay: 0.27, release: 0.08, kick: 0.78 };
 // Staged hatching (founder pick 2026-08-02): the emergence channels
 // de-synchronize on the SAME pressure spring — the abdomen reads it with a
 // gain so it hatches ahead of the wings, and the antennae ease over a wide
