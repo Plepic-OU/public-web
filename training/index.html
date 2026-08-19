@@ -60,6 +60,7 @@
     "teaches": [
       "Prompt Engineering",
       "Agentic Development",
+      "Agentic Loops",
       "AI-powered Code Review",
       "Automated Documentation"
     ],
@@ -224,65 +225,129 @@
           <p class="mt-md text-dim">New to coding agents? <a href="/claude-code/">Why Claude Code &rarr;</a></p>
         </div>
 
+        <p class="curriculum-throughline reveal">Foundation <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Guardrails <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Build <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Scale</p>
+
         <div class="curriculum-timeline reveal reveal-delay-1">
           <div class="curriculum-item">
             <button class="curriculum-header" aria-expanded="false" aria-controls="curr-1-desc">
               <span class="curriculum-week">Week 1</span>
-              <span class="curriculum-title">Core OS</span>
-              <span class="curriculum-tagline">Setup, commands, sub-agents</span>
+              <span class="curriculum-title">Foundations &amp; Safety</span>
+              <span class="curriculum-tagline">Set the foundation. Turn friendly fire off.</span>
               <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="curriculum-desc" id="curr-1-desc" hidden>
-              Claude Code setup and IDE integration. Token economics and when to use extended thinking. Commands like /review, /test, /debug. Sub-agents for task delegation. Creating CLAUDE.md files that encode your team's conventions.
+              <div class="curr-track">
+                <span class="curr-track-label">Lectures</span>
+                <ul>
+                  <li>Claude Code and the agentic loop: prompts, tokens, skills, subagents, MCP, plans and pricing</li>
+                  <li>Hooks: observe every tool call, block the dangerous ones</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Workshops</span>
+                <ul>
+                  <li>Devcontainer setup, then /init your own CLAUDE.md against a 150k-line repo</li>
+                  <li>Build a guard hook; your breakout room then probes it with prompts until it holds</li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div class="curriculum-item">
             <button class="curriculum-header" aria-expanded="false" aria-controls="curr-2-desc">
               <span class="curriculum-week">Week 2</span>
-              <span class="curriculum-title">Context Engine</span>
-              <span class="curriculum-tagline">Context the agent can act on</span>
+              <span class="curriculum-title">Guardrails &amp; Context</span>
+              <span class="curriculum-tagline">Give the agent a map. Validate before you build.</span>
               <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="curriculum-desc" id="curr-2-desc" hidden>
-              What makes agents understand your intent: code structure, documentation, and examples. Crafting Software Requirements Documents (SRDs) that capture scope, constraints, and acceptance criteria the agent can verify.
+              <div class="curr-track">
+                <span class="curr-track-label">Lectures</span>
+                <ul>
+                  <li>Maps of the project: layered summaries, the C4 model, tokens vs the prompt cache</li>
+                  <li>Design docs, the testing pyramid, validation loops and subagents in depth</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Workshops</span>
+                <ul>
+                  <li>Build a C4-model skill and a DB-schema map, wired into CLAUDE.md</li>
+                  <li>Prompt engineering, write-then-compare: write yours cold, run it, then run the reference. The delta is the lesson</li>
+                  <li>Write a spec with acceptance criteria the agent can verify, checked by parallel validation agents</li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div class="curriculum-item">
             <button class="curriculum-header" aria-expanded="false" aria-controls="curr-3-desc">
               <span class="curriculum-week">Week 3</span>
-              <span class="curriculum-title">The Loop</span>
-              <span class="curriculum-tagline">explore &rarr; act &rarr; verify</span>
+              <span class="curriculum-title">Spec-Driven Build &amp; Verification</span>
+              <span class="curriculum-tagline">Implement in chunks. Validate each. Measure everything.</span>
               <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="curriculum-desc" id="curr-3-desc" hidden>
-              The Explore-Plan-Code-Commit pattern from Anthropic's engineering team, the core loop of agentic engineering. Breaking SRDs into agent-executable tasks. AI-enhanced TDD: write tests first, commit them, let Claude implement. Using separate Claude instances for independent code review.
+              <div class="curr-track">
+                <span class="curr-track-label">Lectures</span>
+                <ul>
+                  <li>From validated spec to working code; the two gates every change must pass: e2e and performance</li>
+                  <li>Loop engineering: turn-based, goal-based, time-based and proactive loops (Anthropic&rsquo;s &ldquo;Getting started with loops&rdquo;)</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Workshops</span>
+                <ul>
+                  <li>Implement the spec in chunks; a validator subagent checks each one, then a /code-review loop runs until no issues remain, with a second review by another vendor&rsquo;s model</li>
+                  <li>Build the verification gate: a Lighthouse runner with a baseline diff and gated exit codes</li>
+                  <li>Breakout: one ambitious goal per room. Divide the work, pick a presenter, ship</li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div class="curriculum-item">
             <button class="curriculum-header" aria-expanded="false" aria-controls="curr-4-desc">
               <span class="curriculum-week">Week 4</span>
-              <span class="curriculum-title">Fleet Mode</span>
-              <span class="curriculum-tagline">Run multiple agents in parallel</span>
+              <span class="curriculum-title">Parallel Agents &amp; Architecture</span>
+              <span class="curriculum-tagline">Run many agents at once. See what they do.</span>
               <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="curriculum-desc" id="curr-4-desc" hidden>
-              Parallel development with git worktrees and multiple Claude instances. Agent debugging: logging, observability, and error feedback patterns. Feedback loops that let agents self-correct before commit. Generating C4 diagrams and Architecture Decision Records.
+              <div class="curr-track">
+                <span class="curr-track-label">Lectures</span>
+                <ul>
+                  <li>Introspection and observability: session logs, /insights, OTEL metrics</li>
+                  <li>Agent-native architecture, and proactive loops that run without you: log analysis, slow-query triage, payment matching</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Workshops</span>
+                <ul>
+                  <li>Complete 2&ndash;5 GitHub issues in parallel, each agent in its own worktree</li>
+                  <li>A measurable improvement loop: speed up the test suite or raise the Lighthouse score, both gates staying green</li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div class="curriculum-item curriculum-final">
             <button class="curriculum-header" aria-expanded="false" aria-controls="curr-5-desc">
               <span class="curriculum-week">Weeks 5 &amp; 6</span>
-              <span class="curriculum-title">First Deploy</span>
-              <span class="curriculum-tagline">Ship a real feature</span>
+              <span class="curriculum-title">Graduation Project</span>
+              <span class="curriculum-tagline">Ship a real feature in your own codebase</span>
               <span class="curriculum-sessions-badge">2 sessions</span>
               <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="curriculum-desc" id="curr-5-desc" hidden>
-              Apply everything you've learned to build a real feature for your product. Work on your company's actual codebase with instructor support. Present your project and graduate with a production-ready deliverable.
+              <p>Apply the whole workflow in your company&rsquo;s actual codebase, with instructor support. The weeks participants rate highest.</p>
+              <div class="curr-track">
+                <span class="curr-track-label">Deliverables</span>
+                <ul>
+                  <li>A configured agentic setup: CLAUDE.md, skills, hooks, gates</li>
+                  <li>A real feature shipped through the full workflow, with the spec, ADRs and C4 diagrams</li>
+                  <li>Final presentation and peer review</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -297,10 +362,10 @@
             <div class="panel-header">Your Agentic Harness</div>
             <h3>Built in Your Own Codebase</h3>
             <ul class="detail-list">
-              <li>CLAUDE.md + architecture docs: your standards, your voice, your C4 diagrams. The context that makes the agent <em>yours</em></li>
-              <li>Claude skills for brainstorming &amp; scoping: reusable Claude Code skills that shape requirements by thinking out loud with the agent, before a line of the spec is written</li>
-              <li>The agentic loop: explore, plan, code, verify. The agent iterates and self-corrects until tests pass and you approve</li>
-              <li>Git worktrees: trust the loop, then multiply it. Run parallel agents across your codebase</li>
+              <li>A CLAUDE.md and architecture docs that make the agent <em>yours</em></li>
+              <li>Reusable skills that scope the work before the spec is written</li>
+              <li>Verification gates the agent runs itself: tests, e2e, performance budgets</li>
+              <li>A parallel-agent workflow: worktrees, loops, review discipline</li>
             </ul>
           </div>
 

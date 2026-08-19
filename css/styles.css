@@ -606,6 +606,10 @@ p:last-child {
   gap: var(--space-md);
 }
 
+.text-center .btn-group {
+  justify-content: center;
+}
+
 /* ========================================
    Badge
    ======================================== */
@@ -2555,6 +2559,69 @@ p:last-child {
   white-space: nowrap;
 }
 
+.curriculum-throughline {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin-top: var(--space-2xl);
+}
+
+.curriculum-throughline .throughline-arrow {
+  color: var(--text-3);
+  margin: 0 var(--space-xs);
+}
+
+.curriculum-throughline + .curriculum-timeline {
+  margin-top: var(--space-lg);
+}
+
+.curr-track {
+  margin-top: var(--space-md);
+}
+
+.curr-track:first-child {
+  margin-top: 0;
+}
+
+.curr-track-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-xs);
+}
+
+.curriculum-desc p {
+  margin: 0 0 var(--space-sm);
+}
+
+.curriculum-desc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.curriculum-desc li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: var(--space-xs);
+}
+
+.curriculum-desc li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--green-brand);
+  font-weight: 700;
+}
+
 /* ========================================
    Training Page — Details (Toolkit + Requirements)
    ======================================== */
@@ -3256,10 +3323,22 @@ p:last-child {
 
   .curriculum-header {
     flex-wrap: wrap;
+    position: relative;
+    padding-right: calc(var(--space-xl) + 28px);
   }
 
   .curriculum-week {
     width: 100%;
+  }
+
+  .curriculum-title {
+    white-space: normal;
+  }
+
+  .curriculum-chevron {
+    position: absolute;
+    right: var(--space-xl);
+    top: var(--space-lg);
   }
 
   .curriculum-tagline {
