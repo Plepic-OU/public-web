@@ -1,0 +1,5 @@
+# Verification log for money/date tokens added to pages. HISTORICAL RECORD ONLY —
+# never read values from here; current values live in the HTML and their owning
+# systems (the plan Sheet, Pipedrive, pricing docs). CI (claims job) requires every
+# money/date token added in a PR to gain a line here in the same PR: <token> | <source>
+2026-08-21 | (file created) | risk-tiered review plan, docs/specs/2026-08-21-risk-tiered-review-system.md in the vault
