@@ -159,6 +159,16 @@
   --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
 
+  /* Type scale (canon: design-system.html Section 4). --fs- prefix; --text-
+     is the color namespace. At clamp minimums h3 = h4 = body by design:
+     weight carries the bottom of the hierarchy. */
+  --fs-body: 1.25rem;
+  --fs-body-lg: 1.35rem;
+  --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+  --fs-h4: 1.25rem;
+  --fs-faq-q: 1.25rem;
+
   /* Spacing */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -215,7 +225,7 @@ html {
 body {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 1.15rem;
+  font-size: var(--fs-body);
   line-height: 1.7;
   color: var(--text);
   background: var(--bg);
@@ -270,9 +280,9 @@ h1 { font-size: clamp(2rem, 2rem + 3vw, 3.5rem); }
   letter-spacing: -0.025em;
   margin-bottom: 2rem;
 }
-h2 { font-size: clamp(1.5rem, 1.25rem + 2vw, 2.25rem); }
-h3 { font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem); }
-h4 { font-size: 1.15rem; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
 
 p {
   margin-bottom: var(--space-md);
@@ -733,7 +743,7 @@ p:last-child {
 
 
 .hero-desc {
-  font-size: 1.2rem;
+  font-size: var(--fs-body-lg);
   line-height: 1.6;
   color: var(--text-2);
   margin-bottom: 2.5rem;
@@ -1018,7 +1028,7 @@ p:last-child {
 
 
 .perspective-shift-desc {
-  font-size: 1.15rem;
+  font-size: var(--fs-body);
   color: var(--text-2);
   margin-bottom: var(--space-2xl);
   line-height: 1.7;
@@ -1121,7 +1131,7 @@ p:last-child {
 
 
 .hackathon-message {
-  font-size: 1.125rem;
+  font-size: var(--fs-body);
   color: var(--text-2);
   line-height: 1.7;
 }
@@ -1919,7 +1929,7 @@ p:last-child {
 }
 
 .enlist-content > p {
-  font-size: 1.15rem;
+  font-size: var(--fs-body);
   color: var(--text-2);
   margin-bottom: var(--space-2xl);
 }
@@ -1973,7 +1983,7 @@ p:last-child {
 }
 
 .closing-content > p {
-  font-size: 1.15rem;
+  font-size: var(--fs-body);
   color: var(--text-on-dark-2);
   margin-bottom: var(--space-2xl);
 }
@@ -3224,7 +3234,7 @@ p:last-child {
   .hero-desc {
     /* Tighter type + leading so the description holds fewer, shorter lines,
        and less bottom gap before the CTA. */
-    font-size: 1.125rem;
+    font-size: 1.2rem;
     line-height: 1.45;
     max-width: 500px;
     margin-left: auto;
@@ -3642,7 +3652,7 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   padding: var(--space-lg) 0;
   cursor: pointer;
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: var(--fs-faq-q);
   color: var(--text);
   list-style: none;
   user-select: none;
