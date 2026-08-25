@@ -3,3 +3,5 @@
 # systems (the plan Sheet, Pipedrive, pricing docs). CI (claims job) requires every
 # money/date token added in a PR to gain a line here in the same PR: <token> | <source>
 2026-08-21 | (file created) | risk-tiered review plan, docs/specs/2026-08-21-risk-tiered-review-system.md in the vault
+2026-08-25 | founder sign-off on the type-scale revision, recorded in vault docs/specs/2026-08-25-clarity-redesign.md (Decisions 2 and 6)
+2026-08-01 | hero H1 two-line cap decision, recorded in css/styles.css comment above .hero h1 (measured 2026-08-01)
