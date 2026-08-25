@@ -1165,72 +1165,6 @@ p:last-child {
 }
 
 /* ========================================
-   Incentive Section
-   ======================================== */
-
-.incentive-section {
-  background: var(--bg-alt);
-}
-
-.incentive-content {
-  display: grid;
-  grid-template-columns: 1.4fr 0.6fr;
-  gap: var(--space-2xl);
-  align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.incentive-text h2 {
-  margin-bottom: var(--space-lg);
-}
-
-.incentive-text p {
-  font-size: 1.15rem;
-  color: var(--text-2);
-  line-height: 1.7;
-}
-
-.incentive-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.incentive-equation {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  line-height: normal;
-}
-
-.equation-old {
-  color: var(--text-3);
-  text-decoration: line-through;
-  padding: 0.5rem 1rem;
-  background: var(--surface);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.equation-arrow {
-  color: var(--green-dark);
-  font-size: 1.2rem;
-}
-
-.equation-new {
-  color: var(--green-dark);
-  font-weight: 700;
-  padding: 0.5rem 1rem;
-  background: var(--green-surface);
-  border-radius: 8px;
-  border: 1px solid var(--green-light);
-}
-
-/* ========================================
    Clients Section
    ======================================== */
 
@@ -3096,36 +3030,6 @@ p:last-child {
 
 
 /* ========================================
-   Equation Animation
-   ======================================== */
-
-.incentive-equation .equation-old {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.incentive-equation .equation-arrow {
-  transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
-}
-
-.incentive-equation .equation-new {
-  transition: opacity 0.4s ease 0.4s, transform 0.4s ease 0.4s;
-}
-
-.incentive-equation:not(.eq-visible) .equation-old,
-.incentive-equation:not(.eq-visible) .equation-arrow,
-.incentive-equation:not(.eq-visible) .equation-new {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
-.incentive-equation.eq-visible .equation-old,
-.incentive-equation.eq-visible .equation-arrow,
-.incentive-equation.eq-visible .equation-new {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ========================================
    Footer Tagline
    ======================================== */
 
@@ -3267,15 +3171,6 @@ p:last-child {
 
   .perspective-shift-comparison {
     grid-template-columns: 1fr;
-  }
-
-  .incentive-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .incentive-equation {
-    flex-direction: row;
   }
 
   .team-grid {
