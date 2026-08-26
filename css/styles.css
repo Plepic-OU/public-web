@@ -2330,11 +2330,18 @@ p:last-child {
 .training-hero {
   padding-top: calc(var(--header-height) + var(--space-3xl));
   padding-bottom: var(--space-3xl);
-  text-align: center;
+  text-align: left;
 }
 
 .training-hero .btn-group {
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+/* .btn-primary takes `margin: 0 auto` under 600px for every page. This hero
+   reads left at every width, so undo the centring here and nowhere else. */
+.training-hero .btn-primary {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .training-hero h1 {
@@ -2350,17 +2357,23 @@ p:last-child {
   color: var(--text-2);
   line-height: 1.7;
   max-width: 640px;
-  margin: 0 auto var(--space-xl);
+  margin: 0 0 var(--space-xl);
 }
 
 .squad-badge {
   margin-bottom: var(--space-lg);
 }
 
-/* Training hero figure — image + ruled mono spec list overlay (Option A) */
+/* Training hero figure: artwork plus the data panel it was composed to carry.
+   images/agentic-harness is 1600 x 893 and the drawn subject starts no further
+   left than x = 656, so the left 41 of 100 of the image is clear cream ground.
+   The panel's right edge is fixed at 304px and has to stay inside 31 of 100 of
+   the figure, which needs a figure at least 981px wide. The figure therefore
+   runs the container's full width: capped at 800px the clearance the panel was
+   measured against does not exist. */
 .hero-figure {
-  max-width: 800px;
-  margin: 0 auto var(--space-2xl);
+  max-width: none;
+  margin: 0 0 var(--space-2xl);
   position: relative;
 }
 
@@ -2375,8 +2388,9 @@ p:last-child {
   display: block;
 }
 
-/* Ruled spec list positioned in the image's left cream negative space.
-   No container: hairline rules between rows, generous vertical rhythm. */
+/* The row group: no container, a hairline between rows, each figure and its
+   label on one baseline. .hero-panel is the only thing that mounts it and
+   resets the placement below, so tune the overlay's position on the panel. */
 .hero-stats {
   position: absolute;
   left: var(--space-lg);
@@ -2417,6 +2431,162 @@ p:last-child {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
+}
+
+/* The hero panel: one component, two headed halves, standing on the image's
+   cream margin. Vertical is the binding constraint, not horizontal. At a
+   1120px container the panel measures 402.5px against a 590.3px figure, which
+   leaves ~94px clear above and below it. That budget exists only because every
+   row keeps its figure and its label on one baseline, which is what .hero-stat
+   already does; do not stack them here to buy width. */
+.hero-panel {
+  position: absolute;
+  left: var(--space-lg);
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* One continuous hairline binds the two halves into one component. It hugs the
+   content, not the figure, so it never runs on past the last row. */
+.hero-panel-inner {
+  padding-left: var(--space-md);
+  border-left: 1px solid rgba(28, 28, 26, 0.22);
+}
+
+/* The separator between the halves is space, never a box and never a second
+   rule. */
+.hero-panel-group + .hero-panel-group {
+  margin-top: var(--space-xl);
+}
+
+/* A section head must outrank the rows it heads, so 0.875rem against the
+   0.75rem row label. Weight stops at 700 because the JetBrains Mono file is a
+   400 to 700 variable face and 800 would be synthesised. Ink, not green: green
+   is the payload, ink is the structure. The rule goes under the label, never
+   above it, or the first head draws the top edge of a card and the one panel
+   fractures into two widgets. */
+.hero-panel-label {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(28, 28, 26, 0.22);
+  margin-bottom: var(--space-sm);
+}
+
+/* Both halves keep the page's own row grammar. Only the positioning moves to
+   the panel and the row padding tightens, which is what buys the 112px the
+   second half needed. */
+.hero-panel .hero-stats {
+  position: static;
+  transform: none;
+  max-width: none;
+}
+
+.hero-panel .hero-stat {
+  padding: var(--space-sm) 0;
+}
+
+/* 3.8ch aligns the label column for every figure of four characters or fewer.
+   8.7/10 runs one character past it: one ragged row in seven is the price of
+   keeping the published rating token whole. */
+.hero-panel .hero-stat-value {
+  min-width: 3.8ch;
+}
+
+/* The panel leaves the image once its fixed 304px right edge would cross 31 of
+   100 of the figure, which happens below a 1045px viewport. It drops under the
+   picture as two columns rather than shrinking any data point. .hero-figure
+   becomes a flex column here only so `order` can put the picture back on top:
+   the panel is FIRST in the DOM, so a screen reader meets the data before the
+   artwork at every width. */
+@media (max-width: 1050px) {
+  .hero-figure {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-figure-frame {
+    order: 1;
+  }
+
+  .hero-panel {
+    order: 2;
+    position: static;
+    display: block;
+    width: auto;
+    margin-top: var(--space-lg);
+  }
+
+  .hero-panel-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    padding-left: 0;
+    padding-top: var(--space-lg);
+    border-left: 0;
+    border-top: 1px solid rgba(28, 28, 26, 0.22);
+  }
+
+  .hero-panel-group + .hero-panel-group {
+    margin-top: 0;
+  }
+}
+
+/* Phones: the panel opens around the picture. FORMAT above it, RESULTS below
+   it and immediately before the CTA, where a claim like 8.7/10 buys the most.
+   Rows stay one per line because two columns were measured and do not fit: the
+   widest row label sets 138.72px on its own and a 320px viewport offers 132px
+   per cell at zero gap, so a second column can only be bought by wrapping the
+   label or shrinking the type, and both are barred.
+   This block MUST follow the 1050px block. `display: contents` and the frame's
+   order each meet a rule of equal specificity there, so source order decides. */
+@media (max-width: 620px) {
+  .hero-figure {
+    gap: var(--space-md);
+  }
+
+  /* `display: contents` drops the two wrapper boxes but keeps the elements in
+     the tree, so every .hero-panel-scoped rule still matches and the markup is
+     identical at every width. It also drops the ruled top edge the 1050px block
+     puts on .hero-panel-inner, which is right: each band now carries its own
+     head and its own rule. */
+  .hero-panel,
+  .hero-panel-inner {
+    display: contents;
+  }
+
+  .hero-panel-group:first-child { order: 1; }
+  .hero-figure-frame { order: 2; }
+  .hero-panel-group:last-child { order: 3; }
+
+  /* The left margin exists to carry the data points. Here it carries none, so
+     it loses its reason before it loses any pixels. The crop is a ratio, not a
+     pixel value, so no drawn element is touched at any phone width: the first
+     drawn column is x = 656 of 1600 and 3/2 cover cuts at x = 261, leaving
+     395px of source cream standing. object-position pins the right edge so the
+     crop can only ever eat cream. Delete this rule to restore 16:9 exactly. */
+  .hero-figure-inner img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  /* With the vertical spine gone each band needs its own bottom edge, or it
+     frays into the picture. Head, rule, rows, rule: the same shape twice,
+     mirrored around the picture. */
+  .hero-panel .hero-stat:last-child {
+    border-bottom: 1px solid rgba(28, 28, 26, 0.12);
+  }
 }
 
 .social-proof-line {
@@ -2843,32 +3013,15 @@ p:last-child {
   margin-top: auto;
 }
 
-.pricing-proof {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-2xl);
-  margin-top: var(--space-2xl);
-}
-
-.proof-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.proof-number {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.proof-label {
-  font-size: 0.75rem;
+/* One sentence, not a stat block. 300+ and 8.7/10 live in the hero panel, and
+   the page states no figure twice, so whatever stands here must say something
+   the panel does not. */
+.pricing-proof-line {
+  max-width: 48ch;
+  margin: var(--space-xl) auto 0;
   color: var(--text-2);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .pricing-testimonials {
@@ -3348,6 +3501,28 @@ p:last-child {
 
   .hero-stat-value {
     font-size: 1.5rem;
+  }
+
+  /* .hero-stats and .hero-stat above are the retired four-cell overlay's phone
+     answer, a centred wrapping row of cells; the panel keeps one row per line
+     at every width, so the two rules below supersede them for it. Keep
+     .hero-stat-value: nothing panel-scoped sets font-size, so that rule is what
+     renders the panel's figures at 1.5rem on phones. Row padding is not
+     restated here; .hero-panel .hero-stat already outranks .hero-stat. */
+  .hero-panel .hero-stats {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    margin-top: 0;
+  }
+
+  .hero-panel .hero-stat {
+    flex-direction: row;
+    align-items: baseline;
+    text-align: left;
+    gap: var(--space-md);
+    border-bottom: 1px solid rgba(28, 28, 26, 0.12);
   }
 
   .stats-grid {
