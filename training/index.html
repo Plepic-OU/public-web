@@ -150,8 +150,60 @@
         <h1 class="hero-entrance hero-entrance-2"><span class="highlight">Claude Code Training</span> for Software Teams</h1>
         <p class="training-hero-subtitle hero-entrance hero-entrance-2">A six-week course to become the engineer who can walk into any codebase, partner with an AI agent, and ship. Agentic engineering is the skill agencies, product teams, and AI labs are hiring for right now.</p>
 
-        <!-- Hero figure -->
+        <!-- Hero figure. The panel comes FIRST in the DOM so the reading order
+             is data, then artwork. CSS `order` restores the visual order: the
+             picture sits above the panel on tablets and between its two halves
+             on phones. Do not reorder this markup to match what you see. -->
         <div class="hero-figure">
+          <!-- One panel on the image's cream margin: what the course is, then
+               what the course did. Both halves use the same row grammar, so
+               they read as one component. -->
+          <div class="hero-panel">
+            <div class="hero-panel-inner">
+
+              <div class="hero-panel-group">
+                <p class="hero-panel-label">Format</p>
+                <div class="hero-stats">
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">6</div>
+                    <div class="hero-stat-label">Weeks / Fridays</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">50</div>
+                    <div class="hero-stat-label">Academic Hours</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">~20</div>
+                    <div class="hero-stat-label">Participants</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">2+</div>
+                    <div class="hero-stat-label">Yrs Exp Req</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-panel-group">
+                <p class="hero-panel-label">Results</p>
+                <div class="hero-stats">
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">300+</div>
+                    <div class="hero-stat-label">Engineers trained</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">8.7/10</div>
+                    <div class="hero-stat-label">Course rating</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">5&times;</div>
+                    <div class="hero-stat-label">Median speedup</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
           <div class="hero-figure-frame">
             <div class="hero-figure-inner">
               <picture>
@@ -160,26 +212,6 @@
               </picture>
             </div>
           </div>
-          <!-- Stats overlaid on left cream space of image (outside overflow:hidden container) -->
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-value">6</div>
-              <div class="hero-stat-label">Weeks / Fridays</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-value">50</div>
-              <div class="hero-stat-label">Academic Hours</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-value">~20</div>
-              <div class="hero-stat-label">Participants</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-value">2+</div>
-              <div class="hero-stat-label">Yrs Exp Req</div>
-            </div>
-          </div>
-
         </div>
 
         <div class="btn-group hero-entrance hero-entrance-4">
@@ -188,10 +220,10 @@
           </a>
         </div>
 
-        <p class="social-proof-line mt-md text-sm">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-          300+ engineers trained
-        </p>
+        <!-- The panel now carries 300+, so this line does the work no data
+             label has room for: it attributes the speedup to the graduates.
+             5x must never appear bare, and this sentence is its qualifier. -->
+        <p class="hero-qualifier mt-md">Graduates self-report a median 5&times; speedup on their final project.</p>
 
       </div>
     </section>
@@ -442,20 +474,9 @@
             </div>
           </div>
 
-          <div class="pricing-proof">
-            <div class="proof-stat">
-              <span class="proof-number">300+</span>
-              <span class="proof-label">engineers trained</span>
-            </div>
-            <div class="proof-stat">
-              <span class="proof-number">8.7/10</span>
-              <span class="proof-label">avg. course rating</span>
-            </div>
-            <div class="proof-stat">
-              <span class="proof-number">20+</span>
-              <span class="proof-label">companies trained</span>
-            </div>
-          </div>
+          <!-- Was a three-cell stat block that repeated 300+ and 8.7/10. The
+               hero panel holds both, so this says something new instead. -->
+          <p class="pricing-proof-line">Both six-week cohorts ran to full completion.</p>
 
           <p class="text-center text-dim text-sm mt-md mb-md">
             Trained engineers at HELMES &middot; HOLM BANK &middot; DATEL &middot; BITWEB &middot; AKTIVA &middot; DELFI &middot; MERIT &middot; MINDWORKS &middot; RETHINKERS
@@ -529,7 +550,7 @@
       <div class="container">
         <div class="enlist-content reveal">
           <h2>Start Your Claude Code Course</h2>
-          <p><span class="tooltip-trigger" tabindex="0" aria-describedby="guarantee-tip">Graduates self-report a median 5&times; speedup on their final project. Guaranteed at 3&times;.<span class="tooltip" role="tooltip" id="guarantee-tip">3x Time Savings Guarantee: if you don't experience at least 3x time savings in typical development tasks after completing this training, we'll refund your contribution in full. Conditions apply.</span></span></p>
+          <p><span class="tooltip-trigger" tabindex="0" aria-describedby="guarantee-tip">Guaranteed at 3&times;.<span class="tooltip" role="tooltip" id="guarantee-tip">3x Time Savings Guarantee: if you don't experience at least 3x time savings in typical development tasks after completing this training, we'll refund your contribution in full. Conditions apply.</span></span></p>
 
           <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn-enlist">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
