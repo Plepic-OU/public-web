@@ -144,48 +144,6 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="../css/styles.css">
-  <style>
-    /* Page-scoped: the hero video is a click-to-play facade. The live YouTube
-       player costs ~1.1MB above the fold, so it is fetched only by the click
-       that starts playback. Colour and motion from the tokens in styles.css. */
-    .agent-video-poster {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .agent-video-play {
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      width: 76px;
-      height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-left: 5px; /* optical centring: the triangle's mass sits left */
-      border: 0;
-      border-radius: 50%;
-      background: var(--green-dark);
-      color: var(--surface);
-      cursor: pointer;
-      transition: background var(--transition-fast);
-    }
-    .agent-video-play:hover { background: var(--green-brand); }
-    .agent-video-play:focus-visible {
-      outline: 2px solid var(--green-vivid);
-      outline-offset: 2px;
-    }
-    /* Scripting off: the facade cannot upgrade, so lift the fallback link
-       clear of the absolutely positioned poster. */
-    .agent-video noscript {
-      position: absolute;
-      inset: auto 0 0 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-    }
-  </style>
   <!-- Entrance gate: hold .hero-entrance until webfonts are in (1.5s cap) so
        the Bitter/Hanken glyph swap never repaints mid-rise. -->
   <script>(function(g){document.fonts.ready.then(g);setTimeout(g,1500)})(function(){document.documentElement.classList.add('fonts-in')});</script>
