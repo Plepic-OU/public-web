@@ -201,7 +201,7 @@
         <div class="text-center reveal">
           <p class="label">Recent Webinar</p>
           <h2>What 300 Developers Taught Us About Agentic Coding</h2>
-          <p class="section-subtitle">A tour of the patterns, data, and harness we teach. Built from 14 months of training real teams across 20+ Estonian companies.</p>
+          <p class="section-subtitle">A tour of the patterns, data, and harness we teach. Built from every cohort and hackathon we have run since Claude Code shipped in February 2025, across 20+ Estonian companies.</p>
           <div class="btn-group mt-md">
             <a href="/webinar/2026-04-17-agentic-coding/" class="btn btn-secondary btn-lg">
               Open the deck &rarr;
@@ -597,12 +597,26 @@
       link.addEventListener('click', () => setMenu(false));
     });
 
-    // Close mobile menu with Escape key
+    // Escape closes the mobile menu first, otherwise it dismisses a shown
+    // tooltip. WCAG 2.1 SC 1.4.13 forbids moving focus on dismissal, so the
+    // tooltip branch only flags the trigger; styles.css hides the panel while
+    // the trigger carries data-tip-open="false".
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && nav.classList.contains('active')) {
+      if (e.key !== 'Escape') return;
+      if (nav.classList.contains('active')) {
         setMenu(false);
         menuToggle.focus();
+        return;
       }
+      const shownTip = document.querySelector('.tooltip-trigger:hover, .tooltip-trigger:focus, .tooltip-trigger:focus-within');
+      if (shownTip) shownTip.setAttribute('data-tip-open', 'false');
+    });
+
+    // A later hover or focus shows a dismissed tooltip again
+    document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+      const restore = () => trigger.removeAttribute('data-tip-open');
+      trigger.addEventListener('mouseleave', restore);
+      trigger.addEventListener('blur', restore);
     });
 
     // Sticky CTA visibility: yields while the hero or any other primary CTA
