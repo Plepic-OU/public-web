@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Claude Code Training for Dev Teams | Plepic (Prototype)</title>
+  <meta name="description" content="Scan-first homepage prototype. Not a production page.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg?v=3">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Three.js, vendored (same setup as index.html) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/vendor/three.module.min.js"
+      }
+    }
+  </script>
+
+  <style>
+    /* ==================================================================
+       SCAN-FIRST PROTOTYPE OVERRIDES
+       Titles carry the story; body copy is one line per section.
+       Type scale UP per the founder's brief: H1 to 6rem ceiling,
+       H2s toward 3.25rem, body floor 1.05rem. Tokens only.
+       ================================================================== */
+
+    /* Type scale up */
+    .hero h1 {
+      font-size: clamp(2.75rem, 2rem + 4vw, 6rem);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+    }
+    main h2 {
+      font-size: clamp(1.9rem, 1.4rem + 2.2vw, 3.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .hero-desc {
+      font-size: clamp(1.15rem, 1.05rem + 0.6vw, 1.4rem);
+      line-height: 1.5;
+      max-width: none;
+    }
+    .hero-qualifier { font-size: 0.9rem; }
+
+    /* One short line per section, big enough to read from a scan */
+    .section-line {
+      font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+      line-height: 1.5;
+      color: var(--text-2);
+      max-width: 56ch;
+      margin: var(--space-md) auto 0;
+    }
+
+    /* Sections breathe */
+    main .section { padding: clamp(5rem, 9vw, 8.5rem) 0; }
+    .section-header { text-align: center; }
+    .section-header .label { color: var(--text-3); }
+
+    /* ── Section 2: logo wall (own quiet band, bigger than the trust bar) ── */
+    .proto-clients {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .proto-clients .logo-row {
+      margin-top: var(--space-2xl);
+      gap: var(--space-2xl) 2.5rem;
+    }
+    .proto-clients .company-logo { height: 30px; filter: grayscale(1) opacity(0.55); }
+    .proto-clients .company-logo--aktiva { height: 34px; }
+    .proto-clients .logo-row-more { font-size: 1rem; margin-top: var(--space-2xl); }
+
+    /* ── Section 3: the economics equation as a big typographic visual ── */
+    .proto-econ { background: var(--bg-alt); }
+    .proto-econ-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+    .proto-econ-grid .section-line { margin-left: 0; }
+    .proto-equation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: clamp(1.35rem, 0.9rem + 2.2vw, 2.5rem);
+      font-weight: 700;
+      line-height: normal;
+    }
+    .proto-equation .eq-old {
+      color: var(--text-3);
+      text-decoration: line-through;
+      text-decoration-thickness: 0.08em;
+      padding: 0.5em 1em;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .proto-equation .eq-arrow {
+      color: var(--green-dark);
+      font-size: 0.9em;
+    }
+    .proto-equation .eq-new {
+      color: var(--green-dark);
+      padding: 0.5em 1em;
+      background: var(--green-surface);
+      border: 1px solid var(--green-light);
+      border-radius: 12px;
+    }
+
+    /* ── Section 4: team faces BIG ── */
+    .proto-team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-2xl);
+    }
+    .proto-team-grid .team-info { padding: var(--space-md) var(--space-lg) var(--space-lg); }
+    .proto-team-grid h3 { font-size: 1.3rem; margin-bottom: var(--space-xs); }
+    .team-line {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--text-2);
+      margin: 0;
+    }
+    .team-photo-placeholder {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .team-photo-placeholder span {
+      width: 96px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px dashed var(--text-3);
+      border-radius: 50%;
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: normal;
+      color: var(--text-3);
+    }
+
+    /* ── Section 5: the offer, subsidy math as a graphic ── */
+    .proto-offer { background: var(--green-surface); }
+    .subsidy-figure { max-width: 720px; margin: var(--space-2xl) auto 0; }
+    .subsidy-nums {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: var(--space-md) var(--space-lg);
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: normal;
+    }
+    .subsidy-from {
+      font-size: clamp(1.6rem, 1.2rem + 2vw, 2.75rem);
+      color: var(--text-3);
+      text-decoration: line-through;
+      text-decoration-thickness: 0.07em;
+    }
+    .subsidy-arrow {
+      font-family: var(--font-mono);
+      font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem);
+      color: var(--green-dark);
+    }
+    .subsidy-to { font-size: clamp(3rem, 2.2rem + 4vw, 5.5rem); color: var(--green-brand); }
+    .subsidy-to small {
+      font-size: 0.35em;
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    .subsidy-bar {
+      display: flex;
+      margin-top: var(--space-lg);
+      height: 48px;
+      border: 1px solid var(--green-light);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .subsidy-bar > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: normal;
+      white-space: nowrap;
+    }
+    .subsidy-bar-state { flex: 0 0 80%; background: var(--surface); color: var(--green-dark); }
+    .subsidy-bar-you { flex: 0 0 20%; background: var(--green-brand); color: #ffffff; }
+    .fact-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md) var(--space-2xl);
+      margin-top: var(--space-2xl);
+    }
+    .fact-row span {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: normal;
+      color: var(--text);
+    }
+    .offer-cta-row { text-align: center; margin-top: var(--space-2xl); }
+
+    /* The one testimonial pull quote (signature: Bitter italic, vivid dot) */
+    .pull-quote {
+      max-width: 56ch;
+      margin: var(--space-3xl) auto 0;
+      text-align: center;
+    }
+    .pull-quote p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.2rem, 1.05rem + 0.8vw, 1.5rem);
+      line-height: 1.45;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+    }
+    .pull-quote cite {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-style: normal;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-2);
+      line-height: normal;
+    }
+    .pull-quote cite::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green-vivid);
+    }
+
+    /* ── Section 6: closing (reuses shipped .closing-* grammar) ── */
+    .closing-content > p { font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .proto-econ-grid { grid-template-columns: 1fr; gap: var(--space-2xl); text-align: center; }
+      .proto-econ-grid .section-line { margin-left: auto; }
+      .proto-team-grid { grid-template-columns: 1fr 1fr; }
+      .proto-clients .company-logo { height: 26px; }
+      .proto-clients .company-logo--aktiva { height: 30px; }
+      .subsidy-bar-state span { display: none; }
+      .subsidy-bar-state::after {
+        content: 'Subsidy \20AC 2,016';
+        font-family: var(--font-mono);
+      }
+    }
+
+    /* ==================================================================
+       METAMORPHOSIS HERO (reused from index.html, unchanged mechanics)
+       ================================================================== */
+    .hero-visual .meta-stage {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      aspect-ratio: 32 / 23;
+      margin-inline: auto;
+    }
+    @media (min-width: 901px) {
+      .hero-visual .meta-stage {
+        aspect-ratio: auto;
+        width: 440px; max-width: 440px; height: 300px;
+        margin-inline: 0;
+      }
+    }
+    .meta-stage .meta-poster {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity var(--dur-fast) var(--ease-calm);
+    }
+    .meta-stage .meta-poster .butterfly-svg { height: 82.35%; width: auto; }
+    @media (min-width: 901px) {
+      .hero-visual .meta-stage .meta-poster {
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding: 0 0 8px;
+      }
+      .hero-visual .meta-stage .meta-poster .butterfly-svg {
+        height: auto; width: 296px;
+        transform: translate(15px, 40px);
+      }
+    }
+    .meta-stage canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: none;
+      pointer-events: none;
+    }
+    .meta-stage.is-live .meta-poster { opacity: 0; }
+    .meta-stage.is-live canvas { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .meta-stage .meta-poster { opacity: 1 !important; transition: none; }
+      .meta-stage canvas { opacity: 0 !important; transition: none; }
+    }
+
+    @media (min-width: 901px) {
+      .hero .hero-grid:has(.meta-stage) { grid-template-columns: 1.15fr 0.85fr; }
+      .hero-visual:has(.meta-stage) { align-items: flex-end; gap: 0; }
+    }
+    @media (min-width: 1300px) {
+      .hero .hero-grid:has(.meta-stage) { max-width: 1180px; }
+    }
+
+    .hero-visual .hero-code {
+      opacity: 1;
+      animation: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 5.3em;
+      margin-bottom: 3px;
+    }
+    @media (min-width: 901px) {
+      .hero-visual .hero-code {
+        width: fit-content;
+        text-align: right;
+        min-height: 0;
+        margin-top: -0.6em;
+        margin-bottom: -4px;
+        transform: translateX(8px);
+      }
+      .hero-visual .hero-code[data-phase="crawl"],
+      .hero-visual .hero-code[data-phase="gather"],
+      .hero-visual .hero-code[data-phase="chrysalis"],
+      .hero-visual .hero-code[data-phase="unfurl"],
+      .hero-visual .hero-code[data-phase="rest"] {
+        width: fit-content;
+        min-width: 38ch;
+        text-align: left;
+        transform: translateX(8px);
+      }
+    }
+    .hero-code .meta-code-line {
+      display: block;
+      line-height: 1.3;
+      opacity: 0.6;
+      transition:
+        opacity var(--dur-base) var(--ease-settle),
+        transform var(--dur-base) var(--ease-settle);
+    }
+    .hero-code .meta-code-line:empty { opacity: 0; }
+    .hero-code[data-phase="gather"] .meta-code-line:nth-child(1),
+    .hero-code[data-phase="gather"] .meta-code-line:nth-child(2) {
+      opacity: 0;
+      transform: translateY(0.35em);
+    }
+    .hero-code[data-phase="chrysalis"] .meta-code-line:last-child {
+      animation: meta-code-breathe 3s var(--ease-calm) infinite;
+    }
+    @keyframes meta-code-breathe {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.55; }
+    }
+    .hero-code.is-dim .meta-code-line:last-child { opacity: 0.45; }
+    .hero-code.is-settled .meta-code-line:last-child {
+      animation: meta-code-tick var(--dur-settle) var(--ease-settle) 1;
+    }
+    @keyframes meta-code-tick {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.14); }
+    }
+    .hero-code[data-phase="rest"] .meta-code-line:last-child {
+      animation: meta-code-wave 7s var(--ease-calm) 0.3s infinite;
+    }
+    @keyframes meta-code-wave {
+      0%, 70%, 100% { filter: brightness(1); }
+      35% { filter: brightness(1.14); }
+    }
+    .hero-code .meta-code-line.has-cursor { position: relative; }
+    .hero-code .meta-code-line.has-cursor .hero-cursor {
+      position: absolute;
+      left: 100%;
+      top: 0;
+      margin-left: 1px;
+      vertical-align: baseline;
+    }
+    .hero-code .meta-code-line.has-cursor .hero-cursor.is-driven {
+      left: 0;
+      margin-left: 0;
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-code .meta-code-line.has-cursor .hero-cursor { transition: none; }
+    }
+    .hero-code.is-held .hero-cursor { animation: none; opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-code .meta-code-line,
+      .hero-code[data-phase] .meta-code-line { animation: none; opacity: 0.6; transform: none; }
+    }
+
+    .metamorphosis-sr {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    /* ── Mobile hero: drop the WebGL visual, tell the arc as a storyboard ──
+       The animation is gated <=900px (no Three.js boot). In its place a
+       static 3-frame storyboard strip tells the same story: caterpillar,
+       chrysalis, butterfly, with the code line evolving beside each frame.
+       Butterfly frame = the locked 8-facet small mark (sub-48px cut),
+       copied verbatim. */
+    @media (max-width: 900px) {
+      .hero:has(.meta-stage) .hero-grid { margin-top: 0; }
+      .hero-visual:has(.meta-stage) { display: none; }
+    }
+    .hero-storyboard { display: none; }
+    @media (max-width: 900px) {
+      .hero-storyboard {
+        display: grid;
+        gap: var(--space-md);
+        max-width: 360px;
+        margin: var(--space-lg) auto 0;
+        text-align: left;
+      }
+      .sb-frame {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        align-items: center;
+        gap: var(--space-md);
+        padding: var(--space-sm) var(--space-md);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+      .sb-frame svg { display: block; margin: 0 auto; }
+      .sb-label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        line-height: normal;
+        margin-bottom: 0.2rem;
+      }
+      .sb-code {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--green-dark);
+        line-height: normal;
+        white-space: nowrap;
+      }
+      .sb-frame--dim .sb-code { opacity: 0.45; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header: trimmed nav -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="/" class="logo-lockup" aria-label="Plepic home"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></a>
+      <nav class="nav">
+        <a href="/claude-code/">Claude Code</a>
+        <a href="/training/">Training</a>
+        <a href="#team">Team</a>
+        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="nav-cta">Talk to Kaido</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Section 1: Hero -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="badge-base hero-entrance hero-entrance-1">
+            <span>300+ trained &middot; 8.7/10 avg &middot; Squad 3 starts Sep 4</span>
+          </div>
+
+          <h1 class="hero-entrance hero-entrance-2">Claude Code Training for<br><span class="highlight">Dev Teams</span></h1>
+
+          <p class="hero-desc hero-entrance hero-entrance-3">
+            <strong>&euro;2,520</strong>/dev &middot; &#x1F1EA;&#x1F1EA; Estonian subsidy: just <strong>&euro;504</strong>.
+          </p>
+
+          <div class="btn-group hero-entrance hero-entrance-4">
+            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Talk to Kaido about Squad 3</a>
+            <a href="/training/" class="btn btn-ghost btn-lg">View the full program &rarr;</a>
+          </div>
+
+          <p class="hero-qualifier hero-entrance hero-entrance-5">For developers with 2+ years experience &middot; ~20 per squad</p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="meta-stage" id="metaStage">
+            <!-- Static poster: the exact locked mark (22-facet master). -->
+            <div class="meta-poster" aria-hidden="true">
+              <svg class="butterfly-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg>
+            </div>
+          </div>
+
+          <!-- The Refactor: the agentic loop, evolving with the creature -->
+          <p class="hero-code" id="metaCode" data-phase="rest" aria-hidden="true">
+            <span class="meta-code-line"><span class="t"></span></span>
+            <span class="meta-code-line"><span class="t"></span></span>
+            <span class="meta-code-line has-cursor"><span class="t">while(task) { explore &rarr; act &rarr; verify }</span><span class="hero-cursor"></span></span>
+          </p>
+          <span class="metamorphosis-sr">while(task) { explore &rarr; act &rarr; verify }</span>
+        </div>
+
+        <!-- Mobile storyboard: the metamorphosis arc, told statically -->
+        <div class="hero-storyboard">
+          <div class="sb-frame">
+            <svg viewBox="0 0 110 44" width="52" height="21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="4,34 18,12 32,34" fill="#0d5822"/><polygon points="32,34 46,12 60,34" fill="#137b30"/><polygon points="60,34 74,12 88,34" fill="#00c638"/><circle cx="98" cy="29" r="7" fill="#e26c45"/></svg>
+            <span><span class="sb-label">Before</span><span class="sb-code">{ explore &rarr; act &rarr; verify</span></span>
+          </div>
+          <div class="sb-frame sb-frame--dim">
+            <svg viewBox="0 0 110 44" width="52" height="21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="55" y1="0" x2="55" y2="7" stroke="#0d5822" stroke-width="1.8"/><polygon points="55,7 41,22 55,42" fill="#0d5822"/><polygon points="55,7 69,22 55,42" fill="#137b30"/><polygon points="55,7 52,24 55,42 58,24" fill="#00c638"/></svg>
+            <span><span class="sb-label">Six Fridays</span><span class="sb-code">{ explore &rarr; act &rarr; verify }</span></span>
+          </div>
+          <div class="sb-frame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="44" height="41" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg>
+            <span><span class="sb-label">After</span><span class="sb-code">while(task) { explore &rarr; act &rarr; verify }</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Logo wall -->
+    <section class="proto-clients section reveal">
+      <div class="container">
+        <div class="section-header">
+          <p class="label">Clients</p>
+          <h2>Teams that trained <span style="white-space: nowrap;">with us</span></h2>
+        </div>
+        <div class="logo-row reveal reveal-delay-1">
+          <svg class="company-logo" width="120" viewBox="0 0 125 28" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Helmes">
+            <title>Helmes</title>
+            <g fill="currentColor">
+              <path d="m115.8 16.2h-.2c-2.8-.6-3.8-.9-3.8-2.1 0-.6.4-2.1 3.6-2.1 2.2 0 3.5.6 4 2.2h4.3c-.6-2.7-2.6-5.5-8.1-5.5-2.4 0-4.5.5-5.9 1.6-1.4 1-2.1 2.6-2.1 4.4 0 2.9 1.6 4.1 7.4 5.5.5.1.9.2 1.2.3 2.2.5 3.5.8 3.5 2.2 0 1.3-1.2 2-3.7 2-2.8 0-4.4-.8-5-2.8h-4.2c.9 3.9 4.3 6.1 9.1 6.1 4 0 8.1-1.6 8.1-6 .1-3.5-2.5-4.5-8.2-5.8z"></path>
+              <path d="m94.8 8.6c-5.4 0-9.7 4.3-9.7 9.7s4.3 9.7 9.7 9.7c4.1 0 7.6-2.6 9-6.1h-4.7c-1 1.4-2.6 2.4-4.3 2.4-2.6 0-4.8-2-5.3-4.7h14.9c.1-.4.1-.8.1-1.2 0-5.4-4.4-9.8-9.7-9.8zm-5.1 7.7c.8-2.2 2.7-3.9 5-3.9s4.3 1.6 5 3.9z"></path>
+              <path d="m74.1 8.6c-2.2 0-4.2.9-5.6 2.4-1.4-1.5-3.4-2.4-5.6-2.4-4.3 0-7.8 3.5-7.8 7.8v11.6h4.3v-11.6c0-1.9 1.6-3.4 3.4-3.4 1.9 0 3.4 1.6 3.4 3.4v11.6h4.3v-11.6c0-1.9 1.6-3.4 3.4-3.4 1.9 0 3.4 1.6 3.4 3.4v11.6h4.3v-11.6c.3-4.3-3.2-7.8-7.5-7.8z"></path>
+              <path d="m46.3 28h4.3v-28l-4.3.9z"></path>
+              <path d="m33 8.6c-5.4 0-9.7 4.3-9.7 9.7s4.3 9.7 9.7 9.7c4.1 0 7.6-2.6 9-6.1h-4.7c-1 1.4-2.6 2.4-4.3 2.4-2.6 0-4.8-2-5.3-4.7h14.9c.1-.4.1-.8.1-1.2 0-5.4-4.4-9.8-9.7-9.8zm-5.1 7.7c.8-2.2 2.7-3.9 5-3.9s4.3 1.6 5 3.9z"></path>
+              <path d="m15.1 4.3v9.7h-10.8v-9.7h-4.3v23.7h4.3v-9.7h10.8v9.7h4.3v-23.7z"></path>
+            </g>
+          </svg>
+          <svg class="company-logo" width="117" height="32" viewBox="0 0 117 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Holm Bank">
+            <title>Holm Bank</title>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M30.1927 3.52026V3.46275C30.1927 3.34774 30.1927 3.29023 30.1352 3.17521C29.7327 1.04739 27.4898 -0.332817 25.132 0.0697438C22.7166 0.472304 21.1064 2.54261 21.5089 4.72794C21.5089 4.78545 21.5233 4.82858 21.5377 4.87171C21.552 4.91485 21.5664 4.95798 21.5664 5.01549C21.5664 5.04424 21.5808 5.08737 21.5952 5.1305C21.6096 5.17363 21.6239 5.21677 21.6239 5.24552V5.30303C21.9115 6.05064 22.3715 6.68323 23.0616 7.1433C22.7166 7.66088 22.2565 8.17846 21.6814 8.52351C21.3364 8.75354 20.8763 8.98358 20.7038 9.04109C20.7038 9.04109 21.969 9.67368 23.4067 9.67368C23.9818 9.67368 24.5569 9.61617 25.1895 9.50116H25.247C25.3332 9.4724 25.4339 9.44365 25.5345 9.41489C25.6352 9.38614 25.7358 9.35739 25.8221 9.32863C25.8459 9.32863 25.8697 9.31877 25.8976 9.30721C25.9371 9.29086 25.9847 9.27112 26.0521 9.27112C26.1096 9.24237 26.1671 9.22799 26.2246 9.21361C26.2821 9.19924 26.3396 9.18486 26.3972 9.15611C26.4259 9.12735 26.469 9.11297 26.5122 9.0986C26.5553 9.08422 26.5984 9.06984 26.6272 9.04109C26.658 9.02568 26.6847 9.01028 26.7094 8.99598L26.7095 8.99597C26.7772 8.95689 26.8305 8.92607 26.9147 8.92607C26.9722 8.86856 27.0873 8.81105 27.1448 8.81105C27.2023 8.75354 27.3173 8.69604 27.3748 8.69604C27.4898 8.63853 27.5473 8.58102 27.6048 8.52351C27.6336 8.49476 27.6767 8.466 27.7199 8.43725C27.763 8.40849 27.8061 8.37974 27.8349 8.35099C27.8636 8.32223 27.9068 8.29348 27.9499 8.26472C27.993 8.23597 28.0361 8.20721 28.0649 8.17846L28.2374 8.00593L28.4675 7.7759C28.525 7.71839 28.5825 7.66088 28.64 7.66088L28.87 7.43085C28.892 7.40888 28.9056 7.38692 28.9172 7.36815C28.9359 7.3378 28.9495 7.31583 28.985 7.31583C29.0138 7.25832 29.0569 7.21519 29.1001 7.17206C29.1432 7.12893 29.1863 7.0858 29.2151 7.02829L29.3301 6.91327C29.3876 6.79825 29.4451 6.68323 29.5601 6.56822C29.5601 6.53946 29.5745 6.52509 29.5889 6.51071C29.6033 6.49633 29.6176 6.48196 29.6176 6.4532L29.7902 6.10815C29.7902 6.08371 29.7902 6.06966 29.7946 6.05716C29.8005 6.04026 29.8146 6.0262 29.8477 5.99313C29.9052 5.87811 29.9627 5.7631 30.0202 5.59057V5.53306C30.049 5.47555 30.0633 5.40367 30.0777 5.33178C30.0921 5.2599 30.1065 5.18801 30.1352 5.1305V5.07299C30.1927 4.90047 30.1927 4.78545 30.1927 4.61292V4.55542C30.1927 4.46915 30.2071 4.39727 30.2215 4.32538C30.2359 4.2535 30.2502 4.18161 30.2502 4.09535C30.2502 3.86531 30.2502 3.69279 30.1927 3.52026ZM36.9205 6.68403C39.9109 3.29102 44.1665 1.45074 48.8247 1.45074C55.7258 1.45074 60.0389 5.87891 59.9814 12.9525C59.9814 23.0165 52.9079 30.6076 43.5339 30.6076C36.6904 30.6076 32.4348 26.1795 32.4348 19.0484C32.4348 14.3327 34.045 9.90451 36.9205 6.68403ZM40.371 18.4158C40.371 22.2114 41.9237 24.2817 44.6841 24.2817C49.2848 24.2817 52.1027 18.7608 52.1027 13.6426C52.1027 9.90451 50.55 7.8342 47.7321 7.8342C43.1314 7.8342 40.371 13.1825 40.371 18.4158ZM28.4068 9.84609L28.4643 9.78858C28.5793 9.73107 28.6368 9.67356 28.6368 9.67356L24.9562 30.1466H17.5376L19.5504 18.99H9.37141L8.96885 21.1753C8.50879 21.0603 7.99121 20.9453 7.47363 20.8877C7.2436 20.8302 7.01356 20.8302 6.78353 20.8302H6.55349C5.9209 20.8302 5.2883 20.9452 4.65571 21.0603H4.54069C4.42573 21.089 4.32513 21.1177 4.22453 21.1465L4.22439 21.1465C4.12375 21.1753 4.02311 21.204 3.9081 21.2328C3.87934 21.2328 3.85059 21.2472 3.82183 21.2615C3.79308 21.2759 3.76432 21.2903 3.73557 21.2903H3.62055C3.50553 21.2903 3.33301 21.3478 3.21799 21.4053C3.18924 21.4341 3.14611 21.4485 3.10298 21.4628C3.05984 21.4772 3.01671 21.4916 2.98796 21.5203L2.87294 21.5778C2.81544 21.5778 2.70044 21.6353 2.58544 21.6928L2.5854 21.6929C2.52789 21.6929 2.41287 21.7504 2.35536 21.8079L2.24035 21.8654C2.21159 21.8941 2.16846 21.9229 2.12533 21.9517C2.0822 21.9804 2.03907 22.0092 2.01031 22.0379C1.9528 22.0667 1.90967 22.0954 1.86654 22.1242C1.82341 22.1529 1.78028 22.1817 1.72277 22.2104L1.60775 22.268C1.49273 22.3255 1.43522 22.383 1.37772 22.4405L5.05827 1.96741H12.4769L10.4641 13.1241H20.7006L21.1032 10.9388C21.3907 11.0538 21.6207 11.1113 21.9083 11.1688C22.3684 11.2838 22.8284 11.3413 23.2885 11.3413H23.5185C24.1511 11.3413 24.7837 11.2263 25.4163 11.1113H25.5313C25.6464 11.0825 25.747 11.0538 25.8476 11.025C25.9483 10.9963 26.0489 10.9675 26.1639 10.9388C26.2313 10.9388 26.2789 10.919 26.3184 10.9027C26.3463 10.8911 26.3701 10.8812 26.394 10.8812L26.509 10.8237C26.5665 10.795 26.6384 10.7662 26.7103 10.7375C26.7821 10.7087 26.854 10.68 26.9115 10.6512C26.9403 10.6225 26.9834 10.6081 27.0266 10.5937C27.0697 10.5793 27.1128 10.5649 27.1416 10.5362L27.2566 10.4787C27.3141 10.4787 27.4291 10.4212 27.5441 10.3637L27.5441 10.3637C27.6016 10.3637 27.7167 10.3062 27.7742 10.2486L27.8892 10.1911C27.9179 10.1624 27.9611 10.1336 28.0042 10.1049L28.0042 10.1049L28.0042 10.1049C28.0473 10.0761 28.0905 10.0474 28.1192 10.0186C28.1767 9.98986 28.2199 9.96111 28.263 9.93235C28.3061 9.9036 28.3493 9.87484 28.4068 9.84609ZM73.4405 1.96774H66.482L61.4212 30.0895H77.5811L78.7313 23.591H69.5874L73.4405 1.96774ZM100.121 20.9453L107.137 1.96741H116.856L116.569 30.0891H109.725L110.415 11.2838L103.399 30.0891H95.2329L92.2999 11.4563L88.9069 30.0891H81.9484L87.5267 1.96741H97.3032L100.121 20.9453ZM9.54643 23.0738C9.37391 23.1313 8.91384 23.3614 8.56879 23.5914C7.9937 23.994 7.47612 24.454 7.13107 24.8566C7.82117 25.3167 8.28124 25.9493 8.56879 26.6969V26.7544C8.56879 26.7831 8.58316 26.8263 8.59754 26.8694C8.61192 26.9125 8.6263 26.9557 8.6263 26.9844C8.6263 27.0419 8.64067 27.085 8.65505 27.1282C8.66943 27.1713 8.6838 27.2144 8.6838 27.2719C9.08636 29.4573 7.47612 31.5276 5.06076 31.9301C2.70291 32.3327 0.460069 30.9525 0.0575089 28.8247C0 28.7097 0 28.6522 0 28.5371V28.4796V28.0196C0 27.9333 0.0143772 27.8614 0.0287544 27.7895C0.0431316 27.7176 0.0575089 27.6458 0.0575089 27.5595V27.502C0.0575089 27.3295 0.0575085 27.2144 0.115017 27.0419V26.9844C0.143771 26.9269 0.158149 26.855 0.172526 26.7831C0.186903 26.7112 0.20128 26.6394 0.230034 26.5818V26.5243C0.287543 26.3518 0.345052 26.2368 0.40256 26.1218C0.460069 26.0643 0.460069 26.0643 0.460069 26.0068L0.632595 25.6617C0.632595 25.6329 0.646972 25.6186 0.661349 25.6042C0.675726 25.5898 0.690104 25.5754 0.690104 25.5467C0.805121 25.4317 0.86263 25.3167 0.920138 25.2016L1.03516 25.0866C1.06391 25.0291 1.10704 24.986 1.15017 24.9428C1.1933 24.8997 1.23644 24.8566 1.26519 24.7991C1.30073 24.7991 1.31431 24.7771 1.33307 24.7468C1.34466 24.728 1.35824 24.706 1.38021 24.6841L1.61024 24.454C1.66775 24.454 1.72526 24.3965 1.78277 24.339L2.0128 24.109L2.18533 23.9364C2.21408 23.9077 2.25721 23.8789 2.30035 23.8502C2.34348 23.8214 2.38661 23.7927 2.41536 23.7639C2.44412 23.7352 2.48725 23.7064 2.53038 23.6777C2.57351 23.6489 2.61664 23.6202 2.6454 23.5914C2.70291 23.5339 2.76041 23.4764 2.87543 23.4189C2.93294 23.4189 3.04796 23.3614 3.10547 23.3039C3.16297 23.3039 3.27799 23.2463 3.3355 23.1888C3.4197 23.1888 3.47308 23.158 3.54076 23.1189C3.56554 23.1046 3.59223 23.0892 3.62304 23.0738C3.6518 23.0451 3.69493 23.0307 3.73806 23.0163C3.78119 23.0019 3.82432 22.9876 3.85308 22.9588C3.91059 22.93 3.9681 22.9157 4.0256 22.9013C4.08311 22.8869 4.14062 22.8725 4.19813 22.8438C4.26551 22.8438 4.31315 22.824 4.35262 22.8077C4.38052 22.7961 4.40434 22.7863 4.42817 22.7863C4.51443 22.7575 4.61507 22.7288 4.71571 22.7C4.81635 22.6713 4.91699 22.6425 5.00325 22.6137H5.06076C5.69335 22.4987 6.26844 22.4412 6.84353 22.4412C8.28124 22.4412 9.54643 23.0738 9.54643 23.0738Z" fill="currentColor"/>
+          </svg>
+          <svg class="company-logo" width="118" height="27" viewBox="0 0 118 27" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Datel">
+            <title>Datel</title>
+            <path d="M40.3095 6.32574H33.4824V14.8886L36.3753 19.8643V9.06431H40.3095C45.4781 9.06431 47.7924 12.8829 47.7924 16.6629C47.7924 21.2143 44.7838 24.2614 40.3095 24.2614H38.921L40.5024 27C46.4424 26.9228 50.7624 22.6028 50.7624 16.7014C50.7238 10.6843 46.3267 6.32574 40.3095 6.32574Z" fill="currentColor"/>
+            <path d="M15.6214 0L23.4128 13.5L31.2042 26.9999H15.6214H0L7.79141 13.5L15.6214 0Z" fill="currentColor"/>
+            <path d="M56.2002 19.4785L59.9031 10.3371L63.5673 19.4785H56.2002ZM49.9902 27H53.2302L55.1588 22.2171H64.6473L66.5759 27H69.8159L59.9031 2.81573L49.9902 27Z" fill="currentColor"/>
+            <path d="M66.8457 9.06431H73.21V27H76.1028V9.06431H82.4671V6.32574H66.8457V9.06431Z" fill="currentColor"/>
+            <path d="M84.1621 27H97.7006V24.2614H87.055V17.7814H97.5078V15.0429H87.055V9.06431H97.7006V6.32574H84.1621V27Z" fill="currentColor"/>
+            <path d="M102.832 24.2614V6.32574H99.9004V27H112.243V24.2614H102.832Z" fill="currentColor"/>
+            <path d="M114.981 11.5328C113.592 11.5328 112.551 10.4528 112.551 9.10282C112.551 7.75283 113.592 6.67283 114.981 6.67283C116.369 6.67283 117.411 7.75283 117.411 9.10282C117.372 10.4142 116.331 11.5328 114.981 11.5328ZM114.981 11.8414C116.485 11.8414 117.719 10.5685 117.719 9.10282C117.719 7.59854 116.524 6.36426 114.981 6.36426C113.476 6.36426 112.242 7.63711 112.242 9.10282C112.242 10.5685 113.438 11.8414 114.981 11.8414Z" fill="currentColor"/>
+            <path d="M114.328 8.02293H115.1C115.524 8.02293 115.755 8.21578 115.755 8.56293C115.755 8.91007 115.485 9.06435 115.1 9.06435H114.328V8.02293ZM115.717 10.3372H116.141L115.447 9.33435L115.562 9.29578C115.948 9.18007 116.141 8.91007 116.141 8.52435C116.141 8.02293 115.794 7.71436 115.177 7.71436H114.02V10.3372H114.367V9.37292H115.1L115.717 10.3372Z" fill="currentColor"/>
+          </svg>
+          <svg class="company-logo" width="119" height="20" viewBox="0 0 119 20" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bitweb">
+            <title>Bitweb</title>
+            <g clip-path="url(#bitweb-clip)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.15916 3.71652L5.34023 3.99465L6.05683 5.0995V5.09578L7.28787 6.98721C7.35949 7.12697 7.44042 7.26168 7.53014 7.39042L8.05821 8.17422L8.54074 8.91839L9.37826 10.2187L10.857 12.4906C10.8827 12.5353 10.9108 12.5785 10.9412 12.6201L11.8187 13.9683L15.2238 19.2195C15.5182 19.7366 16.1431 20.0251 16.497 19.9988C17.0377 19.9587 17.4475 19.5456 17.5859 19.2925L21.0347 13.9683L24.4373 8.72219C25.1415 7.7542 24.4323 6.7775 23.4523 6.83725H18.9915C17.9972 6.79183 17.6226 5.85492 18.0415 5.11632L18.1338 4.97465L18.2102 4.85709L18.2292 4.82803H18.2283L20.0688 1.99045C20.732 1.07888 20.1416 0.159404 19.2519 0.105469H4.85711C3.96746 0.159404 3.37695 1.07888 4.04019 1.99045L5.15916 3.7155V3.71652ZM10.6229 3.01774C10.4144 2.61143 10.7644 2.28726 11.0288 2.27626C11.2673 2.26629 11.5053 2.26752 11.7377 2.27395C12.1144 2.28456 12.3224 2.36749 12.4891 2.62429L14.0665 5.02511C14.3385 5.44382 14.2837 5.74357 13.9239 6.22581C13.8431 6.33108 13.7555 6.43098 13.6619 6.52488C13.3881 6.79014 12.9885 6.82168 12.7195 6.35981L11.7886 4.83571L10.6229 3.01774ZM14.9914 9.74952C14.7829 9.34317 15.1329 9.019 15.3972 9.00799C15.6359 8.99806 15.8738 8.9993 16.1062 9.00574C16.4829 9.01629 16.691 9.09927 16.8576 9.35603L18.435 11.7568C18.707 12.1756 18.6522 12.4753 18.2924 12.9575C18.2115 13.0628 18.124 13.1627 18.0303 13.2567C17.7565 13.5219 17.357 13.5535 17.0879 13.0915L16.1571 11.5675L14.9914 9.74952V9.74952ZM9.38342 19.2925C9.24471 19.5456 8.83496 19.9587 8.29494 19.9988C7.94036 20.0251 7.31527 19.7366 7.02123 19.2195L3.61573 13.9683L0.285448 8.85098C-0.338414 8.05534 0.0983842 6.78395 1.2252 6.83725H2.99436C4.72378 6.8922 4.83754 6.80508 5.94266 8.4876L10.3454 15.2629C11.0016 16.2141 10.9252 16.9168 10.4537 17.6403L9.38342 19.2925Z" fill="currentColor"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M104.145 0V19.5476H105.474V16.5081C106.61 18.5995 108.854 19.7707 111.18 19.7707C115.003 19.7707 118.022 17.2331 118.022 12.6599C118.022 8.1146 114.975 5.54911 111.153 5.54911C108.798 5.54911 106.582 6.55299 105.474 8.78382V0H104.145ZM111.097 6.85973C114.172 6.85973 116.693 8.78382 116.693 12.6599C116.693 16.4802 114.172 18.4322 111.097 18.4322C107.884 18.4322 105.502 16.0619 105.502 12.6321C105.502 9.20216 107.939 6.85973 111.097 6.85973V6.85973ZM88.3003 12.1022C88.605 8.72808 91.0426 6.80399 93.868 6.80399C97.1642 6.80399 99.3802 8.70022 99.4079 12.1022H88.3003ZM93.868 19.7428C96.0562 19.7428 98.4384 18.8504 99.768 17.0937L98.7985 16.3129C97.7736 17.6793 95.6684 18.4043 93.868 18.4043C91.0426 18.4043 88.5773 16.536 88.3003 13.3013H100.627C101.153 7.9194 97.7182 5.54912 93.868 5.54912C90.0177 5.54912 86.9153 8.53288 86.9153 12.6599C86.9153 17.0379 90.0177 19.7428 93.868 19.7428V19.7428ZM85.4749 5.77224H83.9791L79.8796 17.9581L75.7246 5.77224H74.7551L70.5725 17.9581L66.4452 5.77224H64.9495L69.8246 19.5476H71.3204L73.5363 13.5523L75.2537 8.17035L76.9157 13.5243L79.1317 19.5476H80.6275L85.4749 5.77224ZM57.3874 1.75675V5.77224H54.4789V6.91554H57.3874V15.309C57.3874 18.0139 58.3292 19.7428 61.2376 19.7428C62.0963 19.7428 62.955 19.4639 63.8137 19.0457L63.3428 17.9302C62.6503 18.2648 61.9024 18.488 61.2376 18.488C59.1048 18.488 58.7169 17.1774 58.7169 15.309V6.91554H63.3705V5.77224H58.7169V1.61734L57.3874 1.75675ZM51.709 5.71645V19.5476H50.3517V5.71645H51.709ZM33.1501 0V19.5476H34.4797V16.5081C35.6154 18.5995 37.8591 19.7707 40.1859 19.7707C44.0084 19.7707 47.0277 17.2331 47.0277 12.6599C47.0277 8.1146 43.9807 5.54911 40.1582 5.54911C37.8037 5.54911 35.5877 6.55299 34.4797 8.78382V0H33.1501ZM40.1028 6.85973C43.1774 6.85973 45.6981 8.78382 45.6981 12.6599C45.6981 16.4802 43.1774 18.4322 40.1028 18.4322C36.8896 18.4322 34.5075 16.0619 34.5075 12.6321C34.5075 9.20216 36.945 6.85973 40.1028 6.85973Z" fill="currentColor"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M49.9639 1.28282C49.9639 2.7329 52.1521 2.7329 52.1521 1.28282C52.1521 -0.167191 49.9639 -0.167191 49.9639 1.28282Z" fill="currentColor"/>
+            </g>
+            <defs>
+              <clipPath id="bitweb-clip">
+                <rect width="118.022" height="20" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <svg class="company-logo" width="85" height="30" viewBox="0 0 85 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delfi">
+            <title>Delfi</title>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.1142 18.9706C17.7145 19.9303 17.1535 20.7748 16.4474 21.4806C15.741 22.1877 14.8961 22.748 13.9374 23.1474C12.9781 23.5474 11.9384 23.7499 10.8471 23.7499H6.43774V7.85316H10.8471C11.9384 7.85316 12.9787 8.06316 13.9394 8.47639C14.8984 8.88961 15.7426 9.46348 16.4484 10.1825C17.1545 10.9022 17.7152 11.7599 18.1145 12.7315C18.5139 13.7048 18.7165 14.7635 18.7165 15.8803C18.7165 16.9715 18.5139 18.0112 18.1142 18.9706ZM21.2139 6.168C19.9377 4.95671 18.4006 3.98155 16.6448 3.27122C14.889 2.56187 12.9913 2.20251 11.0042 2.20251H0V29.4012H11.0042C12.9919 29.4012 14.89 29.048 16.6458 28.3512C18.4016 27.6538 19.9387 26.6857 21.2139 25.4745C22.4894 24.2638 23.5158 22.8122 24.2645 21.1609C25.0116 19.5125 25.3903 17.7357 25.3903 15.8803C25.3903 13.9728 25.0116 12.1628 24.2642 10.5009C23.5161 8.83768 22.4897 7.37961 21.2139 6.168Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M33.4463 17.0653L33.5089 16.8563C33.8324 15.7785 34.394 14.9298 35.1785 14.335C35.9647 13.7389 36.9105 13.4369 37.9902 13.4369C39.0444 13.4369 39.9844 13.7524 40.7834 14.3753C41.5785 14.9963 42.1589 15.8285 42.5085 16.8498L42.5821 17.0653H33.4463ZM45.5189 11.7444C44.6076 10.7692 43.507 9.98858 42.2483 9.4231C40.9899 8.85858 39.5967 8.57181 38.1076 8.57181C36.6157 8.57181 35.2012 8.846 33.9041 9.38503C32.606 9.92471 31.466 10.6802 30.5157 11.6305C29.5654 12.5815 28.8028 13.7218 28.2502 15.0195C27.698 16.317 27.418 17.7173 27.418 19.1834C27.418 20.6479 27.7109 22.0476 28.2886 23.3447C28.8673 24.6431 29.6622 25.7834 30.6512 26.7341C31.6399 27.6841 32.8325 28.4402 34.1964 28.9808C35.5605 29.5205 37.0351 29.7947 38.5796 29.7947C40.2809 29.7947 41.8302 29.5463 43.1838 29.0576C44.4838 28.5876 45.7735 27.8305 47.0196 26.8073L43.067 23.2976C42.577 23.7589 41.9876 24.1254 41.3125 24.3876C40.5893 24.6689 39.7754 24.8118 38.8944 24.8118C37.6599 24.8118 36.5705 24.4915 35.6564 23.8592C34.7431 23.2279 34.0625 22.4047 33.6331 21.4108L33.5351 21.1837H48.4438V19.7737C48.4438 18.176 48.1828 16.6676 47.6676 15.2883C47.1525 13.9131 46.4296 12.7202 45.5189 11.7444Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M51.3604 29.4012H57.4049V0.180908H51.3604V29.4012Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M83.3719 5.69926C84.0187 5.05249 84.3467 4.25765 84.3467 3.33668C84.3467 2.417 84.0187 1.62184 83.3719 0.974745C82.7248 0.327971 81.9299 0.000228882 81.0096 0.000228882C80.089 0.000228882 79.2948 0.327971 78.6477 0.974745C78.0009 1.6212 77.6729 2.41636 77.6729 3.33668C77.6729 4.25829 78.0009 5.05313 78.6477 5.69926C79.2941 6.34571 80.0887 6.67378 81.0096 6.67378C81.9303 6.67378 82.7254 6.34571 83.3719 5.69926Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M70.3877 7.62261C70.3877 6.7868 70.6609 6.15454 71.1993 5.7439C71.7242 5.34358 72.498 5.14035 73.4996 5.14035C73.9225 5.14035 74.3319 5.16003 74.7158 5.20003C75.0451 5.23454 75.4271 5.29422 75.8535 5.37874V0.43777C75.459 0.346157 74.9722 0.264544 74.4042 0.195834C73.77 0.117447 73.1751 0.0784149 72.6348 0.0784149C69.9632 0.0784149 67.8896 0.725834 66.4719 2.00293C65.0596 3.27519 64.3435 5.12712 64.3435 7.50519V8.92583H59.7822V13.9087H64.3435V29.4016H70.3877V13.9087H77.9877V29.4016H84.0319V8.92583H70.3877V7.62261Z" fill="currentColor"/>
+          </svg>
+          <svg class="company-logo company-logo--aktiva" viewBox="60 105 450 115" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aktiva">
+            <title>Aktiva Finance Group</title>
+            <g fill="currentColor">
+              <path d="M211.91,200.07l-23.84-31.51-6.14,7.32v24.19h-16.76V121.36h16.76v35.16l27.85-35.16h20.65l-31.27,36.93,33.39,41.77h-20.65Z"/>
+              <path d="M264.3,200.07v-63.96h-23.01v-14.75h62.78v14.75h-22.89v63.96h-16.87Z"/>
+              <path d="M320.7,200.07V121.36h16.76v78.71h-16.76Z"/>
+              <path d="M381,200.07l-30.44-78.71h19.12l21.83,60.53,21.71-60.53h19.12l-30.33,78.71h-21Z"/>
+              <path d="M494.27,200.07l-4.84-13.33h-33.75l-4.96,13.33h-19.12l30.44-78.71h21l30.33,78.71h-19.12Zm-21.71-61.95l-12.27,33.87h24.54l-12.27-33.87Z"/>
+            </g>
+            <g>
+              <polygon points="136.56 165.88 116.81 121.7 98.32 121.7 118.07 165.88 133.36 200.07 151.85 200.07 136.56 165.88" fill="currentColor"/>
+              <polygon points="100.39 165.88 85.1 200.07 66.61 200.07 81.9 165.88 100.39 165.88" fill="currentColor"/>
+            </g>
+            <g fill="currentColor">
+              <path d="M122.22,268.24v-25.5h16.71v2.83h-13.54v8.22h13.27v2.83h-13.27v11.62h-3.17Z"/>
+              <path d="M147.08,268.24v-25.5h3.17v25.5h-3.17Z"/>
+              <path d="M178.09,268.24l-14.88-20.34v20.34h-3.17v-25.5h3.25l14.68,19.92v-19.92h3.17v25.5h-3.06Z"/>
+              <path d="M209.14,268.24l-2.26-5.66h-12.7l-2.26,5.66h-3.63l10.25-25.5h3.94l10.29,25.5h-3.63Zm-8.6-22.22l-5.43,13.73h10.82l-5.39-13.73Z"/>
+              <path d="M237.97,268.24l-14.88-20.34v20.34h-3.17v-25.5h3.25l14.68,19.92v-19.92h3.17v25.5h-3.06Z"/>
+              <path d="M249.79,255.5c0-7.84,5.77-13.19,13.12-13.19,4.51,0,7.65,2.18,9.67,5.05l-2.68,1.49c-1.45-2.14-4.09-3.71-7-3.71-5.58,0-9.83,4.28-9.83,10.36s4.25,10.36,9.83,10.36c2.91,0,5.54-1.53,7-3.71l2.71,1.49c-2.14,2.91-5.2,5.05-9.71,5.05-7.34,0-13.12-5.35-13.12-13.19Z"/>
+              <path d="M280.5,268.24v-25.5h16.71v2.83h-13.54v8.22h13.27v2.83h-13.27v8.79h13.54v2.83h-16.71Z"/>
+              <path d="M318.74,255.5c0-7.92,5.85-13.19,13.12-13.19,4.51,0,7.65,1.99,9.9,4.78l-2.52,1.57c-1.61-2.06-4.32-3.52-7.38-3.52-5.58,0-9.83,4.28-9.83,10.36s4.25,10.4,9.83,10.4c3.06,0,5.58-1.49,6.84-2.75v-5.2h-8.76v-2.83h11.93v9.22c-2.37,2.64-5.85,4.4-10.02,4.4-7.27,0-13.12-5.32-13.12-13.23Z"/>
+              <path d="M365.62,268.24l-6.5-10.13h-5.09v10.13h-3.17v-25.5h10.25c4.67,0,7.99,2.98,7.99,7.69s-3.14,7.11-6.62,7.42l6.88,10.4h-3.75Zm.19-17.82c0-2.87-2.06-4.86-5.08-4.86h-6.69v9.75h6.69c3.02,0,5.08-2.03,5.08-4.89Z"/>
+              <path d="M376.9,255.5c0-7.53,5.09-13.19,12.66-13.19s12.66,5.66,12.66,13.19-5.12,13.19-12.66,13.19-12.66-5.66-12.66-13.19Zm22.03,0c0-5.96-3.67-10.36-9.37-10.36s-9.37,4.4-9.37,10.36,3.63,10.36,9.37,10.36,9.37-4.44,9.37-10.36Z"/>
+              <path d="M411.01,258.33v-15.6h3.17v15.52c0,4.67,2.52,7.61,7.23,7.61s7.23-2.94,7.23-7.61v-15.52h3.17v15.56c0,6.35-3.48,10.4-10.4,10.4s-10.4-4.09-10.4-10.36Z"/>
+              <path d="M441.6,268.24v-25.5h10.25c5.12,0,7.99,3.52,7.99,7.69s-2.94,7.69-7.99,7.69h-7.07v10.13h-3.17Zm14.95-17.82c0-2.87-2.06-4.86-5.09-4.86h-6.69v9.71h6.69c3.02,0,5.09-1.99,5.09-4.86Z"/>
+            </g>
+          </svg>
+        </div>
+        <p class="logo-row-more reveal">Plus teams at Merit, Mindworks, and Rethinkers.</p>
+      </div>
+    </section>
+
+    <!-- Section 3: The economics -->
+    <section class="proto-econ section reveal">
+      <div class="container">
+        <div class="proto-econ-grid reveal">
+          <div>
+            <p class="label">The Economics</p>
+            <h2>When developers ship faster, <span class="highlight">hourly billing breaks</span></h2>
+            <p class="section-line">Agents change how code gets written. Pricing follows.</p>
+          </div>
+          <div class="proto-equation" role="img" aria-label="Pricing shifts from hours times rate to scope times value">
+            <span class="eq-old">hours &times; rate</span>
+            <span class="eq-arrow">&darr;</span>
+            <span class="eq-new">scope &times; value</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: The team -->
+    <section id="team" class="section reveal">
+      <div class="container">
+        <div class="section-header">
+          <p class="label">The Team</p>
+          <h2>Senior engineers beside you</h2>
+          <p class="section-line">40+ years shipping software. Co-authors of AI Coding for Beginners.</p>
+        </div>
+
+        <div class="proto-team-grid reveal reveal-delay-1">
+          <article class="team-card">
+            <div class="team-photo">
+              <img src="images/kaido.png" alt="Kaido Koort" width="500" height="568" loading="lazy">
+            </div>
+            <div class="team-info">
+              <h3>Kaido Koort</h3>
+              <p class="team-line">Wrote his first agent loop and couldn't sleep.</p>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo">
+              <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
+            </div>
+            <div class="team-info">
+              <h3>Joosep Simm</h3>
+              <p class="team-line">20 years of production systems, telecom to blockchain.</p>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo-placeholder" aria-hidden="true"><span>V</span></div>
+            <div class="team-info">
+              <h3>Vootele</h3>
+              <p class="team-line">Joining in September.</p>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo-placeholder" aria-hidden="true"><span>A</span></div>
+            <div class="team-info">
+              <h3>Andre</h3>
+              <p class="team-line">Joining in September.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: The offer -->
+    <section class="proto-offer section reveal">
+      <div class="container">
+        <div class="section-header">
+          <p class="label">Squad 3</p>
+          <h2><span class="highlight">Six Fridays</span> on your own codebase</h2>
+          <p class="section-line">Estonian employers apply to T&ouml;&ouml;tukassa before the start date.</p>
+        </div>
+
+        <div class="subsidy-figure reveal">
+          <div class="subsidy-nums">
+            <span class="subsidy-from">&euro;2,520</span>
+            <span class="subsidy-arrow">&rarr;</span>
+            <span class="subsidy-to">&euro;504 <small>/dev</small></span>
+          </div>
+          <div class="subsidy-bar" role="img" aria-label="Of the 2,520 euro price, the state subsidy covers 2,016 euro (80 percent), you pay 504 euro">
+            <div class="subsidy-bar-state"><span>T&ouml;&ouml;tukassa pays &euro;2,016 &middot; 80%</span></div>
+            <div class="subsidy-bar-you">&euro;504</div>
+          </div>
+        </div>
+
+        <div class="fact-row reveal">
+          <span>Starts Fri, Sep 4</span>
+          <span>Register by Aug 28</span>
+          <span>50 academic hours</span>
+          <span>Online &middot; 9:00&ndash;15:30</span>
+        </div>
+
+        <div class="offer-cta-row reveal">
+          <a href="/training/" class="btn btn-outline">See the week-by-week program &rarr;</a>
+        </div>
+
+        <blockquote class="pull-quote reveal">
+          <p>&ldquo;The biggest value was a mindset shift: not using AI as a tool, but building architecture around it.&rdquo;</p>
+          <cite>Kristina Krist, Mindworks Industries</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 6: Closing CTA -->
+    <section class="closing-section section reveal">
+      <div class="container">
+        <div class="closing-content on-dark reveal">
+          <h2>See the shift on <span class="highlight">your codebase</span></h2>
+          <p>A 30-minute call with Kaido. Bring one task from your backlog, no prep, no obligation.</p>
+          <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Book a 30-minute call</a>
+          <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
+          <p class="closing-guarantee">No 3x time savings on your typical tasks? We refund your contribution in full. <a href="/#faq-refund">See conditions</a></p>
+          <p class="closing-tagline">Curious play. Epic growth.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/claude-code/">Claude Code</a>
+        <a href="/training/">Training</a>
+        <a href="/scopeful/">Scopeful</a>
+        <a href="/jobs/">Jobs</a>
+        <a href="https://skill.plepic.com" target="_blank" rel="noopener noreferrer">Skill Tree</a>
+      </nav>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener noreferrer" aria-label="Follow on LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            LinkedIn
+          </a>
+          <a href="tel:+3725077333">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +372 5077 333
+          </a>
+          <a href="mailto:kaido@plepic.com">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            kaido@plepic.com
+          </a>
+          <a href="https://discord.gg/mc4Hhh8F3p" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            #claude-code-ee
+          </a>
+        </div>
+        <div class="footer-company-info">
+          <strong>Plepic <span lang="et">OÜ</span></strong> &middot; <span lang="et">Liivalaia 7, 10118 Tallinn</span> &middot; Reg. code 11275881 &middot; VAT EE102813797<br>
+          &copy; 2026 Plepic &middot; <span class="footer-tagline">Curious play. Epic growth.</span> &middot; <a href="/privacy/">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    const setMenu = (open) => {
+      nav.classList.toggle('active', open);
+      menuToggle.setAttribute('aria-expanded', open);
+      menuToggle.textContent = open ? '✕' : '☰';
+    };
+    menuToggle.addEventListener('click', () => setMenu(!nav.classList.contains('active')));
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('active')) {
+        setMenu(false);
+        menuToggle.focus();
+      }
+    });
+
+    // Scroll-triggered reveal animations
+    document.documentElement.classList.add('js-reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+
+  <!-- Metamorphosis hero: same gating + choreography as index.html -->
+  <script type="module">
+    const stage = document.getElementById('metaStage');
+    const code = document.getElementById('metaCode');
+    if (stage && code) {
+      const skip =
+        matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        matchMedia('(max-width: 900px)').matches ||
+        (navigator.connection && navigator.connection.saveData) ||
+        (navigator.deviceMemory && navigator.deviceMemory < 2) ||
+        !document.createElement('canvas').getContext('webgl2');
+
+      if (!skip) {
+        const { init } = await import('/js/crystalline-metamorphosis.js');
+        let choreoOn = true;
+        const hero = init(stage, {
+          startAtRest: true,
+          markPx: 296,
+          markRightPx: -15,
+          markBottomPx: 8,
+          onLive() { stage.classList.add('is-live'); },
+          onFallback() {
+            stage.classList.remove('is-live');
+            choreoOn = false;
+          }
+        });
+        const METAMORPHOSIS_DELAY = 5000;
+        let played = false;
+        function playOnce() {
+          if (played || !choreoOn) return;
+          played = true;
+          hero.replay();
+        }
+        setTimeout(playOnce, METAMORPHOSIS_DELAY);
+
+        const COLLAPSED = '{ explore → act → verify }';
+        const FINAL = 'while(task) ' + COLLAPSED;
+        const PREFIX = 'while(task) ';
+        const PHASE_NAMES = ['crawl', 'gather', 'chrysalis', 'unfurl', 'rest'];
+        const T_CRAWL_APPROX = 4.6;
+        const slots = [...code.querySelectorAll('.meta-code-line .t')];
+        const cursor = code.querySelector('.hero-cursor');
+        const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+        const typed = (s, k) => s.slice(0, Math.round(clamp01(k) * s.length));
+
+        let chWidth = 0;
+        const CURSOR_NUDGE = 2;
+        function measureCh() {
+          if (chWidth) return true;
+          const txt = slots[2].textContent;
+          if (!txt.length) return false;
+          const w = slots[2].getBoundingClientRect().width;
+          if (w <= 0) return false;
+          chWidth = w / txt.length;
+          return true;
+        }
+        let lastCursorPx = -1;
+        let cursorDriven = false;
+        function setCursorIdx(idx) {
+          if (!measureCh()) return;
+          if (!cursorDriven) { cursor.classList.add('is-driven'); cursorDriven = true; }
+          const px = Math.round(idx * chWidth + CURSOR_NUDGE);
+          if (px === lastCursorPx) return;
+          lastCursorPx = px;
+          cursor.style.transform = 'translateX(' + px + 'px)';
+        }
+
+        function codeState(phase, t) {
+          if (phase === 0) {
+            const kDraw = clamp01(t / T_CRAWL_APPROX);
+            const drawn = typed(COLLAPSED, kDraw);
+            const curIdx = Math.round(kDraw * COLLAPSED.length);
+            return { texts: ['', '', drawn], held: false, dim: false, settled: false, cur: 2, curIdx };
+          }
+          if (phase === 1) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2, curIdx: COLLAPSED.length };
+          if (phase === 2) return { texts: ['', '', COLLAPSED], held: true, dim: true, settled: false, cur: 2, curIdx: COLLAPSED.length };
+          if (phase === 3) {
+            const kRaw = clamp01((t - 0.25) / 1.5);
+            const k = 1 - (1 - kRaw) * (1 - kRaw);
+            const n = typed(PREFIX, k);
+            const done = kRaw >= 1;
+            const settled = t >= 2.89;
+            const curIdx = Math.round(k * PREFIX.length);
+            return { texts: ['', '', n + COLLAPSED], held: !done, dim: !done, settled, cur: 2, curIdx };
+          }
+          return { texts: ['', '', FINAL], held: false, dim: false, settled: false, cur: 2, curIdx: FINAL.length };
+        }
+
+        let lastKey = '';
+        function applyCode() {
+          if (!choreoOn) {
+            if (lastKey !== 'off') {
+              lastKey = 'off';
+              slots[0].textContent = ''; slots[1].textContent = ''; slots[2].textContent = FINAL;
+              code.dataset.phase = 'rest';
+              code.classList.remove('is-held', 'is-dim', 'is-settled');
+            }
+            setCursorIdx(FINAL.length);
+            return;
+          }
+          const { phase, tPhase } = hero.phaseInfo();
+          const s = codeState(phase, tPhase);
+          setCursorIdx(s.curIdx);
+          const key = phase + '|' + s.texts.join(' ') + '|' + s.held + s.dim + s.settled + s.cur;
+          if (key === lastKey) return;
+          lastKey = key;
+          for (let i = 0; i < 3; i++) {
+            if (slots[i].textContent !== s.texts[i]) slots[i].textContent = s.texts[i];
+          }
+          code.dataset.phase = PHASE_NAMES[phase];
+          code.classList.toggle('is-held', s.held);
+          code.classList.toggle('is-dim', s.dim);
+          code.classList.toggle('is-settled', s.settled);
+        }
+        (function codeLoop() { applyCode(); requestAnimationFrame(codeLoop); })();
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Evolution directions, round 2: fonts, italics, ink cards | Plepic</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg?v=3">
+
+  <!-- Site fonts (canon) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;1,400&display=swap">
+  <!-- Lab-only candidate fonts (this page only, never production). Every candidate loads 700 upright + true italic 400 (display) or 400 + true italic 400 (body). -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,700;1,400&family=Besley:ital,wght@0,700;1,400&family=Literata:ital,wght@0,700;1,400&family=Schibsted+Grotesk:ital,wght@0,700;1,400&family=Hanken+Grotesk:ital,wght@0,400;1,400&family=Source+Sans+3:ital,wght@0,400;1,400&family=Alegreya+Sans:ital,wght@0,400;1,400&display=swap">
+
+  <!-- Production tokens + components -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ============ Lab scaffolding (this page only) ============
+       Round 2.1 chrome rule: every specimen sits in the canon card grammar,
+       .panel-white anatomy (white var(--surface), 1px var(--border), 14px
+       radius, 2rem padding) on the cream page canvas. No cream-bodied frames,
+       no improvised gray strips. Annotations live INSIDE the card as mono
+       labels + body text, ink on white. */
+    .lab-head {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .lab-head h1 {
+      font-size: 2rem;
+      margin-bottom: 0.35rem;
+    }
+    .lab-head .lab-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .lab-meta a { color: var(--green-brand); text-decoration: underline; text-underline-offset: 3px; }
+    .lab-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 3rem;
+    }
+    .lab-section + .lab-section { border-top: 1px solid var(--border); }
+    .lab-dir {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      margin-bottom: 0.4rem;
+    }
+    .lab-section > h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .lab-q {
+      max-width: 82ch;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+    .lab-row { margin-top: 2rem; }
+    .lab-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .lab-stack { display: grid; gap: 1.5rem; }
+    @media (max-width: 900px) {
+      .lab-compare { grid-template-columns: 1fr; }
+    }
+
+    /* Canon specimen card: .panel-white anatomy (css/styles.css ~3417). */
+    .spec-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: var(--space-xl);
+    }
+    /* Card annotation label: canon .label grammar (mono 600, 0.12em,
+       uppercase), ink per the A-adopted context. */
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    /* Annotation zone at the bottom of a card: hairline separator, then
+       body text + mono verification line, ink on white. */
+    .spec-anno {
+      border-top: 1px solid var(--border);
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+    }
+    .spec-verify {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .spec-anno .spec-verify { margin-top: 0.6rem; }
+    .verify-fail { color: #a3502e; }
+
+    /* Fidelity exception: production heroes render on the cream CANVAS, so
+       the hero H1 (and the header lockup, also cream in production) sit on a
+       cream inset strip inside the white card. Everything else renders on
+       white, a real production panel context. */
+    .hero-inset {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.4rem 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-inset .inset-label {
+      color: var(--text-3);
+      margin-bottom: 0.9rem;
+    }
+
+    /* ============ A-adopted context (round 1 verdict), page-wide ============
+       Wordmark stays green (production default). Kickers go ink. Green is
+       rationed to payload phrases + primary links inside specimens. */
+    .label { color: var(--text); }
+
+    /* ============ Font hooks ============ */
+    .f-zilla     { font-family: 'Zilla Slab', Georgia, serif; }
+    .f-bitter    { font-family: 'Bitter', Georgia, serif; }
+    .f-besley    { font-family: 'Besley', Georgia, serif; }
+    .f-literata  { font-family: 'Literata', Georgia, serif; }
+    .f-schibsted { font-family: 'Schibsted Grotesk', -apple-system, sans-serif; }
+    .f-jakarta   { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    .f-hanken    { font-family: 'Hanken Grotesk', -apple-system, sans-serif; }
+    .f-sourcesans { font-family: 'Source Sans 3', -apple-system, sans-serif; }
+    .f-alegreya  { font-family: 'Alegreya Sans', -apple-system, sans-serif; }
+
+    /* ============ Section 1: display specimens ============ */
+    .c-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      line-height: normal;
+      flex-shrink: 0;
+    }
+    .c-wordmark {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
+      color: var(--green-brand);
+      line-height: normal;
+    }
+    .d-h1 {
+      font-weight: 700;
+      font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin: 1rem 0 0;
+    }
+    @media (max-width: 480px) {
+      .d-h1 { font-size: 2.4rem; }
+    }
+    .d-h2 {
+      font-weight: 700;
+      font-size: clamp(1.5rem, 1.25rem + 2vw, 2.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    .d-h2block { margin-bottom: 1.5rem; }
+    .d-italics {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+    .d-tagline {
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.35rem;
+      line-height: normal;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+    .d-quote { margin: 0; max-width: 56ch; }
+    .d-quote p {
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.35rem;
+      line-height: 1.45;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    .d-quote cite {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      font-style: normal;
+      font-weight: 600;
+      font-family: var(--font-body);
+    }
+    .d-quote cite::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green-vivid);
+    }
+    .d-arg {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      max-width: 88ch;
+      margin-bottom: 0;
+    }
+    .d-arg strong { color: var(--text); }
+
+    /* ============ Section 2: italic scanline (one white card) ============ */
+    .scan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 1.5rem;
+    }
+    .scan-item .scan-name {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 0.5rem;
+    }
+    .scan-item .scan-tag {
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.35rem;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+
+    /* ============ Section 3: body candidates ============ */
+    .b-par {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 68ch;
+      margin-bottom: 0.9rem;
+    }
+    .b-caption {
+      font-size: 0.8rem;
+      line-height: normal;
+      color: var(--text-3);
+      letter-spacing: 0.01em;
+      margin-bottom: 0;
+    }
+    .b-pair {
+      border-top: 1px solid var(--border);
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+    }
+    .b-pairlabel {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 0.6rem;
+    }
+    .b-pair-h {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .b-why {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      max-width: 88ch;
+      margin-bottom: 0;
+    }
+
+    /* ============ Section 4: ink on cards ============
+       The team cards ARE canon white cards, so they sit directly on the
+       cream canvas (kicker + H2 above them, production context); the
+       annotations live in a white card below. */
+    .ink-col .label { margin-bottom: 0.25rem; }
+    .ink-h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.45rem;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .ink-col > .spec-label { margin-bottom: 1.25rem; }
+    .ink-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .ink-grid { grid-template-columns: 1fr; }
+    }
+    .anno-card { padding: var(--space-lg); }
+    .anno-card .spec-label { color: var(--text-3); margin-bottom: 0.5rem; }
+    .anno-body {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    /* INK-FIRST overrides: all reading text goes near-black ink; green leaves
+       reading text (the vivid check icon stays as the decorative dot). */
+    .ink-first .team-role,
+    .ink-first .team-bio,
+    .ink-first .team-experience { color: var(--text); }
+
+    /* ============ Section 5: strategic note (white card) ============ */
+    .note-card { max-width: 88ch; }
+    .note-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .note-card p {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .note-card p:last-child { margin-bottom: 0; }
+
+    /* Header verdicts card */
+    .lab-verdicts { max-width: 96ch; padding: var(--space-lg); }
+    .lab-verdicts .spec-label { color: var(--text-3); margin-bottom: 0.5rem; }
+    .lab-verdicts ul { margin: 0; padding-left: 1.1rem; }
+    .lab-verdicts li {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.55;
+      margin-bottom: 0.35rem;
+    }
+    .lab-verdicts li:last-child { margin-bottom: 0; }
+
+    @media (max-width: 600px) {
+      .lab-head { padding: 2rem 1.25rem 1.25rem; }
+      .lab-section { padding: 2rem 1.25rem 2.5rem; }
+      .spec-card { padding: var(--space-lg); }
+      .hero-inset { padding: 0.9rem 1rem 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= Lab header ================= -->
+  <div class="lab-head">
+    <h1>Evolution directions, round 2: fonts, italics, ink cards</h1>
+    <p class="lab-meta">2026-07-23 &middot; local lab file, untracked &middot; canon: DESIGN.md + css/styles.css &middot; <a href="/evolution-directions.html">round 1: three directions &rarr;</a><br>Round 2.1: re-set on canon white cards</p>
+    <div class="spec-card lab-verdicts">
+      <p class="spec-label">Round 1 verdicts (stored here so decisions live in-repo)</p>
+      <ul>
+        <li>Direction A adopted with amendment: wordmark STAYS GREEN; label kickers go ink; green rationed to one payload phrase + primary links.</li>
+        <li>Direction B: current dark-section colors retained.</li>
+        <li>Direction C: Bitter 700 benchmark, founder wants bolder strategic options plus italics and body comparisons.</li>
+        <li>All specimens on this page render in the A-adopted context: green wordmark, ink kickers, rationed green.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ================= SECTION 1: STRATEGIC DISPLAY CANDIDATES ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Section 1</p>
+    <h2>Strategic display candidates</h2>
+    <p class="lab-q">Five rows: the control, the round-1 benchmark, and three candidates from genuinely different strategic lanes. Every candidate ships 700 and a true italic on Google Fonts; each row states its live verification result. Screened out before selection: Bricolage Grotesque (no true italic on Google Fonts; the tagline &ldquo;Curious play. Epic growth.&rdquo; and the pull-quote canon are set in true italic, and a synthesized oblique would fake both), Familjen Grotesk (ships italic + 700, but rounder and friendlier: it drifts toward the generic startup sans this lane must avoid), Source Serif 4 (credible, but Literata carries more book-grade warmth at display sizes), Roboto Slab (no italic at all). The reflex-ban list was honored throughout. Note: wordmarks below render at 700 because candidates load 700 only; the shipped wordmark is Zilla 600. Each card shows the face on both production surfaces: the hero H1 and lockup on a cream canvas inset (heroes never sit in cards), the section H2, kicker, and italics on the white card surface (headings inside white panels are a real production context).</p>
+
+    <div class="lab-row">
+      <div class="lab-stack">
+
+        <!-- Row 1: Zilla Slab control -->
+        <article class="spec-card">
+          <p class="spec-label">CONTROL &middot; Zilla Slab 700 &middot; lane: incumbent slab</p>
+          <div class="f-zilla">
+            <div class="hero-inset">
+              <p class="spec-label inset-label">Hero on canvas</p>
+              <span class="c-lockup"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="d-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+            </div>
+            <div class="d-h2block">
+              <p class="label">The Shift</p>
+              <p class="d-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+            <div class="d-italics">
+              <p class="d-tagline">Curious play. Epic growth.</p>
+              <blockquote class="d-quote"><p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p><cite>Kaido Koort</cite></blockquote>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="d-arg"><strong>Positioning:</strong> the incumbent. It claims grounded, documentation-grade competence and costs nothing to keep. But it is Mozilla's brand face: the lane is already owned by Firefox and MDN, so the distinctiveness is rented, and its italic is serviceable rather than characterful.</p>
+            <p class="spec-verify"><span class="verify" data-font="Zilla Slab" data-upright="700" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Row 2: Bitter benchmark -->
+        <article class="spec-card">
+          <p class="spec-label">BENCHMARK (ROUND 1) &middot; Bitter 700 &middot; lane: screen-bred slab, closest safe evolution</p>
+          <div class="f-bitter">
+            <div class="hero-inset">
+              <p class="spec-label inset-label">Hero on canvas</p>
+              <span class="c-lockup"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="d-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+            </div>
+            <div class="d-h2block">
+              <p class="label">The Shift</p>
+              <p class="d-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+            <div class="d-italics">
+              <p class="d-tagline">Curious play. Epic growth.</p>
+              <blockquote class="d-quote"><p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p><cite>Kaido Koort</cite></blockquote>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="d-arg"><strong>Positioning:</strong> keeps the slab authority but screen-bred and rounder: the claim shifts from browser-maker to publisher, &ldquo;we wrote the book on this.&rdquo; The lane is long-form reading products and modern editorial platforms. Main risk: it sits so close to Zilla that visitors will not register the change; a migration's worth of cost for a whisper of difference.</p>
+            <p class="spec-verify"><span class="verify" data-font="Bitter" data-upright="700" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Row 3: Besley, lane (a) -->
+        <article class="spec-card">
+          <p class="spec-label">CANDIDATE 1 &middot; Besley 700 &middot; lane (a): sharp Clarendon authority serif, &ldquo;confident specialist consultancy&rdquo;</p>
+          <div class="f-besley">
+            <div class="hero-inset">
+              <p class="spec-label inset-label">Hero on canvas</p>
+              <span class="c-lockup"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="d-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+            </div>
+            <div class="d-h2block">
+              <p class="label">The Shift</p>
+              <p class="d-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+            <div class="d-italics">
+              <p class="d-tagline">Curious play. Epic growth.</p>
+              <blockquote class="d-quote"><p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p><cite>Kaido Koort</cite></blockquote>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="d-arg"><strong>Positioning:</strong> a sharp Clarendon revival (of Robert Besley's 1845 original): the grammar of institutions that expect to be believed. It lets Plepic claim the confident specialist consultancy: verdicts, numbers, signed work. The lane is newspaper mastheads, heritage law and finance, letterpress Americana. Main risk: authority can tip into sternness; the ball terminals get loud at display sizes, and warmth must then come entirely from the cream, the green, and the copy.</p>
+            <p class="spec-verify"><span class="verify" data-font="Besley" data-upright="700" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Row 4: Literata, lane (b) -->
+        <article class="spec-card">
+          <p class="spec-label">CANDIDATE 2 &middot; Literata 700 &middot; lane (b): warm literary serif, &ldquo;considered depth, book-grade credibility&rdquo;</p>
+          <div class="f-literata">
+            <div class="hero-inset">
+              <p class="spec-label inset-label">Hero on canvas</p>
+              <span class="c-lockup"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="d-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+            </div>
+            <div class="d-h2block">
+              <p class="label">The Shift</p>
+              <p class="d-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+            <div class="d-italics">
+              <p class="d-tagline">Curious play. Epic growth.</p>
+              <blockquote class="d-quote"><p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p><cite>Kaido Koort</cite></blockquote>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="d-arg"><strong>Positioning:</strong> a contemporary literary serif commissioned for Google Play Books: book-grade credibility, considered depth, the firm that writes the field guide. It lets Plepic claim patience and rigor in a market shouting hype, and its italic is genuinely beautiful. Main risk: modest display presence; at hero sizes it whispers, so hierarchy must come from scale and space, and the site can read publisher before it reads engineering firm.</p>
+            <p class="spec-verify"><span class="verify" data-font="Literata" data-upright="700" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Row 5: Schibsted Grotesk, lane (c) -->
+        <article class="spec-card">
+          <p class="spec-label">CANDIDATE 3 &middot; Schibsted Grotesk 700 &middot; lane (c): retire the slab; humanist grotesque display sans, &ldquo;modern engineering firm, no costume&rdquo;</p>
+          <div class="f-schibsted">
+            <div class="hero-inset">
+              <p class="spec-label inset-label">Hero on canvas</p>
+              <span class="c-lockup"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="d-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+            </div>
+            <div class="d-h2block">
+              <p class="label">The Shift</p>
+              <p class="d-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+            <div class="d-italics">
+              <p class="d-tagline">Curious play. Epic growth.</p>
+              <blockquote class="d-quote"><p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p><cite>Kaido Koort</cite></blockquote>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="d-arg"><strong>Positioning:</strong> the lane-change: retire the slab and let a characterful humanist grotesque carry the display voice. Built for Schibsted, the Nordic media group, it reads modern European engineering firm, no costume, and it ships a true italic so the tagline stays honest. Main risk: typography stops carrying the warmth channel; cream, green, and motion must carry it alone, and the site steps closer to the sans-everything startup norm the design system explicitly rejects.</p>
+            <p class="spec-verify"><span class="verify" data-font="Schibsted Grotesk" data-upright="700" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2: ITALIC SCANLINE ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Section 2</p>
+    <h2>Italic scanline</h2>
+    <p class="lab-q">The tagline in every candidate's true italic, side by side, all at italic 400 &middot; 1.35rem. The shipped tagline is Zilla italic 500; 400 is used here because it is the italic every candidate loads, so the comparison is fair.</p>
+
+    <div class="lab-row">
+      <div class="spec-card">
+        <div class="scan-grid">
+          <div class="scan-item f-zilla">
+            <p class="scan-name">Zilla Slab &middot; control</p>
+            <p class="scan-tag">Curious play. Epic growth.</p>
+          </div>
+          <div class="scan-item f-bitter">
+            <p class="scan-name">Bitter</p>
+            <p class="scan-tag">Curious play. Epic growth.</p>
+          </div>
+          <div class="scan-item f-besley">
+            <p class="scan-name">Besley</p>
+            <p class="scan-tag">Curious play. Epic growth.</p>
+          </div>
+          <div class="scan-item f-literata">
+            <p class="scan-name">Literata</p>
+            <p class="scan-tag">Curious play. Epic growth.</p>
+          </div>
+          <div class="scan-item f-schibsted">
+            <p class="scan-name">Schibsted Grotesk</p>
+            <p class="scan-tag">Curious play. Epic growth.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: BODY TEXT CANDIDATES ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Section 3</p>
+    <h2>Body text candidates</h2>
+    <p class="lab-q">The control plus three alternatives, all with true italics, each shown as: a real paragraph at 1rem/1.7 capped near 70ch, a sentence with inline emphasis so the italic shows, a caption sample, and the same paragraph under a Bitter 700 heading to judge pairing. Considered and rejected: Wix Madefor Text (commissioned for the Wix brand: the same rented-distinctiveness problem the display row is trying to exit), Mulish (its italic is a near-oblique slant and the texture is cool and geometric: no warmth gained over the incumbent).</p>
+
+    <div class="lab-row">
+      <div class="lab-compare">
+
+        <!-- Control: Plus Jakarta Sans -->
+        <article class="spec-card">
+          <p class="spec-label">CONTROL &middot; Plus Jakarta Sans 400 &middot; note: sits on the reflex-ban list</p>
+          <div class="f-jakarta">
+            <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            <p class="b-par">Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop <em>until the task is done</em>, and keeps context across iterations.</p>
+            <p class="b-caption">For developers with 2+ years experience &middot; ~20 per squad</p>
+            <div class="b-pair">
+              <p class="b-pairlabel">Pairing test &middot; under Bitter 700</p>
+              <p class="b-pair-h">When Developers Ship Faster, Hourly Billing Breaks</p>
+              <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="b-why">geometric and slightly cool; personality lives in the quirky g; it is the incumbent, so swap cost is the yardstick: every page, the OG image, and the design guard reference it</p>
+            <p class="spec-verify"><span class="verify" data-font="Plus Jakarta Sans" data-upright="400" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Candidate: Hanken Grotesk -->
+        <article class="spec-card">
+          <p class="spec-label">CANDIDATE A &middot; Hanken Grotesk 400</p>
+          <div class="f-hanken">
+            <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            <p class="b-par">Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop <em>until the task is done</em>, and keeps context across iterations.</p>
+            <p class="b-caption">For developers with 2+ years experience &middot; ~20 per squad</p>
+            <div class="b-pair">
+              <p class="b-pairlabel">Pairing test &middot; under Bitter 700</p>
+              <p class="b-pair-h">When Developers Ship Faster, Hourly Billing Breaks</p>
+              <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="b-why">humanist warmth at near-identical color and x-height: the quiet swap; texture calms without changing the page's weight; lowest swap cost here, close to drop-in</p>
+            <p class="spec-verify"><span class="verify" data-font="Hanken Grotesk" data-upright="400" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Candidate: Source Sans 3 -->
+        <article class="spec-card">
+          <p class="spec-label">CANDIDATE B &middot; Source Sans 3 400</p>
+          <div class="f-sourcesans">
+            <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            <p class="b-par">Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop <em>until the task is done</em>, and keeps context across iterations.</p>
+            <p class="b-caption">For developers with 2+ years experience &middot; ~20 per squad</p>
+            <div class="b-pair">
+              <p class="b-pairlabel">Pairing test &middot; under Bitter 700</p>
+              <p class="b-pair-h">When Developers Ship Faster, Hourly Billing Breaks</p>
+              <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="b-why">the engineering workhorse: tall x-height, open apertures, a genuinely cursive italic; a touch cooler and narrower than Hanken, credibility texture with zero hype; moderate swap cost</p>
+            <p class="spec-verify"><span class="verify" data-font="Source Sans 3" data-upright="400" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+        <!-- Candidate: Alegreya Sans -->
+        <article class="spec-card">
+          <p class="spec-label">CANDIDATE C &middot; Alegreya Sans 400</p>
+          <div class="f-alegreya">
+            <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            <p class="b-par">Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop <em>until the task is done</em>, and keeps context across iterations.</p>
+            <p class="b-caption">For developers with 2+ years experience &middot; ~20 per squad</p>
+            <div class="b-pair">
+              <p class="b-pairlabel">Pairing test &middot; under Bitter 700</p>
+              <p class="b-pair-h">When Developers Ship Faster, Hourly Billing Breaks</p>
+              <p class="b-par">Kaido Koort founded Plepic in 2025 after 23 years in software: 8 teams, 6 products, both agency and client side. He knows what it looks like when efficiency arrives and the teams that made it possible don&rsquo;t share in it.</p>
+            </div>
+          </div>
+          <div class="spec-anno">
+            <p class="b-why">calligraphic humanist with the warmest texture and the best italic on this page; slightly lower x-height so 1rem sets smaller; the voice moves literary: highest-warmth, highest-risk swap</p>
+            <p class="spec-verify"><span class="verify" data-font="Alegreya Sans" data-upright="400" data-italic="italic 400">verifying fonts&hellip;</span></p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4: INK ON CARDS ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Section 4</p>
+    <h2>Ink on cards</h2>
+    <p class="lab-q">Founder request from the round-1 review: &ldquo;near-black text in white cards on cream isn't prototyped.&rdquo; Below, the real homepage team-card cluster (real markup, real copy; the team cards are themselves canon white cards, so they sit directly on the cream canvas exactly as in production; book divider omitted for width), CURRENT text colors vs INK-FIRST, annotations in a white card below each. Both render in the A-adopted context: ink kicker, green rationed. In the ink-first column every piece of reading text is near-black; --text-2 would remain only for true metadata such as dates and captions, and nothing on these cards qualifies, which is the point of the prototype.</p>
+
+    <div class="lab-row">
+      <div class="lab-compare">
+
+        <div class="ink-col">
+          <p class="spec-label">CURRENT &middot; reading text in three grays + one green, reproduced faithfully</p>
+          <p class="label">Meet the Team</p>
+          <p class="ink-h2">Your Instructors</p>
+          <div class="ink-grid">
+            <article class="team-card">
+              <div class="team-photo">
+                <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="eager">
+              </div>
+              <div class="team-info">
+                <h3>Joosep Simm</h3>
+                <p class="team-role">Developer, Architect &amp; AI Trainer</p>
+                <div class="team-experience">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  20+ Years Dev Experience
+                </div>
+                <div class="team-skills">
+                  <span class="skill-tag">Java</span>
+                  <span class="skill-tag">Kotlin</span>
+                  <span class="skill-tag">Go</span>
+                  <span class="skill-tag">TypeScript</span>
+                  <span class="skill-tag">Python</span>
+                </div>
+                <p class="team-bio">Telecommunications | Blockchain | AML | Energy | Game Design | Agentic Coding</p>
+              </div>
+            </article>
+            <article class="team-card">
+              <div class="team-photo">
+                <img src="images/kaido.png" alt="Kaido Koort" width="500" height="568" loading="eager">
+              </div>
+              <div class="team-info">
+                <h3>Kaido Koort</h3>
+                <p class="team-role">Tech Leader &amp; Product Strategist</p>
+                <div class="team-experience">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  20+ Years in Software
+                </div>
+                <div class="team-skills">
+                  <span class="skill-tag">MSc</span>
+                  <span class="skill-tag">MA</span>
+                  <span class="skill-tag">Strategy</span>
+                  <span class="skill-tag">Product</span>
+                </div>
+                <p class="team-bio">Led 8 teams | Launched 6 products | Former Head of Dev, Smart-ID | StaffLogic | SurfCast | Lunar Base</p>
+              </div>
+            </article>
+          </div>
+          <div class="spec-card anno-card">
+            <p class="spec-label">Contrast on white</p>
+            <p class="anno-body">on white: h3 ink 17.1:1 &middot; .team-role #4a4a45 8.9:1 &middot; .team-bio #6b6b60 5.4:1 &middot; .team-experience #0d5822 8.6:1</p>
+          </div>
+        </div>
+
+        <div class="ink-col ink-first">
+          <p class="spec-label">INK-FIRST &middot; all reading text #1c1c1a via var(--text); green only on payload/link (none here)</p>
+          <p class="label">Meet the Team</p>
+          <p class="ink-h2">Your Instructors</p>
+          <div class="ink-grid">
+            <article class="team-card">
+              <div class="team-photo">
+                <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="eager">
+              </div>
+              <div class="team-info">
+                <h3>Joosep Simm</h3>
+                <p class="team-role">Developer, Architect &amp; AI Trainer</p>
+                <div class="team-experience">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  20+ Years Dev Experience
+                </div>
+                <div class="team-skills">
+                  <span class="skill-tag">Java</span>
+                  <span class="skill-tag">Kotlin</span>
+                  <span class="skill-tag">Go</span>
+                  <span class="skill-tag">TypeScript</span>
+                  <span class="skill-tag">Python</span>
+                </div>
+                <p class="team-bio">Telecommunications | Blockchain | AML | Energy | Game Design | Agentic Coding</p>
+              </div>
+            </article>
+            <article class="team-card">
+              <div class="team-photo">
+                <img src="images/kaido.png" alt="Kaido Koort" width="500" height="568" loading="eager">
+              </div>
+              <div class="team-info">
+                <h3>Kaido Koort</h3>
+                <p class="team-role">Tech Leader &amp; Product Strategist</p>
+                <div class="team-experience">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  20+ Years in Software
+                </div>
+                <div class="team-skills">
+                  <span class="skill-tag">MSc</span>
+                  <span class="skill-tag">MA</span>
+                  <span class="skill-tag">Strategy</span>
+                  <span class="skill-tag">Product</span>
+                </div>
+                <p class="team-bio">Led 8 teams | Launched 6 products | Former Head of Dev, Smart-ID | StaffLogic | SurfCast | Lunar Base</p>
+              </div>
+            </article>
+          </div>
+          <div class="spec-card anno-card">
+            <p class="spec-label">What changed</p>
+            <p class="anno-body">changed: .team-role #4a4a45 &rarr; #1c1c1a (8.9 &rarr; 17.1:1) &middot; .team-bio #6b6b60 &rarr; #1c1c1a (5.4 &rarr; 17.1:1) &middot; .team-experience #0d5822 &rarr; #1c1c1a (8.6 &rarr; 17.1:1; green leaves reading text, the vivid check icon stays as the decorative dot) &middot; unchanged: h3 (already ink), skill tags (badge grammar, not reading text)</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5: STRATEGIC NOTE ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Section 5</p>
+    <h2>Strategic note: the two moves Google Fonts cannot provide</h2>
+
+    <div class="lab-row">
+      <div class="spec-card note-card">
+        <h3>License a characterful foundry slab or serif</h3>
+        <p>Faces in the Jubilat, Sentinel, or Caponi lane carry Clarendon-grade character that no competitor stumbles into via a free-fonts search, which is exactly the ownability the Zilla problem exposes. The cost is real: web licenses are typically annual and priced by traffic, and every renewal is a dependency on the foundry. Self-hosting on a static site is straightforward though: two woff2 files and an @font-face block, no CDN, usually faster than Google Fonts.</p>
+        <h3>Customize 2 or 3 letterforms of the wordmark only</h3>
+        <p>A lettering pass on &ldquo;Plepic&rdquo;, say the two P bowls and the c terminal, turns the wordmark from a font rendering into owned artwork: shipped as SVG beside the butterfly, zero font dependency, one-time cost. It is the cheapest genuine ownability on this page, and it decouples identity from typography: the display face can change later, or never, without touching the mark. The risk is small and known: amateur lettering reads instantly, so this is a commission for a type designer, not an in-house tweak.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Font verification: strict two-step. document.fonts.check() for the exact
+    // spec, AND an inspection of loaded FontFace entries (check() can nearest-
+    // match, the inspection cannot). A row passes only if both agree.
+    (function () {
+      function coversWeight(faceWeight, target) {
+        var w = String(faceWeight).trim();
+        if (w.indexOf(' ') > 0) {
+          var p = w.split(/\s+/).map(parseFloat);
+          return target >= p[0] && target <= p[1];
+        }
+        var n = parseFloat(w);
+        if (isNaN(n)) n = (w === 'bold') ? 700 : 400;
+        return n === target;
+      }
+      function faceLoaded(family, style, weight) {
+        var found = false;
+        document.fonts.forEach(function (f) {
+          if (found || f.status !== 'loaded') return;
+          if (f.family.replace(/['"]/g, '') !== family) return;
+          var isItalic = /italic|oblique/.test(f.style);
+          if ((style === 'italic') !== isItalic) return;
+          if (coversWeight(f.weight, weight)) found = true;
+        });
+        return found;
+      }
+      function run() {
+        document.querySelectorAll('.verify[data-font]').forEach(function (el) {
+          var fam = el.dataset.font;
+          var upW = parseInt(el.dataset.upright, 10);
+          var itW = parseInt(el.dataset.italic.replace(/[^0-9]/g, ''), 10);
+          var upOk = document.fonts.check(el.dataset.upright + ' 1rem "' + fam + '"') && faceLoaded(fam, 'normal', upW);
+          var itOk = document.fonts.check(el.dataset.italic + ' 1rem "' + fam + '"') && faceLoaded(fam, 'italic', itW);
+          el.textContent = 'verified via document.fonts: ' + el.dataset.upright + ' upright ' +
+            (upOk ? 'LOADED' : 'MISSING') + ' · true ' + el.dataset.italic + ' ' +
+            (itOk ? 'LOADED' : 'MISSING');
+          if (!(upOk && itOk)) el.classList.add('verify-fail');
+        });
+      }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () { setTimeout(run, 100); });
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Evolution directions: lab, not shipped | Plepic</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg?v=3">
+
+  <!-- Site fonts (canon) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+  <!-- Lab-only candidate fonts (this page only, never production) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Arvo:wght@700&family=Vollkorn:wght@700&family=Hanken+Grotesk:wght@400;600&display=swap">
+
+  <!-- Production tokens + components -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ============ Lab scaffolding (this page only) ============ */
+    .lab-head {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .lab-head h1 {
+      font-size: 2rem;
+      margin-bottom: 0.35rem;
+    }
+    .lab-head .lab-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+    .lab-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 3rem;
+    }
+    .lab-section + .lab-section { border-top: 1px solid var(--border); }
+    .lab-dir {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      margin-bottom: 0.4rem;
+    }
+    .lab-section > h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .lab-q {
+      max-width: 76ch;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+    .lab-row { margin-top: 2rem; }
+    .lab-rowlabel {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 0.75rem;
+    }
+    .lab-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .lab-compare--3 { grid-template-columns: 1fr 1fr 1fr; }
+    .lab-stack { display: grid; gap: 1.25rem; }
+    @media (max-width: 900px) {
+      .lab-compare, .lab-compare--3 { grid-template-columns: 1fr; }
+    }
+    .lab-frame {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .lab-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-2);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      line-height: 1.5;
+    }
+    .lab-anno {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 0.5rem 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ============ Direction A: header specimens ============ */
+    .spec-header .header {
+      position: static;
+      background: var(--bg);
+    }
+    .a-ink .logo-wordmark { color: var(--text); }
+    .a-ink .nav-cta {
+      border-color: var(--text) !important;
+      color: var(--text) !important;
+    }
+
+    /* ============ Direction A: mini-page mock ============ */
+    .mini-page { background: var(--bg); }
+    .mini-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .mini-nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.25rem;
+    }
+    .mini-nav > a {
+      font-size: 0.85rem;
+      line-height: normal;
+      color: var(--text-2);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .mini-nav > .nav-cta { white-space: nowrap; }
+    .mini-hero { padding: 2rem 1.5rem 1.75rem; }
+    .mini-h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 1.5rem + 1vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .mini-hero .hero-desc { font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .mini-hero .btn-group { margin-bottom: 0.75rem; }
+    .mini-section {
+      padding: 1.75rem 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+    .mini-h2 {
+      font-size: 1.45rem;
+      margin-bottom: 0.75rem;
+    }
+    .mini-section > p { max-width: 60ch; font-size: 0.95rem; }
+    .mini-links { margin-top: 1rem; }
+
+    /* Rationed overrides: ink identity, green only on payload + primary link */
+    .a2-rationed .logo-wordmark { color: var(--text); }
+    .a2-rationed .nav-cta {
+      border-color: var(--text) !important;
+      color: var(--text) !important;
+    }
+    .a2-rationed .badge-base {
+      background: var(--surface);
+      color: var(--text-2);
+      border-color: var(--border);
+    }
+    .a2-rationed .badge-base::before {
+      background: var(--text-3);
+      animation: none;
+    }
+    .a2-rationed .label { color: var(--text); }
+    .a2-rationed .btn-ghost { color: var(--text); }
+    .a2-rationed .link {
+      color: var(--text);
+      text-decoration-color: var(--text-3);
+    }
+    .a2-rationed .link--keep { color: var(--green-brand); }
+
+    /* ============ Direction B: dark panel variants ============ */
+    .b-panel { padding: 2.5rem 1.5rem; }
+    .b-cream-heads .closing-content h2 { color: var(--bg); }
+    .b-cream-heads .closing-content p { color: var(--text-on-dark); }
+    .b-full-cream .closing-content h2,
+    .b-full-cream .closing-content p { color: var(--bg); }
+
+    /* ============ Direction C: display font candidates ============ */
+    .f-zilla    { font-family: 'Zilla Slab', Georgia, serif; }
+    .f-bitter   { font-family: 'Bitter', Georgia, serif; }
+    .f-arvo     { font-family: 'Arvo', Georgia, serif; }
+    .f-vollkorn { font-family: 'Vollkorn', Georgia, serif; }
+    .f-jakarta  { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    .f-hanken   { font-family: 'Hanken Grotesk', -apple-system, sans-serif; }
+
+    .c-body { padding: 1.75rem 1.5rem; }
+    .c-side {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .c-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      line-height: normal;
+      flex-shrink: 0;
+    }
+    .c-wordmark {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
+      color: var(--green-brand);
+      line-height: normal;
+    }
+    .c-rationale {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      flex: 1;
+      min-width: 260px;
+      max-width: 80ch;
+      margin-bottom: 0;
+    }
+    .c-h1 {
+      font-weight: 700;
+      font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .c-h2 {
+      font-weight: 700;
+      font-size: clamp(1.5rem, 1.25rem + 2vw, 2.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    @media (max-width: 480px) {
+      .c-h1 { font-size: 2.4rem; }
+    }
+    .c-bodyspec { padding: 1.5rem; }
+    .c-bodyspec .c-name {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 0.75rem;
+    }
+    .c-bodyspec p.spec-par {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 65ch;
+      margin-bottom: 0.9rem;
+    }
+    .c-bodynote {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      max-width: 80ch;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= Lab header ================= -->
+  <div class="lab-head">
+    <h1>Evolution directions: lab, not shipped</h1>
+    <p class="lab-meta">2026-07-23 &middot; local lab file, untracked &middot; three directions rendered on real site surfaces with real copy &middot; canon: DESIGN.md + css/styles.css</p>
+  </div>
+
+  <!-- ================= DIRECTION A ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Direction A</p>
+    <h2>Ink-first identity</h2>
+    <p class="lab-q">Design question: is green the identity or the punctuation? Today green carries the wordmark, links, kickers, payload phrases and badges all at once. The instinct says ink carries identity, and green appears only where it marks the payload.</p>
+
+    <div class="lab-row">
+      <p class="lab-rowlabel">A1 &middot; Header bar, real markup, full width</p>
+      <div class="lab-stack">
+        <div class="lab-frame spec-header">
+          <div class="lab-tag">CURRENT &middot; wordmark #137b30, nav CTA green outline</div>
+          <header class="header">
+            <div class="header-inner">
+              <a href="#" class="logo-lockup" aria-label="Plepic home"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></a>
+              <nav class="nav">
+                <a href="#">Claude Code</a>
+                <a href="#">Training</a>
+                <a href="#">Scopeful</a>
+                <a href="#">Team</a>
+                <a href="#" class="nav-cta">Talk to Kaido</a>
+              </nav>
+              <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+            </div>
+          </header>
+        </div>
+        <div class="lab-frame spec-header a-ink">
+          <div class="lab-tag">INK &middot; wordmark #1c1c1a via var(--text), butterfly unchanged: the mark is the only green in the header</div>
+          <header class="header">
+            <div class="header-inner">
+              <a href="#" class="logo-lockup" aria-label="Plepic home"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></a>
+              <nav class="nav">
+                <a href="#">Claude Code</a>
+                <a href="#">Training</a>
+                <a href="#">Scopeful</a>
+                <a href="#">Team</a>
+                <a href="#" class="nav-cta">Talk to Kaido</a>
+              </nav>
+              <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+            </div>
+          </header>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-row">
+      <p class="lab-rowlabel">A2 &middot; Mini page (header + hero + one section), same copy both sides, reduced scale</p>
+      <div class="lab-compare">
+        <div class="lab-frame">
+          <div class="lab-tag">CURRENT &middot; green wordmark, links, kicker, payloads, badge</div>
+          <div class="mini-page">
+            <div class="mini-header">
+              <span class="logo-lockup"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <nav class="mini-nav">
+                <a href="#">Claude Code</a>
+                <a href="#">Training</a>
+                <a href="#" class="nav-cta">Talk to Kaido</a>
+              </nav>
+            </div>
+            <div class="mini-hero">
+              <div class="badge-base"><span>300+ trained &middot; 8.7/10 avg &middot; Squad 3 starts Sep 4</span></div>
+              <p class="mini-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+              <p class="hero-desc">Six Fridays, senior engineers beside you, your real codebase. You direct the agent, it ships production code.<br><strong>&euro;2,520</strong>/dev &middot; &#x1F1EA;&#x1F1EA; Estonian subsidy: just <strong>&euro;504</strong>.</p>
+              <div class="btn-group">
+                <a href="#" class="btn btn-primary">Talk to Kaido about Squad 3</a>
+                <a href="#" class="btn btn-ghost">View the full program &rarr;</a>
+              </div>
+              <p class="hero-qualifier">For developers with 2+ years experience &middot; ~20 per squad</p>
+            </div>
+            <div class="mini-section">
+              <p class="label">The Shift</p>
+              <h2 class="mini-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
+              <p>Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop until the task is done, and keeps context across iterations.</p>
+              <p class="mini-links"><a href="#" class="link">Why Claude Code &rarr;</a><span class="link-separator">&middot;</span><a href="#" class="link">See the 6-week program &rarr;</a></p>
+            </div>
+          </div>
+          <div class="lab-anno">green touches: wordmark + nav CTA + badge + kicker + 2 payloads + ghost link + 2 links = 9</div>
+        </div>
+        <div class="lab-frame a2-rationed">
+          <div class="lab-tag">RATIONED &middot; ink wordmark and kicker, green only on payload phrases and one primary link</div>
+          <div class="mini-page">
+            <div class="mini-header">
+              <span class="logo-lockup"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <nav class="mini-nav">
+                <a href="#">Claude Code</a>
+                <a href="#">Training</a>
+                <a href="#" class="nav-cta">Talk to Kaido</a>
+              </nav>
+            </div>
+            <div class="mini-hero">
+              <div class="badge-base"><span>300+ trained &middot; 8.7/10 avg &middot; Squad 3 starts Sep 4</span></div>
+              <p class="mini-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+              <p class="hero-desc">Six Fridays, senior engineers beside you, your real codebase. You direct the agent, it ships production code.<br><strong>&euro;2,520</strong>/dev &middot; &#x1F1EA;&#x1F1EA; Estonian subsidy: just <strong>&euro;504</strong>.</p>
+              <div class="btn-group">
+                <a href="#" class="btn btn-primary">Talk to Kaido about Squad 3</a>
+                <a href="#" class="btn btn-ghost">View the full program &rarr;</a>
+              </div>
+              <p class="hero-qualifier">For developers with 2+ years experience &middot; ~20 per squad</p>
+            </div>
+            <div class="mini-section">
+              <p class="label">The Shift</p>
+              <h2 class="mini-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
+              <p>Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop until the task is done, and keeps context across iterations.</p>
+              <p class="mini-links"><a href="#" class="link link--keep">Why Claude Code &rarr;</a><span class="link-separator">&middot;</span><a href="#" class="link">See the 6-week program &rarr;</a></p>
+            </div>
+          </div>
+          <div class="lab-anno">green touches: 2 payloads + 1 primary link = 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIRECTION B ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Direction B</p>
+    <h2>Cream-on-dark</h2>
+    <p class="lab-q">Design question: should dark-panel text step up from warm gray to the cream of the canvas, so the dark section feels like the same material inverted? Vivid green payload kept in all three so the interplay stays visible. Ratios computed against #1c1c1a.</p>
+
+    <div class="lab-row">
+      <div class="lab-compare lab-compare--3">
+        <div class="lab-frame">
+          <div class="lab-tag">CURRENT &middot; shipped .on-dark rules, reproduced faithfully</div>
+          <section class="closing-section b-panel">
+            <div class="closing-content on-dark">
+              <h2>See the shift on <span class="highlight">your codebase</span></h2>
+              <p>A 30-minute call with Kaido. No prep, no slides, no obligation: bring one real task from your backlog and we'll talk through what an agent would do with it.</p>
+              <a href="#" class="btn btn-primary btn-lg">Book a 30-minute call</a>
+              <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
+              <p class="closing-guarantee">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. <a href="#">See conditions</a></p>
+              <p class="closing-alt">Not ready to talk? <a href="#">See the 6-week program &rarr;</a></p>
+              <p class="closing-tagline">Curious play. Epic growth.</p>
+            </div>
+          </section>
+          <div class="lab-anno">heading #e5e2dc 13.2:1 &middot; body #a3a39a 6.7:1 &middot; payload #00c638 7.4:1</div>
+        </div>
+        <div class="lab-frame b-cream-heads">
+          <div class="lab-tag">CREAM HEADINGS &middot; headings #faf7f2 = var(--bg), body #e5e2dc</div>
+          <section class="closing-section b-panel">
+            <div class="closing-content on-dark">
+              <h2>See the shift on <span class="highlight">your codebase</span></h2>
+              <p>A 30-minute call with Kaido. No prep, no slides, no obligation: bring one real task from your backlog and we'll talk through what an agent would do with it.</p>
+              <a href="#" class="btn btn-primary btn-lg">Book a 30-minute call</a>
+              <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
+              <p class="closing-guarantee">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. <a href="#">See conditions</a></p>
+              <p class="closing-alt">Not ready to talk? <a href="#">See the 6-week program &rarr;</a></p>
+              <p class="closing-tagline">Curious play. Epic growth.</p>
+            </div>
+          </section>
+          <div class="lab-anno">heading #faf7f2 16.0:1 &middot; body #e5e2dc 13.2:1 &middot; payload #00c638 7.4:1</div>
+        </div>
+        <div class="lab-frame b-full-cream">
+          <div class="lab-tag">FULL CREAM &middot; headings and body #faf7f2</div>
+          <section class="closing-section b-panel">
+            <div class="closing-content on-dark">
+              <h2>See the shift on <span class="highlight">your codebase</span></h2>
+              <p>A 30-minute call with Kaido. No prep, no slides, no obligation: bring one real task from your backlog and we'll talk through what an agent would do with it.</p>
+              <a href="#" class="btn btn-primary btn-lg">Book a 30-minute call</a>
+              <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
+              <p class="closing-guarantee">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. <a href="#">See conditions</a></p>
+              <p class="closing-alt">Not ready to talk? <a href="#">See the 6-week program &rarr;</a></p>
+              <p class="closing-tagline">Curious play. Epic growth.</p>
+            </div>
+          </section>
+          <div class="lab-anno">heading and body #faf7f2 16.0:1 &middot; payload #00c638 7.4:1</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIRECTION C ================= -->
+  <section class="lab-section">
+    <p class="lab-dir">Direction C</p>
+    <h2>Display font candidates</h2>
+    <p class="lab-q">Design question: Zilla Slab is Mozilla&rsquo;s brand typeface, so its distinctiveness is borrowed. Voice words: warm, grounded, distinctive; credible and calm; expert without hype. Object frame: a well-made field guide, a letterpress poster in a workshop, not a magazine cover. Reflex picks (Fraunces, Playfair, Lora, Space Grotesk and kin) were screened out before selection; Crete Round and Bree Serif fell in verification, neither ships a 700 weight.</p>
+
+    <div class="lab-row">
+      <p class="lab-rowlabel">Display &middot; wordmark 1.5rem + real hero H1 at display size + section H2, all at 700</p>
+      <div class="lab-stack">
+
+        <div class="lab-frame">
+          <div class="lab-tag">CURRENT &middot; Zilla Slab 700</div>
+          <div class="c-body">
+            <div class="c-side">
+              <span class="c-lockup f-zilla"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="c-rationale">Sturdy slab with a squarish, low-contrast skeleton; credible and calm, but it is Mozilla&rsquo;s brand face, so the distinctiveness is rented, not owned.</p>
+            </div>
+            <div class="c-main f-zilla">
+              <p class="c-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+              <p class="c-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-frame">
+          <div class="lab-tag">CANDIDATE 1 &middot; Bitter 700</div>
+          <div class="c-body">
+            <div class="c-side">
+              <span class="c-lockup f-bitter"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="c-rationale">Contemporary slab bred for screens; keeps Zilla&rsquo;s grounded authority but rounder and more bookish, the field-guide voice and the closest safe evolution.</p>
+            </div>
+            <div class="c-main f-bitter">
+              <p class="c-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+              <p class="c-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-frame">
+          <div class="lab-tag">CANDIDATE 2 &middot; Arvo 700</div>
+          <div class="c-body">
+            <div class="c-side">
+              <span class="c-lockup f-arvo"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="c-rationale">Geometric letterpress slab; sharper serifs and firmer corners than Zilla read as a workshop poster, the most distinctive silhouette of the three.</p>
+            </div>
+            <div class="c-main f-arvo">
+              <p class="c-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+              <p class="c-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-frame">
+          <div class="lab-tag">CANDIDATE 3 &middot; Vollkorn 700</div>
+          <div class="c-body">
+            <div class="c-side">
+              <span class="c-lockup f-vollkorn"><span class="c-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><circle cx="150" cy="90" r="12" fill="#e26c45"/></svg></span>
+              <p class="c-rationale">Warm old-style workhorse, the self-described wholemeal bread of typefaces; trades slab geometry for bookish field-guide warmth, the biggest step away from Zilla.</p>
+            </div>
+            <div class="c-main f-vollkorn">
+              <p class="c-h1">Claude Code Training for<br><span class="highlight">Dev Teams</span></p>
+              <p class="c-h2">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lab-row">
+      <p class="lab-rowlabel">Body &middot; same real paragraph, current vs one alternative</p>
+      <div class="lab-compare">
+        <div class="lab-frame">
+          <div class="lab-tag">CURRENT &middot; Plus Jakarta Sans 400</div>
+          <div class="c-bodyspec f-jakarta">
+            <p class="c-name">Plus Jakarta Sans</p>
+            <p class="spec-par">Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop until the task is done, and keeps context across iterations.</p>
+            <p class="spec-par">Six Fridays, senior engineers beside you, your real codebase. You direct the agent, it ships production code.</p>
+            <p class="c-rationale">Geometric, crisp, slightly cool; its personality lives in the quirky lowercase g and tight apertures.</p>
+          </div>
+        </div>
+        <div class="lab-frame">
+          <div class="lab-tag">ALTERNATIVE &middot; Hanken Grotesk 400</div>
+          <div class="c-bodyspec f-hanken">
+            <p class="c-name">Hanken Grotesk</p>
+            <p class="spec-par">Forget the hand-waving about &ldquo;autonomous systems.&rdquo; An agent is an LLM that uses tools, runs in a loop until the task is done, and keeps context across iterations.</p>
+            <p class="spec-par">Six Fridays, senior engineers beside you, your real codebase. You direct the agent, it ships production code.</p>
+            <p class="c-rationale">Humanist grotesque with open apertures; warmer and calmer at reading length, close enough in color that a swap would be quiet.</p>
+          </div>
+        </div>
+      </div>
+      <p class="c-bodynote">Note: Plus Jakarta Sans is itself on the reflex-ban list. This row exists to test whether exiting it is worth the cascade: every page, the OG image, and the design guard all reference it.</p>
+    </div>
+  </section>
+
+</body>
+</html>

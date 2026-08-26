@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Rationing Comp — Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .lab { max-width: 1400px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    .lab-title { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .lab-sub { font-size: 0.85rem; color: var(--text-2); margin: 0 0 1.5rem; }
+    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: start; }
+    @media (max-width: 1240px) { .levels { grid-template-columns: 1fr; } }
+    .level-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); line-height: normal; margin-bottom: 0.5rem; }
+    .mini { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .mini-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); background: rgba(250, 247, 242, 0.92); }
+    .mini-nav { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+    .mini-nav a { font-size: 0.8rem; color: var(--text-2); text-decoration: none; font-weight: 500; line-height: normal; }
+    .mini-body { padding: 1.25rem 1rem 1.5rem; background: var(--bg); }
+    .mini-body h2 { font-size: 1.4rem; margin: 0.75rem 0 0.5rem; }
+    .mini-body h3 { font-size: 1.05rem; margin: 1.25rem 0 0.35rem; }
+    .mini-body p { font-size: 0.9rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem; }
+    .mini-close { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; padding: 0.9rem 1rem; border-top: 1px solid var(--border); background: var(--surface); }
+    .rule-line { font-size: 0.8rem; color: var(--text-2); line-height: 1.5; margin: 0.6rem 0 0; }
+    .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+
+    /* Level 2 — RARE: payload at most once per viewport; other headings ink. */
+    .lvl2 .mini h3 .highlight { color: inherit; }
+
+    /* Level 3 — INK: no payloads; outline/ghost go ink, green on hover-fill only. */
+    .lvl3 .mini .highlight { color: inherit; }
+    .lvl3 .mini .btn-outline { border-color: var(--text); color: var(--text); }
+    .lvl3 .mini .btn-outline:hover { background: var(--green-surface); border-color: var(--green-brand); color: var(--green-brand); }
+    .lvl3 .mini .btn-ghost { color: var(--text); }
+    .lvl3 .mini .btn-ghost:hover { background: var(--green-surface); color: var(--green-brand); }
+    /* Green survives: mark, links, badges, and the CTA context. */
+    .lvl3 .mini .mini-close .btn-ghost { color: var(--green-brand); }
+  </style>
+</head>
+<body>
+<div class="lab">
+  <h1 class="lab-title">Green rationing</h1>
+  <p class="lab-sub">Three levels, same mini-page. Lab comp, not production.</p>
+
+  <div class="levels">
+
+    <div class="lvl1">
+      <div class="level-label">Level 1 — Current</div>
+      <div class="mini">
+        <header class="mini-header">
+          <span class="logo-lockup"><span class="logo-wordmark" style="font-size: 1.05rem;">Plepic</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="22" height="21" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"></polygon><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"></polygon><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"></polygon><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"></polygon><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"></path><circle cx="150" cy="90" r="12" fill="#e26c45"></circle></svg></span>
+          <nav class="mini-nav"><a href="#l1">Training</a><a href="#l1">About</a><button class="btn btn-outline btn-sm" type="button">Book a call</button></nav>
+        </header>
+        <div class="mini-body">
+          <span class="badge badge-default"><span class="badge-dot"></span> Squad 3 open</span>
+          <h2>Ship <span class="highlight">production agents</span> in 6 weeks</h2>
+          <p>Hands-on training for developers with 2+ years experience. Real codebases, not toy demos.</p>
+          <div class="btn-row">
+            <button class="btn btn-outline btn-sm" type="button">View curriculum</button>
+            <a class="btn btn-ghost btn-sm" href="#l1">See dates &rarr;</a>
+          </div>
+          <h3>Why <span class="highlight">terminal agents</span> win</h3>
+          <p>The terminal is where real work ships. <a class="link" href="#l1">Read the argument</a>.</p>
+          <h3>Six Fridays, online</h3>
+          <p>Full days via Google Meet, 8.7/10 training score.</p>
+        </div>
+        <div class="mini-close">
+          <button class="btn btn-primary btn-sm" type="button">Book a free call</button>
+          <a class="btn btn-ghost btn-sm" href="#l1">View curriculum &rarr;</a>
+        </div>
+      </div>
+      <p class="rule-line">Current: green payload on ~2/3 of headings; green outline and ghost buttons.</p>
+    </div>
+
+    <div class="lvl2">
+      <div class="level-label">Level 2 — Rare</div>
+      <div class="mini">
+        <header class="mini-header">
+          <span class="logo-lockup"><span class="logo-wordmark" style="font-size: 1.05rem;">Plepic</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="22" height="21" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"></polygon><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"></polygon><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"></polygon><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"></polygon><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"></path><circle cx="150" cy="90" r="12" fill="#e26c45"></circle></svg></span>
+          <nav class="mini-nav"><a href="#l2">Training</a><a href="#l2">About</a><button class="btn btn-outline btn-sm" type="button">Book a call</button></nav>
+        </header>
+        <div class="mini-body">
+          <span class="badge badge-default"><span class="badge-dot"></span> Squad 3 open</span>
+          <h2>Ship <span class="highlight">production agents</span> in 6 weeks</h2>
+          <p>Hands-on training for developers with 2+ years experience. Real codebases, not toy demos.</p>
+          <div class="btn-row">
+            <button class="btn btn-outline btn-sm" type="button">View curriculum</button>
+            <a class="btn btn-ghost btn-sm" href="#l2">See dates &rarr;</a>
+          </div>
+          <h3>Why <span class="highlight">terminal agents</span> win</h3>
+          <p>The terminal is where real work ships. <a class="link" href="#l2">Read the argument</a>.</p>
+          <h3>Six Fridays, online</h3>
+          <p>Full days via Google Meet, 8.7/10 training score.</p>
+        </div>
+        <div class="mini-close">
+          <button class="btn btn-primary btn-sm" type="button">Book a free call</button>
+          <a class="btn btn-ghost btn-sm" href="#l2">View curriculum &rarr;</a>
+        </div>
+      </div>
+      <p class="rule-line">Rare: green payload at most once per viewport (One Accent logic); all other headings ink; buttons unchanged.</p>
+    </div>
+
+    <div class="lvl3">
+      <div class="level-label">Level 3 — Ink</div>
+      <div class="mini">
+        <header class="mini-header">
+          <span class="logo-lockup"><span class="logo-wordmark" style="font-size: 1.05rem;">Plepic</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="22" height="21" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48 20,72 15,108 147,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"></polygon><polygon points="147,130 15,108 28,150 50,178 147,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="147,178 50,178 82,195 75,220" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"></polygon><polygon points="147,195 75,220 100,240 135,232" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,105 190,68 245,48 280,72 285,108 153,130" fill="#00c638" stroke="#00c638" stroke-width="0.5"></polygon><polygon points="153,130 285,108 272,150 250,178 153,165" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,178 250,178 218,195 225,220" fill="#137b30" stroke="#137b30" stroke-width="0.5"></polygon><polygon points="153,195 225,220 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"></polygon><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"></path><circle cx="150" cy="90" r="12" fill="#e26c45"></circle></svg></span>
+          <nav class="mini-nav"><a href="#l3">Training</a><a href="#l3">About</a><button class="btn btn-outline btn-sm" type="button">Book a call</button></nav>
+        </header>
+        <div class="mini-body">
+          <span class="badge badge-default"><span class="badge-dot"></span> Squad 3 open</span>
+          <h2>Ship <span class="highlight">production agents</span> in 6 weeks</h2>
+          <p>Hands-on training for developers with 2+ years experience. Real codebases, not toy demos.</p>
+          <div class="btn-row">
+            <button class="btn btn-outline btn-sm" type="button">View curriculum</button>
+            <a class="btn btn-ghost btn-sm" href="#l3">See dates &rarr;</a>
+          </div>
+          <h3>Why <span class="highlight">terminal agents</span> win</h3>
+          <p>The terminal is where real work ships. <a class="link" href="#l3">Read the argument</a>.</p>
+          <h3>Six Fridays, online</h3>
+          <p>Full days via Google Meet, 8.7/10 training score.</p>
+        </div>
+        <div class="mini-close">
+          <button class="btn btn-primary btn-sm" type="button">Book a free call</button>
+          <a class="btn btn-ghost btn-sm" href="#l3">View curriculum &rarr;</a>
+        </div>
+      </div>
+      <p class="rule-line">Ink: all headings ink, no payloads; outline and ghost go ink with green hover-fill; green survives only in the mark, links, badges, and the CTA row.</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

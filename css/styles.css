@@ -1570,7 +1570,7 @@ p:last-child {
 .agent-video-play:hover { background: var(--green-brand); }
 
 .agent-video-play:focus-visible {
-  outline: 2px solid var(--green-vivid);
+  outline: 2px solid var(--green-dark);
   outline-offset: 2px;
 }
 
