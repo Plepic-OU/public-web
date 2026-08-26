@@ -27,3 +27,6 @@ demo-tenders-screenshot.png
 # (.impeccable/critique/ and live/config.json stay tracked)
 .critique-shots/
 .impeccable/live/server.json
+
+# Design comps: may hold unpublished photography awaiting consent. Never deploy.
+.impeccable/comps/

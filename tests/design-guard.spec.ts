@@ -145,6 +145,30 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
+  test('every var() resolves: no references to undeclared custom properties', () => {
+    // An unresolvable var() is invalid at computed-value time, so the property
+    // falls back to inherit and the page renders one tier flatter, in silence.
+    // css/styles.css declares every token in :root and declares no custom
+    // property outside it; a page that invents its own token name is off-canon
+    // by the same rule that closes the palette.
+    const css = read('css/styles.css');
+    const rootBlocks = [...css.matchAll(/:root\s*\{([\s\S]*?)\}/g)].map((m) => m[1]);
+    expect(rootBlocks.length, 'css/styles.css must declare its tokens in a :root block').toBeGreaterThan(0);
+    const declared = new Set(rootBlocks.flatMap((block) => [...block.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1])));
+    // var(--name) and var(--name, fallback) are both references; a fallback
+    // inside a fallback is caught on the next pass of the same global regex.
+    const undeclared = (label: string, text: string) =>
+      [...new Set([...text.matchAll(/var\(\s*(--[\w-]+)/g)].map((m) => m[1]))]
+        .filter((name) => !declared.has(name))
+        .map((name) => `${name} in ${label}`);
+    let offenders = undeclared('css/styles.css', css);
+    for (const page of PRODUCTION_PAGES) {
+      const styleBlocks = (stripComments(read(page)).match(/<style[\s\S]*?<\/style>/gi) || []).join('\n');
+      offenders = offenders.concat(undeclared(`${page} <style>`, styleBlocks));
+    }
+    expect(offenders, 'these var() references name a custom property no :root declares; add the token to css/styles.css or use the token that exists').toEqual([]);
+  });
+
   // Enabled after the training-hero stat cards were recast (critique P1):
   // the mech-* class family is the rejected pre-2026 era and must not grow.
   test('no mech-* legacy class names', () => {

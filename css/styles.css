@@ -251,7 +251,9 @@ a:hover {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--green-vivid);
+  /* Dark green, not vivid: WCAG 2.1 SC 1.4.11 needs 3:1 against the adjacent
+     surface, and vivid measures 2.15:1 on cream. Dark bands override below. */
+  outline: 2px solid var(--green-dark);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -532,7 +534,7 @@ p:last-child {
 }
 .btn:hover { filter: brightness(0.92); }
 .btn:focus-visible {
-  outline: 2px solid var(--green-vivid);
+  outline: 2px solid var(--green-dark);
   outline-offset: 2px;
 }
 
@@ -1508,7 +1510,7 @@ p:last-child {
 }
 
 .agent-hero-description {
-  font-size: 1.15rem;
+  font-size: var(--fs-body-lg);
   color: var(--text-2);
   line-height: 1.7;
   margin-bottom: var(--space-xl);
@@ -1535,6 +1537,50 @@ p:last-child {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/* Click-to-play facade: the live YouTube player costs ~1.1MB above the fold,
+   so it is fetched only by the click that starts playback. */
+.agent-video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.agent-video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 5px; /* optical centring: the triangle's mass sits left */
+  border: 0;
+  border-radius: 50%;
+  background: var(--green-dark);
+  color: var(--surface);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.agent-video-play:hover { background: var(--green-brand); }
+
+.agent-video-play:focus-visible {
+  outline: 2px solid var(--green-vivid);
+  outline-offset: 2px;
+}
+
+/* Scripting off: the facade cannot upgrade, so lift the fallback link clear
+   of the absolutely positioned poster. */
+.agent-video noscript {
+  position: absolute;
+  inset: auto 0 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
 }
 
 .loop-icon {
@@ -1571,7 +1617,7 @@ p:last-child {
   font-family: var(--font-mono);
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-1);
+  color: var(--text);
   text-align: center;
   line-height: 1.15;
   z-index: 1;
@@ -1700,7 +1746,6 @@ p:last-child {
 
 .timeline {
   max-width: 600px;
-  margin: 0 auto;
   position: relative;
   padding-left: var(--space-xl);
 }
@@ -1768,7 +1813,7 @@ p:last-child {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
-  max-width: 800px;
+  max-width: var(--max-width);
   margin: 0 auto;
 }
 
@@ -2009,7 +2054,7 @@ p:last-child {
 }
 
 .scopeful-hero-description {
-  font-size: 1.15rem;
+  font-size: var(--fs-body-lg);
   color: var(--text-2);
   line-height: 1.7;
   margin-bottom: var(--space-xl);
@@ -2249,12 +2294,16 @@ p:last-child {
 
 .flow-badge strong { color: var(--green-dark); }
 
-@media (max-width: 768px) {
+/* Tablet: hero stacks at 900px, matching .hero-grid. Between 769 and 900px the
+   two-column grid leaves the h1 about 360px, and it breaks onto five lines. */
+@media (max-width: 900px) {
   .scopeful-hero-grid {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
   }
+}
 
+@media (max-width: 768px) {
   .flow {
     flex-direction: column;
   }
@@ -2297,7 +2346,7 @@ p:last-child {
 
 
 .training-hero-subtitle {
-  font-size: 1.15rem;
+  font-size: var(--fs-body-lg);
   color: var(--text-2);
   line-height: 1.7;
   max-width: 640px;
@@ -2949,11 +2998,15 @@ p:last-child {
 
 .tooltip {
   position: absolute;
-  bottom: calc(100% + 10px);
+  /* SC 1.4.13 hoverable: the 10px gap is padding inside the panel, so the
+     pointer never leaves the trigger before it reaches the text. The
+     padding-bottom must stay after the shorthand, which would reset it. */
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   width: 320px;
   padding: 0.75rem 1rem;
+  padding-bottom: 10px;
   background: var(--surface);
   color: var(--text-2);
   font-size: 0.9rem;
@@ -2966,7 +3019,7 @@ p:last-child {
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-fast), visibility var(--transition-fast);
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 10;
 }
 
@@ -2985,6 +3038,16 @@ p:last-child {
 .tooltip-trigger:focus-within .tooltip {
   opacity: 1;
   visibility: visible;
+}
+
+/* SC 1.4.13 dismissible. JS contract: a trigger that carries
+   data-tip-open="false" keeps the tooltip hidden through hover and focus.
+   The extra pseudo-class outranks the three rules above. */
+.tooltip-trigger[data-tip-open="false"]:hover .tooltip,
+.tooltip-trigger[data-tip-open="false"]:focus .tooltip,
+.tooltip-trigger[data-tip-open="false"]:focus-within .tooltip {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* ========================================
@@ -3558,7 +3621,7 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 }
 
 .faq-item summary:focus-visible {
-  outline: 2px solid var(--green-vivid);
+  outline: 2px solid var(--green-dark);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -3723,6 +3786,12 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 }
 
 /* ── Dark section context base ──────────────────────────────── */
+/* Focus ring flips back to vivid here: green-dark on --dark fails SC 1.4.11,
+   vivid measures 7.42:1. Width and offset stay as set on the base rules. */
+.on-dark a:focus-visible,
+.on-dark .btn:focus-visible {
+  outline-color: var(--green-vivid);
+}
 .on-dark { color: #e5e2dc; }
 .on-dark h1,
 .on-dark h2,

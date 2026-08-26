@@ -6,3 +6,10 @@
 2026-08-25 | founder sign-off on the type-scale revision, recorded in vault docs/specs/2026-08-25-clarity-redesign.md (Decisions 2 and 6)
 2026-08-01 | hero H1 two-line cap decision, recorded in css/styles.css comment above .hero h1 (measured 2026-08-01)
 €2,520 | unchanged list price re-added in a reworded FAQ sentence; verified against the page's own hero/FAQ and Strategy/Plepic Strategy.md (subsidy-optimal ceiling)
+February 2025 | /claude-code/ hero lede, terminal-section lede and Since Day One card: reworded sentences re-add the page's existing anchor date (Claude Code ship date, already in the <title> and the FAQ JSON-LD); consistent with vault Projects/Agentic Coding Training/trainer-delivery-log.md, which dates every Plepic delivery after it
+9.25/10 | /claude-code/ track-record lede: best hackathon score; vault Projects/Agentic Coding Training/trainer-delivery-log.md, delivered-events table row 5 (Aktiva hackathon, 16.12.2025). Replaces the stale "average 8.4/10"; the same table's eight scored hackathons average 8.0, which is why a running mean was dropped for a count and a best
+Eight hackathons | /claude-code/ track-record lede: trainer-delivery-log.md delivered-events rows 2 to 9 (Datel, Bitweb, Holm, Aktiva, Aktiva vol2, Delfi Meedia, Thorgate, OIXIO). Row 1 (Holm esitlus) is a one-hour Copilot talk, not a hackathon, and is excluded
+Mar 2025 | /claude-code/ timeline: first client session; trainer-delivery-log.md row 0, Helmes Prompt Library Workshop, 20.03.2025
+Sep to Dec 2025 | /claude-code/ timeline: first hackathons; trainer-delivery-log.md rows 2 to 5, Datel 24.09.2025, Bitweb 24.10.2025, Holm 07.11.2025, Aktiva 16.12.2025
+Mar 2026 | /claude-code/ timeline: first six-week cohort starts, 20 developers; trainer-delivery-log.md cohort table row 10, 06.03.2026 to 10.04.2026, 20 participants
+Mar to May 2026 | /claude-code/ timeline: hackathons with Delfi Meedia, Thorgate and OIXIO; trainer-delivery-log.md rows 7 to 9, 12.03.2026, 31.03.2026, 05.05.2026
