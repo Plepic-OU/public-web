@@ -488,6 +488,37 @@
       clip-path: inset(50%);
       white-space: nowrap;
     }
+
+    /* Hero badge link ("recruiting" -> /jobs/). The badge text is --text-2 and
+       the link is --green-brand; those two measure 1.66:1 against each other,
+       below the 3:1 that WCAG 1.4.1 needs before colour alone can mark a link.
+       The underline carries the distinction. The focus ring comes from the
+       global a:focus-visible rule, and the badge does not clip it. */
+    .hero .badge-base a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* The one-sentence opinion under the instructors heading. Held to a
+       reading measure so it does not run the full container width. */
+    .team-header .team-opinion {
+      max-width: 58ch;
+      margin-inline: auto;
+      font-size: 1rem;
+      color: var(--text-2);
+    }
+
+    /* Buyer invitation panel closing the FAQ. Narrower than the FAQ list, so
+       it reads as an aside to the budget holder rather than another question. */
+    .buyer-invite {
+      margin-top: var(--space-2xl);
+      margin-inline: auto;
+      max-width: 46rem;
+      text-align: center;
+    }
+    .buyer-invite h3 { margin-bottom: var(--space-sm); }
+    .buyer-invite p { color: var(--text-2); }
+    .buyer-invite .btn { margin-top: var(--space-lg); }
   </style>
 </head>
 <body>
@@ -501,6 +532,7 @@
         <a href="/claude-code/">Claude Code</a>
         <a href="/training/">Training</a>
         <a href="/scopeful/">Scopeful</a>
+        <a href="/jobs/">Jobs</a>
         <a href="#team">Team</a>
         <a href="https://skill.plepic.com" target="_blank" rel="noopener noreferrer">Skill Tree</a>
         <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="nav-cta">Talk to Kaido</a>
@@ -516,7 +548,7 @@
       <div class="hero-grid">
         <div class="hero-text">
           <div class="badge-base hero-entrance hero-entrance-1">
-            <span>300+ trained &middot; 8.7/10 course rating &middot; recruiting</span>
+            <span>300+ engineers trained &middot; 8.7/10 course rating &middot; <a href="/jobs/">recruiting</a></span>
           </div>
 
           <h1 class="hero-entrance hero-entrance-2">Claude Code Training<br>for <span class="highlight">Dev Teams</span></h1>
@@ -615,6 +647,7 @@
       <div class="container">
         <div class="team-header reveal">
           <h2>Your Instructors: 50+ Years Combined</h2>
+          <p class="team-opinion">We pay instructors per squad, not per hour, and we set the dates well ahead, so the schedule serves learning.</p>
         </div>
 
         <div class="team-grid reveal reveal-delay-1">
@@ -625,7 +658,7 @@
             </div>
             <div class="team-info">
               <h3>Joosep Simm</h3>
-              <p class="team-role">Developer, Architect & AI Trainer</p>
+              <p class="team-role">Developer, Architect & AI Instructor</p>
               <div class="team-experience">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                 20+ Years Dev Experience
@@ -795,6 +828,21 @@
 
           </div>
         </div>
+
+        <!-- Buyer path. Placed directly after the "Pricing & subsidy" group,
+             because those two questions are the only ones a budget holder
+             reads: this is where a CTO is already weighing the decision, so no
+             new fold is invented. Secondary button by design, since the
+             closing section below owns the one orange accent. No offer, no
+             package, no seat count, no price: private cohorts are not
+             productised, and the after-subsidy figure is never published. -->
+        <div class="panel buyer-invite reveal">
+          <div class="panel-header">For CTOs and heads of engineering</div>
+          <h3>Bring the whole team</h3>
+          <p>Kaido shows you how Estonian state aid funds the training.</p>
+          <p>He then shapes a cohort with you, around your team and your codebase.</p>
+          <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Talk to Kaido about your team &rarr;</a>
+        </div>
       </div>
     </section>
 
@@ -846,7 +894,8 @@
         </div>
         <div class="footer-company-info">
           <strong>Plepic <span lang="et">OÜ</span></strong> &middot; <span lang="et">Liivalaia 7, 10118 Tallinn</span> &middot; Reg. code 11275881 &middot; VAT EE102813797<br>
-          &copy; 2026 Plepic &middot; <span class="footer-tagline">Curious play. Epic growth.</span> &middot; <a href="/privacy/">Privacy</a>
+          &copy; 2026 Plepic &middot; <span class="footer-tagline">Curious play. Epic growth.</span> &middot; <a href="/privacy/">Privacy</a><br>
+          Claude and Claude Code are trademarks of Anthropic, and Plepic is an independent training provider with no affiliation to Anthropic.
         </div>
       </div>
     </div>
