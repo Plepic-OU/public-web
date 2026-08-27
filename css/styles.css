@@ -1997,6 +1997,16 @@ p:last-child {
   color: var(--text-on-dark);
 }
 
+/* Decodes the tagline directly above it. Quieter than the tagline and not
+   italic, so the signature stays the last voiced line on the page. */
+.closing-content > .closing-etymology {
+  margin: var(--space-md) auto 0;
+  max-width: 52ch;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-on-dark-2);
+}
+
 /* ========================================
    Skill Tree band (cross-property bridge -> skill.plepic.com)
    Quiet Surface-Green band between the FAQ and the closing CTA. A
