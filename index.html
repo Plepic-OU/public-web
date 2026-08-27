@@ -489,16 +489,6 @@
       white-space: nowrap;
     }
 
-    /* Hero badge link ("recruiting" -> /jobs/). The badge text is --text-2 and
-       the link is --green-brand; those two measure 1.66:1 against each other,
-       below the 3:1 that WCAG 1.4.1 needs before colour alone can mark a link.
-       The underline carries the distinction. The focus ring comes from the
-       global a:focus-visible rule, and the badge does not clip it. */
-    .hero .badge-base a {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
     /* The one-sentence opinion under the instructors heading. Held to a
        reading measure so it does not run the full container width. */
     .team-header .team-opinion {
@@ -507,18 +497,6 @@
       font-size: 1rem;
       color: var(--text-2);
     }
-
-    /* Buyer invitation panel closing the FAQ. Narrower than the FAQ list, so
-       it reads as an aside to the budget holder rather than another question. */
-    .buyer-invite {
-      margin-top: var(--space-2xl);
-      margin-inline: auto;
-      max-width: 46rem;
-      text-align: center;
-    }
-    .buyer-invite h3 { margin-bottom: var(--space-sm); }
-    .buyer-invite p { color: var(--text-2); }
-    .buyer-invite .btn { margin-top: var(--space-lg); }
   </style>
 </head>
 <body>
@@ -548,7 +526,7 @@
       <div class="hero-grid">
         <div class="hero-text">
           <div class="badge-base hero-entrance hero-entrance-1">
-            <span>300+ engineers trained &middot; 8.7/10 course rating &middot; <a href="/jobs/">recruiting</a></span>
+            <span>Cohort 4 filling &middot; 300+ engineers trained &middot; 8.7/10 course rating</span>
           </div>
 
           <h1 class="hero-entrance hero-entrance-2"><span class="highlight">Practitioners</span>, not trainers</h1>
@@ -633,10 +611,7 @@
             <p>
               Build something real in a single session. A hackathon puts agentic tools in your team&rsquo;s hands before any 6-week commitment.
             </p>
-            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg mt-xl">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
-              Book a 30-minute call
-            </a>
+            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-ghost mt-xl">Book a 30-minute call</a>
           </div>
         </div>
       </div>
@@ -827,21 +802,11 @@
             </details>
 
           </div>
-        </div>
 
-        <!-- Buyer path. Placed directly after the "Pricing & subsidy" group,
-             because those two questions are the only ones a budget holder
-             reads: this is where a CTO is already weighing the decision, so no
-             new fold is invented. Secondary button by design, since the
-             closing section below owns the one orange accent. No offer, no
-             package, no seat count, no price: private cohorts are not
-             productised, and the after-subsidy figure is never published. -->
-        <div class="panel buyer-invite reveal">
-          <div class="panel-header">For CTOs and heads of engineering</div>
-          <h3>Bring the whole team</h3>
-          <p>Kaido shows you how Estonian state aid funds the training.</p>
-          <p>He then shapes a cohort with you, around your team and your codebase.</p>
-          <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Talk to Kaido about your team &rarr;</a>
+          <!-- The browsing path, for a reader who is not ready to talk. It sits
+               outside the FAQPage microdata on purpose: it is a link, not a
+               question, and it must never enter the structured data. -->
+          <p class="faq-alt">Not ready to talk? <a href="/webinar/2026-04-17-agentic-coding/">See the webinar deck &rarr;</a></p>
         </div>
       </div>
     </section>
@@ -849,17 +814,16 @@
     <!-- Section 6: Closing CTA — the booking decision is the last content block -->
     <section class="closing-section section reveal">
       <div class="container">
-        <div class="closing-content on-dark reveal">
+        <div class="closing-content reveal">
           <h2>See the shift on <span class="highlight">your codebase</span></h2>
           <p>A 30-minute call with Kaido. No prep, no slides, no obligation: bring one real task from your backlog and we'll talk through what an agent would do with it.</p>
+          <p>Bringing the whole team? On the same call, Kaido shows you how Estonian state aid funds the training, then shapes a cohort with you, around your team and your codebase.</p>
           <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Book a 30-minute call</a>
           <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
           <p class="closing-guarantee">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. Conditions apply.</p>
-          <p class="closing-alt">Not ready to talk? <a href="/webinar/2026-04-17-agentic-coding/">See the webinar deck &rarr;</a></p>
-          <p class="closing-tagline">Curious play. Epic growth.</p>
-          <!-- The tagline is the name's decoder ring (design-system.html Section 1):
-               PLEPIC = PL(ay) + EPIC. Printed alone it decodes to nothing, so one
-               line states the method it stands for. -->
+          <!-- The name's decoder ring (design-system.html Section 1): PLEPIC =
+               PL(ay) + EPIC. The tagline itself now prints once, in the footer,
+               so this line carries both the decode and the method it stands for. -->
           <p class="closing-etymology">Play is in the name: PL and EPIC. Teams that experiment their way into agents get further than teams that wait to be trained on them.</p>
         </div>
       </div>

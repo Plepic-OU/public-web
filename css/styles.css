@@ -655,6 +655,12 @@ p:last-child {
   50% { opacity: 0.3; }
 }
 
+/* The badge dot is the only infinite animation inside page content, so reduced
+   motion stops it outright rather than leaving it frozen mid-fade. */
+@media (prefers-reduced-motion: reduce) {
+  .badge-base::before { animation: none; }
+}
+
 /* ========================================
    Code Snippet
    ======================================== */
@@ -1945,9 +1951,10 @@ p:last-child {
   color: var(--text);
 }
 
-/* Closing CTA — the homepage's single dark section */
+/* Closing CTA — the page's second and last ask. Light like the rest of the
+   site; --bg-alt separates it from the FAQ above, which sits on --bg. */
 .closing-section {
-  background: var(--dark);
+  background: var(--bg-alt);
 }
 
 .closing-content {
@@ -1957,54 +1964,39 @@ p:last-child {
 }
 
 .closing-content h2 {
-  color: var(--text-on-dark);
+  color: var(--text);
   margin-bottom: var(--space-lg);
 }
 
 .closing-content > p {
   font-size: var(--fs-body);
-  color: var(--text-on-dark-2);
+  color: var(--text-2);
   margin-bottom: var(--space-2xl);
 }
 
-.closing-alt {
-  margin-top: var(--space-xl);
-  font-size: 1rem;
+/* The invitation and the buyer argument read as one voice, so the pair stacks
+   tight and the argument carries the gap down to the single CTA. */
+.closing-content > p:first-of-type {
+  margin-bottom: var(--space-md);
 }
 
-.closing-alt a,
-.closing-guarantee a {
-  color: var(--green-vivid);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Refund reassurance beside the closing CTA; links to the FAQ conditions. */
+/* Refund reassurance beside the closing CTA. The copy states the conditions
+   rather than linking them; the link treatment, for when it carries one again,
+   is set with .faq-alt a in the FAQ section below. */
 .closing-content > .closing-guarantee {
   margin: var(--space-lg) auto 0;
   font-size: 1rem;
   max-width: 48ch;
 }
 
-/* Tagline sign-off, the last line of the page: quiet, no accent, true italic. */
-.closing-content > .closing-tagline {
-  margin: var(--space-2xl) auto 0;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 1.35rem;
-  line-height: normal;
-  color: var(--text-on-dark);
-}
-
-/* Decodes the tagline directly above it. Quieter than the tagline and not
-   italic, so the signature stays the last voiced line on the page. */
+/* Decodes the name for a reader who meets it only in the footer tagline:
+   PLEPIC = PL(ay) + EPIC. Quiet, and the last voiced line on the page. */
 .closing-content > .closing-etymology {
   margin: var(--space-md) auto 0;
   max-width: 52ch;
   font-size: 1rem;
   line-height: 1.7;
-  color: var(--text-on-dark-2);
+  color: var(--text-2);
 }
 
 /* ========================================
@@ -3766,6 +3758,23 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--border);
+}
+
+/* The browsing path out of the FAQ: the webinar deck, for a reader who is not
+   ready to talk. The closing below owns the one ask, so this alternative lives
+   here instead. The closing's refund line shares the treatment for whenever its
+   copy links #faq-refund again; both sit on light, so both take brand green,
+   never vivid. */
+.faq-alt {
+  margin-top: var(--space-xl);
+  font-size: 1rem;
+}
+
+.faq-alt a,
+.closing-guarantee a {
+  color: var(--green-brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .faq-group-title {
