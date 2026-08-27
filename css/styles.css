@@ -1018,29 +1018,11 @@ p:last-child {
 }
 
 /* ========================================
-   Perspective Shift Section
+   Comparison + pull-quote specimens
+   (the homepage perspective-shift section was removed 2026-08-27; these
+   rules stay because design-system.html documents them and the homepage
+   outcome section still uses .perspective-shift-quote)
    ======================================== */
-
-.perspective-shift {
-  background: var(--bg-alt);
-}
-
-.perspective-shift-content {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.perspective-shift-content h2 {
-  margin-bottom: var(--space-lg);
-}
-
-
-.perspective-shift-desc {
-  font-size: var(--fs-body);
-  color: var(--text-2);
-  margin-bottom: var(--space-2xl);
-  line-height: 1.7;
-}
 
 .perspective-shift-comparison {
   display: grid;
@@ -1121,28 +1103,59 @@ p:last-child {
 }
 
 /* ========================================
-   Hackathon Section
+   Homepage: What changes (the outcome band)
    ======================================== */
 
-.hackathon-section {
-  background: var(--bg);
+.outcome-section {
+  background: var(--bg-alt);
 }
 
-.hackathon-content {
-  max-width: 800px;
+.outcome-content {
+  max-width: 720px;
   margin: 0 auto;
 }
 
-.hackathon-content h2 {
-  margin-bottom: var(--space-xl);
+.outcome-content h2 {
+  margin-bottom: var(--space-lg);
 }
 
-
-.hackathon-message {
+.outcome-content > p {
   font-size: var(--fs-body);
   color: var(--text-2);
   line-height: 1.7;
+  margin-bottom: var(--space-md);
 }
+
+/* ========================================
+   Homepage: What Plepic does (the offering band)
+   Four label/sentence rows on the shared .proposal-doc-rows primitive, with
+   a wider label column: "Instructor seats" does not fit the 110px default.
+   The width override is min-width scoped so it never outranks the shared
+   single-column stack the phone breakpoint applies.
+   ======================================== */
+
+.offering-section {
+  background: var(--bg);
+}
+
+.offering-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.offering-content h2 {
+  margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 769px) {
+  .offering-rows .proposal-doc-row {
+    grid-template-columns: 160px 1fr;
+  }
+}
+
+/* ========================================
+   Stats
+   ======================================== */
 
 .big-stat {
   background: var(--surface);
@@ -1307,66 +1320,10 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-.team-experience {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: 0.9rem;
-  color: var(--green-dark);
-  font-weight: 600;
-  margin-bottom: var(--space-md);
-}
-
-.team-experience svg {
-  color: var(--green-vivid);
-  flex-shrink: 0;
-}
-
-.team-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
-}
-
-.skill-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: normal;
-  padding: 0.2rem 0.6rem;
-  background: var(--green-surface);
-  color: var(--green-dark);
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.team-bio {
-  font-size: 0.9rem;
-  color: var(--text-3);
-  line-height: 1.5;
-}
-
-.book-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  margin-top: var(--space-xl);
-}
-
-.book-divider img {
-  width: 80px;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(28, 28, 26, 0.1);
-}
-
-/* Sentence, not label: it names which two of the three instructors wrote the
-   book, so uppercase tracking no longer applies. */
-.book-caption {
-  font-size: 0.9rem;
-  color: var(--text-3);
-  text-align: center;
+/* The role line is now the card's only sentence, so it carries no trailing
+   gap on top of .team-info's padding. */
+.team-role:last-child {
+  margin-bottom: 0;
 }
 
 /* ========================================
@@ -2014,9 +1971,10 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-/* Refund reassurance beside the closing CTA. The copy states the conditions
+/* Refund reassurance beside the closing CTA, and the #faq-refund anchor since
+   the FAQ item that used to own it was removed. The copy states the conditions
    rather than linking them; the link treatment, for when it carries one again,
-   is set with .faq-alt a in the FAQ section below. */
+   is set with .closing-guarantee a in the FAQ section below. */
 .closing-content > .closing-guarantee {
   margin: var(--space-lg) auto 0;
   font-size: 1rem;
@@ -3430,11 +3388,6 @@ p:last-child {
     gap: var(--space-lg);
   }
 
-  .book-divider {
-    flex-direction: column;
-    text-align: center;
-  }
-
   /* On a phone the two footer columns have nowhere to sit side by side, so
      they stack and centre, as they did before. */
   .footer-inner {
@@ -3634,10 +3587,6 @@ p:last-child {
     grid-template-columns: 1fr 1fr;
   }
 
-  .book-divider {
-    gap: var(--space-md);
-  }
-
   .hero-stats {
     left: var(--space-md);
   }
@@ -3800,17 +3749,8 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   border-top: 1px solid var(--border);
 }
 
-/* The browsing path out of the FAQ: the webinar deck, for a reader who is not
-   ready to talk. The closing below owns the one ask, so this alternative lives
-   here instead. The closing's refund line shares the treatment for whenever its
-   copy links #faq-refund again; both sit on light, so both take brand green,
-   never vivid. */
-.faq-alt {
-  margin-top: var(--space-xl);
-  font-size: 1rem;
-}
-
-.faq-alt a,
+/* The closing's refund line, for whenever its copy carries a link again. It
+   sits on light, so it takes brand green, never vivid. */
 .closing-guarantee a {
   color: var(--green-brand);
   text-decoration: underline;
