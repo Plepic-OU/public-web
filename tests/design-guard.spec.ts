@@ -178,26 +178,29 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  test('homepage carries no dark surface (The Dark Placement Rule)', () => {
+  test('no production page carries a dark surface (The Dark Placement Rule)', () => {
     // June 2026 (623f623) put a full-bleed dark closing section on the homepage
     // because canon documented the dark device without saying where it belongs.
-    // Section 3 of design-system.html now says where: a panel, on a page that is
-    // not selling the course. jobs/index.html is that sanctioned use and
-    // design-system.html demonstrates the device, so neither is checked here.
-    // The homepage carries an inline <style> block, so this reads file text
+    // Kaido, 2026-08-27: "no exemptions. No dark mode in my public web." So the
+    // rule is the whole site, not a page list that can drift. design-system.html
+    // is the one place dark still renders, because it is the specimen page that
+    // documents the device; it is not a production page and is not checked here.
+    // These pages carry inline <style> blocks, so this reads file text
     // (comments stripped), not class attributes alone.
-    const html = stripComments(read('index.html'));
-    const offenders = [
-      ...(html.match(/\bon-dark\b/g) || []),
-      ...(html.match(/\bpanel-dark\b/g) || []),
-      ...(html.match(/background[^;{}]*var\(--dark(-surface)?\)/g) || []),
-      // The token is not the only way in: the literal values behind --dark and
-      // --dark-surface are both on the canon hex list, so the off-canon-colour
-      // test would wave them through. Matched only after `background`, so ink
-      // text (color: #1c1c1a) stays legal.
-      ...(html.match(/background[^;{}]*#(1c1c1a|262624)/gi) || []),
-    ];
-    expect(offenders, 'index.html carries a dark surface; the homepage is light from hero to footer. Dark is a panel-level device for pages that are not selling the course (jobs/index.html is the reference use). Recast this as a light panel, or change the rule on design-system.html first: The Dark Placement Rule, section 3 (Neutrals).').toEqual([]);
+    for (const page of PRODUCTION_PAGES) {
+      const html = stripComments(read(page));
+      const offenders = [
+        ...(html.match(/\bon-dark\b/g) || []),
+        ...(html.match(/\bpanel-dark\b/g) || []),
+        ...(html.match(/background[^;{}]*var\(--dark(-surface)?\)/g) || []),
+        // The token is not the only way in: the literal values behind --dark and
+        // --dark-surface are both on the canon hex list, so the off-canon-colour
+        // test would wave them through. Matched only after `background`, so ink
+        // text (color: #1c1c1a) stays legal.
+        ...(html.match(/background[^;{}]*#(1c1c1a|262624)/gi) || []),
+      ];
+      expect(offenders, `${page} carries a dark surface. The public site is light, on every page, with no exemptions. Recast this as a light panel or section, or change the rule on design-system.html first: The Dark Placement Rule, section 3 (Neutrals).`).toEqual([]);
+    }
   });
 
   test('design-system page: cream panels only as the demonstrated variant (Cards canon)', () => {

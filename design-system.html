@@ -209,7 +209,7 @@
     </p>
 
     <p class="ds-note" style="margin-top: var(--space-md); margin-bottom: 0;">
-      <strong>The Dark Placement Rule.</strong> Dark is a panel-level device, never a full-bleed page section. The homepage is light from hero to footer. No exceptions. The reference correct use is <code>panel-dark on-dark</code> on a panel, as on <a href="/jobs/">/jobs/</a>. This rule is written down because the device was documented without a home and grew onto the homepage in June 2026 (commit <code>623f623</code>).
+      <strong>The Dark Placement Rule.</strong> <strong>The public site is light. Every page, no exemptions.</strong> No <code>on-dark</code>, no <code>panel-dark</code>, no dark background, whether written as a token or as a hex literal. This page is the one place dark still renders, because documenting a device is not using it. The rule exists because the device sat in canon with no stated home and grew onto the homepage in June 2026 (commit <code>623f623</code>); it came off in August. A design-guard test enforces it across every production page, so changing the rule means editing the test in the same commit.
     </p>
   </div>
 
