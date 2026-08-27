@@ -1,0 +1,16 @@
+{
+  "date": "2026-08-27",
+  "actions": [
+    {
+      "timestamp": "2026-08-27T00:00:00.000Z",
+      "action": "UPDATE_CONVERSION_VALUE",
+      "conversion_action_id": "7486541959",
+      "conversion_action": "Training Registration Click",
+      "old_default_value": 504,
+      "new_default_value": 2520,
+      "always_use_default_value": true,
+      "reason": "The default value was 504, the after-subsidy per-seat figure, against a published and transacted net price of 2520. Every ROAS number was understated fivefold. 2520 matches plan Sheet DRIVERS seat price and Pipedrive, where 47 of 48 won seats transacted at exactly 2520. Approved by Kaido 2026-08-27.",
+      "success": true
+    }
+  ]
+}
