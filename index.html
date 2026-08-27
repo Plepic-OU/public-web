@@ -97,22 +97,6 @@
       },
       {
         "@type": "Question",
-        "name": "How is agentic AI different from ChatGPT?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "ChatGPT responds to a single prompt and stops. An agentic AI runs in a loop: it plans, acts with tools (write files, run tests, search code), observes the results, and continues until the job is done."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Claude Code and why does it matter?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Claude Code is Anthropic's terminal-based agentic coding tool. Unlike IDE plugins, it has full system access: read files, run commands, manage git, integrate with any tool in your pipeline. It is scriptable end to end, which is why we built our curriculum around it."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "Who is Plepic's training designed for?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -149,14 +133,6 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "No. We teach the method, not the tool. Later sessions cover specs an agent can verify, verification gates, parallel agents in git worktrees, observability and agent-native architecture. Prior Claude experience helps, but it is not required. The entry bar is 2+ years of software development and access to a real codebase."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What makes Plepic's training different from online courses?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You ship a real feature in your own codebase in the graduation project: the code you'll ship Monday. Sessions are led by senior engineers, 50+ years combined, who build production systems with agentic tools. The curriculum was designed specifically for Claude Code, not adapted from generic AI content. Graduates self-report a median 5× speedup on their final project, estimated at course end against their previous methods. Basis: 25 answered, 20 gave measurable comparisons; cohort medians 7.5× and 4.2×. If you don't experience at least 3x time savings in typical development tasks after completing the training, we'll refund your contribution in full. Conditions apply."
         }
       },
       {
@@ -488,15 +464,6 @@
       clip-path: inset(50%);
       white-space: nowrap;
     }
-
-    /* The one-sentence opinion under the instructors heading. Held to a
-       reading measure so it does not run the full container width. */
-    .team-header .team-opinion {
-      max-width: 58ch;
-      margin-inline: auto;
-      font-size: 1rem;
-      color: var(--text-2);
-    }
   </style>
 </head>
 <body>
@@ -577,52 +544,13 @@
       </div>
     </section>
 
-    <!-- Section 2: The Perspective Shift -->
-    <section class="perspective-shift section reveal">
-      <div class="container">
-        <div class="perspective-shift-content reveal">
-          <h2>An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
-
-          <p class="perspective-shift-desc">
-            Forget the hand-waving about &ldquo;autonomous systems.&rdquo; It runs until the task is done and keeps context across iterations.
-          </p>
-
-          <div class="perspective-shift-comparison">
-            <div class="shift-col shift-col--agent">
-              <h3 class="text-agent">Agent</h3>
-              <p>LLM + Tools + Loop + Context</p>
-              <div class="code-snippet" tabindex="0"><code class="language-pseudocode">while(task) { explore &rarr; act &rarr; verify }</code></div>
-            </div>
-            <div class="shift-col shift-col--conversational">
-              <h3 class="text-conversational">Conversational AI</h3>
-              <p>Single prompt, single response</p>
-              <div class="code-snippet code-snippet--orange"><code class="language-pseudocode">prompt &rarr; response &rarr; done</code></div>
-            </div>
-          </div>
-
-          <blockquote class="perspective-shift-quote">
-            <p>&ldquo;After writing my first LLM loop, I couldn't sleep. Once you see it, your perspective changes permanently.&rdquo;</p>
-            <cite>Kaido Koort</cite>
-          </blockquote>
-
-          <a href="/claude-code/" class="btn btn-secondary mt-xl">Why Claude Code &rarr;</a>
-
-          <div class="hackathon-message mt-xl">
-            <p>
-              Build something real in a single session. A hackathon puts agentic tools in your team&rsquo;s hands before any 6-week commitment.
-            </p>
-            <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-ghost mt-xl">Book a 30-minute call</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: Team -->
+    <!-- Section 2: The people. The hero claims practitioners; this section
+         proves it with current practice, not tenure. One present-tense line
+         per instructor, naming where that person ships code now. -->
     <section id="team" class="team-section section reveal">
       <div class="container">
         <div class="team-header reveal">
-          <h2>Your Instructors: 50+ Years Combined</h2>
-          <p class="team-opinion">We pay instructors per cohort, not per hour, and we set the dates well ahead, so the schedule serves learning.</p>
+          <h2>Every instructor has a <span class="highlight">day job shipping code</span></h2>
         </div>
 
         <div class="team-grid reveal reveal-delay-1">
@@ -633,19 +561,7 @@
             </div>
             <div class="team-info">
               <h3>Joosep Simm</h3>
-              <p class="team-role">Developer, Architect & AI Instructor</p>
-              <div class="team-experience">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                20+ Years Dev Experience
-              </div>
-              <div class="team-skills">
-                <span class="skill-tag">Java</span>
-                <span class="skill-tag">Kotlin</span>
-                <span class="skill-tag">Go</span>
-                <span class="skill-tag">TypeScript</span>
-                <span class="skill-tag">Python</span>
-              </div>
-              <p class="team-bio">Telecommunications | Blockchain | AML | Energy | Game Design | Agentic Coding</p>
+              <p class="team-role">Ships code at Gridraven.</p>
             </div>
           </article>
 
@@ -656,18 +572,7 @@
             </div>
             <div class="team-info">
               <h3>Kaido Koort</h3>
-              <p class="team-role">Founder &middot; Tech Leader & Product Strategist</p>
-              <div class="team-experience">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                20+ Years in Software
-              </div>
-              <div class="team-skills">
-                <span class="skill-tag">MSc</span>
-                <span class="skill-tag">MA</span>
-                <span class="skill-tag">Strategy</span>
-                <span class="skill-tag">Product</span>
-              </div>
-              <p class="team-bio">Led 8 teams | Launched 6 products | Former Head of Dev, Smart-ID | StaffLogic | SurfCast | Lunar Base</p>
+              <p class="team-role">Builds the Plepic website and product.</p>
             </div>
           </article>
 
@@ -678,41 +583,59 @@
             </div>
             <div class="team-info">
               <h3>Vootele R&otilde;tov</h3>
-              <p class="team-role">Software Engineer &amp; Founder</p>
-              <div class="team-experience">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                10+ Years Dev Experience
-              </div>
-              <div class="team-skills">
-                <span class="skill-tag">Java</span>
-                <span class="skill-tag">JVM</span>
-                <span class="skill-tag">Optimization</span>
-                <span class="skill-tag">MSc</span>
-              </div>
-              <p class="team-bio">Founder, Balancing.services | Ex-Sympower | Ex-JRebel | Taught Algorithms at University of Tartu</p>
+              <p class="team-role">Builds Balancing.services.</p>
             </div>
           </article>
         </div>
+      </div>
+    </section>
 
-        <!-- Book Divider: names the two co-authors, since the third instructor is not one -->
-        <div class="book-divider reveal reveal-delay-1">
-          <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer"><img src="images/book-cover.png" alt="AI Coding for Beginners - book cover" width="325" height="522" loading="lazy"></a>
-          <p class="book-caption">Joosep and Kaido co-authored <em>AI Coding for Beginners</em></p>
-        </div>
+    <!-- Section 3: What changes. Introduces no new claim: both sentences are
+         hoisted verbatim from the FAQ item this restructure removed, and the
+         quote is the one of three that describes a discipline change. -->
+    <section class="outcome-section section reveal">
+      <div class="container">
+        <div class="outcome-content reveal">
+          <h2>You ship <span class="highlight">a real feature in your own codebase</span></h2>
 
-        <div class="pricing-testimonials reveal">
-          <blockquote class="pricing-quote">
+          <p>That is the graduation project, in weeks 5 and 6: the code you&rsquo;ll ship Monday.</p>
+
+          <p>Graduates self-report a median 5&times; speedup on their final project, estimated at course end against their previous methods. Basis: 25 answered, 20 gave measurable comparisons; cohort medians 7.5&times; and 4.2&times;.</p>
+
+          <blockquote class="perspective-shift-quote">
             <p>&ldquo;The biggest value was a mindset shift: not using AI as a tool, but building architecture around it. An entirely new perspective on applying AI systematically.&rdquo;</p>
             <cite>Kristina Krist, Mindworks Industries</cite>
           </blockquote>
-          <blockquote class="pricing-quote">
-            <p>&ldquo;The content was very strong. The biggest value came when I started experimenting on my own project. That&rsquo;s when real understanding and trust emerged.&rdquo;</p>
-            <cite>Erich Jagom&auml;gis, Bitweb</cite>
-          </blockquote>
-          <blockquote class="pricing-quote">
-            <p>&ldquo;It broadens your thinking and shows how to bring AI into your work processes. It gave me a clear direction for where to go next.&rdquo;</p>
-            <cite>Merilin Sellik, Rethinkers</cite>
-          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: What Plepic does. Front-door coverage the page lacked, and
+         deliberately linkless: the nav and footer already route all four, so
+         naming them here costs no mid-page exit. -->
+    <section class="offering-section section reveal">
+      <div class="container">
+        <div class="offering-content reveal">
+          <h2>Everything here starts from <span class="highlight">work we actually do</span></h2>
+
+          <dl class="proposal-doc-rows offering-rows">
+            <div class="proposal-doc-row">
+              <dt>Cohort</dt>
+              <dd>Six Fridays, about 20 engineers, each working in their own repo.</dd>
+            </div>
+            <div class="proposal-doc-row">
+              <dt>Hackathon</dt>
+              <dd>Build something real in a single session, your team, one real problem.</dd>
+            </div>
+            <div class="proposal-doc-row">
+              <dt>Scopeful</dt>
+              <dd>Our own applied research into public-tender discovery, at concept stage.</dd>
+            </div>
+            <div class="proposal-doc-row">
+              <dt>Instructor seats</dt>
+              <dd>We hire practising engineers to teach three or four cohorts a year alongside their own work.</dd>
+            </div>
+          </dl>
         </div>
       </div>
     </section>
@@ -721,11 +644,11 @@
     <section class="faq-section section reveal">
       <div class="container">
         <div class="reveal">
-          <h2>Pricing, Subsidy, Common Questions</h2>
+          <h2>Before you book</h2>
 
           <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
 
-            <h3 class="faq-group-title">Agentic engineering</h3>
+            <h3 class="faq-group-title">The program</h3>
 
             <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
               <summary itemprop="name">What is agentic coding?</summary>
@@ -733,22 +656,6 @@
                 <p itemprop="text">Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until the goal is achieved.</p>
               </div>
             </details>
-
-            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-              <summary itemprop="name">How is agentic AI different from ChatGPT?</summary>
-              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                <p itemprop="text">ChatGPT responds to a single prompt and stops. An agentic AI runs in a loop: it plans, acts with tools (write files, run tests, search code), observes the results, and continues until the job is done.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-              <summary itemprop="name">What is Claude Code and why does it matter?</summary>
-              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                <p itemprop="text">Claude Code is Anthropic&rsquo;s terminal-based agentic coding tool. Unlike IDE plugins, it has full system access: read files, run commands, manage git, integrate with any tool in your pipeline. It is scriptable end to end, which is why we built our curriculum around it.</p>
-              </div>
-            </details>
-
-            <h3 class="faq-group-title">The program</h3>
 
             <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
               <summary itemprop="name">Who is Plepic&rsquo;s training designed for?</summary>
@@ -778,13 +685,6 @@
               </div>
             </details>
 
-            <details class="faq-item" id="faq-refund" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-              <summary itemprop="name">What makes Plepic&rsquo;s training different from online courses?</summary>
-              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                <p itemprop="text">You ship a real feature in your own codebase in the graduation project: the code you&rsquo;ll ship Monday. Sessions are led by senior engineers, 50+ years combined, who build production systems with agentic tools. The curriculum was designed specifically for Claude Code, not adapted from generic AI content. Graduates self-report a median 5&times; speedup on their final project, estimated at course end against their previous methods. Basis: 25 answered, 20 gave measurable comparisons; cohort medians 7.5&times; and 4.2&times;. If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. Conditions apply.</p>
-              </div>
-            </details>
-
             <h3 class="faq-group-title">Pricing &amp; subsidy</h3>
 
             <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
@@ -802,11 +702,6 @@
             </details>
 
           </div>
-
-          <!-- The browsing path, for a reader who is not ready to talk. It sits
-               outside the FAQPage microdata on purpose: it is a link, not a
-               question, and it must never enter the structured data. -->
-          <p class="faq-alt">Not ready to talk? <a href="/webinar/2026-04-17-agentic-coding/">See the webinar deck &rarr;</a></p>
         </div>
       </div>
     </section>
@@ -820,7 +715,10 @@
           <p>Bringing the whole team? On the same call, Kaido shows you how Estonian state aid funds the training, then shapes a cohort with you, around your team and your codebase.</p>
           <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Book a 30-minute call</a>
           <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
-          <p class="closing-guarantee">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. Conditions apply.</p>
+          <!-- id="faq-refund": the FAQ item that used to carry it is gone, and
+               external links still deep-link the refund terms. This paragraph
+               is that text, so the anchor lands on the same promise. -->
+          <p class="closing-guarantee" id="faq-refund">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. Conditions apply.</p>
           <!-- The name's decoder ring (design-system.html Section 1): PLEPIC =
                PL(ay) + EPIC. The tagline itself now prints once, in the footer,
                so this line carries both the decode and the method it stands for. -->
@@ -871,8 +769,8 @@
 
   <!-- Mobile Sticky CTA -->
   <div class="sticky-cta" id="stickyCta">
-    <a href="/training/" class="btn btn-primary">
-      View Full Program
+    <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      Book a 30-minute call
     </a>
   </div>
 
@@ -941,8 +839,10 @@
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Deep-linked FAQ items (e.g. an external /#faq-refund link): open the
-    // <details> accordion the hash targets.
+    // Deep-linked FAQ items: open the <details> accordion the hash targets.
+    // A hash that lands outside the FAQ (e.g. /#faq-refund, now the closing
+    // guarantee paragraph) finds no <details> ancestor and falls through to
+    // the browser's own anchor scroll, which is the wanted behaviour.
     const openFaqFromHash = () => {
       let target;
       try { target = location.hash && document.querySelector(location.hash); } catch { return; }
