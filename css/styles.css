@@ -1415,15 +1415,25 @@ p:last-child {
   opacity: 0.6;
 }
 
-/* One left-aligned column: nav, then contact links, then the legal block. The
-   old row put the legal block beside the links and let it wrap when the two no
-   longer fit, which gave the three rows three different alignments. A column
-   holds the same alignment at every width. */
+/* Contact links left, company details right, as it read before the Anthropic
+   trademark line was added. That line is what broke this row: it made the
+   right-hand block wide enough that the two columns no longer fit, so it wrapped
+   to its own line while still right-aligning. The disclaimer now lives in
+   .footer-legal below, and the two columns fit again. */
 .footer-inner {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-xl);
+}
+
+/* Full-width legal line under both columns. Quietest text on the page. */
+.footer-legal {
+  margin: var(--space-md) 0 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-2);
 }
 
 .footer-links {
@@ -1455,6 +1465,7 @@ p:last-child {
 }
 
 .footer-company-info {
+  text-align: right;
   font-size: 0.75rem;
   color: var(--text-2);
   line-height: 1.5;
@@ -1473,6 +1484,21 @@ p:last-child {
   color: var(--green-brand);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* Measured, not guessed: the links column is about 557px and the company
+   column about 430px, so the pair needs roughly 1027px plus the gap. Below
+   this the row wraps, and a wrapped right-aligned block is the ragged edge
+   that made the footer look broken. Stack it left instead of letting it wrap. */
+@media (max-width: 1100px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-company-info {
+    text-align: left;
+  }
 }
 
 /* ========================================
@@ -3409,8 +3435,24 @@ p:last-child {
     text-align: center;
   }
 
-  /* The footer stacks left-aligned at every width, so the narrow-screen
-     centering that once fought the wide-screen row is gone. */
+  /* On a phone the two footer columns have nowhere to sit side by side, so
+     they stack and centre, as they did before. */
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  .footer-company-info {
+    text-align: center;
+  }
+
+  .footer-legal {
+    text-align: center;
+  }
 
   /* Agent page */
   .agent-hero-grid {
