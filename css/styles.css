@@ -1373,10 +1373,15 @@ p:last-child {
    Footer
    ======================================== */
 
+/* The public site is light on every page, so the footer is light too. It sits
+   on --bg while the closing section above sits on --bg-alt, and the border-top
+   keeps it reading as a distinct final band instead of bleeding into the
+   closing. */
 .footer {
-  background: var(--dark-surface);
-  color: var(--text-on-dark);
+  background: var(--bg);
+  color: var(--text);
   padding: var(--space-xl) 0;
+  border-top: 1px solid var(--border);
 }
 
 .footer-nav {
@@ -1385,21 +1390,21 @@ p:last-child {
   gap: var(--space-sm) var(--space-lg);
   padding-bottom: var(--space-sm);
   margin-bottom: var(--space-md);
-  border-bottom: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border);
 }
 
 .footer-nav a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: var(--text-on-dark-2);
+  color: var(--text-2);
   font-size: 0.95rem;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .footer-nav a:hover {
-  color: var(--text-on-dark);
+  color: var(--text);
 }
 
 /* External footer nav links (Skill Tree -> skill.plepic.com) get an outbound affordance */
@@ -1410,12 +1415,15 @@ p:last-child {
   opacity: 0.6;
 }
 
+/* One left-aligned column: nav, then contact links, then the legal block. The
+   old row put the legal block beside the links and let it wrap when the two no
+   longer fit, which gave the three rows three different alignments. A column
+   holds the same alignment at every width. */
 .footer-inner {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-md) var(--space-xl);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
 }
 
 .footer-links {
@@ -1431,14 +1439,14 @@ p:last-child {
   gap: 0.35rem;
   min-height: 44px;
   padding-block: 0.5rem;
-  color: var(--text-on-dark-2);
+  color: var(--text-2);
   font-size: 0.95rem;
   transition: color var(--transition-fast);
   text-decoration: none;
 }
 
 .footer-links a:hover {
-  color: var(--text-on-dark);
+  color: var(--text);
 }
 
 .footer-links svg {
@@ -1447,22 +1455,22 @@ p:last-child {
 }
 
 .footer-company-info {
-  text-align: right;
   font-size: 0.75rem;
-  color: var(--text-on-dark-2);
+  color: var(--text-2);
   line-height: 1.5;
 }
 
 .footer-company-info strong {
-  color: var(--text-on-dark);
+  color: var(--text);
   font-weight: 600;
 }
 
-/* Privacy link sits on the dark footer — brand green fails there (2.7:1).
-   Vivid green is the on-dark link color (7.4:1); underline distinguishes
-   it from surrounding text independent of color. */
+/* Privacy link on the light footer: brand green is the link color on cream
+   (5.0:1, AA). Vivid green is the on-dark color and fails here, so it must not
+   come back. The underline distinguishes the link from the text around it
+   independent of color. */
 .footer-company-info a {
-  color: var(--green-vivid);
+  color: var(--green-brand);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -3257,7 +3265,7 @@ p:last-child {
 }
 
 .footer-tagline:hover {
-  color: var(--green-vivid);
+  color: var(--green-brand);
 }
 
 /* ========================================
@@ -3401,18 +3409,8 @@ p:last-child {
     text-align: center;
   }
 
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-links {
-    justify-content: center;
-  }
-
-  .footer-company-info {
-    text-align: center;
-  }
+  /* The footer stacks left-aligned at every width, so the narrow-screen
+     centering that once fought the wide-screen row is gone. */
 
   /* Agent page */
   .agent-hero-grid {
