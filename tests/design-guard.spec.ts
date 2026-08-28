@@ -19,7 +19,6 @@ const PRODUCTION_PAGES = [
   'index.html',
   'training/index.html',
   'scopeful/index.html',
-  'claude-code/index.html',
   'jobs/index.html',
   '404.html',
 ];
