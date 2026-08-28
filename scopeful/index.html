@@ -159,6 +159,44 @@
         </div>
 
         <p class="flow-badge reveal reveal-delay-2">The research target: <strong>four weeks of scoping</strong> compressed to <strong>under an hour</strong> of Scopeful&rsquo;s own work.</p>
+
+        <!-- Thesis framework. The source graphic is a triangle with its labels
+             baked into the artwork; at a 375px viewport the apex label lands
+             around 7px and stops being readable, and baked text is neither
+             selectable nor translatable. Rebuilt here as three stacked tiers of
+             decreasing width: the pyramid survives, the labels stay real HTML.
+             DOM order runs bottom-up, matching the argument that each tier
+             rests on the one below it; column-reverse returns the base to the
+             bottom on screen. -->
+        <div class="thesis reveal reveal-delay-3">
+          <h3 class="thesis-title">What a performance-based price rests on</h3>
+          <p class="thesis-lead">Measurement is one condition of five. Kaido&rsquo;s master&rsquo;s research at the University of Tartu maps the rest, and the order: each tier has to hold up the one above it.</p>
+          <figure class="pyramid">
+            <ol class="pyramid-tiers" role="list">
+              <li class="pyramid-tier pyramid-tier-base">
+                <p class="pyramid-band">Foundational Environment</p>
+                <ul class="pyramid-items" role="list">
+                  <li>Trust &amp; Partnership</li>
+                </ul>
+              </li>
+              <li class="pyramid-tier pyramid-tier-mid">
+                <p class="pyramid-band">Defining Value</p>
+                <ul class="pyramid-items" role="list">
+                  <li>Clear Value Proposition / Uniqueness</li>
+                  <li>Measurable Outcomes / KPIs</li>
+                </ul>
+              </li>
+              <li class="pyramid-tier pyramid-tier-top">
+                <p class="pyramid-band">Structuring the Deal</p>
+                <ul class="pyramid-items pyramid-items-stacked" role="list">
+                  <li>Structured Risk Sharing</li>
+                  <li>Aligned Incentives</li>
+                </ul>
+              </li>
+            </ol>
+            <figcaption class="pyramid-source"><cite>Enablers and Barriers to Performance-Based Pricing of Software Projects</cite> <a href="https://dspace.ut.ee/items/ccf0dbc9-30c3-446b-8dd6-98b954842bd1" target="_blank" rel="noopener noreferrer" class="link" aria-label="Koort 2025, thesis on performance-based pricing">(Koort, 2025)</a></figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
