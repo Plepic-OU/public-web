@@ -789,7 +789,8 @@ p:last-child {
 /* text-2 (#4a4a45, ~8.3:1 on cream) passes AA at this size; the old
    opacity:0.65 over text-3 dropped it to ~2.6:1. Opacity now scoped to the
    divider hairline only, so the label text stays fully legible. */
-.hero-bottom span {
+.hero-bottom-label,
+.client-names {
   font-size: 0.75rem;
   color: var(--text-2);
   text-transform: uppercase;
@@ -800,9 +801,45 @@ p:last-child {
 
 .hero-bottom-line {
   flex: 1;
+  min-width: 1.5rem;
   height: 1px;
   background: var(--border);
   opacity: 0.65;
+}
+
+.client-logos {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-shrink: 0;
+}
+
+/* Heights are set per mark against a shared 14.5px cap height, never against
+   the SVG box: Helmes puts its caps in 85% of its box, Bitweb's lowercase
+   fills 70%, Aktiva's fill all of it. One shared value leaves Aktiva shouting
+   and Bitweb whispering. */
+.client-logos .company-logo { height: 17px; }
+.client-logos .company-logo--datel { height: 18px; }
+.client-logos .company-logo--bitweb { height: 15px; }
+.client-logos .company-logo--aktiva { height: 15px; }
+.client-logos .company-logo--delfi { height: 16px; }
+
+/* Three clients have no mark of their own. Setting them as display-face
+   wordmarks made them read as logos that failed; carrying them in the same
+   label grammar as "Trusted by" says what is true, that these are names and
+   not marks. text-3 (5.0:1 on cream, AA) matches the marks' resting ink,
+   where the leading label stays a step darker because it is the heading. */
+.client-names {
+  margin-left: 0.25rem;
+  color: var(--text-3);
+}
+
+/* All nine need 833px of row, which the bar has from 1045px up. Below that
+   the six marks carry it alone; scaling everything down to fit would put each
+   logo under 14px, smaller than the label beside it. */
+@media (max-width: 1044px) {
+  .client-logos { gap: 1.4rem; }
+  .client-names { display: none; }
 }
 
 /* Butterfly visual */
@@ -1181,11 +1218,19 @@ p:last-child {
   gap: var(--space-2xl) var(--space-3xl);
 }
 
+/* Client marks are black and white at rest and true colour on hover, the
+   same reveal the team photos use. grayscale() alone is not black and white:
+   it maps a navy wordmark to near-ink and a coral one to pale grey, so the
+   row reads as uneven weight. brightness(0) flattens every mark to one ink,
+   and opacity sets how loud that ink is. Both ends of the transition are
+   written as full filter lists because `none` is not interpolable and would
+   snap instead of fading. */
 .company-logo {
   height: 24px;
   width: auto;
-  filter: grayscale(1) opacity(0.5);
-  transition: filter var(--transition-base);
+  filter: grayscale(1) brightness(0);
+  opacity: 0.5;
+  transition: filter var(--transition-smooth), opacity var(--transition-smooth);
 }
 
 .logo-row-more {
@@ -1196,7 +1241,12 @@ p:last-child {
 }
 
 .company-logo:hover {
-  filter: none;
+  filter: grayscale(0) brightness(1);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .company-logo { transition: none; }
 }
 
 .company-logo--aktiva {
