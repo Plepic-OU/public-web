@@ -28,7 +28,6 @@ const DARK_NEUTRALS = new Set([
 const PAGES = [
   { name: 'homepage', path: '/' },
   { name: 'training', path: '/training/' },
-  { name: 'claude-code', path: '/claude-code/' },
   { name: 'scopeful', path: '/scopeful/' },
   { name: 'jobs', path: '/jobs/' },
   { name: 'privacy', path: '/privacy/' },

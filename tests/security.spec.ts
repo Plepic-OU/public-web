@@ -1,10 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-// frame-src is per-page: claude-code embeds the webinar video from
-// youtube-nocookie.com; every other page locks frames out entirely.
+// frame-src is asserted per page: every page below locks frames out entirely.
+// A page that must embed a third party carries its own frame-src value here.
 const pages = [
   { name: 'homepage', path: '/', frameSrc: "frame-src 'none'" },
-  { name: 'claude-code', path: '/claude-code/', frameSrc: 'frame-src https://www.youtube-nocookie.com' },
   { name: 'training', path: '/training/', frameSrc: "frame-src 'none'" },
 ];
 
