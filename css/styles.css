@@ -789,7 +789,7 @@ p:last-child {
 /* text-2 (#4a4a45, ~8.3:1 on cream) passes AA at this size; the old
    opacity:0.65 over text-3 dropped it to ~2.6:1. Opacity now scoped to the
    divider hairline only, so the label text stays fully legible. */
-.hero-bottom span {
+.hero-bottom-label {
   font-size: 0.75rem;
   color: var(--text-2);
   text-transform: uppercase;
@@ -800,10 +800,40 @@ p:last-child {
 
 .hero-bottom-line {
   flex: 1;
+  min-width: 1.5rem;
   height: 1px;
   background: var(--border);
   opacity: 0.65;
 }
+
+/* Ten marks and a label do not fit one line at every width the bar is shown
+   at, so the row scales instead of breaking. font-size is the single scale
+   knob: 15px where the container is at its full 1120px, 11.5px at 901px where
+   the bar is about to hide anyway, and every mark and gap below is sized in
+   em off it. One clamp, no breakpoint, nothing to keep in sync. */
+.client-logos {
+  display: flex;
+  align-items: center;
+  gap: 1.35em;
+  flex-shrink: 0;
+  font-size: clamp(11.5px, 1.6vw - 2.92px, 15px);
+}
+
+/* Heights are per mark against a shared cap height, never against the SVG
+   box: Helmes puts its caps in 85% of its box, Bitweb's lowercase in 70%,
+   Aktiva's in all of it. One shared value leaves Aktiva shouting and Bitweb
+   whispering. Marks whose own box carries padding (Merit, Aktiva, Thorgate)
+   have it cropped out of the viewBox instead, so no height here is fighting
+   an exporter's artboard. */
+.client-logos .company-logo { height: 1em; }
+.client-logos .company-logo--datel,
+.client-logos .company-logo--thorgate { height: 1.07em; }
+.client-logos .company-logo--delfi { height: 0.93em; }
+.client-logos .company-logo--bitweb,
+.client-logos .company-logo--aktiva,
+.client-logos .company-logo--rethink,
+.client-logos .company-logo--mindworks { height: 0.87em; }
+.client-logos .company-logo--merit { height: 0.8em; }
 
 /* Butterfly visual */
 .hero-visual {
@@ -1181,11 +1211,19 @@ p:last-child {
   gap: var(--space-2xl) var(--space-3xl);
 }
 
+/* Client marks are black and white at rest and true colour on hover, the
+   same reveal the team photos use. grayscale() alone is not black and white:
+   it maps a navy wordmark to near-ink and a coral one to pale grey, so the
+   row reads as uneven weight. brightness(0) flattens every mark to one ink,
+   and opacity sets how loud that ink is. Both ends of the transition are
+   written as full filter lists because `none` is not interpolable and would
+   snap instead of fading. */
 .company-logo {
   height: 24px;
   width: auto;
-  filter: grayscale(1) opacity(0.5);
-  transition: filter var(--transition-base);
+  filter: grayscale(1) brightness(0);
+  opacity: 0.5;
+  transition: filter var(--transition-smooth), opacity var(--transition-smooth);
 }
 
 .logo-row-more {
@@ -1196,7 +1234,12 @@ p:last-child {
 }
 
 .company-logo:hover {
-  filter: none;
+  filter: grayscale(0) brightness(1);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .company-logo { transition: none; }
 }
 
 .company-logo--aktiva {
