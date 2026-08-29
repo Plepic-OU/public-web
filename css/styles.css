@@ -789,8 +789,7 @@ p:last-child {
 /* text-2 (#4a4a45, ~8.3:1 on cream) passes AA at this size; the old
    opacity:0.65 over text-3 dropped it to ~2.6:1. Opacity now scoped to the
    divider hairline only, so the label text stays fully legible. */
-.hero-bottom-label,
-.client-names {
+.hero-bottom-label {
   font-size: 0.75rem;
   color: var(--text-2);
   text-transform: uppercase;
@@ -807,40 +806,34 @@ p:last-child {
   opacity: 0.65;
 }
 
+/* Ten marks and a label do not fit one line at every width the bar is shown
+   at, so the row scales instead of breaking. font-size is the single scale
+   knob: 15px where the container is at its full 1120px, 11.5px at 901px where
+   the bar is about to hide anyway, and every mark and gap below is sized in
+   em off it. One clamp, no breakpoint, nothing to keep in sync. */
 .client-logos {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.35em;
   flex-shrink: 0;
+  font-size: clamp(11.5px, 1.6vw - 2.92px, 15px);
 }
 
-/* Heights are set per mark against a shared 14.5px cap height, never against
-   the SVG box: Helmes puts its caps in 85% of its box, Bitweb's lowercase
-   fills 70%, Aktiva's fill all of it. One shared value leaves Aktiva shouting
-   and Bitweb whispering. */
-.client-logos .company-logo { height: 17px; }
-.client-logos .company-logo--datel { height: 18px; }
-.client-logos .company-logo--bitweb { height: 15px; }
-.client-logos .company-logo--aktiva { height: 15px; }
-.client-logos .company-logo--delfi { height: 16px; }
-
-/* Three clients have no mark of their own. Setting them as display-face
-   wordmarks made them read as logos that failed; carrying them in the same
-   label grammar as "Trusted by" says what is true, that these are names and
-   not marks. text-3 (5.0:1 on cream, AA) matches the marks' resting ink,
-   where the leading label stays a step darker because it is the heading. */
-.client-names {
-  margin-left: 0.25rem;
-  color: var(--text-3);
-}
-
-/* All nine need 833px of row, which the bar has from 1045px up. Below that
-   the six marks carry it alone; scaling everything down to fit would put each
-   logo under 14px, smaller than the label beside it. */
-@media (max-width: 1044px) {
-  .client-logos { gap: 1.4rem; }
-  .client-names { display: none; }
-}
+/* Heights are per mark against a shared cap height, never against the SVG
+   box: Helmes puts its caps in 85% of its box, Bitweb's lowercase in 70%,
+   Aktiva's in all of it. One shared value leaves Aktiva shouting and Bitweb
+   whispering. Marks whose own box carries padding (Merit, Aktiva, Thorgate)
+   have it cropped out of the viewBox instead, so no height here is fighting
+   an exporter's artboard. */
+.client-logos .company-logo { height: 1em; }
+.client-logos .company-logo--datel,
+.client-logos .company-logo--thorgate { height: 1.07em; }
+.client-logos .company-logo--delfi { height: 0.93em; }
+.client-logos .company-logo--bitweb,
+.client-logos .company-logo--aktiva,
+.client-logos .company-logo--rethink,
+.client-logos .company-logo--mindworks { height: 0.87em; }
+.client-logos .company-logo--merit { height: 0.8em; }
 
 /* Butterfly visual */
 .hero-visual {
