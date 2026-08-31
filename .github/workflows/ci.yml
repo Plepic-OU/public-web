@@ -36,7 +36,19 @@ jobs:
       # snapshot baselines) and tests/metamorphosis.spec.ts (needs WebGL)
       # fail permanently on a Linux runner and stay local-only. Never
       # switch this to bare `npm test`.
-      - run: npx playwright test tests/design-guard.spec.ts tests/a11y.spec.ts tests/security.spec.ts
+      #
+      # Everything else belongs here. light-mode and instructor-slide were
+      # absent until 2026-08-31 for no reason anyone recorded: both are pure
+      # DOM/computed-style checks with no WebGL and no snapshots, so both run
+      # on a Linux runner exactly as they do locally. light-mode is the suite
+      # written BECAUSE the source-level design guard missed a dark footer set
+      # in the shared stylesheet, so leaving it out of CI removed the guard
+      # that exists to catch what the other guard cannot see.
+      # Adding a new spec file? Add it to this list in the same PR, or it
+      # runs only on the machine of whoever remembers.
+      # tests/ci-coverage.spec.ts fails the build if a spec file is missing
+      # from this very line, so the list cannot silently fall behind again.
+      - run: npx playwright test tests/ci-coverage.spec.ts tests/design-guard.spec.ts tests/a11y.spec.ts tests/security.spec.ts tests/light-mode.spec.ts tests/motion.spec.ts tests/accent.spec.ts tests/instructor-slide.spec.ts
 
   claims:
     runs-on: ubuntu-latest

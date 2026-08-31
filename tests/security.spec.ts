@@ -1,11 +1,15 @@
 import { test, expect } from '@playwright/test';
 
-// frame-src is asserted per page: every page below locks frames out entirely.
-// A page that must embed a third party carries its own frame-src value here.
-const pages = [
-  { name: 'homepage', path: '/', frameSrc: "frame-src 'none'" },
-  { name: 'training', path: '/training/', frameSrc: "frame-src 'none'" },
-];
+import { PRODUCTION_PAGES } from './pages';
+
+// frame-src is asserted per page. Every production page currently locks frames
+// out entirely; a page that must embed a third party overrides its value in
+// FRAME_SRC below rather than dropping out of the sweep.
+const FRAME_SRC: Record<string, string> = {};
+const pages = PRODUCTION_PAGES.map((p) => ({
+  ...p,
+  frameSrc: FRAME_SRC[p.name] ?? "frame-src 'none'",
+}));
 
 const expectedCSPDirectives = [
   "default-src 'self'",

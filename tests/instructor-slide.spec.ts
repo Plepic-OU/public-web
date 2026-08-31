@@ -51,7 +51,19 @@ test.describe('instructor slide preview', () => {
     await page.hover('.team-card[data-instructor="kaido"] .team-photo');
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
 
-    await page.hover('.team-header h2');
+    // Move off by coordinate, not page.hover('.team-header h2').
+    //
+    // hover() scrolls its target into view and returns while the page is still
+    // settling, and the pointer then stays at a fixed screen position while the
+    // layout slides beneath it. Traced 2026-08-31: the slide began dismissing
+    // correctly (opacity 1 -> 0.25), then ~300ms later the still-moving page
+    // put a team photo back under the unmoved cursor, the slide re-raised, and
+    // the poll timed out on a feature that works. The suite was not in CI, so
+    // this failed on main unnoticed.
+    //
+    // The paint test below already moves by coordinate for the same reason.
+    // The page top-left corner is empty and scrolls nothing.
+    await page.mouse.move(4, 4);
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('0');
   });
 

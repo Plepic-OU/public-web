@@ -1,12 +1,8 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { PRODUCTION_PAGES } from './pages';
 
-const pages = [
-  { name: 'homepage', path: '/' },
-  { name: 'training', path: '/training/' },
-];
-
-for (const page of pages) {
+for (const page of PRODUCTION_PAGES) {
   test(`accessibility - ${page.name} @a11y`, async ({ page: browserPage }) => {
     await browserPage.goto(page.path);
     await browserPage.waitForLoadState('networkidle');
