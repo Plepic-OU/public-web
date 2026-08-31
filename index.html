@@ -657,39 +657,56 @@
           <h2>Every instructor has a <span class="highlight">day job shipping code</span></h2>
         </div>
 
-        <div class="team-grid reveal reveal-delay-1">
-          <!-- Joosep Card -->
-          <article class="team-card">
-            <div class="team-photo">
-              <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
-            </div>
-            <div class="team-info">
-              <h3>Joosep Simm</h3>
-              <p class="team-role">Ships code at Gridraven.</p>
-            </div>
-          </article>
+        <div class="team-showcase">
+          <div class="team-grid reveal reveal-delay-1">
+            <!-- Joosep Card -->
+            <article class="team-card" data-instructor="joosep">
+              <div class="team-photo">
+                <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
+              </div>
+              <div class="team-info">
+                <h3>Joosep Simm</h3>
+                <p class="team-role">Ships code at Gridraven.</p>
+              </div>
+            </article>
 
-          <!-- Kaido Card -->
-          <article class="team-card team-card-right">
-            <div class="team-photo">
-              <img src="images/kaido.jpg" alt="Kaido Koort" width="640" height="640" loading="lazy">
-            </div>
-            <div class="team-info">
-              <h3>Kaido Koort</h3>
-              <p class="team-role">Builds the Plepic website and product.</p>
-            </div>
-          </article>
+            <!-- Kaido Card -->
+            <article class="team-card team-card-right" data-instructor="kaido">
+              <div class="team-photo">
+                <img src="images/kaido.jpg" alt="Kaido Koort" width="640" height="640" loading="lazy">
+              </div>
+              <div class="team-info">
+                <h3>Kaido Koort</h3>
+                <p class="team-role">Builds the Plepic website and product.</p>
+              </div>
+            </article>
 
-          <!-- Vootele Card -->
-          <article class="team-card">
-            <div class="team-photo">
-              <img src="images/vootele.jpg" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy">
-            </div>
-            <div class="team-info">
-              <h3>Vootele R&otilde;tov</h3>
-              <p class="team-role">Builds Balancing.services.</p>
-            </div>
-          </article>
+            <!-- Vootele Card -->
+            <article class="team-card" data-instructor="vootele">
+              <div class="team-photo">
+                <img src="images/vootele.jpg" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy">
+              </div>
+              <div class="team-info">
+                <h3>Vootele R&otilde;tov</h3>
+                <p class="team-role">Builds Balancing.services.</p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Hovering a card raises that instructor's career slide over the
+               grid: the day-job line is the claim, the timeline is the proof.
+               Desktop pointers only, and decorative to assistive tech, because
+               a slide is an image of text no screen reader can usefully read.
+               Source: Google Slides presentation
+               1qAcofhLiAIYXP54DLPPgOH17Cyel3piO59oqNHAmkOs, slides 4 to 6
+               (page objectIds g381d2b15ca7_0_430 Kaido, g381d2b15ca7_0_489
+               Joosep, slide_vootele Vootele). To re-export: Slides API
+               pages.getThumbnail at LARGE, then cwebp -q 85 -sharp_yuv -m 6. -->
+          <div class="instructor-slides" aria-hidden="true">
+            <img class="instructor-slide" data-instructor="joosep" src="images/slide-joosep.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
+            <img class="instructor-slide" data-instructor="kaido" src="images/slide-kaido.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
+            <img class="instructor-slide" data-instructor="vootele" src="images/slide-vootele.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
+          </div>
         </div>
       </div>
     </section>

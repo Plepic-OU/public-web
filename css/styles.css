@@ -1329,6 +1329,84 @@ p:last-child {
   margin-bottom: 0;
 }
 
+/* Instructor slide preview.
+   Hovering a card raises that instructor's career slide over the grid. The
+   panel is a SIBLING of the grid, never a child of the card: .team-card
+   clips with overflow: hidden and lifts on hover with a transform, so a
+   tooltip nested inside it would be cut off. pointer-events: none keeps the
+   panel from ever owning the pointer, so :hover always belongs to the card
+   underneath and moving the mouse away dismisses the panel with no flicker.
+   Top-aligned with the grid, the 16:9 panel overhangs the cards by about
+   150px, which lands inside the section's 6rem bottom padding. */
+.team-showcase {
+  position: relative;
+}
+
+/* Touch and narrow viewports get no panel at all. display: none also means
+   the browser never fetches the three slide images there. */
+.instructor-slides {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  /* #team also carries .reveal, whose transform: translateY(0) makes the
+     section a stacking context. That traps the panel's z-index inside it, so
+     .outcome-section, later in the DOM and opaque, painted over the part of
+     the panel that overhangs the cards. Raising the section itself is what
+     puts the panel above the next section; a z-index on the panel cannot. */
+  .team-section {
+    z-index: 2;
+  }
+
+  .instructor-slides {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(1040px, 100%);
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .instructor-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(28, 28, 26, 0.16);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.22s ease,
+                transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* The panel covers the card, so the shared card-hover lift buys nothing
+     here and its 3px rise and shadow peek out above the panel's top edge.
+     The panel is the hover feedback now. */
+  .team-showcase .team-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .team-showcase:has(.team-card[data-instructor="joosep"]:hover) .instructor-slide[data-instructor="joosep"],
+  .team-showcase:has(.team-card[data-instructor="kaido"]:hover) .instructor-slide[data-instructor="kaido"],
+  .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instructor-slide {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ========================================
    Footer
    ======================================== */
