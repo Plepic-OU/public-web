@@ -1349,6 +1349,15 @@ p:last-child {
 }
 
 @media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  /* #team also carries .reveal, whose transform: translateY(0) makes the
+     section a stacking context. That traps the panel's z-index inside it, so
+     .outcome-section, later in the DOM and opaque, painted over the part of
+     the panel that overhangs the cards. Raising the section itself is what
+     puts the panel above the next section; a z-index on the panel cannot. */
+  .team-section {
+    z-index: 2;
+  }
+
   .instructor-slides {
     display: block;
     position: absolute;
