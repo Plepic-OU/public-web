@@ -8,13 +8,21 @@ import { join } from 'path';
  * Nothing compared it to the stylesheet, and it had drifted badly.
  *
  * Until 2026-09-01 it declared 8 colours, each with a generated 8-step
- * "tonalRamp". All 8 canonical values were right and all 64 ramp values were
- * invented: not one appeared anywhere in css/styles.css, and they sat close
- * enough to mislead (the ramp offered #12732d beside the real brand green
- * #137b30, and #48443d beside the real secondary ink #4a4a45). A tool reading
- * that file in good faith would pick a near-miss grey that looks correct next
- * to the real thing. It also omitted the eight working neutrals entirely, so
- * a tool needing a border colour would find none declared and invent one.
+ * "tonalRamp". All 8 canonical values were right; none of the 64 ramp values
+ * appeared anywhere in css/styles.css. That was not corruption: the impeccable
+ * sidecar schema asks for a synthesised ramp per token to render a strip under
+ * each swatch in its critique panel. The problem is that nothing in the file
+ * marked which values were real and which were decoration, and the synthesised
+ * ones sat close enough to mislead, offering #12732d beside the real brand
+ * green #137b30 and #48443d beside the real secondary ink #4a4a45. It also
+ * omitted the eight working neutrals entirely, so a tool needing a border
+ * colour would find none declared and invent one.
+ *
+ * Kaido's call, 2026-09-01: the palette is the greens, the orange and the
+ * creams he designed, plus the neutrals already in the stylesheet, and nothing
+ * synthesised. The panel degrades safely without ramps (live-browser.js reads
+ * `m.tonalRamp || null` and `c.tonalRamp?.length`), so the strip simply stops
+ * rendering.
  *
  * Both failure modes are the same bug: the file was allowed to disagree with
  * the stylesheet. This test removes that freedom. The stylesheet is the source
@@ -100,9 +108,10 @@ test.describe('palette file mirrors the stylesheet @palette', () => {
   });
 
   test('no generated tonal ramps survive', () => {
-    // The ramps were the drift. They carried the authority of the file with
-    // none of its accuracy, and nothing generated them from real values. If a
-    // ramp is ever wanted, derive it from the stylesheet and check it here
+    // Ramps carried the authority of the file with none of its accuracy: they
+    // were synthesised for display, never derived from the stylesheet, and
+    // nothing distinguished them from the canonical values beside them. If a
+    // ramp is ever wanted again, derive it from real tokens and check it here
     // rather than reintroducing free-floating arrays.
     const withRamps = Object.entries(colorMeta)
       .filter(([, m]) => 'tonalRamp' in m)
@@ -110,7 +119,7 @@ test.describe('palette file mirrors the stylesheet @palette', () => {
 
     expect(
       withRamps,
-      'A tonalRamp is back in design.json. Every previous ramp value was invented and matched nothing in the stylesheet.',
+      'A tonalRamp is back in design.json. Every previous ramp value was synthesised for display and matched nothing in the stylesheet.',
     ).toEqual([]);
   });
 

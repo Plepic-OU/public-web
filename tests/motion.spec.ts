@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { PRODUCTION_PAGES } from './pages';
+import { PUBLIC_PAGES } from './pages';
 
 /**
  * The Reduced-Motion Rule, enforced against the RENDERED page.
@@ -25,7 +25,7 @@ import { PRODUCTION_PAGES } from './pages';
 // threshold a human could perceive as motion.
 const PERCEPTIBLE_MS = 100;
 
-for (const p of PRODUCTION_PAGES) {
+for (const p of PUBLIC_PAGES) {
   test(`no perceptible animation survives reduced motion on ${p.name} (The Reduced-Motion Rule) @motion`, async ({ page }) => {
     // Set the preference with emulateMedia, NOT test.use({ reducedMotion }).
     // playwright.config.ts sets `use` per project, and a project-level `use`

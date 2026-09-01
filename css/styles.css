@@ -1550,9 +1550,14 @@ p:last-child {
   right: 0;
   z-index: 90;
   padding: var(--space-md);
-  /* Clear the iOS home indicator: without this the bar sits inside the
-     gesture strip and the site's only mobile CTA competes with the system
-     swipe. env() resolves to 0px everywhere that has no inset. */
+  /* Reserve the iOS home-indicator strip so the site's only mobile CTA does
+     not sit under the system swipe area.
+     NOT YET IN EFFECT: env(safe-area-inset-bottom) resolves to 0 until the
+     page's viewport meta carries viewport-fit=cover, and none of these pages
+     sets it. Adding that flag also pulls content under the notch horizontally
+     in landscape, which needs its own pass on a real device, so it is left
+     out. This declaration is correct and inert; it starts working the day
+     viewport-fit=cover lands, and costs nothing until then. */
   padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
   background: rgba(250, 247, 242, 0.95);
   backdrop-filter: blur(12px);

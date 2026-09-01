@@ -38,7 +38,11 @@ export const PRODUCTION_PAGES = [
  * skipping it, or the page would have to stop showing specimens to pass.
  *
  * Everything not about being a specimen still applies, and is enforced:
- * accessibility and CSP run over PUBLIC_PAGES below.
+ * a11y.spec.ts, security.spec.ts and motion.spec.ts all run over PUBLIC_PAGES
+ * below, so the design system is held to accessibility, CSP and The
+ * Reduced-Motion Rule exactly like every commercial page. Only the two rules
+ * a specimen structurally cannot satisfy are skipped, and this comment names
+ * them so the exemption stays a decision rather than an oversight.
  */
 export const REFERENCE_PAGES = [{ name: 'design-system', path: '/design-system/' }];
 
