@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-import { PRODUCTION_PAGES } from './pages';
+import { PUBLIC_PAGES } from './pages';
 
-// frame-src is asserted per page. Every production page currently locks frames
+// frame-src is asserted per page. Every public page currently locks frames
 // out entirely; a page that must embed a third party overrides its value in
 // FRAME_SRC below rather than dropping out of the sweep.
 const FRAME_SRC: Record<string, string> = {};
-const pages = PRODUCTION_PAGES.map((p) => ({
+const pages = PUBLIC_PAGES.map((p) => ({
   ...p,
   frameSrc: FRAME_SRC[p.name] ?? "frame-src 'none'",
 }));

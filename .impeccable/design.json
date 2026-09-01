@@ -4,14 +4,22 @@
   "title": "Design System: Plepic Nature-Digital",
   "extensions": {
     "colorMeta": {
-      "green-vivid": { "role": "primary", "displayName": "Vivid Green", "canonical": "#00c638", "tonalRamp": ["#004d16", "#008526", "#00bd35", "#00f545", "#2eff69", "#66ff91", "#9effba", "#d6ffe2"] },
-      "green-brand": { "role": "primary", "displayName": "Brand Green", "canonical": "#137b30", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
-      "green-dark": { "role": "primary", "displayName": "Deep Green", "canonical": "#0d5822", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
-      "green-light": { "role": "primary", "displayName": "Light Green", "canonical": "#c5f6d3", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
-      "green-surface": { "role": "primary", "displayName": "Surface Green", "canonical": "#edfcf1", "tonalRamp": ["#0a421a", "#12732d", "#19a341", "#21d454", "#4ae375", "#7bea9a", "#abf2bf", "#dcf9e4"] },
-      "accent": { "role": "secondary", "displayName": "Ember Orange", "canonical": "#e26c45", "tonalRamp": ["#42180a", "#732a12", "#a33c19", "#d44e21", "#e3704a", "#ea977b", "#f2bdab", "#f9e3dc"] },
-      "bg-cream": { "role": "neutral", "displayName": "Cream", "canonical": "#faf7f2", "tonalRamp": ["#292723", "#48443d", "#666157", "#847e71", "#9f998e", "#b9b5ac", "#d2d0cb", "#ecebe9"] },
-      "dark": { "role": "neutral", "displayName": "Ink", "canonical": "#1c1c1a", "tonalRamp": ["#292723", "#48443d", "#666157", "#847e71", "#9f998e", "#b9b5ac", "#d2d0cb", "#ecebe9"] }
+      "green-vivid": { "role": "primary", "displayName": "Vivid Green", "canonical": "#00c638", "cssVar": "--green-vivid", "purpose": "Decorative only on light (2.5:1). On dark it is AAA: links, labels, inline emphasis." },
+      "green-brand": { "role": "primary", "displayName": "Brand Green", "canonical": "#137b30", "cssVar": "--green-brand", "purpose": "Logo, links, headings, and the .highlight payload phrase on light. AA on cream and white." },
+      "green-dark": { "role": "primary", "displayName": "Deep Green", "canonical": "#0d5822", "cssVar": "--green-dark", "purpose": "Body text that needs green at AAA on cream and white." },
+      "green-light": { "role": "primary", "displayName": "Light Green", "canonical": "#c5f6d3", "cssVar": "--green-light", "purpose": "Tint fills and the borders that pair with Surface Green." },
+      "green-surface": { "role": "primary", "displayName": "Surface Green", "canonical": "#edfcf1", "cssVar": "--green-surface", "purpose": "Tinted panel and badge backgrounds." },
+      "accent": { "role": "secondary", "displayName": "Ember Orange", "canonical": "#e26c45", "cssVar": "--accent", "purpose": "The one warm action per viewport. No hover variant." },
+      "bg-cream": { "role": "neutral", "displayName": "Cream", "canonical": "#faf7f2", "cssVar": "--bg", "purpose": "The page canvas on every page." },
+      "bg-cream-alt": { "role": "neutral", "displayName": "Cream Alt", "canonical": "#f3efe7", "cssVar": "--bg-alt", "purpose": "Alternating section bands against the canvas." },
+      "surface": { "role": "neutral", "displayName": "White", "canonical": "#ffffff", "cssVar": "--surface", "purpose": "Card and panel surfaces lifted off the canvas." },
+      "dark": { "role": "neutral", "displayName": "Ink", "canonical": "#1c1c1a", "cssVar": "--dark", "alsoCssVar": ["--text"], "purpose": "Body and heading text on light; the dark-section ground on the specimen page." },
+      "dark-surface": { "role": "neutral", "displayName": "Ink Surface", "canonical": "#262624", "cssVar": "--dark-surface", "purpose": "Raised panels inside a dark section." },
+      "text-2": { "role": "neutral", "displayName": "Ink Secondary", "canonical": "#4a4a45", "cssVar": "--text-2", "purpose": "Secondary body text on light." },
+      "text-3": { "role": "neutral", "displayName": "Ink Muted", "canonical": "#6b6b60", "cssVar": "--text-3", "purpose": "Captions, meta lines, and cite text on light." },
+      "text-on-dark": { "role": "neutral", "displayName": "Off-White", "canonical": "#e5e2dc", "cssVar": "--text-on-dark", "alsoCssVar": ["--border"], "purpose": "Body text inside a dark section, and every resting border on light." },
+      "text-on-dark-2": { "role": "neutral", "displayName": "Off-White Muted", "canonical": "#a3a39a", "cssVar": "--text-on-dark-2", "purpose": "Secondary text inside a dark section." },
+      "border-dark": { "role": "neutral", "displayName": "Border Dark", "canonical": "#3a3a38", "cssVar": "--border-dark", "purpose": "Borders inside a dark section." }
     },
     "typographyMeta": {
       "display": { "displayName": "Display (Zilla Slab)", "purpose": "Hero headlines only; warm slab authority." },

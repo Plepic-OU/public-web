@@ -393,14 +393,32 @@
       }
     });
 
-    // Sticky CTA visibility: yields while the hero or any other primary CTA
-    // is on screen (one accent per viewport)
+    // Sticky CTA visibility: yields while the hero or any other accent element
+    // is on screen (The One Accent Rule).
+    //
+    // Targets are chosen by rendered colour, not by class name. This listed
+    // .btn-primary until 2026-09-01, so .btn-enlist wore the same accent
+    // background under a different class and was never observed: on scopeful
+    // the bar stayed up beside it, two identical "Talk to Kaido" buttons in
+    // one viewport. Training had already been patched by appending its class
+    // to the list, which fixed one page and left the next one to be found by
+    // hand. A rule about colour has to be enforced on colour. The scan is a
+    // single pass at load, measured 0.6-2.5ms across these pages.
     const stickyCta = document.getElementById('stickyCta');
     const heroSection = document.querySelector('.scopeful-hero');
 
     if (stickyCta && heroSection) {
-      const accentTargets = [heroSection, ...document.querySelectorAll('.btn-primary')]
-        .filter(el => !stickyCta.contains(el));
+      // Resolve --accent to the rgb() form getComputedStyle returns.
+      const probe = document.createElement('span');
+      probe.style.cssText = 'position:absolute;visibility:hidden;background:var(--accent)';
+      document.body.appendChild(probe);
+      const accent = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+
+      const accentEls = [...document.querySelectorAll('*')]
+        .filter(el => getComputedStyle(el).backgroundColor === accent);
+      const accentTargets = [heroSection, ...accentEls]
+        .filter(el => el !== stickyCta && !stickyCta.contains(el));
       const onScreen = new Set();
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

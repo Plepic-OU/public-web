@@ -34,8 +34,14 @@ jobs:
           # be publicly reachable on plepic.com. Keep this list in sync with
           # repo hygiene; if a file here gets a real public role, remove
           # it from this list rather than working around the deploy.
+          #
+          # design-system.html left this list on 2026-09-01. PRODUCT.md had
+          # described the design system as "public and canonical at
+          # /design-system" the whole time, while this step deleted it from
+          # every deploy, so the URL 404'd. It now ships as
+          # design-system/index.html and is noindex rather than hidden.
           rm -rf _archive playwright-report tests
-          rm -f  design-system.html font-compare.html demo-tenders.html
+          rm -f  font-compare.html demo-tenders.html
           rm -f  claims-receipts.log scripts/check-claims.mjs
           rm -rf docs/training-one-pager
           rm -rf docs/specs

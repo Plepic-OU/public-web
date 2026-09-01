@@ -19,15 +19,19 @@ import { PRODUCTION_PAGES } from './pages';
  * second accent element three screens down is still two accent elements in one
  * viewport when the reader gets there.
  *
- * THE STICKY CTA IS EXCLUDED, AND THAT IS AN OPEN QUESTION. Canon says "the
- * mobile sticky CTA yields", which reads two ways: the sticky CTA hides when a
- * real CTA is on screen, or it simply is not counted as the page's accent
- * element. Measured 2026-08-31 on mobile (375px): homepage, training and
- * scopeful all render the sticky CTA alongside an in-content CTA near the foot
- * of the page, so under the first reading those three pages are in violation
- * today. Excluding it, every page holds at exactly one. This test enforces the
- * unambiguous half so the content rule is guarded now; if "yields" means
- * "hides", drop the .sticky-cta exclusion below and the test tightens.
+ * THE STICKY CTA IS COUNTED LIKE ANYTHING ELSE. Canon is explicit that it
+ * hides rather than being exempt: design-system.html section 13 says it
+ * "yields when any other primary CTA is on screen", and .impeccable/design.json
+ * says the same. So the bar is one of the page's accent elements whenever it
+ * is up, and if it is up beside another one, that is the violation the rule
+ * exists to catch. Kaido confirmed the reading on 2026-09-01.
+ *
+ * MEASURE AFTER THE BAR HAS SETTLED, NOT DURING. The bar slides out over
+ * --transition-base once the observer sees another CTA. An earlier version of
+ * this measurement read the frame 120ms after scrolling and counted a bar that
+ * was already leaving, which reported homepage, training and scopeful as
+ * violations when only scopeful was one. Each stop now waits for the bar's own
+ * transition to finish before counting.
  */
 
 // --accent, #e26c45.
@@ -50,8 +54,19 @@ for (const p of PRODUCTION_PAGES) {
 
     for (let y = 0; y <= height; y += step) {
       await page.evaluate((top) => window.scrollTo(0, top), y);
-      // Let a scroll-driven class change settle before reading the frame.
+      // Two waits, and both are needed. The IntersectionObserver callback runs
+      // before the next paint and toggles .visible; only then does the slide
+      // start. Checking for a finished transition first would find none running
+      // and read the previous frame's state.
       await page.waitForTimeout(120);
+      await page.waitForFunction(
+        () => {
+          const bar = document.querySelector('.sticky-cta');
+          return !bar || bar.getAnimations().every((a) => a.playState !== 'running');
+        },
+        undefined,
+        { timeout: 2000 },
+      );
 
       const onScreen = await page.evaluate((accent) => {
         const found: string[] = [];
@@ -62,8 +77,6 @@ for (const p of PRODUCTION_PAGES) {
           // it names are all filled.
           if (cs.backgroundColor !== accent) return;
           if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') return;
-          // See the header note: the sticky CTA yields, so it is not counted.
-          if (el.closest('.sticky-cta')) return;
           const r = el.getBoundingClientRect();
           if (r.width * r.height < 16) return; // hairlines and collapsed nodes
           if (r.bottom <= 0 || r.top >= window.innerHeight) return;

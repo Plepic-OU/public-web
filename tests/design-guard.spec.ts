@@ -240,7 +240,7 @@ test.describe('design guard @design-guard', () => {
     // The reference page presents specimens inside white panels (white on
     // cream); .panel-cream appears only as the demonstrated variant on a white
     // surface, tagged data-demo="panel-cream". Cream-on-cream furniture is banned.
-    const html = stripComments(read('design-system.html'));
+    const html = stripComments(read('design-system/index.html'));
     const tags = html.match(/<[^>]*class="[^"]*\bpanel-cream\b[^"]*"[^>]*>/g) || [];
     for (const tag of tags) {
       expect(tag.includes('data-demo="panel-cream"'), `design-system.html: unsanctioned .panel-cream (cream furniture is banned; only the tagged variant demo may use it):\n${tag.slice(0, 160)}`).toBe(true);

@@ -48,7 +48,7 @@ jobs:
       # runs only on the machine of whoever remembers.
       # tests/ci-coverage.spec.ts fails the build if a spec file is missing
       # from this very line, so the list cannot silently fall behind again.
-      - run: npx playwright test tests/ci-coverage.spec.ts tests/design-guard.spec.ts tests/a11y.spec.ts tests/security.spec.ts tests/light-mode.spec.ts tests/motion.spec.ts tests/accent.spec.ts tests/instructor-slide.spec.ts
+      - run: npx playwright test tests/ci-coverage.spec.ts tests/design-guard.spec.ts tests/a11y.spec.ts tests/security.spec.ts tests/light-mode.spec.ts tests/motion.spec.ts tests/accent.spec.ts tests/instructor-slide.spec.ts tests/palette.spec.ts
 
   claims:
     runs-on: ubuntu-latest
