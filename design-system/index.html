@@ -4,11 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plepic Design System</title>
-  <!-- Fonts: self-hosted (@font-face in css/styles.css); preload the above-the-fold critical files -->
-  <link rel="preload" href="fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/hanken.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta name="description" content="The Plepic Design System: the palette, type stack, components and named rules behind plepic.com, with live contrast figures.">
+  <!-- Public but not indexed. It is a reference to link people to, not a page
+       that should compete with /training/ and /scopeful/ in search results. -->
+  <meta name="robots" content="noindex, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Tighter than the production pages: this page carries no analytics, so
+       it needs no Google origins. Inline script and style stay allowed; the
+       page runs two inline scripts and sets specimen styles inline. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <!-- Fonts: self-hosted (@font-face in /css/styles.css); preload the above-the-fold critical files -->
+  <link rel="preload" href="/fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/hanken.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
@@ -125,13 +134,13 @@
         <div class="ds-sw-hex" style="color: #fff;">#0d5822</div>
       </div>
       <div class="ds-sw" style="background: var(--accent);">
-        <div class="ds-sw-name" style="color: rgba(28,28,26,0.8);">Accent</div>
+        <div class="ds-sw-name" style="color: var(--dark);">Accent</div>
         <div class="ds-sw-hex" style="color: #1c1c1a;">#e26c45</div>
       </div>
     </div>
 
     <!-- Token reference table — populated by JS -->
-    <div class="panel panel-white" style="margin-top: var(--space-lg); overflow-x: auto;">
+    <div class="panel panel-white" tabindex="0" role="region" aria-label="Design token reference table" style="margin-top: var(--space-lg); overflow-x: auto;">
       <table class="ds-token-table">
         <thead>
           <tr>
@@ -168,19 +177,19 @@
 
     <div class="ds-swatch-strip">
       <div class="ds-sw" style="background: var(--bg); border: 1px solid var(--border);">
-        <div class="ds-sw-name" style="color: var(--text-3);">Cream</div>
+        <div class="ds-sw-name" style="color: var(--text-2);">Cream</div>
         <div class="ds-sw-hex" style="color: var(--text);">#faf7f2</div>
-        <div class="ds-sw-meta" style="color: var(--text-3);">--bg</div>
+        <div class="ds-sw-meta" style="color: var(--text-2);">--bg</div>
       </div>
       <div class="ds-sw" style="background: var(--bg-alt); border: 1px solid var(--border);">
-        <div class="ds-sw-name" style="color: var(--text-3);">Alt</div>
+        <div class="ds-sw-name" style="color: var(--text-2);">Alt</div>
         <div class="ds-sw-hex" style="color: var(--text);">#f3efe7</div>
-        <div class="ds-sw-meta" style="color: var(--text-3);">--bg-alt</div>
+        <div class="ds-sw-meta" style="color: var(--text-2);">--bg-alt</div>
       </div>
       <div class="ds-sw" style="background: var(--surface); border: 1px solid var(--border);">
-        <div class="ds-sw-name" style="color: var(--text-3);">Surface</div>
+        <div class="ds-sw-name" style="color: var(--text-2);">Surface</div>
         <div class="ds-sw-hex" style="color: var(--text);">#ffffff</div>
-        <div class="ds-sw-meta" style="color: var(--text-3);">--surface</div>
+        <div class="ds-sw-meta" style="color: var(--text-2);">--surface</div>
       </div>
       <div class="ds-sw" style="background: var(--border);">
         <div class="ds-sw-name" style="color: var(--text-2);">Border</div>
@@ -190,7 +199,7 @@
       <div class="ds-sw" style="background: var(--text-3);">
         <div class="ds-sw-name" style="color: #ffffff;">Text 3</div>
         <div class="ds-sw-hex" style="color: #ffffff;">#6b6b60</div>
-        <div class="ds-sw-meta" style="color: rgba(255,255,255,0.9);">Muted</div>
+        <div class="ds-sw-meta" style="color: #ffffff;">Muted</div>
       </div>
       <div class="ds-sw" style="background: var(--text-2);">
         <div class="ds-sw-name" style="color: #e5e2dc;">Text 2</div>
@@ -278,7 +287,7 @@
         </div>
       </div>
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — ink (off-white)</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-on-dark-2); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">Headings on Dark — ink (off-white)</div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <h1 style="font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.05; margin: 0; color: #e5e2dc;">Build production <span class="highlight">AI agents</span> in 6 weeks</h1>
           <h2 style="margin: 0; color: #e5e2dc;">An Agent Is an <span class="highlight">LLM Using Tools in a Loop</span></h2>
@@ -409,7 +418,7 @@
           </div>
         </div>
         <div class="on-dark panel-dark" style="padding: 1.5rem; border-radius: 10px; background: var(--dark);">
-          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #6b6b60; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Dark</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-on-dark-2); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.75rem;">On Dark</span>
           <div class="ds-btn-row">
             <button class="btn btn-primary">Book a free call</button>
             <a class="btn btn-ghost" href="#">View curriculum &rarr;</a>
@@ -489,7 +498,7 @@
 
       <!-- Dark context — with CTA (no urgency badge) -->
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with CTA</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-on-dark-2); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with CTA</div>
 
         <!-- Badges — default only -->
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
@@ -545,7 +554,7 @@
       </div>
       <!-- Dark — urgency badge without CTA -->
       <div class="panel panel-dark on-dark">
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b60; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with urgency badge (no CTA)</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-on-dark-2); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-dark);">On Dark — with urgency badge (no CTA)</div>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: var(--space-md);">
           <span class="badge badge-default"><span class="badge-dot"></span> Cohort 3 open</span>
           <span class="badge badge-urgency"><span class="badge-dot"></span> 4 spots left</span>
@@ -668,7 +677,7 @@
       <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
         Master markup for all placements. Resize via <code>width</code> / <code>height</code>; the viewBox is fixed.
       </p>
-      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
+      <pre class="code-block code-block-default" tabindex="0" role="region" aria-label="Butterfly mark SVG source" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
   &lt;!-- Left wing — 11 facets, DK-B-V pattern --&gt;
   &lt;polygon points="147,105 110,68 55,48"  fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
   &lt;polygon points="147,105 55,48 20,72"   fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
@@ -712,11 +721,11 @@
       </p>
       <div style="display:flex; gap:2rem; align-items:center; flex-wrap:wrap;">
         <div style="padding:1.25rem 1.75rem; background:var(--bg); border-radius:10px;">
-          <img src="images/butterfly.svg" alt="Crystalline butterfly mark" width="120" height="112">
+          <img src="/images/butterfly.svg" alt="Crystalline butterfly mark" width="120" height="112">
         </div>
         <div class="ds-btn-row" style="display:flex; gap:0.75rem; flex-wrap:wrap;">
-          <a class="btn btn-outline" href="images/butterfly.svg" download>Download SVG</a>
-          <a class="btn btn-outline" href="images/butterfly.png" download>Download PNG</a>
+          <a class="btn btn-outline" href="/images/butterfly.svg" download>Download SVG</a>
+          <a class="btn btn-outline" href="/images/butterfly.png" download>Download PNG</a>
         </div>
       </div>
     </div>
@@ -956,7 +965,7 @@
       <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <article class="team-card" style="max-width: 520px;">
         <div class="team-photo">
-          <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
+          <img src="/images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
         </div>
         <div class="team-info">
           <h3>Joosep Simm</h3>
@@ -1019,7 +1028,7 @@
             <polygon points="136.56 165.88 116.81 121.7 98.32 121.7 118.07 165.88 133.36 200.07 151.85 200.07 136.56 165.88" fill="#15d466"/>
             <polygon points="100.39 165.88 85.1 200.07 66.61 200.07 81.9 165.88 100.39 165.88" fill="#0169fe"/>
           </svg>
-          <img class="company-logo company-logo--mindworks" src="images/mindworks.webp" alt="Mindworks" width="432" height="64" decoding="async">
+          <img class="company-logo company-logo--mindworks" src="/images/mindworks.webp" alt="Mindworks" width="432" height="64" decoding="async">
         </div>
       </div>
       <p style="margin-top: 0.75rem; font-size: 0.95rem; color: var(--text-2);">Hover a mark. Every client mark rests as one flat ink silhouette (<code>grayscale(1) brightness(0)</code> at half opacity) and reveals its real brand colour on hover, the same treatment the team photos carry. <code>grayscale()</code> alone is not black and white: it maps a navy wordmark to near ink and a coral one to pale grey, so the row reads as uneven weight. Client brand hexes live on the mark itself, never in <code>css/styles.css</code>: that palette is closed. Marks are inline SVG where the client publishes a vector and a cropped raster where none exists. Heights are set per mark against a shared cap height, never a shared box height.</p>
@@ -1123,7 +1132,7 @@
     <!-- Signature pattern: the metamorphosis refactor (verified spec) -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Metamorphosis Refactor &mdash; the hero signature</h4>
-      <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem; max-width: 70ch;">On the <a href="/">homepage hero</a>, a crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath evolves into <code>while(task) { explore &rarr; act &rarr; verify }</code>: developer becomes agentic engineer, told twice at once. The synced code line is what makes the arc a domain claim instead of a transformation clich&eacute;.</p>
+      <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem; max-width: 70ch;">On the <a href="/" style="text-decoration: underline; text-underline-offset: 3px;">homepage hero</a>, a crystalline caterpillar crawls, cocoons, and unfurls into the locked mark while the code line beneath evolves into <code>while(task) { explore &rarr; act &rarr; verify }</code>: developer becomes agentic engineer, told twice at once. The synced code line is what makes the arc a domain claim instead of a transformation clich&eacute;.</p>
       <ul class="ds-rules">
         <li><strong>Trigger</strong> &mdash; the hero mounts at rest; a single 3000ms timer after module boot fires one <code>replay()</code>. After that the visitor owns it: hovering the resting mark with a mouse, or tapping it, replays the arc. The target is the mark itself, not the wider stage box, and it fires only from rest, so a replay never restarts the arc mid-flight and never queues. A pointer cursor over the resting mark is the only affordance; there is no button. No scroll trigger, no auto-loop.</li>
         <li><strong>Movements</strong> &mdash; crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest; 13.6s. The 22 facets are constant; matter reorganizes. Motion is spring forces, never tweens; a deadband snap and shader rest gate land the rest pose byte-exact on the locked mark, which then breathes (Wing-Breathe, Light-Shift).</li>
@@ -1321,8 +1330,8 @@
     { bg: 'var(--surface)',       border: 'var(--border)',      label: 'White',      cls: '',        lc: 'var(--text-3)' },
     { bg: 'var(--bg)',            border: 'var(--border)',      label: 'Cream',      cls: '',        lc: 'var(--text-3)' },
     { bg: 'var(--green-surface)', border: 'var(--green-light)', label: 'Green tint', cls: '',        lc: 'var(--text-3)' },
-    { bg: 'var(--dark)',          border: 'var(--border-dark)', label: 'Dark',       cls: 'on-dark', lc: '#6b6b60' },
-    { bg: 'var(--green-brand)',   border: 'var(--green-brand)', label: 'On brand',   cls: 'on-brand', lc: 'rgba(255,255,255,0.85)' }
+    { bg: 'var(--dark)',          border: 'var(--border-dark)', label: 'Dark',       cls: 'on-dark', lc: 'var(--text-on-dark-2)' },
+    { bg: 'var(--green-brand)',   border: 'var(--green-brand)', label: 'On brand',   cls: 'on-brand', lc: '#ffffff' }
   ];
   bgs.forEach(function(b) {
     var card = document.createElement('div');
@@ -1347,7 +1356,7 @@
 
     var itemD = document.createElement('div');
     itemD.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
-    itemD.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b6b60;margin-top:0.3rem;">' + s + 'px</div>';
+    itemD.innerHTML = mark + '<div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-on-dark-2);margin-top:0.3rem;">' + s + 'px</div>';
     lDark.appendChild(itemD);
   });
 

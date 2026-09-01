@@ -1550,6 +1550,15 @@ p:last-child {
   right: 0;
   z-index: 90;
   padding: var(--space-md);
+  /* Reserve the iOS home-indicator strip so the site's only mobile CTA does
+     not sit under the system swipe area.
+     NOT YET IN EFFECT: env(safe-area-inset-bottom) resolves to 0 until the
+     page's viewport meta carries viewport-fit=cover, and none of these pages
+     sets it. Adding that flag also pulls content under the notch horizontally
+     in landscape, which needs its own pass on a real device, so it is left
+     out. This declaration is correct and inert; it starts working the day
+     viewport-fit=cover lands, and costs nothing until then. */
+  padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
   background: rgba(250, 247, 242, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -3074,7 +3083,7 @@ p:last-child {
   }
 
   body.has-sticky-cta {
-    padding-bottom: 70px;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -3676,7 +3685,7 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   border-color: var(--border-dark);
   color: var(--text-on-dark);
 }
-.on-dark .code-block-default .comment { color: var(--text-3); }
+.on-dark .code-block-default .comment { color: var(--text-on-dark-2); }
 .on-dark .code-block-default .keyword { color: var(--green-vivid); }
 .on-dark .code-block-hero { color: var(--green-vivid); }
 
@@ -3789,7 +3798,10 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 }
 .ds-sw-name { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
 .ds-sw-hex  { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; }
-.ds-sw-meta { font-family: var(--font-mono); font-size: 0.75rem; opacity: 0.85; }
+/* No opacity here. Every .ds-sw-meta already declares its own colour, so
+   dimming on top of it only subtracted contrast: the label on the Ink
+   Muted swatch read 4.43:1 against its own ground while claiming white. */
+.ds-sw-meta { font-family: var(--font-mono); font-size: 0.75rem; }
 
 /* Jump nav — sticky TOC for the (long) reference page */
 .ds-toc {

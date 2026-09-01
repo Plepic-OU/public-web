@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { PRODUCTION_PAGES } from './pages';
 
 /**
  * The Dark Placement Rule, enforced against the RENDERED page.
@@ -23,18 +24,10 @@ const DARK_NEUTRALS = new Set([
   'rgb(38, 38, 36)', // --dark-surface #262624
 ]);
 
-// design-system.html is deliberately absent: it is the specimen page that
-// documents the dark device, and documenting a device is not using it.
-const PAGES = [
-  { name: 'homepage', path: '/' },
-  { name: 'training', path: '/training/' },
-  { name: 'scopeful', path: '/scopeful/' },
-  { name: 'jobs', path: '/jobs/' },
-  { name: 'privacy', path: '/privacy/' },
-  { name: '404', path: '/404.html' },
-];
-
-for (const p of PAGES) {
+// design-system.html is deliberately absent from the shared list: it is the
+// specimen page that documents the dark device, and documenting a device is
+// not using it.
+for (const p of PRODUCTION_PAGES) {
   test(`no dark surface renders on ${p.name} (The Dark Placement Rule) @light-mode`, async ({ page }) => {
     await page.goto(p.path);
     await page.waitForLoadState('networkidle');

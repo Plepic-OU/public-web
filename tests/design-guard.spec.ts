@@ -87,6 +87,40 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
+  test('the mark is never restyled, only animated (The Mark-Motion Rule)', () => {
+    // Canon, design-system.html section 12: "Choreographed motion that resolves
+    // to the locked mark is sanctioned; static effects (glow, gradient,
+    // drop-shadow, per-facet opacity, outline-only wings) stay banned. Motion
+    // animates the mark; it never restyles it."
+    //
+    // metamorphosis.spec.ts guards the motion half, but it needs WebGL and CI
+    // never runs it, so the restyling half was unguarded everywhere. This is a
+    // source check precisely so it runs on any machine: the banned effects are
+    // all attributes on the inlined SVG.
+    //
+    // Scoped to the mark's own <svg>, not the page: a gradient elsewhere is a
+    // different question, governed by its own rule.
+    const SIGNATURE = 'points="147,105 110,68 55,48"';
+    for (const page of PRODUCTION_PAGES) {
+      const marks = (read(page).match(/<svg[\s\S]*?<\/svg>/g) || []).filter((s) => s.includes(SIGNATURE));
+      expect(marks.length, `${page} should inline the butterfly mark exactly as the other pages do`).toBeGreaterThan(0);
+      for (const svg of marks) {
+        // Glow and drop-shadow arrive as filters; gradients as paint servers.
+        for (const effect of ['filter=', '<linearGradient', '<radialGradient', 'drop-shadow', '<feGaussianBlur', '<feDropShadow']) {
+          expect(svg.includes(effect), `${page}: the butterfly carries "${effect}". The mark is locked geometry; motion animates it, it is never restyled.`).toBe(false);
+        }
+        // Per-facet opacity and outline-only wings are facet-level, so they are
+        // checked on <polygon> alone. The two antenna <path>s carry a
+        // deliberate opacity="0.7" and are part of the locked artwork.
+        const facets = svg.match(/<polygon[^>]*>/g) || [];
+        for (const facet of facets) {
+          expect(/\bopacity=/.test(facet), `${page}: a wing facet carries per-facet opacity, which is banned:\n${facet}`).toBe(false);
+          expect(/fill="none"/.test(facet), `${page}: a wing facet is outline-only (fill="none"), which is banned:\n${facet}`).toBe(false);
+        }
+      }
+    }
+  });
+
   test('green payload rule: ink headings, one green payload phrase max', () => {
     // Headings are ink with at most one load-bearing green phrase via .highlight.
     // Only two .highlight color rules exist (brand on light, vivid on dark);
@@ -206,7 +240,7 @@ test.describe('design guard @design-guard', () => {
     // The reference page presents specimens inside white panels (white on
     // cream); .panel-cream appears only as the demonstrated variant on a white
     // surface, tagged data-demo="panel-cream". Cream-on-cream furniture is banned.
-    const html = stripComments(read('design-system.html'));
+    const html = stripComments(read('design-system/index.html'));
     const tags = html.match(/<[^>]*class="[^"]*\bpanel-cream\b[^"]*"[^>]*>/g) || [];
     for (const tag of tags) {
       expect(tag.includes('data-demo="panel-cream"'), `design-system.html: unsanctioned .panel-cream (cream furniture is banned; only the tagged variant demo may use it):\n${tag.slice(0, 160)}`).toBe(true);
