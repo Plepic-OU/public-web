@@ -1422,56 +1422,15 @@ p:last-child {
   border-top: 1px solid var(--border);
 }
 
-.footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-lg);
-  padding-bottom: var(--space-sm);
-  margin-bottom: var(--space-md);
-  border-bottom: 1px solid var(--border);
-}
-
-.footer-nav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--text-2);
-  font-size: 0.95rem;
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.footer-nav a:hover {
-  color: var(--text);
-}
-
-/* External footer nav links (Skill Tree -> skill.plepic.com) get an outbound affordance */
-.footer-nav a[target="_blank"]::after {
-  content: "\2197"; /* ↗ */
-  margin-left: 0.2em;
-  font-size: 0.85em;
-  opacity: 0.6;
-}
-
-/* Contact links left, company details right, as it read before the Anthropic
-   trademark line was added. That line is what broke this row: it made the
-   right-hand block wide enough that the two columns no longer fit, so it wrapped
-   to its own line while still right-aligning. The disclaimer now lives in
-   .footer-legal below, and the two columns fit again. */
+/* Two columns only: contact links left, company details right. A third wide
+   element in this row makes the pair too wide to fit, so it wraps and the
+   right-aligned block goes ragged. Keep the footer at these two. */
 .footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-md) var(--space-xl);
-}
-
-/* Full-width legal line under both columns. Quietest text on the page. */
-.footer-legal {
-  margin: var(--space-md) 0 0;
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: var(--text-2);
 }
 
 .footer-links {
@@ -3196,10 +3155,6 @@ p:last-child {
   }
 
   .footer-company-info {
-    text-align: center;
-  }
-
-  .footer-legal {
     text-align: center;
   }
 
