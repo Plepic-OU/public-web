@@ -1,0 +1,34 @@
+name: Auto-merge
+
+# Every PR opened here is meant to reach plepic.com. The vault's auto-ship hook
+# deliberately refuses anything touching this submodule ("ship those inside the
+# submodule first"), and until 2026-09-02 nothing inside the submodule did the
+# shipping — so every website PR sat waiting for a human to press merge. This
+# workflow is that missing half.
+#
+# It arms GitHub's own auto-merge. The merge then happens only when the three
+# required checks (lint, tests, claims) are green, and never at all if one is
+# red, so this loosens who presses the button, not what has to pass first.
+#
+# The escape hatch is a draft PR: a draft is skipped and stays open until it is
+# marked ready. Open work you do not want live as a draft.
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  arm:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Arm auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr merge "$NUMBER" --auto --squash --delete-branch
