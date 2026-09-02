@@ -274,10 +274,14 @@ h1 { font-size: clamp(2rem, 2rem + 3vw, 3.5rem); }
 
 /* Hero heading override — matches prototype exactly */
 .hero h1 {
-  /* Cap chosen so "Claude Code Training" holds one line in the 580px hero
-     column (fits to 60.5px, measured 2026-08-01); the founder wants exactly
-     two lines: "Claude Code Training" / "for Dev Teams". */
-  font-size: clamp(2.5rem, 2rem + 2vw, 3.7rem);
+  /* Cap restored to the pre-2026-08-01 4.8rem on 2026-09-02. The 3.7rem cap
+     existed only to hold "Claude Code Training" on one line; that headline is
+     gone, and the 2026-08-25 scale step raised every other level while the
+     hero stayed put, so the headline read small on a large monitor. Current
+     constraint: "Practitioners," holds one line in the 580px hero column —
+     it measures 478px at 76.8px in Bitter 700 at -0.025em (2026-09-02), ~100px
+     of slack. The break after the comma is a hard <br> in the markup. */
+  font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem);
   line-height: 1.05;
   letter-spacing: -0.025em;
   margin-bottom: 2rem;
@@ -285,6 +289,19 @@ h1 { font-size: clamp(2rem, 2rem + 3vw, 3.5rem); }
 h2 { font-size: var(--fs-h2); }
 h3 { font-size: var(--fs-h3); }
 h4 { font-size: var(--fs-h4); }
+
+/* 901-1014px only. The hero runs two columns here while the page is still
+   narrower than --max-width, and the butterfly stage holds a hard 440px, so
+   the text track gets exactly (viewport - 536px). "Practitioners," is one
+   unbreakable word measuring 6.22px per 1px of font, so above ~68px it
+   out-measures that track, min-content-sizes it, and pushes the stage past
+   the viewport edge — the hero clips overflow, so the code line under the
+   butterfly silently loses its tail (measured 2026-09-02). Ramp to the cap
+   across the band instead of arriving early. Below 901px the stage is
+   hidden and the full width is the headline's again. */
+@media (min-width: 901px) and (max-width: 1014px) {
+  .hero h1 { font-size: calc(-85px + 15.9vw); }
+}
 
 p {
   margin-bottom: var(--space-md);
