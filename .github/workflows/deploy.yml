@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+  # Belt and braces for auto-merge. GitHub suppresses workflow runs for pushes
+  # attributed to GITHUB_TOKEN, and auto-merge.yml arms auto-merge with exactly
+  # that token — so the push above may never fire when a PR merges itself, and
+  # a merged change would sit undeployed. This trigger fires on the merge event
+  # instead of the push, which nothing suppresses. A human merge fires both; the
+  # pages concurrency group serialises them and the second is a harmless no-op.
+  pull_request:
+    types: [closed]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -17,6 +27,8 @@ concurrency:
 
 jobs:
   deploy:
+    # A closed PR that was never merged changed nothing, so it must not deploy.
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -24,6 +36,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Always main, whatever the trigger. On a pull_request event the
+          # default would be the PR's merge ref; pinning main also means a
+          # hand-run workflow_dispatch cannot put a branch on plepic.com.
+          ref: main
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
