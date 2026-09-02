@@ -242,8 +242,8 @@
       <div style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);">Type Scale</div>
       <div style="display: flex; flex-direction: column; gap: 1.25rem;">
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">Hero — clamp(2.5rem, 2rem + 2vw, 3.7rem) / 700 / 1.05</span>
-          <h1 style="font-size: clamp(2.5rem, 2rem + 2vw, 3.7rem); line-height: 1.05; letter-spacing: -0.025em;">Build production</h1>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">Hero — clamp(3rem, 2.5rem + 3.5vw, 4.8rem) / 700 / 1.05</span>
+          <h1 style="font-size: clamp(3rem, 2.5rem + 3.5vw, 4.8rem); line-height: 1.05; letter-spacing: -0.025em;">Build production</h1>
         </div>
         <div>
           <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">H2 — var(--fs-h2) = clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem) / 700 / 1.15</span>
@@ -263,7 +263,7 @@
         </div>
       </div>
       <p class="ds-note" style="margin-top: var(--space-md); margin-bottom: 0; font-size: 1.125rem;">
-        Display is hero-only; non-hero h1s use clamp(2rem, 2rem + 3vw, 3.5rem). The scale lives as :root tokens in styles.css: --fs-body, --fs-body-lg (hero descriptions, 1.35rem), --fs-h2, --fs-h3, --fs-h4 (1.25rem), --fs-faq-q (1.25rem); --fs- is the size namespace, --text- stays colors. At clamp minimums h3 = h4 = body: weight carries the bottom of the hierarchy. Scale revised one step up 2026-08-25 (founder sign-off; hero cap unchanged per the 2026-08-01 two-line decision).
+        Display is hero-only; non-hero h1s use clamp(2rem, 2rem + 3vw, 3.5rem). The scale lives as :root tokens in styles.css: --fs-body, --fs-body-lg (hero descriptions, 1.35rem), --fs-h2, --fs-h3, --fs-h4 (1.25rem), --fs-faq-q (1.25rem); --fs- is the size namespace, --text- stays colors. At clamp minimums h3 = h4 = body: weight carries the bottom of the hierarchy. Scale revised one step up 2026-08-25 (founder sign-off). The hero cap followed on 2026-09-02: the 3.7rem cap had been set to hold a headline that no longer exists, and leaving it behind the raised scale made the hero read small on a large monitor, so it returns to 4.8rem. A hero headline that must break in a chosen place carries a hard &lt;br&gt;; the 580px hero column holds 14 display characters on one line at the cap.
       </p>
     </div>
 
