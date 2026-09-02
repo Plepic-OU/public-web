@@ -948,7 +948,7 @@
     // A hash that matches no element, or one outside the FAQ, finds no
     // <details> ancestor and falls through to the browser's own anchor
     // scroll, which is the wanted behaviour. /#faq-refund is now such a
-    // hash: the closing guarantee it pointed at was removed 2026-09-02.
+    // hash: the closing guarantee paragraph it pointed at is gone.
     const openFaqFromHash = () => {
       let target;
       try { target = location.hash && document.querySelector(location.hash); } catch { return; }
