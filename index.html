@@ -836,14 +836,6 @@
           <p>Bringing the whole team? On the same call, Kaido shows you how Estonian state aid funds the training, then shapes a cohort with you, around your team and your codebase.</p>
           <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Book a 30-minute call</a>
           <p class="hero-qualifier">Opens Google Calendar to pick a time</p>
-          <!-- id="faq-refund": the FAQ item that used to carry it is gone, and
-               external links still deep-link the refund terms. This paragraph
-               is that text, so the anchor lands on the same promise. -->
-          <p class="closing-guarantee" id="faq-refund">If you don&rsquo;t experience at least 3x time savings in typical development tasks after completing the training, we&rsquo;ll refund your contribution in full. Conditions apply.</p>
-          <!-- The name's decoder ring (design-system.html Section 1): PLEPIC =
-               PL(ay) + EPIC. The tagline itself now prints once, in the footer,
-               so this line carries both the decode and the method it stands for. -->
-          <p class="closing-etymology">Play is in the name: PL and EPIC. Teams that experiment their way into agents get further than teams that wait to be trained on them.</p>
         </div>
       </div>
     </section>
@@ -953,9 +945,10 @@
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // Deep-linked FAQ items: open the <details> accordion the hash targets.
-    // A hash that lands outside the FAQ (e.g. /#faq-refund, now the closing
-    // guarantee paragraph) finds no <details> ancestor and falls through to
-    // the browser's own anchor scroll, which is the wanted behaviour.
+    // A hash that matches no element, or one outside the FAQ, finds no
+    // <details> ancestor and falls through to the browser's own anchor
+    // scroll, which is the wanted behaviour. /#faq-refund is now such a
+    // hash: the closing guarantee paragraph it pointed at is gone.
     const openFaqFromHash = () => {
       let target;
       try { target = location.hash && document.querySelector(location.hash); } catch { return; }
