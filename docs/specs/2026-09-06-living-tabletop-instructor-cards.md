@@ -14,8 +14,8 @@ Phase 1 ships the foundation through one surface: the three instructor cards on 
 2. Transformation leads. Play is one deliberate dose, and the dose is game UI: cards, sheets, boards, loadouts, in a tabletop grammar (Magic cards, character sheets, tech trees), rendered with the juice of modern digital card games.
 3. Art direction: crystalline. The butterfly's facet language is the whole art style. People are low-poly portraits triangulated from photos; concepts are crystals; backgrounds are shards.
 4. The butterfly geometry is locked as it is (22 facets, Appendix A of `docs/metamorphosis-hero-prompt.md`). Its evolution is life, not shape: at rest, outside the hero, it is the exact SVG, animated by motion only. Colours are never lit, tinted or shifted.
-5. Architecture: vanilla, zero-build, inside `public-web`. Tokens in `css/styles.css`, components as ES modules served like `js/crystalline-metamorphosis.js`, portraits generated offline and committed. No framework, no bundler, no runtime dependency added. Custom elements are chosen so a React wrapper for Claude Design can be generated later without a rewrite.
-6. Order of surfaces: instructor cards (this phase), then the cohort loadout builder, then the character sheet.
+5. Architecture, taken as the default for this spec pending Kaido's confirmation: vanilla, zero-build, inside `public-web`. Tokens in `css/styles.css`, components as ES modules served like `js/crystalline-metamorphosis.js`, portraits generated offline and committed. No framework, no bundler, no runtime dependency added. Custom elements are chosen so a React wrapper for Claude Design can be generated later without a rewrite.
+6. Instructor cards ship first (confirmed). The recommended sequence after that, not yet confirmed: the cohort loadout builder, then the character sheet.
 
 ## 3. Scope
 
@@ -26,7 +26,7 @@ Out: the hero (`js/crystalline-metamorphosis.js` and its poster stay untouched);
 
 - Palette is closed. Every hex on a production page must be in the canon list (`tests/design-guard.spec.ts`, "no off-canon colors"). Portrait SVGs carry photo colours, so they ship as external files under `images/portraits/`, referenced by `<img>`, never inlined.
 - The butterfly polygons are byte-identical everywhere. The guard checks the slot-6 asymmetry on every page that inlines the mark; `<plepic-mark>` must therefore enhance an inline SVG, never replace it with a copy from JS.
-- `--green-vivid` is never text on light. Headings are ink with at most one green phrase. One `--accent` element per viewport: the cards carry none.
+- `--green-vivid` is never text on light. Headings are ink with at most one green phrase. One `--accent` element per viewport: the cards carry none; the ember head inside the set glyph is part of the locked mark, not an accent element.
 - No dark surface on a production page (The Dark Placement Rule). No side-stripe accent borders (The Flat-By-Default Rule). Badge radius `20px 4px 16px` stays. No em-dashes in copy. Every `var()` must resolve.
 - No new claims. Card copy is the existing name and present-tense day-job line. A number or date added to a page needs a `claims-receipts.log` line in the same PR (`scripts/check-claims.mjs`); the cards add none.
 - CI runs `npm run lint`, `tests/design-guard.spec.ts`, `tests/a11y.spec.ts`, `tests/security.spec.ts`; `deploy.yml` strips `docs/specs` from the artifact. Visual baselines in `tests/visual.spec.ts-snapshots` will change: refresh with `npm run test:visual:update` and commit them.
@@ -58,7 +58,7 @@ Sizes: display (300 px), card art and set glyph (120 px and 15 px), nav (30 px).
 Anatomy, top to bottom, all inside a 2 px ink border with `--rounded-lg` corners and `--ink-shadow-rest`:
 1. Inner bevel: 1 px `--border` inset 7 px, `--rounded-sm`.
 2. Name plate: `--font-display` 700, ink, on `--bg`, 1 px ink border; right side carries the set glyph, a 15 px `<plepic-mark>`.
-3. Art window: the crystalline portrait as `<img>`, 1 px ink border, inset shadow `inset 0 2px 6px rgba(28,28,26,.18)`, `--green-surface` behind the transparent parts.
+3. Art window: the crystalline portrait as `<img>`, 1 px ink border, inset shadow `inset 0 2px 6px rgba(28,28,26,.18)`. The portrait fills the window edge to edge; its shard backdrop is generated in 5.4.
 4. Type line: `--font-mono`, 9.5 px, letter-spacing .08em, uppercase, `--text-2`, e.g. `Instructor · Practitioner`. No numbers.
 5. Text box: the day-job line, `--font-body`, `--text-2`, name of the company in ink.
 6. Foot plate: `--font-mono` collector line `PLEPIC · INSTRUCTOR`, no numbers, no power.
@@ -74,7 +74,7 @@ Behaviour (`js/tabletop.js`, one module, applies to every `[data-tilt]` element)
 ### 5.4 Portrait pipeline, `scripts/triangulate-portrait.mjs`
 
 Offline, deterministic, committed output. Dev dependencies `sharp` and `delaunator` only; nothing ships to the browser.
-- Input: `images/kaido.png` (transparent cut-out), `images/joosep.png`, `images/vootele.jpg`. Square crop, head and shoulders, 800 px working size.
+- Input: `images/kaido.png` (transparent cut-out, arms crossed), `images/joosep.png`, `images/vootele.jpg`. Square crop, head and shoulders, 800 px working size. Kaido's choice to flip: the live team card uses `images/kaido.jpg` (smiling, football shirt); generate both and let him pick.
 - Points: about 700, weighted to edges (Sobel magnitude) with a seeded random fill, plus the four corners and edge midpoints. Delaunay over the points. Each triangle filled with the mean colour of the pixels it covers. Skin and clothing keep their photo colours; no quantisation.
 - Background: where the source is transparent or near-white, the triangles are filled from the shard palette `--green-light`, `--green-surface`, `--green-brand`, `--green-dark`, `--green-vivid` in the proportions 40, 30, 15, 10, 5, chosen per triangle by seeded hash, so the backdrop reads as the same crystal as the mark.
 - Output: `images/portraits/<name>.svg`, `viewBox 0 0 400 400`, one `<polygon>` per triangle, `shape-rendering="geometricPrecision"`, target under 90 KB each. Parameters (points, seed, edge weight) are flags with the defaults recorded in the file header, so a portrait can be regenerated identically.
