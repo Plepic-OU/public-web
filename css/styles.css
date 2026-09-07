@@ -1452,11 +1452,11 @@ p:last-child {
      [data-tilt] because the rule it has to outrank carries it too; without
      the attribute the two selectors weigh the same and source order, not
      intent, would decide which shadow wins. */
-  .team-showcase .tt-card {
+  .team-showcase .tt-seat {
     --tilt-enabled: 0;
   }
 
-  .team-showcase .tt-card[data-tilt]:hover {
+  .team-showcase .tt-seat[data-tilt]:hover > .tt-card {
     transform: none;
   }
 
@@ -1464,7 +1464,7 @@ p:last-child {
      rest shadow falls in the 3px beside it and reads as a dark hairline down
      the panel's edge. Every card stops casting the moment the panel comes up,
      not just the hovered one, because it is the outer cards that show. */
-  .team-showcase:has(.team-card[data-instructor]:hover) .tt-card {
+  .team-showcase:has(.tt-seat:hover) .tt-card {
     box-shadow: none;
   }
 
@@ -1508,7 +1508,7 @@ plepic-mark > svg {
 
 /* The four sanctioned sizes. The set glyph is on the Card; the other three are
    utilities so the canon page can show the whole range side by side. */
-.mark-display { width: 300px; }
+.mark-display { width: 300px; max-width: 100%; }
 .mark-art { width: 120px; }
 .mark-nav { width: 30px; }
 
@@ -1618,17 +1618,40 @@ plepic-mark > svg {
      same element express that with no JavaScript and no state: the beat runs
      once, and the breath is delayed by exactly the beat's duration so it picks
      the wing up at the moment the beat lets go. The right wing keeps its
-     --breath-offset on top of that delay, so the pair stays out of phase. */
-  .mark-live:hover .mark-layer--left {
+     --breath-offset on top of that delay, so the pair stays out of phase.
+     ORDER IS load-bearing. Both animations write transform, and the later one
+     in the list wins while it is in effect, delay or no delay. Naming the beat
+     first cost it the property for its whole run: the wing crept to the 34deg
+     of --breath-open instead of opening to the 62deg of --wingbeat-open, and
+     nothing looked broken enough to notice. The beat goes last, and its
+     fill-mode of none hands transform back the instant it ends.
+     The handover DOES jump, and this comment used to claim it did not. A
+     hovered breath keeps its clock and takes the 1.1s delay retroactively, so
+     the wing steps 6 to 34deg in one frame at hover-in and again at hover-out,
+     depending where in the 4.6s cycle the pointer arrived. Removing that needs
+     the two rotations to compose rather than compete: a hinge element carrying
+     the breath, the layer carrying the beat. Section 8 of the spec records it,
+     tests/plepic-mark.spec.ts holds the line that the beat still reaches
+     --wingbeat-open, and the header and footer adopting the mark is the PR
+     that should do the restructure. */
+  /* A hovered seat beats its card's set glyph too. The glyph is 15px inside a
+     card that lifts and rotates, so it slides out from under the pointer the
+     moment the card moves and can never hold its own hover long enough to
+     finish a beat: on the homepage, where every mark is a set glyph, the
+     wingbeat would otherwise never once play. Hovering the card is the
+     gesture that means "this card", so the card's own mark answers it. */
+  .mark-live:hover .mark-layer--left,
+  .tt-seat[data-tilt]:hover .mark-live .mark-layer--left {
     animation:
-      mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) 1,
-      mark-breath-left var(--breath-period) var(--ease-calm) var(--wingbeat-dur) infinite;
+      mark-breath-left var(--breath-period) var(--ease-calm) var(--wingbeat-dur) infinite,
+      mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) 1;
   }
 
-  .mark-live:hover .mark-layer--right {
+  .mark-live:hover .mark-layer--right,
+  .tt-seat[data-tilt]:hover .mark-live .mark-layer--right {
     animation:
-      mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) 1,
-      mark-breath-right var(--breath-period) var(--ease-calm) calc(var(--wingbeat-dur) + var(--breath-offset)) infinite;
+      mark-breath-right var(--breath-period) var(--ease-calm) calc(var(--wingbeat-dur) + var(--breath-offset)) infinite,
+      mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) 1;
   }
 }
 
@@ -1642,7 +1665,9 @@ plepic-mark > svg {
   .mark-antenna--l,
   .mark-antenna--r,
   .mark-live:hover .mark-layer--left,
-  .mark-live:hover .mark-layer--right {
+  .mark-live:hover .mark-layer--right,
+  .tt-seat[data-tilt]:hover .mark-live .mark-layer--left,
+  .tt-seat[data-tilt]:hover .mark-live .mark-layer--right {
     animation: none;
   }
 }
@@ -1666,15 +1691,35 @@ plepic-mark > svg {
   overflow: hidden;
 }
 
+/* The seat: the card's resting place, and the reason the tilt is stable.
+   A transformed element is hit-tested against its TRANSFORMED box, so a card
+   that owned its own :hover fed itself: lift it 12px and a pointer resting 3px
+   inside its top edge is suddenly outside it, hover drops, the card falls back,
+   the pointer is inside again. Measured before this wrapper existed: 86 enter
+   and leave events in two and a half seconds, a card visibly buzzing, and a
+   set glyph that could never hold hover long enough to play its wingbeat. The
+   seat never moves, so it is the seat that owns hover and the card that owns
+   the transform. Custom properties inherit, so js/tabletop.js writes the
+   channels here and the card reads them one level down. */
+.tt-seat {
+  display: block;
+}
+
 /* The lift and the tilt are one CSS transform, so reduced motion and a failed
    module still get the lift; js/tabletop.js only ever writes --tt-rx and
    --tt-ry. Putting the lift in JavaScript would make the hover state depend on
    a script that is allowed to bail. */
-.tt-card[data-tilt] {
+.tt-seat[data-tilt] > .tt-card {
+  height: 100%;
   transform: perspective(var(--tilt-perspective)) translateY(var(--tt-lift)) rotateX(var(--tt-rx)) rotateY(var(--tt-ry));
   transition: transform var(--tilt-dur) var(--ease-settle), box-shadow var(--tilt-dur) var(--ease-settle);
 }
-.tt-card[data-tilt]:hover { --tt-lift: calc(-1 * var(--lift-height)); box-shadow: var(--ink-shadow-hover); }
+
+.tt-seat[data-tilt]:hover > .tt-card {
+  --tt-lift: calc(-1 * var(--lift-height));
+
+  box-shadow: var(--ink-shadow-hover);
+}
 
 /* Name plate. It sits on --bg inside the white card so it reads as a separate
    piece of stock, the way a title bar is printed on a real card. */

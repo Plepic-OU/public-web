@@ -289,8 +289,15 @@ test.describe('design guard @design-guard', () => {
     // The var() guard above catches a name CSS references and :root forgot; this
     // one catches the mirror failure, a token deleted from :root because no rule
     // in the stylesheet appeared to use it while a module still writes it.
+    // --tilt-x and --tilt-y earn their place here more than any other name on
+    // the list: no rule in the stylesheet writes var(--tilt-x), only
+    // js/tabletop.js reads it through getPropertyValue, so the var() guard
+    // above is blind to them by construction. Delete them from :root and every
+    // test stays green while getPropertyValue returns "", degrees() falls back
+    // to 0, and the cards quietly stop rotating.
     const REQUIRED = [
       '--ink-shadow-rest', '--ink-shadow-hover',
+      '--tilt-x', '--tilt-y',
       '--tilt-enabled', '--tt-lift', '--tt-rx', '--tt-ry', '--tt-foil-x', '--tt-foil-y',
       '--mark-perspective',
       '--breath-period', '--breath-open', '--wingbeat-dur', '--wingbeat-open',
@@ -312,8 +319,14 @@ test.describe('design guard @design-guard', () => {
     // drift from the geometry either.
     const module = read('js/plepic-mark.js');
     expect(module.includes('points='), 'js/plepic-mark.js names a points attribute. The module must clone nodes out of the inline SVG: keep the coordinates in the page, comments included, or change the contract in docs/specs first.').toBe(false);
+    // Only real coordinate PAIRS, and only from the butterfly. Splitting every
+    // points attribute on the page into bare tokens put "0", "1" and "20" in
+    // the needle list, and every one of them appears in the module as a plain
+    // number, so the guard could accuse an editor of copying the mark over a
+    // loop bound. A pair carries a comma, which no number in the module does.
     const pairs = [...new Set([...read('index.html').matchAll(/points="([^"]+)"/g)]
-      .flatMap((m) => m[1].trim().split(/\s+/)))];
+      .flatMap((m) => m[1].trim().split(/\s+/))
+      .filter((token) => /^\d+,\d+$/.test(token)))];
     expect(pairs.length, 'index.html no longer inlines the mark, so this guard has no geometry left to compare against').toBeGreaterThan(20);
     const copied = pairs.filter((pair) => module.includes(pair));
     expect(copied, 'js/plepic-mark.js repeats coordinates from the locked mark. Read them from the DOM instead; do not keep a second copy, not even in prose.').toEqual([]);
@@ -329,7 +342,18 @@ test.describe('design guard @design-guard', () => {
     const uris = [...read('css/styles.css').matchAll(/url\("(data:[^"]*)"\)/g)].map((m) => m[1]);
     expect(uris.length, 'no data: URI found in css/styles.css; the grain tile moved and this guard now checks nothing').toBeGreaterThan(0);
     for (const uri of uris) {
-      expect(uri.match(/(#|%23)[0-9a-f]{6}\b/gi) || [], 'a data: URI in css/styles.css carries a colour. Desaturate it in the filter as the grain does, or put the tint on a canon token and change design-system.html first.').toEqual([]);
+      // Three spellings, because banning only #rrggbb leaves two open doors:
+      // #rgb is a colour too, and so is every CSS named colour, which needs no
+      // punctuation at all to reach a fill or a flood-color.
+      expect(uri.match(/(#|%23)[0-9a-f]{3,8}\b/gi) || [], 'a data: URI in css/styles.css carries a colour. Desaturate it in the filter as the grain does, or put the tint on a canon token and change design-system.html first.').toEqual([]);
+      expect(uri.match(/(fill|stroke|flood-color|stop-color|lighting-color)\s*=?\s*['"]?[a-z]{3,}/gi) || [], 'a data: URI in css/styles.css names a paint. A tile that paints is a tile that can tint; the grain must get its value from the filter alone.').toEqual([]);
+      // The desaturation this test is named after was never actually asserted.
+      // A tile whose feColorMatrix is deleted still contains no hex, so it
+      // passed every check above while multiplying full-saturation fractal
+      // noise over the card.
+      if (/feTurbulence/i.test(uri)) {
+        expect(/feColorMatrix[^>]*type=['"]?saturate['"]?[^>]*values=['"]?0/i.test(uri), 'the fractal-noise tile in css/styles.css is not desaturated. feTurbulence emits full-colour noise; without feColorMatrix type="saturate" values="0" the grain tints every card it multiplies over.').toBe(true);
+      }
     }
   });
 });

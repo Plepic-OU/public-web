@@ -352,7 +352,7 @@
 
     <!-- Living tabletop tokens. The motion, elevation and material half of the
          system, all of it appended to the single :root block in css/styles.css. -->
-    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg); overflow-x: auto;">
       <div class="panel-label">Living Tabletop Tokens &middot; <code>:root</code> in <code>css/styles.css</code></div>
       <p class="ds-note" style="margin-bottom: var(--space-md);">
         Game feel on the paper canon: weight, lift, tilt, breath. <strong>Never colour.</strong> The Card (Section 6) and <code>&lt;plepic-mark&gt;</code> (Section 8) are built from these; the patterns they drive are named in Section 11. Values here are read from the stylesheet.
@@ -613,13 +613,14 @@
 
     <!-- The Card. One live specimen: it tilts under a fine pointer, so the
          anatomy below describes something the reader can put a hand on. -->
-    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" style="margin-top: var(--space-lg); overflow-x: auto;">
       <div class="panel-label">Card &middot; <code>.tt-card</code> (living tabletop)</div>
       <p class="ds-note" style="margin-bottom: var(--space-md);">
         A 300px piece of card stock: 2px ink border, <code>--rounded-lg</code> corners, <code>--ink-shadow-rest</code> under it. On a fine pointer it lifts and tilts away from the cursor and the foil glint travels with it, so it reads as an object on a table rather than a picture of one. <strong>Hover the specimen.</strong>
       </p>
       <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
-        <article class="tt-card" data-tilt data-foil>
+        <div class="tt-seat" data-tilt>
+        <article class="tt-card" data-foil>
           <div class="tt-plate">
             <h3 class="tt-name">Joosep Simm</h3>
             <plepic-mark class="tt-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
@@ -636,6 +637,7 @@
           <span class="tt-grain" aria-hidden="true"></span>
           <span class="tt-foil" aria-hidden="true"></span>
         </article>
+        </div>
       </div>
       <table class="ds-token-table" style="margin-top: var(--space-md);">
         <thead>
@@ -768,9 +770,9 @@
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Final SVG Markup (copy-paste for new locations)</div>
       <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
-        Master markup for all placements. Resize via <code>width</code> / <code>height</code>; the viewBox is fixed.
+        Master markup for all placements. The <code>&lt;plepic-mark&gt;</code> wrapper is what makes the mark live: <code>js/plepic-mark.js</code> re-stacks the nodes it finds inside the host into three hinging layers, so a placement without the wrapper is a still mark. The inline SVG stays the single copy of the locked geometry and the module never draws one of its own, which is why the coordinates below are the ones to paste. Size the host with its class, one of <code>.mark-display</code>, <code>.mark-art</code>, <code>.mark-nav</code> or the Card's <code>.tt-setglyph</code>; the viewBox owns the ratio.
       </p>
-      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
+      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;plepic-mark class="mark-nav" aria-hidden="true"&gt;&lt;svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"&gt;
   &lt;!-- Left wing — 11 facets, DK-B-V pattern --&gt;
   &lt;polygon points="147,105 110,68 55,48"  fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
   &lt;polygon points="147,105 55,48 20,72"   fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
@@ -802,7 +804,7 @@
   &lt;circle cx="136" cy="41" r="3.5" fill="#00c638"/&gt;
   &lt;circle cx="164" cy="41" r="3.5" fill="#00c638"/&gt;
   &lt;circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/&gt;
-&lt;/svg&gt;</pre>
+&lt;/svg&gt;&lt;/plepic-mark&gt;</pre>
     </div>
 
     <!-- Downloadable assets -->
@@ -853,7 +855,7 @@
         <li><strong>Without JavaScript, and under <code>prefers-reduced-motion</code>, it is the flat locked mark.</strong> That is the authored rendering rather than a degraded copy of one: the source SVG stays in the DOM and keeps the layout box, and CSS hides it with <code>visibility: hidden</code> only once the layers stand over it. Every keyframe rests at 0, so the upgrade is pixel-identical to the flat mark and not a step at the antenna tips.</li>
         <li><strong>It refuses anything but the locked partition.</strong> No child <code>&lt;svg&gt;</code>, a polygon count other than 22, or a wing split other than 11 and 11, and the element leaves the authored mark exactly as it is. A future geometry edit ships a static mark, never half a butterfly.</li>
         <li><strong>Perspective follows the size.</strong> <code>--mark-perspective</code> is the only style the module writes, at three times the rendered width, on upgrade and on every resize. One fixed value would hinge flat at 15px and fold the 300px mark in half.</li>
-        <li><strong>The component's copy carries <code>shape-rendering="geometricPrecision"</code></strong>, not the master's <code>crispEdges</code>. crispEdges turns anti-aliasing off, which is what kills the seams on a mark that sits still and what makes the edges of a turning wing crawl. The homepage hero poster already ships this way; the master markup above is unchanged.</li>
+        <li><strong>Every live copy carries <code style="overflow-wrap: anywhere;">shape-rendering="geometricPrecision"</code></strong>, not <code>crispEdges</code>. crispEdges turns anti-aliasing off, which is what kills the seams on a mark that sits still and what makes the edges of a turning wing crawl. The homepage hero poster and the copy-paste markup above both ship this way. crispEdges stays where the mark never moves: the still lockup and the downloadable asset.</li>
         <li><strong>Sizes are the host's job.</strong> <code>.mark-display</code>, <code>.mark-art</code>, <code>.mark-nav</code> and the Card's <code>.tt-setglyph</code> set width only; the viewBox owns the ratio. Below about 32px the wings still hinge and the antennae idle is invisible.</li>
       </ul>
     </div>
@@ -1092,9 +1094,13 @@
       </div>
     </div>
 
-    <!-- Team card -->
+    <!-- Team card. Superseded by the Card in Section 6. Kept as the record of
+         the treatment the Card replaced; its CSS still styles this specimen. -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment) &middot; cream canvas</div>
+      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos) &middot; cream canvas <span class="ds-wip">Superseded</span></div>
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        The homepage instructor cards moved to the Card in Section 6. They are <code>.tt-card</code> now, and the <code>team-card</code> class survives on that article only as the career-slide hook Section 6 names. This specimen is the record of the treatment the Card replaced, and <code>.team-photo</code>, <code>.team-info</code> and <code>.team-role</code> are retained in <code>css/styles.css</code> for this specimen alone. Do not put a person on it in new work.
+      </p>
       <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <article class="team-card" style="max-width: 520px;">
         <div class="team-photo">

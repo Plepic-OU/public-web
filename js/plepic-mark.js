@@ -146,6 +146,12 @@ class PlepicMark extends HTMLElement {
       buildLayer(source, 'right', right.map(clone)),
       buildLayer(source, 'core', buildCore(nodes.filter((node) => node.localName !== 'polygon'))),
     );
+    // The stylesheet hides the source through .mark-flat, and this module is
+    // what decides a source exists, so this module puts the class on. A page
+    // that inlines the mark without it would otherwise paint the flat butterfly
+    // and the three layers on top of each other, which reads as a slightly
+    // bolder mark rather than as a bug.
+    source.classList.add('mark-flat');
     this.classList.add('mark-live');
 
     this.measure();
@@ -156,9 +162,11 @@ class PlepicMark extends HTMLElement {
   }
 
   measure() {
-    // getBoundingClientRect, not contentRect: the host is padded by nothing
-    // today, but the perspective must follow the box the visitor sees.
-    const width = this.getBoundingClientRect().width;
+    // offsetWidth, not getBoundingClientRect: the rect is the TRANSFORMED box,
+    // and a set glyph rides inside a card that tilts and foreshortens, so the
+    // rect would hand the perspective a width that shrinks as the card turns.
+    // The layout width is the one the hinge was designed against.
+    const width = this.offsetWidth;
     // Zero width means not laid out yet, or hidden. The :root default holds
     // until the ResizeObserver reports a real box.
     if (width > 0) {
