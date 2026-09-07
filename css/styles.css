@@ -205,6 +205,39 @@
   --transition-fast: var(--dur-fast) ease;
   --transition-base: var(--dur-base) ease;
   --transition-smooth: var(--dur-base) var(--ease-settle);
+
+  /* Living tabletop, phase 1. Canon: design-system.html sections 6, 8, 11.
+     Game feel on the paper canon: weight, lift, tilt, breath. Never colour. */
+  --ink-shadow-rest: 3px 3px 0 var(--text);
+  --ink-shadow-hover: 6px 12px 0 var(--text);
+  --tilt-x: 16deg;
+  --tilt-y: 20deg;
+  --lift-height: 12px;
+  --tilt-dur: 220ms;
+  --tilt-perspective: 900px;
+  --breath-period: 4.6s;
+  --breath-open: 34deg;
+  --breath-offset: 0.35s;
+  --breath-bob: 1.5px;
+  --wingbeat-dur: 1.1s;
+  --wingbeat-open: 62deg;
+  --grain-opacity: 0.28;
+  --foil-opacity: 0.45;
+
+  /* Module tiers, named for the loadout builder. Never applied to people. */
+  --tier-core: var(--green-surface);
+  --tier-advanced: var(--green-light);
+  --tier-signature: var(--green-brand);
+
+  /* Runtime channels. js/tabletop.js and js/plepic-mark.js write these per
+     element; they are declared here because every var() must resolve. */
+  --tilt-enabled: 1;
+  --tt-lift: 0px;
+  --tt-rx: 0deg;
+  --tt-ry: 0deg;
+  --tt-foil-x: 0%;
+  --tt-foil-y: 0%;
+  --mark-perspective: 90px;
 }
 
 /* ========================================
@@ -1290,11 +1323,21 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
+/* Three 300px cards in the 1040px grid box. The tracks are capped rather than
+   fractional because the Card has a fixed width, and space-between spends the
+   140px that are left over on the two gaps, so the outer card edges stay
+   flush with the instructor slide that covers the grid on hover. minmax(0, …)
+   lets the tracks shrink below 300px on narrower viewports instead of pushing
+   the grid past its box. */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 300px));
+  justify-content: space-between;
   gap: var(--space-xl);
-  align-items: start;
+  /* stretch, not start: a day-job line that wraps to two lines would
+     otherwise make one card taller than the two beside it, and three cards
+     of three heights read as a layout accident rather than as a deck. */
+  align-items: stretch;
   max-width: 1040px;
   margin: 0 auto;
 }
@@ -1401,11 +1444,27 @@ p:last-child {
                 transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* The panel covers the card, so the shared card-hover lift buys nothing
-     here and its 3px rise and shadow peek out above the panel's top edge.
-     The panel is the hover feedback now. */
-  .team-showcase .team-card:hover {
+  /* The panel covers the card, so a tilt here would be invisible and the
+     hover ink shadow would peek out above the panel's top edge. The panel is
+     the hover feedback now. --tilt-enabled is the single source of truth for
+     that: CSS owns the breakpoint, and js/tabletop.js reads the computed
+     value and applies no rotation when it is 0. The hover override carries
+     [data-tilt] because the rule it has to outrank carries it too; without
+     the attribute the two selectors weigh the same and source order, not
+     intent, would decide which shadow wins. */
+  .team-showcase .tt-card {
+    --tilt-enabled: 0;
+  }
+
+  .team-showcase .tt-card[data-tilt]:hover {
     transform: none;
+  }
+
+  /* The panel is exactly as wide as the grid, so the outermost card's 3px
+     rest shadow falls in the 3px beside it and reads as a dark hairline down
+     the panel's edge. Every card stops casting the moment the panel comes up,
+     not just the hovered one, because it is the outer cards that show. */
+  .team-showcase:has(.team-card[data-instructor]:hover) .tt-card {
     box-shadow: none;
   }
 
@@ -1422,6 +1481,345 @@ p:last-child {
     transform: none;
     transition: none;
   }
+}
+
+/* ========================================
+   Living Tabletop
+   ========================================
+   Game feel on the paper canon: weight, lift, tilt, breath, never colour.
+   Two components, the breathing mark and the Card. Both are built so that the
+   no-JS and the reduced-motion rendering is the authored one rather than a
+   degraded copy of it: the mark enhances an inline SVG that stays in the DOM,
+   and the Card owns its lift in CSS so JavaScript only ever adds the pointer
+   rotation. Canon: design-system.html sections 6, 8 and 11. */
+
+/* Before js/plepic-mark.js upgrades it, the host is a plain box around the
+   inlined mark, so the element renders the exact locked SVG with zero JS. The
+   host owns the width and the viewBox owns the ratio. */
+plepic-mark {
+  display: inline-block;
+}
+
+plepic-mark > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The four sanctioned sizes. The set glyph is on the Card; the other three are
+   utilities so the canon page can show the whole range side by side. */
+.mark-display { width: 300px; }
+.mark-art { width: 120px; }
+.mark-nav { width: 30px; }
+
+/* Upgraded. The three layers stack on top of the source SVG, which keeps the
+   layout box so the upgrade costs no reflow. The perspective lives on the host
+   because the wings hinge about the body axis, and js/plepic-mark.js keeps
+   --mark-perspective at three times the rendered width, so the hinge reads the
+   same at 15px and at 300px. */
+.mark-live {
+  position: relative;
+  perspective: var(--mark-perspective);
+}
+
+/* visibility, not display: the hidden source is still what sizes the host. */
+.mark-live > .mark-flat {
+  visibility: hidden;
+}
+
+.mark-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The body axis is x=150 in the 300-wide viewBox, which is the layer's own
+   50%, so the hinge needs no view-box units here. */
+.mark-layer--left,
+.mark-layer--right {
+  transform-origin: 50% 50%;
+}
+
+.mark-layer--left {
+  animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite;
+}
+
+.mark-layer--right {
+  animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite;
+}
+
+.mark-layer--core {
+  animation: mark-bob var(--breath-period) var(--ease-calm) infinite;
+}
+
+/* The antennae pivot at their root, (150, 86) in the viewBox, which is far
+   outside each group's own bounding box. transform-box: view-box is what makes
+   those numbers mean viewBox units rather than fractions of the group. */
+.mark-antenna {
+  transform-box: view-box;
+  transform-origin: 150px 86px;
+}
+
+.mark-antenna--l {
+  animation: mark-antenna-l 5.3s var(--ease-calm) infinite;
+}
+
+.mark-antenna--r {
+  animation: mark-antenna-r 6.1s var(--ease-calm) infinite;
+}
+
+/* The breath opens slow and closes a touch faster: the peak sits at 58% of the
+   period, not at half of it. Every keyframe here starts and ends closed, so a
+   hover that hands the wing from the wingbeat back to the breath never jumps. */
+@keyframes mark-breath-left {
+  0%, 100% { transform: rotateY(0deg); }
+  58% { transform: rotateY(var(--breath-open)); }
+}
+
+@keyframes mark-breath-right {
+  0%, 100% { transform: rotateY(0deg); }
+  58% { transform: rotateY(calc(-1 * var(--breath-open))); }
+}
+
+@keyframes mark-bob {
+  0%, 100% { transform: translateY(0); }
+  58% { transform: translateY(calc(-1 * var(--breath-bob))); }
+}
+
+/* The antennae swing through plus and minus 2.5deg but rest at 0, the same as
+   the wings and the core. Every layer therefore starts on the frame the flat
+   SVG already draws, so the upgrade is pixel-identical rather than a 2.5deg
+   step at the antenna tips. The two are mirrored so they never track. */
+@keyframes mark-antenna-l {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2.5deg); }
+  75% { transform: rotate(-2.5deg); }
+}
+
+@keyframes mark-antenna-r {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2.5deg); }
+  75% { transform: rotate(2.5deg); }
+}
+
+@keyframes mark-wingbeat-left {
+  0%, 100% { transform: rotateY(0deg); }
+  45% { transform: rotateY(var(--wingbeat-open)); }
+}
+
+@keyframes mark-wingbeat-right {
+  0%, 100% { transform: rotateY(0deg); }
+  45% { transform: rotateY(calc(-1 * var(--wingbeat-open))); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* One wingbeat, then straight back into the breath. Two animations on the
+     same element express that with no JavaScript and no state: the beat runs
+     once, and the breath is delayed by exactly the beat's duration so it picks
+     the wing up at the moment the beat lets go. The right wing keeps its
+     --breath-offset on top of that delay, so the pair stays out of phase. */
+  .mark-live:hover .mark-layer--left {
+    animation:
+      mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) 1,
+      mark-breath-left var(--breath-period) var(--ease-calm) var(--wingbeat-dur) infinite;
+  }
+
+  .mark-live:hover .mark-layer--right {
+    animation:
+      mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) 1,
+      mark-breath-right var(--breath-period) var(--ease-calm) calc(var(--wingbeat-dur) + var(--breath-offset)) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The layered mark must be indistinguishable from the flat one, so every
+     loop is off. The two hover selectors are listed because they outrank the
+     rest-state rules; leaving them out would let a hover restart the wings. */
+  .mark-layer--left,
+  .mark-layer--right,
+  .mark-layer--core,
+  .mark-antenna--l,
+  .mark-antenna--r,
+  .mark-live:hover .mark-layer--left,
+  .mark-live:hover .mark-layer--right {
+    animation: none;
+  }
+}
+
+/* ── The Card ──
+   A 300px piece of card stock: ink border, ink drop shadow, and three material
+   layers over the content. max-width lets it shrink inside a narrower grid
+   track without overflowing, while the fixed width keeps it the same object
+   wherever it is placed on its own. */
+.tt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  max-width: 100%;
+  padding: 14px;
+  background: var(--surface);
+  border: 2px solid var(--text);
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--ink-shadow-rest);
+  overflow: hidden;
+}
+
+/* The lift and the tilt are one CSS transform, so reduced motion and a failed
+   module still get the lift; js/tabletop.js only ever writes --tt-rx and
+   --tt-ry. Putting the lift in JavaScript would make the hover state depend on
+   a script that is allowed to bail. */
+.tt-card[data-tilt] {
+  transform: perspective(var(--tilt-perspective)) translateY(var(--tt-lift)) rotateX(var(--tt-rx)) rotateY(var(--tt-ry));
+  transition: transform var(--tilt-dur) var(--ease-settle), box-shadow var(--tilt-dur) var(--ease-settle);
+}
+.tt-card[data-tilt]:hover { --tt-lift: calc(-1 * var(--lift-height)); box-shadow: var(--ink-shadow-hover); }
+
+/* Name plate. It sits on --bg inside the white card so it reads as a separate
+   piece of stock, the way a title bar is printed on a real card. */
+.tt-plate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 6px 10px;
+  background: var(--bg);
+  border: 1px solid var(--text);
+  border-radius: var(--rounded-xs);
+}
+
+.tt-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+/* The set glyph is the mark at its smallest sanctioned size. flex: none holds
+   it there when a long name claims the rest of the plate. */
+.tt-setglyph {
+  width: 15px;
+  flex: none;
+}
+
+/* Art window. The square is reserved here and the portrait carries width and
+   height attributes, so the card's box never changes when the SVG lands. */
+.tt-art {
+  position: relative;
+  flex: none;
+  margin-top: 10px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--green-surface);
+  border: 1px solid var(--text);
+  border-radius: var(--rounded-xs);
+}
+
+/* An inset shadow on the window itself paints under its own child, so the seat
+   the portrait sits in is drawn by an overlay instead. */
+.tt-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 2px 6px rgba(28, 28, 26, 0.18);
+  pointer-events: none;
+}
+
+/* The global img rule sets height: auto, which would letterbox a portrait
+   whose ratio ever drifts from square. State the fill on the portrait. */
+.tt-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tt-type {
+  margin: 10px 0 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+/* The one part that grows. Everything above it is fixed, so the card's spare
+   height lands here and the foot plate stays on the bottom edge. */
+.tt-text {
+  flex: 1;
+  margin-top: 6px;
+}
+
+.tt-role {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* The employer is the only part of the sentence a reader scans for, so it is
+   ink where the rest of the line is secondary text. */
+.tt-company {
+  color: var(--text);
+}
+
+/* Foot plate: the collector line. It carries no number and no rank, which is
+   the whole reason people can be put on a card at all. */
+.tt-foot {
+  margin: 12px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.tt-bevel {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-sm);
+  pointer-events: none;
+}
+
+/* Paper grain over everything. The tile is one fractal-noise rect desaturated
+   by the filter itself, so the layer carries no colour of its own and the data
+   URI carries no hex for the palette guard to catch. The URI is percent-encoded
+   because a raw <, > or # ends the CSS url() token early, and the rect's 100%
+   has to survive as %25 or the whole image fails in silence. */
+.tt-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Foil, only where the markup asks for it. A single diagonal band in the green
+   family, on a canvas 2.6 times the card, so the tilt slides a glint across a
+   corner instead of sweeping the whole face. multiply keeps it inside the
+   paper: the band darkens what is under it and never lights it. */
+.tt-card[data-foil] .tt-foil {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(115deg,
+    transparent 40%,
+    rgba(0, 198, 56, 0.22) 46%,
+    rgba(197, 246, 211, 0.95) 50%,
+    rgba(0, 198, 56, 0.22) 54%,
+    transparent 60%);
+  background-size: 260% 260%;
+  background-position: calc(8% + var(--tt-foil-x)) calc(8% + var(--tt-foil-y));
+  opacity: var(--foil-opacity);
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
 /* ========================================
@@ -3155,8 +3553,11 @@ p:last-child {
     grid-template-columns: 1fr;
   }
 
+  /* One column, and the card keeps its own width instead of stretching to the
+     viewport, so a phone shows the same object a desktop does. */
   .team-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 300px);
+    justify-content: center;
     gap: var(--space-lg);
   }
 
@@ -3326,8 +3727,11 @@ p:last-child {
     display: block;
   }
 
+  /* Two capped columns, centred: space-between would push the pair to the
+     viewport edges once there are only two of them. */
   .team-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 300px));
+    justify-content: center;
   }
 
   .hero-stats {
@@ -3451,7 +3855,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 
 /* Card hover lift — panels, team cards, terminal cards */
 .panel,
-.team-card,
 .big-stat,
 .shift-col {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -3459,7 +3862,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 }
 
 .panel:hover,
-.team-card:hover,
 .big-stat:hover,
 .shift-col:hover {
   transform: translateY(-3px);

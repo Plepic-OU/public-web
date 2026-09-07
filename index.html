@@ -659,37 +659,69 @@
 
         <div class="team-showcase">
           <div class="team-grid reveal reveal-delay-1">
+            <!-- Living tabletop cards. Each article carries BOTH classes on
+                 purpose: .tt-card is the component, and .team-card plus
+                 data-instructor are what the career-slide :has() rules in
+                 css/styles.css select on, so dropping them kills the slide
+                 preview, not just the card styling. -->
             <!-- Joosep Card -->
-            <article class="team-card" data-instructor="joosep">
-              <div class="team-photo">
-                <img src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy">
+            <article class="tt-card team-card" data-instructor="joosep" data-tilt data-foil>
+              <div class="tt-plate">
+                <h3 class="tt-name">Joosep Simm</h3>
+                <plepic-mark class="tt-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
               </div>
-              <div class="team-info">
-                <h3>Joosep Simm</h3>
-                <p class="team-role">Ships code at Gridraven.</p>
+              <div class="tt-art">
+                <img class="tt-portrait" src="images/portraits/joosep.svg" alt="Joosep Simm" width="400" height="400" loading="lazy" decoding="async">
               </div>
+              <p class="tt-type">Instructor &middot; Practitioner</p>
+              <div class="tt-text">
+                <p class="tt-role">Ships code at <span class="tt-company">Gridraven</span>.</p>
+              </div>
+              <p class="tt-foot">PLEPIC &middot; INSTRUCTOR</p>
+              <span class="tt-bevel" aria-hidden="true"></span>
+              <span class="tt-grain" aria-hidden="true"></span>
+              <span class="tt-foil" aria-hidden="true"></span>
             </article>
 
             <!-- Kaido Card -->
-            <article class="team-card team-card-right" data-instructor="kaido">
-              <div class="team-photo">
-                <img src="images/kaido.jpg" alt="Kaido Koort" width="640" height="640" loading="lazy">
+            <article class="tt-card team-card" data-instructor="kaido" data-tilt data-foil>
+              <div class="tt-plate">
+                <h3 class="tt-name">Kaido Koort</h3>
+                <plepic-mark class="tt-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
               </div>
-              <div class="team-info">
-                <h3>Kaido Koort</h3>
-                <p class="team-role">Builds the Plepic website and product.</p>
+              <div class="tt-art">
+                <!-- images/portraits/kaido-cutout.svg is the alternative portrait,
+                     triangulated from the arms-crossed cut-out rather than from this
+                     smiling shot. Switching to it is a one-word change to the src. -->
+                <img class="tt-portrait" src="images/portraits/kaido.svg" alt="Kaido Koort" width="400" height="400" loading="lazy" decoding="async">
               </div>
+              <p class="tt-type">Instructor &middot; Practitioner</p>
+              <div class="tt-text">
+                <p class="tt-role">Builds the <span class="tt-company">Plepic</span> website and product.</p>
+              </div>
+              <p class="tt-foot">PLEPIC &middot; INSTRUCTOR</p>
+              <span class="tt-bevel" aria-hidden="true"></span>
+              <span class="tt-grain" aria-hidden="true"></span>
+              <span class="tt-foil" aria-hidden="true"></span>
             </article>
 
             <!-- Vootele Card -->
-            <article class="team-card" data-instructor="vootele">
-              <div class="team-photo">
-                <img src="images/vootele.jpg" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy">
+            <article class="tt-card team-card" data-instructor="vootele" data-tilt data-foil>
+              <div class="tt-plate">
+                <h3 class="tt-name">Vootele R&otilde;tov</h3>
+                <plepic-mark class="tt-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
               </div>
-              <div class="team-info">
-                <h3>Vootele R&otilde;tov</h3>
-                <p class="team-role">Builds Balancing.services.</p>
+              <div class="tt-art">
+                <img class="tt-portrait" src="images/portraits/vootele.svg" alt="Vootele R&otilde;tov" width="400" height="400" loading="lazy" decoding="async">
               </div>
+              <p class="tt-type">Instructor &middot; Practitioner</p>
+              <div class="tt-text">
+                <p class="tt-role">Builds <span class="tt-company">Balancing.services</span>.</p>
+              </div>
+              <p class="tt-foot">PLEPIC &middot; INSTRUCTOR</p>
+              <span class="tt-bevel" aria-hidden="true"></span>
+              <span class="tt-grain" aria-hidden="true"></span>
+              <span class="tt-foil" aria-hidden="true"></span>
             </article>
           </div>
 
@@ -969,6 +1001,15 @@
       'color: #4a4a45; font-size: 11px;'
     );
   </script>
+
+  <!-- The living tabletop's two enhancements: the mark that breathes at rest,
+       and the pointer tilt on every [data-tilt] card. Both are decoration on
+       top of markup that is already finished, so neither is gated the way the
+       hero below is. A module script is deferred, so they block no parsing and
+       no paint, and a visitor who never gets them keeps the authored flat mark
+       and the CSS hover lift. -->
+  <script type="module" src="/js/plepic-mark.js"></script>
+  <script type="module" src="/js/tabletop.js"></script>
 
   <!-- Metamorphosis hero: the crystalline caterpillar -> butterfly arc, with
        the agent-loop snippet evolving alongside it ("The Refactor"). Gated
