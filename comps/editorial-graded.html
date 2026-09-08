@@ -1,0 +1,368 @@
+<section class="cd ce-graded">
+<style>
+/* ── Editorial rule, variant: Graded set ──
+   Everything the direction argues stays: no box, no border, no shadow and no
+   tint at rest, a column of a printed page held by a 1.5px ink rule at the top
+   and a 1px --border rule at the foot, Bitter for the byline and mono small
+   caps for the standing head. Two things change. The colophon is gone, because
+   the eyebrow already says INSTRUCTOR and the section heading says it a third
+   time; the rule it sat under stays and is now the column's own closing rule.
+   And the photographs are in colour.
+
+   The bet of this variant: the three shots do not clash because they are
+   coloured, they clash because they were never graded. Joosep is a saturated
+   yellow shirt under warm studio light, Kaido is a teal jersey with red
+   sleeves under neutral light, Vootele is a navy tee under a cool grey window.
+   Three white balances, three exposures, one page. A press run does not fix
+   that by throwing the colour away; it fixes it by running every plate through
+   the same correction. So there is exactly ONE filter chain here, on one
+   selector, and no per-person override anywhere. If a face still needs its own
+   number, the grade is wrong, not the face.
+
+   Scoped under .ce-graded so the variants can share a page. Every var() is a
+   token css/styles.css already declares in its one :root; values the system
+   has no token for are literals, written here and named in the note. */
+
+.ce-graded {
+  background: var(--bg);
+  padding: var(--space-2xl) 0 var(--space-3xl);
+}
+
+/* The head and the note sit on the printed measure: their left edge is the
+   left edge of the first column's rule, not the middle of the band. The trio is
+   1072px wide with all three columns at their cap, so the indent is half of
+   that back from the centre, less the card's own 24px gutter, and max() drops
+   it to a plain page gutter the moment the row stops being that wide. Both
+   paddings are zeroed here and on the row below, because a host page's own
+   gutter would otherwise slide one of the two off the other. */
+.ce-graded .cd-head,
+.ce-graded .cd-note {
+  padding-inline: 0;
+  margin-inline: max(24px, calc(50% - 512px)) 24px;
+}
+
+.ce-graded .cd-head {
+  max-width: 52ch;
+  margin-bottom: var(--space-2xl);
+}
+
+.ce-graded .cd-head h2 {
+  margin: 0 0 var(--space-sm);
+}
+
+.ce-graded .cd-head p {
+  margin: 0;
+  color: var(--text-2);
+}
+
+.ce-graded .cd-cards {
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline: 0;
+  justify-content: center;
+  /* stretch is what turns three columns into a set: the day-job lines wrap at
+     different widths, and only equal-height columns put all three closing rules
+     on one line across the row. */
+  align-items: stretch;
+  gap: var(--space-2xl) var(--space-xl);
+}
+
+.ce-graded .cd-note {
+  max-width: 74ch;
+  margin-top: var(--space-2xl);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* The seat: an untransformed wrapper that owns the hover, because a transformed
+   element is hit-tested against its transformed box and a card that tracks its
+   own hover chases itself out from under a resting pointer. js/tabletop.js
+   writes --tt-rx and --tt-ry here and the card one level down inherits them.
+   The caps come down from the shipped 16/20 on a long perspective, because a
+   sheet of paper flexes less than card stock does. */
+.ce-graded .ed-seat {
+  --tilt-x: 9deg;
+  --tilt-y: 11deg;
+  --tilt-perspective: 1400px;
+
+  display: block;
+  flex: 1 1 268px;
+  max-width: 336px;
+}
+
+.ce-graded .ed-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* The only horizontal padding is the margin the sheet shows once it appears,
+     which is why the sheet can sit at inset 0 and still read as paper wider
+     than its own measure. The vertical padding keeps the two rules off the
+     sheet's cut edge. */
+  padding: 18px 24px;
+  transform: perspective(var(--tilt-perspective)) translateY(var(--tt-lift)) rotateX(var(--tt-rx)) rotateY(var(--tt-ry));
+  transition: transform var(--tilt-dur) var(--ease-settle);
+}
+
+/* The sheet. At rest it is not there at all. Hover fades one sheet of
+   --surface in behind the column and lifts it, so elevation is a state and
+   never a resting decoration. It is a ::before rather than the card's own
+   background because a root background paints under the children's borders and
+   both rules would vanish under the white the moment it faded in. */
+.ce-graded .ed-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: var(--surface);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-settle),
+              box-shadow var(--dur-base) var(--ease-settle);
+}
+
+/* 5px, where card stock lifts 12. The lift is a CSS rule and not a JavaScript
+   one, so it still fires under reduced motion, on touch, and before
+   js/tabletop.js loads. */
+.ce-graded .ed-seat:hover > .ed-card,
+.ce-graded .ed-seat:focus-within > .ed-card {
+  --tt-lift: -5px;
+}
+
+.ce-graded .ed-seat:hover > .ed-card::before,
+.ce-graded .ed-seat:focus-within > .ed-card::before {
+  opacity: 1;
+  box-shadow: 0 1px 2px rgba(28, 28, 26, 0.05),
+              0 10px 28px rgba(28, 28, 26, 0.08);
+}
+
+/* ── The two rules ──
+   The opening rule is 1.5px of ink and carries the weight; the closing rule is
+   1px of --border and only stops the column. That asymmetry gives the object a
+   direction, top-heavy, which is what a printed column does and a four-sided
+   box cannot. */
+.ce-graded .ed-standing {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1.5px solid var(--text);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  /* The Line-Height Trap: body's 1.7 inherits into compact components. */
+  line-height: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  transition: color var(--transition-fast);
+}
+
+.ce-graded .ed-seat:hover .ed-standing,
+.ce-graded .ed-seat:focus-within .ed-standing {
+  color: var(--text-2);
+}
+
+/* The byline. baseline alignment sits the set glyph on the name's own baseline,
+   so the two read as one printed line and not a name with a badge beside it. */
+.ce-graded .ed-name {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.ce-graded .ed-setglyph {
+  width: 15px;
+  flex: none;
+}
+
+/* The plate. Square corners, no frame, a tone instead of an edge. The ground
+   stays --bg-alt and is not swapped for white, because multiply pulls the
+   ground's tint up into the photograph as well as dropping the studio white
+   down into the page: on a cream plate every face picks up the same faint warm
+   cast from the paper. That is not a side effect to design around here, it is
+   the last step of the grade, and it is the one step that is identical for all
+   three by construction. */
+.ce-graded .ed-plate {
+  position: relative;
+  flex: none;
+  margin-top: 18px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+
+/* The blend and the filter sit on different elements on purpose: both on one
+   node is the combination engines disagree about, and a filtered image inside a
+   blending wrapper renders the same everywhere. */
+.ce-graded .ed-ink {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+}
+
+/* ── The grade ──
+   One chain, one selector, all three photographs, in this order, and the order
+   is the argument. Every number below was measured on the rendered plates
+   themselves, screenshot at 1440 and sampled over every pixel that is not the
+   plate ground: sRGB chroma at the 90th percentile, which is what the eye calls
+   a loud garment, mean luma, median hue, and mean R minus B, which is a whole
+   photograph's warm-or-cool sign.
+
+   saturate(0.58)  The clash is loudest where the chroma is: a yellow shirt at
+     one end of the wheel, a teal jersey at the other. Pulling all three down by
+     the same factor is the only move that closes the gap before anything is
+     tinted. It stops at 0.58 because that is where the 90th-percentile chroma
+     spread across the set is exactly halved, 0.108 to 0.054, the peaks going
+     0.49, 0.51, 0.27 to 0.34, 0.25, 0.21. Halving is a correction. Going on to
+     0.40 for another 0.011 is a mood, and a mood is a different variant.
+
+   sepia(0.18)  The warm bias, and the number is not a taste: it is a
+     threshold. Under this exact chain Kaido's mean R minus B, minus 0.063
+     ungraded, crosses zero just past sepia 0.14: still minus 0.0003 at 0.14,
+     plus 0.0021 at 0.15. Below the crossing the set has two warm members and
+     one cool one, which is precisely what the eye reads as the odd photograph
+     out. 0.18 clears it with margin and lands all three median hues in one
+     family, 43, 43 and 26 degrees, without pushing skin into tan. sepia
+     collapses part of every hue onto one axis, which is what one press run does
+     to three rolls of film shot in three rooms.
+
+   contrast(1.07)  Desaturated photographs go milky, and milky is the one thing
+     that cannot sit next to a 1.5px ink rule. It is deliberately the smallest
+     of the three correcting moves, brightness below being compensation rather
+     than correction, because it is the only one that makes the set worse on a
+     second axis: a linear lift pushes the bright photograph brighter and the
+     dark one darker, and luma spread across the three widens from 0.176 to
+     0.189 between 1.00 and 1.07. Bite is worth 0.013 of luma spread here. At
+     1.20 it would not be.
+
+   brightness(1.04)  Compensation, not exposure. multiply against #f3efe7
+     returns at most 95, 94 and 91 percent of the three channels, so every
+     photograph comes back a touch heavy; 1.04 puts the level back and clips
+     everything above 96 percent to pure white, which is what keeps the studio
+     ground seamless with the plate now that grayscale and its contrast are no
+     longer doing that job. The plate corners measure #f3efe7 on all three.
+
+   What is deliberately absent: any per-person correction. Three chains tuned
+   face by face would measure better and would be a different, weaker claim. */
+.ce-graded .ed-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+}
+
+/* Framing, per person, because the three sources were shot at three distances
+   and a set is a set only when the heads are the same size and the eyes sit on
+   one line. This is geometry and not colour, so the grade above stays single.
+   Scale is never below 1, so the image always covers the plate. Every number
+   here is a literal: the system has no token for a per-image crop. */
+.ce-graded .ed-card[data-person="joosep"] .ed-photo {
+  transform: translateY(3%) scale(1.15);
+}
+
+.ce-graded .ed-card[data-person="kaido"] .ed-photo {
+  transform: translateY(4.2%) scale(1.28);
+}
+
+.ce-graded .ed-card[data-person="vootele"] .ed-photo {
+  transform: translate(5.9%, 5.5%) scale(1.17);
+}
+
+/* The day-job line is the part that grows, and now it carries the closing rule
+   on its own bottom edge. The colophon that used to sit under that rule is
+   gone: the standing head above already says INSTRUCTOR and the section heading
+   says it again, so the word was printed three times inside one column. The
+   rule is worth keeping on its own, because it is what stops the column, and
+   flex growth is what lands all three of them on one line across the row. */
+.ce-graded .ed-line {
+  flex: 1;
+  margin: 14px 0 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* The employer is the only word a reader scans for, so it is ink where the rest
+   of the line is secondary text. */
+.ce-graded .ed-company {
+  color: var(--text);
+}
+
+/* Nothing here is focusable today, which matches what ships. The rule is here
+   so the day a name becomes a link the lift is reachable from the keyboard and
+   the outline is drawn outside the sheet, not clipped by it. */
+.ce-graded .ed-card :focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
+/* Reduced motion keeps the state and drops the travel. The grade is not
+   animated at all, at rest or on hover: a set that changes its correction when
+   a pointer arrives is two sets. */
+@media (prefers-reduced-motion: reduce) {
+  .ce-graded .ed-card,
+  .ce-graded .ed-card::before,
+  .ce-graded .ed-standing {
+    transition: none;
+  }
+}
+
+/* One column below the second breakpoint. The measure holds at 320px and the
+   rules stay the weights they are. */
+@media (max-width: 400px) {
+  .ce-graded .ed-seat {
+    max-width: 100%;
+  }
+}
+</style>
+
+  <div class="cd-head">
+    <h2>Graded set</h2>
+    <p>The colour stays and the correction is shared: one filter chain, identical on all three plates and tuned on none of them, so the yellow shirt, the teal jersey and the navy tee come back from three rooms as one press run.</p>
+  </div>
+
+  <div class="cd-cards">
+    <div class="ed-seat" data-tilt>
+      <article class="ed-card" data-person="joosep">
+        <p class="ed-standing">Instructor &middot; Practitioner</p>
+        <h3 class="ed-name">Joosep Simm<plepic-mark class="ed-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark></h3>
+        <div class="ed-plate">
+          <span class="ed-ink"><img class="ed-photo" src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy" decoding="async"></span>
+        </div>
+        <p class="ed-line">Ships code at <span class="ed-company">Gridraven</span>.</p>
+      </article>
+    </div>
+
+    <div class="ed-seat" data-tilt>
+      <article class="ed-card" data-person="kaido">
+        <p class="ed-standing">Instructor &middot; Practitioner</p>
+        <h3 class="ed-name">Kaido Koort<plepic-mark class="ed-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark></h3>
+        <div class="ed-plate">
+          <span class="ed-ink"><img class="ed-photo" src="images/kaido.jpg" alt="Kaido Koort" width="640" height="640" loading="lazy" decoding="async"></span>
+        </div>
+        <p class="ed-line">Builds the <span class="ed-company">Plepic</span> website and product.</p>
+      </article>
+    </div>
+
+    <div class="ed-seat" data-tilt>
+      <article class="ed-card" data-person="vootele">
+        <p class="ed-standing">Instructor &middot; Practitioner</p>
+        <h3 class="ed-name">Vootele R&otilde;tov<plepic-mark class="ed-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark></h3>
+        <div class="ed-plate">
+          <span class="ed-ink"><img class="ed-photo" src="images/vootele.jpg" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy" decoding="async"></span>
+        </div>
+        <p class="ed-line">Builds <span class="ed-company">Balancing.services</span>.</p>
+      </article>
+    </div>
+  </div>
+
+  <p class="cd-note">The photographs keep their colour and get one correction, written once on one selector and applied to all three: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04), still multiplied onto a --bg-alt plate, so the paper's own warm cast is the last step of the grade and the one step that is identical by construction. Every number answers a measurement taken on the rendered plates, not a preference: saturate stops at 0.58 because that is where the 90th-percentile chroma spread across the set is exactly halved, 0.108 to 0.054; Kaido's frame crosses from net-cool to net-warm just past sepia 0.14, so 0.18 clears the threshold with margin and puts all three median hues at 43, 43 and 26 degrees; and brightness 1.04 cancels what multiplying against #f3efe7 costs and clips the studio white back to the plate tone now that grayscale is gone, which the plate corners confirm at #f3efe7 on all three. contrast is the smallest of the three correcting moves on purpose, because it is the only one that pays: the lift widens luma spread between the bright photograph and the dark one from 0.176 to 0.189, a fair price for not going milky beside an ink rule at 1.07 and not a fair one at 1.20. It gets most of the way and there is one place it does not: the three share a white balance now, the yellow shirt has come down from shouting to speaking and the teal jersey has come back as a green that belongs on this page, but a multiplicative chain compresses differences and cannot close ratios, so Joosep's frame carries 2.1 times Vootele's mean chroma where it carried 1.8 before, and still averages more than twice his luma, which is why the eye lands on Joosep first and no single chain can change that. Literals the system has no token for, all named where they sit: the four grade values, the 1.5px rule weight, the 24px sheet bleed, the 1.4rem byline, the 0.16em mono tracking, the 5px lift and its two shadows, the three tilt values, and the per-person crops, which stay per-person because framing is geometry and the grade is the thing that is not allowed to be.</p>
+</section>
