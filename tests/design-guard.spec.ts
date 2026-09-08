@@ -236,7 +236,7 @@ test.describe('design guard @design-guard', () => {
     // the butterfly's ember head, and that head is part of the locked mark,
     // inlined as SVG, so it is geometry rather than an accent the component
     // chose. Breaking this looks like a card that warms up as it lifts: an
-    // accent-tinted foil band, plate border or hover shadow, and the piece stops
+    // accent-tinted plate border or hover shadow, and the piece stops
     // reading as printed stock and starts reading as a HUD highlight.
     // Declarations only, never page text, because the inline mark is legitimately
     // full of #e26c45.
@@ -276,8 +276,8 @@ test.describe('design guard @design-guard', () => {
 
   test('living tabletop: the Card never sets a dark background (The Dark Placement Rule)', () => {
     // The page-level dark guard reads pages, so a component can walk dark back
-    // onto a light site underneath it: a dark plate behind the grain is the
-    // obvious way to make the foil band pop, and it would ship on every page
+    // onto a light site underneath it: a dark plate behind a photograph is the
+    // obvious way to make a portrait pop, and it would ship on every page
     // that ever places a Card without a single page changing. Same two shapes as
     // the page guard, the token and the two literal values behind it, matched
     // only after `background` so ink borders and ink text stay legal.
@@ -357,12 +357,10 @@ test.describe('design guard @design-guard', () => {
   });
 
   test('living tabletop: an embedded image carries no colour of its own', () => {
-    // The grain is one fractalNoise tile desaturated by feColorMatrix and
-    // multiplied over the card, so it darkens the paper and never tints it. A
-    // hex inside the data URI is how a texture smuggles a colour past the closed
-    // palette: the off-canon guard above reads the stylesheet as text, and a
-    // percent-encoded %23 is not a # to it, so a warm noise tile would ship
-    // unseen. Both spellings are checked here for that reason.
+    // A hex inside a data URI is how a texture smuggles a colour past the
+    // closed palette: the off-canon guard above reads the stylesheet as text,
+    // and a percent-encoded %23 is not a # to it, so a warm tile would ship
+    // unseen. All the spellings are checked here for that reason.
     // The paper grain that first prompted this guard went with the trading
     // card, so there may legitimately be no data: URI in the stylesheet at all.
     // The rule survives the tile: an embedded image is still the one way a

@@ -29,3 +29,4 @@ Mar to May 2026 | /claude-code/ timeline: hackathons with Delfi Meedia, Thorgate
 24% | not a claim: how far the foil band travels at full pointer offset, documented on the same row; verified against FOIL_TRAVEL in js/tabletop.js
 50% | not a claim: transform-origin: 50% 50% on the mark's wing layers, the body axis at x=150 in the 300-wide viewBox, in the design-system.html Motion section; verified against the .mark-layer--left rule in css/styles.css
 58% | not a claim: the keyframe at which the breath reaches --breath-open, so the wing opens slower than it closes, in the same Motion entry; verified against the @keyframes mark-breath-left block in css/styles.css
+2026-09-08 | not a claim: the date the trading-card instructor treatment was rejected and the Editorial rule Card replaced it, recorded on design-system.html and in the css/styles.css comments; verified against this branch's own commit history

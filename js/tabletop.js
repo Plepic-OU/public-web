@@ -9,9 +9,9 @@
  * hover chased itself out from under a resting pointer. The seat never moves,
  * which is what makes both the hover and the measurement below trustworthy.
  *
- * The module writes four custom properties and nothing else, because
+ * The module writes two custom properties and nothing else, because
  * css/styles.css owns the transform. That split is the whole point: the
- * hover lift and the ink shadow are CSS rules, so they still work under
+ * hover lift and the sheet behind it are CSS rules, so they still work under
  * reduced motion, on touch, and before this file loads, with the module
  * doing nothing at all.
  *

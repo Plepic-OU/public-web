@@ -10,10 +10,10 @@ import { test, expect } from '@playwright/test';
  * card's overflow: hidden, no overhang into the next section, and no image
  * download at all on touch devices.
  *
- * The hover target is .tt-art, the Card's art window: the living tabletop
- * rebuild replaced the old .team-photo box with it. The material layers that
- * cover the art, .tt-grain and .tt-foil, are pointer-events: none, so the hit
- * test still lands inside the card.
+ * The hover target is .tt-art, the Card's photo plate: the living tabletop
+ * rebuild replaced the old .team-photo box with it. Hover belongs to .tt-seat,
+ * the untransformed wrapper, so the tilt cannot move the card out from under
+ * the pointer and the hit test stays stable.
  */
 
 const INSTRUCTORS = ['joosep', 'kaido', 'vootele'];

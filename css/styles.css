@@ -1328,8 +1328,8 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-/* Three 300px cards in the 1040px grid box. The tracks are capped rather than
-   fractional because the Card has a fixed width, and space-between spends the
+/* Three 300px cards in the 1040px grid box. The cap is the track's now, not
+   the Card's: the Card fills whatever column it is given. space-between spends the
    140px that are left over on the two gaps, so the outer card edges stay
    flush with the instructor slide that covers the grid on hover. minmax(0, …)
    lets the tracks shrink below 300px on narrower viewports instead of pushing
@@ -1456,7 +1456,7 @@ p:last-child {
   }
 
   /* The panel covers the card, so a tilt here would be invisible and the
-     hover ink shadow would peek out above the panel's top edge. The panel is
+     hover sheet would show at the panel's edges. The panel is
      the hover feedback now. --tilt-enabled is the single source of truth for
      that: CSS owns the breakpoint, and js/tabletop.js reads the computed
      value and applies no rotation when it is 0. The hover override carries
