@@ -1,0 +1,323 @@
+<section class="cd cd-photoforward">
+  <style>
+    /* ── Photo forward ──
+       The card is a photograph with a caption printed over it. Nothing frames
+       the picture, because a frame is the thing Kaido threw out and because a
+       full bleed is the only way a 300px card can show a face at the size a
+       face needs to be believed. Everything below exists to serve that one
+       decision: the ground, the crop and the plate are all answers to problems
+       the full bleed creates. */
+
+    .cd-photoforward {
+      padding: var(--space-2xl) 0;
+    }
+
+    .cd-photoforward .cd-head {
+      max-width: 44rem;
+      margin: 0 auto var(--space-2xl);
+      padding: 0 var(--space-lg);
+    }
+
+    .cd-photoforward .cd-head h2 {
+      margin: 0 0 var(--space-sm);
+      font-family: var(--font-display);
+      font-size: var(--fs-h2);
+      color: var(--text);
+    }
+
+    .cd-photoforward .cd-head p {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.5;
+      color: var(--text-2);
+    }
+
+    /* auto-fit rather than three fixed tracks, so one breakpoint carries the
+       whole range: three cards on a desktop row, two on a tablet, one on a
+       phone, and never a card wider than the 300px the crop was cut for. */
+    .cd-photoforward .cd-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(248px, 300px));
+      justify-content: center;
+      align-items: start;
+      gap: var(--space-xl);
+      padding: 0 var(--space-lg);
+    }
+
+    /* The seat is the shipped pattern under a new name. It never moves, so the
+       pointer that hovers it cannot be thrown off by the card's own transform,
+       and js/tabletop.js writes --tt-rx and --tt-ry here for the card to read
+       one level down. Copied from .tt-seat in css/styles.css on purpose: the
+       tilt is not what Kaido rejected, so it is not what this comp re-invents. */
+    .cd-photoforward .pf-seat {
+      display: block;
+    }
+
+    /* 5:7 is the proportion of a printed photograph, not of a UI card, and the
+       ratio is stated here rather than a height so the three photo offsets
+       below can be percentages that hold at every width. isolation is what
+       keeps the photo's multiply blend inside the card. The 3D transform on
+       this element already opens a stacking context and would contain the
+       blend by accident, but a comp that drops the tilt would then blend the
+       portrait straight onto the page, so the containment is declared here
+       rather than inherited from a rule about motion. */
+    .cd-photoforward .pf-card {
+      position: relative;
+      width: 300px;
+      max-width: 100%;
+      aspect-ratio: 5 / 7;
+      overflow: hidden;
+      border-radius: var(--rounded-2xl);
+      isolation: isolate;
+      /* Elevation, resting. The hard 3px ink offset is gone with the border it
+         belonged to, so this direction elevates the way a photographic print
+         lying on a table does: one tight contact shadow that says the object
+         touches the surface, one wide soft shadow that says it has thickness.
+         Both are rgba() of --text, so the elevation is still ink and never a
+         colour, which is the part of the canon that survives the redesign. */
+      box-shadow: 0 1px 2px rgba(28, 28, 26, 0.10), 0 8px 18px rgba(28, 28, 26, 0.13);
+    }
+
+    /* The photograph's field. All three sources are head and shoulders on a
+       pure white ground (measured: every ground pixel of kaido.jpg and
+       vootele.jpg is #ffffff, and joosep.png is a transparent cut-out), and a
+       head and shoulders shot cannot fill a tall card at any crop that keeps
+       the head. So the card supplies the rest of the picture: a lit backdrop,
+       white behind the face where skin has to stay true, cooling to the green
+       surface tint at the edges. The light sits at 34% of the height, on the
+       face and not on the scalp, because a white core behind the head made a
+       fair scalp disappear into it. The gradient also draws the card's edge,
+       which is the job the 2px ink border used to do. */
+    .cd-photoforward .pf-frame {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(96% 66% at var(--pf-gx) 34%,
+        var(--surface) 0%,
+        var(--green-surface) 58%,
+        var(--green-light) 118%);
+    }
+
+    /* multiply is what makes the backdrop honest instead of a collage. White
+       multiplied by the ground is the ground exactly, so each source's own
+       white dissolves into the field with no seam and no cut-out edge, and the
+       figure keeps its own colour because it is multiplied by a tint that is
+       96% light. max-width: none overrides the global img reset, which would
+       otherwise cap the enlargement at the card width and drop the crop back
+       to a small floating portrait. */
+    .cd-photoforward .pf-photo {
+      position: absolute;
+      top: var(--pf-y);
+      left: var(--pf-x);
+      width: var(--pf-w);
+      max-width: none;
+      height: auto;
+      mix-blend-mode: multiply;
+    }
+
+    /* The three crops. Each source was shot at its own distance, so one scale
+       would put three different sized heads in a row. The width enlarges each
+       portrait until the heads match, the left offset centres each face near
+       the middle of the card, and the top offset drops every head top onto the
+       same line about 5% below the card's top edge. Percentages, not pixels,
+       because the card is fluid below 300px and the crop has to travel with it:
+       --pf-w and --pf-x resolve against the card's width, --pf-y against its
+       height, and the fixed aspect ratio keeps the two in step. */
+    .cd-photoforward .pf-card[data-instructor="joosep"] {
+      --pf-w: 153%;
+      --pf-x: -32%;
+      --pf-y: -8.2%;
+      --pf-gx: 47%;
+    }
+
+    .cd-photoforward .pf-card[data-instructor="kaido"] {
+      --pf-w: 153%;
+      --pf-x: -26.7%;
+      --pf-y: -8.1%;
+      --pf-gx: 51%;
+    }
+
+    .cd-photoforward .pf-card[data-instructor="vootele"] {
+      --pf-w: 187%;
+      --pf-x: -31%;
+      --pf-y: -6.5%;
+      --pf-gx: 52%;
+    }
+
+    /* The plate. It is the only opaque thing on the card, it runs the full
+       width so the type never has to survive whatever colour the shirt behind
+       it happens to be, and it is a tint of --bg rather than --bg itself so a
+       little of the photograph still shows through and the plate reads as laid
+       on the picture rather than cut out of it. The hairline is the one rule
+       left on the card and it separates plate from photograph, not card from
+       page. The blur is what lets the plate stay this translucent: at 90% over
+       an unblurred photograph the Spanish crest on Kaido's shirt read through
+       as a smudge, and blurring the backdrop turns every shirt behind every
+       plate into a soft wash of its own colour instead. The card's overflow
+       clip is what stops the blur sampling anything outside the card, and
+       where backdrop-filter is unsupported the plate is still 90% opaque
+       cream, so the type never depends on the filter landing. */
+    .cd-photoforward .pf-plate {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 11px 16px 14px;
+      background: rgba(250, 247, 242, 0.90);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(28, 28, 26, 0.12);
+    }
+
+    /* --text-2, not --text-3, and the reason is measured rather than assumed.
+       A translucent plate over a photograph is a lighter background than the
+       card stock this line is normally printed on: at 9.5px in --text-3 it came
+       back at 4.25:1 over Vootele's shirt, under the 4.5:1 that size needs.
+       --text-2 is the ink the shipped card already gives this line and it
+       measures 6.9:1 on the worst of the three. */
+    .cd-photoforward .pf-type {
+      margin: 0 0 4px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      line-height: 1.6;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+
+    .cd-photoforward .pf-nameline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .cd-photoforward .pf-name {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--fs-h4);
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    /* The set glyph at its sanctioned smallest size. flex: none holds it there
+       when a long name claims the rest of the row. */
+    .cd-photoforward .pf-setglyph {
+      width: 15px;
+      flex: none;
+    }
+
+    /* min-height reserves two lines on every card. Only Kaido's sentence wraps
+       to two, and without the reservation his plate would stand 22px taller
+       than the other two and break the line the three plates share. */
+    .cd-photoforward .pf-role {
+      margin: 5px 0 0;
+      min-height: 2.9em;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--text-2);
+    }
+
+    /* The employer is the only word a reader scans for, so it is ink where the
+       rest of the line is secondary text. */
+    .cd-photoforward .pf-company {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* The lift and the tilt are one transform on the card, so the lift still
+       happens when js/tabletop.js is absent, blocked, or has bailed on a coarse
+       pointer. focus-within sits beside hover so the state has a keyboard path
+       the day a name becomes a link. */
+    .cd-photoforward .pf-seat[data-tilt] > .pf-card {
+      transform: perspective(var(--tilt-perspective)) translateY(var(--tt-lift)) rotateX(var(--tt-rx)) rotateY(var(--tt-ry));
+      transition: transform var(--tilt-dur) var(--ease-settle), box-shadow var(--tilt-dur) var(--ease-settle);
+    }
+
+    .cd-photoforward .pf-seat[data-tilt]:hover > .pf-card,
+    .cd-photoforward .pf-seat[data-tilt]:focus-within > .pf-card {
+      --tt-lift: calc(-1 * var(--lift-height));
+
+      /* Elevation, hovering. The contact shadow stays tight and the ambient one
+         opens: the print has come off the table, not switched on a light. */
+      box-shadow: 0 2px 4px rgba(28, 28, 26, 0.10), 0 24px 44px rgba(28, 28, 26, 0.22);
+    }
+
+    /* A reader who asks for less motion still gets the elevation, because the
+       shadow is the part that says the card is an object. Only the travel goes. */
+    @media (prefers-reduced-motion: reduce) {
+      .cd-photoforward .pf-seat[data-tilt] > .pf-card {
+        transition: box-shadow var(--dur-fast) ease;
+      }
+
+      .cd-photoforward .pf-seat[data-tilt]:hover > .pf-card,
+      .cd-photoforward .pf-seat[data-tilt]:focus-within > .pf-card {
+        --tt-lift: 0px;
+      }
+    }
+
+    .cd-photoforward .cd-note {
+      max-width: 44rem;
+      margin: var(--space-2xl) auto 0;
+      padding: 0 var(--space-lg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-3);
+    }
+  </style>
+  <div class="cd-head">
+    <h2>Photo forward</h2>
+    <p>The instructors are the product, so the card is a photograph of a person and the words are a caption printed on it. This bets that one face at the largest size the grid allows persuades a reader faster than any amount of card furniture around a small one.</p>
+  </div>
+  <div class="cd-cards">
+      <div class="pf-seat" data-tilt>
+        <article class="pf-card" data-instructor="joosep">
+          <div class="pf-frame">
+            <img class="pf-photo" src="/images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy" decoding="async">
+          </div>
+          <div class="pf-plate">
+            <p class="pf-type">Instructor &middot; Practitioner</p>
+            <div class="pf-nameline">
+              <h3 class="pf-name">Joosep Simm</h3>
+              <plepic-mark class="pf-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+            </div>
+            <p class="pf-role">Ships code at <span class="pf-company">Gridraven</span>.</p>
+          </div>
+        </article>
+      </div>
+      <div class="pf-seat" data-tilt>
+        <article class="pf-card" data-instructor="kaido">
+          <div class="pf-frame">
+            <img class="pf-photo" src="/images/kaido.jpg" alt="Kaido Koort" width="640" height="640" loading="lazy" decoding="async">
+          </div>
+          <div class="pf-plate">
+            <p class="pf-type">Instructor &middot; Practitioner</p>
+            <div class="pf-nameline">
+              <h3 class="pf-name">Kaido Koort</h3>
+              <plepic-mark class="pf-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+            </div>
+            <p class="pf-role">Builds the <span class="pf-company">Plepic</span> website and product.</p>
+          </div>
+        </article>
+      </div>
+      <div class="pf-seat" data-tilt>
+        <article class="pf-card" data-instructor="vootele">
+          <div class="pf-frame">
+            <img class="pf-photo" src="/images/vootele.jpg" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy" decoding="async">
+          </div>
+          <div class="pf-plate">
+            <p class="pf-type">Instructor &middot; Practitioner</p>
+            <div class="pf-nameline">
+              <h3 class="pf-name">Vootele R&otilde;tov</h3>
+              <plepic-mark class="pf-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+            </div>
+            <p class="pf-role">Builds <span class="pf-company">Balancing.services</span>.</p>
+          </div>
+        </article>
+      </div>
+  </div>
+  <p class="cd-note">The photograph is the card: it runs the full 5:7 bleed, no border is drawn at all, and the edge is held instead by the picture and by a lit backdrop that cools from white behind the face to the green surface tint at the corners. Every source is head and shoulders on a ground that measures pure white, and a head and shoulders shot cannot fill a tall card at any crop that keeps the head, so the card supplies the missing backdrop and the photograph is composited in multiply, which dissolves each source's own white into that field exactly and leaves no seam; each portrait is then enlarged and offset on its own three percentages, because the three were shot at three different distances and one crop would stand three different sized heads in a row. Shot properly, head to waist on a seamless coloured backdrop, none of that would be needed: the ground could be a flat brand colour, the blend would come out, and Vootele's 512px file would stop being visibly the softest of the three. Elevation replaces the hard ink offset that went with the border with two soft ones, a 0 1px 2px contact shadow and a 0 8px 18px ambient shadow, both rgba tints of --text, opening to 0 2px 4px and 0 24px 44px on hover over the shipped 12px lift and the shipped tilt. The foot plate is dropped because no footer is left for it to sit in, and the type that stays sits on rgba(250, 247, 242, 0.90) over a 12px backdrop blur, measured on screen, column by column, at 13.0:1 to 15.7:1 for the name and 6.8:1 at its worst for the two secondary lines; the 5:7 ratio, the plate alpha, the blur radius, the shadow geometry, the nine crop percentages and the three gradient centres are all literals, because the system carries a token for none of them.</p>
+</section>

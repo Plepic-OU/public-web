@@ -827,7 +827,7 @@
 
     <!-- The mark as a live component. Four real marks, one per sanctioned size,
          each one enhancing the inline SVG it was authored with. -->
-    <div class="panel panel-white" style="margin-top: var(--space-lg);">
+    <div class="panel panel-white" id="mark-component" style="margin-top: var(--space-lg);">
       <div class="panel-label">The Mark as a Component &middot; <code>&lt;plepic-mark&gt;</code></div>
       <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
         The locked cut at the four sanctioned sizes, breathing. <code>&lt;plepic-mark&gt;</code> is progressive enhancement and never a renderer: the page inlines the master's exact polygon set and core nodes inside the element, and <code>js/plepic-mark.js</code> re-stacks the nodes it finds into three layers (left wing, right wing, core) so CSS can hinge the wings on the body axis. The module carries no coordinate of its own, every node is cloned from the page, and the geometry and colour on screen are therefore the locked mark at every size. Motion is Section 11's Wing-Breathe.

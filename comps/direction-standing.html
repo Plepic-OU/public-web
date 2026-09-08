@@ -1,0 +1,276 @@
+<section class="cd cd-standing">
+<style>
+/* ── Standing figure ──
+   The card has no art window. The person is the art, cut out and standing on
+   a flat brand-green field that runs to all four edges, cropped by the bottom
+   of the card the way a court figure is cropped on a playing card. Everything
+   the shard backdrop was trying to do (colour, set identity, a place for the
+   portrait to live) is done by one flat green plane instead. */
+
+/* Card geometry and motion, declared once on the seat so the whole direction
+   reads from one place and js/tabletop.js can find --tilt-x and --tilt-y where
+   it looks for them, on the seat itself.
+
+   The tilt is softened from the shipped 16/20deg to 9/11deg and the
+   perspective pushed from 900px to 1400px, because a rotated PHOTOGRAPH is
+   not a rotated illustration: at the shipped angles a real face skews and the
+   set looks like three people photographed through a wide lens. Both are
+   stated as literals; the system has one global pair of tilt tokens and this
+   direction needs its own. */
+.cd-standing .st-seat {
+  --tilt-x: 9deg;
+  --tilt-y: 11deg;
+  --tilt-perspective: 1400px;
+  --lift-height: 14px;
+  --tilt-dur: 240ms;
+
+  display: block;
+}
+
+/* The playing-card proportion is literal here: 5:7 is the poker card, and the
+   direction only works if the object reads as a card before it reads as a
+   photo. The aspect ratio also reserves the whole box before the portrait
+   lands, so nothing shifts on load. */
+.cd-standing .st-card {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 5 / 7;
+  background: var(--green-surface);
+  border-radius: var(--rounded-2xl);
+  overflow: hidden;
+
+  /* The blend below must never reach the page. A transform already makes this
+     a stacking context today, but saying isolate states the intent, so the
+     multiply stays inside the card if the transform rule ever moves. */
+  isolation: isolate;
+}
+
+/* Elevation, resting. Kaido rejected the hard ink offset, so weight is carried
+   by two soft ink-tinted shadows instead of one solid black one: a 2px contact
+   shadow that sits the card on the table, and an 18px ambient that says how
+   far above the table it is. The third layer is the edge: an inset hairline in
+   brand green at 12% is the faintest border that still stops a pale mint field
+   from bleeding into the cream page. All three are rgba() of canon values. */
+.cd-standing .st-seat[data-tilt] > .st-card {
+  transform: perspective(var(--tilt-perspective)) translateY(var(--tt-lift)) rotateX(var(--tt-rx)) rotateY(var(--tt-ry));
+  box-shadow:
+    inset 0 0 0 1px rgba(19, 123, 48, 0.12),
+    0 1px 2px rgba(28, 28, 26, 0.06),
+    0 8px 18px rgba(28, 28, 26, 0.07);
+  transition: transform var(--tilt-dur) var(--ease-settle), box-shadow var(--tilt-dur) var(--ease-settle);
+}
+
+/* Elevation, hover. The card rises 14px and the ambient shadow triples its
+   blur while the contact shadow softens and slides out, which is what a real
+   object does when you lift it off a table. focus-within is bound to the same
+   state so a link placed in the plate later moves the card the same way. */
+.cd-standing .st-seat[data-tilt]:hover > .st-card,
+.cd-standing .st-seat:focus-within > .st-card {
+  --tt-lift: calc(-1 * var(--lift-height));
+
+  box-shadow:
+    inset 0 0 0 1px rgba(19, 123, 48, 0.16),
+    0 4px 8px rgba(28, 28, 26, 0.05),
+    0 14px 24px rgba(28, 28, 26, 0.07),
+    0 28px 54px rgba(28, 28, 26, 0.14);
+}
+
+/* The figure. multiply is what makes the cut-out free: white multiplied by the
+   mint field IS the mint field, so the studio background disappears with no
+   mask and no second asset, and the transparent PNG needs nothing at all. The
+   same blend tints the person by the field's own factors (0.93 red, 0.99
+   green, 0.95 blue), which is small enough to read as one printing pass over
+   the set rather than as a duotone.
+
+   max-width: none overrides the global img rule. Every figure here is wider
+   than the card on purpose: the shoulders have to leave the frame or the
+   person is a portrait in a box again, which is the thing being replaced. */
+.cd-standing .st-figure {
+  position: absolute;
+  left: var(--fig-x);
+  bottom: var(--fig-y);
+  width: var(--fig-w);
+  max-width: none;
+  height: auto;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Per-portrait framing. The three sources are shot at different distances, so
+   one placement cannot serve all three: these numbers put every head at the
+   same size and the same height in the card, measured from the images rather
+   than guessed. --fig-y is negative on two of the three so the body is cut by
+   the card's bottom edge instead of stopping short of it. --fig-x centres a
+   weighted point between the head and the shoulders, because centring the head
+   alone throws the body off the card and centring the body alone breaks the
+   line of faces you scan across the row. */
+.cd-standing .st-card--joosep  { --fig-w: 139%; --fig-x: -24%; --fig-y: -2%; }
+.cd-standing .st-card--kaido   { --fig-w: 139%; --fig-x: -18%; --fig-y: -3%; }
+.cd-standing .st-card--vootele { --fig-w: 133%; --fig-x: -8%;  --fig-y: -2%; }
+
+/* The plate: one piece of white stock lying on the green field, carrying every
+   word on the card. It is inset on three sides so the field, and the figure
+   standing in it, continue past it on all three, which is what keeps the
+   person behind the plate rather than above it. No border; the plate is
+   separated from the field by its own shadow, tinted green so it reads as a
+   shadow cast onto that field and not as a grey box. */
+.cd-standing .st-plate {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 10px 12px 12px;
+  background: var(--surface);
+  border-radius: var(--rounded-md);
+  box-shadow: 0 1px 2px rgba(28, 28, 26, 0.05), 0 4px 10px rgba(19, 123, 48, 0.16);
+}
+
+/* The type line is printed on the field itself, at the top of the card, not
+   inside the plate. Two reasons: the top of every one of these three frames is
+   empty field above the head, so the line costs no space at all up there, and
+   the 16px it would have cost inside the plate is the 16px that lifts the
+   plate off Vootele's shoulders, the one source framed too loose around the
+   head to spare them. It sits after the portrait in source order so the
+   multiply below never touches it. */
+.cd-standing .st-kicker {
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.cd-standing .st-nameline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.cd-standing .st-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+/* The set glyph at its smallest sanctioned size. flex: none holds it there
+   when a long name claims the rest of the line. */
+.cd-standing .st-glyph {
+  width: 15px;
+  flex: none;
+}
+
+/* The role line is two lines on one card and one on the other two. Reserving
+   both lines everywhere is what keeps the three plates the same height, and
+   three plates at three heights is the first thing the eye finds wrong in a
+   row of cards. */
+.cd-standing .st-role {
+  min-height: 2.9em;
+  margin: 3px 0 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* The employer is the only part of the sentence a reader scans for, so it is
+   ink where the rest of the line is secondary text. */
+.cd-standing .st-company {
+  color: var(--text);
+}
+
+.cd-standing .cd-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+.cd-standing .cd-head h2 {
+  margin: 0;
+}
+
+.cd-standing .cd-head p,
+.cd-standing .cd-note {
+  max-width: 62ch;
+  margin: var(--space-sm) 0 0;
+  color: var(--text-2);
+}
+
+.cd-standing .cd-note {
+  margin-top: var(--space-xl);
+}
+
+/* Reduced motion keeps the lift and the elevation, which are state, and drops
+   only the travel between states. js/tabletop.js already declines to bind the
+   tilt here, so the card still answers the pointer, instantly. */
+@media (prefers-reduced-motion: reduce) {
+  .cd-standing .st-seat[data-tilt] > .st-card {
+    transition: none;
+  }
+}
+</style>
+
+<div class="cd-head">
+  <h2>Standing figure</h2>
+  <p>No window, no frame: the person is cut out and stands directly on a flat brand-green field that runs off all four edges of the card. The bet is that a real photograph standing in a coloured space carries the whole card, and that the green does the identity work the shards were doing badly.</p>
+</div>
+
+<div class="cd-cards">
+
+  <div class="st-seat" data-tilt>
+    <article class="st-card st-card--joosep">
+      <img class="st-figure" src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy" decoding="async">
+      <p class="st-kicker">Instructor &middot; Practitioner</p>
+      <div class="st-plate">
+        <div class="st-nameline">
+          <h3 class="st-name">Joosep Simm</h3>
+          <plepic-mark class="st-glyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+        </div>
+        <p class="st-role">Ships code at <span class="st-company">Gridraven</span>.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="st-seat" data-tilt>
+    <article class="st-card st-card--kaido">
+      <img class="st-figure" src="images/kaido.jpg" alt="Kaido Koort" width="640" height="640" loading="lazy" decoding="async">
+      <p class="st-kicker">Instructor &middot; Practitioner</p>
+      <div class="st-plate">
+        <div class="st-nameline">
+          <h3 class="st-name">Kaido Koort</h3>
+          <plepic-mark class="st-glyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+        </div>
+        <p class="st-role">Builds the <span class="st-company">Plepic</span> website and product.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="st-seat" data-tilt>
+    <article class="st-card st-card--vootele">
+      <img class="st-figure" src="images/vootele.jpg" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy" decoding="async">
+      <p class="st-kicker">Instructor &middot; Practitioner</p>
+      <div class="st-plate">
+        <div class="st-nameline">
+          <h3 class="st-name">Vootele R&otilde;tov</h3>
+          <plepic-mark class="st-glyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+        </div>
+        <p class="st-role">Builds <span class="st-company">Balancing.services</span>.</p>
+      </div>
+    </article>
+  </div>
+
+</div>
+
+<p class="cd-note">The field is <code>--green-surface</code> bled to all four edges, and the photograph sits on it with <code>mix-blend-mode: multiply</code>, so the studio white becomes the field with no mask and the transparent PNG needs nothing at all. Resting elevation is a 2px ink contact shadow under an 18px ambient, at 6 and 7 percent; hover lifts the card 14px and opens that into a 24px and a 54px layer; the edge is not a border but an inset hairline of brand green at 12 percent, which is the faintest thing that still holds a mint field against the cream page. Everything the card says lives on one white plate inset on three sides so the figure passes behind it and is cropped by the card rather than by the caption, the foot plate is dropped because a second collector line would need a second plate over the same body, and the type line is printed on the field at the top instead, where all three frames are empty anyway and the 16px it gives back to the plate is what lifts that plate off Vootele's shoulders. Stated as literals because the system has no token for them: the 5:7 playing-card aspect, a tilt softened to 9 and 11 degrees at 1400px perspective (a rotated photograph of a face skews where a rotated illustration does not), and three per-portrait framing triples measured off the images so every head lands at one size and one height. On the risk: the multiply was measured, not assumed, and it is clean, since the field scales colour by 0.93 red, 0.99 green, 0.95 blue, so Vootele's navy and Kaido's teal keep their fabric and lose about three units of red; sampling the rendered cards found the field at exactly #edfcf1 inside the photo, no seam at the image edge, and a 2px anti-aliased transition at the hair line rather than the grey halo the JPEG near-whites (225 in kaido.jpg, 232 in vootele.jpg) predicted.</p>
+</section>
