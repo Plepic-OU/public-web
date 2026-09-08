@@ -46,8 +46,6 @@ const INTERNAL_PAGES = new Set([
   'demo-tenders.html',
   'card-directions.html',
   'card-editorial.html',
-  // The whole comps directory: design explorations, stripped with the rest.
-  'comps',
 ]);
 
 // --- tokens added to pages ---------------------------------------------------

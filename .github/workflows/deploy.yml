@@ -36,7 +36,6 @@ jobs:
           # it from this list rather than working around the deploy.
           rm -rf _archive playwright-report tests
           rm -f  design-system.html font-compare.html demo-tenders.html card-directions.html card-editorial.html
-          rm -rf comps
           rm -f  claims-receipts.log scripts/check-claims.mjs
           rm -rf docs/training-one-pager
           rm -rf docs/specs
