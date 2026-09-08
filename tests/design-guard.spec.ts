@@ -246,23 +246,32 @@ test.describe('design guard @design-guard', () => {
     expect(offenders, 'these Card rules reach for the accent. The Card is ink and green only: use a token that exists, or change the rule on design-system.html first.').toEqual([]);
   });
 
-  test('living tabletop: elevation is ink, never a colour', () => {
-    // Elevation on the tabletop is a hard offset print of the object, so the
-    // drop shadow is var(--text) and nothing else. Give it a colour and it stops
-    // being a shadow and becomes a glow, which is the console register the canon
-    // rejects. The hover token is the tempting one, because a card that has just
-    // lifted off the table looks like an invitation to light it. The comma is
-    // banned with the colours: one ink offset is the whole language, and a
-    // second stacked layer is where a glow gets in past a first layer that
-    // still says var(--text). Comments come out first, so a token quoted in
-    // prose never counts as a second declaration.
+  test('living tabletop: elevation is ink, and only ever a hover state', () => {
+    // The Card is a sheet of paper, not a piece of card stock: at rest it has
+    // no shadow at all, and hover fades one in. That is section 9's
+    // flat-by-default rule, and it is the rule the first version broke, with a
+    // hard 3px ink offset printed under every card whether or not anyone was
+    // looking at it. Two things are checked. The shadow token is ink, because a
+    // coloured shadow stops being a shadow and becomes a glow, which is the
+    // console register the canon rejects. And no .tt-* rule paints a resting
+    // box-shadow: the only place elevation may appear is behind :hover or
+    // :focus-within. Comments come out first, so a value quoted in prose never
+    // counts as a declaration.
     const css = read('css/styles.css').replace(/\/\*[\s\S]*?\*\//g, '');
-    const shadows = [...css.matchAll(/(--ink-shadow-(?:rest|hover))\s*:([^;]+);/g)];
-    expect(shadows.map((m) => m[1]).sort(), 'css/styles.css must declare both ink shadow tokens exactly once each').toEqual(['--ink-shadow-hover', '--ink-shadow-rest']);
-    for (const [, name, value] of shadows) {
-      expect(value.includes('var(--text)'), `${name} is ${value.trim()}; elevation is ink, so the colour must be var(--text). Follow the rule or change canon (design-system.html, section 11) first.`).toBe(true);
-      expect(/--accent|#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|,/i.test(value), `${name} is ${value.trim()}; it carries a colour or a second shadow layer. One ink offset only: change the rule on design-system.html before you change this token.`).toBe(false);
-    }
+    const token = css.match(/--card-shadow-hover\s*:([^;]+);/);
+    expect(token, 'css/styles.css must declare --card-shadow-hover; the Card reads it for its one elevated state').toBeTruthy();
+    expect(/--accent|--green|#[0-9a-f]{3,8}\b|hsla?\(/i.test(token![1]), `--card-shadow-hover is ${token![1].trim()}; elevation is ink. Use rgba() of the ink value, or change the rule on design-system.html first.`).toBe(false);
+    expect(/rgba\(\s*28\s*,\s*28\s*,\s*26/.test(token![1]), `--card-shadow-hover is ${token![1].trim()}; it must be built from the ink value 28, 28, 26.`).toBe(true);
+
+    // css, not read(...): comments are already stripped above, and a comment
+    // that mentions box-shadow is prose, not a declaration.
+    const resting = ttRules(css)
+      // An actual declaration, not the word: `transition: box-shadow …` names
+      // the property it will animate and paints nothing.
+      .filter((rule) => /(^|;)\s*box-shadow\s*:/.test(rule.body))
+      .filter((rule) => !/:hover|:focus-within/.test(rule.selector))
+      .map((rule) => rule.selector);
+    expect(resting, 'these Card rules print a shadow at rest. The card is flat until a pointer arrives; move the elevation behind :hover and :focus-within, or change The Flat-By-Default Rule on design-system.html first.').toEqual([]);
   });
 
   test('living tabletop: the Card never sets a dark background (The Dark Placement Rule)', () => {
@@ -296,16 +305,31 @@ test.describe('design guard @design-guard', () => {
     // test stays green while getPropertyValue returns "", degrees() falls back
     // to 0, and the cards quietly stop rotating.
     const REQUIRED = [
-      '--ink-shadow-rest', '--ink-shadow-hover',
+      '--card-shadow-hover', '--photo-grade',
       '--tilt-x', '--tilt-y',
-      '--tilt-enabled', '--tt-lift', '--tt-rx', '--tt-ry', '--tt-foil-x', '--tt-foil-y',
+      '--tilt-enabled', '--tt-lift', '--tt-rx', '--tt-ry',
       '--mark-perspective',
       '--breath-period', '--breath-open', '--wingbeat-dur', '--wingbeat-open',
-      '--grain-opacity', '--foil-opacity',
     ];
     const declared = rootTokens(read('css/styles.css'));
     const missing = REQUIRED.filter((name) => !declared.has(name));
     expect(missing, 'these living tabletop tokens are missing from :root in css/styles.css. A module writes or a keyframe reads every one of them: declare it with its default, or take the token out of the modules and canon first.').toEqual([]);
+  });
+
+  test('living tabletop: one grade for the whole set, never a face at a time', () => {
+    // The three instructor photographs were shot in three rooms under three
+    // lights, and the Card answers that the way a press run does: one
+    // correction chain, --photo-grade, through which every plate passes. A
+    // per-person filter is the failure this direction exists to avoid, because
+    // the moment one face gets its own numbers the set stops being a set and
+    // the next photograph has no rule to follow. Per-person GEOMETRY is fine
+    // and expected: the sources were shot at three distances, so each crop is
+    // its own transform. Colour is what may not vary.
+    const perPerson = ttRules(read('css/styles.css'))
+      .filter((rule) => /\[data-instructor=/.test(rule.selector))
+      .filter((rule) => /filter\s*:|saturate\(|sepia\(|grayscale\(|contrast\(|brightness\(|hue-rotate\(/.test(rule.body))
+      .map((rule) => rule.selector);
+    expect(perPerson, 'these rules grade one instructor differently from the others. The grade is --photo-grade, applied once to every portrait; correct the grade, not the face.').toEqual([]);
   });
 
   test('living tabletop: js/plepic-mark.js carries no copy of the mark geometry', () => {
@@ -332,15 +356,19 @@ test.describe('design guard @design-guard', () => {
     expect(copied, 'js/plepic-mark.js repeats coordinates from the locked mark. Read them from the DOM instead; do not keep a second copy, not even in prose.').toEqual([]);
   });
 
-  test('living tabletop: the paper grain carries no colour of its own', () => {
+  test('living tabletop: an embedded image carries no colour of its own', () => {
     // The grain is one fractalNoise tile desaturated by feColorMatrix and
     // multiplied over the card, so it darkens the paper and never tints it. A
     // hex inside the data URI is how a texture smuggles a colour past the closed
     // palette: the off-canon guard above reads the stylesheet as text, and a
     // percent-encoded %23 is not a # to it, so a warm noise tile would ship
     // unseen. Both spellings are checked here for that reason.
+    // The paper grain that first prompted this guard went with the trading
+    // card, so there may legitimately be no data: URI in the stylesheet at all.
+    // The rule survives the tile: an embedded image is still the one way a
+    // colour reaches the page without passing the palette guard, because a
+    // percent-encoded %23 is not a # to a text scan.
     const uris = [...read('css/styles.css').matchAll(/url\("(data:[^"]*)"\)/g)].map((m) => m[1]);
-    expect(uris.length, 'no data: URI found in css/styles.css; the grain tile moved and this guard now checks nothing').toBeGreaterThan(0);
     for (const uri of uris) {
       // Three spellings, because banning only #rrggbb leaves two open doors:
       // #rgb is a colour too, and so is every CSS named colour, which needs no

@@ -17,23 +17,17 @@
  *
  * INTEGRATION CONTRACT
  *   <script type="module" src="/js/tabletop.js"></script>
- *   <div class="tt-seat" data-tilt><article class="tt-card" data-foil>…</article></div>
+ *   <div class="tt-seat" data-tilt><article class="tt-card">…</article></div>
  *
  *   Reads   --tilt-enabled (0 switches this seat off), --tilt-x, --tilt-y
- *   Writes  --tt-rx, --tt-ry, --tt-foil-x, --tt-foil-y, inline, on the seat.
- *           Custom properties inherit, so the card one level down reads them
- *           without this module ever touching it. They are cleared on pointer
- *           leave so the :root defaults take over and the card settles back
- *           through the CSS transition.
+ *   Writes  --tt-rx and --tt-ry, inline, on the seat. Custom properties
+ *           inherit, so the card one level down reads them without this
+ *           module ever touching it. They are cleared on pointer leave so the
+ *           :root defaults take over and the card settles back through the
+ *           CSS transition.
  */
 
-const CHANNELS = ['--tt-rx', '--tt-ry', '--tt-foil-x', '--tt-foil-y'];
-
-// How far the foil band travels, in background-position percent, at full
-// pointer offset. Its tile is 260% of the card, so a quarter of the
-// positioning area sweeps the glint right across the face without ever
-// walking it off the card.
-const FOIL_TRAVEL = 24;
+const CHANNELS = ['--tt-rx', '--tt-ry'];
 
 const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -77,8 +71,6 @@ const bind = (element) => {
     // the card chasing the mouse.
     element.style.setProperty('--tt-rx', `${(-ny * capX).toFixed(2)}deg`);
     element.style.setProperty('--tt-ry', `${(nx * capY).toFixed(2)}deg`);
-    element.style.setProperty('--tt-foil-x', `${(nx * FOIL_TRAVEL).toFixed(2)}%`);
-    element.style.setProperty('--tt-foil-y', `${(ny * FOIL_TRAVEL).toFixed(2)}%`);
   };
 
   const track = (event) => {
