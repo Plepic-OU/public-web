@@ -9,6 +9,11 @@ import { test, expect } from '@playwright/test';
  * slide for the right card, dismissal on mouse-away, no clipping by the
  * card's overflow: hidden, no overhang into the next section, and no image
  * download at all on touch devices.
+ *
+ * The hover target is .tt-art, the Card's photo plate: the living tabletop
+ * rebuild replaced the old .team-photo box with it. Hover belongs to .tt-seat,
+ * the untransformed wrapper, so the tilt cannot move the card out from under
+ * the pointer and the hit test stays stable.
  */
 
 const INSTRUCTORS = ['joosep', 'kaido', 'vootele'];
@@ -30,7 +35,7 @@ test.describe('instructor slide preview', () => {
     await page.locator('#team').scrollIntoViewIfNeeded();
 
     for (const who of INSTRUCTORS) {
-      await page.hover(`.team-card[data-instructor="${who}"] .team-photo`);
+      await page.hover(`.team-card[data-instructor="${who}"] .tt-art`);
       await expect
         .poll(() => opacityOf(page, who), { timeout: 2000 })
         .toBe('1');
@@ -48,7 +53,7 @@ test.describe('instructor slide preview', () => {
     await page.waitForLoadState('networkidle');
     await page.locator('#team').scrollIntoViewIfNeeded();
 
-    await page.hover('.team-card[data-instructor="kaido"] .team-photo');
+    await page.hover('.team-card[data-instructor="kaido"] .tt-art');
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
 
     await page.hover('.team-header h2');
@@ -61,7 +66,7 @@ test.describe('instructor slide preview', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     await page.locator('#team').scrollIntoViewIfNeeded();
-    await page.hover('.team-card[data-instructor="kaido"] .team-photo');
+    await page.hover('.team-card[data-instructor="kaido"] .tt-art');
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
 
     const geometry = await page.evaluate(() => {
@@ -123,7 +128,7 @@ test.describe('instructor slide preview', () => {
     const scrollBefore = await page.evaluate(() => Math.round(window.scrollY));
 
     const card = await page
-      .locator('.team-card[data-instructor="kaido"] .team-photo')
+      .locator('.team-card[data-instructor="kaido"] .tt-art')
       .boundingBox();
     await page.mouse.move(card.x + card.width / 2, card.y + card.height / 2);
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');

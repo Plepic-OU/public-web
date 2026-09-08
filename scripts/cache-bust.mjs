@@ -28,6 +28,8 @@ const ROOT = resolve(process.argv[2] || process.cwd());
 const ASSETS = [
   'css/styles.css',
   'js/crystalline-metamorphosis.js',
+  'js/plepic-mark.js',
+  'js/tabletop.js',
   'scripts/tracking.js',
   'vendor/three.module.min.js',
 ];

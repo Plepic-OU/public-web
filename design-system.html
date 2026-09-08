@@ -306,10 +306,10 @@
   </div>
 
   <!-- ============================================ -->
-  <!-- 5. SPACING -->
+  <!-- 5. SPACING & TOKENS -->
   <!-- ============================================ -->
   <div class="ds-section">
-    <div class="ds-section-label" id="s5">5 — Spacing</div>
+    <div class="ds-section-label" id="s5">5 — Spacing & Tokens</div>
 
     <div class="ds-spacing-row">
       <div class="ds-spacing-item">
@@ -349,6 +349,53 @@
     <p class="ds-note" style="margin-top: var(--space-lg);">
       <strong>Rhythm:</strong> tight groupings, generous separations. Never the same spacing everywhere.
     </p>
+
+    <!-- Living tabletop tokens. The motion, elevation and material half of the
+         system, all of it appended to the single :root block in css/styles.css. -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); overflow-x: auto;">
+      <div class="panel-label">Living Tabletop Tokens &middot; <code>:root</code> in <code>css/styles.css</code></div>
+      <p class="ds-note" style="margin-bottom: var(--space-md);">
+        Game feel on the paper canon: weight, lift, tilt, breath. <strong>Never colour.</strong> The Card (Section 6) and <code>&lt;plepic-mark&gt;</code> (Section 8) are built from these; the patterns they drive are named in Section 11. Values here are read from the stylesheet.
+      </p>
+      <table class="ds-token-table">
+        <thead>
+          <tr><th>Token</th><th>Value</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+          <tr><th colspan="3">Elevation, a hover state only</th></tr>
+          <tr><td><code>--card-shadow-hover</code></td><td><code>0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08)</code></td><td>The Card&#39;s one elevated state, and it exists only while a pointer or the keyboard is on the card. Ink at both stops, never a colour: a coloured shadow stops being a shadow and becomes a glow. There is no resting counterpart, by rule (Section 9).</td></tr>
+          <tr><th colspan="3">Tilt and lift</th></tr>
+          <tr><td><code>--tilt-x</code></td><td><code>9deg</code></td><td>Cap on <code>rotateX</code>. Gentler than the trading card&#39;s because a sheet of paper flexes less than a piece of stock.</td></tr>
+          <tr><td><code>--tilt-y</code></td><td><code>11deg</code></td><td>Cap on <code>rotateY</code>.</td></tr>
+          <tr><td><code>--lift-height</code></td><td><code>5px</code></td><td>How far a hovered card rises off the page.</td></tr>
+          <tr><td><code>--tilt-dur</code></td><td><code>220ms</code></td><td>Settle time for the transform, which is the lift and the rotation together, on <code>--ease-settle</code>. The sheet and its shadow cross-fade on <code>--dur-base</code> instead.</td></tr>
+          <tr><td><code>--tilt-perspective</code></td><td><code>1400px</code></td><td>The viewer&#39;s distance from the table. Long, because it is what keeps a rotated photograph of a face from skewing the way a rotated illustration does not.</td></tr>
+          <tr><th colspan="3">Breath, the mark's rest state</th></tr>
+          <tr><td><code>--breath-period</code></td><td><code>4.6s</code></td><td>One full open and close of the wings, and the core's bob on the same clock.</td></tr>
+          <tr><td><code>--breath-open</code></td><td><code>34deg</code></td><td>How far each wing swings about the body axis at the peak.</td></tr>
+          <tr><td><code>--breath-offset</code></td><td><code>0.35s</code></td><td>The right wing's delay, so the pair never tracks exactly.</td></tr>
+          <tr><td><code>--breath-bob</code></td><td><code>1.5px</code></td><td>The core's vertical travel.</td></tr>
+          <tr><td><code>--wingbeat-dur</code></td><td><code>1.1s</code></td><td>The single beat a hover buys, on <code>--ease-settle</code>.</td></tr>
+          <tr><td><code>--wingbeat-open</code></td><td><code>62deg</code></td><td>How far that one beat opens, against the 34deg of the idle.</td></tr>
+          <tr><th colspan="3">Material, the photographs</th></tr>
+          <tr><td><code>--photo-grade</code></td><td><code>saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04)</code></td><td>One correction chain, every instructor photograph, no per-person override. The numbers are measured on the rendered plates, not chosen: <code>saturate</code> halves the set&#39;s 90th-percentile chroma spread, <code>sepia</code> is the threshold past which the coolest face crosses warm, <code>contrast</code> is the only move that widens luma spread, and <code>brightness</code> puts back what the multiply took. Reasoning in full on <code>.tt-portrait</code>.</td></tr>
+          <tr><th colspan="3">Module tiers, named for the loadout builder</th></tr>
+          <tr><td><code>--tier-core</code></td><td><code>var(--green-surface)</code></td><td>Reserved for the loadout builder. Applied to nothing in this phase.</td></tr>
+          <tr><td><code>--tier-advanced</code></td><td><code>var(--green-light)</code></td><td>Reserved for the loadout builder. Applied to nothing in this phase.</td></tr>
+          <tr><td><code>--tier-signature</code></td><td><code>var(--green-brand)</code></td><td>Reserved for the loadout builder. Applied to nothing in this phase.</td></tr>
+          <tr><th colspan="3">Runtime channels, written per element</th></tr>
+          <tr><td><code>--tilt-enabled</code></td><td><code>1</code></td><td>Set to <code>0</code> to switch the rotation off for one element or one subtree. CSS owns the breakpoint and <code>js/tabletop.js</code> reads the computed value, so there is one source of truth for where the tilt applies.</td></tr>
+          <tr><td><code>--tt-lift</code></td><td><code>0px</code></td><td>The lift channel, written by the CSS hover rule and by nothing else.</td></tr>
+          <tr><td><code>--tt-rx</code> &middot; <code>--tt-ry</code></td><td><code>0deg</code></td><td>Pointer rotation, written inline by <code>js/tabletop.js</code> and cleared on pointer leave so these defaults take the card home.</td></tr>
+          <tr><td><code>--mark-perspective</code></td><td><code>90px</code></td><td>Set by <code>js/plepic-mark.js</code> to three times the mark's rendered width, on upgrade and on resize.</td></tr>
+        </tbody>
+      </table>
+      <ul class="ds-rules" style="margin-top: var(--space-md);">
+        <li><strong>Tiers name modules, never people.</strong> <code>core</code>, <code>advanced</code> and <code>signature</code> are documented here for the cohort loadout builder and are applied to nothing in this phase. Putting a tier on a person ranks a real person in public (Section 9).</li>
+        <li><strong>The runtime channels are declared with defaults</strong> because every <code>var()</code> must resolve; an unresolvable one is invalid at computed-value time and the object renders one tier flatter, in silence.</li>
+        <li><strong>Nothing here is colour.</strong> The tokens buy weight, lift, tilt and breath. <code>--photo-grade</code> is the one that touches colour at all, and it corrects a photograph rather than adding a value: the palette (Section 2) is untouched by the living tabletop.</li>
+      </ul>
+    </div>
   </div>
 
   <!-- ============================================ -->
@@ -560,6 +607,55 @@
     <div class="ds-note" style="margin-top: var(--space-lg);">
       <strong>Hero badge variant:</strong> <code>.badge-base</code>, same anatomy and radius (20px 4px 16px) at 0.3rem 0.9rem padding, dot pulsing via <code>::before</code>. One per hero.
     </div>
+
+    <!-- The Card. One live specimen, on the cream ground it ships against, so
+         the reader can see that at rest there is no card there at all. -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); overflow-x: auto;">
+      <div class="panel-label">Card &middot; <code>.tt-card</code> (living tabletop)</div>
+      <p class="ds-note" style="margin-bottom: var(--space-md);">
+        A column of a printed page, not a piece of card stock. No box, no border, no shadow and no tint at rest: the column is held by two rules, 1.5px of ink at the top that carries the weight and 1px of <code>--border</code> at the foot that only stops it. The asymmetry gives the object a direction, top-heavy, which is what a printed column does and a four-sided box cannot. Hover fades one sheet of <code>--surface</code> in behind it and lifts it, so elevation is a state and never a resting decoration. The photographs are real and in colour, every one of them through the same grade. <strong>Hover the specimen.</strong>
+      </p>
+      <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
+        <div class="tt-seat" data-tilt style="max-width: 300px;">
+          <article class="tt-card" data-instructor="joosep">
+            <p class="tt-type">Instructor &middot; Practitioner</p>
+            <h3 class="tt-name">Joosep Simm<plepic-mark class="tt-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark></h3>
+            <div class="tt-art">
+              <span class="tt-ink"><img class="tt-portrait" src="images/joosep.png" alt="Joosep Simm" width="400" height="400" loading="lazy" decoding="async"></span>
+            </div>
+            <p class="tt-role">Ships code at <span class="tt-company">Gridraven</span>.</p>
+          </article>
+        </div>
+      </div>
+      <table class="ds-token-table" style="margin-top: var(--space-md);">
+        <thead>
+          <tr><th>Part, in source order</th><th>Class</th><th>Spec</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Seat</td><td><code>.tt-seat</code></td><td>An untransformed wrapper that owns the hover and the <code>data-tilt</code> hook. A transformed element is hit-tested against its transformed box, so a card that tracked its own hover chased itself out from under a resting pointer: 86 enter and leave events in two and a half seconds, measured. The seat never moves, which is what makes both the hover and <code>js/tabletop.js</code>&#39;s per-frame measurement trustworthy.</td></tr>
+          <tr><td>Column</td><td><code>.tt-card</code></td><td>A flex column at <code>18px 24px</code> padding. It sets no width of its own: the Card fills the column it is handed, and on the homepage the team grid caps that track at 300px. The vertical padding keeps both rules off the cut edge, and the horizontal padding is the margin the sheet shows once it appears.</td></tr>
+          <tr><td>Sheet</td><td><code>.tt-card::before</code></td><td><code>inset: 0</code>, <code>--surface</code>, <code>opacity: 0</code> at rest; on <code>:hover</code> and <code>:focus-within</code> it fades to 1 under <code>--card-shadow-hover</code> while the card rises <code>--lift-height</code>. A <code>::before</code> rather than the card&#39;s own background, because a background paints under the children&#39;s borders and both rules would vanish under the white the moment it faded in.</td></tr>
+          <tr><td>Standing head</td><td><code>.tt-type</code></td><td><code>--font-mono</code> 9.5px, letter-spacing 0.16em, uppercase, <code>--text-3</code> warming to <code>--text-2</code> on hover, at <code>line-height: normal</code> against the Line-Height Trap. It carries the 1.5px ink rule on its own top edge, so the rule that holds the column is a property of the first line rather than a separate element. Names the role. Carries no number.</td></tr>
+          <tr><td>Byline</td><td><code>.tt-name</code></td><td><code>--font-display</code> 700 at 1.4rem, a flex row on <code>align-items: baseline</code>. The baseline sits the set glyph on the name&#39;s own baseline, so the two read as one printed line and not as a name with a badge beside it.</td></tr>
+          <tr><td>Set glyph</td><td><code>.tt-setglyph</code></td><td>The mark at 15px, the smallest sanctioned size (Section 8), held at that width by <code>flex: none</code> when a long name claims the rest of the line. The ember head inside it belongs to the locked mark; it is not an accent element and does not spend the card&#39;s accent budget.</td></tr>
+          <tr><td>Plate</td><td><code>.tt-art</code></td><td>Square by <code>aspect-ratio: 1</code>. Square corners, no frame, a tone instead of an edge: the ground is <code>--bg-alt</code> and is deliberately not swapped for white, because the multiply below pulls the cream up into the photograph as well as dropping the studio white down into the page. Every face picking up the same faint warm cast is the last step of the grade, and the one step identical for all three by construction.</td></tr>
+          <tr><td>Ink wrapper</td><td><code>.tt-ink</code></td><td><code>inset: 0</code>, <code>mix-blend-mode: multiply</code>. The blend and the filter sit on different elements on purpose: both on one node is the combination engines disagree about, and a filtered image inside a blending wrapper renders the same everywhere.</td></tr>
+          <tr><td>Photograph</td><td><code>.tt-portrait</code></td><td>A real photograph, in colour, <code>object-fit: cover</code> under <code>filter: var(--photo-grade)</code>. One chain, one selector, all three faces, no per-person override: if a face needs its own number the grade is wrong, not the face. Framing is the exception and it is geometry, never colour, so <code>.tt-card[data-instructor]</code> carries a translate and a scale per person, which is why the specimen above carries the attribute too.</td></tr>
+          <tr><td>Day-job line</td><td><code>.tt-role</code> &middot; <code>.tt-company</code></td><td>The present-tense sentence in <code>--font-body</code> on <code>--text-2</code>, employer in ink because it is the only word a reader scans for. It is also the part that grows: <code>flex: 1</code> takes the spare height, so the closing 1px <code>--border</code> rule lands on one line across a row of unequal text.</td></tr>
+        </tbody>
+      </table>
+      <ul class="ds-rules" style="margin-top: var(--space-md);">
+        <li><strong>Elevation is a hover state.</strong> The Card obeys the flat-by-default rule rather than claiming an exception to it: nothing at rest but the two rules, and <code>--card-shadow-hover</code> only while a pointer or the keyboard is on it (Section 9).</li>
+        <li><strong>No tier and no power number on a card that carries a person.</strong> It ranks a real person in public, and the number behind the rank cannot be verified (Section 9).</li>
+        <li><strong>No accent element.</strong> The card&#39;s only warm pixel is the ember head inside the locked mark, so a card never spends the viewport&#39;s one accent.</li>
+        <li><strong>The lift is CSS, the rotation is JavaScript.</strong> With <code>js/tabletop.js</code> absent, on touch, and under reduced motion the sheet still appears and the card still rises. It simply does not rotate. Putting the lift in the module would make the hover state depend on a script that is allowed to bail.</li>
+        <li><strong>On the homepage the same article also carries <code>team-card</code></strong>, which the career-slide <code>:has()</code> rules name. That one is the team section&#39;s hook and not part of the component. <code>data-instructor</code> is part of it: the per-person crop is a Card rule, so the specimen above is the component whole.</li>
+      </ul>
+      <div class="panel-label" style="margin-top: var(--space-lg);">The treatment this replaced <span class="ds-wip">Superseded</span></div>
+      <p class="ds-note" style="margin: 0.5rem 0 0;">
+        Until 2026-09-08 the Card was a trading card: a 300px piece of stock inside a 2px ink border, a printed ink offset under it at rest, an inner bevel, paper grain, a foil band that travelled with the pointer, a collector foot line, and portraits triangulated into crystalline facets on a shard backdrop. Kaido rejected it by name, on the photographs first. Every token and every layer it needed is gone from <code>css/styles.css</code>, so nothing on this page still offers it. What survived is the register it was reaching for: weight and motion, carried by a sheet of paper instead of by chrome. The rules it cost are in Section 9.
+      </p>
+    </div>
   </div>
 
   <!-- ============================================ -->
@@ -666,9 +762,9 @@
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
       <div class="panel-label">Final SVG Markup (copy-paste for new locations)</div>
       <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
-        Master markup for all placements. Resize via <code>width</code> / <code>height</code>; the viewBox is fixed.
+        Master markup for all placements. The <code>&lt;plepic-mark&gt;</code> wrapper is what makes the mark live: <code>js/plepic-mark.js</code> re-stacks the nodes it finds inside the host into three hinging layers, so a placement without the wrapper is a still mark. The inline SVG stays the single copy of the locked geometry and the module never draws one of its own, which is why the coordinates below are the ones to paste. Size the host with its class, one of <code>.mark-display</code>, <code>.mark-art</code>, <code>.mark-nav</code> or the Card's <code>.tt-setglyph</code>; the viewBox owns the ratio.
       </p>
-      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"&gt;
+      <pre class="code-block code-block-default" style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.5; max-height: 280px; overflow: auto;">&lt;plepic-mark class="mark-nav" aria-hidden="true"&gt;&lt;svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"&gt;
   &lt;!-- Left wing — 11 facets, DK-B-V pattern --&gt;
   &lt;polygon points="147,105 110,68 55,48"  fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/&gt;
   &lt;polygon points="147,105 55,48 20,72"   fill="#00c638" stroke="#00c638" stroke-width="0.5"/&gt;
@@ -700,7 +796,7 @@
   &lt;circle cx="136" cy="41" r="3.5" fill="#00c638"/&gt;
   &lt;circle cx="164" cy="41" r="3.5" fill="#00c638"/&gt;
   &lt;circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/&gt;
-&lt;/svg&gt;</pre>
+&lt;/svg&gt;&lt;/plepic-mark&gt;</pre>
     </div>
 
     <!-- Downloadable assets -->
@@ -719,6 +815,41 @@
           <a class="btn btn-outline" href="images/butterfly.png" download>Download PNG</a>
         </div>
       </div>
+    </div>
+
+    <!-- The mark as a live component. Four real marks, one per sanctioned size,
+         each one enhancing the inline SVG it was authored with. -->
+    <div class="panel panel-white" id="mark-component" style="margin-top: var(--space-lg);">
+      <div class="panel-label">The Mark as a Component &middot; <code>&lt;plepic-mark&gt;</code></div>
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        The locked cut at the four sanctioned sizes, breathing. <code>&lt;plepic-mark&gt;</code> is progressive enhancement and never a renderer: the page inlines the master's exact polygon set and core nodes inside the element, and <code>js/plepic-mark.js</code> re-stacks the nodes it finds into three layers (left wing, right wing, core) so CSS can hinge the wings on the body axis. The module carries no coordinate of its own, every node is cloned from the page, and the geometry and colour on screen are therefore the locked mark at every size. Motion is Section 11's Wing-Breathe.
+      </p>
+      <div style="display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--bg);border-radius:10px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <plepic-mark class="mark-display" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+          <div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.5rem;">Display &middot; 300px</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <plepic-mark class="mark-art" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+          <div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.5rem;">Card art &middot; 120px</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <plepic-mark class="mark-nav" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+          <div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.5rem;">Nav &middot; 30px</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <plepic-mark class="tt-setglyph" aria-hidden="true"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></plepic-mark>
+          <div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-top:0.5rem;">Set glyph &middot; 15px</div>
+        </div>
+      </div>
+      <ul class="ds-rules" style="margin-top: var(--space-md);">
+        <li><strong>The element only ever enhances an inline SVG.</strong> It never draws one from JavaScript, so the geometry guard governs the one copy of the mark on the page and the module cannot drift from it.</li>
+        <li><strong>Without JavaScript, and under <code>prefers-reduced-motion</code>, it is the flat locked mark.</strong> That is the authored rendering rather than a degraded copy of one: the source SVG stays in the DOM and keeps the layout box, and CSS hides it with <code>visibility: hidden</code> only once the layers stand over it. Every keyframe rests at 0, so the upgrade is pixel-identical to the flat mark and not a step at the antenna tips.</li>
+        <li><strong>It refuses anything but the locked partition.</strong> No child <code>&lt;svg&gt;</code>, a polygon count other than 22, or a wing split other than 11 and 11, and the element leaves the authored mark exactly as it is. A future geometry edit ships a static mark, never half a butterfly.</li>
+        <li><strong>Perspective follows the size.</strong> <code>--mark-perspective</code> is the only style the module writes, at three times the rendered width, on upgrade and on every resize. One fixed value would hinge flat at 15px and fold the 300px mark in half.</li>
+        <li><strong>Every live copy carries <code style="overflow-wrap: anywhere;">shape-rendering="geometricPrecision"</code></strong>, not <code>crispEdges</code>. crispEdges turns anti-aliasing off, which is what kills the seams on a mark that sits still and what makes the edges of a turning wing crawl. The homepage hero poster and the copy-paste markup above both ship this way. crispEdges stays where the mark never moves: the still lockup and the downloadable asset.</li>
+        <li><strong>Sizes are the host's job.</strong> <code>.mark-display</code>, <code>.mark-art</code>, <code>.mark-nav</code> and the Card's <code>.tt-setglyph</code> set width only; the viewBox owns the ratio. Below about 32px the wings still hinge and the antennae idle is invisible.</li>
+      </ul>
     </div>
 
     <!-- Design rationale -->
@@ -782,6 +913,9 @@
           <li>No SVG blur/glow filters</li>
           <li>No AI slop aesthetics (2024-2025 generic look)</li>
           <li>No #8a8a80 as readable text — use --text-3 (#6b6b60) minimum</li>
+          <li><strong>No HUD:</strong> no dark surface, no glow, no XP or power bars. The living tabletop's play is earned in physics and feedback, never by relaxing a rule.</li>
+          <li><strong>No sound on a marketing page.</strong> Sound is reserved for the cohort loadout builder.</li>
+          <li><strong>No tiers or power numbers on people.</strong> It ranks a real person in public, and the number behind the rank cannot be verified.</li>
         </ul>
       </div>
     </div>
@@ -790,7 +924,7 @@
     <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 720px;">
       <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">The Flat-By-Default Rule</h4>
       <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem;">
-        A resting element that needs separation gets a 1px or 1.5px full border or a tint, never a shadow; shadows are state (hover, floating) or the one featured exception per page. The ghost-card pattern (border plus wide resting shadow) is prohibited. The whole shadow vocabulary:
+        A resting element that needs separation gets a 1px or 1.5px full border or a tint, never a shadow; shadows are state (hover, floating) or the one featured exception per page. The ghost-card pattern (border plus wide resting shadow) is prohibited. The living tabletop claimed an exception here once and lost it: the Card carried a printed ink offset under it at rest until 2026-09-08, and what replaced it is the rule kept rather than bent, a column with no shadow at all until a pointer arrives. The whole shadow vocabulary:
       </p>
       <ul class="ds-rules">
         <li><strong>Code ambient</strong> &mdash; 0 2px 8px rgba(28,28,26,0.04): the one resting shadow, under inline code snippets.</li>
@@ -798,6 +932,22 @@
         <li><strong>Tooltip</strong> &mdash; 0 8px 24px rgba(28,28,26,0.1): floating layers.</li>
         <li><strong>Featured glow</strong> &mdash; 0 4px 24px rgba(0,198,56,0.1): the featured pricing card; at most one per page.</li>
         <li><strong>Accent pulse</strong> &mdash; a ring keyframed from rgba(226,108,69,0.3) to transparent: the CTA heartbeat, 3s loop.</li>
+        <li><strong>Card sheet</strong> &mdash; 0 1px 2px rgba(28,28,26,0.05) plus 0 10px 28px rgba(28,28,26,0.08) under a sheet of --surface that fades in behind the column (<code>--card-shadow-hover</code>, Section 5). Hover and focus only; the Card prints nothing at rest, and CI fails a resting <code>box-shadow</code> on any <code>.tt-*</code> rule.</li>
+      </ul>
+    </div>
+
+    <!-- What the rejected instructor card cost, written as rules rather than as
+         a story, because a story is not something a reader can apply. -->
+    <div class="panel panel-white" style="margin-top: var(--space-lg); max-width: 720px;">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Four Rules the Trading Card Bought</h4>
+      <p style="font-size: 1.125rem; color: var(--text-2); line-height: 1.6; margin: 0 0 0.75rem;">
+        The first instructor card (Section 6, superseded 2026-09-08) was rejected on four counts at once. Each one generalises past that card, so each one is a rule here rather than a note in its record.
+      </p>
+      <ul class="ds-rules">
+        <li><strong>A photograph of a real person is not raw material for a generated treatment.</strong> Triangulating three faces into facets did not make them art direction, it made them distorted, and the person in the photograph is the one who has to live with it. Crop it, grade it, or replace it. Do not redraw it.</li>
+        <li><strong>Decoration that repeats per item becomes noise at three items.</strong> A grain tile, a shard backdrop and a foil band each read as craft on one specimen; printed three times across a row they are the loudest thing in the section and the faces are the quietest. Judge every per-item flourish at the count it will actually ship at, never on the single card.</li>
+        <li><strong>A resting drop shadow on every card is the flat-by-default rule being broken by habit.</strong> The offset was not argued for, it arrived with the genre. When a card needs separation the answer is a rule or a tint; elevation waits for a pointer.</li>
+        <li><strong>One grade for a whole set of photographs, never a correction per face.</strong> Three shots under three white balances are fixed the way a press run fixes them, by sending every plate through the same chain (<code>--photo-grade</code>, Section 5). The moment one face gets its own numbers the set stops being a set, and the next photograph has no rule to follow. CI enforces this one.</li>
       </ul>
     </div>
   </div>
@@ -950,9 +1100,13 @@
       </div>
     </div>
 
-    <!-- Team card -->
+    <!-- Team card. Superseded by the Card in Section 6. Kept as the record of
+         the treatment the Card replaced; its CSS still styles this specimen. -->
     <div class="panel panel-white" style="margin-top: var(--space-lg);">
-      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos, locked treatment) &middot; cream canvas</div>
+      <div class="panel-label">Team Card — <code>.team-card</code> (grayscale photos) &middot; cream canvas <span class="ds-wip">Superseded</span></div>
+      <p style="font-size: 1.125rem; color: var(--text-2); margin: 0.5rem 0 1rem; max-width: 70ch;">
+        The homepage instructor cards moved to the Card in Section 6. They are <code>.tt-card</code> now, and the <code>team-card</code> class survives on that article only as the career-slide hook Section 6 names. This specimen is the record of the treatment the Card replaced, and <code>.team-photo</code>, <code>.team-info</code> and <code>.team-role</code> are retained in <code>css/styles.css</code> for this specimen alone. Do not put a person on it in new work.
+      </p>
       <div style="padding: 1.5rem; background: var(--bg); border-radius: 10px;">
       <article class="team-card" style="max-width: 520px;">
         <div class="team-photo">
@@ -1022,7 +1176,7 @@
           <img class="company-logo company-logo--mindworks" src="images/mindworks.webp" alt="Mindworks" width="432" height="64" decoding="async">
         </div>
       </div>
-      <p style="margin-top: 0.75rem; font-size: 0.95rem; color: var(--text-2);">Hover a mark. Every client mark rests as one flat ink silhouette (<code>grayscale(1) brightness(0)</code> at half opacity) and reveals its real brand colour on hover, the same treatment the team photos carry. <code>grayscale()</code> alone is not black and white: it maps a navy wordmark to near ink and a coral one to pale grey, so the row reads as uneven weight. Client brand hexes live on the mark itself, never in <code>css/styles.css</code>: that palette is closed. Marks are inline SVG where the client publishes a vector and a cropped raster where none exists. Heights are set per mark against a shared cap height, never a shared box height.</p>
+      <p style="margin-top: 0.75rem; font-size: 0.95rem; color: var(--text-2);">Hover a mark. Every client mark rests as one flat ink silhouette (<code>grayscale(1) brightness(0)</code> at half opacity) and reveals its real brand colour on hover. The instructor photographs no longer work this way: they are in colour at rest through <code>--photo-grade</code> (Section 6), and the grayscale-to-colour hover survives only on the superseded team card above. <code>grayscale()</code> alone is not black and white: it maps a navy wordmark to near ink and a coral one to pale grey, so the row reads as uneven weight. Client brand hexes live on the mark itself, never in <code>css/styles.css</code>: that palette is closed. Marks are inline SVG where the client publishes a vector and a cropped raster where none exists. Heights are set per mark against a shared cap height, never a shared box height.</p>
     </div>
 
     <!-- Sticky CTA (static specimen) -->
@@ -1105,11 +1259,13 @@
       <ul class="ds-rules">
         <li><strong>Crystalline Assembly</strong> &mdash; the signature. Facets settle into the locked mark on load, symmetric outward stagger.</li>
         <li><strong>Metamorphosis Refactor</strong> &mdash; the hero signature. The crystalline caterpillar becomes the locked mark while the synced code line becomes the agentic loop; detailed below.</li>
-        <li><strong>Wing-Breathe</strong> &mdash; perpetual 2deg wing idle over 4s, starting after the assembly.</li>
+        <li><strong>Wing-Breathe:</strong> the mark's rest state, in CSS alone. Each wing layer hinges about the body axis (<code>transform-origin: 50% 50%</code>, which is x=150 in the 300-wide viewBox) and turns to <code>--breath-open</code> 34deg at 58% of <code>--breath-period</code> 4.6s on <code>--ease-calm</code>, so it opens slow and closes a touch faster. The right wing is delayed by <code>--breath-offset</code> 0.35s, the core bobs <code>--breath-bob</code> 1.5px on the same period, and the antennae idle plus and minus 2.5deg on 5.3s and 6.1s about their root at (150, 86). Every keyframe rests at 0. On a fine pointer, hover plays one wingbeat to <code>--wingbeat-open</code> 62deg over <code>--wingbeat-dur</code> 1.1s on <code>--ease-settle</code>, and the breath is delayed by exactly that duration so it picks the wing up as the beat lets go. The assembly specimen above still runs the earlier 2deg idle over 4s on its wing groups; whether the hero's rest breath converges on these numbers is open.</li>
         <li><strong>Light-Shift</strong> &mdash; a 7s brightness wave across the facets; brightness only, never a glow.</li>
         <li><strong>Hero Choreography</strong> &mdash; the hero text enters in five rise-and-fade steps.</li>
         <li><strong>Scroll Reveal</strong> &mdash; content fades and rises 16px as it enters the viewport, once.</li>
-        <li><strong>Hover Lift</strong> &mdash; interactive cards rise 3px onto a soft shadow; the only resting-to-hover depth change.</li>
+        <li><strong>Hover Lift</strong> &mdash; interactive cards rise 3px onto a soft shadow. The marketing surface's depth change; the Card's is Lift, below.</li>
+        <li><strong>Tilt:</strong> a <code>[data-tilt]</code> seat&#39;s card follows the pointer, with the edge nearest the cursor pushed away, so it reads as a card being pressed on a table rather than one leaning toward you. <code>js/tabletop.js</code> writes the rotation as <code>--tt-rx</code> and <code>--tt-ry</code> on the seat and touches nothing else; the card one level down inherits both and CSS owns the transform. The channels go on the seat because a transformed element is hit-tested against its transformed box, so a card that carried its own hover chased itself out from under a resting pointer. <code>rotateX</code> is capped at <code>--tilt-x</code> 9deg and <code>rotateY</code> at <code>--tilt-y</code> 11deg inside <code>perspective(--tilt-perspective)</code> 1400px, settling over <code>--tilt-dur</code> 220ms on <code>--ease-settle</code>. The caps are gentle and the perspective is long because the thing turning is a photograph of a face, which skews under a rotation an illustration shrugs off. Fine pointers only, never on touch, off under reduced motion, and off wherever CSS sets <code>--tilt-enabled: 0</code>, which is how the homepage team grid keeps its career slide from 1024px up.</li>
+        <li><strong>Lift:</strong> the tabletop&#39;s weight, and a CSS hover state on the seat rather than anything the module does. <code>.tt-seat[data-tilt]:hover</code> and <code>:focus-within</code> set <code>--tt-lift</code> to minus <code>--lift-height</code> 5px and fade the card&#39;s <code>::before</code> sheet of <code>--surface</code> in under <code>--card-shadow-hover</code>. Two clocks: the card rises on the transform&#39;s <code>--tilt-dur</code> 220ms, the sheet and its shadow fade on <code>--dur-base</code> 300ms. At rest there is neither sheet nor shadow, so elevation is a state and never a resting decoration. CSS owning the whole of it is what keeps the lift alive on touch, under reduced motion, and before <code>js/tabletop.js</code> loads or when it bails.</li>
         <li><strong>Accent Pulse</strong> &mdash; the one warm action per viewport carries a 3s heartbeat ring.</li>
       </ul>
     </div>
@@ -1351,6 +1507,13 @@
   document.getElementById('stackedDark').innerHTML =
     '<span class="logo-lockup logo-lockup--stacked on-dark"><span class="logo-wordmark" style="font-size:1.6rem;">Plepic</span>' + bf(56) + '</span>';
 </script>
+
+<!-- The living tabletop's two modules, which is what makes the Card in Section 6
+     and the marks in Section 8 specimens rather than pictures of themselves. Both
+     are progressive enhancement: delete these two tags and the page still renders
+     the flat locked mark and a card that lifts on hover. -->
+<script type="module" src="/js/plepic-mark.js"></script>
+<script type="module" src="/js/tabletop.js"></script>
 
 </body>
 </html>

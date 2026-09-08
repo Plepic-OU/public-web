@@ -34,6 +34,23 @@ const visibleCopy = (html: string) =>
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<style[\s\S]*?<\/style>/gi, '');
 
+// The living tabletop rules below read declarations, not file text, so a rule
+// that names a .tt-* class is returned as { selector, body }. CSS comments come
+// out first: css/styles.css explains --accent and the dark tokens in prose
+// right beside these rules, and prose must never trip a declaration check. A
+// rule body carries no braces of its own, so the flat match is enough, and
+// inside a @media block the text between the block's brace and the rule's brace
+// is that rule's own selector.
+const ttRules = (css: string) =>
+  [...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .map((m) => ({ selector: m[1].trim(), body: m[2] }))
+    .filter((rule) => rule.selector.includes('.tt-'));
+
+// Every custom property declared in the stylesheet's :root blocks.
+const rootTokens = (css: string) =>
+  new Set([...css.matchAll(/:root\s*\{([\s\S]*?)\}/g)]
+    .flatMap((block) => [...block[1].matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1])));
+
 test.describe('design guard @design-guard', () => {
   test('no side-stripe accent borders (The Flat-By-Default Rule)', () => {
     const css = read('css/styles.css');
@@ -212,5 +229,157 @@ test.describe('design guard @design-guard', () => {
       expect(tag.includes('data-demo="panel-cream"'), `design-system.html: unsanctioned .panel-cream (cream furniture is banned; only the tagged variant demo may use it):\n${tag.slice(0, 160)}`).toBe(true);
     }
     expect(tags.length, 'design-system.html: exactly one demonstrative .panel-cream specimen is sanctioned').toBe(1);
+  });
+
+  test('living tabletop: the Card spends no accent (One Accent Element)', () => {
+    // The cards carry no accent element at all. The one warm thing on a card is
+    // the butterfly's ember head, and that head is part of the locked mark,
+    // inlined as SVG, so it is geometry rather than an accent the component
+    // chose. Breaking this looks like a card that warms up as it lifts: an
+    // accent-tinted plate border or hover shadow, and the piece stops
+    // reading as printed stock and starts reading as a HUD highlight.
+    // Declarations only, never page text, because the inline mark is legitimately
+    // full of #e26c45.
+    const rules = ttRules(read('css/styles.css'));
+    expect(rules.length, 'no .tt-* rule found in css/styles.css; the Card was renamed and this guard now checks nothing').toBeGreaterThan(0);
+    const offenders = rules.filter((rule) => /--accent|#e26c45/i.test(rule.body)).map((rule) => rule.selector);
+    expect(offenders, 'these Card rules reach for the accent. The Card is ink and green only: use a token that exists, or change the rule on design-system.html first.').toEqual([]);
+  });
+
+  test('living tabletop: elevation is ink, and only ever a hover state', () => {
+    // The Card is a sheet of paper, not a piece of card stock: at rest it has
+    // no shadow at all, and hover fades one in. That is section 9's
+    // flat-by-default rule, and it is the rule the first version broke, with a
+    // hard 3px ink offset printed under every card whether or not anyone was
+    // looking at it. Two things are checked. The shadow token is ink, because a
+    // coloured shadow stops being a shadow and becomes a glow, which is the
+    // console register the canon rejects. And no .tt-* rule paints a resting
+    // box-shadow: the only place elevation may appear is behind :hover or
+    // :focus-within. Comments come out first, so a value quoted in prose never
+    // counts as a declaration.
+    const css = read('css/styles.css').replace(/\/\*[\s\S]*?\*\//g, '');
+    const token = css.match(/--card-shadow-hover\s*:([^;]+);/);
+    expect(token, 'css/styles.css must declare --card-shadow-hover; the Card reads it for its one elevated state').toBeTruthy();
+    expect(/--accent|--green|#[0-9a-f]{3,8}\b|hsla?\(/i.test(token![1]), `--card-shadow-hover is ${token![1].trim()}; elevation is ink. Use rgba() of the ink value, or change the rule on design-system.html first.`).toBe(false);
+    expect(/rgba\(\s*28\s*,\s*28\s*,\s*26/.test(token![1]), `--card-shadow-hover is ${token![1].trim()}; it must be built from the ink value 28, 28, 26.`).toBe(true);
+
+    // css, not read(...): comments are already stripped above, and a comment
+    // that mentions box-shadow is prose, not a declaration.
+    const resting = ttRules(css)
+      // An actual declaration, not the word: `transition: box-shadow …` names
+      // the property it will animate and paints nothing.
+      .filter((rule) => /(^|;)\s*box-shadow\s*:/.test(rule.body))
+      .filter((rule) => !/:hover|:focus-within/.test(rule.selector))
+      .map((rule) => rule.selector);
+    expect(resting, 'these Card rules print a shadow at rest. The card is flat until a pointer arrives; move the elevation behind :hover and :focus-within, or change The Flat-By-Default Rule on design-system.html first.').toEqual([]);
+  });
+
+  test('living tabletop: the Card never sets a dark background (The Dark Placement Rule)', () => {
+    // The page-level dark guard reads pages, so a component can walk dark back
+    // onto a light site underneath it: a dark plate behind a photograph is the
+    // obvious way to make a portrait pop, and it would ship on every page
+    // that ever places a Card without a single page changing. Same two shapes as
+    // the page guard, the token and the two literal values behind it, matched
+    // only after `background` so ink borders and ink text stay legal.
+    const rules = ttRules(read('css/styles.css'));
+    expect(rules.length, 'no .tt-* rule found in css/styles.css; the Card was renamed and this guard now checks nothing').toBeGreaterThan(0);
+    const offenders = rules
+      .filter((rule) => /background[^;{}]*var\(--dark(-surface)?\)/.test(rule.body)
+        || /background[^;{}]*#(1c1c1a|262624)/i.test(rule.body))
+      .map((rule) => rule.selector);
+    expect(offenders, 'these Card rules paint a dark surface. The public site is light on every page with no exemptions, components included. Recast this on --surface or --bg, or change the rule on design-system.html first: The Dark Placement Rule, section 3 (Neutrals).').toEqual([]);
+  });
+
+  test('living tabletop: every token the living tabletop depends on is declared in :root', () => {
+    // js/tabletop.js and js/plepic-mark.js set custom properties inline, and the
+    // transform and the breath keyframes read them back. An unresolvable var()
+    // is invalid at computed-value time, so the card would simply stop tilting
+    // and the mark would fold flat, in silence, with nothing in the console.
+    // The var() guard above catches a name CSS references and :root forgot; this
+    // one catches the mirror failure, a token deleted from :root because no rule
+    // in the stylesheet appeared to use it while a module still writes it.
+    // --tilt-x and --tilt-y earn their place here more than any other name on
+    // the list: no rule in the stylesheet writes var(--tilt-x), only
+    // js/tabletop.js reads it through getPropertyValue, so the var() guard
+    // above is blind to them by construction. Delete them from :root and every
+    // test stays green while getPropertyValue returns "", degrees() falls back
+    // to 0, and the cards quietly stop rotating.
+    const REQUIRED = [
+      '--card-shadow-hover', '--photo-grade',
+      '--tilt-x', '--tilt-y',
+      '--tilt-enabled', '--tt-lift', '--tt-rx', '--tt-ry',
+      '--mark-perspective',
+      '--breath-period', '--breath-open', '--wingbeat-dur', '--wingbeat-open',
+    ];
+    const declared = rootTokens(read('css/styles.css'));
+    const missing = REQUIRED.filter((name) => !declared.has(name));
+    expect(missing, 'these living tabletop tokens are missing from :root in css/styles.css. A module writes or a keyframe reads every one of them: declare it with its default, or take the token out of the modules and canon first.').toEqual([]);
+  });
+
+  test('living tabletop: one grade for the whole set, never a face at a time', () => {
+    // The three instructor photographs were shot in three rooms under three
+    // lights, and the Card answers that the way a press run does: one
+    // correction chain, --photo-grade, through which every plate passes. A
+    // per-person filter is the failure this direction exists to avoid, because
+    // the moment one face gets its own numbers the set stops being a set and
+    // the next photograph has no rule to follow. Per-person GEOMETRY is fine
+    // and expected: the sources were shot at three distances, so each crop is
+    // its own transform. Colour is what may not vary.
+    const perPerson = ttRules(read('css/styles.css'))
+      .filter((rule) => /\[data-instructor=/.test(rule.selector))
+      .filter((rule) => /filter\s*:|saturate\(|sepia\(|grayscale\(|contrast\(|brightness\(|hue-rotate\(/.test(rule.body))
+      .map((rule) => rule.selector);
+    expect(perPerson, 'these rules grade one instructor differently from the others. The grade is --photo-grade, applied once to every portrait; correct the grade, not the face.').toEqual([]);
+  });
+
+  test('living tabletop: js/plepic-mark.js carries no copy of the mark geometry', () => {
+    // <plepic-mark> enhances the SVG the page inlines and never renders one of
+    // its own, which is what keeps a single copy of the locked butterfly on the
+    // site: the copy the slot-6 guard above checks. A module holding its own
+    // coordinates would pass every page-level geometry test and still paint a
+    // different butterfly the moment JavaScript ran, and no visual baseline
+    // would flag it, because both drawings look like a butterfly. The pairs are
+    // read out of the inline mark rather than typed here, so this guard cannot
+    // drift from the geometry either.
+    const module = read('js/plepic-mark.js');
+    expect(module.includes('points='), 'js/plepic-mark.js names a points attribute. The module must clone nodes out of the inline SVG: keep the coordinates in the page, comments included, or change the contract in docs/specs first.').toBe(false);
+    // Only real coordinate PAIRS, and only from the butterfly. Splitting every
+    // points attribute on the page into bare tokens put "0", "1" and "20" in
+    // the needle list, and every one of them appears in the module as a plain
+    // number, so the guard could accuse an editor of copying the mark over a
+    // loop bound. A pair carries a comma, which no number in the module does.
+    const pairs = [...new Set([...read('index.html').matchAll(/points="([^"]+)"/g)]
+      .flatMap((m) => m[1].trim().split(/\s+/))
+      .filter((token) => /^\d+,\d+$/.test(token)))];
+    expect(pairs.length, 'index.html no longer inlines the mark, so this guard has no geometry left to compare against').toBeGreaterThan(20);
+    const copied = pairs.filter((pair) => module.includes(pair));
+    expect(copied, 'js/plepic-mark.js repeats coordinates from the locked mark. Read them from the DOM instead; do not keep a second copy, not even in prose.').toEqual([]);
+  });
+
+  test('living tabletop: an embedded image carries no colour of its own', () => {
+    // A hex inside a data URI is how a texture smuggles a colour past the
+    // closed palette: the off-canon guard above reads the stylesheet as text,
+    // and a percent-encoded %23 is not a # to it, so a warm tile would ship
+    // unseen. All the spellings are checked here for that reason.
+    // The paper grain that first prompted this guard went with the trading
+    // card, so there may legitimately be no data: URI in the stylesheet at all.
+    // The rule survives the tile: an embedded image is still the one way a
+    // colour reaches the page without passing the palette guard, because a
+    // percent-encoded %23 is not a # to a text scan.
+    const uris = [...read('css/styles.css').matchAll(/url\("(data:[^"]*)"\)/g)].map((m) => m[1]);
+    for (const uri of uris) {
+      // Three spellings, because banning only #rrggbb leaves two open doors:
+      // #rgb is a colour too, and so is every CSS named colour, which needs no
+      // punctuation at all to reach a fill or a flood-color.
+      expect(uri.match(/(#|%23)[0-9a-f]{3,8}\b/gi) || [], 'a data: URI in css/styles.css carries a colour. Desaturate it in the filter as the grain does, or put the tint on a canon token and change design-system.html first.').toEqual([]);
+      expect(uri.match(/(fill|stroke|flood-color|stop-color|lighting-color)\s*=?\s*['"]?[a-z]{3,}/gi) || [], 'a data: URI in css/styles.css names a paint. A tile that paints is a tile that can tint; the grain must get its value from the filter alone.').toEqual([]);
+      // The desaturation this test is named after was never actually asserted.
+      // A tile whose feColorMatrix is deleted still contains no hex, so it
+      // passed every check above while multiplying full-saturation fractal
+      // noise over the card.
+      if (/feTurbulence/i.test(uri)) {
+        expect(/feColorMatrix[^>]*type=['"]?saturate['"]?[^>]*values=['"]?0/i.test(uri), 'the fractal-noise tile in css/styles.css is not desaturated. feTurbulence emits full-colour noise; without feColorMatrix type="saturate" values="0" the grain tints every card it multiplies over.').toBe(true);
+      }
+    }
   });
 });
