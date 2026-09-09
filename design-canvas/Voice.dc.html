@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .slogan { font-family: var(--font-display); font-style: italic;
+              font-weight: 500; font-size: 1.75rem; line-height: normal;
+              color: var(--green-brand); margin: 0 0 0.6rem; }
+    .decoder { display: flex; align-items: baseline; gap: 4px;
+               font-family: var(--font-display); font-weight: 700;
+               font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.01em;
+               margin: 0 0 6px; }
+    .decoder .lit { color: var(--text); }
+    .decoder .dim { color: var(--text-3); font-weight: 400; }
+    .decoder .g { color: var(--green-brand); }
+    .decode-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-2);
+                   margin: 0; max-width: 56ch; }
+    .slogan-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                   margin: 14px 0 0; max-width: 60ch; }
+    .langs { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .lang .tag { font-family: var(--font-mono); font-size: 9.5px;
+                 letter-spacing: 0.16em; text-transform: uppercase;
+                 color: var(--text-3); margin: 0 0 8px; }
+    .lang .line { font-family: var(--font-display); font-weight: 700;
+                  font-size: 1.5rem; line-height: 1.2; color: var(--text);
+                  margin: 0 0 8px; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .say h3, .dont h3 { font-family: var(--font-mono); font-size: 9.5px;
+                        letter-spacing: 0.16em; text-transform: uppercase;
+                        margin: 0 0 12px; font-weight: 400; }
+    .say h3 { color: var(--green-brand); }
+    .dont h3 { color: var(--accent); }
+    .ex { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+          line-height: 1.2; margin: 0 0 8px; color: var(--text); }
+    .ex em { font-style: normal; color: var(--green-brand); }
+    .ex-all { color: var(--green-brand); }
+    .why { font-size: 0.88rem; line-height: 1.5; color: var(--text-2); margin: 0; }
+    .rules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 40px; }
+    .rule-row { display: grid; grid-template-columns: 150px 1fr; gap: 16px;
+                padding: 12px 0; border-top: 1px solid var(--border); }
+    .rule-row b { font-family: var(--font-display); font-weight: 700;
+                  font-size: 0.95rem; color: var(--text); }
+    .rule-row span { font-size: 0.88rem; line-height: 1.5; color: var(--text-2); }
+    .never { background: var(--bg-alt); padding: 22px 26px; }
+    .never p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2);
+               margin: 0 0 10px; }
+    .never ul { margin: 0; padding-left: 18px; }
+    .never li { font-size: 0.88rem; line-height: 1.6; color: var(--text-2); }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Voice</h1>
+    <p class="lede">The words are as fixed as the greens. A tagline that decodes the name, two positioning lines that do not translate each other, and one headline pattern. Everything else is written fresh, against the rules at the bottom.</p>
+
+    <h2 class="sec">The tagline, and why it is those four words</h2>
+    <p class="sec-note">It is the name's decoder ring. PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half of the name. That is the whole reason it cannot be reworded.</p>
+    <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
+    <p class="decode-note">"Curious play" names the <span class="mono" style="font-size:0.95em">PL</span>. "Epic growth" names the <span class="mono" style="font-size:0.95em">EPIC</span>. Change either half and the name stops explaining itself.</p>
+    <p class="slogan" style="margin-top: 26px">Curious play. Epic growth.</p>
+    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when it is given room. In the footer it sits at 0.75rem in the quieter ink and warms to green on hover, which is the only easter egg on the site. It is a tagline, not a heading, so it is the one line allowed to be green all the way through.</p>
+
+    <hr class="rule">
+    <h2 class="sec">Two positioning lines, not a translation</h2>
+    <p class="sec-note">The wordplay does not survive Estonian, so Estonian does not attempt it. The two lines are complementary: one names the category, the other names the outcome.</p>
+    <div class="langs">
+      <div class="lang">
+        <p class="tag">EN</p>
+        <p class="line">Agentic coding for dev teams</p>
+        <p class="why">Names the category, because an English reader is choosing between training offers and needs to know which shelf this is on.</p>
+      </div>
+      <div class="lang">
+        <p class="tag">ET</p>
+        <p class="line">Tulemusp&otilde;hine digimuutus</p>
+        <p class="why">Names the outcome, because an Estonian buyer is justifying a spend. Never a translation of the English line, and never the tagline.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">The headline pattern</h2>
+    <p class="sec-note">A heading is ink, and at most one phrase inside it carries green. The green phrase is the claim, not the decoration.</p>
+    <div class="pair">
+      <div class="say">
+        <h3>This</h3>
+        <p class="ex"><em>Practitioners</em>, not trainers</p>
+        <p class="why">Green marks the word the page is about; ink carries the qualification. Take the green away and the heading still reads, which is the test.</p>
+      </div>
+      <div class="dont">
+        <h3>Never this</h3>
+        <p class="ex ex-all">Practitioners, not trainers</p>
+        <p class="why">A fully green heading spends the brand colour on a whole sentence, so nothing inside it is emphasised and the next green phrase on the page has nothing left to earn.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Rules that travel</h2>
+    <p class="sec-note">They hold in a heading, a slide, an email and a proposal. None of them is a house style; each one prevents a specific failure.</p>
+    <div class="rules">
+      <div class="rule-row"><b>No em-dashes</b><span>Not in anything a customer reads. Commas, colons and full stops carry the same joins and survive every mail client.</span></div>
+      <div class="rule-row"><b>Cohort, not squad</b><span>The word changed on 2026-08-31. Older records keep the old one; nothing new does.</span></div>
+      <div class="rule-row"><b>One green phrase</b><span>Per heading, and never the whole of it. Green is a claim, not a colour scheme.</span></div>
+      <div class="rule-row"><b>Sentence, then proof</b><span>The supporting line is set in the quieter ink. If it is not quieter, the heading is not carrying.</span></div>
+    </div>
+
+    <hr class="rule">
+    <div class="never">
+      <p><b>What never enters this canvas.</b> Volatile values live in the page that states them, so one edit changes one place and the claims gate can see it. If you need one, read it off the live page, never off a design file.</p>
+      <ul>
+        <li>Prices, discounts and any figure with a currency on it</li>
+        <li>Cohort dates, deadlines and anything counted in weeks from today</li>
+        <li>Seat counts, developers trained, ratings, any number that grows</li>
+        <li>Names of people who have not signed</li>
+      </ul>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>

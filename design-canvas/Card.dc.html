@@ -55,8 +55,18 @@
       --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-calm: ease-in-out;
       --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
     body { margin: 0; background: var(--bg); color: var(--text);
            font-family: var(--font-body); font-weight: 400;
            -webkit-font-smoothing: antialiased; }

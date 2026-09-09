@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .trk { display: grid; grid-template-columns: 210px 1fr 300px;
+           align-items: center; gap: 24px; padding: 14px 0;
+           border-top: 1px solid var(--border); }
+    .trk-meta { display: flex; flex-direction: column; }
+    .trk-tok { font-size: 11px; color: var(--text); letter-spacing: 0.02em; }
+    .trk-val { font-size: 10.5px; color: var(--text-3); letter-spacing: 0.02em;
+               margin-top: 2px; }
+    .trk-rail { position: relative; height: 14px;
+                border-bottom: 1px solid var(--border); }
+    .trk-dot { position: absolute; bottom: -4px; left: 0; width: 14px; height: 14px;
+               background: var(--green-brand);
+               animation-duration: 2400ms; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+               animation-iteration-count: infinite; }
+    .trk-note { font-size: 0.85rem; line-height: 1.45; color: var(--text-2); margin: 0; }
+    .eases { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .ease h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+               margin: 0 0 2px; }
+    .ease .mono { font-size: 10.5px; color: var(--text-3); }
+    .ease p { font-size: 0.85rem; line-height: 1.45; color: var(--text-2);
+              margin: 8px 0 0; }
+    .ease .trk-rail { margin-top: 14px; }
+    .ease .trk-dot { animation-name: run-ease; }
+    @keyframes run-ease { 0% { left: 0; }
+      29.1667%, 100% { left: calc(100% - 14px); } }
+    .rev { display: flex; gap: 16px; }
+    .rev span { display: block; width: 132px; height: 62px; background: var(--bg-alt);
+                border-top: 1.5px solid var(--text);
+                animation: rev-loop 3s var(--ease-settle) infinite; }
+    .rev span:nth-child(2) { animation-delay: 100ms; }
+    .rev span:nth-child(3) { animation-delay: 200ms; }
+    @keyframes rev-loop {
+      0% { opacity: 0; transform: translateY(20px); }
+      20%, 88% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+    .marks { display: flex; align-items: flex-end; gap: 64px; }
+    .mk { position: relative; display: block; aspect-ratio: 300 / 280;
+          perspective: calc(160px * 3); }
+    .mk-layer { position: absolute; inset: 0; width: 100%; height: 100%;
+                transform-origin: 50% 50%; }
+    .mk .mk-left  { animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite; }
+    .mk .mk-right { animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite; }
+    .mk .mk-core  { animation: mark-bob var(--breath-period) var(--ease-calm) infinite; }
+    .mk--beat:hover .mk-left  { animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite,
+                                           mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) infinite; }
+    .mk--beat:hover .mk-right { animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite,
+                                           mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) infinite; }
+    @keyframes mark-breath-left {
+      0%, 100% { transform: rotateY(0deg); }
+      58% { transform: rotateY(var(--breath-open)); }
+    }
+    @keyframes mark-breath-right {
+      0%, 100% { transform: rotateY(0deg); }
+      58% { transform: rotateY(calc(-1 * var(--breath-open))); }
+    }
+    @keyframes mark-bob {
+      0%, 100% { transform: translateY(0); }
+      58% { transform: translateY(calc(-1 * var(--breath-bob))); }
+    }
+    @keyframes mark-wingbeat-left {
+      0%, 100% { transform: rotateY(0deg); }
+      45% { transform: rotateY(var(--wingbeat-open)); }
+    }
+    @keyframes mark-wingbeat-right {
+      0%, 100% { transform: rotateY(0deg); }
+      45% { transform: rotateY(calc(-1 * var(--wingbeat-open))); }
+    }
+    .lift { display: flex; gap: 40px; align-items: flex-start; }
+    .liftbox { width: 200px; height: 120px; background: var(--bg-alt);
+               border-top: 1.5px solid var(--text); position: relative;
+               transition: transform var(--tilt-dur) var(--ease-settle); }
+    .liftbox::before { content: ""; position: absolute; z-index: -1; inset: 0;
+                       background: var(--surface); opacity: 0;
+                       transition: opacity var(--dur-base) var(--ease-settle),
+                                   box-shadow var(--dur-base) var(--ease-settle); }
+    .liftseat:hover .liftbox { transform: translateY(calc(-1 * var(--lift-height))); }
+    .liftseat:hover .liftbox::before { opacity: 1; box-shadow: var(--card-shadow-hover); }
+    .stop { background: var(--bg-alt); padding: 22px 26px; }
+    .stop p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    @keyframes run-dur-fast { 0% { left: 0; } 6.2500%, 100% { left: calc(100% - 14px); } }
+    @keyframes run-dur-base { 0% { left: 0; } 12.5000%, 100% { left: calc(100% - 14px); } }
+    @keyframes run-dur-settle { 0% { left: 0; } 22.9167%, 100% { left: calc(100% - 14px); } }
+    @keyframes run-dur-entrance { 0% { left: 0; } 29.1667%, 100% { left: calc(100% - 14px); } }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Motion</h1>
+    <p class="lede">Everything on this artboard is running. Weight, lift, tilt and breath are the whole register, and each one is a duration and an ease, never a new colour. Hover where it says to.</p>
+
+    <h2 class="sec">Four durations</h2>
+    <p class="sec-note">All four dots restart together every 2.4 seconds, so what you are comparing is how soon each one arrives.</p>
+      <div class="trk">
+        <div class="trk-meta"><span class="trk-tok mono">--dur-fast</span><span class="trk-val mono">150ms</span></div>
+        <div class="trk-rail"><span class="trk-dot" style="animation-name: run-dur-fast"></span></div>
+        <p class="trk-note">State response: a colour, an opacity, a link waking up</p>
+      </div>
+      <div class="trk">
+        <div class="trk-meta"><span class="trk-tok mono">--dur-base</span><span class="trk-val mono">300ms</span></div>
+        <div class="trk-rail"><span class="trk-dot" style="animation-name: run-dur-base"></span></div>
+        <p class="trk-note">The default. A hover lift, a border appearing</p>
+      </div>
+      <div class="trk">
+        <div class="trk-meta"><span class="trk-tok mono">--dur-settle</span><span class="trk-val mono">550ms</span></div>
+        <div class="trk-rail"><span class="trk-dot" style="animation-name: run-dur-settle"></span></div>
+        <p class="trk-note">Something assembling: the crystalline hero, a wing</p>
+      </div>
+      <div class="trk">
+        <div class="trk-meta"><span class="trk-tok mono">--dur-entrance</span><span class="trk-val mono">700ms</span></div>
+        <div class="trk-rail"><span class="trk-dot" style="animation-name: run-dur-entrance"></span></div>
+        <p class="trk-note">The hero's own arrival, once per page</p>
+      </div>
+
+    <hr class="rule">
+    <h2 class="sec">Two eases, and no third</h2>
+    <p class="sec-note">One for anything that arrives, one for anything that never stops. A linear ease is a bug.</p>
+    <div class="eases">
+      <div class="ease">
+        <h3>Arriving</h3><span class="mono">--ease-settle &middot; cubic-bezier(0.16, 1, 0.3, 1)</span>
+        <div class="trk-rail"><span class="trk-dot"></span></div>
+        <p>Fast off the mark, long settle. Every hover, lift, reveal and entrance uses it. It is why the site feels like it is putting things down rather than moving them.</p>
+      </div>
+      <div class="ease">
+        <h3>Idling</h3><span class="mono">--ease-calm &middot; ease-in-out</span>
+        <div class="trk-rail"><span class="trk-dot" style="animation-timing-function: ease-in-out"></span></div>
+        <p>Symmetrical, so a loop has no beginning. Only perpetual motion uses it: the breath, the bob, the antennae.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">The reveal</h2>
+    <p class="sec-note">Twenty pixels up and into view over 600ms, staggered 100ms per sibling. Content is visible by default and only hidden once the script has proved it can run, so a failed script shows the page rather than a blank one.</p>
+    <div class="rev"><span></span><span></span><span></span></div>
+
+    <hr class="rule">
+    <h2 class="sec">The breath, and the beat</h2>
+    <p class="sec-note">The mark is hinged into three layers: two wings and a core. At rest the wings open to 34deg over 4.6s, a third of a second out of phase, while the core bobs 1.5px. Hover the right-hand one.</p>
+    <div class="marks">
+      <div>
+      <span class="mk" style="width: 160px"><svg class="mk-layer mk-left" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></svg><svg class="mk-layer mk-right" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></svg><svg class="mk-layer mk-core" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
+        <p class="trk-note" style="margin-top:14px">At rest. Breath only.</p>
+      </div>
+      <div>
+      <span class="mk mk--beat" style="width: 160px"><svg class="mk-layer mk-left" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></svg><svg class="mk-layer mk-right" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/></svg><svg class="mk-layer mk-core" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
+        <p class="trk-note" style="margin-top:14px">Hover me. The beat opens to 62deg in 1.1s and always wins: it is the last animation named on the layer, so it takes the transform whatever the breath is doing.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Weight and lift</h2>
+    <p class="sec-note">A card rises 5px and prints a sheet beneath it, in 300ms. On a fine pointer it also tilts up to 9deg and 11deg toward the cursor. Hover it.</p>
+    <div class="lift">
+      <div class="liftseat"><div class="liftbox"></div>
+        <p class="trk-note" style="margin-top:14px">Rest, then lift. The shadow belongs to the sheet, never to the card.</p></div>
+    </div>
+
+    <hr class="rule">
+    <div class="stop">
+      <p><b>Reduced motion stops all of it.</b> Every loop, every reveal, every tilt. What it never does is hide something: a reveal that cannot animate shows its content immediately, and the hero holds its from-state fully legible. Motion is the last thing added and the first thing taken away.</p>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .hgrid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 2rem;
+             align-items: end; padding: 26px 0 10px; }
+    .htext { max-width: 580px; }
+    .hh1 { font-family: var(--font-display); font-weight: 700; font-size: 4.8rem;
+           line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 2rem;
+           color: var(--text); }
+    .hh1 .highlight { color: var(--green-brand); }
+    .hdesc { font-size: var(--fs-body-lg); line-height: 1.6; color: var(--text-2);
+             max-width: 480px; margin: 0 0 2.5rem; }
+    .hdesc strong { color: var(--text); font-weight: 600; }
+    .hctas { display: flex; align-items: center; gap: 1.5rem; }
+    .hbtn { display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.5rem; font-family: var(--font-body); font-weight: 600;
+            font-size: 1.05rem; padding: 0.7rem 1.4rem; border-radius: 10px;
+            border: 1.5px solid transparent; text-decoration: none; }
+    .hbtn--p { background: var(--accent); color: var(--text); }
+    .hbtn--t { color: var(--text); text-decoration: underline;
+               text-underline-offset: 4px; font-weight: 600; }
+    .hqual { margin: 0.5rem 0 0; font-size: 0.9rem; line-height: normal;
+             color: var(--text-3); letter-spacing: 0.01em; }
+    .slot { display: inline-block; padding: 0.2rem 0.6rem;
+            outline: 1px dashed var(--accent); outline-offset: -1px;
+            font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em;
+            color: var(--accent); }
+    .hvis { display: flex; flex-direction: column; align-items: center;
+            justify-content: flex-end; align-self: end; }
+    .hstage { width: 100%; aspect-ratio: 22 / 15; background: var(--bg-alt);
+              display: flex; align-items: center; justify-content: center;
+              text-align: center; padding: 20px; }
+    .hstage p { font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.7;
+                letter-spacing: 0.04em; color: var(--text-3); margin: 0; }
+    .hcode { font-family: var(--font-mono); font-size: 0.75rem; line-height: normal;
+             color: var(--green-dark); margin: 0.5rem 0 0; white-space: nowrap; }
+    .htrust { display: flex; align-items: center; gap: 20px; margin-top: 30px;
+              border-top: 1px solid var(--border); padding-top: 16px; }
+    .htrust-label { font-family: var(--font-mono); font-size: 9.5px;
+                    letter-spacing: 0.16em; text-transform: uppercase;
+                    color: var(--text-3); flex: none; }
+    .htrust-line { flex: 1; border-top: 1px solid var(--border); }
+    .anno { display: grid; grid-template-columns: 150px 1fr; gap: 16px;
+            padding: 11px 0; border-top: 1px solid var(--border); }
+    .anno b { font-family: var(--font-mono); font-size: 11px; font-weight: 400;
+              color: var(--text); letter-spacing: 0.02em; }
+    .anno span { font-size: 0.88rem; line-height: 1.5; color: var(--text-2); }
+    .cant { background: var(--bg-alt); padding: 22px 26px; }
+    .cant p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0 0 10px; }
+    .cant p:last-child { margin: 0; }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Hero</h1>
+    <p class="lede">One composition, used on every page that has a hero. It is a wireframe here on purpose: the real hero carries four values that change, and a screenshot would hide them in pixels where nothing can check them. Dashed slots are those values.</p>
+
+    <div class="hgrid">
+      <div class="htext">
+        <p style="margin: 0 0 0.75rem"><span class="slot">cohort state &middot; engineers trained &middot; rating</span></p>
+        <h2 class="hh1"><span class="highlight">Practitioners</span>,<br>not trainers</h2>
+        <p class="hdesc">The engineers who teach our cohorts ship production code every week. Every pattern we teach ran on a real codebase before it reached a slide.<br><span class="slot" style="margin-top:0.5rem">price &middot; subsidy share</span></p>
+        <div class="hctas">
+          <a class="hbtn hbtn--p" href="#">Talk to Kaido</a>
+          <a class="hbtn hbtn--t" href="#">View the full program &rarr;</a>
+        </div>
+        <p class="hqual"><span class="slot">experience floor &middot; cohort size</span></p>
+      </div>
+      <div class="hvis">
+        <div class="hstage"><p>the crystalline mark<br>440px stage<br>WebGL</p></div>
+        <p class="hcode">{ explore &rarr; act &rarr; verify }|</p>
+      </div>
+    </div>
+    <div class="htrust">
+      <span class="htrust-label">Trusted by</span><span class="htrust-line"></span>
+      <span class="htrust-label" style="letter-spacing:0.04em; text-transform:none">client wordmarks, one row, ink at rest</span>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">What the composition fixes</h2>
+    <p class="sec-note">Every number here is in the stylesheet. The hero is the one place the type scale is overridden, so these are the values to check first when it looks wrong.</p>
+    <div class="anno"><b>grid</b><span>1.4fr / 0.6fr, 2rem gap, aligned to the BOTTOM. The headline and the butterfly share a baseline, which is what makes the two columns read as one object.</span></div>
+    <div class="anno"><b>h1</b><span>clamp(3rem, 2.5rem + 3.5vw, 4.8rem) at -0.025em and 1.05 line height. Its own ramp, not the page's --fs-h2. The break after the comma is a hard rule in the markup, never a wrap.</span></div>
+    <div class="anno"><b>text track</b><span>580px maximum, and the supporting sentence 480px. Below 1015px the headline ramps rather than sitting at its cap, because the stage holds a hard 440px and the two would collide.</span></div>
+    <div class="anno"><b>stage</b><span>440px, hidden entirely below 900px. The page loses the butterfly rather than shrinking it.</span></div>
+    <div class="anno"><b>entrance</b><span>A settle, not an arrival: content starts 6px low and fully legible, and rises over 600ms once the fonts have landed. No load-bearing element ever starts invisible.</span></div>
+
+    <hr class="rule">
+    <div class="cant">
+      <p><b>The butterfly itself does not travel.</b> The hero mark is a WebGL metamorphosis, about 69 KB of module, with a rest pose the animation lands on byte-exact and a still poster behind it for anything that cannot run WebGL. It cannot be an artboard and should not be redrawn as one.</p>
+      <p>What lives here is the composition and the rules around it. The geometry and the choreography live in <span class="mono" style="font-size:0.95em">js/crystalline-metamorphosis.js</span>, and that module is the only thing that may change them.</p>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>

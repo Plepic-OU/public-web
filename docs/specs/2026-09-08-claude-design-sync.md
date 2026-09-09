@@ -12,17 +12,20 @@ The audience is every Plepic instructor, not only the two people who touch the r
 Full consolidation is a destination, not a step. A stylesheet generated from a design tool must still pass the design guard's 19 source assertions, the claims gate, the cache-bust step and the visual baselines. None of that machinery can read a canvas today, and none of it should be weakened so that it can. So the canvas earns the authoring role in stages, and each stage has an exit test that is not "it feels ready".
 | Stage | Direction | Exit test |
 | --- | --- | --- |
-| **1. Mirror** (built 2026-09-09) | Site to canvas, generated | The canvas shows the site's real values, and a token change is one command away from being reflected |
+| **1. Mirror** (built 2026-09-09) | Site to canvas, generated | The canvas covers everything visual, shows the site's real values, and a token change is one command away from being reflected |
 | **2. Live with it** | Still site to canvas | Nobody reaches for `design-system.html` or the stylesheet to answer a design question. If they do, the canvas is missing something, and the answer is to widen the canvas, not to advance the stage |
 | **3. Authoring moves** | Canvas to site, generated | A generated `css/styles.css` passes the full gate set unedited, twice running |
 Stage 3 is where the reverse generator has to exist, and where its output has to be trusted by CI rather than by a person reading a diff. It is the expensive stage. Stages 1 and 2 cost almost nothing and settle whether it is worth paying for.
 ## 3. Stage 1, as built
-`design-canvas/build.py` generates four artboards from `css/styles.css` and `index.html`, and `seed-canvas.mjs` seeds them into a published canvas.
-- **Foundations.** Brand greens, ground, ink, each swatch showing its token, its resolved value and the role it holds. Plus the three rules that travel to any medium: headings are ink, the mark is locked, nothing shines.
-- **Type.** The three faces and the job each one holds, then the scale from `--fs-h2` down to the 9.5px mono eyebrow.
-- **The card.** The three instructor cards at rest, rest and hover side by side, and the four things that make the card what it is.
-- **The mark.** The butterfly at 300, 120, 30 and 15px, with the breath, the wingbeat and the three-layer enhancement stated.
-No value is typed into an artboard by hand. `build.py` reads every token out of the `:root` block, lifts each portrait transform out of its rule, and extracts the mark's SVG verbatim from `index.html`, refusing to build if it does not find 22 facets. Change the site, run `python3 build.py`, re-seed, republish. If the canvas ever disagrees with the stylesheet, the stylesheet is right and the canvas is stale; the canvas says so on a sticky note.
+`design-canvas/build.py` generates ten artboards from `css/styles.css`, `index.html` and `design-system.html`, and `seed-canvas.mjs` seeds them into a published canvas on three pages.
+| Page | Artboards | What it settles |
+| --- | --- | --- |
+| **Identity** | Foundations, Type, Voice, Logo | The palette and the neutral roles, the three faces and the scale, the tagline and the headline pattern, the lockup and its three grounds |
+| **System** | Layout, Motion, Components | The space scale and the container, the durations and eases running live, the buttons, badges, panel, row and nav |
+| **Objects** | The mark, The card, Hero | The construction spec and the facet law, the graded editorial column at rest and lifted, the hero composition |
+No value is typed into an artboard by hand. `build.py` reads every token out of the `:root` block, lifts each portrait crop and every animation keyframe out of its own rule, extracts both inlinings of the mark verbatim, and derives the facet slot table from the geometry rather than transcribing it. It refuses to build unless it finds 22 facets, an 11/11 hinge partition and exactly two swapped facet slots, so a change to the mark stops the build instead of quietly producing a canvas that disagrees with the page.
+Motion and Components are live: the duration dots run, the mark breathes, and hovering a button, a card or the right-hand butterfly does on the canvas what it does on the site.
+Change the site, run `python3 build.py`, re-seed, republish. If the canvas ever disagrees with the stylesheet, the stylesheet is right and the canvas is stale; the canvas says so on a sticky note.
 Live at https://claude.ai/code/artifact/1d34b86f-8fa6-40ad-9631-fd3b6d3865ac
 ## 4. What public cost
 A Claude Design canvas that declares PNG/PDF export can be shared inside the org only. One without export can be shared by public link. Public was the decision, so export is not declared, and the canvas's Export buttons do nothing. That is the trade, and it is the right way round: a design system nobody outside the repo can open is the problem being solved.
@@ -34,8 +37,8 @@ Consolidation resolves it in the right direction: `/design-system` should reach 
 ## 6. What never moves, whatever the stylesheet does
 - **The gates.** The CSS that ships is the CSS the design guard, the claims gate and the visual baselines see. A canvas is a source, never a gate.
 - **The mark's geometry.** Twenty-two facets, one body, two antennae, one ember. `js/plepic-mark.js` carries no coordinate and a guard fails if one appears. Anything generated inherits that rule; nothing hand-draws a polygon, in either direction.
-- **Copy.** No artboard carries a price, a date, a cohort claim or a headline sentence. `scripts/check-claims.mjs` cannot see a canvas, and a claim that escapes into one escapes the gate that exists to catch it. The artboards on the canvas today carry none.
-- **Pages.** The hero, `js/crystalline-metamorphosis.js` and every `.html` file stay hand-authored. The system covers components, not pages.
+- **Volatile values.** The canvas carries the words that never change: the tagline, the two positioning lines, the headline pattern. It carries no price, no date, no seat count and no rating, because `scripts/check-claims.mjs` cannot see a canvas and a claim that escapes into one escapes the gate that exists to catch it. The Voice artboard lists what stays in the page instead, and the Hero artboard is a wireframe rather than a screenshot for exactly this reason: the live hero carries four such values, and a screenshot would hide them in pixels.
+- **Pages.** Every `.html` file stays hand-authored, and so does `js/crystalline-metamorphosis.js`. The Hero artboard documents the composition and the rules around it; the WebGL mark's geometry and choreography live in that module and cannot become an artboard.
 ## 7. Drift, while two artefacts exist
 Stages 1 and 2 have two artefacts and one truth. `build.py` is deterministic, so the cheap mechanism is a guard that regenerates the artboards and fails on a diff, with `python3 build.py` as the fix. That catches a token change landing in the stylesheet without reaching the canvas.
 It does not catch a stale *publish*: seeding and publishing are manual, so the guard can only prove the working files are current. That is still the failure worth catching, because a wrong value reaches the canvas through the working files or not at all.

@@ -1,4 +1,18 @@
 {
+  "pages": [
+    {
+      "id": "identity",
+      "name": "Identity"
+    },
+    {
+      "id": "system",
+      "name": "System"
+    },
+    {
+      "id": "objects",
+      "name": "Objects"
+    }
+  ],
   "artboards": [
     {
       "file": "Main.dc.html",
@@ -7,7 +21,8 @@
       "w": 1120,
       "h": 1490,
       "title": "Foundations",
-      "print": "flow"
+      "print": "flow",
+      "page": "identity"
     },
     {
       "file": "Type.dc.html",
@@ -16,37 +31,113 @@
       "w": 1120,
       "h": 1450,
       "title": "Type",
-      "print": "flow"
+      "print": "flow",
+      "page": "identity"
     },
     {
-      "file": "Card.dc.html",
-      "x": 0,
-      "y": 1740,
+      "file": "Voice.dc.html",
+      "x": 2480,
+      "y": 0,
       "w": 1120,
-      "h": 1760,
-      "title": "The card",
-      "print": "flow"
+      "h": 1880,
+      "title": "Voice",
+      "print": "flow",
+      "page": "identity"
+    },
+    {
+      "file": "Logo.dc.html",
+      "x": 0,
+      "y": 2040,
+      "w": 1120,
+      "h": 1210,
+      "title": "Logo",
+      "print": "flow",
+      "page": "identity"
+    },
+    {
+      "file": "Layout.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1120,
+      "h": 1710,
+      "title": "Layout",
+      "print": "flow",
+      "page": "system"
+    },
+    {
+      "file": "Motion.dc.html",
+      "x": 1240,
+      "y": 0,
+      "w": 1120,
+      "h": 2150,
+      "title": "Motion",
+      "print": "flow",
+      "page": "system",
+      "is_interactive": true
+    },
+    {
+      "file": "Components.dc.html",
+      "x": 2480,
+      "y": 0,
+      "w": 1120,
+      "h": 1860,
+      "title": "Components",
+      "print": "flow",
+      "page": "system",
+      "is_interactive": true
     },
     {
       "file": "Mark.dc.html",
-      "x": 1240,
-      "y": 1740,
+      "x": 0,
+      "y": 0,
       "w": 1120,
-      "h": 960,
+      "h": 2130,
       "title": "The mark",
-      "print": "flow"
+      "print": "flow",
+      "page": "objects"
+    },
+    {
+      "file": "Card.dc.html",
+      "x": 1240,
+      "y": 0,
+      "w": 1120,
+      "h": 1760,
+      "title": "The card",
+      "print": "flow",
+      "page": "objects",
+      "is_interactive": true
+    },
+    {
+      "file": "Hero.dc.html",
+      "x": 2480,
+      "y": 0,
+      "w": 1120,
+      "h": 1725,
+      "title": "Hero",
+      "print": "flow",
+      "page": "objects"
     }
   ],
   "annotations": [
     {
       "id": "source-of-truth",
       "x": 0,
-      "y": -180,
-      "w": 820,
-      "text": "Generated from css/styles.css and index.html by design-canvas/build.py. Change the site, re-run the script, re-seed. If a value here disagrees with the stylesheet, the stylesheet is right and this canvas is stale."
+      "y": -190,
+      "w": 860,
+      "page": "identity",
+      "text": "Generated from css/styles.css and index.html by design-canvas/build.py. Change the site, re-run the script, re-seed. If a value here disagrees with the stylesheet, the stylesheet is right and this canvas is stale. No artboard carries a price, a date or any other value that moves; the Voice artboard lists what stays in the page instead."
+    },
+    {
+      "id": "motion-live",
+      "x": 1240,
+      "y": -140,
+      "w": 420,
+      "page": "system",
+      "text": "Motion and Components are live. Hover the buttons, the card and the right-hand butterfly."
     }
   ],
   "launch": {
-    "view": "canvas"
+    "view": "canvas",
+    "page": "identity"
   }
 }
