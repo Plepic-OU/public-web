@@ -48,9 +48,20 @@ const INTERNAL_PAGES = new Set([
   'card-editorial.html',
 ]);
 
+// Same reasoning as INTERNAL_PAGES, different shape: a directory, not a
+// filename. design-canvas/ holds the Claude Design artboards, which are
+// generated from css/styles.css and dropped from every build by the same
+// deploy step. Its .dc.html files are full of CSS percentages (a crop offset,
+// a scale) and reach no visitor, so a receipt for one would mean nothing.
+const INTERNAL_DIRS = ['design-canvas/'];
+
 // --- tokens added to pages ---------------------------------------------------
 const tokens = new Set();
-for (const raw of addedLines(['*.html', ...[...INTERNAL_PAGES].map((page) => `:(exclude)${page}`)])) {
+for (const raw of addedLines([
+  '*.html',
+  ...[...INTERNAL_PAGES].map((page) => `:(exclude)${page}`),
+  ...INTERNAL_DIRS.map((dir) => `:(exclude)${dir}`),
+])) {
   // Cache-bust query strings (?v=...) are not claims.
   const line = raw.replace(/\?v=[^"'\s>]*/g, '');
   for (const m of line.matchAll(CLAIM_PAT)) {
