@@ -30,3 +30,8 @@ demo-tenders-screenshot.png
 
 # Design comps: may hold unpublished photography awaiting consent. Never deploy.
 .impeccable/comps/
+
+# Claude Design canvas: the seeded page is a 2 MB build artifact (the bundled
+# design skill's editor payload plus the artboards). Rebuild it from the
+# tracked sources in design-canvas/ rather than committing it.
+design-canvas/plepic-design-system.html

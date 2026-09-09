@@ -1,0 +1,52 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1120,
+      "h": 1580,
+      "title": "Foundations",
+      "print": "flow"
+    },
+    {
+      "file": "Type.dc.html",
+      "x": 1240,
+      "y": 0,
+      "w": 1120,
+      "h": 1450,
+      "title": "Type",
+      "print": "flow"
+    },
+    {
+      "file": "Card.dc.html",
+      "x": 0,
+      "y": 1740,
+      "w": 1120,
+      "h": 1760,
+      "title": "The card",
+      "print": "flow"
+    },
+    {
+      "file": "Mark.dc.html",
+      "x": 1240,
+      "y": 1740,
+      "w": 1120,
+      "h": 960,
+      "title": "The mark",
+      "print": "flow"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "source-of-truth",
+      "x": 0,
+      "y": -180,
+      "w": 820,
+      "text": "Generated from css/styles.css and index.html by design-canvas/build.py. Change the site, re-run the script, re-seed. If a value here disagrees with the stylesheet, the stylesheet is right and this canvas is stale."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

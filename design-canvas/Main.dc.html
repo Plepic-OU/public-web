@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .sw-grid { display: grid; grid-template-columns: repeat(6, 1fr);
+                gap: 20px 18px; margin: 0 0 4px; }
+    .chip { height: 84px; display: flex; align-items: flex-end; padding: 8px 10px;
+            font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; }
+    .sw-name { font-size: 11px; letter-spacing: 0.02em; color: var(--text);
+               margin: 8px 0 3px; }
+    .sw-role { font-size: 0.82rem; line-height: 1.45; color: var(--text-3); margin: 0; }
+    .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+             border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                margin: 0 0 6px; }
+    .canon p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Foundations</h1>
+    <p class="lede">The register is weight, lift, tilt and breath &mdash; never colour. Colour names a role and holds it. Every value on this canvas is the value in <span class="mono" style="font-size:0.95em">css/styles.css</span>; nothing here is a second opinion.</p>
+
+    <h2 class="sec">Brand</h2>
+    <p class="sec-note">Green is the mark's own light, three steps of it. In type, green is a single load-bearing phrase, never a whole heading.</p>
+    <div class="sw-grid">
+      <div class="sw">
+        <div class="chip" style="background: #00c638; color: #1c1c1a; ">#00c638</div>
+        <p class="sw-name mono">--green-vivid</p>
+        <p class="sw-role">Facet light. The mark, never text.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #137b30; color: #1c1c1a; ">#137b30</div>
+        <p class="sw-name mono">--green-brand</p>
+        <p class="sw-role">The one load-bearing phrase in a heading.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #0d5822; color: #1c1c1a; ">#0d5822</div>
+        <p class="sw-name mono">--green-dark</p>
+        <p class="sw-role">Facet shadow, mark body, antennae.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #c5f6d3; color: #1c1c1a; ">#c5f6d3</div>
+        <p class="sw-name mono">--green-light</p>
+        <p class="sw-role">Quiet fill behind a green statement.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #edfcf1; color: #1c1c1a; border: 1px solid var(--border);">#edfcf1</div>
+        <p class="sw-name mono">--green-surface</p>
+        <p class="sw-role">Section ground when a block must lift off --bg.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #e26c45; color: #1c1c1a; ">#e26c45</div>
+        <p class="sw-name mono">--accent</p>
+        <p class="sw-role">The ember at the mark's head. One call to action.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Ground</h2>
+    <p class="sec-note">Paper, not panels. A surface appears only when something is lifted; at rest everything shares the page ground.</p>
+    <div class="sw-grid">
+      <div class="sw">
+        <div class="chip" style="background: #faf7f2; color: #1c1c1a; border: 1px solid var(--border);">#faf7f2</div>
+        <p class="sw-name mono">--bg</p>
+        <p class="sw-role">Page ground. Everything sits on this.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #f3efe7; color: #1c1c1a; border: 1px solid var(--border);">#f3efe7</div>
+        <p class="sw-name mono">--bg-alt</p>
+        <p class="sw-role">Recessed ground: the card's art well.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #ffffff; color: #1c1c1a; border: 1px solid var(--border);">#ffffff</div>
+        <p class="sw-name mono">--surface</p>
+        <p class="sw-role">Raised sheet. Only ever a hover state.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #1c1c1a; color: #e5e2dc; ">#1c1c1a</div>
+        <p class="sw-name mono">--dark</p>
+        <p class="sw-role">Inverted section ground.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #262624; color: #e5e2dc; ">#262624</div>
+        <p class="sw-name mono">--dark-surface</p>
+        <p class="sw-role">Raised sheet on an inverted section.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #e5e2dc; color: #1c1c1a; ">#e5e2dc</div>
+        <p class="sw-name mono">--border</p>
+        <p class="sw-role">Hairline on light ground.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #3a3a38; color: #e5e2dc; ">#3a3a38</div>
+        <p class="sw-name mono">--border-dark</p>
+        <p class="sw-role">Hairline on dark ground.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Ink</h2>
+    <p class="sec-note">Three weights of ink on light, two on dark. A label is never a lighter grey than <span class="mono" style="font-size:0.95em">--text-3</span>.</p>
+    <div class="sw-grid">
+      <div class="sw">
+        <div class="chip" style="background: #1c1c1a; color: #1c1c1a; ">#1c1c1a</div>
+        <p class="sw-name mono">--text</p>
+        <p class="sw-role">Body and every heading.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #4a4a45; color: #1c1c1a; ">#4a4a45</div>
+        <p class="sw-name mono">--text-2</p>
+        <p class="sw-role">Supporting sentence.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #6b6b60; color: #1c1c1a; ">#6b6b60</div>
+        <p class="sw-name mono">--text-3</p>
+        <p class="sw-role">Label, eyebrow, caption.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #e5e2dc; color: #e5e2dc; ">#e5e2dc</div>
+        <p class="sw-name mono">--text-on-dark</p>
+        <p class="sw-role">Body on an inverted section.</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #a3a39a; color: #e5e2dc; ">#a3a39a</div>
+        <p class="sw-name mono">--text-on-dark-2</p>
+        <p class="sw-role">Supporting sentence, inverted.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <div class="canon">
+      <div><h3>Headings are ink</h3><p>At most one green phrase carries the sentence. A fully green heading is off-canon in any medium.</p></div>
+      <div><h3>The mark is locked</h3><p>Twenty-two facets, one body, two antennae, one ember. Never recoloured, never re-faceted, never redrawn.</p></div>
+      <div><h3>Nothing shines</h3><p>No cyan, no neon, no glassmorphism, no gradient text. Elevation is ink and shadow, and only ever a hover state.</p></div>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>

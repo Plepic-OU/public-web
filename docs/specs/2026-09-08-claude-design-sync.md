@@ -1,85 +1,56 @@
-# Handoff: syncing the Plepic design system to Claude Design
-
-A scoping spec, not a build prompt. It answers what would be generated, from what source of truth, what stays hand-authored, and what breaks when the two diverge. Nothing here is decided until Kaido says so; every open question is marked.
-
-## 1. Why this exists, and what it is not
-
-Section 2.5 of `docs/specs/2026-09-06-living-tabletop-instructor-cards.md` chose custom elements over a framework so that "a React wrapper for Claude Design can be generated later without a rewrite". That was an architectural bet made in advance of a decision. This spec is where the decision gets made.
-
-The bet has held so far. `<plepic-mark>` is a custom element that enhances inline SVG, and the Card is plain markup plus CSS with two custom properties written by a module. Neither carries framework assumptions. Nothing has been built for Claude Design: no package, no wrapper, no sync, no directory.
-
-**This is not a rebuild of the design system.** `design-system.html` plus `css/styles.css` are canonical and stay canonical. Anything generated is downstream of them.
-
-## 2. The question that decides everything else
-
-**Is Claude Design a consumer of the design system, or a second home for it?**
-
-A consumer reads the tokens and components, renders them, and has no opinion. Divergence is then a one-way problem, and the fix is to regenerate. A second home means designs originate there and flow back, which needs a merge story, and the whole history of this repo says that ends in two truths and a stale one.
-
-The recommendation is **consumer, one-way, generated**. Everything below assumes it until Kaido says otherwise. **OPEN: Kaido confirms.**
-
-## 3. What would go across, and in what order
-
-Ordered by how much each earns its place, not by how easy it is.
-
-| Rank | What | Why it is worth generating | Cost |
-| --- | --- | --- | --- |
-| 1 | The 75 `:root` tokens | Colour, type, spacing and motion are the whole identity, they are already machine-readable, and they are what a designer reaches for first | Low. One parser over one block |
-| 2 | `<plepic-mark>` | The single most reused object on the site, and the one with locked geometry that must never be redrawn by hand | Medium. The SVG must travel verbatim, the breath is CSS |
-| 3 | The Card | The component this whole branch built, and the pattern the loadout builder will extend | Medium |
-| 4 | Panels, badges, buttons | The furniture every page uses | Medium, and largely mechanical |
-| 5 | The hero | Three.js, WebGL, 69 KB, a poster fallback and a byte-exact rest pose | High, and almost certainly not worth it |
-
-**Recommendation: ranks 1 and 2 only, first.** Tokens plus the mark is a real, useful, small deliverable that proves the pipeline. Ranks 3 and 4 follow once the pipeline is boring. Rank 5 stays out; the hero is a page, not a component.
-
-## 4. Generated from what, exactly
-
-The source of truth is `css/styles.css` for tokens and the inline SVG in `index.html` for the mark's geometry. Not the spec, not `design-system.html` prose, not a hand-kept copy.
-
-- **Tokens.** Parse the single `:root` block. It is already the thing the design guard asserts against, so a generator that reads it inherits that guarantee. Emit whatever shape Claude Design consumes.
-- **The mark.** The 22 polygons plus the five core nodes travel verbatim. `js/plepic-mark.js` deliberately contains no coordinate, and `tests/design-guard.spec.ts` fails if one appears, so the generator must extract from the page rather than from the module, and must never hand-write a polygon. The same guard should be extended to cover the generated output.
-- **Components.** **OPEN:** generated from the CSS, or hand-written React that imports the tokens? Generating React from CSS classes is where this kind of project usually dies. Hand-written components that consume generated tokens is the boring option and probably the right one, at the cost of the components being a second implementation that can drift. Kaido decides.
-
-## 5. What stays hand-authored, and never generates
-
-- Every page. Claude Design gets components, not `index.html`.
-- The hero and `js/crystalline-metamorphosis.js`.
-- Copy. No generated component carries a Plepic sentence, a price, a date or a cohort claim; `scripts/check-claims.mjs` cannot see a package, and a claim that escapes into one escapes the gate that exists to catch it.
-- `design-system.html` itself. It is the canon a human reads.
-
-## 6. How drift is prevented, which is the only part that really matters
-
-A generated artefact that nobody checks is worse than no artefact, because it looks current. Three mechanisms, in order of strength:
-
-1. **Regenerate in CI and fail on a diff.** The generator runs, and if its output differs from what is committed, the build fails. This makes drift impossible rather than unlikely. It is the same shape as the visual baselines already in this repo.
-2. **Extend the geometry guard.** The design guard already asserts that the locked mark is byte-identical wherever it is inlined. The generated package is another such place, and it should be added to the same test rather than given its own.
-3. **One direction, enforced socially.** Nothing flows back from Claude Design. If a design starts there, it is re-authored here before it ships.
-
-**OPEN:** whether the package lives in this repo (generated, committed, CI-checked) or its own. Same repo is strongly recommended: the generator, its source and its test then move in one commit, and the CI check above is trivial. A separate repo needs a release dance and will drift the first week someone is busy.
-
-## 7. What breaks if they diverge
-
-Worth stating plainly, because it is the argument for section 6.
-
-- **The mark drifts** and Plepic has two butterflies. This is the one that matters. The geometry is locked, the asymmetry in slot 6 is hand-crafted, and the hero lands on it byte-exact. A second, slightly different mark in a design tool is how a brand quietly loses its logo.
-- **Tokens drift** and a design is approved in a green the site cannot produce. Cheap to detect, annoying to unwind.
-- **A component drifts** and the design tool shows an interaction the site does not have, which is how a promise gets made in a review that the site then breaks.
-
-## 8. Recommended first slice
-
-One PR, small enough to finish and prove the shape:
-
-1. A generator that reads the `:root` block and the inline mark, and emits tokens plus one `<PlepicMark>` component.
-2. Its output committed.
-3. A CI job that regenerates and fails on a diff.
-4. The geometry guard extended to the generated mark.
-5. A line in `PRODUCT.md` saying the package is downstream and never edited by hand.
-
-No Card, no panels, no hero. If that slice is boring to run twice, the rest is mechanical. If it is not, better to learn it on 75 tokens and one butterfly.
-
-## 9. Open, for Kaido
-
-1. Consumer or second home. Section 2 recommends consumer.
-2. Components generated from CSS, or hand-written React over generated tokens. Section 4 leans hand-written.
-3. Same repo or its own. Section 6 recommends same repo.
-4. Whether Claude Design is a real commitment at all, or an option the architecture keeps open at no cost. It is entirely reasonable to close this and rely on the fact that nothing about the current build blocks it later.
+# Consolidating the Plepic design system into Claude Design
+Claude Design becomes the one home for the design system. Kaido decided this on 2026-09-09; it reverses the recommendation this document carried on 2026-09-08, which is kept in section 9. The destination is full consolidation, with `css/styles.css` eventually generated from Claude Design. The route there is staged, because nothing that ships today can move until a generated stylesheet can satisfy the gates that already guard the site. Stage 1 is built and live.
+## 1. What was decided
+| Question | Decision | What it rules out |
+| --- | --- | --- |
+| Consumer of the system, or its home? | **Its home.** The system is authored in Claude Design and the stylesheet is generated from it | A second canonical copy anywhere. Kaido: "I don't want multiple homes" |
+| Who can see it? | **Public**, and linked from plepic.com | An org-only canvas, and therefore PNG/PDF export (section 4) |
+| What happens to `css/styles.css`? | **Deferred.** Decide once the canvas has been lived with | Committing now to a reverse generator nobody has used |
+| What first? | **Rewrite this spec and build a first canvas** | A build that starts at the stylesheet end |
+The audience is every Plepic instructor, not only the two people who touch the repo. That is the reason the home moves at all: `design-system.html` and `css/styles.css` are reachable by someone with a checkout, and a canvas is reachable by anyone with a link.
+## 2. Why the route is staged
+Full consolidation is a destination, not a step. A stylesheet generated from a design tool must still pass the design guard's 19 source assertions, the claims gate, the cache-bust step and the visual baselines. None of that machinery can read a canvas today, and none of it should be weakened so that it can. So the canvas earns the authoring role in stages, and each stage has an exit test that is not "it feels ready".
+| Stage | Direction | Exit test |
+| --- | --- | --- |
+| **1. Mirror** (built 2026-09-09) | Site to canvas, generated | The canvas shows the site's real values, and a token change is one command away from being reflected |
+| **2. Live with it** | Still site to canvas | Nobody reaches for `design-system.html` or the stylesheet to answer a design question. If they do, the canvas is missing something, and the answer is to widen the canvas, not to advance the stage |
+| **3. Authoring moves** | Canvas to site, generated | A generated `css/styles.css` passes the full gate set unedited, twice running |
+Stage 3 is where the reverse generator has to exist, and where its output has to be trusted by CI rather than by a person reading a diff. It is the expensive stage. Stages 1 and 2 cost almost nothing and settle whether it is worth paying for.
+## 3. Stage 1, as built
+`design-canvas/build.py` generates four artboards from `css/styles.css` and `index.html`, and `seed-canvas.mjs` seeds them into a published canvas.
+- **Foundations.** Brand greens, ground, ink, each swatch showing its token, its resolved value and the role it holds. Plus the three rules that travel to any medium: headings are ink, the mark is locked, nothing shines.
+- **Type.** The three faces and the job each one holds, then the scale from `--fs-h2` down to the 9.5px mono eyebrow.
+- **The card.** The three instructor cards at rest, rest and hover side by side, and the four things that make the card what it is.
+- **The mark.** The butterfly at 300, 120, 30 and 15px, with the breath, the wingbeat and the three-layer enhancement stated.
+No value is typed into an artboard by hand. `build.py` reads every token out of the `:root` block, lifts each portrait transform out of its rule, and extracts the mark's SVG verbatim from `index.html`, refusing to build if it does not find 22 facets. Change the site, run `python3 build.py`, re-seed, republish. If the canvas ever disagrees with the stylesheet, the stylesheet is right and the canvas is stale; the canvas says so on a sticky note.
+Live at https://claude.ai/code/artifact/1d34b86f-8fa6-40ad-9631-fd3b6d3865ac
+## 4. What public cost
+A Claude Design canvas that declares PNG/PDF export can be shared inside the org only. One without export can be shared by public link. Public was the decision, so export is not declared, and the canvas's Export buttons do nothing. That is the trade, and it is the right way round: a design system nobody outside the repo can open is the problem being solved.
+The canvas is published private and has to be set public once, by hand, from its share menu. Nothing in this repo can do that.
+## 5. Linking it from plepic.com, and the contradiction in the way
+`PRODUCT.md` states that the design system "is public and canonical at /design-system (design-system.html + css/styles.css)". It is not. `.github/workflows/deploy.yml` deletes `design-system.html` from every build, so `/design-system` and `/design-system.html` both return 404 today. The claim has been false for as long as the deploy list has existed.
+Consolidation resolves it in the right direction: `/design-system` should reach the canvas, not an un-deleted page. Until that redirect exists, `PRODUCT.md` is making a public claim the site does not honour, which is exactly the class of thing the claims gate was built to stop.
+**OPEN:** where plepic.com carries the link. The footer reaches every page and costs nothing; `/about` is where a reader would look for it. Kaido decides.
+## 6. What never moves, whatever the stylesheet does
+- **The gates.** The CSS that ships is the CSS the design guard, the claims gate and the visual baselines see. A canvas is a source, never a gate.
+- **The mark's geometry.** Twenty-two facets, one body, two antennae, one ember. `js/plepic-mark.js` carries no coordinate and a guard fails if one appears. Anything generated inherits that rule; nothing hand-draws a polygon, in either direction.
+- **Copy.** No artboard carries a price, a date, a cohort claim or a headline sentence. `scripts/check-claims.mjs` cannot see a canvas, and a claim that escapes into one escapes the gate that exists to catch it. The artboards on the canvas today carry none.
+- **Pages.** The hero, `js/crystalline-metamorphosis.js` and every `.html` file stay hand-authored. The system covers components, not pages.
+## 7. Drift, while two artefacts exist
+Stages 1 and 2 have two artefacts and one truth. `build.py` is deterministic, so the cheap mechanism is a guard that regenerates the artboards and fails on a diff, with `python3 build.py` as the fix. That catches a token change landing in the stylesheet without reaching the canvas.
+It does not catch a stale *publish*: seeding and publishing are manual, so the guard can only prove the working files are current. That is still the failure worth catching, because a wrong value reaches the canvas through the working files or not at all.
+**Recommendation:** add the guard when stage 2 starts, not now. Today there is one commit and no drift to catch, and a guard added before anyone has changed a token is a guard nobody has seen bite.
+## 8. Open
+1. Where plepic.com links to the canvas (section 5).
+2. What `css/styles.css` becomes, deferred by Kaido until the canvas has been lived with (section 2).
+3. Whether the regenerate-and-diff guard lands now or with stage 2 (section 7).
+## 9. Superseded on 2026-09-09
+| The 2026-09-08 draft said | Now | Why |
+| --- | --- | --- |
+| Claude Design is a **consumer**; the recommendation is one-way and generated, with the stylesheet canonical | Claude Design is the **home**; the stylesheet is generated from it, eventually | Kaido: the design system should have one home, and it should be the one every instructor can open |
+| A React package, generated, committed and CI-checked in this repo | No package. The deliverable is a canvas | A package serves code. The audience is instructors, and it needs a link |
+| First slice: tokens and `<PlepicMark>`, ranks 1 and 2 only | First slice: tokens, type, the Card and the mark, as artboards | Ranked by generation cost, the Card was expensive. As an artboard it is markup, so the ranking no longer applies |
+| Ranks 3 to 5 deferred; the hero ruled out | The hero is still ruled out | Unchanged. It is a page, not a component |
+| **OPEN:** consumer or second home | Decided, above | |
+| **OPEN:** components generated from CSS, or hand-written | Moot at stage 1. Returns at stage 3 as "what generates the stylesheet" | |
+| **OPEN:** same repo or its own | Same repo. `design-canvas/` holds the generator and the working files | The generator has to read `css/styles.css`, so it lives beside it |

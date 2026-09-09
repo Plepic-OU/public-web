@@ -34,7 +34,7 @@ jobs:
           # be publicly reachable on plepic.com. Keep this list in sync with
           # repo hygiene; if a file here gets a real public role, remove
           # it from this list rather than working around the deploy.
-          rm -rf _archive playwright-report tests
+          rm -rf _archive playwright-report tests design-canvas
           rm -f  design-system.html font-compare.html demo-tenders.html card-directions.html card-editorial.html
           rm -f  claims-receipts.log scripts/check-claims.mjs
           rm -rf docs/training-one-pager
