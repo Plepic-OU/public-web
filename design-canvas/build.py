@@ -89,50 +89,104 @@ def page(body, extra_css=""):
 
 
 # --- Main: foundations ------------------------------------------------------
-def swatch(name, role, on_dark=False):
-    value = T[name]
-    ink = "#e5e2dc" if on_dark else "#1c1c1a"
-    border = "border: 1px solid var(--border);" if name in (
-        "--bg", "--bg-alt", "--surface", "--green-surface") else ""
-    return ("      <div class=\"sw\">\n"
-            "        <div class=\"chip\" style=\"background: %s; color: %s; %s\">%s</div>\n"
-            "        <p class=\"sw-name mono\">%s</p>\n"
-            "        <p class=\"sw-role\">%s</p>\n"
-            "      </div>\n" % (value, ink, border, value, name, role))
-
-
+# One ramp, lightest to darkest. Any other order is a list a reader has to
+# take on trust; a ramp checks itself. The accent sits after a break because
+# it is not a step on the ramp, it is the one colour that is not green.
 BRAND = [
-    ("--green-vivid", "Facet light. The mark, never text."),
-    ("--green-brand", "The one load-bearing phrase in a heading."),
-    ("--green-dark", "Facet shadow, mark body, antennae."),
-    ("--green-light", "Quiet fill behind a green statement."),
-    ("--green-surface", "Section ground when a block must lift off --bg."),
-    ("--accent", "The ember at the mark's head. One call to action."),
+    ("--green-surface", "Section ground when a block must lift off the page"),
+    ("--green-light", "Quiet fill behind a green statement"),
+    ("--green-vivid", "Facet light. The mark, never text"),
+    ("--green-brand", "The one load-bearing phrase in a heading"),
+    ("--green-dark", "Facet shadow, mark body, antennae"),
 ]
-GROUND = [
-    ("--bg", "Page ground. Everything sits on this."),
-    ("--bg-alt", "Recessed ground: the card's art well."),
-    ("--surface", "Raised sheet. Only ever a hover state."),
-    ("--dark", "Inverted section ground."),
-    ("--dark-surface", "Raised sheet on an inverted section."),
-    ("--border", "Hairline on light ground."),
-    ("--border-dark", "Hairline on dark ground."),
+ACCENT = ("--accent", "The ember at the mark's head. One call to action")
+
+# Neutrals are one set of roles filled twice, not two lists of chips. The
+# pairing is the content: a reader looks across a row instead of hunting a
+# "-on-dark" twin in a second grid. Where dark has no twin, saying so is the
+# useful fact. Each column is painted in its own ground, so every ink is shown
+# on the ground it is for.
+NEUTRALS = [
+    ("Ground", "--bg", "--dark", "What the page is made of"),
+    ("Recessed", "--bg-alt", None, "A well cut into the ground"),
+    ("Raised", "--surface", "--dark-surface", "A sheet lifted off it"),
+    ("Hairline", "--border", "--border-dark", "The only line either context draws"),
+    ("Ink", "--text", "--text-on-dark", "Body and every heading"),
+    ("Ink, quieter", "--text-2", "--text-on-dark-2", "The supporting sentence"),
+    ("Ink, label", "--text-3", None, "Eyebrow, caption, token name"),
 ]
-INK = [
-    ("--text", "Body and every heading."),
-    ("--text-2", "Supporting sentence."),
-    ("--text-3", "Label, eyebrow, caption."),
-    ("--text-on-dark", "Body on an inverted section."),
-    ("--text-on-dark-2", "Supporting sentence, inverted."),
-]
+INK_ROLES = {"Ink", "Ink, quieter", "Ink, label"}
+
+
+def brand_swatch(name, role):
+    return ("      <div class=\"sw\">\n"
+            "        <div class=\"chip\" style=\"background: %s\"></div>\n"
+            "        <p class=\"sw-name mono\">%s</p>\n"
+            "        <p class=\"sw-hex mono\">%s</p>\n"
+            "        <p class=\"sw-role\">%s</p>\n"
+            "      </div>\n" % (T[name], name, T[name], role))
+
+
+def ncell(side, role, name):
+    if name is None:
+        return ("      <div class=\"ncell ncell--%s ncell--none\"><span class=\"nnone\">"
+                "no twin</span></div>\n" % side)
+    ink = " style=\"color: %s\"" % T[name] if role in INK_ROLES else ""
+    return ("      <div class=\"ncell ncell--%s\">\n"
+            "        <span class=\"nchip\" style=\"background: %s\"></span>\n"
+            "        <span class=\"ntok mono\"%s>%s</span>\n"
+            "        <span class=\"nhex mono\">%s</span>\n"
+            "      </div>\n" % (side, T[name], ink, name, T[name]))
+
+
+def nrow(role, light, dark, note):
+    return ("      <div class=\"nrole\"><span class=\"nrole-name\">%s</span>"
+            "<span class=\"nrole-note\">%s</span></div>\n%s%s"
+            % (role, note, ncell("light", role, light), ncell("dark", role, dark)))
+
+
+# Stated only while it is true, so a token change retires the sentence rather
+# than turning it into a lie nobody re-reads.
+DOUBLES = ""
+if T["--dark"] == T["--text"] and T["--border"] == T["--text-on-dark"]:
+    DOUBLES = (" Two values do four jobs here: the dark ground is the light ink, "
+               "and the light hairline is the dark ink. An inverted section is "
+               "the same page turned over.")
 
 main_css = """    .sw-grid { display: grid; grid-template-columns: repeat(6, 1fr);
-                gap: 20px 18px; margin: 0 0 4px; }
-    .chip { height: 84px; display: flex; align-items: flex-end; padding: 8px 10px;
-            font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; }
+                gap: 0 18px; align-items: start; }
+    .sw-break { border-left: 1px solid var(--border); padding-left: 18px;
+                margin-left: -18px; }
+    .chip { height: 76px; outline: 1px solid rgba(28, 28, 26, 0.1);
+            outline-offset: -1px; }
     .sw-name { font-size: 11px; letter-spacing: 0.02em; color: var(--text);
-               margin: 8px 0 3px; }
-    .sw-role { font-size: 0.82rem; line-height: 1.45; color: var(--text-3); margin: 0; }
+               margin: 9px 0 2px; }
+    .sw-hex { font-size: 10.5px; letter-spacing: 0.02em; color: var(--text-3);
+              margin: 0 0 5px; }
+    .sw-role { font-size: 0.82rem; line-height: 1.45; color: var(--text-2); margin: 0; }
+    .ngrid { display: grid; grid-template-columns: 236px 1fr 1fr;
+             align-items: stretch; }
+    .nhead { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+             text-transform: uppercase; color: var(--text-3); padding: 0 0 8px 16px; }
+    .nrole { display: flex; flex-direction: column; justify-content: center;
+             padding: 11px 20px 11px 0; }
+    .nrole-name { font-family: var(--font-display); font-weight: 700;
+                  font-size: 0.95rem; line-height: 1.2; color: var(--text); }
+    .nrole-note { font-size: 0.8rem; line-height: 1.4; color: var(--text-3);
+                  margin-top: 2px; }
+    .ncell { display: flex; align-items: center; gap: 12px; padding: 11px 16px; }
+    .ncell--light { background: var(--bg); border-bottom: 1px solid var(--border); }
+    .ncell--dark { background: var(--dark); border-bottom: 1px solid var(--border-dark); }
+    .nchip { width: 26px; height: 26px; flex: none;
+             outline: 1px solid rgba(128, 128, 122, 0.35); outline-offset: -1px; }
+    .ntok { font-size: 11px; letter-spacing: 0.02em; flex: 1; }
+    .ncell--light .ntok { color: var(--text); }
+    .ncell--dark .ntok { color: var(--text-on-dark); }
+    .nhex { font-size: 10.5px; letter-spacing: 0.02em; }
+    .ncell--light .nhex { color: var(--text-3); }
+    .ncell--dark .nhex { color: var(--text-on-dark-2); }
+    .nnone { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+             color: var(--text-on-dark-2); }
     .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
              border-top: 1.5px solid var(--text); padding-top: 16px; }
     .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
@@ -146,20 +200,21 @@ main_body = """  <div class="board">
     <p class="lede">The register is weight, lift, tilt and breath &mdash; never colour. Colour names a role and holds it. Every value on this canvas is the value in <span class="mono" style="font-size:0.95em">css/styles.css</span>; nothing here is a second opinion.</p>
 
     <h2 class="sec">Brand</h2>
-    <p class="sec-note">Green is the mark's own light, three steps of it. In type, green is a single load-bearing phrase, never a whole heading.</p>
+    <p class="sec-note">One ramp, lightest to darkest, and one colour that is not green. In type, green is a single load-bearing phrase, never a whole heading.</p>
     <div class="sw-grid">
-%s    </div>
+%s      <div class="sw sw-break">
+        <div class="chip" style="background: %s"></div>
+        <p class="sw-name mono">%s</p>
+        <p class="sw-hex mono">%s</p>
+        <p class="sw-role">%s</p>
+      </div>
+    </div>
 
     <hr class="rule">
-    <h2 class="sec">Ground</h2>
-    <p class="sec-note">Paper, not panels. A surface appears only when something is lifted; at rest everything shares the page ground.</p>
-    <div class="sw-grid">
-%s    </div>
-
-    <hr class="rule">
-    <h2 class="sec">Ink</h2>
-    <p class="sec-note">Three weights of ink on light, two on dark. A label is never a lighter grey than <span class="mono" style="font-size:0.95em">--text-3</span>.</p>
-    <div class="sw-grid">
+    <h2 class="sec">Neutrals</h2>
+    <p class="sec-note">One set of roles, filled twice. A colour is named by the job it does, so the dark column is the light column's answer and not a second palette.%s</p>
+    <div class="ngrid">
+      <div></div><div class="nhead">On light</div><div class="nhead">On dark</div>
 %s    </div>
 
     <hr class="rule">
@@ -169,9 +224,10 @@ main_body = """  <div class="board">
       <div><h3>Nothing shines</h3><p>No cyan, no neon, no glassmorphism, no gradient text. Elevation is ink and shadow, and only ever a hover state.</p></div>
     </div>
   </div>""" % (
-    "".join(swatch(n, r) for n, r in BRAND),
-    "".join(swatch(n, r, on_dark=n in ("--dark", "--dark-surface", "--border-dark")) for n, r in GROUND),
-    "".join(swatch(n, r, on_dark=n.endswith("on-dark") or n.endswith("on-dark-2")) for n, r in INK),
+    "".join(brand_swatch(n, r) for n, r in BRAND),
+    T[ACCENT[0]], ACCENT[0], T[ACCENT[0]], ACCENT[1],
+    DOUBLES,
+    "".join(nrow(*row) for row in NEUTRALS),
 )
 
 (OUT / "Main.dc.html").write_text(page(main_body, main_css))
@@ -379,7 +435,7 @@ mark_body = """  <div class="board">
 # --- canvas.json ------------------------------------------------------------
 canvas = {
     "artboards": [
-        {"file": "Main.dc.html", "x": 0, "y": 0, "w": 1120, "h": 1580,
+        {"file": "Main.dc.html", "x": 0, "y": 0, "w": 1120, "h": 1490,
          "title": "Foundations", "print": "flow"},
         {"file": "Type.dc.html", "x": 1240, "y": 0, "w": 1120, "h": 1450,
          "title": "Type", "print": "flow"},
