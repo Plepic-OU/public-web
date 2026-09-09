@@ -579,7 +579,7 @@ voice_css = """    .slogan { font-family: var(--font-display); font-style: itali
 voice_body = """  <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Voice</h1>
-    <p class="lede">The words are as fixed as the greens. A tagline that decodes the name, two positioning lines that do not translate each other, and one headline pattern. Everything else is written fresh, against the rules at the bottom.</p>
+    <p class="lede">The words are as fixed as the greens. A tagline that decodes the name and only works in English, an Estonian line that stands in its place, a category line that says what is sold, and one headline pattern. Everything else is written fresh, against the rules at the bottom.</p>
 
     <h2 class="sec">The tagline, and why it is those four words</h2>
     <p class="sec-note">It is the name's decoder ring. PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half of the name. That is the whole reason it cannot be reworded.</p>
@@ -589,20 +589,26 @@ voice_body = """  <div class="board">
     <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when it is given room. In the footer it sits at 0.75rem in the quieter ink and warms to green on hover, which is the only easter egg on the site. It is a tagline, not a heading, so it is the one line allowed to be green all the way through.</p>
 
     <hr class="rule">
-    <h2 class="sec">Two positioning lines, not a translation</h2>
-    <p class="sec-note">The wordplay does not survive Estonian, so Estonian does not attempt it. The two lines are complementary: one names the category, the other names the outcome.</p>
+    <h2 class="sec">What Estonian carries instead</h2>
+    <p class="sec-note">The wordplay lives inside an English name, so the tagline only works in English. Estonian does not attempt it and does not translate it; it carries a different line that does a different job.</p>
     <div class="langs">
       <div class="lang">
         <p class="tag">EN</p>
-        <p class="line">Agentic coding for dev teams</p>
-        <p class="why">Names the category, because an English reader is choosing between training offers and needs to know which shelf this is on.</p>
+        <p class="line" style="font-style: italic; font-weight: 500; color: var(--green-brand)">Curious play. Epic growth.</p>
+        <p class="why">The tagline is the line. Nothing stands in for it, because nothing else decodes the name.</p>
       </div>
       <div class="lang">
         <p class="tag">ET</p>
         <p class="line">Tulemusp&otilde;hine digimuutus</p>
-        <p class="why">Names the outcome, because an Estonian buyer is justifying a spend. Never a translation of the English line, and never the tagline.</p>
+        <p class="why">Names the outcome, because an Estonian buyer is justifying a spend and the pun is unavailable. Never a translation of the tagline, and never presented as one.</p>
       </div>
     </div>
+
+    <hr class="rule">
+    <h2 class="sec">The category line</h2>
+    <p class="sec-note">Separate from both of the above, and the only one of the three that says what Plepic sells. It is the training page&rsquo;s own headline, so it can be checked against a live page rather than against a design file.</p>
+    <p class="ex" style="font-size: 2rem"><em>Agentic engineering</em> for dev teams</p>
+    <p class="why">Engineering, not coding: the training is about directing agents to ship production work, which is more than writing code. It also shows the headline pattern doing its job, with green on the phrase the page is about.</p>
 
     <hr class="rule">
     <h2 class="sec">The headline pattern</h2>
@@ -1289,7 +1295,7 @@ PAGES = [
     ("identity", "Identity", [
         ("Main.dc.html", "Foundations", 1490),
         ("Type.dc.html", "Type", 1450),
-        ("Voice.dc.html", "Voice", 1880),
+        ("Voice.dc.html", "Voice", 2240),
         ("Logo.dc.html", "Logo", 1210),
     ]),
     ("system", "System", [
