@@ -96,6 +96,12 @@
     .m { font-family: var(--font-mono); margin: 0; }
     .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 8px; }
     .stack div { border-top: 1.5px solid var(--text); padding-top: 12px; }
+    .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+             border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                margin: 0 0 6px; }
+    .canon p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .canon .mono { font-size: 0.92em; }
     .stack h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 700;
                 font-family: var(--font-display); }
     .stack p { margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--text-2); }
@@ -143,6 +149,15 @@
       <div class="meta"><p class="tok">eyebrow</p><p>9.5px / 0.16em</p><p>Mono 400 / uppercase &middot; --text-3</p></div>
       <p class="m" style="font-size: 9.5px; line-height: normal; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);">Instructor &middot; Practitioner</p>
     </div>
+
+    <hr class="rule">
+    <h2 class="sec">Four things the scale assumes</h2>
+    <div class="canon">
+      <div><h3>Display is hero-only</h3><p>A non-hero h1 uses clamp(2rem, 2rem + 3vw, 3.5rem). Reaching for the hero ramp on an interior page makes every page look like a landing page.</p></div>
+      <div><h3>Weight carries the bottom</h3><p>At their clamp minimums h3, h4 and body are the same size. What separates them there is weight, not scale, which is why an h3 must never be set at 400.</p></div>
+      <div><h3>Two namespaces, no overlap</h3><p><span class="mono">--fs-</span> is size. <span class="mono">--text-</span> is colour. A token that sets both is a token that will be wrong for one of them.</p></div>
+    </div>
+    <p class="sec-note" style="margin-top: 18px">The Line-Height Trap: a compact component that inherits the body&rsquo;s 1.7 grows a box nobody asked for. Buttons, badges and labels set <span class="mono" style="font-size:0.95em">line-height: normal</span> explicitly.</p>
   </div>
 </x-dc>
 </body>

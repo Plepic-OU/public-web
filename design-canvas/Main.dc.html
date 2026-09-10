@@ -120,6 +120,8 @@
              color: var(--text-on-dark-2); }
     .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
              border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon--4 { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .canon .mono { font-size: 0.92em; }
     .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
                 margin: 0 0 6px; }
     .canon p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
@@ -173,7 +175,7 @@
 
     <hr class="rule">
     <h2 class="sec">Neutrals</h2>
-    <p class="sec-note">One set of roles, filled twice. A colour is named by the job it does, so the dark column is the light column's answer and not a second palette. Two values do four jobs here: the dark ground is the light ink, and the light hairline is the dark ink. An inverted section is the same page turned over.</p>
+    <p class="sec-note">One set of roles, filled twice. A colour is named by the job it does, so the dark column is the light column's answer and not a second palette. The dark column is a device for an emphasis section, never a theme: the public site is light on every page. Two values do four jobs here: the dark ground is the light ink, and the light hairline is the dark ink. An inverted section is the same page turned over.</p>
     <div class="ngrid">
       <div></div><div class="nhead">On light</div><div class="nhead">On dark</div>
       <div class="nrole"><span class="nrole-name">Ground</span><span class="nrole-note">What the page is made of</span></div>
@@ -245,6 +247,16 @@
         <span class="nhex mono">#6b6b60</span>
       </div>
       <div class="ncell ncell--dark ncell--none"><span class="nnone">no twin</span></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Four laws</h2>
+    <p class="sec-note">These are why the palette has the values it has. A new need is met by an existing step, never by a new colour.</p>
+    <div class="canon canon--4">
+      <div><h3>The 73% rule</h3><p>One hue for every green, 137&deg;, at 73% saturation. Vivid is the single decorative exception at 100%. The accent sits at hue 15&deg; with its saturation matched to 73%, which is why an orange and a green from this palette look like they were mixed by the same hand.</p></div>
+      <div><h3>One accent per viewport</h3><p>Exactly one: a CTA button, or an urgency badge, or an accent dot. Never two, and the mobile sticky CTA yields to whatever is already there. No accent variants either &mdash; states use opacity.</p></div>
+      <div><h3>The vivid text ban</h3><p><span class="mono">--green-vivid</span> is never text on light. It measures 2.5:1 on cream and fails AA. It is facet light and a dark-mode label, nothing else.</p></div>
+      <div><h3>The dark placement rule</h3><p>The public site is light. Every page, no exemptions: no <span class="mono">.on-dark</span>, no dark background, whether written as a token or a hex literal. The device grew onto the homepage in June 2026 and came off in August; a guard now fails any production page that reaches for it. It appears on this canvas only where documenting a device is not using it.</p></div>
     </div>
 
     <hr class="rule">

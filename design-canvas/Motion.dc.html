@@ -161,6 +161,12 @@
                                    box-shadow var(--dur-base) var(--ease-settle); }
     .liftseat:hover .liftbox { transform: translateY(calc(-1 * var(--lift-height))); }
     .liftseat:hover .liftbox::before { opacity: 1; box-shadow: var(--card-shadow-hover); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+    .kv { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 11px 0;
+          border-top: 1px solid var(--border); }
+    .kv b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+            color: var(--text); }
+    .kv span { font-size: 0.85rem; line-height: 1.5; color: var(--text-2); }
     .stop { background: var(--bg-alt); padding: 22px 26px; }
     .stop p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
     @keyframes run-dur-fast { 0% { left: 0; } 6.2500%, 100% { left: calc(100% - 14px); } }
@@ -238,6 +244,24 @@
     <div class="lift">
       <div class="liftseat"><div class="liftbox"></div>
         <p class="trk-note" style="margin-top:14px">Rest, then lift. The shadow belongs to the sheet, never to the card.</p></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">The signature, and what owns it</h2>
+    <p class="sec-note">On the homepage a crystalline caterpillar crawls, cocoons and unfurls into the locked mark while the code line beneath it becomes the agentic loop. Developer becomes agentic engineer, told twice at once; the synced code line is what makes the arc a domain claim rather than a transformation clich&eacute;.</p>
+    <div class="two">
+      <div class="kv"><b>Movements</b><span>Crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest. 13.6s in all. The 22 facets are constant throughout; matter reorganises, geometry never changes.</span></div>
+      <div class="kv"><b>Trigger</b><span>One replay 3000ms after boot, then the visitor owns it: hover or tap the resting mark. It fires only from rest, so a replay never restarts mid-flight and never queues. No scroll trigger, no auto-loop, no button.</span></div>
+      <div class="kv"><b>Springs, not tweens</b><span>A deadband snap and a shader rest gate land the rest pose byte-exact on the locked mark, which then breathes.</span></div>
+      <div class="kv"><b>One locked unit</b><span>The animation and its code block ship together and are retimed together, never one side alone.</span></div>
+      <div class="kv"><b>Fallback</b><span>Reduced motion, 900px or narrower, Save-Data, deviceMemory under 2 or no WebGL2: nothing downloads, a static poster and the finished line render instead. Init failure, context loss or sustained slow frames do the same, never freezing mid-refactor.</span></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Two rules that outrank any effect</h2>
+    <div class="two">
+      <div class="kv"><b>Mark-motion</b><span>Choreographed motion that resolves to the locked mark is sanctioned. Static effects &mdash; glow, gradient, drop-shadow, per-facet opacity, outline-only wings &mdash; stay banned. Motion animates the mark; it never restyles it.</span></div>
+      <div class="kv"><b>Reduced motion</b><span>Every animation has a prefers-reduced-motion branch that lands on the static end state instantly. Shipping without one is a defect, not a polish item.</span></div>
     </div>
 
     <hr class="rule">

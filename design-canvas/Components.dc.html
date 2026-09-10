@@ -85,7 +85,6 @@
     .mono { font-family: var(--font-mono); }
     hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
     .demo { display: flex; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
-    .demo-item { }
     .demo-cap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
                 text-transform: uppercase; color: var(--text-3); margin: 12px 0 0; }
     .demo-note { font-size: 0.85rem; line-height: 1.45; color: var(--text-2);
@@ -97,29 +96,55 @@
            text-decoration: none;
            transition: filter var(--transition-fast), background var(--transition-fast),
                        color var(--transition-fast); }
+    .btn-lg { font-size: 1.15rem; padding: 0.95rem 1.9rem; border-radius: 12px; }
+    .btn-sm { font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 8px; }
     .btn-primary { background: var(--accent); color: var(--text); }
-    .btn-primary:hover { background: var(--accent); filter: brightness(0.92); }
-    .btn-secondary { background: transparent; border-color: var(--text); color: var(--text); }
-    .btn-secondary:hover { background: var(--green-surface); border-color: var(--green-brand);
-                           color: var(--green-dark); filter: none; }
+    .btn-primary:hover { filter: brightness(0.92); }
+    .btn-outline { background: transparent; border-color: var(--text); color: var(--text); }
+    .btn-outline:hover { background: var(--green-surface); border-color: var(--green-brand);
+                         color: var(--green-dark); filter: none; }
+    .btn-ghost { background: transparent; border-color: transparent; color: var(--text);
+                 text-decoration: underline; text-underline-offset: 3px;
+                 padding-left: 0.5rem; padding-right: 0.5rem; }
+    .btn-ghost:hover { background: var(--green-surface); color: var(--green-dark);
+                       filter: none; }
     .btn-focus { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+    .btnrow { display: grid; grid-template-columns: 120px 1fr 250px;
+              gap: 24px; align-items: center; padding: 14px 0;
+              border-top: 1px solid var(--border); }
+    .btnrow-name { font-family: var(--font-mono); font-size: 11px; color: var(--text);
+                   letter-spacing: 0.02em; }
+    .btnrow-set { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btnrow-spec { font-family: var(--font-mono); font-size: 10px; line-height: 1.6;
+                   color: var(--text-3); letter-spacing: 0.02em; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .pair h3 { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+               text-transform: uppercase; margin: 0 0 14px; font-weight: 400; }
+    .pair .yes { color: var(--green-brand); }
+    .pair .no { color: var(--accent); }
+    .pair .why { font-size: 0.88rem; line-height: 1.5; color: var(--text-2);
+                 margin: 14px 0 0; }
     .badge { display: inline-flex; align-items: center; gap: 0.35rem;
              padding: 0.2rem 0.65rem; font-size: 0.75rem; font-weight: 600;
              line-height: normal; border-radius: 20px 4px 16px;
              background: var(--surface); color: var(--text-2);
              border: 1px solid var(--border); }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%%;
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%;
                  background: var(--green-vivid); flex-shrink: 0; }
     .badge-urgency .badge-dot { background: var(--accent); }
-    .on-dark { background: var(--dark); padding: 20px 22px; }
-    .on-dark .badge { background: var(--dark-surface); color: var(--text-on-dark-2);
-                      border-color: var(--border-dark); }
-    .panel { background: var(--surface); border: 1px solid var(--border);
-             border-radius: 16px; padding: var(--space-xl); max-width: 360px; }
+    .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .pbox { padding: 26px; }
+    .pbox--onCream { background: var(--bg); }
+    .pbox--onWhite { background: var(--surface); }
+    .panel-white { background: var(--surface); border: 1px solid var(--border);
+                   border-radius: 14px; padding: var(--space-xl); }
+    .panel-cream { background: var(--bg); border: 1px solid var(--border);
+                   border-radius: 14px; padding: var(--space-xl); }
     .panel-header { font-family: var(--font-mono); font-size: 0.75rem;
                     text-transform: uppercase; letter-spacing: 0.12em;
                     color: var(--green-dark); font-weight: 600; margin: 0 0 10px; }
-    .panel p { font-size: 1rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .panel-white p, .panel-cream p { font-size: 1rem; line-height: 1.55;
+                                     color: var(--text-2); margin: 0; }
     .faq { max-width: 460px; }
     .faq-item { border-bottom: 1px solid var(--border); }
     .faq-row { display: flex; justify-content: space-between; align-items: center;
@@ -138,9 +163,10 @@
     .navdemo a.ext::after { content: "\2197"; margin-left: 0.25em;
                             font-size: 0.85em; opacity: 0.55; }
     .codeb { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7;
-             border-radius: 8px; padding: 0.75rem 1rem; background: var(--dark);
-             color: var(--text-on-dark); max-width: 360px; }
-    .codeb .cm { color: var(--text-on-dark-2); }
+             border-radius: 8px; padding: 0.75rem 1rem;
+             box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04);
+             background: var(--surface); color: var(--text-2); max-width: 360px; }
+    .codeb .cm { color: var(--text-3); }
     .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
              border-top: 1.5px solid var(--text); padding-top: 16px; }
     .grid3 h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
@@ -151,60 +177,92 @@
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Components</h1>
-    <p class="lede">The furniture every page uses. Two buttons, one badge, one panel, one row. Anything a page needs that is not here is a page's own problem and does not become a component until a second page wants it.</p>
+    <p class="lede">The furniture every page uses. Anything a page needs that is not here is a page&rsquo;s own problem, and does not become a component until a second page wants it.</p>
 
-    <h2 class="sec">Buttons</h2>
-    <p class="sec-note">Two, and no third. Both are 10px radius with a 1.5px border, so they occupy the same box whether the border shows or not. Hover them.</p>
-    <div class="demo">
-      <div class="demo-item">
-        <a class="btn btn-primary" href="#">Talk to Kaido</a>
-        <p class="demo-cap">Primary</p>
-        <p class="demo-note">The ember, once per screen. It is the only place the accent appears in type.</p>
-      </div>
-      <div class="demo-item">
-        <a class="btn btn-secondary" href="#">See the curriculum</a>
-        <p class="demo-cap">Secondary</p>
-        <p class="demo-note">Ink border, ink text. Green arrives on hover only, which is the whole rationing rule in one control.</p>
-      </div>
-      <div class="demo-item">
-        <a class="btn btn-secondary btn-focus" href="#">Keyboard focus</a>
+    <h2 class="sec">The button system</h2>
+    <p class="sec-note">Three sizes by three variants, and the two axes never touch: a variant sets colour and nothing else, a size sets the box and nothing else. On light, outline and ghost are ink, and hover fills them with <span class="mono" style="font-size:0.92em">--green-surface</span> under <span class="mono" style="font-size:0.92em">--green-dark</span> text. Hover any of them.</p>
+    <div class="btnrow">
+      <span class="btnrow-name">.btn-lg</span>
+      <span class="btnrow-set"><a class="btn btn-lg btn-primary" href="#">Book a free call</a><a class="btn btn-lg btn-outline" href="#">View curriculum</a><a class="btn btn-lg btn-ghost" href="#">Learn more</a></span>
+      <span class="btnrow-spec">1.15rem &middot; 0.95rem 1.9rem &middot; radius 12px<br>Heroes</span>
+    </div>
+    <div class="btnrow">
+      <span class="btnrow-name">.btn</span>
+      <span class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-outline" href="#">View curriculum</a><a class="btn btn-ghost" href="#">Learn more</a></span>
+      <span class="btnrow-spec">1.05rem &middot; 0.7rem 1.4rem &middot; radius 10px<br>The default</span>
+    </div>
+    <div class="btnrow">
+      <span class="btnrow-name">.btn-sm</span>
+      <span class="btnrow-set"><a class="btn btn-sm btn-primary" href="#">Book a free call</a><a class="btn btn-sm btn-outline" href="#">View curriculum</a><a class="btn btn-sm btn-ghost" href="#">Learn more</a></span>
+      <span class="btnrow-spec">0.9rem &middot; 0.5rem 1rem &middot; radius 8px<br>Nav, dense UIs</span>
+    </div>
+
+    <div class="demo" style="margin-top: 24px">
+      <div>
+        <a class="btn btn-outline btn-focus" href="#">Keyboard focus</a>
         <p class="demo-cap">Focus ring</p>
         <p class="demo-note">2px <span class="mono" style="font-size:0.92em">--green-dark</span>, offset 2px. Never removed, never restyled per control.</p>
       </div>
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Badges</h2>
-    <p class="sec-note">The asymmetric radius is the signature: 20px, 4px, 16px. It is the one shape on the site that is deliberately not a rounded rectangle.</p>
-    <div class="demo">
-      <div class="demo-item">
-        <span class="badge"><span class="badge-dot"></span>Cohort open</span>
-        <p class="demo-cap">Default</p>
-        <p class="demo-note">Green dot. A state that is simply true.</p>
+    <h2 class="sec">Primary plus ghost, never two solids</h2>
+    <p class="sec-note">The hero pairing, and the reason the ghost variant exists: do this, or just look first.</p>
+    <div class="pair">
+      <div>
+        <h3 class="yes">This</h3>
+        <div class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-ghost" href="#">View curriculum &rarr;</a></div>
+        <p class="why">One thing to do and one thing to read. The eye lands on the solid, and the link is there for the visitor who is not ready.</p>
       </div>
-      <div class="demo-item">
-        <span class="badge badge-urgency"><span class="badge-dot"></span>Closing soon</span>
-        <p class="demo-cap">Urgency</p>
-        <p class="demo-note">The dot goes ember. Nothing else changes, because urgency is not a different component.</p>
-      </div>
-      <div class="demo-item on-dark">
-        <span class="badge"><span class="badge-dot"></span>Cohort open</span>
-        <p class="demo-cap" style="color: var(--text-on-dark-2)">On dark</p>
+      <div>
+        <h3 class="no">Never this</h3>
+        <div class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-outline" href="#">View curriculum</a></div>
+        <p class="why">Two solid-looking buttons compete and neither wins. Use <span class="mono" style="font-size:0.92em">.btn-outline</span> only where no primary shares the row.</p>
       </div>
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Panel, row and code</h2>
-    <p class="sec-note">A panel is the only element that carries a border and a radius at rest. A row carries neither: it is two hairlines and the space between them.</p>
-    <div class="demo">
-      <div class="demo-item">
-        <div class="panel">
+    <h2 class="sec">Panels, never same on same</h2>
+    <p class="sec-note">White on cream, cream on white. Always a full 1px border, 14px radius. The green surface marks a favoured option and nothing else.</p>
+    <div class="panels">
+      <div class="pbox pbox--onCream">
+        <div class="panel-white">
           <p class="panel-header">What you leave with</p>
           <p>A working agent setup in your own repository, and the judgement to know when to reach for one.</p>
         </div>
-        <p class="demo-cap">Panel &middot; 16px radius</p>
+        <p class="demo-cap">.panel-white on cream &middot; the default</p>
       </div>
-      <div class="demo-item">
+      <div class="pbox pbox--onWhite">
+        <div class="panel-cream" data-demo="panel-cream">
+          <p class="panel-header">What you leave with</p>
+          <p>A working agent setup in your own repository, and the judgement to know when to reach for one.</p>
+        </div>
+        <p class="demo-cap">.panel-cream on white &middot; the inverse</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Badges, rows, code and nav</h2>
+    <p class="sec-note">The badge radius is the signature: 20px, 4px, 16px, the one shape on the site deliberately not a rounded rectangle. Inline code carries the only resting shadow anywhere.</p>
+    <div class="demo">
+      <div>
+        <span class="badge"><span class="badge-dot"></span>Cohort open</span>
+        <p class="demo-cap">Default</p>
+        <p class="demo-note">Green dot. A state that is simply true, and the badge&rsquo;s only green.</p>
+      </div>
+      <div>
+        <span class="badge badge-urgency"><span class="badge-dot"></span>Closing soon</span>
+        <p class="demo-cap">Urgency</p>
+        <p class="demo-note">The dot goes ember, and it spends the viewport&rsquo;s one accent. It never appears while a CTA button is visible.</p>
+      </div>
+      <div>
+        <div class="codeb"><span class="cm"># the shape of a session</span><br>claude --resume</div>
+        <p class="demo-cap">Code &middot; 8px radius</p>
+        <p class="demo-note">The one resting shadow: 0 2px 8px at 4 percent ink.</p>
+      </div>
+    </div>
+    <div class="demo" style="margin-top: 28px">
+      <div>
         <div class="faq">
           <div class="faq-item faq-item--open">
             <div class="faq-row">Do I need to know Python?</div>
@@ -213,27 +271,20 @@
           <div class="faq-item"><div class="faq-row">How much of it is hands on keyboard?</div></div>
         </div>
         <p class="demo-cap">Row &middot; open and closed</p>
+        <p class="demo-note">Two hairlines and the space between them. No box, no radius, no shadow.</p>
       </div>
-      <div class="demo-item">
-        <div class="codeb"><span class="cm"># the shape of a session</span><br>claude --resume<br>&nbsp;&nbsp;--effort high</div>
-        <p class="demo-cap">Code &middot; 8px radius</p>
-        <p class="demo-note">Mono at 0.75rem on ink. Comments in the quieter ink; no syntax colouring beyond that.</p>
+      <div>
+        <nav class="navdemo">
+          <a href="#" class="cur">Training</a><a href="#">Scopeful</a><a href="#">Jobs</a><a href="#" class="ext">Skill Tree</a>
+        </nav>
+        <p class="demo-cap">Navigation</p>
+        <p class="demo-note">Quieter ink at rest, full ink on hover, green and underlined for the page you are on. An external link earns an arrow and nothing else.</p>
       </div>
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Navigation</h2>
-    <p class="sec-note">Quieter ink at rest, full ink on hover, green and underlined for the page you are on. An external link earns an arrow and nothing else.</p>
-    <nav class="navdemo">
-      <a href="#" class="cur">Training</a>
-      <a href="#">Scopeful</a>
-      <a href="#">Jobs</a>
-      <a href="#" class="ext">Skill Tree</a>
-    </nav>
-
-    <hr class="rule">
     <div class="grid3">
-      <div><h3>Two of anything, not five</h3><p>Two buttons, two eases, two inks that carry text. A third variant has to retire one of the first two.</p></div>
+      <div><h3>Sizes and variants are orthogonal</h3><p>Three by three, not nine components. A variant that changes the box is a new size pretending to be a colour.</p></div>
       <div><h3>State, not decoration</h3><p>A border, a shadow, a surface and a green fill are all states. At rest a component owns as few of them as it can.</p></div>
       <div><h3>The box is optional</h3><p>Most things are a rule and some space. Reach for a panel only when the content genuinely has to be lifted off the page.</p></div>
     </div>

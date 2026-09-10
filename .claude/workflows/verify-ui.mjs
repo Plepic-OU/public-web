@@ -24,7 +24,7 @@ const RUBRIC = `GROUND YOUR JUDGEMENT IN THE IMPECCABLE DESIGN RUBRIC — read t
 - ${IMPECCABLE}/critique.md — score all 10 Nielsen heuristics 0-4, cognitive load, emotional journey, AI-slop verdict.
 - ${IMPECCABLE}/audit.md — the 5 technical dimensions (a11y, performance, theming, responsive, code quality), score 0-4.
 - ${IMPECCABLE}/polish.md — the final-pass bar (alignment, spacing, consistency, detail).
-- /Users/kaidokoort/Documents/Plepic Business/public-web/design-system.html — the LOCKED Plepic design system reference (palette, type, motion, named rules); tokens in css/styles.css.
+- https://claude.ai/code/artifact/1d34b86f-8fa6-40ad-9631-fd3b6d3865ac — the LOCKED Plepic design system canvas (palette, type, voice, logo, layout, motion, components, named rules); sources in public-web/design-canvas/, tokens in css/styles.css.
 - /Users/kaidokoort/Documents/Plepic Business/public-web/PRODUCT.md — register, users, anti-references.
 A defect is anything that fails this rubric OR that a demanding studio art director would not ship. The AI-slop test is mandatory: if a visitor could say "AI made this," that is a blocking defect.`
 

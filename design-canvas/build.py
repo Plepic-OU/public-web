@@ -265,6 +265,8 @@ main_css = """    .sw-grid { display: grid; grid-template-columns: repeat(6, 1fr
              color: var(--text-on-dark-2); }
     .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
              border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon--4 { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .canon .mono { font-size: 0.92em; }
     .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
                 margin: 0 0 6px; }
     .canon p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
@@ -288,10 +290,20 @@ main_body = """  <div class="board">
 
     <hr class="rule">
     <h2 class="sec">Neutrals</h2>
-    <p class="sec-note">One set of roles, filled twice. A colour is named by the job it does, so the dark column is the light column's answer and not a second palette.%s</p>
+    <p class="sec-note">One set of roles, filled twice. A colour is named by the job it does, so the dark column is the light column's answer and not a second palette. The dark column is a device for an emphasis section, never a theme: the public site is light on every page.%s</p>
     <div class="ngrid">
       <div></div><div class="nhead">On light</div><div class="nhead">On dark</div>
 %s    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Four laws</h2>
+    <p class="sec-note">These are why the palette has the values it has. A new need is met by an existing step, never by a new colour.</p>
+    <div class="canon canon--4">
+      <div><h3>The 73%% rule</h3><p>One hue for every green, 137&deg;, at 73%% saturation. Vivid is the single decorative exception at 100%%. The accent sits at hue 15&deg; with its saturation matched to 73%%, which is why an orange and a green from this palette look like they were mixed by the same hand.</p></div>
+      <div><h3>One accent per viewport</h3><p>Exactly one: a CTA button, or an urgency badge, or an accent dot. Never two, and the mobile sticky CTA yields to whatever is already there. No accent variants either &mdash; states use opacity.</p></div>
+      <div><h3>The vivid text ban</h3><p><span class="mono">--green-vivid</span> is never text on light. It measures 2.5:1 on cream and fails AA. It is facet light and a dark-mode label, nothing else.</p></div>
+      <div><h3>The dark placement rule</h3><p>The public site is light. Every page, no exemptions: no <span class="mono">.on-dark</span>, no dark background, whether written as a token or a hex literal. The device grew onto the homepage in June 2026 and came off in August; a guard now fails any production page that reaches for it. It appears on this canvas only where documenting a device is not using it.</p></div>
+    </div>
 
     <hr class="rule">
     <div class="canon">
@@ -321,6 +333,12 @@ type_css = """    .spec { display: grid; grid-template-columns: 168px 1fr; gap: 
     .m { font-family: var(--font-mono); margin: 0; }
     .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 8px; }
     .stack div { border-top: 1.5px solid var(--text); padding-top: 12px; }
+    .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+             border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                margin: 0 0 6px; }
+    .canon p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .canon .mono { font-size: 0.92em; }
     .stack h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 700;
                 font-family: var(--font-display); }
     .stack p { margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--text-2); }
@@ -346,7 +364,16 @@ type_body = """  <div class="board">
     <hr class="rule">
     <h2 class="sec">Scale</h2>
     <p class="sec-note">Headings ramp with the viewport; body does not. The two clamps below are shown at their upper bound.</p>
-%s%s%s%s%s%s%s  </div>""" % (
+%s%s%s%s%s%s%s
+    <hr class="rule">
+    <h2 class="sec">Four things the scale assumes</h2>
+    <div class="canon">
+      <div><h3>Display is hero-only</h3><p>A non-hero h1 uses clamp(2rem, 2rem + 3vw, 3.5rem). Reaching for the hero ramp on an interior page makes every page look like a landing page.</p></div>
+      <div><h3>Weight carries the bottom</h3><p>At their clamp minimums h3, h4 and body are the same size. What separates them there is weight, not scale, which is why an h3 must never be set at 400.</p></div>
+      <div><h3>Two namespaces, no overlap</h3><p><span class="mono">--fs-</span> is size. <span class="mono">--text-</span> is colour. A token that sets both is a token that will be wrong for one of them.</p></div>
+    </div>
+    <p class="sec-note" style="margin-top: 18px">The Line-Height Trap: a compact component that inherits the body&rsquo;s 1.7 grows a box nobody asked for. Buttons, badges and labels set <span class="mono" style="font-size:0.95em">line-height: normal</span> explicitly.</p>
+  </div>""" % (
     spec("--fs-h2", T["--fs-h2"], "Bitter 700 / 1.15", "d", "font-size: 2.6rem;",
          "Learn the craft from people who ship"),
     spec("--fs-h3", T["--fs-h3"], "Bitter 700 / 1.15", "d", "font-size: 1.65rem;",
@@ -398,6 +425,13 @@ card_css = """    .row { display: grid; grid-template-columns: repeat(3, 300px);
     .state { display: grid; grid-template-columns: repeat(2, 300px); gap: 88px; }
     .state-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
                    text-transform: uppercase; color: var(--text-3); margin: 0 0 14px; }
+    .part { display: grid; grid-template-columns: 130px 130px 1fr; gap: 20px;
+            padding: 11px 0; border-top: 1px solid var(--border); align-items: baseline; }
+    .part b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+              color: var(--text); }
+    .part code { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+                 color: var(--text-3); }
+    .part span { font-size: 0.85rem; line-height: 1.5; color: var(--text-2); }
     .anat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
             border-top: 1.5px solid var(--text); padding-top: 16px; }
     .anat h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
@@ -405,6 +439,29 @@ card_css = """    .row { display: grid; grid-template-columns: repeat(3, 300px);
     .anat p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
     .anat .mono { font-size: 0.92em; }
 """
+
+PARTS = [
+    ("Seat", ".tt-seat",
+     "An untransformed wrapper that owns the hover and the data-tilt hook. A transformed element is hit-tested against its transformed box, so a card that tracked its own hover chased itself out from under a resting pointer: 86 enter and leave events in two and a half seconds, measured. The seat never moves, which is what makes both the hover and the per-frame measurement trustworthy."),
+    ("Column", ".tt-card",
+     "A flex column at 18px 24px padding. It sets no width of its own: the Card fills the column it is handed, and the homepage team grid caps that track at 300px. The vertical padding keeps both rules off the cut edge; the horizontal padding is the margin the sheet shows once it appears."),
+    ("Sheet", ".tt-card::before",
+     "inset 0, --surface, opacity 0 at rest; on hover and focus-within it fades to 1 under --card-shadow-hover while the card rises. A ::before rather than the card's own background, because a background paints under the children's borders and both rules would vanish under the white the moment it faded in."),
+    ("Standing head", ".tt-type",
+     "Mono 9.5px, 0.16em, uppercase, --text-3 warming to --text-2 on hover, at line-height normal against the Line-Height Trap. It carries the 1.5px ink rule on its own top edge, so the rule that holds the column is a property of the first line rather than a separate element. Names the role. Carries no number."),
+    ("Byline", ".tt-name",
+     "Display 700 at 1.4rem, a flex row on align-items: baseline. The baseline sits the set glyph on the name's own baseline, so the two read as one printed line and not as a name with a badge beside it."),
+    ("Set glyph", ".tt-setglyph",
+     "The mark at 15px, the smallest sanctioned size, held at that width by flex: none when a long name claims the rest of the line. The ember head inside it belongs to the locked mark; it is not an accent element and does not spend the card's accent budget."),
+    ("Plate", ".tt-art",
+     "Square by aspect-ratio. Square corners, no frame, a tone instead of an edge: the ground is --bg-alt and is deliberately not swapped for white, because the multiply below pulls the cream up into the photograph as well as dropping the studio white down into the page. Every face picking up the same faint warm cast is the last step of the grade, and the one step identical for all three by construction."),
+    ("Ink wrapper", ".tt-ink",
+     "inset 0, mix-blend-mode multiply. The blend and the filter sit on different elements on purpose: both on one node is the combination engines disagree about, and a filtered image inside a blending wrapper renders the same everywhere."),
+    ("Photograph", ".tt-portrait",
+     "A real photograph, in colour, object-fit cover under --photo-grade. One chain, one selector, all three faces, no per-person override: if a face needs its own number the grade is wrong, not the face. Framing is the exception and it is geometry, never colour, so each card carries a translate and a scale per person."),
+    ("Day-job line", ".tt-role",
+     "The present-tense sentence in body on --text-2, employer in ink because it is the only word a reader scans for. It is also the part that grows: flex: 1 takes the spare height, so the closing 1px rule lands on one line across a row of unequal text."),
+]
 
 def card(who, name, role_html, lifted=False):
     return ("      <div class=\"seat%s\">\n"
@@ -445,6 +502,19 @@ card_body = """  <div class="board">
     </div>
 
     <hr class="rule">
+    <h2 class="sec">Part by part, in source order</h2>
+    <p class="sec-note">Ten parts, and every one of them is answering something that went wrong. This is the component whole: drop a part and the reason it existed comes back.</p>
+%s
+    <hr class="rule">
+    <h2 class="sec">Four things a card never does</h2>
+    <div class="anat">
+      <div><h3>It never rests elevated</h3><p>The Card obeys flat-by-default rather than claiming an exception to it. Nothing at rest but the two rules, and the sheet only while a pointer or the keyboard is on it.</p></div>
+      <div><h3>It never ranks a person</h3><p>No tier and no power number on a card that carries a face. It ranks a real person in public, and the number behind the rank cannot be verified.</p></div>
+      <div><h3>It never spends the accent</h3><p>The card&rsquo;s only warm pixel is the ember head inside the locked mark, so a row of three cards still leaves the viewport&rsquo;s one accent unspent.</p></div>
+      <div><h3>It never depends on the script</h3><p>The lift is CSS, the rotation is JavaScript. With the module absent, on touch, and under reduced motion the sheet still appears and the card still rises. It simply does not rotate.</p></div>
+    </div>
+
+    <hr class="rule">
     <div class="anat">
       <div><h3>The rule opens it</h3><p>A 1.5px ink rule sits above the eyebrow. It is the card's only hard edge; there is no border and no radius.</p></div>
       <div><h3>One grade, one set</h3><p>Every portrait carries the same <span class="mono">--photo-grade</span> and multiplies into the page ground. Never grade a face on its own.</p></div>
@@ -457,6 +527,8 @@ card_body = """  <div class="board">
     card("vootele", "Vootele R&otilde;tov", "Builds <span class=\"tt-company\">Balancing.services</span>."),
     card("joosep", "Joosep Simm", "Ships code at <span class=\"tt-company\">Gridraven</span>."),
     card("joosep", "Joosep Simm", "Ships code at <span class=\"tt-company\">Gridraven</span>.", lifted=True),
+    "".join("    <div class=\"part\"><b>%s</b><code>%s</code><span>%s</span></div>\n"
+            % (n, c, d) for n, c, d in PARTS),
 )
 
 (OUT / "Card.dc.html").write_text(page(card_body, card_css))
@@ -577,6 +649,10 @@ mark_body = """  <div class="board">
 voice_css = """    .slogan { font-family: var(--font-display); font-style: italic;
               font-weight: 500; font-size: 1.75rem; line-height: normal;
               color: var(--green-brand); margin: 0 0 0.6rem; }
+    .mission { font-family: var(--font-display); font-weight: 700; font-size: 2.2rem;
+               line-height: 1.2; letter-spacing: -0.012em; color: var(--text);
+               margin: 0; max-width: 24ch; }
+    .mission em { font-style: normal; color: var(--green-brand); }
     .decoder { display: flex; align-items: baseline; gap: 4px;
                font-family: var(--font-display); font-weight: 700;
                font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.01em;
@@ -624,6 +700,11 @@ voice_body = """  <div class="board">
     <h1>Voice</h1>
     <p class="lede">The words are as fixed as the greens. A tagline that decodes the name and only works in English, an Estonian line that stands in its place, a category line that says what is sold, and one headline pattern. Everything else is written fresh, against the rules at the bottom.</p>
 
+    <h2 class="sec">The sentence everything serves</h2>
+    <p class="sec-note">Brand first, pixels second. Every rule on this canvas exists to make this one claim credible.</p>
+    <p class="mission">Plepic helps a software engineer become an <em>agentic engineer</em>.</p>
+
+    <hr class="rule">
     <h2 class="sec">The tagline, and why it is those four words</h2>
     <p class="sec-note">It is the name's decoder ring. PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half of the name. That is the whole reason it cannot be reworded.</p>
     <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
@@ -899,6 +980,12 @@ motion_css = """    .trk { display: grid; grid-template-columns: 210px 1fr 300px
                                    box-shadow var(--dur-base) var(--ease-settle); }
     .liftseat:hover .liftbox { transform: translateY(calc(-1 * var(--lift-height))); }
     .liftseat:hover .liftbox::before { opacity: 1; box-shadow: var(--card-shadow-hover); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+    .kv { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 11px 0;
+          border-top: 1px solid var(--border); }
+    .kv b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+            color: var(--text); }
+    .kv span { font-size: 0.85rem; line-height: 1.5; color: var(--text-2); }
     .stop { background: var(--bg-alt); padding: 22px 26px; }
     .stop p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
 """ % (CYCLE, T["--ease-settle"], VB_W, VB_H,
@@ -955,6 +1042,24 @@ motion_body = """  <div class="board">
     </div>
 
     <hr class="rule">
+    <h2 class="sec">The signature, and what owns it</h2>
+    <p class="sec-note">On the homepage a crystalline caterpillar crawls, cocoons and unfurls into the locked mark while the code line beneath it becomes the agentic loop. Developer becomes agentic engineer, told twice at once; the synced code line is what makes the arc a domain claim rather than a transformation clich&eacute;.</p>
+    <div class="two">
+      <div class="kv"><b>Movements</b><span>Crawl 4.6s, gather 2.6s, chrysalis 3.0s, unfurl 3.4s, then rest. 13.6s in all. The 22 facets are constant throughout; matter reorganises, geometry never changes.</span></div>
+      <div class="kv"><b>Trigger</b><span>One replay 3000ms after boot, then the visitor owns it: hover or tap the resting mark. It fires only from rest, so a replay never restarts mid-flight and never queues. No scroll trigger, no auto-loop, no button.</span></div>
+      <div class="kv"><b>Springs, not tweens</b><span>A deadband snap and a shader rest gate land the rest pose byte-exact on the locked mark, which then breathes.</span></div>
+      <div class="kv"><b>One locked unit</b><span>The animation and its code block ship together and are retimed together, never one side alone.</span></div>
+      <div class="kv"><b>Fallback</b><span>Reduced motion, 900px or narrower, Save-Data, deviceMemory under 2 or no WebGL2: nothing downloads, a static poster and the finished line render instead. Init failure, context loss or sustained slow frames do the same, never freezing mid-refactor.</span></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Two rules that outrank any effect</h2>
+    <div class="two">
+      <div class="kv"><b>Mark-motion</b><span>Choreographed motion that resolves to the locked mark is sanctioned. Static effects &mdash; glow, gradient, drop-shadow, per-facet opacity, outline-only wings &mdash; stay banned. Motion animates the mark; it never restyles it.</span></div>
+      <div class="kv"><b>Reduced motion</b><span>Every animation has a prefers-reduced-motion branch that lands on the static end state instantly. Shipping without one is a defect, not a polish item.</span></div>
+    </div>
+
+    <hr class="rule">
     <div class="stop">
       <p><b>Reduced motion stops all of it.</b> Every loop, every reveal, every tilt. What it never does is hide something: a reveal that cannot animate shows its content immediately, and the hero holds its from-state fully legible. Motion is the last thing added and the first thing taken away.</p>
     </div>
@@ -969,8 +1074,21 @@ motion_body = """  <div class="board">
 (OUT / "Motion.dc.html").write_text(page(motion_body, motion_css))
 
 # --- Components -------------------------------------------------------------
+# Three sizes by three variants, which the first draft of this artboard got
+# wrong by calling it "two buttons and no third". Sizes and variants are
+# orthogonal on purpose: a variant sets colour and never touches the box.
+BTN_SIZES = [
+    ("btn-lg", "1.15rem &middot; 0.95rem 1.9rem &middot; radius 12px", "Heroes"),
+    ("btn", "1.05rem &middot; 0.7rem 1.4rem &middot; radius 10px", "The default"),
+    ("btn-sm", "0.9rem &middot; 0.5rem 1rem &middot; radius 8px", "Nav, dense UIs"),
+]
+BTN_VARIANTS = [
+    ("btn-primary", "Book a free call"),
+    ("btn-outline", "View curriculum"),
+    ("btn-ghost", "Learn more"),
+]
+
 comp_css = """    .demo { display: flex; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
-    .demo-item { }
     .demo-cap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
                 text-transform: uppercase; color: var(--text-3); margin: 12px 0 0; }
     .demo-note { font-size: 0.85rem; line-height: 1.45; color: var(--text-2);
@@ -982,29 +1100,55 @@ comp_css = """    .demo { display: flex; align-items: flex-start; gap: 40px; fle
            text-decoration: none;
            transition: filter var(--transition-fast), background var(--transition-fast),
                        color var(--transition-fast); }
+    .btn-lg { font-size: 1.15rem; padding: 0.95rem 1.9rem; border-radius: 12px; }
+    .btn-sm { font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 8px; }
     .btn-primary { background: var(--accent); color: var(--text); }
-    .btn-primary:hover { background: var(--accent); filter: brightness(0.92); }
-    .btn-secondary { background: transparent; border-color: var(--text); color: var(--text); }
-    .btn-secondary:hover { background: var(--green-surface); border-color: var(--green-brand);
-                           color: var(--green-dark); filter: none; }
+    .btn-primary:hover { filter: brightness(0.92); }
+    .btn-outline { background: transparent; border-color: var(--text); color: var(--text); }
+    .btn-outline:hover { background: var(--green-surface); border-color: var(--green-brand);
+                         color: var(--green-dark); filter: none; }
+    .btn-ghost { background: transparent; border-color: transparent; color: var(--text);
+                 text-decoration: underline; text-underline-offset: 3px;
+                 padding-left: 0.5rem; padding-right: 0.5rem; }
+    .btn-ghost:hover { background: var(--green-surface); color: var(--green-dark);
+                       filter: none; }
     .btn-focus { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+    .btnrow { display: grid; grid-template-columns: 120px 1fr 250px;
+              gap: 24px; align-items: center; padding: 14px 0;
+              border-top: 1px solid var(--border); }
+    .btnrow-name { font-family: var(--font-mono); font-size: 11px; color: var(--text);
+                   letter-spacing: 0.02em; }
+    .btnrow-set { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btnrow-spec { font-family: var(--font-mono); font-size: 10px; line-height: 1.6;
+                   color: var(--text-3); letter-spacing: 0.02em; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .pair h3 { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+               text-transform: uppercase; margin: 0 0 14px; font-weight: 400; }
+    .pair .yes { color: var(--green-brand); }
+    .pair .no { color: var(--accent); }
+    .pair .why { font-size: 0.88rem; line-height: 1.5; color: var(--text-2);
+                 margin: 14px 0 0; }
     .badge { display: inline-flex; align-items: center; gap: 0.35rem;
              padding: 0.2rem 0.65rem; font-size: 0.75rem; font-weight: 600;
              line-height: normal; border-radius: 20px 4px 16px;
              background: var(--surface); color: var(--text-2);
              border: 1px solid var(--border); }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%%;
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%;
                  background: var(--green-vivid); flex-shrink: 0; }
     .badge-urgency .badge-dot { background: var(--accent); }
-    .on-dark { background: var(--dark); padding: 20px 22px; }
-    .on-dark .badge { background: var(--dark-surface); color: var(--text-on-dark-2);
-                      border-color: var(--border-dark); }
-    .panel { background: var(--surface); border: 1px solid var(--border);
-             border-radius: 16px; padding: var(--space-xl); max-width: 360px; }
+    .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .pbox { padding: 26px; }
+    .pbox--onCream { background: var(--bg); }
+    .pbox--onWhite { background: var(--surface); }
+    .panel-white { background: var(--surface); border: 1px solid var(--border);
+                   border-radius: 14px; padding: var(--space-xl); }
+    .panel-cream { background: var(--bg); border: 1px solid var(--border);
+                   border-radius: 14px; padding: var(--space-xl); }
     .panel-header { font-family: var(--font-mono); font-size: 0.75rem;
                     text-transform: uppercase; letter-spacing: 0.12em;
                     color: var(--green-dark); font-weight: 600; margin: 0 0 10px; }
-    .panel p { font-size: 1rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .panel-white p, .panel-cream p { font-size: 1rem; line-height: 1.55;
+                                     color: var(--text-2); margin: 0; }
     .faq { max-width: 460px; }
     .faq-item { border-bottom: 1px solid var(--border); }
     .faq-row { display: flex; justify-content: space-between; align-items: center;
@@ -1023,9 +1167,10 @@ comp_css = """    .demo { display: flex; align-items: flex-start; gap: 40px; fle
     .navdemo a.ext::after { content: "\\2197"; margin-left: 0.25em;
                             font-size: 0.85em; opacity: 0.55; }
     .codeb { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7;
-             border-radius: 8px; padding: 0.75rem 1rem; background: var(--dark);
-             color: var(--text-on-dark); max-width: 360px; }
-    .codeb .cm { color: var(--text-on-dark-2); }
+             border-radius: 8px; padding: 0.75rem 1rem;
+             box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04);
+             background: var(--surface); color: var(--text-2); max-width: 360px; }
+    .codeb .cm { color: var(--text-3); }
     .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
              border-top: 1.5px solid var(--text); padding-top: 16px; }
     .grid3 h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
@@ -1033,63 +1178,94 @@ comp_css = """    .demo { display: flex; align-items: flex-start; gap: 40px; fle
     .grid3 p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
 """
 
+
+def btn_row(cls, spec, use):
+    size = "" if cls == "btn" else " " + cls
+    return ("    <div class=\"btnrow\">\n"
+            "      <span class=\"btnrow-name\">.%s</span>\n"
+            "      <span class=\"btnrow-set\">%s</span>\n"
+            "      <span class=\"btnrow-spec\">%s<br>%s</span>\n"
+            "    </div>\n" % (
+                cls,
+                "".join("<a class=\"btn%s %s\" href=\"#\">%s</a>" % (size, v, label)
+                        for v, label in BTN_VARIANTS),
+                spec, use))
+
+
 comp_body = """  <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Components</h1>
-    <p class="lede">The furniture every page uses. Two buttons, one badge, one panel, one row. Anything a page needs that is not here is a page's own problem and does not become a component until a second page wants it.</p>
+    <p class="lede">The furniture every page uses. Anything a page needs that is not here is a page&rsquo;s own problem, and does not become a component until a second page wants it.</p>
 
-    <h2 class="sec">Buttons</h2>
-    <p class="sec-note">Two, and no third. Both are 10px radius with a 1.5px border, so they occupy the same box whether the border shows or not. Hover them.</p>
-    <div class="demo">
-      <div class="demo-item">
-        <a class="btn btn-primary" href="#">Talk to Kaido</a>
-        <p class="demo-cap">Primary</p>
-        <p class="demo-note">The ember, once per screen. It is the only place the accent appears in type.</p>
-      </div>
-      <div class="demo-item">
-        <a class="btn btn-secondary" href="#">See the curriculum</a>
-        <p class="demo-cap">Secondary</p>
-        <p class="demo-note">Ink border, ink text. Green arrives on hover only, which is the whole rationing rule in one control.</p>
-      </div>
-      <div class="demo-item">
-        <a class="btn btn-secondary btn-focus" href="#">Keyboard focus</a>
+    <h2 class="sec">The button system</h2>
+    <p class="sec-note">Three sizes by three variants, and the two axes never touch: a variant sets colour and nothing else, a size sets the box and nothing else. On light, outline and ghost are ink, and hover fills them with <span class="mono" style="font-size:0.92em">--green-surface</span> under <span class="mono" style="font-size:0.92em">--green-dark</span> text. Hover any of them.</p>
+%s
+    <div class="demo" style="margin-top: 24px">
+      <div>
+        <a class="btn btn-outline btn-focus" href="#">Keyboard focus</a>
         <p class="demo-cap">Focus ring</p>
         <p class="demo-note">2px <span class="mono" style="font-size:0.92em">--green-dark</span>, offset 2px. Never removed, never restyled per control.</p>
       </div>
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Badges</h2>
-    <p class="sec-note">The asymmetric radius is the signature: 20px, 4px, 16px. It is the one shape on the site that is deliberately not a rounded rectangle.</p>
-    <div class="demo">
-      <div class="demo-item">
-        <span class="badge"><span class="badge-dot"></span>Cohort open</span>
-        <p class="demo-cap">Default</p>
-        <p class="demo-note">Green dot. A state that is simply true.</p>
+    <h2 class="sec">Primary plus ghost, never two solids</h2>
+    <p class="sec-note">The hero pairing, and the reason the ghost variant exists: do this, or just look first.</p>
+    <div class="pair">
+      <div>
+        <h3 class="yes">This</h3>
+        <div class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-ghost" href="#">View curriculum &rarr;</a></div>
+        <p class="why">One thing to do and one thing to read. The eye lands on the solid, and the link is there for the visitor who is not ready.</p>
       </div>
-      <div class="demo-item">
-        <span class="badge badge-urgency"><span class="badge-dot"></span>Closing soon</span>
-        <p class="demo-cap">Urgency</p>
-        <p class="demo-note">The dot goes ember. Nothing else changes, because urgency is not a different component.</p>
-      </div>
-      <div class="demo-item on-dark">
-        <span class="badge"><span class="badge-dot"></span>Cohort open</span>
-        <p class="demo-cap" style="color: var(--text-on-dark-2)">On dark</p>
+      <div>
+        <h3 class="no">Never this</h3>
+        <div class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-outline" href="#">View curriculum</a></div>
+        <p class="why">Two solid-looking buttons compete and neither wins. Use <span class="mono" style="font-size:0.92em">.btn-outline</span> only where no primary shares the row.</p>
       </div>
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Panel, row and code</h2>
-    <p class="sec-note">A panel is the only element that carries a border and a radius at rest. A row carries neither: it is two hairlines and the space between them.</p>
-    <div class="demo">
-      <div class="demo-item">
-        <div class="panel">
+    <h2 class="sec">Panels, never same on same</h2>
+    <p class="sec-note">White on cream, cream on white. Always a full 1px border, 14px radius. The green surface marks a favoured option and nothing else.</p>
+    <div class="panels">
+      <div class="pbox pbox--onCream">
+        <div class="panel-white">
           <p class="panel-header">What you leave with</p>
           <p>A working agent setup in your own repository, and the judgement to know when to reach for one.</p>
         </div>
-        <p class="demo-cap">Panel &middot; 16px radius</p>
+        <p class="demo-cap">.panel-white on cream &middot; the default</p>
       </div>
-      <div class="demo-item">
+      <div class="pbox pbox--onWhite">
+        <div class="panel-cream" data-demo="panel-cream">
+          <p class="panel-header">What you leave with</p>
+          <p>A working agent setup in your own repository, and the judgement to know when to reach for one.</p>
+        </div>
+        <p class="demo-cap">.panel-cream on white &middot; the inverse</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Badges, rows, code and nav</h2>
+    <p class="sec-note">The badge radius is the signature: 20px, 4px, 16px, the one shape on the site deliberately not a rounded rectangle. Inline code carries the only resting shadow anywhere.</p>
+    <div class="demo">
+      <div>
+        <span class="badge"><span class="badge-dot"></span>Cohort open</span>
+        <p class="demo-cap">Default</p>
+        <p class="demo-note">Green dot. A state that is simply true, and the badge&rsquo;s only green.</p>
+      </div>
+      <div>
+        <span class="badge badge-urgency"><span class="badge-dot"></span>Closing soon</span>
+        <p class="demo-cap">Urgency</p>
+        <p class="demo-note">The dot goes ember, and it spends the viewport&rsquo;s one accent. It never appears while a CTA button is visible.</p>
+      </div>
+      <div>
+        <div class="codeb"><span class="cm"># the shape of a session</span><br>claude --resume</div>
+        <p class="demo-cap">Code &middot; 8px radius</p>
+        <p class="demo-note">The one resting shadow: 0 2px 8px at 4 percent ink.</p>
+      </div>
+    </div>
+    <div class="demo" style="margin-top: 28px">
+      <div>
         <div class="faq">
           <div class="faq-item faq-item--open">
             <div class="faq-row">Do I need to know Python?</div>
@@ -1098,31 +1274,24 @@ comp_body = """  <div class="board">
           <div class="faq-item"><div class="faq-row">How much of it is hands on keyboard?</div></div>
         </div>
         <p class="demo-cap">Row &middot; open and closed</p>
+        <p class="demo-note">Two hairlines and the space between them. No box, no radius, no shadow.</p>
       </div>
-      <div class="demo-item">
-        <div class="codeb"><span class="cm"># the shape of a session</span><br>claude --resume<br>&nbsp;&nbsp;--effort high</div>
-        <p class="demo-cap">Code &middot; 8px radius</p>
-        <p class="demo-note">Mono at 0.75rem on ink. Comments in the quieter ink; no syntax colouring beyond that.</p>
+      <div>
+        <nav class="navdemo">
+          <a href="#" class="cur">Training</a><a href="#">Scopeful</a><a href="#">Jobs</a><a href="#" class="ext">Skill Tree</a>
+        </nav>
+        <p class="demo-cap">Navigation</p>
+        <p class="demo-note">Quieter ink at rest, full ink on hover, green and underlined for the page you are on. An external link earns an arrow and nothing else.</p>
       </div>
     </div>
-
-    <hr class="rule">
-    <h2 class="sec">Navigation</h2>
-    <p class="sec-note">Quieter ink at rest, full ink on hover, green and underlined for the page you are on. An external link earns an arrow and nothing else.</p>
-    <nav class="navdemo">
-      <a href="#" class="cur">Training</a>
-      <a href="#">Scopeful</a>
-      <a href="#">Jobs</a>
-      <a href="#" class="ext">Skill Tree</a>
-    </nav>
 
     <hr class="rule">
     <div class="grid3">
-      <div><h3>Two of anything, not five</h3><p>Two buttons, two eases, two inks that carry text. A third variant has to retire one of the first two.</p></div>
+      <div><h3>Sizes and variants are orthogonal</h3><p>Three by three, not nine components. A variant that changes the box is a new size pretending to be a colour.</p></div>
       <div><h3>State, not decoration</h3><p>A border, a shadow, a surface and a green fill are all states. At rest a component owns as few of them as it can.</p></div>
       <div><h3>The box is optional</h3><p>Most things are a rule and some space. Reach for a panel only when the content genuinely has to be lifted off the page.</p></div>
     </div>
-  </div>"""
+  </div>""" % "".join(btn_row(c, spec, use) for c, spec, use in BTN_SIZES)
 
 (OUT / "Components.dc.html").write_text(page(comp_body, comp_css))
 
@@ -1184,7 +1353,7 @@ layout_body = """  <div class="board">
     <p class="lede">One scale, one container, one section rhythm. Vertical space is the only thing that separates most blocks, so the scale below is doing more work than any component on this canvas.</p>
 
     <h2 class="sec">The space scale</h2>
-    <p class="sec-note">Eight steps, each roughly a third larger than the last. A value not on this list is a mistake, not a nuance.</p>
+    <p class="sec-note">Eight steps, each roughly a third larger than the last. A value not on this list is a mistake, not a nuance. The rhythm is tight groupings and generous separations: the same spacing everywhere reads as a wireframe nobody finished.</p>
 %s
     <hr class="rule">
     <h2 class="sec">The container</h2>
@@ -1208,6 +1377,12 @@ layout_body = """  <div class="board">
     </div>
 
     <hr class="rule">
+    <h2 class="sec">Two rules about arrangement</h2>
+    <div class="two" style="margin-bottom: 32px">
+      <div class="kv"><b>Asymmetric</b><span>1.4fr / 0.6fr, never 50/50. A page split down the middle presents two equal options and argues for neither. The hero, the comparison blocks and the panel rows all lean.</span></div>
+      <div class="kv"><b>Not centred</b><span>No centred-everything layouts on desktop. Centring is for one short thing, not for a page of them.</span></div>
+    </div>
+
     <h2 class="sec">Radii</h2>
     <p class="sec-note">Five values, each with one owner. The card and every rule-based block have no radius at all.</p>
     <div class="rad">
@@ -1318,6 +1493,7 @@ hero_body = """  <div class="board">
     <div class="anno"><b>h1</b><span>clamp(3rem, 2.5rem + 3.5vw, 4.8rem) at -0.025em and 1.05 line height. Its own ramp, not the page's --fs-h2. The break after the comma is a hard rule in the markup, never a wrap.</span></div>
     <div class="anno"><b>text track</b><span>580px maximum, and the supporting sentence 480px. Below 1015px the headline ramps rather than sitting at its cap, because the stage holds a hard 440px and the two would collide.</span></div>
     <div class="anno"><b>stage</b><span>440px, hidden entirely below 900px. The page loses the butterfly rather than shrinking it.</span></div>
+    <div class="anno"><b>accent</b><span>The viewport&rsquo;s one accent element is the hero body CTA. The nav CTA is an ink outline so it does not compete, and an urgency badge never appears while that CTA is visible.</span></div>
     <div class="anno"><b>entrance</b><span>A settle, not an arrival: content starts 6px low and fully legible, and rises over 600ms once the fonts have landed. No load-bearing element ever starts invisible.</span></div>
 
     <hr class="rule">
@@ -1329,6 +1505,117 @@ hero_body = """  <div class="board">
 
 (OUT / "Hero.dc.html").write_text(page(hero_body, hero_css))
 
+# --- Rules ------------------------------------------------------------------
+# Section 9 of the canon page, which had no home on the canvas at all. These
+# are the rules that say NO, and they are the half of a design system that
+# actually holds: a palette can be re-derived from a stylesheet, a prohibition
+# cannot. Each one names the failure it prevents rather than stating a taste.
+DO = [
+    ("--green-brand for text on light", "It clears AA on cream. It is the only green that does."),
+    ("--green-dark for body needing AAA", "The step below brand, for long reading."),
+    ("--green-vivid for decoration only", "Facets, dark-mode links and labels. Never a paragraph."),
+    ("--accent for exactly one element", "Per viewport. A CTA button, or an urgency badge, or an accent dot."),
+    ("Asymmetric grids", "1.4fr / 0.6fr, never 50/50. A page split down the middle has no argument."),
+    ("Spacing rhythm", "Tight groupings, generous separations. Never the same spacing everywhere."),
+    ("line-height: normal on compact components", "Buttons, badges, labels. The Line-Height Trap is a body value inherited into a control."),
+    ("Light mode, every page", "Dark sections are emphasis, never a toggle."),
+]
+DONT = [
+    ("--green-vivid as text on light", "2.5:1 on cream. It fails AA and always will."),
+    ("Two accent elements in one viewport", "One CTA button or one urgency badge or one accent dot. Never two."),
+    ("Accent hover variants", "Use opacity for states. A second orange is a second brand."),
+    ("Cyan, neon, glassmorphism, gradient text, glow", "None of it. No SVG blur or glow filters either."),
+    ("All-caps headings", "Except mono labels and the trust bar."),
+    ("Centred-everything layouts on desktop", "Centring is for a single short thing, not a page."),
+    ("AI slop aesthetics", "The generic 2024-2025 look. If it could be any company, it is not this one."),
+    ("#8a8a80 as readable text", "--text-3 at #6b6b60 is the floor."),
+    ("HUD", "No dark surface, no glow, no XP or power bars. The tabletop earns its play in physics and feedback, never by relaxing a rule."),
+    ("Sound on a marketing page", "Reserved for the cohort loadout builder."),
+    ("Tiers or power numbers on people", "It ranks a real person in public, and the number behind the rank cannot be verified."),
+]
+SHADOWS = [
+    ("Code ambient", "0 2px 8px rgba(28,28,26,0.04)", "The one resting shadow on the whole site, under inline code."),
+    ("Hover lift", "0 8px 24px rgba(28,28,26,0.06)", "With translateY(-2px). Interactive cards, on hover only."),
+    ("Tooltip", "0 8px 24px rgba(28,28,26,0.1)", "Floating layers."),
+    ("Featured glow", "0 4px 24px rgba(0,198,56,0.1)", "The featured pricing card. At most one per page."),
+    ("Accent pulse", "rgba(226,108,69,0.3) to transparent", "A keyframed ring. The CTA heartbeat, 3s loop."),
+    ("Card sheet", T["--card-shadow-hover"], "Under a sheet of --surface behind the column. Hover and focus only; CI fails a resting box-shadow on any .tt-* rule."),
+]
+BOUGHT = [
+    ("A photograph of a person is not raw material",
+     "Triangulating three faces into facets did not make them art direction, it made them distorted, and the person in the photograph is the one who has to live with it. Crop it, grade it, or replace it. Do not redraw it."),
+    ("Judge a flourish at the count it ships at",
+     "A grain tile, a shard backdrop and a foil band each read as craft on one specimen. Printed three times across a row they are the loudest thing in the section and the faces are the quietest."),
+    ("A resting shadow is the flat rule broken by habit",
+     "The offset was not argued for, it arrived with the genre. When a card needs separation the answer is a rule or a tint; elevation waits for a pointer."),
+    ("One grade for a set, never a correction per face",
+     "Three shots under three white balances are fixed the way a press run fixes them, by sending every plate through the same chain. The moment one face gets its own numbers the set stops being a set. CI enforces this one."),
+]
+
+rules_css = """    .dd { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .dd h3 { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+             text-transform: uppercase; margin: 0 0 14px; font-weight: 400; }
+    .dd .do-h { color: var(--green-brand); }
+    .dd .no-h { color: var(--accent); }
+    .r { padding: 10px 0; border-top: 1px solid var(--border); }
+    .r b { display: block; font-family: var(--font-display); font-weight: 700;
+           font-size: 0.95rem; line-height: 1.25; color: var(--text); }
+    .r span { display: block; font-size: 0.85rem; line-height: 1.45;
+              color: var(--text-2); margin-top: 3px; }
+    .flat { background: var(--bg-alt); padding: 24px 28px; }
+    .flat p { font-size: 0.95rem; line-height: 1.6; color: var(--text-2); margin: 0 0 10px; }
+    .flat p:last-child { margin: 0; }
+    .sh { display: grid; grid-template-columns: 150px 320px 1fr; gap: 20px;
+          padding: 11px 0; border-top: 1px solid var(--border); align-items: baseline; }
+    .sh b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .sh code { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+               color: var(--text-3); }
+    .sh span { font-size: 0.85rem; line-height: 1.45; color: var(--text-2); }
+    .bought { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+    .bought h4 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                 margin: 0 0 6px; color: var(--text); }
+    .bought p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+"""
+
+rules_body = """  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Rules</h1>
+    <p class="lede">The half of a design system that actually holds. A palette can be re-derived from a stylesheet; a prohibition cannot. Every line here names the failure it prevents, because a rule whose reason is lost is the first one somebody argues away.</p>
+
+    <div class="dd">
+      <div>
+        <h3 class="do-h">Do</h3>
+%s      </div>
+      <div>
+        <h3 class="no-h">Never</h3>
+%s      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Flat by default</h2>
+    <div class="flat">
+      <p>A resting element that needs separation gets a 1px or 1.5px full border, or a tint. Never a shadow. Shadows are state &mdash; hover, floating &mdash; or the one featured exception per page. The ghost-card pattern, a border plus a wide resting shadow, is prohibited outright.</p>
+      <p>The living tabletop claimed an exception here once and lost it. The Card carried a printed ink offset under it at rest until 2026-09-08, and what replaced it is the rule kept rather than bent: a column with no shadow at all until a pointer arrives.</p>
+    </div>
+
+    <h2 class="sec" style="margin-top: 32px">The whole shadow vocabulary</h2>
+    <p class="sec-note">Six, and no seventh. If a new surface needs depth, it is using one of these or it is not getting depth.</p>
+%s
+    <hr class="rule">
+    <h2 class="sec">Four rules the trading card bought</h2>
+    <p class="sec-note">The first instructor card was rejected on four counts at once on 2026-09-08. Each one generalises past that card, which is why each is a rule here rather than a note in a record.</p>
+    <div class="bought">
+%s    </div>
+  </div>""" % (
+    "".join("        <div class=\"r\"><b>%s</b><span>%s</span></div>\n" % (a, b) for a, b in DO),
+    "".join("        <div class=\"r\"><b>%s</b><span>%s</span></div>\n" % (a, b) for a, b in DONT),
+    "".join("    <div class=\"sh\"><b>%s</b><code>%s</code><span>%s</span></div>\n"
+            % (a, b, c) for a, b, c in SHADOWS),
+    "".join("      <div><h4>%s</h4><p>%s</p></div>\n" % (a, b) for a, b in BOUGHT),
+)
+
+(OUT / "Rules.dc.html").write_text(page(rules_body, rules_css))
+
 # --- canvas.json ------------------------------------------------------------
 # Three pages, because ten artboards on one plane is a scroll, not a system.
 # Frames are fixed and surplus frame is harmless while clipping is not, so each
@@ -1336,20 +1623,21 @@ hero_body = """  <div class="board">
 # 1120px wide after any content change.
 PAGES = [
     ("identity", "Identity", [
-        ("Main.dc.html", "Foundations", 1490),
-        ("Type.dc.html", "Type", 1450),
-        ("Voice.dc.html", "Voice", 2240),
+        ("Main.dc.html", "Foundations", 1950),
+        ("Type.dc.html", "Type", 1770),
+        ("Voice.dc.html", "Voice", 2490),
         ("Logo.dc.html", "Logo", 1210),
     ]),
     ("system", "System", [
-        ("Layout.dc.html", "Layout", 1710),
-        ("Motion.dc.html", "Motion", 2150),
-        ("Components.dc.html", "Components", 1860),
+        ("Layout.dc.html", "Layout", 1900),
+        ("Motion.dc.html", "Motion", 2950),
+        ("Components.dc.html", "Components", 2360),
+        ("Rules.dc.html", "Rules", 2250),
     ]),
     ("objects", "Objects", [
         ("Mark.dc.html", "The mark", 2130),
-        ("Card.dc.html", "The card", 1760),
-        ("Hero.dc.html", "Hero", 1725),
+        ("Card.dc.html", "The card", 3100),
+        ("Hero.dc.html", "Hero", 1790),
     ]),
 ]
 INTERACTIVE = {"Motion.dc.html", "Components.dc.html", "Card.dc.html"}

@@ -23,8 +23,9 @@ const DARK_NEUTRALS = new Set([
   'rgb(38, 38, 36)', // --dark-surface #262624
 ]);
 
-// design-system.html is deliberately absent: it is the specimen page that
-// documents the dark device, and documenting a device is not using it.
+// Every public page is listed. design-system.html was the one exemption, as the
+// specimen page documenting the dark device; it was retired into the Claude
+// Design canvas on 2026-09-10, so the rule now has no exemptions at all.
 const PAGES = [
   { name: 'homepage', path: '/' },
   { name: 'training', path: '/training/' },

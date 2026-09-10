@@ -19,7 +19,7 @@
       "x": 0,
       "y": 0,
       "w": 1120,
-      "h": 1490,
+      "h": 1950,
       "title": "Foundations",
       "print": "flow",
       "page": "identity"
@@ -29,7 +29,7 @@
       "x": 1240,
       "y": 0,
       "w": 1120,
-      "h": 1450,
+      "h": 1770,
       "title": "Type",
       "print": "flow",
       "page": "identity"
@@ -39,7 +39,7 @@
       "x": 2480,
       "y": 0,
       "w": 1120,
-      "h": 2240,
+      "h": 2490,
       "title": "Voice",
       "print": "flow",
       "page": "identity"
@@ -47,7 +47,7 @@
     {
       "file": "Logo.dc.html",
       "x": 0,
-      "y": 2400,
+      "y": 2650,
       "w": 1120,
       "h": 1210,
       "title": "Logo",
@@ -59,7 +59,7 @@
       "x": 0,
       "y": 0,
       "w": 1120,
-      "h": 1710,
+      "h": 1900,
       "title": "Layout",
       "print": "flow",
       "page": "system"
@@ -69,7 +69,7 @@
       "x": 1240,
       "y": 0,
       "w": 1120,
-      "h": 2150,
+      "h": 2950,
       "title": "Motion",
       "print": "flow",
       "page": "system",
@@ -80,11 +80,21 @@
       "x": 2480,
       "y": 0,
       "w": 1120,
-      "h": 1860,
+      "h": 2360,
       "title": "Components",
       "print": "flow",
       "page": "system",
       "is_interactive": true
+    },
+    {
+      "file": "Rules.dc.html",
+      "x": 0,
+      "y": 3110,
+      "w": 1120,
+      "h": 2250,
+      "title": "Rules",
+      "print": "flow",
+      "page": "system"
     },
     {
       "file": "Mark.dc.html",
@@ -101,7 +111,7 @@
       "x": 1240,
       "y": 0,
       "w": 1120,
-      "h": 1760,
+      "h": 3100,
       "title": "The card",
       "print": "flow",
       "page": "objects",
@@ -112,7 +122,7 @@
       "x": 2480,
       "y": 0,
       "w": 1120,
-      "h": 1725,
+      "h": 1790,
       "title": "Hero",
       "print": "flow",
       "page": "objects"
