@@ -27,14 +27,17 @@ Deleted outright. Git recovers anything that turns out to be needed; a file left
 | `card-directions.html`, `card-editorial.html` | The chosen direction shipped on 2026-09-08. The rules the rejected ones bought are on the Rules artboard |
 | `font-compare.html` | The Type artboard |
 | `_archive/prototypes/`, 16 pages | Nowhere. Superseded palette and logo explorations |
+| `PRODUCT.md` | The canvas. It was the `/impeccable` skill's project brief, and four of its seven sections had become a second statement of rules the canvas now owns |
+| `.impeccable/design.json`, 17 KB | Nowhere. A June snapshot of the design system in JSON, three months stale, carrying tonal ramps that were never in the stylesheet |
 Every list that existed to hide these is now shorter: the deploy step's orphan list, the claims gate's `INTERNAL_PAGES`, the live-server excludes and two `.gitignore` entries. A design-guard assertion lost its subject and was re-pointed at the canvas rather than deleted, so the cream-panel rule still bites.
-Left alone deliberately: `demo-tenders.html` is a Scopeful sales demo, not design noise; `metamorphosis-hero.html` is a locked asset with its own test. Both are internal, and the hero lab is publicly reachable, which is worth a decision but is not this PR's.
+Left alone deliberately: `demo-tenders.html` is a Scopeful sales demo, not design noise; `metamorphosis-hero.html` is a locked asset with its own test. Both are internal, and the hero lab is publicly reachable, which is worth a decision but is not this PR's. The two dated `.impeccable/critique/` records survive as records, though what they critique is a page that no longer exists.
+The `/impeccable` skill's scripts are vendored and self-updating, so they were not patched: `context.mjs` still hard-codes the `PRODUCT.md` filename and will offer to interview and write a new one in this repo. `CLAUDE.md` now says the answer is the canvas, which is the only durable place to put that, since a patched vendored script is overwritten on the next skill update.
 ## 4. What public cost
 A Claude Design canvas that declares PNG/PDF export can be shared inside the org only. One without export can be shared by public link. Public was the decision, so export is not declared and the canvas's Export buttons do nothing.
 The canvas is published private and has to be set public once, by hand, from its share menu. Nothing in this repo can do that.
 ## 5. Linking it, and the claim that is now plainly false
 `PRODUCT.md` states the design system "is public and canonical at /design-system (design-system.html + css/styles.css)". That page has now been deleted, so the sentence names a file that does not exist. It was already false: the deploy step had been stripping the page from every build for as long as the list existed, and the URL 404s.
-Two things are needed, and neither is in this PR. `/design-system` should redirect to the canvas. `PRODUCT.md` should name the canvas. Kaido owns that file and rejected an edit to it on 2026-09-10, so it is proposed here rather than changed.
+One thing is still needed and is not in this PR: `/design-system` should redirect to the canvas. `PRODUCT.md` itself was sunset on 2026-09-10 rather than corrected, so the false sentence is gone with the file.
 ## 6. The duplication that is left, and why
 Rules have consolidated. Values have not.
 `css/styles.css` still owns every token, and `build.py` reads them out of it at build time so the canvas cannot drift into a second set of numbers. That is one direction, generated, and it is not the destination Kaido named: eventually the stylesheet is generated from the canvas, not the other way round.
@@ -53,6 +56,5 @@ The gaps closed before anything was deleted: the 73 percent rule, the one-accent
 | The hero is ruled out | Unchanged. Documented as a composition, never rebuilt | It is a page and a WebGL module, not a component |
 ## 9. Open
 1. Where plepic.com links to the canvas, and the `/design-system` redirect.
-2. `PRODUCT.md` naming the canvas instead of a deleted file.
-3. Reversing the value direction, so `css/styles.css` is generated. Starts with the guards, not the generator.
-4. Whether `metamorphosis-hero.html` should stay publicly reachable.
+2. Reversing the value direction, so `css/styles.css` is generated. Starts with the guards, not the generator.
+3. Whether `metamorphosis-hero.html` should stay publicly reachable.
