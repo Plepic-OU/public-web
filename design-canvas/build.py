@@ -1630,13 +1630,13 @@ PAGES = [
     ]),
     ("system", "System", [
         ("Layout.dc.html", "Layout", 1900),
-        ("Motion.dc.html", "Motion", 2950),
-        ("Components.dc.html", "Components", 2360),
+        ("Motion.dc.html", "Motion \u00b7 live", 2950),
+        ("Components.dc.html", "Components \u00b7 live", 2360),
         ("Rules.dc.html", "Rules", 2250),
     ]),
     ("objects", "Objects", [
         ("Mark.dc.html", "The mark", 2130),
-        ("Card.dc.html", "The card", 3100),
+        ("Card.dc.html", "The card \u00b7 live", 3100),
         ("Hero.dc.html", "Hero", 1790),
     ]),
 ]
@@ -1668,9 +1668,17 @@ canvas = {
                  "with the stylesheet, the stylesheet is right and this canvas is stale. "
                  "No artboard carries a price, a date or any other value that moves; "
                  "the Voice artboard lists what stays in the page instead."},
-        {"id": "motion-live", "x": 1240, "y": -140, "w": 420, "page": "system",
-         "text": "Motion and Components are live. Hover the buttons, the card and the "
-                 "right-hand butterfly."},
+        {"id": "motion-live", "x": 1240, "y": -140, "w": 460, "page": "system",
+         "text": "These three run. Open one with the play button above its frame to watch "
+                 "it at full size: at canvas zoom the mark's breath is a few pixels and "
+                 "reads as still. Then hover the buttons, the card, and the right-hand "
+                 "butterfly."},
+        {"id": "where-motion", "x": 2480, "y": -190, "w": 460, "page": "identity",
+         "text": "Nothing on this page moves. The moving half of the system \u2014 the "
+                 "durations, the eases, the reveal, the mark breathing and beating, the "
+                 "card lifting \u2014 is on the System page, marked live. Open an artboard "
+                 "with the play button above its frame; the canvas view is too small to "
+                 "read motion in."},
     ],
     "launch": {"view": "canvas", "page": "identity"},
 }

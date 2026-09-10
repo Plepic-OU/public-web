@@ -70,7 +70,7 @@
       "y": 0,
       "w": 1120,
       "h": 2950,
-      "title": "Motion",
+      "title": "Motion \u00b7 live",
       "print": "flow",
       "page": "system",
       "is_interactive": true
@@ -81,7 +81,7 @@
       "y": 0,
       "w": 1120,
       "h": 2360,
-      "title": "Components",
+      "title": "Components \u00b7 live",
       "print": "flow",
       "page": "system",
       "is_interactive": true
@@ -112,7 +112,7 @@
       "y": 0,
       "w": 1120,
       "h": 3100,
-      "title": "The card",
+      "title": "The card \u00b7 live",
       "print": "flow",
       "page": "objects",
       "is_interactive": true
@@ -141,9 +141,17 @@
       "id": "motion-live",
       "x": 1240,
       "y": -140,
-      "w": 420,
+      "w": 460,
       "page": "system",
-      "text": "Motion and Components are live. Hover the buttons, the card and the right-hand butterfly."
+      "text": "These three run. Open one with the play button above its frame to watch it at full size: at canvas zoom the mark's breath is a few pixels and reads as still. Then hover the buttons, the card, and the right-hand butterfly."
+    },
+    {
+      "id": "where-motion",
+      "x": 2480,
+      "y": -190,
+      "w": 460,
+      "page": "identity",
+      "text": "Nothing on this page moves. The moving half of the system \u2014 the durations, the eases, the reveal, the mark breathing and beating, the card lifting \u2014 is on the System page, marked live. Open an artboard with the play button above its frame; the canvas view is too small to read motion in."
     }
   ],
   "launch": {
