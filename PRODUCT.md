@@ -10,11 +10,11 @@ Developers with 2+ years of experience and the CTOs / engineering leads of softw
 
 ## Product Purpose
 
-plepic.com is the marketing site for Plepic OÜ: agentic engineering training (Claude Code) for dev teams, plus the Scopeful product page. Static HTML + CSS, no build system. Success is booked calls and training signups via external links; there are no on-site forms. The design system itself is public and canonical at /design-system (design-system.html + css/styles.css).
+plepic.com is the marketing site for Plepic OÜ: agentic coding training (Claude Code) for dev teams, plus the Scopeful product page. Static HTML + CSS, no build system. Success is booked calls and training signups via external links; there are no on-site forms. The design system itself is public and canonical at /design-system (design-system.html + css/styles.css).
 
 ## Brand Personality
 
-Warm, grounded, distinctive. Credible and calm: expert without hype. Warmth in service of authority, never cuteness. Tagline: "Curious play. Epic growth." In English the tagline is the brand line; the wordplay is inside the name, so it does not translate and Estonian materials carry "tulemuspõhine digimuutus" in its place, naming the outcome. The category line, "agentic engineering for dev teams", is separate from both and is the training page's headline. Three pillars: Agentic engineering (what we do), Performance and learning held in conscious tension (culture), Aligned incentives (we win only when clients win).
+Warm, grounded, distinctive. Credible and calm: expert without hype. Warmth in service of authority, never cuteness. Tagline: "Curious play. Epic growth." The EN brand line names the category (agentic coding for dev teams); the ET line names the outcome (tulemuspõhine digimuutus). Three pillars: Agentic coding (what we do), Performance and learning held in conscious tension (culture), Aligned incentives (we win only when clients win).
 
 ## Anti-references
 

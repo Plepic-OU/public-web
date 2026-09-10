@@ -2,9 +2,52 @@
 """Generate the Claude Design canvas artboards from the live site source.
 
 The canvas must not become a second set of values. Everything a rule can be
-read off is pulled from css/styles.css and index.html at build time: the mark
-geometry verbatim, the token block, the card measurements. Edit the site,
-re-run this, re-seed. Nothing here restates a value the stylesheet owns.
+read off is pulled from css/styles.css, index.html and design-system.html at
+build time: both inlinings of the mark verbatim, the token block, the card
+measurements, the animation keyframes, the facet slot table. Nothing here
+restates a value the repository owns.
+
+The build refuses rather than lies. It stops unless the mark is 22 facets, the
+hinge partition is 11/11, and exactly two facet slots are swapped. Add a check
+here whenever you add a claim a value could falsify.
+
+Ten artboards on three pages. Identity: Foundations, Type, Voice, Logo.
+System: Layout, Motion, Components. Objects: Mark, Card, Hero. Motion and
+Components are live; hovering does on the canvas what it does on the site.
+
+To update the published canvas after a design change:
+
+  1. python3 design-canvas/build.py
+  2. Seed a fresh page from the bundled `design` skill's template:
+
+     node "<skill dir>/seed-canvas.mjs" \
+       --template "<skill dir>/payload.template.html" \
+       --out plepic-design-system.html --title "Plepic Design System" \
+       --artboard Main.dc.html   --artboard Type.dc.html \
+       --artboard Voice.dc.html  --artboard Logo.dc.html \
+       --artboard Layout.dc.html --artboard Motion.dc.html \
+       --artboard Components.dc.html \
+       --artboard Mark.dc.html   --artboard Card.dc.html \
+       --artboard Hero.dc.html \
+       --image joosep.jpg --image kaido.jpg --image vootele.jpg \
+       --canvas canvas.json
+
+  3. node "<skill dir>/seed-canvas.mjs" --check plepic-design-system.html
+  4. Republish to the SAME artifact URL. Publishing without it creates a second
+     canvas, which is the one failure the whole exercise exists to prevent.
+
+Three things that look like oversights and are not. Export is not declared,
+because a canvas offering PNG/PDF can be shared inside the org only and this
+one is public. The seeded page is gitignored, because it is ~2.6 MB of editor
+payload these sources rebuild. Ligatures are off canvas-wide, because
+JetBrains Mono ligates a double hyphen into one long dash and silently renames
+every token.
+
+Frames in canvas.json are fixed. Surplus frame is harmless, clipping is not:
+after a content change, measure the real height at 1120px wide and give the
+frame about five percent of slack.
+
+Scope and rationale: docs/specs/2026-09-08-claude-design-sync.md.
 """
 import json
 import pathlib
@@ -1290,7 +1333,7 @@ hero_body = """  <div class="board">
 # Three pages, because ten artboards on one plane is a scroll, not a system.
 # Frames are fixed and surplus frame is harmless while clipping is not, so each
 # height is the measured content height plus about five percent. Re-measure at
-# 1120px wide after any content change; design-canvas/README.md says how.
+# 1120px wide after any content change.
 PAGES = [
     ("identity", "Identity", [
         ("Main.dc.html", "Foundations", 1490),
