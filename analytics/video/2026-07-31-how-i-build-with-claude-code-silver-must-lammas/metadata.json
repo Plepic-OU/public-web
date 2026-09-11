@@ -1,0 +1,113 @@
+{
+  "title": "Five pull requests overnight, reviewed by ten agents: how Silver builds with Claude Code",
+  "description": "Silver needed a Merit Aktiva accounting integration for his WooCommerce shop. The existing plugin carried too much bloat, so he wrote down what he wanted, went to sleep, and woke up to five pull requests that ten review agents had already been through.\n\nRecorded at the Plepic developer meetup, July 2026. Silver is a developer at Stebby and a co-founder of the Must Lammas web agency, which runs the Padelhaus e-shop. His opening line: he is not here to teach Claude Code, because he is still learning it himself. He asked for feedback on the gaps in his flow, so the comments are the point of this one.\n\nWhat he walks through:\n\nA brain dump prompt, then a brainstorming session that interviews him about what he left out, then a handoff prompt for a fresh session.\nGit worktrees, so several agents work in parallel without stepping on each other.\nOne orchestrator that splits the work into logically scoped pull requests and picks the model per task.\nA review loop: ten review agents, each with its own remit, then a scorer that rates every comment 1 to 100 and throws out anything under 80.\nA stop condition. After three fix and review rounds the loop stops and waits for a human, because that many mistakes means the plan was wrong.\nPull request summaries used as project memory instead of a ticket tracker.\nAn in house inventory app with an email agent that drafts customer replies and leaves notes on the order.\nA client project where the documentation folder carries the client calls, the conventions and the decisions that every session reads first.\nSkills for transactions, migrations, front end work, deploys, SEO and test driven development.\nA personal brain vault that holds projects, people and machine setup.\n\nThe principle underneath all of it: every step gets a second agent to verify it. The plan gets verified, the code gets verified, and only then does the human review.\n\nChapters:\n0:00 Who Silver is, and why this is not a tutorial\n1:18 The web agency and the padel e-shop\n2:00 The problem: WooCommerce needs Merit Aktiva\n2:43 Trying the existing plugin first\n3:30 Brain dump, then a brainstorming session\n4:28 What the planning session produced\n5:37 Splitting the work: one orchestrator, many subagents\n6:36 Git worktrees and logically scoped pull requests\n7:17 Five pull requests while he slept\n7:40 Pull request summaries instead of Jira\n8:50 The review loop: ten reviewers and a scorer\n10:22 Three rounds, then it stops for the human\n11:42 Every step gets a peer agent to verify it\n12:15 The result, one overnight plugin\n12:40 Second project: the in house inventory app\n13:46 The email agent that drafts customer replies\n15:09 From a Discord message to a shipped feature\n16:03 Client project: documentation is the core asset\n17:19 Roadmap phases sized for overnight runs\n18:06 The skills that steer the agents\n19:24 The brain vault\n20:08 Closing\n\nSpeaker: Silver, Must Lammas, https://www.mustlammas.ee\n\nPlepic trains development teams to work this way: https://www.plepic.com/training?utm_source=youtube&utm_content=how-i-build-with-claude-code-silver-must-lammas\n\n#claudecode #agenticcoding #aicoding",
+  "tags": [
+    "claude code",
+    "agentic coding",
+    "ai coding",
+    "subagents",
+    "code review agents",
+    "git worktree",
+    "woocommerce plugin",
+    "wordpress development",
+    "merit aktiva",
+    "ai pair programming",
+    "orchestrator agent",
+    "developer workflow",
+    "test driven development",
+    "plepic",
+    "eesti"
+  ],
+  "chapters": [
+    {
+      "timestamp": "0:00",
+      "title": "Who Silver is, and why this is not a tutorial"
+    },
+    {
+      "timestamp": "1:18",
+      "title": "The web agency and the padel e-shop"
+    },
+    {
+      "timestamp": "2:00",
+      "title": "The problem: WooCommerce needs Merit Aktiva"
+    },
+    {
+      "timestamp": "2:43",
+      "title": "Trying the existing plugin first"
+    },
+    {
+      "timestamp": "3:30",
+      "title": "Brain dump, then a brainstorming session"
+    },
+    {
+      "timestamp": "4:28",
+      "title": "What the planning session produced"
+    },
+    {
+      "timestamp": "5:37",
+      "title": "Splitting the work: one orchestrator, many subagents"
+    },
+    {
+      "timestamp": "6:36",
+      "title": "Git worktrees and logically scoped pull requests"
+    },
+    {
+      "timestamp": "7:17",
+      "title": "Five pull requests while he slept"
+    },
+    {
+      "timestamp": "7:40",
+      "title": "Pull request summaries instead of Jira"
+    },
+    {
+      "timestamp": "8:50",
+      "title": "The review loop: ten reviewers and a scorer"
+    },
+    {
+      "timestamp": "10:22",
+      "title": "Three rounds, then it stops for the human"
+    },
+    {
+      "timestamp": "11:42",
+      "title": "Every step gets a peer agent to verify it"
+    },
+    {
+      "timestamp": "12:15",
+      "title": "The result, one overnight plugin"
+    },
+    {
+      "timestamp": "12:40",
+      "title": "Second project: the in house inventory app"
+    },
+    {
+      "timestamp": "13:46",
+      "title": "The email agent that drafts customer replies"
+    },
+    {
+      "timestamp": "15:09",
+      "title": "From a Discord message to a shipped feature"
+    },
+    {
+      "timestamp": "16:03",
+      "title": "Client project: documentation is the core asset"
+    },
+    {
+      "timestamp": "17:19",
+      "title": "Roadmap phases sized for overnight runs"
+    },
+    {
+      "timestamp": "18:06",
+      "title": "The skills that steer the agents"
+    },
+    {
+      "timestamp": "19:24",
+      "title": "The brain vault"
+    },
+    {
+      "timestamp": "20:08",
+      "title": "Closing"
+    }
+  ],
+  "pinnedComment": "Silver asked for feedback on this flow, so here is the open question: after three failed review rounds his loop stops and waits for a human. Where does your loop stop?",
+  "slug": "how-i-build-with-claude-code-silver-must-lammas"
+}
