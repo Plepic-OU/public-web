@@ -1617,70 +1617,57 @@ rules_body = """  <div class="board">
 (OUT / "Rules.dc.html").write_text(page(rules_body, rules_css))
 
 # --- canvas.json ------------------------------------------------------------
-# Three pages, because ten artboards on one plane is a scroll, not a system.
+# One plane, no page groups. Eleven artboards a reader pans between beats three
+# tabs a reader has to remember the names of; the structure was mine, not the
+# system's, and a design system that needs a table of contents is one nobody
+# reads twice. Reading order runs left to right, top to bottom.
 # Frames are fixed and surplus frame is harmless while clipping is not, so each
 # height is the measured content height plus about five percent. Re-measure at
 # 1120px wide after any content change.
-PAGES = [
-    ("identity", "Identity", [
-        ("Main.dc.html", "Foundations", 1950),
-        ("Type.dc.html", "Type", 1770),
-        ("Voice.dc.html", "Voice", 2490),
-        ("Logo.dc.html", "Logo", 1210),
-    ]),
-    ("system", "System", [
-        ("Layout.dc.html", "Layout", 1900),
-        ("Motion.dc.html", "Motion \u00b7 live", 2950),
-        ("Components.dc.html", "Components \u00b7 live", 2360),
-        ("Rules.dc.html", "Rules", 2250),
-    ]),
-    ("objects", "Objects", [
-        ("Mark.dc.html", "The mark", 2130),
-        ("Card.dc.html", "The card \u00b7 live", 3100),
-        ("Hero.dc.html", "Hero", 1790),
-    ]),
+BOARDS = [
+    ("Main.dc.html", "Foundations", 1950),
+    ("Type.dc.html", "Type", 1770),
+    ("Voice.dc.html", "Voice", 2490),
+    ("Logo.dc.html", "Logo", 1210),
+    ("Mark.dc.html", "The mark", 2130),
+    ("Layout.dc.html", "Layout", 1900),
+    ("Motion.dc.html", "Motion \u00b7 live", 2950),
+    ("Components.dc.html", "Components \u00b7 live", 2360),
+    ("Card.dc.html", "The card \u00b7 live", 3100),
+    ("Hero.dc.html", "Hero", 1790),
+    ("Rules.dc.html", "Rules", 2250),
 ]
 INTERACTIVE = {"Motion.dc.html", "Components.dc.html", "Card.dc.html"}
-COL_W, COL_GAP, ROW_GAP = 1120, 120, 160
+COLS, COL_W, COL_GAP, ROW_GAP = 3, 1120, 120, 160
 
 artboards = []
-for _page_id, _page_name, boards in PAGES:
-    x = y = 0
-    row_h = 0
-    for n, (fname, title, h) in enumerate(boards):
-        if n and n % 3 == 0:
-            x, y, row_h = 0, y + row_h + ROW_GAP, 0
-        entry = {"file": fname, "x": x, "y": y, "w": COL_W, "h": h,
-                 "title": title, "print": "flow", "page": _page_id}
+y = 0
+for row_start in range(0, len(BOARDS), COLS):
+    row = BOARDS[row_start:row_start + COLS]
+    for n, (fname, title, h) in enumerate(row):
+        entry = {"file": fname, "x": n * (COL_W + COL_GAP), "y": y,
+                 "w": COL_W, "h": h, "title": title, "print": "flow"}
         if fname in INTERACTIVE:
             entry["is_interactive"] = True
         artboards.append(entry)
-        x += COL_W + COL_GAP
-        row_h = max(row_h, h)
+    y += max(h for _, _, h in row) + ROW_GAP
 
 canvas = {
-    "pages": [{"id": pid, "name": name} for pid, name, _ in PAGES],
     "artboards": artboards,
     "annotations": [
-        {"id": "source-of-truth", "x": 0, "y": -190, "w": 860, "page": "identity",
-         "text": "Generated from css/styles.css and index.html by design-canvas/build.py. "
-                 "Change the site, re-run the script, re-seed. If a value here disagrees "
-                 "with the stylesheet, the stylesheet is right and this canvas is stale. "
-                 "No artboard carries a price, a date or any other value that moves; "
-                 "the Voice artboard lists what stays in the page instead."},
-        {"id": "motion-live", "x": 1240, "y": -140, "w": 460, "page": "system",
-         "text": "These three run. Open one with the play button above its frame to watch "
-                 "it at full size: at canvas zoom the mark's breath is a few pixels and "
-                 "reads as still. Then hover the buttons, the card, and the right-hand "
-                 "butterfly."},
-        {"id": "where-motion", "x": 2480, "y": -190, "w": 460, "page": "identity",
-         "text": "Nothing on this page moves. The moving half of the system \u2014 the "
-                 "durations, the eases, the reveal, the mark breathing and beating, the "
-                 "card lifting \u2014 is on the System page, marked live. Open an artboard "
-                 "with the play button above its frame; the canvas view is too small to "
-                 "read motion in."},
+        {"id": "source-of-truth", "x": 0, "y": -400, "w": 900,
+         "text": "The Plepic design system. Generated from css/styles.css and index.html "
+                 "by design-canvas/build.py: change the site, re-run the script, re-seed. "
+                 "If a value here disagrees with the stylesheet, the stylesheet is right "
+                 "and this canvas is stale. No artboard carries a price, a date or any "
+                 "other value that moves; Voice lists what stays in the page instead."},
+        {"id": "live-boards", "x": 2480, "y": -400, "w": 480,
+         "text": "Three artboards run: Motion, Components and The card. Open one with the "
+                 "play button above its frame to watch it at full size \u2014 at canvas "
+                 "zoom the mark's breath is a few pixels and reads as still. Then hover "
+                 "the buttons, the card, and the right-hand butterfly."},
     ],
-    "launch": {"view": "canvas", "page": "identity"},
+    "launch": {"view": "canvas"},
 }
 (OUT / "canvas.json").write_text(json.dumps(canvas, indent=2) + "\n")
 
