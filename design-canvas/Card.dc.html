@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .row { display: grid; grid-template-columns: repeat(3, 300px);
+           gap: 32px; align-items: stretch; }
+    .seat { display: block; }
+    .tt-card { position: relative; display: flex; flex-direction: column;
+               height: 100%; padding: 18px 24px; }
+    .tt-card::before { content: ""; position: absolute; z-index: -1; inset: 0;
+                       background: var(--surface); opacity: 0; }
+    .tt-type { margin: 0; padding-top: 12px; border-top: 1.5px solid var(--text);
+               font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); }
+    .tt-name { display: flex; align-items: baseline; justify-content: space-between;
+               gap: var(--space-sm); margin: 6px 0 0; font-family: var(--font-display);
+               font-weight: 700; font-size: 1.4rem; line-height: 1.15; color: var(--text); }
+    .tt-setglyph { width: 15px; flex: none; }
+    .tt-setglyph svg { display: block; width: 100%; height: auto; }
+    .tt-art { position: relative; flex: none; margin-top: 18px; aspect-ratio: 1;
+              overflow: hidden; background: var(--bg-alt); }
+    .tt-ink { position: absolute; inset: 0; mix-blend-mode: multiply; }
+    .tt-portrait { width: 100%; height: 100%; object-fit: cover; filter: var(--photo-grade); }
+    .tt-role { flex: 1; margin: 14px 0 0; padding-bottom: 16px;
+               border-bottom: 1px solid var(--border); font-family: var(--font-body);
+               font-size: 1rem; line-height: 1.5; color: var(--text-2); }
+    .tt-company { color: var(--text); }
+    .lifted > .tt-card { transform: translateY(calc(-1 * var(--lift-height))); }
+    .lifted > .tt-card::before { opacity: 1; box-shadow: var(--card-shadow-hover); }
+    .state { display: grid; grid-template-columns: repeat(2, 300px); gap: 88px; }
+    .state-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+                   text-transform: uppercase; color: var(--text-3); margin: 0 0 14px; }
+    .part { display: grid; grid-template-columns: 130px 130px 1fr; gap: 20px;
+            padding: 11px 0; border-top: 1px solid var(--border); align-items: baseline; }
+    .part b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+              color: var(--text); }
+    .part code { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+                 color: var(--text-3); }
+    .part span { font-size: 0.85rem; line-height: 1.5; color: var(--text-2); }
+    .anat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+            border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .anat h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+               margin: 0 0 6px; }
+    .anat p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .anat .mono { font-size: 0.92em; }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>The card</h1>
+    <p class="lede">A graded editorial column. The rule above the eyebrow opens it, the rule under the role closes it, and nothing else draws a box. The set is graded as one photograph, so three faces read as one deck rather than three uploads.</p>
+
+    <h2 class="sec">The set at rest</h2>
+    <p class="sec-note">Three columns on the page ground, no card of its own. 300px each, 32px apart, stretched to one height.</p>
+    <div class="row">
+      <div class="seat">
+        <article class="tt-card">
+          <p class="tt-type">Instructor &middot; Practitioner</p>
+          <h3 class="tt-name">Joosep Simm<span class="tt-setglyph"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span></h3>
+          <div class="tt-art">
+            <span class="tt-ink"><img class="tt-portrait" src="joosep.jpg" alt="Joosep Simm" style="transform: translateY(3%) scale(1.15);"></span>
+          </div>
+          <p class="tt-role">Ships code at <span class="tt-company">Gridraven</span>.</p>
+        </article>
+      </div>
+      <div class="seat">
+        <article class="tt-card">
+          <p class="tt-type">Instructor &middot; Practitioner</p>
+          <h3 class="tt-name">Kaido Koort<span class="tt-setglyph"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span></h3>
+          <div class="tt-art">
+            <span class="tt-ink"><img class="tt-portrait" src="kaido.jpg" alt="Kaido Koort" style="transform: translateY(4.2%) scale(1.28);"></span>
+          </div>
+          <p class="tt-role">Builds the <span class="tt-company">Plepic</span> website and product.</p>
+        </article>
+      </div>
+      <div class="seat">
+        <article class="tt-card">
+          <p class="tt-type">Instructor &middot; Practitioner</p>
+          <h3 class="tt-name">Vootele R&otilde;tov<span class="tt-setglyph"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span></h3>
+          <div class="tt-art">
+            <span class="tt-ink"><img class="tt-portrait" src="vootele.jpg" alt="Vootele R&otilde;tov" style="transform: translate(5.9%, 5.5%) scale(1.17);"></span>
+          </div>
+          <p class="tt-role">Builds <span class="tt-company">Balancing.services</span>.</p>
+        </article>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Rest and lift</h2>
+    <p class="sec-note">Hover is the only time a sheet appears: the column rises 5px and a white surface with a soft shadow prints behind it. On a fine pointer the card also tilts up to 9&deg; / 11&deg; toward the cursor &mdash; motion this artboard cannot show.</p>
+    <div class="state">
+      <div><p class="state-label">Rest</p>
+        <div class="row" style="grid-template-columns: 300px">
+      <div class="seat">
+        <article class="tt-card">
+          <p class="tt-type">Instructor &middot; Practitioner</p>
+          <h3 class="tt-name">Joosep Simm<span class="tt-setglyph"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span></h3>
+          <div class="tt-art">
+            <span class="tt-ink"><img class="tt-portrait" src="joosep.jpg" alt="Joosep Simm" style="transform: translateY(3%) scale(1.15);"></span>
+          </div>
+          <p class="tt-role">Ships code at <span class="tt-company">Gridraven</span>.</p>
+        </article>
+      </div>
+        </div>
+      </div>
+      <div><p class="state-label">Hover &middot; lifted</p>
+        <div class="row" style="grid-template-columns: 300px">
+      <div class="seat lifted">
+        <article class="tt-card">
+          <p class="tt-type">Instructor &middot; Practitioner</p>
+          <h3 class="tt-name">Joosep Simm<span class="tt-setglyph"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span></h3>
+          <div class="tt-art">
+            <span class="tt-ink"><img class="tt-portrait" src="joosep.jpg" alt="Joosep Simm" style="transform: translateY(3%) scale(1.15);"></span>
+          </div>
+          <p class="tt-role">Ships code at <span class="tt-company">Gridraven</span>.</p>
+        </article>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Part by part, in source order</h2>
+    <p class="sec-note">Ten parts, and every one of them is answering something that went wrong. This is the component whole: drop a part and the reason it existed comes back.</p>
+    <div class="part"><b>Seat</b><code>.tt-seat</code><span>An untransformed wrapper that owns the hover and the data-tilt hook. A transformed element is hit-tested against its transformed box, so a card that tracked its own hover chased itself out from under a resting pointer: 86 enter and leave events in two and a half seconds, measured. The seat never moves, which is what makes both the hover and the per-frame measurement trustworthy.</span></div>
+    <div class="part"><b>Column</b><code>.tt-card</code><span>A flex column at 18px 24px padding. It sets no width of its own: the Card fills the column it is handed, and the homepage team grid caps that track at 300px. The vertical padding keeps both rules off the cut edge; the horizontal padding is the margin the sheet shows once it appears.</span></div>
+    <div class="part"><b>Sheet</b><code>.tt-card::before</code><span>inset 0, --surface, opacity 0 at rest; on hover and focus-within it fades to 1 under --card-shadow-hover while the card rises. A ::before rather than the card's own background, because a background paints under the children's borders and both rules would vanish under the white the moment it faded in.</span></div>
+    <div class="part"><b>Standing head</b><code>.tt-type</code><span>Mono 9.5px, 0.16em, uppercase, --text-3 warming to --text-2 on hover, at line-height normal against the Line-Height Trap. It carries the 1.5px ink rule on its own top edge, so the rule that holds the column is a property of the first line rather than a separate element. Names the role. Carries no number.</span></div>
+    <div class="part"><b>Byline</b><code>.tt-name</code><span>Display 700 at 1.4rem, a flex row on align-items: baseline. The baseline sits the set glyph on the name's own baseline, so the two read as one printed line and not as a name with a badge beside it.</span></div>
+    <div class="part"><b>Set glyph</b><code>.tt-setglyph</code><span>The mark at 15px, the smallest sanctioned size, held at that width by flex: none when a long name claims the rest of the line. The ember head inside it belongs to the locked mark; it is not an accent element and does not spend the card's accent budget.</span></div>
+    <div class="part"><b>Plate</b><code>.tt-art</code><span>Square by aspect-ratio. Square corners, no frame, a tone instead of an edge: the ground is --bg-alt and is deliberately not swapped for white, because the multiply below pulls the cream up into the photograph as well as dropping the studio white down into the page. Every face picking up the same faint warm cast is the last step of the grade, and the one step identical for all three by construction.</span></div>
+    <div class="part"><b>Ink wrapper</b><code>.tt-ink</code><span>inset 0, mix-blend-mode multiply. The blend and the filter sit on different elements on purpose: both on one node is the combination engines disagree about, and a filtered image inside a blending wrapper renders the same everywhere.</span></div>
+    <div class="part"><b>Photograph</b><code>.tt-portrait</code><span>A real photograph, in colour, object-fit cover under --photo-grade. One chain, one selector, all three faces, no per-person override: if a face needs its own number the grade is wrong, not the face. Framing is the exception and it is geometry, never colour, so each card carries a translate and a scale per person.</span></div>
+    <div class="part"><b>Day-job line</b><code>.tt-role</code><span>The present-tense sentence in body on --text-2, employer in ink because it is the only word a reader scans for. It is also the part that grows: flex: 1 takes the spare height, so the closing 1px rule lands on one line across a row of unequal text.</span></div>
+
+    <hr class="rule">
+    <h2 class="sec">Four things a card never does</h2>
+    <div class="anat">
+      <div><h3>It never rests elevated</h3><p>The Card obeys flat-by-default rather than claiming an exception to it. Nothing at rest but the two rules, and the sheet only while a pointer or the keyboard is on it.</p></div>
+      <div><h3>It never ranks a person</h3><p>No tier and no power number on a card that carries a face. It ranks a real person in public, and the number behind the rank cannot be verified.</p></div>
+      <div><h3>It never spends the accent</h3><p>The card&rsquo;s only warm pixel is the ember head inside the locked mark, so a row of three cards still leaves the viewport&rsquo;s one accent unspent.</p></div>
+      <div><h3>It never depends on the script</h3><p>The lift is CSS, the rotation is JavaScript. With the module absent, on touch, and under reduced motion the sheet still appears and the card still rises. It simply does not rotate.</p></div>
+    </div>
+
+    <hr class="rule">
+    <div class="anat">
+      <div><h3>The rule opens it</h3><p>A 1.5px ink rule sits above the eyebrow. It is the card's only hard edge; there is no border and no radius.</p></div>
+      <div><h3>One grade, one set</h3><p>Every portrait carries the same <span class="mono">--photo-grade</span> and multiplies into the page ground. Never grade a face on its own.</p></div>
+      <div><h3>The mark signs the name</h3><p>A 15px butterfly closes the name line. It breathes on its own and beats its wings when the card is hovered.</p></div>
+      <div><h3>Elevation is a state</h3><p><span class="mono">--surface</span> and <span class="mono">--card-shadow-hover</span> exist only under a pointer. At rest the card owns no shadow at all.</p></div>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>

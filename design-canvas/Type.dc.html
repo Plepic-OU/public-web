@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .spec { display: grid; grid-template-columns: 168px 1fr; gap: 24px;
+            padding: 20px 0; border-top: 1px solid var(--border); align-items: baseline; }
+    .spec:last-of-type { border-bottom: 1px solid var(--border); }
+    .spec .meta p { margin: 0 0 2px; font-family: var(--font-mono); font-size: 10.5px;
+                    line-height: 1.5; letter-spacing: 0.02em; color: var(--text-3); }
+    .spec .meta p.tok { color: var(--text); }
+    .d { font-family: var(--font-display); font-weight: 700; line-height: 1.15;
+         letter-spacing: -0.01em; color: var(--text); margin: 0; }
+    .b { font-family: var(--font-body); color: var(--text); margin: 0; }
+    .m { font-family: var(--font-mono); margin: 0; }
+    .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 8px; }
+    .stack div { border-top: 1.5px solid var(--text); padding-top: 12px; }
+    .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+             border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                margin: 0 0 6px; }
+    .canon p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .canon .mono { font-size: 0.92em; }
+    .stack h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 700;
+                font-family: var(--font-display); }
+    .stack p { margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--text-2); }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Type</h1>
+    <p class="lede">Three faces, one job each. Bitter carries every heading, Hanken Grotesk every sentence, JetBrains Mono every label and every line of code. A face never borrows another's job.</p>
+
+    <div class="stack">
+      <div><h3>Bitter</h3><p>Display. 400&ndash;700 upright, 400&ndash;500 italic. Headings only, always at &minus;0.01em and 1.15 line height.</p></div>
+      <div><h3>Hanken Grotesk</h3><p>Body. 400&ndash;700 upright, 400 italic. Running text at 1.7 line height; UI text at 1.5.</p></div>
+      <div><h3>JetBrains Mono</h3><p>Label and code. Uppercase eyebrows at 0.16em; code at its natural tracking.</p></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Scale</h2>
+    <p class="sec-note">Headings ramp with the viewport; body does not. The two clamps below are shown at their upper bound.</p>
+    <div class="spec">
+      <div class="meta"><p class="tok">--fs-h2</p><p>clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem)</p><p>Bitter 700 / 1.15</p></div>
+      <p class="d" style="font-size: 2.6rem;">Learn the craft from people who ship</p>
+    </div>
+    <div class="spec">
+      <div class="meta"><p class="tok">--fs-h3</p><p>clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem)</p><p>Bitter 700 / 1.15</p></div>
+      <p class="d" style="font-size: 1.65rem;">Three instructors, one tabletop</p>
+    </div>
+    <div class="spec">
+      <div class="meta"><p class="tok">--fs-h4</p><p>1.25rem</p><p>Bitter 700 / 1.15</p></div>
+      <p class="d" style="font-size: 1.25rem;">What a cohort actually covers</p>
+    </div>
+    <div class="spec">
+      <div class="meta"><p class="tok">card name</p><p>1.4rem</p><p>Bitter 700 / 1.15</p></div>
+      <p class="d" style="font-size: 1.4rem;">Joosep Simm</p>
+    </div>
+    <div class="spec">
+      <div class="meta"><p class="tok">--fs-body</p><p>1.25rem</p><p>Hanken 400 / 1.7</p></div>
+      <p class="b" style="font-size: 1.25rem; line-height: 1.7;">An engineer arrives able to write code and leaves able to direct agents that write it.</p>
+    </div>
+    <div class="spec">
+      <div class="meta"><p class="tok">card role</p><p>1rem</p><p>Hanken 400 / 1.5 &middot; --text-2</p></div>
+      <p class="b" style="font-size: 1rem; line-height: 1.5; color: var(--text-2);">Ships code at Gridraven.</p>
+    </div>
+    <div class="spec">
+      <div class="meta"><p class="tok">eyebrow</p><p>9.5px / 0.16em</p><p>Mono 400 / uppercase &middot; --text-3</p></div>
+      <p class="m" style="font-size: 9.5px; line-height: normal; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);">Instructor &middot; Practitioner</p>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Four things the scale assumes</h2>
+    <div class="canon">
+      <div><h3>Display is hero-only</h3><p>A non-hero h1 uses clamp(2rem, 2rem + 3vw, 3.5rem). Reaching for the hero ramp on an interior page makes every page look like a landing page.</p></div>
+      <div><h3>Weight carries the bottom</h3><p>At their clamp minimums h3, h4 and body are the same size. What separates them there is weight, not scale, which is why an h3 must never be set at 400.</p></div>
+      <div><h3>Two namespaces, no overlap</h3><p><span class="mono">--fs-</span> is size. <span class="mono">--text-</span> is colour. A token that sets both is a token that will be wrong for one of them.</p></div>
+    </div>
+    <p class="sec-note" style="margin-top: 18px">The Line-Height Trap: a compact component that inherits the body&rsquo;s 1.7 grows a box nobody asked for. Buttons, badges and labels set <span class="mono" style="font-size:0.95em">line-height: normal</span> explicitly.</p>
+  </div>
+</x-dc>
+</body>
+</html>

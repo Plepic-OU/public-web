@@ -33,24 +33,31 @@ function addedLines(paths) {
 // Pages a visitor can never reach. deploy.yml deletes each of these from the
 // artifact, so a number on one of them cannot mislead a customer, which is the
 // only thing this gate exists to prevent. They are excluded because they are
-// the pages that legitimately document values: design-system.html alone states
-// dozens of CSS percentages, a crop offset and a filter strength among them,
-// and every one of them would demand a receipt that means nothing. Requiring
-// receipts for those trains the habit of writing a receipt to get past a gate,
-// which is the opposite of what a receipt is for. Keep this list in step with
-// the "Remove orphan files from deploy" step in .github/workflows/deploy.yml:
-// if a page here ever becomes publicly reachable, it belongs back in the scan.
+// the pages that legitimately document values, where a receipt would mean
+// nothing, and requiring one trains the habit of writing a receipt to get past
+// a gate. Keep this list in step with the "Remove orphan files from deploy"
+// step in .github/workflows/deploy.yml: if a page here ever becomes publicly
+// reachable, it belongs back in the scan. The design-system, card-comparison
+// and font-comparison pages sat here until 2026-09-10, when they were retired
+// into the Claude Design canvas.
 const INTERNAL_PAGES = new Set([
-  'design-system.html',
-  'font-compare.html',
   'demo-tenders.html',
-  'card-directions.html',
-  'card-editorial.html',
 ]);
+
+// Same reasoning as INTERNAL_PAGES, different shape: a directory, not a
+// filename. design-canvas/ holds the Claude Design artboards, which are
+// generated from css/styles.css and dropped from every build by the same
+// deploy step. Its .dc.html files are full of CSS percentages (a crop offset,
+// a scale) and reach no visitor, so a receipt for one would mean nothing.
+const INTERNAL_DIRS = ['design-canvas/'];
 
 // --- tokens added to pages ---------------------------------------------------
 const tokens = new Set();
-for (const raw of addedLines(['*.html', ...[...INTERNAL_PAGES].map((page) => `:(exclude)${page}`)])) {
+for (const raw of addedLines([
+  '*.html',
+  ...[...INTERNAL_PAGES].map((page) => `:(exclude)${page}`),
+  ...INTERNAL_DIRS.map((dir) => `:(exclude)${dir}`),
+])) {
   // Cache-bust query strings (?v=...) are not claims.
   const line = raw.replace(/\?v=[^"'\s>]*/g, '');
   for (const m of line.matchAll(CLAIM_PAT)) {

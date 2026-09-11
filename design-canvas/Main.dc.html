@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .sw-grid { display: grid; grid-template-columns: repeat(6, 1fr);
+                gap: 0 18px; align-items: start; }
+    .sw-break { border-left: 1px solid var(--border); padding-left: 18px;
+                margin-left: -18px; }
+    .chip { height: 76px; outline: 1px solid rgba(28, 28, 26, 0.1);
+            outline-offset: -1px; }
+    .sw-name { font-size: 11px; letter-spacing: 0.02em; color: var(--text);
+               margin: 9px 0 2px; }
+    .sw-hex { font-size: 10.5px; letter-spacing: 0.02em; color: var(--text-3);
+              margin: 0 0 5px; }
+    .sw-role { font-size: 0.82rem; line-height: 1.45; color: var(--text-2); margin: 0; }
+    .ngrid { display: grid; grid-template-columns: 236px 1fr 1fr;
+             align-items: stretch; }
+    .nhead { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+             text-transform: uppercase; color: var(--text-3); padding: 0 0 8px 16px; }
+    .nrole { display: flex; flex-direction: column; justify-content: center;
+             padding: 11px 20px 11px 0; }
+    .nrole-name { font-family: var(--font-display); font-weight: 700;
+                  font-size: 0.95rem; line-height: 1.2; color: var(--text); }
+    .nrole-note { font-size: 0.8rem; line-height: 1.4; color: var(--text-3);
+                  margin-top: 2px; }
+    .ncell { display: flex; align-items: center; gap: 12px; padding: 11px 16px; }
+    .ncell--light { background: var(--bg); border-bottom: 1px solid var(--border); }
+    .ncell--dark { background: var(--dark); border-bottom: 1px solid var(--border-dark); }
+    .nchip { width: 26px; height: 26px; flex: none;
+             outline: 1px solid rgba(128, 128, 122, 0.35); outline-offset: -1px; }
+    .ntok { font-size: 11px; letter-spacing: 0.02em; flex: 1; }
+    .ncell--light .ntok { color: var(--text); }
+    .ncell--dark .ntok { color: var(--text-on-dark); }
+    .nhex { font-size: 10.5px; letter-spacing: 0.02em; }
+    .ncell--light .nhex { color: var(--text-3); }
+    .ncell--dark .nhex { color: var(--text-on-dark-2); }
+    .nnone { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+             color: var(--text-on-dark-2); }
+    .canon { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+             border-top: 1.5px solid var(--text); padding-top: 16px; }
+    .canon--4 { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .canon .mono { font-size: 0.92em; }
+    .canon h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                margin: 0 0 6px; }
+    .canon p { font-size: 0.9rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Foundations</h1>
+    <p class="lede">The register is weight, lift, tilt and breath &mdash; never colour. Colour names a role and holds it. Every value on this canvas is the value in <span class="mono" style="font-size:0.95em">css/styles.css</span>; nothing here is a second opinion.</p>
+
+    <h2 class="sec">Brand</h2>
+    <p class="sec-note">One ramp, lightest to darkest, and one colour that is not green. In type, green is a single load-bearing phrase, never a whole heading.</p>
+    <div class="sw-grid">
+      <div class="sw">
+        <div class="chip" style="background: #edfcf1"></div>
+        <p class="sw-name mono">--green-surface</p>
+        <p class="sw-hex mono">#edfcf1</p>
+        <p class="sw-role">Section ground when a block must lift off the page</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #c5f6d3"></div>
+        <p class="sw-name mono">--green-light</p>
+        <p class="sw-hex mono">#c5f6d3</p>
+        <p class="sw-role">Quiet fill behind a green statement</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #00c638"></div>
+        <p class="sw-name mono">--green-vivid</p>
+        <p class="sw-hex mono">#00c638</p>
+        <p class="sw-role">Facet light. The mark, never text</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #137b30"></div>
+        <p class="sw-name mono">--green-brand</p>
+        <p class="sw-hex mono">#137b30</p>
+        <p class="sw-role">The one load-bearing phrase in a heading</p>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background: #0d5822"></div>
+        <p class="sw-name mono">--green-dark</p>
+        <p class="sw-hex mono">#0d5822</p>
+        <p class="sw-role">Facet shadow, mark body, antennae</p>
+      </div>
+      <div class="sw sw-break">
+        <div class="chip" style="background: #e26c45"></div>
+        <p class="sw-name mono">--accent</p>
+        <p class="sw-hex mono">#e26c45</p>
+        <p class="sw-role">The ember at the mark's head. One call to action</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Neutrals</h2>
+    <p class="sec-note">One set of roles, filled twice. A colour is named by the job it does, so the dark column is the light column's answer and not a second palette. The dark column is a device for an emphasis section, never a theme: the public site is light on every page. Two values do four jobs here: the dark ground is the light ink, and the light hairline is the dark ink. An inverted section is the same page turned over.</p>
+    <div class="ngrid">
+      <div></div><div class="nhead">On light</div><div class="nhead">On dark</div>
+      <div class="nrole"><span class="nrole-name">Ground</span><span class="nrole-note">What the page is made of</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #faf7f2"></span>
+        <span class="ntok mono">--bg</span>
+        <span class="nhex mono">#faf7f2</span>
+      </div>
+      <div class="ncell ncell--dark">
+        <span class="nchip" style="background: #1c1c1a"></span>
+        <span class="ntok mono">--dark</span>
+        <span class="nhex mono">#1c1c1a</span>
+      </div>
+      <div class="nrole"><span class="nrole-name">Recessed</span><span class="nrole-note">A well cut into the ground</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #f3efe7"></span>
+        <span class="ntok mono">--bg-alt</span>
+        <span class="nhex mono">#f3efe7</span>
+      </div>
+      <div class="ncell ncell--dark ncell--none"><span class="nnone">no twin</span></div>
+      <div class="nrole"><span class="nrole-name">Raised</span><span class="nrole-note">A sheet lifted off it</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #ffffff"></span>
+        <span class="ntok mono">--surface</span>
+        <span class="nhex mono">#ffffff</span>
+      </div>
+      <div class="ncell ncell--dark">
+        <span class="nchip" style="background: #262624"></span>
+        <span class="ntok mono">--dark-surface</span>
+        <span class="nhex mono">#262624</span>
+      </div>
+      <div class="nrole"><span class="nrole-name">Hairline</span><span class="nrole-note">The only line either context draws</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #e5e2dc"></span>
+        <span class="ntok mono">--border</span>
+        <span class="nhex mono">#e5e2dc</span>
+      </div>
+      <div class="ncell ncell--dark">
+        <span class="nchip" style="background: #3a3a38"></span>
+        <span class="ntok mono">--border-dark</span>
+        <span class="nhex mono">#3a3a38</span>
+      </div>
+      <div class="nrole"><span class="nrole-name">Ink</span><span class="nrole-note">Body and every heading</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #1c1c1a"></span>
+        <span class="ntok mono" style="color: #1c1c1a">--text</span>
+        <span class="nhex mono">#1c1c1a</span>
+      </div>
+      <div class="ncell ncell--dark">
+        <span class="nchip" style="background: #e5e2dc"></span>
+        <span class="ntok mono" style="color: #e5e2dc">--text-on-dark</span>
+        <span class="nhex mono">#e5e2dc</span>
+      </div>
+      <div class="nrole"><span class="nrole-name">Ink, quieter</span><span class="nrole-note">The supporting sentence</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #4a4a45"></span>
+        <span class="ntok mono" style="color: #4a4a45">--text-2</span>
+        <span class="nhex mono">#4a4a45</span>
+      </div>
+      <div class="ncell ncell--dark">
+        <span class="nchip" style="background: #a3a39a"></span>
+        <span class="ntok mono" style="color: #a3a39a">--text-on-dark-2</span>
+        <span class="nhex mono">#a3a39a</span>
+      </div>
+      <div class="nrole"><span class="nrole-name">Ink, label</span><span class="nrole-note">Eyebrow, caption, token name</span></div>
+      <div class="ncell ncell--light">
+        <span class="nchip" style="background: #6b6b60"></span>
+        <span class="ntok mono" style="color: #6b6b60">--text-3</span>
+        <span class="nhex mono">#6b6b60</span>
+      </div>
+      <div class="ncell ncell--dark ncell--none"><span class="nnone">no twin</span></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Four laws</h2>
+    <p class="sec-note">These are why the palette has the values it has. A new need is met by an existing step, never by a new colour.</p>
+    <div class="canon canon--4">
+      <div><h3>The 73% rule</h3><p>One hue for every green, 137&deg;, at 73% saturation. Vivid is the single decorative exception at 100%. The accent sits at hue 15&deg; with its saturation matched to 73%, which is why an orange and a green from this palette look like they were mixed by the same hand.</p></div>
+      <div><h3>One accent per viewport</h3><p>Exactly one: a CTA button, or an urgency badge, or an accent dot. Never two, and the mobile sticky CTA yields to whatever is already there. No accent variants either &mdash; states use opacity.</p></div>
+      <div><h3>The vivid text ban</h3><p><span class="mono">--green-vivid</span> is never text on light. It measures 2.5:1 on cream and fails AA. It is facet light and a dark-mode label, nothing else.</p></div>
+      <div><h3>The dark placement rule</h3><p>The public site is light. Every page, no exemptions: no <span class="mono">.on-dark</span>, no dark background, whether written as a token or a hex literal. The device grew onto the homepage in June 2026 and came off in August; a guard now fails any production page that reaches for it. It appears on this canvas only where documenting a device is not using it.</p></div>
+    </div>
+
+    <hr class="rule">
+    <div class="canon">
+      <div><h3>Headings are ink</h3><p>At most one green phrase carries the sentence. A fully green heading is off-canon in any medium.</p></div>
+      <div><h3>The mark is locked</h3><p>Twenty-two facets, one body, two antennae, one ember. Never recoloured, never re-faceted, never redrawn.</p></div>
+      <div><h3>Nothing shines</h3><p>No cyan, no neon, no glassmorphism, no gradient text. Elevation is ink and shadow, and only ever a hover state.</p></div>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>

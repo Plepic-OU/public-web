@@ -1,0 +1,161 @@
+{
+  "pages": [
+    {
+      "id": "identity",
+      "name": "Identity"
+    },
+    {
+      "id": "system",
+      "name": "System"
+    },
+    {
+      "id": "objects",
+      "name": "Objects"
+    }
+  ],
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1120,
+      "h": 1950,
+      "title": "Foundations",
+      "print": "flow",
+      "page": "identity"
+    },
+    {
+      "file": "Type.dc.html",
+      "x": 1240,
+      "y": 0,
+      "w": 1120,
+      "h": 1770,
+      "title": "Type",
+      "print": "flow",
+      "page": "identity"
+    },
+    {
+      "file": "Voice.dc.html",
+      "x": 2480,
+      "y": 0,
+      "w": 1120,
+      "h": 2490,
+      "title": "Voice",
+      "print": "flow",
+      "page": "identity"
+    },
+    {
+      "file": "Logo.dc.html",
+      "x": 0,
+      "y": 2650,
+      "w": 1120,
+      "h": 1210,
+      "title": "Logo",
+      "print": "flow",
+      "page": "identity"
+    },
+    {
+      "file": "Layout.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1120,
+      "h": 1900,
+      "title": "Layout",
+      "print": "flow",
+      "page": "system"
+    },
+    {
+      "file": "Motion.dc.html",
+      "x": 1240,
+      "y": 0,
+      "w": 1120,
+      "h": 2950,
+      "title": "Motion \u00b7 live",
+      "print": "flow",
+      "page": "system",
+      "is_interactive": true
+    },
+    {
+      "file": "Components.dc.html",
+      "x": 2480,
+      "y": 0,
+      "w": 1120,
+      "h": 2360,
+      "title": "Components \u00b7 live",
+      "print": "flow",
+      "page": "system",
+      "is_interactive": true
+    },
+    {
+      "file": "Rules.dc.html",
+      "x": 0,
+      "y": 3110,
+      "w": 1120,
+      "h": 2250,
+      "title": "Rules",
+      "print": "flow",
+      "page": "system"
+    },
+    {
+      "file": "Mark.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1120,
+      "h": 2130,
+      "title": "The mark",
+      "print": "flow",
+      "page": "objects"
+    },
+    {
+      "file": "Card.dc.html",
+      "x": 1240,
+      "y": 0,
+      "w": 1120,
+      "h": 3100,
+      "title": "The card \u00b7 live",
+      "print": "flow",
+      "page": "objects",
+      "is_interactive": true
+    },
+    {
+      "file": "Hero.dc.html",
+      "x": 2480,
+      "y": 0,
+      "w": 1120,
+      "h": 1790,
+      "title": "Hero",
+      "print": "flow",
+      "page": "objects"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "source-of-truth",
+      "x": 0,
+      "y": -190,
+      "w": 860,
+      "page": "identity",
+      "text": "Generated from css/styles.css and index.html by design-canvas/build.py. Change the site, re-run the script, re-seed. If a value here disagrees with the stylesheet, the stylesheet is right and this canvas is stale. No artboard carries a price, a date or any other value that moves; the Voice artboard lists what stays in the page instead."
+    },
+    {
+      "id": "motion-live",
+      "x": 1240,
+      "y": -140,
+      "w": 460,
+      "page": "system",
+      "text": "These three run. Open one with the play button above its frame to watch it at full size: at canvas zoom the mark's breath is a few pixels and reads as still. Then hover the buttons, the card, and the right-hand butterfly."
+    },
+    {
+      "id": "where-motion",
+      "x": 2480,
+      "y": -190,
+      "w": 460,
+      "page": "identity",
+      "text": "Nothing on this page moves. The moving half of the system \u2014 the durations, the eases, the reveal, the mark breathing and beating, the card lifting \u2014 is on the System page, marked live. Open an artboard with the play button above its frame; the canvas view is too small to read motion in."
+    }
+  ],
+  "launch": {
+    "view": "canvas",
+    "page": "identity"
+  }
+}

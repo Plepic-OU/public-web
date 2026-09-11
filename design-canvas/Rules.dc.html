@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="./support.js"></script></head>
+<body>
+<x-dc>
+  <helmet>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..700;1,400..500&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400..700&display=swap">
+    <style>
+    :root {
+      --green-vivid: #00c638;
+      --green-brand: #137b30;
+      --green-dark: #0d5822;
+      --green-light: #c5f6d3;
+      --green-surface: #edfcf1;
+      --accent: #e26c45;
+      --bg: #faf7f2;
+      --bg-alt: #f3efe7;
+      --surface: #ffffff;
+      --dark: #1c1c1a;
+      --dark-surface: #262624;
+      --text: #1c1c1a;
+      --text-2: #4a4a45;
+      --text-3: #6b6b60;
+      --text-on-dark: #e5e2dc;
+      --text-on-dark-2: #a3a39a;
+      --border: #e5e2dc;
+      --border-dark: #3a3a38;
+      --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
+      --fs-body: 1.25rem;
+      --fs-body-lg: 1.35rem;
+      --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
+      --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
+      --fs-h4: 1.25rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --card-shadow-hover: 0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08);
+      --photo-grade: saturate(0.58) sepia(0.18) contrast(1.07) brightness(1.04);
+      --tilt-x: 9deg;
+      --tilt-y: 11deg;
+      --lift-height: 5px;
+      --tilt-dur: 220ms;
+      --tilt-perspective: 1400px;
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+      --dur-settle: 550ms;
+      --dur-entrance: 700ms;
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-calm: ease-in-out;
+      --max-width: 1120px;
+      --header-height: 64px;
+      --transition-fast: var(--dur-fast) ease;
+      --transition-base: var(--dur-base) ease;
+      --transition-smooth: var(--dur-base) var(--ease-settle);
+      --breath-period: 4.6s;
+      --breath-open: 34deg;
+      --breath-offset: 0.35s;
+      --breath-bob: 1.5px;
+      --wingbeat-dur: 1.1s;
+      --wingbeat-open: 62deg;
+    }
+    * { box-sizing: border-box; font-variant-ligatures: none; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: var(--font-body); font-weight: 400;
+           -webkit-font-smoothing: antialiased; }
+    .board { padding: 56px 64px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 9.5px; line-height: normal;
+               letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+               margin: 0 0 10px; }
+    .board > h1 { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem;
+                  line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 10px; }
+    .lede { font-size: 1.05rem; line-height: 1.6; color: var(--text-2);
+            max-width: 62ch; margin: 0 0 40px; }
+    h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+             line-height: 1.15; margin: 0 0 4px; }
+    .sec-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
+                margin: 0 0 18px; max-width: 68ch; }
+    .mono { font-family: var(--font-mono); }
+    hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .dd { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .dd h3 { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+             text-transform: uppercase; margin: 0 0 14px; font-weight: 400; }
+    .dd .do-h { color: var(--green-brand); }
+    .dd .no-h { color: var(--accent); }
+    .r { padding: 10px 0; border-top: 1px solid var(--border); }
+    .r b { display: block; font-family: var(--font-display); font-weight: 700;
+           font-size: 0.95rem; line-height: 1.25; color: var(--text); }
+    .r span { display: block; font-size: 0.85rem; line-height: 1.45;
+              color: var(--text-2); margin-top: 3px; }
+    .flat { background: var(--bg-alt); padding: 24px 28px; }
+    .flat p { font-size: 0.95rem; line-height: 1.6; color: var(--text-2); margin: 0 0 10px; }
+    .flat p:last-child { margin: 0; }
+    .sh { display: grid; grid-template-columns: 150px 320px 1fr; gap: 20px;
+          padding: 11px 0; border-top: 1px solid var(--border); align-items: baseline; }
+    .sh b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .sh code { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+               color: var(--text-3); }
+    .sh span { font-size: 0.85rem; line-height: 1.45; color: var(--text-2); }
+    .bought { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+    .bought h4 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+                 margin: 0 0 6px; color: var(--text); }
+    .bought p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    </style>
+  </helmet>
+  <div class="board">
+    <p class="eyebrow">Plepic &middot; Design system</p>
+    <h1>Rules</h1>
+    <p class="lede">The half of a design system that actually holds. A palette can be re-derived from a stylesheet; a prohibition cannot. Every line here names the failure it prevents, because a rule whose reason is lost is the first one somebody argues away.</p>
+
+    <div class="dd">
+      <div>
+        <h3 class="do-h">Do</h3>
+        <div class="r"><b>--green-brand for text on light</b><span>It clears AA on cream. It is the only green that does.</span></div>
+        <div class="r"><b>--green-dark for body needing AAA</b><span>The step below brand, for long reading.</span></div>
+        <div class="r"><b>--green-vivid for decoration only</b><span>Facets, dark-mode links and labels. Never a paragraph.</span></div>
+        <div class="r"><b>--accent for exactly one element</b><span>Per viewport. A CTA button, or an urgency badge, or an accent dot.</span></div>
+        <div class="r"><b>Asymmetric grids</b><span>1.4fr / 0.6fr, never 50/50. A page split down the middle has no argument.</span></div>
+        <div class="r"><b>Spacing rhythm</b><span>Tight groupings, generous separations. Never the same spacing everywhere.</span></div>
+        <div class="r"><b>line-height: normal on compact components</b><span>Buttons, badges, labels. The Line-Height Trap is a body value inherited into a control.</span></div>
+        <div class="r"><b>Light mode, every page</b><span>Dark sections are emphasis, never a toggle.</span></div>
+      </div>
+      <div>
+        <h3 class="no-h">Never</h3>
+        <div class="r"><b>--green-vivid as text on light</b><span>2.5:1 on cream. It fails AA and always will.</span></div>
+        <div class="r"><b>Two accent elements in one viewport</b><span>One CTA button or one urgency badge or one accent dot. Never two.</span></div>
+        <div class="r"><b>Accent hover variants</b><span>Use opacity for states. A second orange is a second brand.</span></div>
+        <div class="r"><b>Cyan, neon, glassmorphism, gradient text, glow</b><span>None of it. No SVG blur or glow filters either.</span></div>
+        <div class="r"><b>All-caps headings</b><span>Except mono labels and the trust bar.</span></div>
+        <div class="r"><b>Centred-everything layouts on desktop</b><span>Centring is for a single short thing, not a page.</span></div>
+        <div class="r"><b>AI slop aesthetics</b><span>The generic 2024-2025 look. If it could be any company, it is not this one.</span></div>
+        <div class="r"><b>#8a8a80 as readable text</b><span>--text-3 at #6b6b60 is the floor.</span></div>
+        <div class="r"><b>HUD</b><span>No dark surface, no glow, no XP or power bars. The tabletop earns its play in physics and feedback, never by relaxing a rule.</span></div>
+        <div class="r"><b>Sound on a marketing page</b><span>Reserved for the cohort loadout builder.</span></div>
+        <div class="r"><b>Tiers or power numbers on people</b><span>It ranks a real person in public, and the number behind the rank cannot be verified.</span></div>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Flat by default</h2>
+    <div class="flat">
+      <p>A resting element that needs separation gets a 1px or 1.5px full border, or a tint. Never a shadow. Shadows are state &mdash; hover, floating &mdash; or the one featured exception per page. The ghost-card pattern, a border plus a wide resting shadow, is prohibited outright.</p>
+      <p>The living tabletop claimed an exception here once and lost it. The Card carried a printed ink offset under it at rest until 2026-09-08, and what replaced it is the rule kept rather than bent: a column with no shadow at all until a pointer arrives.</p>
+    </div>
+
+    <h2 class="sec" style="margin-top: 32px">The whole shadow vocabulary</h2>
+    <p class="sec-note">Six, and no seventh. If a new surface needs depth, it is using one of these or it is not getting depth.</p>
+    <div class="sh"><b>Code ambient</b><code>0 2px 8px rgba(28,28,26,0.04)</code><span>The one resting shadow on the whole site, under inline code.</span></div>
+    <div class="sh"><b>Hover lift</b><code>0 8px 24px rgba(28,28,26,0.06)</code><span>With translateY(-2px). Interactive cards, on hover only.</span></div>
+    <div class="sh"><b>Tooltip</b><code>0 8px 24px rgba(28,28,26,0.1)</code><span>Floating layers.</span></div>
+    <div class="sh"><b>Featured glow</b><code>0 4px 24px rgba(0,198,56,0.1)</code><span>The featured pricing card. At most one per page.</span></div>
+    <div class="sh"><b>Accent pulse</b><code>rgba(226,108,69,0.3) to transparent</code><span>A keyframed ring. The CTA heartbeat, 3s loop.</span></div>
+    <div class="sh"><b>Card sheet</b><code>0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08)</code><span>Under a sheet of --surface behind the column. Hover and focus only; CI fails a resting box-shadow on any .tt-* rule.</span></div>
+
+    <hr class="rule">
+    <h2 class="sec">Four rules the trading card bought</h2>
+    <p class="sec-note">The first instructor card was rejected on four counts at once on 2026-09-08. Each one generalises past that card, which is why each is a rule here rather than a note in a record.</p>
+    <div class="bought">
+      <div><h4>A photograph of a person is not raw material</h4><p>Triangulating three faces into facets did not make them art direction, it made them distorted, and the person in the photograph is the one who has to live with it. Crop it, grade it, or replace it. Do not redraw it.</p></div>
+      <div><h4>Judge a flourish at the count it ships at</h4><p>A grain tile, a shard backdrop and a foil band each read as craft on one specimen. Printed three times across a row they are the loudest thing in the section and the faces are the quietest.</p></div>
+      <div><h4>A resting shadow is the flat rule broken by habit</h4><p>The offset was not argued for, it arrived with the genre. When a card needs separation the answer is a rule or a tint; elevation waits for a pointer.</p></div>
+      <div><h4>One grade for a set, never a correction per face</h4><p>Three shots under three white balances are fixed the way a press run fixes them, by sending every plate through the same chain. The moment one face gets its own numbers the set stops being a set. CI enforces this one.</p></div>
+    </div>
+  </div>
+</x-dc>
+</body>
+</html>
