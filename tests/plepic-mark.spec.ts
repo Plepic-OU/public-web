@@ -60,6 +60,65 @@ test.describe('the breathing mark', () => {
     }
   });
 
+  test('the beat composes with the breath instead of replacing it', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'the wingbeat is a fine-pointer hover');
+
+    // The sibling test above fixed the beat being MASKED by putting it last in
+    // the animation list. That left the opposite defect: last also means the
+    // beat takes `transform` outright, so a hover arriving mid-breath snapped
+    // the wing from wherever it was to the beat's own zero. Measured on
+    // 2026-09-12 the worst single frame moved 21.26deg, which is a visible
+    // step, not motion. The fix is structural: span.mark-hinge carries the
+    // breath, the svg layer inside it carries the beat, and nested transforms
+    // compose. This asserts the composition two ways at once.
+    await page.goto('/');
+    await page.locator('.tt-seat').first().scrollIntoViewIfNeeded();
+    await page.waitForTimeout(800);
+
+    await page.evaluate(() => {
+      const angle = (el: Element | null) => {
+        if (!el) return 0;
+        const matrix = getComputedStyle(el).transform.match(/matrix3d\(([^)]+)\)/);
+        if (!matrix) return 0;
+        const m11 = Number(matrix[1].split(',')[0]);
+        return (Math.acos(Math.max(-1, Math.min(1, m11))) * 180) / Math.PI;
+      };
+      const hinge = document.querySelector('.tt-seat .mark-live .mark-hinge--left');
+      const layer = document.querySelector('.tt-seat .mark-live .mark-layer--left');
+      (window as unknown as { __wing: number[] }).__wing = [];
+      const tick = () => {
+        const wing = (window as unknown as { __wing: number[] }).__wing;
+        wing.push(angle(hinge) + angle(layer));
+        if (wing.length < 160) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+
+    await page.waitForTimeout(350);
+    await page.locator('.tt-seat').first().hover();
+    await page.waitForTimeout(2200);
+
+    const samples = await page.evaluate(
+      () => (window as unknown as { __wing: number[] }).__wing,
+    );
+    const steps = samples.slice(1).map((v, i) => Math.abs(v - samples[i]));
+    const worst = Math.max(...steps);
+    const peak = Math.max(...samples);
+
+    // A beat that replaced the breath peaked at exactly --wingbeat-open. One
+    // that composes carries the breath's own angle on top of it.
+    expect(
+      Math.round(peak),
+      `the wing peaked at ${Math.round(peak)}deg. Composed, the beat (62deg) rides on the breath, so the peak sits above --wingbeat-open alone; landing on 62 means the beat is replacing the breath again rather than adding to it.`,
+    ).toBeGreaterThan(64);
+
+    // 6.1deg is the beat's own fastest frame; 21.3deg was the snap.
+    expect(
+      Number(worst.toFixed(2)),
+      `the wing moved ${worst.toFixed(2)}deg in a single frame. Anything past ~12deg is the hover-in snap returning: the breath and the beat are sharing one box again, so put the breath back on .mark-hinge and leave the beat on .mark-layer.`,
+    ).toBeLessThan(12);
+  });
+
   test('reduced motion leaves the authored SVG untouched', async ({ browser }) => {
     // The mark is progressive enhancement, so under reduced motion the element
     // must be the flat locked SVG and not a still copy of the layered one: no

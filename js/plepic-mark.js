@@ -16,7 +16,8 @@
  *     <svg class="mark-flat" viewBox="0 0 300 280" ...>…22 polygons + core…</svg>
  *   </plepic-mark>
  *
- *   Enhanced, the host gains class mark-live and three sibling <svg> layers
+ *   Enhanced, the host gains class mark-live and three <svg> layers, each
+ *   wing inside a span.mark-hinge that carries the breath,
  *   with the source viewBox: mark-layer--left (the 11 polygons whose first
  *   point sits left of the body axis), mark-layer--right (the other 11) and
  *   mark-layer--core (everything that is not a polygon, each antenna wrapped
@@ -97,6 +98,19 @@ const buildCore = (nodes) => {
   return built;
 };
 
+// A wing needs two nested boxes, not one. CSS does not blend two animations
+// writing the same property: the later name in the list takes `transform`
+// outright. With the breath and the hover beat on one box, a hover arriving
+// mid-breath snapped the wing to the beat's own zero and snapped back on the
+// way out. The hinge carries the breath, the layer inside it carries the beat,
+// and nested transforms compose.
+const hinge = (name, layer) => {
+  const box = document.createElement('span');
+  box.setAttribute('class', `mark-hinge mark-hinge--${name}`);
+  box.append(layer);
+  return box;
+};
+
 const buildLayer = (source, name, nodes) => {
   const layer = document.createElementNS(SVG_NS, 'svg');
   layer.setAttribute('viewBox', source.getAttribute('viewBox'));
@@ -141,9 +155,11 @@ class PlepicMark extends HTMLElement {
     if (polygons.length !== WING_FACETS * 2) return;
     if (left.length !== WING_FACETS || right.length !== WING_FACETS) return;
 
+    // The core only translates, so it has nothing to compose with and stays
+    // one box.
     this.append(
-      buildLayer(source, 'left', left.map(clone)),
-      buildLayer(source, 'right', right.map(clone)),
+      hinge('left', buildLayer(source, 'left', left.map(clone))),
+      hinge('right', buildLayer(source, 'right', right.map(clone))),
       buildLayer(source, 'core', buildCore(nodes.filter((node) => node.localName !== 'polygon'))),
     );
     // The stylesheet hides the source through .mark-flat, and this module is
