@@ -1538,17 +1538,33 @@ plepic-mark > svg {
 }
 
 /* The body axis is x=150 in the 300-wide viewBox, which is the layer's own
-   50%, so the hinge needs no view-box units here. */
+   50%, so the hinge needs no view-box units here.
+
+   Two boxes per wing, and the reason is that CSS does not blend two animations
+   writing one property: the later name in the list takes `transform` outright
+   and the other is discarded. With the breath and the beat on one box, a hover
+   arriving mid-breath snapped the wing from wherever it was to the beat's own
+   zero, and let it snap back on the way out. Nesting makes the two rotations
+   compose instead, so the beat adds to a breath that never stops, never takes
+   a delay and never restarts. preserve-3d on the hinge is what keeps the inner
+   rotateY reading the host's perspective rather than being flattened. */
+.mark-hinge {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
 .mark-layer--left,
 .mark-layer--right {
   transform-origin: 50% 50%;
 }
 
-.mark-layer--left {
+.mark-hinge--left {
   animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite;
 }
 
-.mark-layer--right {
+.mark-hinge--right {
   animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite;
 }
 
@@ -1645,16 +1661,12 @@ plepic-mark > svg {
      gesture that means "this card", so the card's own mark answers it. */
   .mark-live:hover .mark-layer--left,
   .tt-seat[data-tilt]:hover .mark-live .mark-layer--left {
-    animation:
-      mark-breath-left var(--breath-period) var(--ease-calm) var(--wingbeat-dur) infinite,
-      mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) 1;
+    animation: mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) 1;
   }
 
   .mark-live:hover .mark-layer--right,
   .tt-seat[data-tilt]:hover .mark-live .mark-layer--right {
-    animation:
-      mark-breath-right var(--breath-period) var(--ease-calm) calc(var(--wingbeat-dur) + var(--breath-offset)) infinite,
-      mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) 1;
+    animation: mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) 1;
   }
 }
 
@@ -1662,6 +1674,8 @@ plepic-mark > svg {
   /* The layered mark must be indistinguishable from the flat one, so every
      loop is off. The two hover selectors are listed because they outrank the
      rest-state rules; leaving them out would let a hover restart the wings. */
+  .mark-hinge--left,
+  .mark-hinge--right,
   .mark-layer--left,
   .mark-layer--right,
   .mark-layer--core,

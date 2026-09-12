@@ -622,7 +622,7 @@ mark_body = """  <div class="board">
     <hr class="rule">
     <div class="facts">
       <div><h3>It breathes</h3><p>At rest the wings open and close on a long, calm loop while the core bobs. Nothing about the colour changes; breath is rotation and translation only. The Motion artboard runs it.</p></div>
-      <div><h3>It beats on arrival</h3><p>Hovering a card the mark signs makes the wings beat wide and settle. The beat always wins over the breath: it is the last animation named on the layer.</p></div>
+      <div><h3>It beats on arrival</h3><p>Hovering a card the mark signs makes the wings beat wide and settle. The beat rides on the breath rather than replacing it, because each wing has two nested boxes and nested rotations compose.</p></div>
       <div><h3>Three layers, one source</h3><p>The page ships the flat SVG inside a <span class="mono">&lt;plepic-mark&gt;</span> host. The script re-stacks what it finds into left wing, right wing and core; it never draws geometry of its own, so the flat mark is always the truth.</p></div>
     </div>
   </div>""" % (
@@ -884,11 +884,14 @@ def keyframes(*names):
 
 
 def hinged(px, beat=False):
-    """The three-layer mark the module builds, assembled statically."""
+    """The mark the module builds: each wing inside its own hinge box, because
+    the breath and the beat cannot share one."""
     svg = ('<svg class="mk-layer mk-%s" viewBox="0 0 %g %g" '
            'xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" '
            'aria-hidden="true">%s</svg>')
-    return ("      <span class=\"mk%s\" style=\"width: %dpx\">%s%s%s</span>\n" % (
+    return ("      <span class=\"mk%s\" style=\"width: %dpx\">"
+            "<span class=\"mk-hinge mk-hinge--left\">%s</span>"
+            "<span class=\"mk-hinge mk-hinge--right\">%s</span>%s</span>\n" % (
         " mk--beat" if beat else "", px,
         svg % ("left", VB_W, VB_H, "".join(_left)),
         svg % ("right", VB_W, VB_H, "".join(_right)),
@@ -963,13 +966,13 @@ motion_css = """    .trk { display: grid; grid-template-columns: 210px 1fr 300px
           perspective: calc(160px * 3); }
     .mk-layer { position: absolute; inset: 0; width: 100%%; height: 100%%;
                 transform-origin: 50%% 50%%; }
-    .mk .mk-left  { animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite; }
-    .mk .mk-right { animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite; }
+    .mk-hinge { position: absolute; inset: 0; transform-origin: 50%% 50%%;
+                transform-style: preserve-3d; }
+    .mk .mk-hinge--left  { animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite; }
+    .mk .mk-hinge--right { animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite; }
     .mk .mk-core  { animation: mark-bob var(--breath-period) var(--ease-calm) infinite; }
-    .mk--beat:hover .mk-left  { animation: mark-breath-left var(--breath-period) var(--ease-calm) infinite,
-                                           mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) infinite; }
-    .mk--beat:hover .mk-right { animation: mark-breath-right var(--breath-period) var(--ease-calm) var(--breath-offset) infinite,
-                                           mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) infinite; }
+    .mk--beat:hover .mk-left  { animation: mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) infinite; }
+    .mk--beat:hover .mk-right { animation: mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) infinite; }
 %s    .lift { display: flex; gap: 40px; align-items: flex-start; }
     .liftbox { width: 200px; height: 120px; background: var(--bg-alt);
                border-top: 1.5px solid var(--text); position: relative;
@@ -1029,7 +1032,7 @@ motion_body = """  <div class="board">
 %s        <p class="trk-note" style="margin-top:14px">At rest. Breath only.</p>
       </div>
       <div>
-%s        <p class="trk-note" style="margin-top:14px">Hover me. The beat opens to %s in %s and always wins: it is the last animation named on the layer, so it takes the transform whatever the breath is doing.</p>
+%s        <p class="trk-note" style="margin-top:14px">Hover me. The beat opens to %s in %s on top of the breath, not instead of it. Each wing sits in its own hinge box: the hinge breathes, the wing inside beats, and nested rotations compose. One box for both meant the later animation took the transform outright and the wing snapped to zero on hover.</p>
       </div>
     </div>
 

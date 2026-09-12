@@ -191,7 +191,7 @@
     <hr class="rule">
     <div class="facts">
       <div><h3>It breathes</h3><p>At rest the wings open and close on a long, calm loop while the core bobs. Nothing about the colour changes; breath is rotation and translation only. The Motion artboard runs it.</p></div>
-      <div><h3>It beats on arrival</h3><p>Hovering a card the mark signs makes the wings beat wide and settle. The beat always wins over the breath: it is the last animation named on the layer.</p></div>
+      <div><h3>It beats on arrival</h3><p>Hovering a card the mark signs makes the wings beat wide and settle. The beat rides on the breath rather than replacing it, because each wing has two nested boxes and nested rotations compose.</p></div>
       <div><h3>Three layers, one source</h3><p>The page ships the flat SVG inside a <span class="mono">&lt;plepic-mark&gt;</span> host. The script re-stacks what it finds into left wing, right wing and core; it never draws geometry of its own, so the flat mark is always the truth.</p></div>
     </div>
   </div>
