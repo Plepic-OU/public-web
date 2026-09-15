@@ -29,8 +29,8 @@
     },
     {
       "file": "Logo.dc.html",
-      "x": 0,
-      "y": 2650,
+      "x": 3720,
+      "y": 0,
       "w": 1120,
       "h": 1210,
       "title": "Logo",
@@ -38,8 +38,8 @@
     },
     {
       "file": "Mark.dc.html",
-      "x": 1240,
-      "y": 2650,
+      "x": 4960,
+      "y": 0,
       "w": 1120,
       "h": 2130,
       "title": "The mark",
@@ -47,8 +47,8 @@
     },
     {
       "file": "Layout.dc.html",
-      "x": 2480,
-      "y": 2650,
+      "x": 6200,
+      "y": 0,
       "w": 1120,
       "h": 1900,
       "title": "Layout",
@@ -57,7 +57,7 @@
     {
       "file": "Motion.dc.html",
       "x": 0,
-      "y": 4940,
+      "y": 2650,
       "w": 1120,
       "h": 2950,
       "title": "Motion \u00b7 live",
@@ -67,7 +67,7 @@
     {
       "file": "Components.dc.html",
       "x": 1240,
-      "y": 4940,
+      "y": 2650,
       "w": 1120,
       "h": 2360,
       "title": "Components \u00b7 live",
@@ -77,7 +77,7 @@
     {
       "file": "Card.dc.html",
       "x": 2480,
-      "y": 4940,
+      "y": 2650,
       "w": 1120,
       "h": 3100,
       "title": "The card \u00b7 live",
@@ -86,8 +86,8 @@
     },
     {
       "file": "Hero.dc.html",
-      "x": 0,
-      "y": 8200,
+      "x": 3720,
+      "y": 2650,
       "w": 1120,
       "h": 1790,
       "title": "Hero",
@@ -95,8 +95,8 @@
     },
     {
       "file": "Rules.dc.html",
-      "x": 1240,
-      "y": 8200,
+      "x": 4960,
+      "y": 2650,
       "w": 1120,
       "h": 2250,
       "title": "Rules",
