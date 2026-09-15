@@ -1625,12 +1625,12 @@ rules_body = """  <div class="board">
 # system's, and a design system that needs a table of contents is one nobody
 # reads twice. Reading order runs left to right, top to bottom.
 #
-# Six across, not three. The artboards are portrait, so stacking them three wide
-# made a canvas 3600 by 10450 — ratio 0.34 against a screen's 1.7 — and fitting
-# it meant zooming to 8.6%, which is the whole overview rendered at a tenth of
-# size. Six across makes it 7320 by 5750, ratio 1.27, and fit-zoom lands near
-# 15%. Eleven reference sheets cannot be READ at once at any zoom; what the
-# overview is for is seeing the shape of the system and picking one to open.
+# ONE ROW. Kaido asked for a single horizontal strip and asked twice; the
+# packing arithmetic prefers six across (fit-zoom 15% against 11.6%) but that
+# is an optimisation nobody wanted. A strip reads as one continuous system and
+# pans left to right, which is the gesture, and no artboard is ever hidden
+# under another row. Eleven reference sheets cannot be READ at once at any
+# zoom regardless: the overview is for seeing the shape and opening one.
 # Frames are fixed and surplus frame is harmless while clipping is not, so each
 # height is the measured content height plus about five percent. Re-measure at
 # 1120px wide after any content change.
@@ -1648,7 +1648,7 @@ BOARDS = [
     ("Rules.dc.html", "Rules", 2250),
 ]
 INTERACTIVE = {"Motion.dc.html", "Components.dc.html", "Card.dc.html"}
-COLS, COL_W, COL_GAP, ROW_GAP = 6, 1120, 120, 160
+COLS, COL_W, COL_GAP, ROW_GAP = 11, 1120, 120, 160
 
 artboards = []
 y = 0
