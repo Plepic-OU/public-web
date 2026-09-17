@@ -1,0 +1,731 @@
+1
+00:00:00,000 --> 00:00:07,800
+Hello! As you can read, I am Silver. I am here not to teach you how to use Claude
+
+2
+00:00:07,800 --> 00:00:13,200
+code, because I'm still learning myself, but I want to show you how I use Claude
+
+3
+00:00:13,200 --> 00:00:18,920
+code to build software. Hopefully, at least some of you can take some tips
+
+4
+00:00:19,740 --> 00:00:25,140
+from my flows, and yeah, any kind of feedback is welcome. I know that
+
+5
+00:00:25,140 --> 00:00:31,260
+definitely there are gaps in my build flows where I can improve, so yeah, any
+
+6
+00:00:31,260 --> 00:00:38,020
+kind of feedback is always welcome. So, about myself a little bit. I have been a
+
+7
+00:00:39,060 --> 00:00:44,900
+software developer for five years, and two years before that I spent in
+
+8
+00:00:44,900 --> 00:00:52,260
+Tartu University studying computer science. So, a little bit more
+
+9
+00:00:52,260 --> 00:00:57,980
+about my software background and current state where I am, is that I'm a Stebby
+
+10
+00:00:57,980 --> 00:01:02,100
+developer, like Stebby background developer. I've been working in Stebby
+
+11
+00:01:02,100 --> 00:01:08,860
+for three years, and yeah, for the last year or year and a half, I've been
+
+12
+00:01:09,260 --> 00:01:18,720
+building a web agency with two of my friends, co-founders, and when we
+
+13
+00:01:18,720 --> 00:01:26,760
+built the web agency, at some point we saw that we didn't have a portfolio item
+
+14
+00:01:26,760 --> 00:01:33,700
+for an e-shop, and two of the co-founders were battle enthusiasts, so we built a
+
+15
+00:01:33,700 --> 00:01:40,720
+battle house e-shop too, and yeah, as we are all experienced people, so
+
+16
+00:01:40,720 --> 00:01:47,980
+this shop started taking off, and currently it feels like the biggest
+
+17
+00:01:47,980 --> 00:01:55,140
+project I'm working on, time-wise. This is where most of my time goes. So yeah, I've
+
+18
+00:01:55,140 --> 00:02:00,180
+been using Claude Code to build different kinds of software projects since
+
+19
+00:02:00,180 --> 00:02:08,440
+the end of last year, since the end of 2025, and yeah, to show you exactly
+
+20
+00:02:08,440 --> 00:02:16,140
+how I use it, I will show you the most recent thing that I built, and it's a
+
+21
+00:02:16,460 --> 00:02:22,120
+WordPress plugin. So our e-shop is in a WordPress WooCommerce platform, and
+
+22
+00:02:22,520 --> 00:02:28,760
+yesterday we had a video call with our new accountant, who is using Merit
+
+23
+00:02:28,760 --> 00:02:35,560
+Activa accounting system, and we needed to integrate our e-shop to the Merit
+
+24
+00:02:36,060 --> 00:02:43,060
+Activa platform. So to do that, first thing always, I try to search for
+
+25
+00:02:43,290 --> 00:02:50,750
+existing plugins. I found that there is one, I downloaded it, tried to use it, but I
+
+26
+00:02:50,750 --> 00:02:56,510
+discovered that there were many things missing that I really needed. So I
+
+27
+00:02:56,510 --> 00:03:02,310
+downloaded it, I will show you the UI. So this is WordPress admin, where the plugin
+
+28
+00:03:02,310 --> 00:03:10,370
+is installed. So I entered all my details, went over all the configuration, and
+
+29
+00:03:10,370 --> 00:03:15,690
+discovered that there are things that I need, but this doesn't have. And also what
+
+30
+00:03:15,690 --> 00:03:20,330
+I didn't like about this plugin is that I only need this Merit Activa part, but
+
+31
+00:03:20,330 --> 00:03:27,130
+it has a lot of bloat that I really don't need. So natural thing to do, talk
+
+32
+00:03:27,130 --> 00:03:33,910
+to Claude Code, and make my own plugin. So I will show you the workflow that I use.
+
+33
+00:03:34,510 --> 00:03:45,710
+Okay, so this is phpStorm, the main IDE that I use, and here I wrote this very
+
+34
+00:03:45,710 --> 00:03:52,870
+basically a brain dump prompt. All handwritten, what I want, what I have
+
+35
+00:03:52,530 --> 00:03:59,650
+already, and then I instructed it to check all the configuration I have
+
+36
+00:03:59,650 --> 00:04:04,430
+already made in the video call with my accountant, so it wouldn't lose that when
+
+37
+00:04:04,430 --> 00:04:11,890
+the new plugin has been built. So yeah, basically just everything that I
+
+38
+00:04:11,890 --> 00:04:20,930
+need, and what I don't like with the existing plugin. And yeah, that's it. So
+
+39
+00:04:21,050 --> 00:04:28,610
+this is a brain dump, and always I do a brainstorming session at first. So what
+
+40
+00:04:28,610 --> 00:04:34,610
+this brainstorming session produced me, like I pasted in this whole prompt, then
+
+41
+00:04:34,610 --> 00:04:41,130
+it interviewed me about the different gaps or things that I haven't thought of,
+
+42
+00:04:41,310 --> 00:04:47,930
+or what I would like to have in this end result of the plugin. And yeah, so what
+
+43
+00:04:49,210 --> 00:04:58,590
+it produced the first session is this folder here. So it went through
+
+44
+00:04:58,590 --> 00:05:06,690
+this existing plugin, listed down what it actually has, what it does, then it
+
+45
+00:05:06,750 --> 00:05:13,110
+probed the Meritactiva API, and wrote down all the notes for the next session.
+
+46
+00:05:15,250 --> 00:05:20,730
+Here it listed down all my original requirements that I have,
+
+47
+00:05:20,730 --> 00:05:29,490
+and then came up with a plan. So yeah, this is the whole plan, what has to be
+
+48
+00:05:29,490 --> 00:05:37,750
+built eventually. Now, how to achieve it? It's like, you can't use AI, like AI
+
+49
+00:05:37,750 --> 00:05:44,230
+doesn't work good if you give it too big task at once, so you have to split it
+
+50
+00:05:44,230 --> 00:05:52,350
+into reasonable sized chunks. So what I always instruct AI to do is give me a
+
+51
+00:05:52,910 --> 00:06:01,590
+handoff prompt. So it's using one main agent, Fable 5, at the moment that's
+
+52
+00:06:01,590 --> 00:06:07,270
+the frontier, the best model that I know. It uses a Fable 5 model to be a
+
+53
+00:06:07,270 --> 00:06:12,490
+top-level orchestrator that spawns different sub-agents to complete
+
+54
+00:06:12,490 --> 00:06:18,490
+smaller tasks. And when those sub-agents are finished, then there is a review loop,
+
+55
+00:06:18,770 --> 00:06:25,690
+and the Fable agent also reviews the whole development at the end. I will talk
+
+56
+00:06:25,690 --> 00:06:31,730
+a bit later a little bit about this review loop step that I have. So yeah,
+
+57
+00:06:31,730 --> 00:06:36,470
+basically it builds a handoff prompt that I just copy-paste from this part,
+
+58
+00:06:36,470 --> 00:06:44,070
+and yeah, then here the whole process is explained, that I use a worktree, so I can
+
+59
+00:06:44,070 --> 00:06:49,250
+do parallelized development with different agents. Yeah, git WorkTrees, use
+
+60
+00:06:49,250 --> 00:06:57,850
+them if you already don't. And yeah, here it says, for pull requests that will be
+
+61
+00:06:57,270 --> 00:07:04,950
+made, every pull request is logically scoped, easy to review for both me and
+
+62
+00:07:04,950 --> 00:07:10,610
+the agents. Yeah, so this is the handoff prompt that this first brainstorming
+
+63
+00:07:10,610 --> 00:07:17,550
+session produced, and then I just copy-paste it, start a fresh session, set
+
+64
+00:07:17,550 --> 00:07:25,010
+the model to Fable 5, and yeah, let it run wild. Then I went to sleep, and in the
+
+65
+00:07:25,010 --> 00:07:34,930
+morning I woke up and checked what it had done. So what it had done, let me go
+
+66
+00:07:34,930 --> 00:07:40,110
+through the five pull requests. First is the main feature branch, into which all the
+
+67
+00:07:40,110 --> 00:07:48,470
+smaller ones get merged into. As I am a solo developer on this project, then
+
+68
+00:07:48,470 --> 00:07:54,910
+I don't see a need for Jira or any kind of workflow management software.
+
+69
+00:07:55,150 --> 00:07:59,430
+I don't see the need to create the Jira task for myself and then execute it.
+
+70
+00:07:59,430 --> 00:08:06,310
+Instead, I talk to AI. AI knows why I want to do something. It writes out what
+
+71
+00:08:06,310 --> 00:08:13,190
+and why to the pull request summary for future AI sessions. So whenever a
+
+72
+00:08:13,190 --> 00:08:18,450
+future session wants to check history, it has been instructed to read the
+
+73
+00:08:18,450 --> 00:08:24,270
+pull request summary plus the comments. And yeah, this is how it keeps this
+
+74
+00:08:24,830 --> 00:08:28,310
+memory, if it needs to find out the reasoning.
+
+75
+00:08:29,830 --> 00:08:36,770
+This is just one layer, there are many layers. Yeah, so every pull request that
+
+76
+00:08:36,770 --> 00:08:42,550
+gets developed by a sub agent, this top orchestrator who handles this feature
+
+77
+00:08:42,350 --> 00:08:50,450
+branch, spawns a sub agent for each of these small pull requests, and it
+
+78
+00:08:50,450 --> 00:08:56,170
+always decides whether to use Sonnet or Opus. I don't tell it, Fable just
+
+79
+00:08:56,170 --> 00:09:02,930
+decides. And when the development is done, the pull request is up, then a review loop is
+
+80
+00:09:02,930 --> 00:09:09,110
+done. What is a review loop? Just this is how I name the action that's taking
+
+81
+00:09:09,070 --> 00:09:18,290
+place, is that it fans out multiple sub agents. In this project there are five
+
+82
+00:09:18,290 --> 00:09:25,670
+code review agents, and even more, ten in total, yeah. Okay, so basically there are
+
+83
+00:09:25,670 --> 00:09:30,510
+ten different sub agents that verify different parts of the code. Everyone has
+
+84
+00:09:30,510 --> 00:09:39,410
+its own dedicated thing to check, and their responsibility is to just post as
+
+85
+00:09:39,410 --> 00:09:46,150
+many comments and issues that they can find. And at the end there is a scorer
+
+86
+00:09:46,430 --> 00:09:54,710
+agent that reviews all the comments, gives score from 1 to 100 for each
+
+87
+00:09:54,710 --> 00:10:00,410
+comment, and it discards everything that gets scored below 80. So everything 80 and
+
+88
+00:10:00,810 --> 00:10:07,410
+above is an issue that must be fixed. So those issues get posted to the
+
+89
+00:10:07,410 --> 00:10:15,270
+developer agent who wrote the code for this branch. If issue is fixed, review is
+
+90
+00:10:16,390 --> 00:10:21,910
+also triggered again. Now this back-and-forth cycle can go on
+
+91
+00:10:22,170 --> 00:10:28,630
+maximum three times. If it happens three times and there are still issues to be
+
+92
+00:10:28,630 --> 00:10:34,170
+fixed, then the review stops and waits for the human, because it means that
+
+93
+00:10:34,170 --> 00:10:39,690
+something has gone wrong somewhere. The plan wasn't good enough. If it makes so
+
+94
+00:10:39,690 --> 00:10:45,170
+many mistakes then something must be off. Then it stops and waits for the human
+
+95
+00:10:45,170 --> 00:10:52,430
+and then tells why it stopped. And then I will check and will decide if I go
+
+96
+00:10:52,430 --> 00:10:56,870
+back to the drawing board, or do I have to adjust skills, or I have to adjust
+
+97
+00:10:56,870 --> 00:11:01,870
+some kind of harness. Something must be done. It needs some kind of action. But
+
+98
+00:11:01,870 --> 00:11:08,370
+yeah, as you can see, this pull request, no issues. And let's check the others too.
+
+99
+00:11:11,270 --> 00:11:21,230
+Yeah, no issues. Just a summary comment. Here too. Yep, no issues. Yeah, nothing had to be
+
+100
+00:11:21,230 --> 00:11:28,890
+fixed and all these small pull requests got merged into the main one. Then as a
+
+101
+00:11:28,890 --> 00:11:36,370
+final step, the main orchestrator, the Fable 5, spawns another Fable 5 agent to
+
+102
+00:11:36,370 --> 00:11:42,390
+review his work. So this is like the core principle when you use AI. Always have a
+
+103
+00:11:42,390 --> 00:11:48,090
+peer agent verify every step. When you make the plan, let another agent verify
+
+104
+00:11:48,090 --> 00:11:52,970
+the plan. If you make development, let another agent verify the development. So
+
+105
+00:11:53,090 --> 00:11:58,850
+yeah, everything is always verified, double-checked and verified before I
+
+106
+00:11:58,850 --> 00:12:04,870
+start reviewing. And yeah, basically this is how the actual development cycle ends
+
+107
+00:12:04,870 --> 00:12:09,590
+for me. Then I will open it, I will review the code myself, I will test it
+
+108
+00:12:09,590 --> 00:12:15,770
+out in browser, and if it's okay, then I will just ship it. Okay, yeah, so this
+
+109
+00:12:15,770 --> 00:12:19,790
+plugin got developed. Yesterday I discovered that I need it. I tried out
+
+110
+00:12:19,790 --> 00:12:24,130
+the third-party plugin, it didn't work out, and then I gave it to Claude. By the
+
+111
+00:12:24,130 --> 00:12:28,510
+morning I had a working plugin myself that I don't have to pay for, that is
+
+112
+00:12:28,690 --> 00:12:36,170
+lightweight, and does exactly what I want, has all the extra features. So yeah, that's
+
+113
+00:12:36,170 --> 00:12:41,830
+just one small plugin. Now I will show you another project that I have built in
+
+114
+00:12:41,830 --> 00:12:48,170
+the last few months. It is our in-house software, only local host, so dummy data.
+
+115
+00:12:48,750 --> 00:12:53,450
+Nothing special to see, but yeah, it just gives us some kind of visualization, like
+
+116
+00:12:53,450 --> 00:13:02,450
+what's going on in the shop. It shows all the products, inventory, it suggests what
+
+117
+00:13:02,450 --> 00:13:11,130
+kind of orders we have to make based on the history, like how often the
+
+118
+00:13:11,710 --> 00:13:17,770
+products move. Yeah, it alerts us of dead stock, if something is on the shelf that
+
+119
+00:13:17,770 --> 00:13:22,990
+hasn't been sold for a while, maybe we have to do discounts, and yeah, here
+
+120
+00:13:22,990 --> 00:13:28,570
+we can do stock takes, so basically inventory checks. We can use a mobile
+
+121
+00:13:28,790 --> 00:13:33,270
+phone to scan all the barcodes that we have in the warehouse, and then at the
+
+122
+00:13:33,270 --> 00:13:38,130
+end the result shows if we have any issues. If there are, it automatically
+
+123
+00:13:38,130 --> 00:13:46,390
+fixes things. Yeah, here we have all the orders. One good thing that we have is
+
+124
+00:13:46,390 --> 00:13:54,990
+our AI reads our customer emails, and it generates draft emails, so every time a
+
+125
+00:13:54,990 --> 00:14:03,150
+customer writes to us, AI spins up, it checks the previous history, searches for
+
+126
+00:14:03,150 --> 00:14:07,750
+similar answers that have been answered before, and writes the draft response.
+
+127
+00:14:07,990 --> 00:14:13,590
+So this is how it helps us with customer communication, and also if in the
+
+128
+00:14:13,710 --> 00:14:20,110
+communication we discover that there is something that must be done with the
+
+129
+00:14:21,330 --> 00:14:25,910
+specific order, then it leaves a note. At the moment it's localhost only, so
+
+130
+00:14:26,130 --> 00:14:34,270
+yeah, I just created this example for you. I just created this example to
+
+131
+00:14:34,270 --> 00:14:39,310
+present this functionality to you. It reads emails when it discovers that we
+
+132
+00:14:39,310 --> 00:14:44,970
+have to do something with a specific order, it automatically posts a note
+
+133
+00:14:45,870 --> 00:14:52,430
+to this application, and we can always give feedback to Tommy. Yeah, Tommy is the
+
+134
+00:14:52,430 --> 00:15:01,530
+email agent. Yeah, this is how AI helps us to manage the stock, and yeah, it's been a
+
+135
+00:15:01,530 --> 00:15:09,290
+great help to us. Again, on-demand generator software, we just need a
+
+136
+00:15:09,290 --> 00:15:17,270
+feature in Slack. Not Slack, we use Discord, and when we have reached the state that we
+
+137
+00:15:17,270 --> 00:15:21,930
+decide, okay, we need this feature, I will just copy-paste the Discord message link,
+
+138
+00:15:23,310 --> 00:15:29,950
+give it to Claude, and then Claude will generate the plan, review the plan, if
+
+139
+00:15:29,950 --> 00:15:35,030
+it's okay, then it executes the plan, it triggers the review loop, and when all
+
+140
+00:15:35,030 --> 00:15:39,270
+the reviews have been done, everything has been verified, if needed it also
+
+141
+00:15:39,270 --> 00:15:44,710
+tests in browser, opens Playwright, opens real live browser, clicks everything
+
+142
+00:15:44,750 --> 00:15:51,410
+through, and if everything is okay, then I will come in and check if it really is
+
+143
+00:15:51,410 --> 00:15:56,850
+okay, and if it is, I just click the button, and we have a new feature. Okay, now
+
+144
+00:15:56,850 --> 00:16:03,110
+the final thing I will present to you is a third project, a client project that we
+
+145
+00:16:03,230 --> 00:16:10,130
+started about a month ago, called Kingelamus. It's basically a gift card
+
+146
+00:16:10,130 --> 00:16:15,630
+platform, where people can come and buy different kinds of gift cards. So,
+
+147
+00:16:15,910 --> 00:16:20,790
+documentation is one of the most important folders for me. As time has
+
+148
+00:16:20,790 --> 00:16:24,690
+moved on, then I realized that this documentation is most important if you
+
+149
+00:16:24,690 --> 00:16:31,630
+do AI development. Here we have all the briefings, client video calls that we
+
+150
+00:16:31,630 --> 00:16:36,210
+have had, we always record our video calls, transcribe to text, and feed the
+
+151
+00:16:36,210 --> 00:16:45,190
+text into AI, where I document all the conventions that I want the AI to
+
+152
+00:16:44,810 --> 00:16:51,170
+follow, decisions we have made over time, the reasoning why something was decided,
+
+153
+00:16:52,110 --> 00:16:58,170
+and yeah, core business logic, and everything is documented in the
+
+154
+00:16:58,170 --> 00:17:04,550
+files. So yeah, when I started this project, I let the Fable 5 agent take in
+
+155
+00:17:04,550 --> 00:17:09,770
+all the knowledge that it has, it generated a roadmap, split it into
+
+156
+00:17:09,770 --> 00:17:19,690
+different phases, and yeah, each phase is like a logical step for an overnight run.
+
+157
+00:17:19,690 --> 00:17:29,430
+I will start an agent, tell it to follow this main orchestrator cycle,
+
+158
+00:17:30,590 --> 00:17:35,330
+so there is Fable 5 agent that orchestrates the development, splits the
+
+159
+00:17:35,330 --> 00:17:41,270
+tasks into reasonable-sized pull requests, does development, does the review, and
+
+160
+00:17:41,270 --> 00:17:51,950
+yeah, basically this is how it goes. So yeah, okay, so what I wanted to perhaps
+
+161
+00:17:51,990 --> 00:17:56,750
+show, here I have, like, this is the most recent project, and this is, I think, the
+
+162
+00:17:56,750 --> 00:18:04,070
+most proper project that I have built so far. So it has a lot of different skills,
+
+163
+00:18:06,350 --> 00:18:10,650
+skill for, like, always ensuring that every right operation is wrapped in a
+
+164
+00:18:10,650 --> 00:18:19,890
+transaction, how to make changes in the admin panel, what to keep in mind when
+
+165
+00:18:19,890 --> 00:18:26,750
+adding migrations, how to do it safely, how to build the front-end stuff, what
+
+166
+00:18:26,410 --> 00:18:31,550
+skills, this also tells what kind of other skills to use when you do
+
+167
+00:18:31,550 --> 00:18:38,290
+front-end work, how to verify front-end work being done, how to deploy the
+
+168
+00:18:38,390 --> 00:18:43,150
+application, what kind of different environments we have, again, the review
+
+169
+00:18:43,150 --> 00:18:50,190
+loop that I have explained previously when I talked about other projects. SEO
+
+170
+00:18:50,190 --> 00:18:59,290
+is important, so this is one skill that is used during development, and yeah,
+
+171
+00:18:59,290 --> 00:19:03,670
+test-driven development also is something that my agents always follow,
+
+172
+00:19:03,670 --> 00:19:10,850
+to write tests first, and then the logic. Yeah, so these are the skills I have, so the
+
+173
+00:19:10,850 --> 00:19:18,510
+AI always uses the skills to execute stuff and documentation to get some
+
+174
+00:19:18,510 --> 00:19:24,830
+reasoning, get some context, and yeah, then it just builds, and I verify that it
+
+175
+00:19:24,830 --> 00:19:30,290
+builds correctly. So one setup thing that I'd like to mention is that I have
+
+176
+00:19:30,290 --> 00:19:35,730
+this brain project where basically I give a summary of all the different
+
+177
+00:19:35,730 --> 00:19:40,590
+kinds of things, like basically everything I do Claude always refers to
+
+178
+00:19:40,590 --> 00:19:48,130
+this project. Yeah, it has like quick documentation about all the different
+
+179
+00:19:48,290 --> 00:19:55,470
+projects that I work on, all the people that I work with, and basically everything
+
+180
+00:19:55,470 --> 00:20:00,110
+about me and about this whole machine. This is my brain vault, all the memory
+
+181
+00:20:00,110 --> 00:20:07,730
+goes back into this. Of course I don't do manually, like writing all these files,
+
+182
+00:20:08,850 --> 00:20:15,090
+AI does it. Yeah, and that's it from me, and if you have any kind of questions
+
+183
+00:20:15,090 --> 00:20:16,830
+then feel free to ping me.

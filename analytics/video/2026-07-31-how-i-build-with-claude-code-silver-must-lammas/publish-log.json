@@ -1,0 +1,29 @@
+{
+  "slug": "how-i-build-with-claude-code-silver-must-lammas",
+  "format": "long",
+  "source_path": "/Users/kaidokoort/Documents/plepic-video/inbox/how-i-build-with-claude-code-silver-must-lammas.mp4",
+  "started_at": "2026-07-31T11:16:57.508Z",
+  "phases_completed": [
+    "transcribe",
+    "edit",
+    "metadata",
+    "thumbnail",
+    "youtube",
+    "write-outbox"
+  ],
+  "youtube": {
+    "video_id": "9ThT6ObQywk",
+    "url": "https://youtu.be/9ThT6ObQywk",
+    "studio_url": "https://studio.youtube.com/video/9ThT6ObQywk/edit",
+    "upload_session_url": null,
+    "privacy": "public"
+  },
+  "linkedin": {
+    "assets_path": "/Users/kaidokoort/Documents/plepic-video/outbox/how-i-build-with-claude-code-silver-must-lammas_edited.mp4",
+    "post_url": null
+  },
+  "quota_units_used": 2050,
+  "duration_seconds": 121.063,
+  "errors": [],
+  "finished_at": "2026-07-31T11:18:58.571Z"
+}
