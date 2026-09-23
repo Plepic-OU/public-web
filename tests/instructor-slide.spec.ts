@@ -16,7 +16,7 @@ import { test, expect } from '@playwright/test';
  * the pointer and the hit test stays stable.
  */
 
-const INSTRUCTORS = ['joosep', 'kaido', 'vootele'];
+const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni'];
 
 const opacityOf = (page, who) =>
   page.evaluate(
@@ -103,65 +103,54 @@ test.describe('instructor slide preview', () => {
     expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.innerWidth);
   });
 
-  test('the overhanging bottom of the panel actually paints', async ({ page }, testInfo) => {
+  test('a second-row card raises its slide inside the section, and it paints', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    // Fitting is not showing. #team also carries .reveal, whose
-    // transform: translateY(0) makes the section a stacking context and traps
-    // the panel's z-index inside it; .outcome-section, later in the DOM and
-    // opaque, then painted over the bottom of the panel while every geometric
-    // assertion above still passed. This compares the same strip of screen
-    // hovered and at rest, so anything painting over it shows up as no change.
+    // With five cards the grid has two rows, so the panel no longer hangs
+    // past the section: a first-row slide covers the top of the grid, a
+    // second-row slide hangs up from its bottom edge. This guards the second
+    // case, whose panel box has no height and once dropped the slide below
+    // the grid entirely. #team still carries .reveal, which makes it a
+    // stacking context, so the comparison also proves the slide is not
+    // painted over by anything.
     //
-    // Everything here moves the mouse by coordinate, never page.hover(): that
-    // helper scrolls its target into view, which would move the strip between
-    // the two screenshots and make them differ for the wrong reason.
+    // Mouse moves by coordinate, never page.hover(): that helper scrolls its
+    // target into view, which would move the strip between the screenshots.
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-
-    // Park the whole panel inside the viewport; the clip is viewport-relative.
     await page.evaluate(() => {
       const grid = document.querySelector('.team-grid').getBoundingClientRect();
-      window.scrollTo({ top: window.scrollY + grid.top - 100, behavior: 'instant' });
+      window.scrollTo({ top: window.scrollY + grid.bottom - window.innerHeight + 40, behavior: 'instant' });
     });
     await page.waitForTimeout(500);
-    const scrollBefore = await page.evaluate(() => Math.round(window.scrollY));
 
     const card = await page
-      .locator('.team-card[data-instructor="kaido"] .tt-art')
+      .locator('.team-card[data-instructor="jevgeni"] .tt-art')
       .boundingBox();
     await page.mouse.move(card.x + card.width / 2, card.y + card.height / 2);
-    await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
+    await expect.poll(() => opacityOf(page, 'jevgeni'), { timeout: 2000 }).toBe('1');
 
-    // The strip of panel that hangs BELOW the team section, and nothing else.
-    // Include even a pixel of the part inside the section and the comparison
-    // passes on that pixel alone, proving nothing about the overhang.
-    const band = await page.evaluate(() => {
+    const geometry = await page.evaluate(() => {
       const s = document
-        .querySelector('.instructor-slide[data-instructor="kaido"]')
+        .querySelector('.instructor-slide[data-instructor="jevgeni"]')
         .getBoundingClientRect();
+      const grid = document.querySelector('.team-grid').getBoundingClientRect();
       const team = document.querySelector('#team').getBoundingClientRect();
-      const y = Math.round(team.bottom) + 2;
+      const top = Math.max(0, Math.round(s.top)) + 2;
       return {
-        x: Math.round(s.left),
-        y,
-        width: Math.round(s.width),
-        height: Math.round(s.bottom) - 2 - y,
-        fitsViewport: s.bottom <= window.innerHeight,
+        slideBottom: s.bottom, gridBottom: grid.bottom, teamTop: team.top,
+        slideTop: s.top,
+        band: { x: Math.round(s.left), y: top, width: Math.round(s.width), height: Math.round(Math.min(s.bottom, window.innerHeight)) - 2 - top },
       };
     });
-    expect(band.fitsViewport).toBe(true);
-    // A band worth measuring: the panel must really hang past the section.
-    expect(band.height).toBeGreaterThan(20);
+    expect(Math.round(geometry.slideBottom)).toBe(Math.round(geometry.gridBottom));
+    expect(geometry.slideTop).toBeGreaterThan(geometry.teamTop);
+    expect(geometry.band.height).toBeGreaterThan(20);
 
-    const shown = await page.screenshot({ clip: band });
-
-    // Off every card, without scrolling: the page top-left corner is empty.
+    const shown = await page.screenshot({ clip: geometry.band });
     await page.mouse.move(4, 4);
-    await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('0');
-    const hidden = await page.screenshot({ clip: band });
-
-    expect(await page.evaluate(() => Math.round(window.scrollY))).toBe(scrollBefore);
+    await expect.poll(() => opacityOf(page, 'jevgeni'), { timeout: 2000 }).toBe('0');
+    const hidden = await page.screenshot({ clip: geometry.band });
     expect(shown.equals(hidden)).toBe(false);
   });
 
