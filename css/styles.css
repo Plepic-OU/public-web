@@ -1328,18 +1328,16 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-/* Three 300px cards in the 1040px grid box. The cap is the track's now, not
-   the Card's: the Card fills whatever column it is given. space-between spends the
-   140px that are left over on the two gaps, so the outer card edges stay
-   flush with the instructor slide that covers the grid on hover. minmax(0, …)
-   lets the tracks shrink below 300px on narrower viewports instead of pushing
-   the grid past its box. */
+/* Six half-tracks in the 1040px grid box, two per card, so a short second
+   row can sit centred under the gaps of the row above. 115px caps a track, so
+   a card is 2 x 115 plus the 70px space-between spends per gap: 300px, and the
+   outer card edges stay flush with the instructor slide that covers the grid
+   on hover. The Card fills whatever span it is given. minmax(0, …) lets the
+   tracks shrink on narrower viewports instead of pushing the grid past its
+   box. The centring rule below handles a two-card remainder only; a seventh
+   instructor would sit alone at the left and needs its own rule. */
 .team-grid {
   display: grid;
-  /* Six half-tracks, two per card, so a short second row can sit centred:
-     with five cards the fourth starts on track 2 and the pair lands under the
-     gaps of the row above instead of at the left edge. 115px caps a card at
-     2 x 115 plus the 70px space-between spends per gap, the same 300px. */
   grid-template-columns: repeat(6, minmax(0, 115px));
   justify-content: space-between;
   gap: var(--space-xl);
@@ -1448,6 +1446,7 @@ p:last-child {
     display: block;
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 50%;
     width: min(1040px, 100%);
     transform: translateX(-50%);
@@ -1489,16 +1488,11 @@ p:last-child {
     --tilt-enabled: 1;
   }
 
-  /* A card on the second row raises its slide from the bottom of the grid,
-     so the panel covers the row that was hovered, not the row above it. */
-  .team-showcase:has(.tt-seat:nth-child(n + 4):hover) .instructor-slides {
-    top: auto;
-    bottom: 0;
-  }
-
-  /* The panel box has no height, so the slide inside must hang up from its
-     bottom edge too, or it would drop below the grid. */
-  .team-showcase:has(.tt-seat:nth-child(n + 4):hover) .instructor-slide {
+  /* A second-row card's slide hangs up from the bottom of the grid, so the
+     panel covers the row that was hovered. The anchor belongs to the slide,
+     not to the pointer: anchoring on :hover made a slide still fading out
+     jump rows when the pointer crossed from one row to the other. */
+  .instructor-slide[data-instructor="jevgeni"] {
     top: auto;
     bottom: 0;
   }
@@ -3692,6 +3686,10 @@ plepic-mark > svg {
     gap: var(--space-lg);
   }
 
+  .team-grid {
+    grid-auto-rows: auto;
+  }
+
   .team-grid > .tt-seat,
   .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
     grid-column: auto;
@@ -3868,6 +3866,10 @@ plepic-mark > svg {
   .team-grid {
     grid-template-columns: repeat(2, minmax(0, 300px));
     justify-content: center;
+  }
+
+  .team-grid {
+    grid-auto-rows: auto;
   }
 
   .team-grid > .tt-seat,
