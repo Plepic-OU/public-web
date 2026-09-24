@@ -1328,21 +1328,26 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-/* Three 300px cards in the 1040px grid box. The cap is the track's now, not
-   the Card's: the Card fills whatever column it is given. space-between spends the
-   140px that are left over on the two gaps, so the outer card edges stay
-   flush with the instructor slide that covers the grid on hover. minmax(0, …)
-   lets the tracks shrink below 300px on narrower viewports instead of pushing
-   the grid past its box. */
+/* Six half-tracks in the 1040px grid box, two per card, so a short second
+   row can sit centred under the gaps of the row above. 115px caps a track, so
+   a card is 2 x 115 plus the 70px space-between spends per gap: 300px, and the
+   outer card edges stay flush with the instructor slide that covers the grid
+   on hover. The Card fills whatever span it is given. minmax(0, …) lets the
+   tracks shrink on narrower viewports instead of pushing the grid past its
+   box. The centring rule below handles a two-card remainder only; a seventh
+   instructor would sit alone at the left and needs its own rule. */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 300px));
+  grid-template-columns: repeat(6, minmax(0, 115px));
   justify-content: space-between;
   gap: var(--space-xl);
   /* stretch, not start: a day-job line that wraps to two lines would
      otherwise make one card taller than the two beside it, and three cards
      of three heights read as a layout accident rather than as a deck. */
   align-items: stretch;
+  /* One height across rows too: the second row's single-line day jobs
+     would otherwise leave it 24px shorter than the row above. */
+  grid-auto-rows: 1fr;
   max-width: 1040px;
   margin: 0 auto;
 }
@@ -1353,6 +1358,14 @@ p:last-child {
    sheet the Card only shows on hover, and overflow: hidden would clip its lift.
    It is scoped to the reference page, which still renders the specimen that
    documents what the Card replaced. Section 10, design-system.html. */
+.team-grid > .tt-seat {
+  grid-column: span 2;
+}
+
+.team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
+  grid-column: 2 / span 2;
+}
+
 .ds-page .team-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1433,6 +1446,7 @@ p:last-child {
     display: block;
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 50%;
     width: min(1040px, 100%);
     transform: translateX(-50%);
@@ -1467,13 +1481,30 @@ p:last-child {
     --tilt-enabled: 0;
   }
 
-  .team-showcase .tt-seat[data-tilt]:hover > .tt-card {
+  /* Aivo has no career slide yet, so nothing covers his card on hover and it
+     keeps the tilt as its hover feedback. Delete this rule when his slide
+     lands in the deck and in .instructor-slides. */
+  .team-showcase .tt-seat:has([data-instructor="aivo"]) {
+    --tilt-enabled: 1;
+  }
+
+  /* A second-row card's slide hangs up from the bottom of the grid, so the
+     panel covers the row that was hovered. The anchor belongs to the slide,
+     not to the pointer: anchoring on :hover made a slide still fading out
+     jump rows when the pointer crossed from one row to the other. */
+  .instructor-slide[data-instructor="jevgeni"] {
+    top: auto;
+    bottom: 0;
+  }
+
+  .team-showcase .tt-seat[data-tilt]:not(:has([data-instructor="aivo"])):hover > .tt-card {
     transform: none;
   }
 
   .team-showcase:has(.team-card[data-instructor="joosep"]:hover) .instructor-slide[data-instructor="joosep"],
   .team-showcase:has(.team-card[data-instructor="kaido"]:hover) .instructor-slide[data-instructor="kaido"],
-  .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"] {
+  .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"],
+  .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"] {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1864,6 +1895,14 @@ plepic-mark > svg {
 
 .tt-card[data-instructor="vootele"] .tt-portrait {
   transform: translate(5.9%, 5.5%) scale(1.17);
+}
+
+.tt-card[data-instructor="jevgeni"] .tt-portrait {
+  transform: translateY(7%) scale(1.2);
+}
+
+.tt-card[data-instructor="aivo"] .tt-portrait {
+  transform: translateY(3%) scale(1.04);
 }
 
 /* The day-job line is the part that grows, and it carries the closing rule on
@@ -3647,6 +3686,15 @@ plepic-mark > svg {
     gap: var(--space-lg);
   }
 
+  .team-grid {
+    grid-auto-rows: auto;
+  }
+
+  .team-grid > .tt-seat,
+  .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
+    grid-column: auto;
+  }
+
   /* On a phone the two footer columns have nowhere to sit side by side, so
      they stack and centre, as they did before. */
   .footer-inner {
@@ -3818,6 +3866,15 @@ plepic-mark > svg {
   .team-grid {
     grid-template-columns: repeat(2, minmax(0, 300px));
     justify-content: center;
+  }
+
+  .team-grid {
+    grid-auto-rows: auto;
+  }
+
+  .team-grid > .tt-seat,
+  .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
+    grid-column: auto;
   }
 
   .hero-stats {
