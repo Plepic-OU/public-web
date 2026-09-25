@@ -34,3 +34,6 @@ demo-tenders-screenshot.png
 # design skill's editor payload plus the artboards). Rebuild it from the
 # tracked sources in design-canvas/ rather than committing it.
 design-canvas/plepic-design-system.html
+
+# agent worktrees nested in this checkout
+.claude/worktrees/
