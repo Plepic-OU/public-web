@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-13",
+  "actions": [
+    {
+      "timestamp": "2026-09-13T16:46:03.704Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "certifications",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Plural gap: the PHRASE negative \"certification\" does not match \"claude certifications\", which took 6 impressions on 2026-09-10..12.",
+      "match_type": "PHRASE",
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 0,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 1,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}
