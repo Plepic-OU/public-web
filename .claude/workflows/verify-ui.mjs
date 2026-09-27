@@ -11,7 +11,7 @@ export const meta = {
 
 // args: { url, capDir, hero }  — capture the states first with
 // scripts/capture-states.mjs <url> <capDir> [--hero], then pass capDir here.
-const URL = (args && args.url) || 'https://www.plepic.com/'
+const URL = (args && args.url) || 'https://plepic.com/'
 const CAP = (args && args.capDir) || './capture'
 const HERO = !(args && args.hero === false)
 
