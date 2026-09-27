@@ -51,7 +51,7 @@ import { loadCredentials, formatCustomerId } from "./ads-operations";
 const APPLY = process.argv.includes("--apply");
 const CAMPAIGN_ID = "23672333274";
 const AD_ID = "824137909366";
-const LANDING = "https://www.plepic.com/training/";
+const LANDING = "https://plepic.com/training/";
 
 const HEADLINES = [
   "Claude Code Training For Teams",
@@ -79,7 +79,7 @@ const RESTORE_SITELINK = {
   linkText: "Töötukassa Subsidy",
   d1: "80% of the invoice incl. VAT",
   d2: "Capped €2,500 per employee",
-  url: "https://www.plepic.com/training/#pricing",
+  url: "https://plepic.com/training/#pricing",
 };
 const RESTORE_CALLOUT = "Töötukassa Reimburses 80%";
 const DROP_NEGATIVES = ["what is", "skills"];

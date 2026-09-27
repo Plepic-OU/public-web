@@ -7,10 +7,22 @@
 var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
 if (dnt === '1' || dnt === 'yes') return;
 
-var tag = document.createElement('script');
-tag.async = true;
-tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9';
-document.head.appendChild(tag);
+// The tag (~350 KB with the Ads tag it pulls in) loads once the page is idle, so
+// it no longer competes with first paint. gtag() calls below queue in dataLayer
+// meanwhile and send when it arrives; only a visitor who leaves within the first
+// seconds goes unrecorded.
+function loadTag() {
+  var tag = document.createElement('script');
+  tag.async = true;
+  tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-65CCEV6RS9';
+  document.head.appendChild(tag);
+}
+function whenIdle() {
+  if ('requestIdleCallback' in window) requestIdleCallback(loadTag, { timeout: 3000 });
+  else setTimeout(loadTag, 1500);
+}
+if (document.readyState === 'complete') whenIdle();
+else window.addEventListener('load', whenIdle, { once: true });
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}

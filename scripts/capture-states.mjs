@@ -11,7 +11,7 @@
  * Usage:
  *   node scripts/capture-states.mjs <url> <outDir> [--full] [--hero]
  *
- *   <url>     page to render (e.g. https://www.plepic.com/ or localhost)
+ *   <url>     page to render (e.g. https://plepic.com/ or localhost)
  *   <outDir>  directory for screenshots + metrics.json
  *   --hero    also capture the metamorphosis load sequence + arc phases
  *             and measure the butterfly/code geometry (hero-specific probes)
@@ -28,7 +28,7 @@ import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const url = process.argv[2] || 'https://www.plepic.com/';
+const url = process.argv[2] || 'https://plepic.com/';
 const outDir = process.argv[3] || './capture';
 const hero = process.argv.includes('--hero');
 mkdirSync(outDir, { recursive: true });

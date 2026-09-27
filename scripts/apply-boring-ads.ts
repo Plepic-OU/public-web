@@ -31,7 +31,7 @@ const APPLY = process.argv.includes("--apply");
 const CAMPAIGN_ID = "23672333274";
 const CAMPAIGN_NAME = "Claude Code Training - Search";
 const AD_GROUP_ID = "201333005744";
-const LANDING = "https://www.plepic.com/training/";
+const LANDING = "https://plepic.com/training/";
 
 // ---------------------------------------------------------------- 1. new RSA
 // Pinned position 1 = what + who. Pinned position 2 = the price. Those two
@@ -81,13 +81,13 @@ const NEW_SITELINKS = [
     linkText: "Price and Next Cohort",
     d1: "€2,520 +VAT per developer",
     d2: "Next cohort starts 16 October",
-    url: "https://www.plepic.com/training/#pricing",
+    url: "https://plepic.com/training/#pricing",
   },
   {
     linkText: "Who Should Join",
     d1: "2+ years of professional dev work",
     d2: "Your own codebase, all 6 Fridays",
-    url: "https://www.plepic.com/training/",
+    url: "https://plepic.com/training/",
   },
 ];
 
