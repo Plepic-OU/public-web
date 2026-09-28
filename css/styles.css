@@ -2988,6 +2988,89 @@ plepic-mark > svg {
   display: inline-block;
 }
 
+/* Typical Friday: one proportional strip, 9:00-15:30. Mode is encoded by fill AND label, never colour alone. */
+.typical-day {
+  max-width: 960px;
+  margin: var(--space-2xl) auto 0;
+  display: grid;
+  gap: var(--space-md);
+}
+
+.typical-day-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.typical-day-lead {
+  color: var(--text-2);
+  max-width: 68ch;
+}
+
+.typical-day-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-lg);
+  font-size: 0.95rem;
+  color: var(--text-2);
+}
+
+.td-key {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--rounded-xs);
+  margin-right: var(--space-sm);
+  vertical-align: -2px;
+}
+
+.typical-day-strip {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 3px;
+}
+
+.td-block {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-sm) var(--space-xs);
+  border-radius: var(--rounded-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+
+.td-block time {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.td-watch { background: var(--surface); border: 1.5px solid var(--text); }
+.td-build { background: var(--green-light); border: 1.5px solid var(--green-brand); }
+.td-share { background: repeating-linear-gradient(135deg, var(--bg-alt) 0 4px, var(--surface) 4px 8px); border: 1.5px dashed var(--text-3); }
+.td-lunch { border: 1.5px dotted var(--text-3); color: var(--text-3); }
+
+.typical-day-note {
+  font-size: 0.9rem;
+  color: var(--text-3);
+}
+
+@media (max-width: 900px) {
+  .typical-day-strip { flex-direction: column; gap: 6px; }
+  .td-block { flex: none; flex-direction: row; align-items: baseline; gap: var(--space-md); font-size: 0.95rem; }
+  .td-block time { flex: 0 0 3.5em; }
+}
+
 .curriculum-timeline {
   max-width: 720px;
   margin: var(--space-2xl) auto 0;
@@ -3266,6 +3349,14 @@ plepic-mark > svg {
   font-weight: 700;
   color: var(--text);
   line-height: 1;
+}
+
+.pricing-card-price-prefix {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-3);
+  vertical-align: middle;
 }
 
 .pricing-card-note {
