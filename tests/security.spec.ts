@@ -5,6 +5,7 @@ import { test, expect } from '@playwright/test';
 const pages = [
   { name: 'homepage', path: '/', frameSrc: "frame-src 'none'" },
   { name: 'training', path: '/training/', frameSrc: "frame-src 'none'" },
+  { name: 'estonian', path: '/et/', frameSrc: "frame-src 'none'" },
 ];
 
 const expectedCSPDirectives = [
