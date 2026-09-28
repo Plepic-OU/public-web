@@ -159,40 +159,53 @@
 
         <p class="flow-badge reveal reveal-delay-2">The research target: <strong>four weeks of scoping</strong> compressed to <strong>under an hour</strong> of Scopeful&rsquo;s own work.</p>
 
-        <!-- Thesis framework. The source graphic is a triangle with its labels
-             baked into the artwork; at a 375px viewport the apex label lands
-             around 7px and stops being readable, and baked text is neither
-             selectable nor translatable. Rebuilt here as three stacked tiers of
-             decreasing width: the pyramid survives, the labels stay real HTML.
-             DOM order runs bottom-up, matching the argument that each tier
-             rests on the one below it; column-reverse returns the base to the
-             bottom on screen. -->
+        <!-- Thesis framework. The drawing is the designer's pyramid, whose
+             source is design-canvas/thesis-pyramid.fig: change the design
+             there, then retrace it here; never trace the deck export. It is
+             redrawn as an inline SVG so the shapes scale cleanly; its labels
+             are not in the artwork. They stay real HTML placed over
+             it, so they remain selectable, translatable and above a readable
+             floor at a 375px viewport, which the baked labels of the thesis
+             graphic were not. DOM order runs bottom-up, matching the argument
+             that each tier rests on the one below it. -->
         <div class="thesis reveal reveal-delay-3">
           <h3 class="thesis-title">What a performance-based price rests on</h3>
           <p class="thesis-lead">Measurement is one condition of five. Kaido&rsquo;s master&rsquo;s research at the University of Tartu maps the rest, and the order: each tier has to hold up the one above it.</p>
           <figure class="pyramid">
-            <ol class="pyramid-tiers" role="list">
-              <li class="pyramid-tier pyramid-tier-base">
-                <p class="pyramid-band">Foundational Environment</p>
-                <ul class="pyramid-items" role="list">
-                  <li>Trust &amp; Partnership</li>
-                </ul>
-              </li>
-              <li class="pyramid-tier pyramid-tier-mid">
-                <p class="pyramid-band">Defining Value</p>
-                <ul class="pyramid-items" role="list">
-                  <li>Clear Value Proposition / Uniqueness</li>
-                  <li>Measurable Outcomes / KPIs</li>
-                </ul>
-              </li>
-              <li class="pyramid-tier pyramid-tier-top">
-                <p class="pyramid-band">Structuring the Deal</p>
-                <ul class="pyramid-items pyramid-items-stacked" role="list">
-                  <li>Structured Risk Sharing</li>
-                  <li>Aligned Incentives</li>
-                </ul>
-              </li>
-            </ol>
+            <div class="pyramid-stage">
+              <svg class="pyramid-art" viewBox="0 0 1193 1059" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <polygon class="pyramid-fill-base" points="86,907 1107,907 1184,1052 10,1052"/>
+                <polygon class="pyramid-fill-mid" points="309,514 882,514 1094,875 98,875"/>
+                <polygon class="pyramid-fill-top" points="595,4 866,481 324,481"/>
+                <polygon class="pyramid-panel-base" points="99,921 1096,921 1143,998 51,998"/>
+                <polygon class="pyramid-panel" points="320,529 578,529 578,822 152,822"/>
+                <polygon class="pyramid-panel" points="610,529 868,529 1034,822 610,822"/>
+                <polygon class="pyramid-panel" points="445,308 744,308 817,430 372,430"/>
+                <polygon class="pyramid-panel" points="595,45 734,280 456,280"/>
+              </svg>
+              <ol class="pyramid-tiers" role="list">
+                <li class="pyramid-tier pyramid-tier-base">
+                  <p class="pyramid-band">Foundational Environment</p>
+                  <ul class="pyramid-items" role="list">
+                    <li class="pyramid-at-trust">Trust &amp; Partnership</li>
+                  </ul>
+                </li>
+                <li class="pyramid-tier pyramid-tier-mid">
+                  <p class="pyramid-band">Defining Value</p>
+                  <ul class="pyramid-items" role="list">
+                    <li class="pyramid-at-value">Clear Value Proposition / Uniqueness</li>
+                    <li class="pyramid-at-kpis">Measurable Outcomes / KPIs</li>
+                  </ul>
+                </li>
+                <li class="pyramid-tier pyramid-tier-top">
+                  <p class="pyramid-band">Structuring the Deal</p>
+                  <ul class="pyramid-items" role="list">
+                    <li class="pyramid-at-risk">Structured Risk Sharing</li>
+                    <li class="pyramid-at-incentives">Aligned Incentives</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
             <figcaption class="pyramid-source"><cite>Enablers and Barriers to Performance-Based Pricing of Software Projects</cite> <a href="https://dspace.ut.ee/items/ccf0dbc9-30c3-446b-8dd6-98b954842bd1" target="_blank" rel="noopener noreferrer" class="link" aria-label="Koort 2025, thesis on performance-based pricing">(Koort, 2025)</a></figcaption>
           </figure>
         </div>

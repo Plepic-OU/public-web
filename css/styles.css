@@ -2524,12 +2524,12 @@ plepic-mark > svg {
 .flow-badge strong { color: var(--green-dark); }
 
 /* Thesis framework — the conditions a performance-based price rests on.
-   Three stacked tiers of decreasing width stand in for the triangle in the
-   source graphic, so every label stays real, selectable, translatable text at
-   every viewport. The list runs base-first in the DOM, which is the order the
-   argument is made in and the order a screen reader needs; column-reverse is
-   what puts the base back at the bottom of the drawing. The green ramp carries
-   the tiers: saturated bands, item boxes deepening toward the foundation. */
+   The shapes are the designer's pyramid (source: design-canvas/
+   thesis-pyramid.fig, the Figma file to build on), traced into an inline SVG
+   whose viewBox is its exported artwork in pixels (1193 x 1059). Every
+   label is HTML placed over it at the centre the designer gave it, in percent
+   of that box, so drawing and text scale together. The fills run dark at the
+   apex to light at the foundation, as in the deck. */
 .thesis {
   max-width: 760px;
   margin: var(--space-3xl) auto 0;
@@ -2557,67 +2557,91 @@ plepic-mark > svg {
   margin: 0;
 }
 
-.pyramid-tiers {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  gap: var(--space-sm);
+.pyramid-stage {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  aspect-ratio: 1193 / 1059;
+  container-type: inline-size;
+}
+
+.pyramid-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* A round-joined stroke in the fill colour gives the traced polygons the
+   rounded corners of the artwork. */
+.pyramid-art polygon {
+  stroke-width: 14;
+  stroke-linejoin: round;
+}
+
+.pyramid-fill-top { fill: var(--green-dark); stroke: var(--green-dark); }
+.pyramid-fill-mid { fill: var(--green-brand); stroke: var(--green-brand); }
+.pyramid-fill-base { fill: var(--green-light); stroke: var(--green-light); }
+.pyramid-panel { fill: var(--green-light); stroke: var(--green-light); }
+.pyramid-panel-base { fill: var(--surface); stroke: var(--surface); }
+
+.pyramid-tiers,
+.pyramid-items {
   list-style: none;
 }
 
-.pyramid-tier {
-  width: 100%;
-  overflow: hidden;
-  border: 1px solid var(--green-light);
-  border-radius: var(--rounded-lg);
+.pyramid-tiers {
+  position: absolute;
+  inset: 0;
 }
 
-.pyramid-tier-mid { width: 76%; }
-.pyramid-tier-top { width: 52%; }
+.pyramid-band,
+.pyramid-items li {
+  position: absolute;
+  left: 50%;
+  translate: -50% -50%;
+  text-align: center;
+  line-height: 1.2;
+}
 
 .pyramid-band {
-  padding: 0.45rem var(--space-md);
+  width: 60%;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: clamp(0.625rem, 1.9cqw, 0.75rem);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: normal;
-  text-align: center;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--surface);
-  background: var(--green-brand);
 }
 
-.pyramid-tier-base .pyramid-band { background: var(--green-dark); }
+.pyramid-tier-top .pyramid-band { top: 43.7%; }
+.pyramid-tier-mid .pyramid-band { top: 80.7%; }
 
-.pyramid-items {
-  display: flex;
-  gap: var(--space-sm);
-  padding: var(--space-sm);
-  list-style: none;
-}
-
-.pyramid-items-stacked { flex-direction: column-reverse; }
-
-.pyramid-items li {
-  flex: 1;
-  padding: 0.6rem var(--space-sm);
-  border: 1px solid var(--green-light);
-  border-radius: var(--rounded-sm);
-  background: var(--surface);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.35;
-  text-align: center;
-  color: var(--text);
-}
-
-.pyramid-tier-mid .pyramid-items li { background: var(--green-surface); }
-
-.pyramid-tier-base .pyramid-items li {
-  background: var(--green-light);
+.pyramid-tier-base .pyramid-band {
+  top: 97.5%;
   color: var(--green-dark);
 }
+
+.pyramid-items li {
+  font-size: clamp(0.75rem, 3.1cqw, 1.125rem);
+  font-weight: 700;
+  text-wrap: balance;
+  color: var(--green-dark);
+}
+
+.pyramid-at-incentives { top: 19.5%; width: 17%; }
+.pyramid-at-risk { top: 34.9%; width: 30%; }
+.pyramid-at-trust { top: 90.7%; width: 60%; }
+
+.pyramid-at-value,
+.pyramid-at-kpis {
+  top: 64.2%;
+  width: 26%;
+}
+
+.pyramid-items .pyramid-at-value { left: 34.3%; }
+.pyramid-items .pyramid-at-kpis { left: 64.5%; }
 
 .pyramid-source {
   margin-top: var(--space-md);
@@ -2628,24 +2652,6 @@ plepic-mark > svg {
 }
 
 .pyramid-source cite { font-style: italic; }
-
-/* Phone: the stepped widths stop earning their keep once the middle tier can no
-   longer hold two boxes side by side, so every tier goes full width and the
-   items stack. The bands still carry the structure the drawing was making. */
-@media (max-width: 640px) {
-  .pyramid-tier-mid,
-  .pyramid-tier-top {
-    width: 100%;
-  }
-
-  .pyramid-items {
-    flex-direction: column;
-  }
-
-  .pyramid-items-stacked {
-    flex-direction: column-reverse;
-  }
-}
 
 /* Tablet: hero stacks at 900px, matching .hero-grid. Between 769 and 900px the
    two-column grid leaves the h1 about 360px, and it breaks onto five lines. */
