@@ -7,6 +7,10 @@
 var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
 if (dnt === '1' || dnt === 'yes') return;
 
+// Only the live site reports. CI and local Playwright runs load these pages on
+// localhost from US servers, and were most of GA4's sessions.
+if (!/(^|\.)plepic\.com$/.test(location.hostname)) return;
+
 // The tag (~350 KB with the Ads tag it pulls in) loads once the page is idle, so
 // it no longer competes with first paint. gtag() calls below queue in dataLayer
 // meanwhile and send when it arrives; only a visitor who leaves within the first
