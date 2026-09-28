@@ -2524,8 +2524,9 @@ plepic-mark > svg {
 .flow-badge strong { color: var(--green-dark); }
 
 /* Thesis framework — the conditions a performance-based price rests on.
-   The shapes are the designed pyramid from the Plepic deck, traced into an
-   inline SVG whose viewBox is the source artwork in pixels (1193 x 1059). Every
+   The shapes are the designer's pyramid (source: design-canvas/
+   thesis-pyramid.fig, the Figma file to build on), traced into an inline SVG
+   whose viewBox is its exported artwork in pixels (1193 x 1059). Every
    label is HTML placed over it at the centre the designer gave it, in percent
    of that box, so drawing and text scale together. The fills run dark at the
    apex to light at the foundation, as in the deck. */
