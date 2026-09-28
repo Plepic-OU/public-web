@@ -241,6 +241,29 @@
           <p class="mt-md text-dim">Using a different agent? <a href="/#faq-claude-code">Why Claude Code &rarr;</a></p>
         </div>
 
+        <div class="typical-day reveal">
+          <p class="label">A typical Friday</p>
+          <h3 class="typical-day-title">Watch it done live, <span class="highlight">then build it yourself</span></h3>
+          <p class="typical-day-lead">The instructor works in Claude Code on a shared screen. Then you repeat it on your own project in a breakout room of three. Each day ends with a short quiz and a feedback round, and the next Friday opens with your feedback.</p>
+          <ul class="typical-day-legend" aria-hidden="true">
+            <li><i class="td-key td-watch"></i>Watch: slides and live demo</li>
+            <li><i class="td-key td-build"></i>Build: breakout room, teams of three</li>
+            <li><i class="td-key td-share"></i>Share: recap, presentations, quiz</li>
+          </ul>
+          <ol class="typical-day-strip">
+            <li class="td-block td-share" style="flex-grow:30"><time>9:00</time><span>Recap and your feedback</span></li>
+            <li class="td-block td-watch" style="flex-grow:45"><time>9:30</time><span>Slides and live demo</span></li>
+            <li class="td-block td-build" style="flex-grow:60"><time>10:15</time><span>Workshop in breakout rooms</span></li>
+            <li class="td-block td-share" style="flex-grow:30"><time>11:15</time><span>Teams present</span></li>
+            <li class="td-block td-watch" style="flex-grow:30"><time>11:45</time><span>Next topic, live</span></li>
+            <li class="td-block td-lunch" style="flex-grow:45"><time>12:15</time><span>Lunch</span></li>
+            <li class="td-block td-watch" style="flex-grow:30"><time>13:00</time><span>Demo</span></li>
+            <li class="td-block td-build" style="flex-grow:90"><time>13:30</time><span>Team task in breakout rooms</span></li>
+            <li class="td-block td-share" style="flex-grow:30"><time>15:00</time><span>Quiz and feedback</span></li>
+          </ol>
+          <p class="typical-day-note">Ends at 15:30. Short breaks sit between blocks.</p>
+        </div>
+
         <p class="curriculum-throughline reveal">Harness <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Context <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Verification <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Scale</p>
 
         <div class="curriculum-timeline reveal reveal-delay-1">
@@ -262,8 +285,8 @@
               <div class="curr-track">
                 <span class="curr-track-label">Workshops</span>
                 <ul>
-                  <li>Devcontainer setup, then /init your own CLAUDE.md against a 150k-line repo</li>
-                  <li>Build a guard hook; your breakout room then probes it with prompts until it holds</li>
+                  <li>Set up Claude Code on your own project, or on our sample repo, then /init its CLAUDE.md</li>
+                  <li>Add a hook that runs your linter or tests on every change; your breakout room then tries to get past it</li>
                 </ul>
               </div>
             </div>
@@ -314,7 +337,7 @@
                 <span class="curr-track-label">Workshops</span>
                 <ul>
                   <li>Implement the spec in chunks; a validator subagent checks each one, then a /code-review loop runs until no issues remain, with a second review by another vendor&rsquo;s model</li>
-                  <li>Build the verification gate: a Lighthouse runner with a baseline diff and gated exit codes</li>
+                  <li>Build the verification gate for your stack (Lighthouse on a web app, a benchmark elsewhere) with a baseline diff and gated exit codes</li>
                   <li>Breakout: one ambitious goal per room. Divide the work, pick a presenter, ship</li>
                 </ul>
               </div>
@@ -340,7 +363,7 @@
                 <span class="curr-track-label">Workshops</span>
                 <ul>
                   <li>Complete 2&ndash;5 GitHub issues in parallel, each agent in its own worktree</li>
-                  <li>A measurable improvement loop: speed up the test suite or raise the Lighthouse score, both gates staying green</li>
+                  <li>A measurable improvement loop: speed up the test suite or improve your performance score, both gates staying green</li>
                 </ul>
               </div>
             </div>
@@ -425,7 +448,7 @@
         <div class="pricing-hero reveal">
           <p class="label">Investment</p>
           <h2>Training Program</h2>
-          <p class="section-subtitle">Weeks 5 and 6: ship a real feature in your own codebase &middot; 6 Fridays &middot; 37.5 hours &middot; Online via Google Meet</p>
+          <p class="section-subtitle">Your own codebase from day one, or our sample repo &middot; 6 Fridays &middot; 37.5 hours &middot; Online via Google Meet</p>
 
           <!-- Cohort status. Sold-out history is the strongest true signal the
                page carries, and the date is what a buyer needs, because the
@@ -458,7 +481,7 @@
               <div class="pricing-card-header">
                 <span class="pricing-tier">&#x1F1EA;&#x1F1EA; Estonian Subsidy</span>
               </div>
-              <div class="pricing-card-price">&minus;80%</div>
+              <div class="pricing-card-price"><span class="pricing-card-price-prefix">up to</span> &minus;80%</div>
               <p class="pricing-card-note">reimbursed, up to &euro;2,500 per employee</p>
               <div class="pricing-card-breakdown">
                 <div class="breakdown-row">
@@ -467,11 +490,11 @@
                 </div>
                 <div class="breakdown-row">
                   <span>T&ouml;&ouml;tukassa reimburses</span>
-                  <span class="savings">80% of the invoice</span>
+                  <span class="savings">up to 80% of the invoice</span>
                 </div>
               </div>
               <p class="pricing-card-explainer">
-                T&ouml;&ouml;tukassa reimburses Estonian employers 80% of the training invoice including VAT, capped at &euro;2,500 per employee over three years. We prepare the application with you. Provider: Plepic koolitus, EHIS majandustegevusteade nr 260952.
+                T&ouml;&ouml;tukassa reimburses Estonian employers up to 80% of the training invoice including VAT, capped at &euro;2,500 per employee over three years. If the employer has used up its de minimis aid limit, the rate is 50%. We prepare the application with you. Provider: Plepic koolitus, EHIS majandustegevusteade nr 260952.
                 <a href="https://www.tootukassa.ee/et/teenused/tooandjatele/koolitustoetus-tooandjatele-tootaja-ikt-oskuste-arendamiseks" target="_blank" rel="noopener noreferrer">Apply before training starts&nbsp;&rarr;</a>
               </p>
               <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
