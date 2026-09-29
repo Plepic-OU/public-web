@@ -21,10 +21,10 @@ Read this before you say anything about Ads, and append to it when you change th
 
 QS is 3 or lower on every keyword. Components, unchanged every week since July: landing page experience BELOW_AVERAGE and expected CTR BELOW_AVERAGE on every keyword; ad relevance ABOVE_AVERAGE, AVERAGE on "agentic engineering". Two parts below average cap QS at 3, so ad copy alone cannot lift it. Mobile Lighthouse on `/training/` is 100, so speed is not the landing-page problem; relevance to the searched phrase is.
 
-## Open questions
+## Decisions
 
-- Registration-form click value: Kaido set the account action to EUR 2,520 on 2026-08-27, but `scripts/tracking.js` sends EUR 50, and the sent value overrides the account default. One of them has to change.
-- The live ad's headline "Töötukassa Reimburses 80%" and its description say 80% flat; the page says "up to 80%" since 2026-09-28.
+- Registration-form click is worth EUR 2,520, the seat price (Kaido 2026-08-27, reconfirmed 2026-09-28). The site sends the same value.
+- Subsidy wording is "Töötukassa reimburses 80%" in ads and page headlines (Kaido 2026-09-28). The 50% de minimis case is stated once, in the `/training/` subsidy card.
 
 ## Change log
 
@@ -37,3 +37,4 @@ QS is 3 or lower on every keyword. Components, unchanged every week since July: 
 | 2026-09-28 | `/training/` H1: "Claude Code training for dev teams" | landing page relevance for the intent keywords | 2026-11-23: landing page experience at least AVERAGE on 3 of 6 scored keywords |
 | 2026-09-28 | GA4 reports from plepic.com hosts only | CI traffic was most of GA4's sessions | next weekly report: no localhost rows |
 | pending | Agentic keywords to own ad group + ad; pause ET keywords; definition negatives (agentic ai, agentic, meaning, definition, what is, agentic ide, agentic design, examples) | expected CTR, ad relevance | 2026-11-23: CTR at least 3% (from ~1.6%), avg CPC below EUR 3.99 |
+| 2026-09-28 | Form click value 50 to 2,520 on the site; "up to 80%" to "80%" on /, /training/, /jobs/ | one value per action; Kaido's wording | done |
