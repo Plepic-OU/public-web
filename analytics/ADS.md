@@ -36,5 +36,5 @@ QS is 3 or lower on every keyword. Components, unchanged every week since July: 
 | 2026-09-27 | Ad final URLs to apex, sitelinks replaced | apex domain move | not judged |
 | 2026-09-28 | `/training/` H1: "Claude Code training for dev teams" | landing page relevance for the intent keywords | 2026-11-23: landing page experience at least AVERAGE on 3 of 6 scored keywords |
 | 2026-09-28 | GA4 reports from plepic.com hosts only | CI traffic was most of GA4's sessions | next weekly report: no localhost rows |
-| pending | Agentic keywords to own ad group + ad; pause ET keywords; definition negatives (agentic ai, agentic, meaning, definition, what is, agentic ide, agentic design, examples) | expected CTR, ad relevance | 2026-11-23: CTR at least 3% (from ~1.6%), avg CPC below EUR 3.99 |
+| 2026-09-29 | New ad group "Agentic Engineering" (5 keywords moved, old copies paused) with its own ad; old group renamed "Claude Code Training"; ET keywords paused; 9 definition negatives (`scripts/apply-qs-package.ts`) (agentic ai, agentic, meaning, definition, what is, agentic ide, agentic design, examples) | expected CTR, ad relevance | 2026-11-23: CTR at least 3% (from ~1.6%), avg CPC below EUR 3.99 |
 | 2026-09-28 | Form click value 50 to 2,520 on the site; "up to 80%" to "80%" on /, /training/, /jobs/ | one value per action; Kaido's wording | done |
