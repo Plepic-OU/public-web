@@ -21,6 +21,7 @@ const PRODUCTION_PAGES = [
   'training/index.html',
   'scopeful/index.html',
   'jobs/index.html',
+  'et/index.html',
   '404.html',
 ];
 

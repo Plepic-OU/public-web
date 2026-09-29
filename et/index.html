@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://ad.doubleclick.net https://*.google.com https://*.google.ee https://www.googleadservices.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://ad.doubleclick.net https://*.google.com https://pagead2.googlesyndication.com https://www.googleadservices.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Claude Code koolitus arendustiimidele | Plepic</title>
+
+  <!-- Google Analytics + Google Ads -->
+  <script src="/scripts/tracking.js"></script>
+
+  <meta name="description" content="Claude Code koolitus arendajatele: 6 reedet, 37,5 tundi ja lõpuprojekt teie enda koodibaasis. Töötukassa koolitustoetus hüvitab tööandjale 80%.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Claude Code koolitus arendustiimidele | Plepic">
+  <meta property="og:description" content="Claude Code koolitus arendajatele: 6 reedet, 37,5 tundi ja lõpuprojekt teie enda koodibaasis. Töötukassa koolitustoetus hüvitab tööandjale 80%.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://plepic.com/et/">
+  <meta property="og:locale" content="et_EE">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:image" content="https://plepic.com/images/plepic-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Plepicu kristalne liblikalogo ja sõnamärk Plepic.com">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg?v=4">
+  <link rel="icon" type="image/png" href="../images/favicon.png?v=4">
+  <link rel="apple-touch-icon" href="../images/favicon.png?v=4">
+
+  <!-- Canonical + language alternates. The English pair is the home page;
+       keep both sides of the hreflang pair in step (index.html carries the
+       mirror of these three lines). -->
+  <link rel="canonical" href="https://plepic.com/et/">
+  <link rel="alternate" hreflang="et" href="https://plepic.com/et/">
+  <link rel="alternate" hreflang="en" href="https://plepic.com/">
+  <link rel="alternate" hreflang="x-default" href="https://plepic.com/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Code koolitus arendustiimidele | Plepic">
+  <meta name="twitter:description" content="Claude Code koolitus arendajatele: 6 reedet, 37,5 tundi ja lõpuprojekt teie enda koodibaasis. Töötukassa koolitustoetus hüvitab tööandjale 80%.">
+  <meta name="twitter:image" content="https://plepic.com/images/plepic-og.png">
+
+  <!-- PWA / Mobile -->
+  <meta name="theme-color" content="#faf7f2">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Structured Data - Course. No inLanguage: the page is Estonian, but the
+       language the course is taught in is a separate claim. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Claude Code koolitus arendustiimidele",
+    "description": "Kuuenädalane praktiline koolitus, kus arendajad õpivad Claude Code'iga agentset arendust ja teevad lõpuprojektina valmis päris funktsionaalsuse oma ettevõtte koodibaasis.",
+    "url": "https://plepic.com/et/",
+    "provider": {
+      "@type": "Organization",
+      "name": "Plepic",
+      "url": "https://plepic.com"
+    },
+    "occupationalCategory": "Software Developer",
+    "educationalLevel": "Professional",
+    "timeRequired": "PT37H30M",
+    "offers": {
+      "@type": "Offer",
+      "category": "Paid",
+      "price": "2520",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://plepic.com/et/"
+    },
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "Online",
+      "startDate": "2026-10-16",
+      "courseWorkload": "PT37H30M",
+      "courseSchedule": {
+        "@type": "Schedule",
+        "repeatFrequency": "P1W",
+        "repeatCount": 6
+      }
+    },
+    "educationalCredentialAwarded": {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Plepic Certificate of Completion: Agentic Development Framework",
+      "credentialCategory": "certificate"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "8.7",
+      "bestRating": "10",
+      "worstRating": "1",
+      "ratingCount": "20"
+    }
+  }
+  </script>
+
+  <!-- Structured Data - FAQ. Every answer here must match the visible KKK
+       text below word for word. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Mis on agentne arendus?", "acceptedAnswer": {"@type": "Answer", "text": "Agentne arendus on tarkvaraarenduse viis, kus keelemudel kasutab tööriistu korduvas tsüklis: planeerib, kirjutab, testib ja parandab koodi iseseisvalt. Erinevalt üksikust päringust jätkab agent tööd, kuni eesmärk on saavutatud. Õpetame seda Claude Code'iga. See on terminalis töötav agent, millel on juurdepääs kogu süsteemile, samas kui Copilot ja Cursor töötavad koodiredaktori sees."}},
+      {"@type": "Question", "name": "Kellele koolitus on mõeldud?", "acceptedAnswer": {"@type": "Answer", "text": "Kogenud arendajatele, kellel on vähemalt kaks aastat erialast töökogemust ja juurdepääs päris koodibaasile. Programmeerimise algõpe see ei ole."}},
+      {"@type": "Question", "name": "Kui kaua koolitus kestab?", "acceptedAnswer": {"@type": "Answer", "text": "Koolitus toimub kuuel reedel, iga kord täispäev (9.00–15.30) Google Meetis. Programmi maht on 37,5 tundi. Koolituspäevade vahel rakendavad osalejad õpitut oma koodibaasis."}},
+      {"@type": "Question", "name": "Kas koolituse lõpus saab tunnistuse?", "acceptedAnswer": {"@type": "Answer", "text": "Jah. Programmi läbinud osalejad saavad Plepicu tunnistuse, mis hõlmab Claude Code'i, kontekstihaldust ja agendi kogu töötsüklit."}},
+      {"@type": "Question", "name": "Kas koolitus sobib ka tiimile, kes juba kasutab agente?", "acceptedAnswer": {"@type": "Answer", "text": "Jah. Õpetame meetodit, mitte tööriista. Hilisemad koolituspäevad käsitlevad spetsifikatsioone, mida agent saab ise kontrollida, kvaliteediväravaid, paralleelseid agente git worktree'des, jälgitavust ja agentidele loodud arhitektuuri. Varasem Claude'i kogemus tuleb kasuks, kuid pole nõutud."}},
+      {"@type": "Question", "name": "Kui palju koolitus maksab ja kuidas koolitustoetus toimib?", "acceptedAnswer": {"@type": "Answer", "text": "2520 € + km ühe arendaja kohta. Töötukassa hüvitab Eesti tööandjale 80% koolitusarvest koos käibemaksuga, kuni 2500 € töötaja kohta kolme aasta jooksul. Tööandja esitab taotluse e-töötukassas enne koolituse algust ja me valmistame selle koos temaga ette. Koolitusasutus on Plepic koolitus (Plepic OÜ, registrikood 11275881), EHIS-e majandustegevusteade nr 260952. Programmi maht vastab koolitustoetuse miinimumnõudele."}}
+    ]
+  }
+  </script>
+
+  <!-- Structured Data - Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Plepic", "item": "https://plepic.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Claude Code koolitus", "item": "https://plepic.com/et/" }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: self-hosted (@font-face in css/styles.css); preload the above-the-fold critical files -->
+  <link rel="preload" href="../fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/hanken.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Disable scroll restoration before browser restores position -->
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <!-- Entrance gate: hold .hero-entrance until webfonts are in (1.5s cap) so
+       the Bitter/Hanken glyph swap never repaints mid-rise. -->
+  <script>(function(g){document.fonts.ready.then(g);setTimeout(g,1500)})(function(){document.documentElement.classList.add('fonts-in')});</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Liigu põhisisu juurde</a>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="/et/" class="logo-lockup" aria-label="Plepic, avaleht"><span class="logo-wordmark">Plepic</span><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" width="30" height="28" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></a>
+      <nav class="nav">
+        <a href="#programm">Programm</a>
+        <a href="#koolitajad">Koolitajad</a>
+        <a href="#hind">Hind</a>
+        <a href="#kkk">KKK</a>
+        <a href="/" lang="en" hreflang="en">ENG</a>
+        <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="nav-cta">Räägi Kaidoga</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Ava menüü" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero -->
+    <section class="training-hero section">
+      <div class="container">
+        <div class="badge-base cohort-badge hero-entrance hero-entrance-1">
+          <span>Kolm esimest kohorti müüdi välja &middot; järgmine algab 16.&nbsp;oktoobril</span>
+        </div>
+
+        <h1 class="hero-entrance hero-entrance-2"><span class="highlight">Claude Code koolitus</span> arendustiimidele</h1>
+        <p class="training-hero-subtitle hero-entrance hero-entrance-2">Enamik arendajaid kasutab juba AI-agente. Agentne arendus on töömeetod, mis muudab agentide töö usaldusväärseks: selged spetsifikatsioonid, piirangud, automaatsed kontrollid ja paralleelselt töötavad agendid. Kuue nädalaga viite meetodi oma tiimi igapäevatöösse.</p>
+
+        <!-- Same figure as /training/: the panel comes FIRST in the DOM and CSS
+             `order` restores the visual order. Do not reorder this markup. -->
+        <div class="hero-figure">
+          <div class="hero-panel">
+            <div class="hero-panel-inner">
+
+              <div class="hero-panel-group">
+                <p class="hero-panel-label">Formaat</p>
+                <div class="hero-stats">
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">6</div>
+                    <div class="hero-stat-label">Nädalat / reedet</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">37,5</div>
+                    <div class="hero-stat-label">Tundi</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">~20</div>
+                    <div class="hero-stat-label">Osalejat</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">2+</div>
+                    <div class="hero-stat-label">Aastat kogemust</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-panel-group">
+                <p class="hero-panel-label">Tulemused</p>
+                <div class="hero-stats">
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">300+</div>
+                    <div class="hero-stat-label">Koolitatud inseneri</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">8,7/10</div>
+                    <div class="hero-stat-label">Osalejate hinnang</div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">5&times;</div>
+                    <div class="hero-stat-label">Töö kiirenemine (mediaan)</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="hero-figure-frame">
+            <div class="hero-figure-inner">
+              <picture>
+                <source srcset="../images/agentic-harness.webp" type="image/webp">
+                <img src="../images/agentic-harness.webp" alt="Arendaja töötab arvuti taga, teda ümbritseb roheline kristalne võrgustik" width="1600" height="893" loading="eager" fetchpriority="high">
+              </picture>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group hero-entrance hero-entrance-4">
+          <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+            Räägi Kaidoga
+          </a>
+        </div>
+
+        <!-- 5x must never appear bare; this sentence is its qualifier. -->
+        <p class="hero-qualifier mt-md">5× on lõpetajate enda hinnangute mediaan: nii palju kiirenes nende töö lõpuprojektis.</p>
+
+      </div>
+    </section>
+
+    <!-- Programm -->
+    <section id="programm" class="curriculum-section section">
+      <div class="container">
+        <div class="text-center mb-4 reveal">
+          <p class="label">Õppekava</p>
+          <h2>Kuus reedet: juhuslikust agentide kasutamisest korratava meetodini</h2>
+          <p class="section-subtitle">6 reedet &middot; 9.00&ndash;15.30 &middot; veebis, Google Meetis</p>
+        </div>
+
+        <p class="curriculum-throughline reveal">Töökeskkond <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Kontekst <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Kontroll <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Skaleerimine</p>
+
+        <div class="curriculum-timeline reveal reveal-delay-1">
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-1-desc">
+              <span class="curriculum-week">1. nädal</span>
+              <span class="curriculum-title">Töökeskkond ja turvalisus</span>
+              <span class="curriculum-tagline">Agent töötab kindlates piirides ja ohtlikud käsud on keelatud.</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-1-desc" hidden>
+              <div class="curr-track">
+                <span class="curr-track-label">Loengud</span>
+                <ul>
+                  <li>Claude Code ja agendi töötsükkel: promptid, tokenid, oskused (skills), alamagendid, MCP, tellimuspaketid ja hinnad</li>
+                  <li>Hookid: iga tööriistakutse jälgimine ja ohtlike käskude blokeerimine</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Töötoad</span>
+                <ul>
+                  <li>Claude Code'i seadistamine oma projektis või meie näidisrepos ning CLAUDE.md loomine käsuga /init</li>
+                  <li>Hook, mis käivitab iga muudatuse järel linteri või testid. Seejärel püüab teie rühm sellest mööda hiilida</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-2-desc">
+              <span class="curriculum-week">2. nädal</span>
+              <span class="curriculum-title">Piirangud ja kontekst</span>
+              <span class="curriculum-tagline">Agent saab projekti kaardi ja plaan kontrollitakse enne koodi kirjutamist.</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-2-desc" hidden>
+              <div class="curr-track">
+                <span class="curr-track-label">Loengud</span>
+                <ul>
+                  <li>Projekti kaardid: kihilised kokkuvõtted, C4-mudel, tokenid ja promptide vahemälu</li>
+                  <li>Disainidokumendid, testimispüramiid, valideerimistsüklid ja alamagendid süvitsi</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Töötoad</span>
+                <ul>
+                  <li>C4-mudeli oskus ja andmebaasi skeemi kaart, mõlemad seotud CLAUDE.md-ga</li>
+                  <li>Promptimine võrdluse kaudu: kirjutate oma prompti, käivitate selle ja seejärel näidislahenduse. Erinevus näitab, mida õppida</li>
+                  <li>Spetsifikatsioon koos vastuvõtukriteeriumidega, mida agent saab ise kontrollida ja mille paralleelsed valideerimisagendid üle vaatavad</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-3-desc">
+              <span class="curriculum-week">3. nädal</span>
+              <span class="curriculum-title">Spetsifikatsioonist koodini ja kontroll</span>
+              <span class="curriculum-tagline">Arendate osade kaupa, kontrollite iga osa ja mõõdate kõike.</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-3-desc" hidden>
+              <div class="curr-track">
+                <span class="curr-track-label">Loengud</span>
+                <ul>
+                  <li>Kuidas jõuda kontrollitud spetsifikatsioonist töötava koodini ja millised kaks kvaliteediväravat peab iga muudatus läbima: e2e-testid ja jõudlus</li>
+                  <li>Tsüklid: vestluspõhised, eesmärgipõhised, ajastatud ja proaktiivsed (Anthropicu juhend <span lang="en">&bdquo;Getting started with loops&ldquo;</span>)</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Töötoad</span>
+                <ul>
+                  <li>Spetsifikatsiooni teostamine osade kaupa: iga osa kontrollib valideeriv alamagent, seejärel kordub /code-review, kuni vigu ei jää, ja lõpuks vaatab koodi üle teise tootja mudel</li>
+                  <li>Kvaliteedivärav teie tehnoloogiale (veebirakendusel Lighthouse, mujal jõudlustest), mis võrdleb tulemust baastasemega ja peatab töö, kui tulemus halveneb</li>
+                  <li>Rühmatöö: igal rühmal üks ambitsioonikas eesmärk. Jagate töö ära, valite esitleja ja viite asja lõpuni</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="curriculum-item">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-4-desc">
+              <span class="curriculum-week">4. nädal</span>
+              <span class="curriculum-title">Paralleelsed agendid ja arhitektuur</span>
+              <span class="curriculum-tagline">Mitu agenti töötab korraga ja te näete, mida igaüks teeb.</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-4-desc" hidden>
+              <div class="curr-track">
+                <span class="curr-track-label">Loengud</span>
+                <ul>
+                  <li>Introspektsioon ja jälgitavus: sessioonilogid, /insights, OTEL-i mõõdikud</li>
+                  <li>Agentidele loodud arhitektuur ja proaktiivsed tsüklid, mis töötavad ka teie eemal olles: logide analüüs, aeglaste päringute läbivaatus, maksete sobitamine</li>
+                </ul>
+              </div>
+              <div class="curr-track">
+                <span class="curr-track-label">Töötoad</span>
+                <ul>
+                  <li>2&ndash;5 GitHubi issue lahendamine paralleelselt, iga agent oma git worktree's</li>
+                  <li>Mõõdetav optimeerimistsükkel: testikomplekti kiirendamine või jõudlusskoori tõstmine nii, et mõlemad kvaliteediväravad jäävad roheliseks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="curriculum-item curriculum-final">
+            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-5-desc">
+              <span class="curriculum-week">5. ja 6. nädal</span>
+              <span class="curriculum-title">Lõpuprojekt</span>
+              <span class="curriculum-tagline">Teete valmis päris funktsionaalsuse oma koodibaasis.</span>
+              <span class="curriculum-sessions-badge">2 sessiooni</span>
+              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="curriculum-desc" id="curr-5-desc" hidden>
+              <p>Rakendate kogu töövoo oma ettevõtte päris koodibaasis koolitaja toel. Osalejad hindavad neid nädalaid kõige kõrgemalt.</p>
+              <div class="curr-track">
+                <span class="curr-track-label">Tulemused</span>
+                <ul>
+                  <li>Seadistatud agentne töökeskkond: CLAUDE.md, oskused, hookid ja kvaliteediväravad</li>
+                  <li>Päris funktsionaalsus, mis on läbinud kogu töövoo, koos spetsifikatsiooni, arhitektuuriotsuste (ADR) ja C4-diagrammidega</li>
+                  <li>Lõpuesitlus ja kaasosalejate tagasiside</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Koolitajad -->
+    <section id="koolitajad" class="team-strip section">
+      <div class="container">
+        <div class="reveal">
+          <p class="label text-center">Teie koolitajad</p>
+          <div class="team-inline">
+            <div class="team-member">
+              <img src="../images/joosep.webp" alt="Joosep Simm" width="400" height="400" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Joosep Simm</strong>
+                <span class="team-member-role">Arendaja, arhitekt ja AI-koolitaja &middot; 20+ aastat</span>
+              </div>
+            </div>
+            <div class="team-member">
+              <img src="../images/kaido.webp" alt="Kaido Koort" width="640" height="640" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Kaido Koort</strong>
+                <span class="team-member-role">Tehnoloogiajuht ja tootestrateeg &middot; 20+ aastat</span>
+              </div>
+            </div>
+            <div class="team-member">
+              <img src="../images/vootele.webp" alt="Vootele R&otilde;tov" width="512" height="512" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Vootele R&otilde;tov</strong>
+                <span class="team-member-role">Tarkvarainsener ja asutaja &middot; 10+ aastat</span>
+              </div>
+            </div>
+            <div class="team-member">
+              <img src="../images/jevgeni.webp" alt="Jevgeni Bogat&otilde;rjov" width="640" height="640" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Jevgeni Bogat&otilde;rjov</strong>
+                <span class="team-member-role">Insener, CTO ja asutaja &middot; 14 aastat</span>
+              </div>
+            </div>
+            <div class="team-member">
+              <img src="../images/aivo.webp" alt="Aivo Olev" width="640" height="640" loading="lazy" class="team-member-photo">
+              <div class="team-member-info">
+                <strong>Aivo Olev</strong>
+                <span class="team-member-role">Kõnetehnoloogia teadur ja asutaja &middot; 18 aastat</span>
+              </div>
+            </div>
+          </div>
+          <p class="team-book-note text-center">Kaido on raamatu <a href="https://www.amazon.de/-/en/Kaido-Koort-ebook/dp/B0DRZ39RTD/" target="_blank" rel="noopener noreferrer"><span lang="en">&bdquo;AI Coding for Beginners&ldquo;</span></a> kaasautor</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hind ja koolitustoetus -->
+    <section id="hind" class="pricing-section section">
+      <div class="container">
+        <div class="pricing-hero reveal">
+          <p class="label">Maksumus</p>
+          <h2>Hind ja Töötukassa koolitustoetus</h2>
+          <p class="section-subtitle">Töö teie enda koodibaasis esimesest päevast (või meie näidisrepos) &middot; 6 reedet &middot; 37,5 tundi &middot; veebis, Google Meetis</p>
+
+          <!-- The third sentence is load-bearing: without it, "müüdi välja"
+               reads as if 16 October is full too. -->
+          <p class="text-dim mt-md">Kolm esimest kohorti müüdi välja. Järgmine kohort algab 16.&nbsp;oktoobril ja sinna on veel kohti.</p>
+
+          <div class="pricing-cards">
+            <div class="pricing-card">
+              <div class="pricing-card-header">
+                <span class="pricing-tier">Koolitus</span>
+              </div>
+              <div class="pricing-card-price">2520&nbsp;€</div>
+              <p class="pricing-card-note">+ km ühe arendaja kohta</p>
+              <ul class="pricing-card-features">
+                <li>Kõik kuus koolituspäeva</li>
+                <li>Lõpuprojekt teie enda koodibaasis</li>
+                <li>Plepicu tunnistus</li>
+              </ul>
+              <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+                Räägi Kaidoga
+              </a>
+              <p class="hero-qualifier">Avaneb Google'i kalender, kus saate aja valida</p>
+            </div>
+
+            <div class="pricing-card pricing-card-featured">
+              <div class="pricing-card-header">
+                <span class="pricing-tier">&#x1F1EA;&#x1F1EA; Koolitustoetus</span>
+              </div>
+              <div class="pricing-card-price">80%</div>
+              <p class="pricing-card-note">arvest tagasi Töötukassalt, kuni 2500&nbsp;€ töötaja kohta</p>
+              <div class="pricing-card-breakdown">
+                <div class="breakdown-row">
+                  <span>Koolituse hind</span>
+                  <span>2520&nbsp;€ + km</span>
+                </div>
+                <div class="breakdown-row">
+                  <span>Töötukassa hüvitab</span>
+                  <span class="savings">80% arvest</span>
+                </div>
+              </div>
+              <p class="pricing-card-explainer">
+                Töötukassa hüvitab Eesti tööandjale 80% koolitusarvest koos käibemaksuga, kuni 2500&nbsp;€ töötaja kohta kolme aasta jooksul. Kui tööandja vähese tähtsusega abi piirmäär on ammendunud, on hüvitis 50%. Taotluse esitab tööandja enne koolituse algust ja me valmistame selle koos teiega ette. Koolitusasutus: Plepic koolitus (EHIS-e majandustegevusteade nr 260952).
+                <a href="https://www.tootukassa.ee/et/teenused/tooandjatele/koolitustoetus-tooandjatele-tootaja-ikt-oskuste-arendamiseks" target="_blank" rel="noopener noreferrer">Toetuse tingimused Töötukassa lehel&nbsp;&rarr;</a>
+              </p>
+              <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+                Räägi Kaidoga
+              </a>
+              <p class="hero-qualifier">Avaneb Google'i kalender, kus saate aja valida</p>
+            </div>
+          </div>
+
+          <p class="pricing-proof-line">Kõik meie kohordid on kuuenädalase programmi täies mahus läbinud.</p>
+
+          <p class="text-center text-dim text-sm mt-md mb-md">
+            Meie koolitusel on osalenud insenerid ettevõtetest HELMES &middot; HOLM BANK &middot; DATEL &middot; BITWEB &middot; AKTIVA &middot; DELFI &middot; MERIT &middot; MINDWORKS &middot; RETHINKERS
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KKK -->
+    <section id="kkk" class="faq-section section reveal">
+      <div class="container">
+        <div class="reveal">
+          <h2>Korduma kippuvad küsimused</h2>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Mis on agentne arendus?</summary>
+              <div class="faq-answer">
+                <p>Agentne arendus on tarkvaraarenduse viis, kus keelemudel kasutab tööriistu korduvas tsüklis: planeerib, kirjutab, testib ja parandab koodi iseseisvalt. Erinevalt üksikust päringust jätkab agent tööd, kuni eesmärk on saavutatud. Õpetame seda Claude Code'iga. See on terminalis töötav agent, millel on juurdepääs kogu süsteemile, samas kui Copilot ja Cursor töötavad koodiredaktori sees.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Kellele koolitus on mõeldud?</summary>
+              <div class="faq-answer">
+                <p>Kogenud arendajatele, kellel on vähemalt kaks aastat erialast töökogemust ja juurdepääs päris koodibaasile. Programmeerimise algõpe see ei ole.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Kui kaua koolitus kestab?</summary>
+              <div class="faq-answer">
+                <p>Koolitus toimub kuuel reedel, iga kord täispäev (9.00–15.30) Google Meetis. Programmi maht on 37,5 tundi. Koolituspäevade vahel rakendavad osalejad õpitut oma koodibaasis.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Kas koolituse lõpus saab tunnistuse?</summary>
+              <div class="faq-answer">
+                <p>Jah. Programmi läbinud osalejad saavad Plepicu tunnistuse, mis hõlmab Claude Code'i, kontekstihaldust ja agendi kogu töötsüklit.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Kas koolitus sobib ka tiimile, kes juba kasutab agente?</summary>
+              <div class="faq-answer">
+                <p>Jah. Õpetame meetodit, mitte tööriista. Hilisemad koolituspäevad käsitlevad spetsifikatsioone, mida agent saab ise kontrollida, kvaliteediväravaid, paralleelseid agente git worktree'des, jälgitavust ja agentidele loodud arhitektuuri. Varasem Claude'i kogemus tuleb kasuks, kuid pole nõutud.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Kui palju koolitus maksab ja kuidas koolitustoetus toimib?</summary>
+              <div class="faq-answer">
+                <p>2520&nbsp;€ + km ühe arendaja kohta. Töötukassa hüvitab Eesti tööandjale 80% koolitusarvest koos käibemaksuga, kuni 2500&nbsp;€ töötaja kohta kolme aasta jooksul. Tööandja esitab taotluse e-töötukassas enne koolituse algust ja me valmistame selle koos temaga ette. Koolitusasutus on Plepic koolitus (Plepic OÜ, registrikood 11275881), EHIS-e majandustegevusteade nr 260952. Programmi maht vastab koolitustoetuse miinimumnõudele.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="closing-section section reveal">
+      <div class="container">
+        <div class="closing-content reveal">
+          <h2>Alustage <span class="highlight">oma koodibaasist</span></h2>
+          <p>20-minutiline kõne Kaidoga. Ettevalmistust ega slaide pole vaja. Võtke kaasa üks päris ülesanne, mis teil praegu töös on, ja arutame, mida agent sellega teeks.</p>
+          <p>Tulete kogu tiimiga? Samas kõnes selgitab Kaido, kuidas Töötukassa koolitustoetus koolituse kulud hüvitab, ja paneb koos teiega kokku kohordi, mis sobib teie tiimi ja koodibaasiga.</p>
+          <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Broneeri 20-minutiline kõne</a>
+          <p class="hero-qualifier">Avaneb Google'i kalender, kus saate aja valida</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="https://linkedin.com/in/kaidokoort/" target="_blank" rel="noopener noreferrer" aria-label="Kaido LinkedInis">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            LinkedIn
+          </a>
+          <a href="tel:+3725077333">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +372 5077 333
+          </a>
+          <a href="mailto:kaido@plepic.com">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            kaido@plepic.com
+          </a>
+          <a href="https://discord.gg/mc4Hhh8F3p" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            #claude-code-ee
+          </a>
+        </div>
+        <div class="footer-company-info">
+          <strong>Plepic OÜ</strong> &middot; Liivalaia 7, 10118 Tallinn &middot; Registrikood 11275881 &middot; KMKR EE102813797<br>
+          &copy; 2026 Plepic &middot; <span class="footer-tagline" lang="en">Curious play. Epic growth.</span> &middot; <a href="/privacy/" hreflang="en">Privaatsus</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Sticky CTA -->
+  <div class="sticky-cta" id="stickyCta">
+    <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      Räägi Kaidoga
+    </a>
+  </div>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    const setMenu = (open) => {
+      nav.classList.toggle('active', open);
+      menuToggle.setAttribute('aria-expanded', open);
+      menuToggle.textContent = open ? '✕' : '☰';
+    };
+    menuToggle.addEventListener('click', () => setMenu(!nav.classList.contains('active')));
+
+    // Close mobile menu when clicking a link
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    // Escape closes the mobile menu first, otherwise it dismisses a shown
+    // tooltip. WCAG 2.1 SC 1.4.13 forbids moving focus on dismissal, so the
+    // tooltip branch only flags the trigger; styles.css hides the panel while
+    // the trigger carries data-tip-open="false".
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (nav.classList.contains('active')) {
+        setMenu(false);
+        menuToggle.focus();
+        return;
+      }
+      const shownTip = document.querySelector('.tooltip-trigger:hover, .tooltip-trigger:focus, .tooltip-trigger:focus-within');
+      if (shownTip) shownTip.setAttribute('data-tip-open', 'false');
+    });
+
+    // A later hover or focus shows a dismissed tooltip again
+    document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+      const restore = () => trigger.removeAttribute('data-tip-open');
+      trigger.addEventListener('mouseleave', restore);
+      trigger.addEventListener('blur', restore);
+    });
+
+    // Sticky CTA visibility: yields while the hero or any other primary CTA
+    // is on screen (one accent per viewport)
+    const stickyCta = document.getElementById('stickyCta');
+    const heroSection = document.querySelector('.training-hero');
+
+    if (stickyCta && heroSection) {
+      const accentTargets = [heroSection, ...document.querySelectorAll('.btn-primary, .btn-enlist')]
+        .filter(el => !stickyCta.contains(el));
+      const onScreen = new Set();
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) onScreen.add(entry.target);
+          else onScreen.delete(entry.target);
+        });
+        const show = onScreen.size === 0;
+        stickyCta.classList.toggle('visible', show);
+        document.body.classList.toggle('has-sticky-cta', show);
+      }, { threshold: 0 });
+
+      accentTargets.forEach(target => observer.observe(target));
+    }
+
+    // Scroll-triggered reveal animations
+    document.documentElement.classList.add('js-reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Curriculum accordion
+    document.querySelectorAll('.curriculum-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.curriculum-item');
+        const desc = item.querySelector('.curriculum-desc');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        desc.hidden = expanded;
+        item.toggleAttribute('data-expanded');
+      });
+    });
+
+  </script>
+</body>
+</html>

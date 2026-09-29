@@ -16,8 +16,9 @@ const range = `origin/${base}...HEAD`;
 
 // Money, percentage, or date. Matches the WHOLE token (€2,520 not €2) so it
 // can be compared against the receipt.
+// Estonian copy puts the sign after the number (2520 €), hence the ?€ branch.
 const CLAIM_PAT =
-  /(€[0-9][0-9.,]*|[0-9][0-9.,]* ?EUR|[0-9][0-9.,]*%|20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]|[0-9]+\.[0-9]+\.20[0-9][0-9])/g;
+  /(€[0-9][0-9.,]*|[0-9][0-9.,]* ?€|[0-9][0-9.,]* ?EUR|[0-9][0-9.,]*%|20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]|[0-9]+\.[0-9]+\.20[0-9][0-9])/g;
 
 function addedLines(paths) {
   const out = execFileSync('git', ['diff', '-U0', range, '--', ...paths], {
@@ -59,7 +60,12 @@ for (const raw of addedLines([
   ...INTERNAL_DIRS.map((dir) => `:(exclude)${dir}`),
 ])) {
   // Cache-bust query strings (?v=...) are not claims.
-  const line = raw.replace(/\?v=[^"'\s>]*/g, '');
+  // Entities are decoded first, so &euro;2,520 and 2520&nbsp;€ are seen as the
+  // prices they render as.
+  const line = raw
+    .replace(/\?v=[^"'\s>]*/g, '')
+    .replace(/&euro;/g, '€')
+    .replace(/&nbsp;|\u00a0/g, ' ');
   for (const m of line.matchAll(CLAIM_PAT)) {
     const tok = m[0].replace(/[.,]+$/, '');
     if (tok) tokens.add(tok);
