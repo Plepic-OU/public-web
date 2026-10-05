@@ -3206,19 +3206,35 @@ plepic-mark > svg {
   margin: 0 0 var(--space-sm);
 }
 
-.curriculum-desc ul {
+.curriculum-official {
+  max-width: 720px;
+  margin: var(--space-lg) auto 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+
+.curriculum-outcomes {
+  max-width: 720px;
+  margin: var(--space-xl) auto 0;
+}
+
+.curriculum-desc ul,
+.curriculum-outcomes ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.curriculum-desc li {
+.curriculum-desc li,
+.curriculum-outcomes li {
   position: relative;
   padding-left: 1rem;
   margin-bottom: var(--space-xs);
 }
 
-.curriculum-desc li::before {
+.curriculum-desc li::before,
+.curriculum-outcomes li::before {
   content: "·";
   position: absolute;
   left: 0;
