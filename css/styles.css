@@ -3217,6 +3217,7 @@ plepic-mark > svg {
 .curriculum-outcomes {
   max-width: 720px;
   margin: var(--space-xl) auto 0;
+  font-size: 1rem;
 }
 
 .curriculum-desc ul,
