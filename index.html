@@ -96,7 +96,15 @@
         "name": "What is agentic coding?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until the goal is achieved. We teach it on Claude Code, a terminal agent with full system access, while Copilot and Cursor stay inside the editor."
+          "text": "Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until the goal is achieved."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do you teach Claude Code, and why in the terminal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Claude Code keeps the whole agentic setup in plain files your team can read, version and share: project instructions, subagents, hooks, skills and MCP tools. We teach the CLI because the terminal is where an agent does real work. It runs your tests, builds and git directly, sits next to any editor, and the same setup runs headless in scripts and CI. The method itself (context, planning, verification) carries over to Cursor, Copilot or Codex."
         }
       },
       {
@@ -808,10 +816,17 @@
 
             <h3 class="faq-group-title">The program</h3>
 
-            <details class="faq-item" id="faq-claude-code" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+            <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
               <summary itemprop="name">What is agentic coding?</summary>
               <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                <p itemprop="text">Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until the goal is achieved. We teach it on Claude Code, a terminal agent with full system access, while Copilot and Cursor stay inside the editor.</p>
+                <p itemprop="text">Agentic coding is a software development approach where an LLM uses tools in a loop to plan, write, test, and refine code autonomously. Unlike single-prompt AI, an agentic system iterates until the goal is achieved.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" id="faq-claude-code" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+              <summary itemprop="name">Why do you teach Claude Code, and why in the terminal?</summary>
+              <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <p itemprop="text">Claude Code keeps the whole agentic setup in plain files your team can read, version and share: project instructions, subagents, hooks, skills and MCP tools. We teach the CLI because the terminal is where an agent does real work. It runs your tests, builds and git directly, sits next to any editor, and the same setup runs headless in scripts and CI. The method itself (context, planning, verification) carries over to Cursor, Copilot or Codex.</p>
               </div>
             </details>
 
