@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -119,7 +123,7 @@
     .part code { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
                  color: var(--text-3); }
     .part span { font-size: 0.85rem; line-height: 1.5; color: var(--text-2); }
-    .anat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    .anat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
             border-top: 1.5px solid var(--text); padding-top: 16px; }
     .anat h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
                margin: 0 0 6px; }
@@ -130,10 +134,10 @@
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>The card</h1>
-    <p class="lede">A graded editorial column. The rule above the eyebrow opens it, the rule under the role closes it, and nothing else draws a box. The set is graded as one photograph, so three faces read as one deck rather than three uploads.</p>
+    <p class="lede">A graded editorial column. A rule opens it above the eyebrow, a rule closes it under the role, and nothing else draws a box. One grade for the set, so three faces read as one deck.</p>
 
     <h2 class="sec">The set at rest</h2>
-    <p class="sec-note">Three columns on the page ground, no card of its own. 300px each, 32px apart, stretched to one height.</p>
+    <p class="sec-note">Three 300px columns, 32px apart, one height, on the page ground.</p>
     <div class="row">
       <div class="seat">
         <article class="tt-card">
@@ -169,7 +173,7 @@
 
     <hr class="rule">
     <h2 class="sec">Rest and lift</h2>
-    <p class="sec-note">Hover is the only time a sheet appears: the column rises 5px and a white surface with a soft shadow prints behind it. On a fine pointer the card also tilts up to 9&deg; / 11&deg; toward the cursor &mdash; motion this artboard cannot show.</p>
+    <p class="sec-note">Only hover prints a sheet: the column rises 5px over a white surface and a soft shadow. On a fine pointer it also tilts up to 9&deg; and 11&deg;, which this artboard does not run.</p>
     <div class="state">
       <div><p class="state-label">Rest</p>
         <div class="row" style="grid-template-columns: 300px">
@@ -203,33 +207,27 @@
 
     <hr class="rule">
     <h2 class="sec">Part by part, in source order</h2>
-    <p class="sec-note">Ten parts, and every one of them is answering something that went wrong. This is the component whole: drop a part and the reason it existed comes back.</p>
-    <div class="part"><b>Seat</b><code>.tt-seat</code><span>An untransformed wrapper that owns the hover and the data-tilt hook. A transformed element is hit-tested against its transformed box, so a card that tracked its own hover chased itself out from under a resting pointer: 86 enter and leave events in two and a half seconds, measured. The seat never moves, which is what makes both the hover and the per-frame measurement trustworthy.</span></div>
-    <div class="part"><b>Column</b><code>.tt-card</code><span>A flex column at 18px 24px padding. It sets no width of its own: the Card fills the column it is handed, and the homepage team grid caps that track at 300px. The vertical padding keeps both rules off the cut edge; the horizontal padding is the margin the sheet shows once it appears.</span></div>
-    <div class="part"><b>Sheet</b><code>.tt-card::before</code><span>inset 0, --surface, opacity 0 at rest; on hover and focus-within it fades to 1 under --card-shadow-hover while the card rises. A ::before rather than the card's own background, because a background paints under the children's borders and both rules would vanish under the white the moment it faded in.</span></div>
-    <div class="part"><b>Standing head</b><code>.tt-type</code><span>Mono 9.5px, 0.16em, uppercase, --text-3 warming to --text-2 on hover, at line-height normal against the Line-Height Trap. It carries the 1.5px ink rule on its own top edge, so the rule that holds the column is a property of the first line rather than a separate element. Names the role. Carries no number.</span></div>
-    <div class="part"><b>Byline</b><code>.tt-name</code><span>Display 700 at 1.4rem, a flex row on align-items: baseline. The baseline sits the set glyph on the name's own baseline, so the two read as one printed line and not as a name with a badge beside it.</span></div>
-    <div class="part"><b>Set glyph</b><code>.tt-setglyph</code><span>The mark at 15px, the smallest sanctioned size, held at that width by flex: none when a long name claims the rest of the line. The ember head inside it belongs to the locked mark; it is not an accent element and does not spend the card's accent budget.</span></div>
-    <div class="part"><b>Plate</b><code>.tt-art</code><span>Square by aspect-ratio. Square corners, no frame, a tone instead of an edge: the ground is --bg-alt and is deliberately not swapped for white, because the multiply below pulls the cream up into the photograph as well as dropping the studio white down into the page. Every face picking up the same faint warm cast is the last step of the grade, and the one step identical for all three by construction.</span></div>
-    <div class="part"><b>Ink wrapper</b><code>.tt-ink</code><span>inset 0, mix-blend-mode multiply. The blend and the filter sit on different elements on purpose: both on one node is the combination engines disagree about, and a filtered image inside a blending wrapper renders the same everywhere.</span></div>
-    <div class="part"><b>Photograph</b><code>.tt-portrait</code><span>A real photograph, in colour, object-fit cover under --photo-grade. One chain, one selector, all three faces, no per-person override: if a face needs its own number the grade is wrong, not the face. Framing is the exception and it is geometry, never colour, so each card carries a translate and a scale per person.</span></div>
-    <div class="part"><b>Day-job line</b><code>.tt-role</code><span>The present-tense sentence in body on --text-2, employer in ink because it is the only word a reader scans for. It is also the part that grows: flex: 1 takes the spare height, so the closing 1px rule lands on one line across a row of unequal text.</span></div>
+    <p class="sec-note">Ten parts in source order. Each answers something that broke; drop one and the break returns.</p>
+    <div class="part"><b>Seat</b><code>.tt-seat</code><span>An unmoving wrapper that owns the hover and the tilt hook, because a transformed card chases its own hover box out from under the pointer.</span></div>
+    <div class="part"><b>Column</b><code>.tt-card</code><span>A flex column at 18px 24px padding that fills the track it is given; the homepage grid caps that track at 300px.</span></div>
+    <div class="part"><b>Sheet</b><code>.tt-card::before</code><span>The white surface and its hover shadow live on ::before, because a background would paint under both rules and hide them.</span></div>
+    <div class="part"><b>Standing head</b><code>.tt-type</code><span>Mono 9.5px uppercase in --text-3, warming on hover, at line-height normal. It carries the 1.5px ink rule on its own top edge. Names the role, never a number.</span></div>
+    <div class="part"><b>Byline</b><code>.tt-name</code><span>Display 700 at 1.4rem on a baseline flex row, so the name and the set glyph print as one line.</span></div>
+    <div class="part"><b>Set glyph</b><code>.tt-setglyph</code><span>The mark at 15px, held by flex: none. Its ember belongs to the locked mark and spends no accent.</span></div>
+    <div class="part"><b>Plate</b><code>.tt-art</code><span>A square on --bg-alt with no frame: the multiply below pulls the cream into the photograph, the last step of the grade.</span></div>
+    <div class="part"><b>Ink wrapper</b><code>.tt-ink</code><span>Carries mix-blend-mode: multiply apart from the filter, because the two on one node render differently across engines.</span></div>
+    <div class="part"><b>Photograph</b><code>.tt-portrait</code><span>A real photograph under --photo-grade. One chain for every face; framing is per person, as geometry, never colour.</span></div>
+    <div class="part"><b>Day-job line</b><code>.tt-role</code><span>Present tense on --text-2, employer in ink. flex: 1 takes the spare height, so the closing rule aligns across a row.</span></div>
 
     <hr class="rule">
-    <h2 class="sec">Four things a card never does</h2>
+    <h2 class="sec">What a card never does</h2>
     <div class="anat">
-      <div><h3>It never rests elevated</h3><p>The Card obeys flat-by-default rather than claiming an exception to it. Nothing at rest but the two rules, and the sheet only while a pointer or the keyboard is on it.</p></div>
-      <div><h3>It never ranks a person</h3><p>No tier and no power number on a card that carries a face. It ranks a real person in public, and the number behind the rank cannot be verified.</p></div>
-      <div><h3>It never spends the accent</h3><p>The card&rsquo;s only warm pixel is the ember head inside the locked mark, so a row of three cards still leaves the viewport&rsquo;s one accent unspent.</p></div>
-      <div><h3>It never depends on the script</h3><p>The lift is CSS, the rotation is JavaScript. With the module absent, on touch, and under reduced motion the sheet still appears and the card still rises. It simply does not rotate.</p></div>
-    </div>
-
-    <hr class="rule">
-    <div class="anat">
-      <div><h3>The rule opens it</h3><p>A 1.5px ink rule sits above the eyebrow. It is the card's only hard edge; there is no border and no radius.</p></div>
-      <div><h3>One grade, one set</h3><p>Every portrait carries the same <span class="mono">--photo-grade</span> and multiplies into the page ground. Never grade a face on its own.</p></div>
-      <div><h3>The mark signs the name</h3><p>A 15px butterfly closes the name line. It breathes on its own and beats its wings when the card is hovered.</p></div>
-      <div><h3>Elevation is a state</h3><p><span class="mono">--surface</span> and <span class="mono">--card-shadow-hover</span> exist only under a pointer. At rest the card owns no shadow at all.</p></div>
+      <div><h3>Rest elevated</h3><p>Two rules at rest. The sheet and its shadow exist only under a pointer or focus.</p></div>
+      <div><h3>Rank a person</h3><p>No tier, score or power bar on a face. The number behind a rank cannot be verified.</p></div>
+      <div><h3>Spend the accent</h3><p>Its only warm pixel is the ember inside the mark, so a row of three leaves the viewport&rsquo;s accent unspent.</p></div>
+      <div><h3>Redraw a face</h3><p>A photograph is not raw material. Crop it, grade it or replace it; never triangulate a person.</p></div>
+      <div><h3>Need the script</h3><p>The lift is CSS, the tilt JavaScript. Without the module, on touch or under reduced motion, it still rises.</p></div>
+      <div><h3>Grade one face</h3><p>Every portrait takes the same <span class="mono">--photo-grade</span>. If a face needs its own number, the grade is wrong, and CI fails it.</p></div>
     </div>
   </div>
 </x-dc>

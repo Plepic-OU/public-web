@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -87,10 +91,6 @@
     .slogan { font-family: var(--font-display); font-style: italic;
               font-weight: 500; font-size: 1.75rem; line-height: normal;
               color: var(--green-brand); margin: 0 0 0.6rem; }
-    .mission { font-family: var(--font-display); font-weight: 700; font-size: 2.2rem;
-               line-height: 1.2; letter-spacing: -0.012em; color: var(--text);
-               margin: 0; max-width: 24ch; }
-    .mission em { font-style: normal; color: var(--green-brand); }
     .decoder { display: flex; align-items: baseline; gap: 4px;
                font-family: var(--font-display); font-weight: 700;
                font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.01em;
@@ -98,11 +98,11 @@
     .decoder .lit { color: var(--text); }
     .decoder .dim { color: var(--text-3); font-weight: 400; }
     .decoder .g { color: var(--green-brand); }
-    .decode-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-2);
-                   margin: 0; max-width: 56ch; }
     .slogan-note { font-size: 0.9rem; line-height: 1.5; color: var(--text-3);
                    margin: 14px 0 0; max-width: 60ch; }
     .langs { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .lang .line em { font-style: normal; }
+    .g { color: var(--green-brand); }
     .lang .tag { font-family: var(--font-mono); font-size: 9.5px;
                  letter-spacing: 0.16em; text-transform: uppercase;
                  color: var(--text-3); margin: 0 0 8px; }
@@ -136,71 +136,76 @@
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Voice</h1>
-    <p class="lede">The words are as fixed as the greens. A tagline that decodes the name and only works in English, an Estonian line that stands in its place, a category line that says what is sold, and one headline pattern. Everything else is written fresh, against the rules at the bottom.</p>
+    <p class="lede">Words are as fixed as the greens. Write like a practitioner: calm, exact, a little playful, and never longer than the thought.</p>
 
-    <h2 class="sec">The sentence everything serves</h2>
-    <p class="sec-note">Brand first, pixels second. Every rule on this canvas exists to make this one claim credible.</p>
-    <p class="mission">Plepic helps a software engineer become an <em>agentic engineer</em>.</p>
-
-    <hr class="rule">
-    <h2 class="sec">The tagline, and why it is those four words</h2>
-    <p class="sec-note">It is the name's decoder ring. PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half of the name. That is the whole reason it cannot be reworded.</p>
-    <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
-    <p class="decode-note">"Curious play" names the <span class="mono" style="font-size:0.95em">PL</span>. "Epic growth" names the <span class="mono" style="font-size:0.95em">EPIC</span>. Change either half and the name stops explaining itself.</p>
-    <p class="slogan" style="margin-top: 26px">Curious play. Epic growth.</p>
-    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when it is given room. In the footer it sits at 0.75rem in the quieter ink and warms to green on hover, which is the only easter egg on the site. It is a tagline, not a heading, so it is the one line allowed to be green all the way through.</p>
-
-    <hr class="rule">
-    <h2 class="sec">What Estonian carries instead</h2>
-    <p class="sec-note">The wordplay lives inside an English name, so the tagline only works in English. Estonian does not attempt it and does not translate it; it carries a different line that does a different job.</p>
+    <h2 class="sec">Who the words are for</h2>
+    <p class="sec-note">Plepic Strategy owns the mission sentence. This is what it asks of a line.</p>
     <div class="langs">
       <div class="lang">
-        <p class="tag">EN</p>
-        <p class="line" style="font-style: italic; font-weight: 500; color: var(--green-brand)">Curious play. Epic growth.</p>
-        <p class="why">The tagline is the line. Nothing stands in for it, because nothing else decodes the name.</p>
+        <p class="tag">The engineer</p>
+        <p class="line">becoming an <em class="g">agentic engineer</em></p>
+        <p class="why">Show the craft: real code, real checks, the engineer directing and verifying. Never promise the agent does the job.</p>
       </div>
       <div class="lang">
-        <p class="tag">ET</p>
-        <p class="line">Tulemusp&otilde;hine digimuutus</p>
-        <p class="why">Names the outcome, because an Estonian buyer is justifying a spend and the pun is unavailable. Never a translation of the tagline, and never presented as one.</p>
+        <p class="tag">The entrepreneurial lead</p>
+        <p class="line">ready to be <em class="g">paid for results</em>, not hours</p>
+        <p class="why">A founder or team lead. Show the outcome and the arithmetic, and make the relationship worth starting.</p>
       </div>
     </div>
 
     <hr class="rule">
+    <h2 class="sec">The tone</h2>
+    <p class="sec-note">Five qualities, each heard on the live site.</p>
+    <div class="rules">
+      <div class="rule-row"><b>Professional</b><span>Exact nouns and checked numbers. A boast becomes a fact or goes.</span></div>
+      <div class="rule-row"><b>A little playful</b><span>One small image or a turn of rhythm; no puns, no exclamation marks. &ldquo;This page is a cocoon.&rdquo; (404)</span></div>
+      <div class="rule-row"><b>Invites experiment</b><span>Low-stakes verbs: try, sketch, break, undo. &ldquo;&hellip;we&rsquo;ll sketch what an agent would do with it.&rdquo;</span></div>
+      <div class="rule-row"><b>Grounded</b><span>The engineer is the subject; agents are directed and checked, never partners or minds; your checks decide when the work is done.</span></div>
+      <div class="rule-row"><b>Inspiring</b><span>Name the after-state, not the tool. &ldquo;In six weeks you build it into how your team works.&rdquo;</span></div>
+      <div class="rule-row"><b>Never</b><span>Revolutionise, 10x, magic, supercharge, autonomy as a selling point, a wellbeing promise.</span></div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">The tagline decodes the name</h2>
+    <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded.</p>
+    <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
+    <p class="slogan" style="margin-top: 18px">Curious play. Epic growth.</p>
+    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when given room; in the footer, quiet ink that warms to green on hover. The one line allowed to be green throughout. Estonian pages carry it untranslated, as a signature, because the pun lives in an English name.</p>
+
+    <hr class="rule">
     <h2 class="sec">The category line</h2>
-    <p class="sec-note">Separate from both of the above, and the only one of the three that says what Plepic sells. It is the training page&rsquo;s own headline, so it can be checked against a live page rather than against a design file.</p>
-    <p class="ex" style="font-size: 2rem"><em>Agentic engineering</em> for dev teams</p>
-    <p class="why">Engineering, not coding: the training is about directing agents to ship production work, which is more than writing code. It also shows the headline pattern doing its job, with green on the phrase the page is about.</p>
+    <p class="sec-note">Read from the training page&rsquo;s headline at build time, so it cannot drift. It names what Plepic sells.</p>
+    <p class="ex" style="font-size: 2rem"><em>Claude Code training</em> for dev teams</p>
 
     <hr class="rule">
     <h2 class="sec">The headline pattern</h2>
-    <p class="sec-note">A heading is ink, and at most one phrase inside it carries green. The green phrase is the claim, not the decoration.</p>
+    <p class="sec-note">A heading is ink, and at most one phrase inside it carries green. The green phrase is the claim.</p>
     <div class="pair">
       <div class="say">
         <h3>This</h3>
         <p class="ex"><em>Practitioners</em>, not trainers</p>
-        <p class="why">Green marks the word the page is about; ink carries the qualification. Take the green away and the heading still reads, which is the test.</p>
+        <p class="why">Green marks what the page is about; ink carries the rest. Remove the green and the heading still reads.</p>
       </div>
       <div class="dont">
         <h3>Never this</h3>
         <p class="ex ex-all">Practitioners, not trainers</p>
-        <p class="why">A fully green heading spends the brand colour on a whole sentence, so nothing inside it is emphasised and the next green phrase on the page has nothing left to earn.</p>
+        <p class="why">A fully green heading emphasises nothing and leaves the next green phrase nothing to earn.</p>
       </div>
     </div>
 
     <hr class="rule">
     <h2 class="sec">Rules that travel</h2>
-    <p class="sec-note">They hold in a heading, a slide, an email and a proposal. None of them is a house style; each one prevents a specific failure.</p>
+    <p class="sec-note">They hold in a heading, a slide, an email and a proposal.</p>
     <div class="rules">
-      <div class="rule-row"><b>No em-dashes</b><span>Not in anything a customer reads. Commas, colons and full stops carry the same joins and survive every mail client.</span></div>
-      <div class="rule-row"><b>Cohort, not squad</b><span>The word changed on 2026-08-31. Older records keep the old one; nothing new does.</span></div>
-      <div class="rule-row"><b>One green phrase</b><span>Per heading, and never the whole of it. Green is a claim, not a colour scheme.</span></div>
-      <div class="rule-row"><b>Sentence, then proof</b><span>The supporting line is set in the quieter ink. If it is not quieter, the heading is not carrying.</span></div>
+      <div class="rule-row"><b>No em-dashes</b><span>Not in anything a customer reads. Commas, colons and full stops carry the same joins.</span></div>
+      <div class="rule-row"><b>Cohort, not squad</b><span>Older records keep the old word; nothing new does.</span></div>
+      <div class="rule-row"><b>Sentence, then proof</b><span>The supporting line sits in the quieter ink. If it is not quieter, the heading is not carrying.</span></div>
+      <div class="rule-row"><b>Never longer</b><span>A rewrite earns its music by losing words; it never outgrows the line it replaces.</span></div>
     </div>
 
     <hr class="rule">
     <div class="never">
-      <p><b>What never enters this canvas.</b> Volatile values live in the page that states them, so one edit changes one place and the claims gate can see it. If you need one, read it off the live page, never off a design file.</p>
+      <p><b>What never enters this canvas.</b> A volatile value lives in the page that states it, where the claims gate can see it.</p>
       <ul>
         <li>Prices, discounts and any figure with a currency on it</li>
         <li>Cohort dates, deadlines and anything counted in weeks from today</li>
