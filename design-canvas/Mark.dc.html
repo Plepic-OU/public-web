@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -84,6 +88,22 @@
                 margin: 0 0 18px; max-width: 68ch; }
     .mono { font-family: var(--font-mono); }
     hr.rule { border: 0; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+    .locks { display: flex; align-items: flex-start; gap: 56px; flex-wrap: wrap; }
+    .lock { display: inline-flex; align-items: center; gap: 0.5rem;
+            line-height: normal; padding: 16px 20px; }
+    .lock--stacked { flex-direction: column-reverse; align-items: center;
+                     gap: 0.3rem; }
+    .lock-word { font-family: var(--font-display); font-weight: 600;
+                 font-size: 1.5rem; letter-spacing: 0.01em; line-height: normal; }
+    .lock-mark { width: 30px; flex: none; }
+    .lock-mark svg { display: block; width: 100%; height: auto; }
+    .lcap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
+           text-transform: uppercase; color: var(--text-3); margin: 14px 0 0; }
+    .lcap-note { font-size: 0.85rem; line-height: 1.5; color: var(--text-2);
+                margin: 4px 0 0; max-width: 26ch; }
+    .ctxs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .ctxbox { padding: 26px 24px; }
+    .ctxbox p { margin: 14px 0 0; font-size: 0.85rem; line-height: 1.5; }
     .sizes { display: flex; align-items: flex-end; gap: 60px; padding: 8px 0 0; }
     .size .m { display: block; }
     .size .cap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
@@ -122,47 +142,87 @@
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>The mark</h1>
-    <p class="lede">One locked cut, at every size: twenty-two facets, a leaf body, two antennae and one ember at the head. It is never recoloured, never re-faceted and never redrawn by hand. Copy the geometry, do not rebuild it.</p>
+    <p class="lede">One locked cut at every size: twenty-two facets, a leaf body, two antennae and one ember. Copy the geometry; never redraw, re-facet, stretch or recolour it, not even in one colour.</p>
 
+    <h2 class="sec">The lockup</h2>
+    <p class="sec-note">Wordmark left, butterfly right, sized to the wordmark&rsquo;s ascender so the pair scales as one. Bitter 600 at 1.5rem is the wordmark. Stacked is the same pair, mark above, for a narrow or centred hole.</p>
+    <div class="locks">
+      <div>
+        <span class="lock">
+          <span class="lock-word" style="color: var(--green-brand)">Plepic</span>
+          <span class="lock-mark"><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
+        </span>
+        <p class="lcap">Horizontal &middot; header, footer, signature</p>
+      </div>
+      <div>
+        <span class="lock lock--stacked">
+          <span class="lock-word" style="color: var(--green-brand)">Plepic</span>
+          <span class="lock-mark"><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
+        </span>
+        <p class="lcap">Stacked &middot; .logo-lockup--stacked</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <h2 class="sec">Two grounds</h2>
+    <p class="sec-note">The mark never changes; only the wordmark answers its ground.</p>
+    <div class="ctxs">
+      <div class="ctxbox" style="background: var(--bg); outline: 1px solid var(--border); outline-offset: -1px;">
+        <span class="lock">
+          <span class="lock-word" style="color: var(--green-brand)">Plepic</span>
+          <span class="lock-mark"><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
+        </span>
+        <p style="color: var(--text-2)"><b>On light.</b> <span class="mono" style="font-size:0.92em">--green-brand</span>, the default.</p>
+      </div>
+      <div class="ctxbox" style="background: var(--green-surface);">
+        <span class="lock">
+          <span class="lock-word" style="color: var(--text)">Plepic</span>
+          <span class="lock-mark"><svg class="logo-butterfly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="crispEdges" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
+        </span>
+        <p style="color: var(--text-2)"><b>On brand.</b> <span class="mono" style="font-size:0.92em">--text</span>, because green on green is illegible.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
     <h2 class="sec">Four host widths, and no fifth</h2>
-    <p class="sec-note">The viewBox owns the ratio, so a placement sizes the host and the mark follows. Only the card glyph is placed today; the other three are declared and waiting, and the header and footer still carry a static copy of the SVG rather than the live component.</p>
+    <p class="sec-note">The viewBox owns the ratio: size the host and the mark follows.</p>
     <div class="sizes">
       <div class="size">
         <span class="m" style="width: 300px;"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
         <p class="cap">.mark-display &middot; 300px</p>
-        <p class="use">Declared, not yet placed.</p>
+        <p class="use">Display</p>
       </div>
       <div class="size">
         <span class="m" style="width: 120px;"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
         <p class="cap">.mark-art &middot; 120px</p>
-        <p class="use">Declared, not yet placed.</p>
+        <p class="use">Art</p>
       </div>
       <div class="size">
         <span class="m" style="width: 30px;"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
         <p class="cap">.mark-nav &middot; 30px</p>
-        <p class="use">The header lockup's size. Still a static copy there.</p>
+        <p class="use">The header lockup</p>
       </div>
       <div class="size">
         <span class="m" style="width: 15px;"><svg class="mark-flat" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true"><polygon points="147,105 110,68 55,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,105 55,48 20,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,105 20,72 15,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,130 147,105 15,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,130 15,108 28,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,165 147,130 28,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,165 28,150 50,178" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,178 50,178 82,195" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="147,178 82,195 75,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="147,195 75,220 100,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="147,195 100,240 135,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 190,68 245,48" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,105 245,48 280,72" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,105 280,72 285,108" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,130 153,105 285,108" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,130 285,108 272,150" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,165 153,130 272,150" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,165 272,150 250,178" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><polygon points="153,178 250,178 218,195" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,178 218,195 225,220" fill="#00c638" stroke="#00c638" stroke-width="0.5"/><polygon points="153,195 225,220 200,240" fill="#137b30" stroke="#137b30" stroke-width="0.5"/><polygon points="153,195 200,240 165,232" fill="#0d5822" stroke="#0d5822" stroke-width="0.5"/><path d="M150,92 C158,120 158,150 150,200 C142,150 142,120 150,92Z" fill="#0d5822"/><path d="M150,86 C146,72 140,55 136,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><path d="M150,86 C154,72 160,55 164,42" fill="none" stroke="#0d5822" stroke-width="1.8" opacity="0.7"/><circle cx="136" cy="41" r="3.5" fill="#00c638"/><circle cx="164" cy="41" r="3.5" fill="#00c638"/><circle cx="150" cy="90" r="8" fill="#e26c45" stroke="#e26c45" stroke-width="0.8"/></svg></span>
         <p class="cap">.tt-setglyph &middot; 15px</p>
-        <p class="use">Set glyph on a card name. The only live placement.</p>
+        <p class="use">Set glyph on a card name</p>
       </div>
     </div>
 
     <hr class="rule">
     <h2 class="sec">Construction</h2>
-    <p class="sec-note">Every number here is in the markup on the page. They are listed so a new placement can be checked, not so it can be retyped.</p>
-    <div class="spec"><b>viewBox</b><span>0 0 300 280. Square-ish, 300 wide by 280 tall.</span></div>
-    <div class="spec"><b>Wing facets</b><span>11 triangles per wing, 22 in total. Adjacent triangles share an edge, so there is no gap to light through.</span></div>
-    <div class="spec"><b>Centre seam</b><span>Left wings end at x=147, right wings start at x=153. The 6px between them is the body channel, and it is why the wings can hinge without clipping each other.</span></div>
-    <div class="spec"><b>Body</b><span>One bezier path, a leaf from (150,92) to (150,200), filled <span class="mono">--green-dark</span>.</span></div>
-    <div class="spec"><b>Antennae</b><span>Two paths from (150,86) curving out to (136,42) and (164,42). Stroked <span class="mono">--green-dark</span> at 1.8px, opacity 0.7.</span></div>
-    <div class="spec"><b>Tips and head</b><span>Two circles r=3.5 at the antenna ends in <span class="mono">--green-vivid</span>, and one r=8 at (150,90) in <span class="mono">--accent</span>. That ember is the only orange in the mark.</span></div>
-    <div class="spec"><b>Seam fix</b><span>Every polygon is stroked in its own fill at 0.5px. With <span class="mono">shape-rendering</span> set on the root it removes the hairline artifacts that otherwise show between adjacent triangles.</span></div>
+    <p class="sec-note">Every number is in the page&rsquo;s markup, listed to check a placement, never to retype one.</p>
+    <div class="spec"><b>viewBox</b><span>0 0 300 280.</span></div>
+    <div class="spec"><b>Wing facets</b><span>11 triangles per wing, 22 in all, sharing edges so no light shows through.</span></div>
+    <div class="spec"><b>Centre seam</b><span>Left wings end at x=147, right begin at x=153; the 6px channel lets the wings hinge without clipping.</span></div>
+    <div class="spec"><b>Body</b><span>One bezier leaf from (150,92) to (150,200) in <span class="mono">--green-dark</span>.</span></div>
+    <div class="spec"><b>Antennae</b><span>Two paths from (150,86) to (136,42) and (164,42), <span class="mono">--green-dark</span> at 1.8px, opacity 0.7.</span></div>
+    <div class="spec"><b>Tips and head</b><span>Two r=3.5 circles in <span class="mono">--green-vivid</span>; one r=8 ember at (150,90) in <span class="mono">--accent</span>, the mark&rsquo;s only orange.</span></div>
+    <div class="spec"><b>Seam fix</b><span>Each polygon is stroked in its own fill at 0.5px; with <span class="mono">shape-rendering</span> on the root, no hairline shows between triangles.</span></div>
 
     <hr class="rule">
     <h2 class="sec">The facet law</h2>
-    <p class="sec-note">No two adjacent facets share a colour, so the wing reads as faceted rather than as a shape with texture. The outlines are exact mirrors about the body axis; the asymmetry lives entirely in the fills.</p>
+    <p class="sec-note">No two adjacent facets share a colour. The outlines mirror exactly; the asymmetry lives in the fills.</p>
     <div class="two">
       <div>
         <div class="keys">
@@ -170,7 +230,7 @@
           <span class="key"><i style="background: #137b30"></i>B &middot; --green-brand</span>
           <span class="key"><i style="background: #00c638"></i>V &middot; --green-vivid</span>
         </div>
-        <p class="why" style="font-size:0.9rem; line-height:1.55; color: var(--text-2); margin:0">Slots 6 and 7 carry the whole asymmetry: the right wing swaps B and DK where the left does not. It is the one hand-made thing in an otherwise mirrored object, and it is why a wing cannot be produced by flipping the other one in a drawing tool. The generator that built this artboard counts the swapped slots and refuses to build if the number changes.</p>
+        <p class="why" style="font-size:0.9rem; line-height:1.55; color: var(--text-2); margin:0">Slots 6 and 7 carry it: the right wing swaps B and DK. That one hand-made swap is why a wing cannot be made by flipping the other, and the build refuses to run if the count changes.</p>
       </div>
       <table class="slots">
         <tr><th>Slot</th><th>Left</th><th>Right</th><th></th></tr>
@@ -190,9 +250,9 @@
 
     <hr class="rule">
     <div class="facts">
-      <div><h3>It breathes</h3><p>At rest the wings open and close on a long, calm loop while the core bobs. Nothing about the colour changes; breath is rotation and translation only. The Motion artboard runs it.</p></div>
-      <div><h3>It beats on arrival</h3><p>Hovering a card the mark signs makes the wings beat wide and settle. The beat rides on the breath rather than replacing it, because each wing has two nested boxes and nested rotations compose.</p></div>
-      <div><h3>Three layers, one source</h3><p>The page ships the flat SVG inside a <span class="mono">&lt;plepic-mark&gt;</span> host. The script re-stacks what it finds into left wing, right wing and core; it never draws geometry of its own, so the flat mark is always the truth.</p></div>
+      <div><h3>It breathes</h3><p>The wings open and close on a long, calm loop while the core bobs: rotation and translation only, never colour.</p></div>
+      <div><h3>It beats on arrival</h3><p>Hovering a card it signs beats the wings wide on top of the breath, because nested rotations compose.</p></div>
+      <div><h3>Three layers, one source</h3><p>The page ships the flat SVG in a <span class="mono">&lt;plepic-mark&gt;</span> host; the script re-stacks it into two wings and a core and draws nothing of its own.</p></div>
     </div>
   </div>
 </x-dc>

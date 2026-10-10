@@ -5,7 +5,7 @@
       "x": 0,
       "y": 0,
       "w": 1120,
-      "h": 1950,
+      "h": 1670,
       "title": "Foundations",
       "print": "flow"
     },
@@ -14,7 +14,7 @@
       "x": 1240,
       "y": 0,
       "w": 1120,
-      "h": 1770,
+      "h": 1780,
       "title": "Type",
       "print": "flow"
     },
@@ -23,83 +23,65 @@
       "x": 2480,
       "y": 0,
       "w": 1120,
-      "h": 2490,
+      "h": 2270,
       "title": "Voice",
       "print": "flow"
     },
     {
-      "file": "Logo.dc.html",
+      "file": "Mark.dc.html",
       "x": 3720,
       "y": 0,
       "w": 1120,
-      "h": 1210,
-      "title": "Logo",
-      "print": "flow"
-    },
-    {
-      "file": "Mark.dc.html",
-      "x": 4960,
-      "y": 0,
-      "w": 1120,
-      "h": 2130,
+      "h": 2550,
       "title": "The mark",
       "print": "flow"
     },
     {
       "file": "Layout.dc.html",
-      "x": 6200,
+      "x": 4960,
       "y": 0,
       "w": 1120,
-      "h": 1900,
+      "h": 1800,
       "title": "Layout",
       "print": "flow"
     },
     {
       "file": "Motion.dc.html",
-      "x": 7440,
+      "x": 6200,
       "y": 0,
       "w": 1120,
-      "h": 2950,
+      "h": 2530,
       "title": "Motion \u00b7 live",
       "print": "flow",
       "is_interactive": true
     },
     {
       "file": "Components.dc.html",
-      "x": 8680,
+      "x": 7440,
       "y": 0,
       "w": 1120,
-      "h": 2360,
+      "h": 2670,
       "title": "Components \u00b7 live",
       "print": "flow",
       "is_interactive": true
     },
     {
       "file": "Card.dc.html",
-      "x": 9920,
+      "x": 8680,
       "y": 0,
       "w": 1120,
-      "h": 3100,
+      "h": 2620,
       "title": "The card \u00b7 live",
       "print": "flow",
       "is_interactive": true
     },
     {
       "file": "Hero.dc.html",
-      "x": 11160,
+      "x": 9920,
       "y": 0,
       "w": 1120,
-      "h": 1790,
+      "h": 1560,
       "title": "Hero",
-      "print": "flow"
-    },
-    {
-      "file": "Rules.dc.html",
-      "x": 12400,
-      "y": 0,
-      "w": 1120,
-      "h": 2250,
-      "title": "Rules",
       "print": "flow"
     }
   ],
@@ -109,14 +91,14 @@
       "x": 0,
       "y": -400,
       "w": 900,
-      "text": "The Plepic design system. Generated from css/styles.css and index.html by design-canvas/build.py: change the site, re-run the script, re-seed. If a value here disagrees with the stylesheet, the stylesheet is right and this canvas is stale. No artboard carries a price, a date or any other value that moves; Voice lists what stays in the page instead."
+      "text": "The Plepic design system. Generated from css/styles.css, index.html and training/index.html by design-canvas/build.py: change the site, re-run the script, re-seed. If a value here disagrees with the stylesheet, the stylesheet is right. No artboard carries a price, a date or any value that moves; Voice lists what stays in the page."
     },
     {
       "id": "live-boards",
       "x": 2480,
       "y": -400,
       "w": 480,
-      "text": "Three artboards run: Motion, Components and The card. Open one with the play button above its frame to watch it at full size \u2014 at canvas zoom the mark's breath is a few pixels and reads as still. Then hover the buttons, the card, and the right-hand butterfly."
+      "text": "Three artboards run: Motion, Components and The card. Open one with the play button above its frame to watch it full size; at canvas zoom the breath is a few pixels. Then hover the buttons, the card and the right-hand butterfly."
     }
   ],
   "launch": {
