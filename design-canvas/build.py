@@ -66,6 +66,17 @@ def token(name):
         raise SystemExit("missing token " + name)
     return m.group(1).strip()
 
+# Copy read off a page must never carry a volatile value onto the canvas, where
+# the claims gate does not look. Same pattern as scripts/check-claims.mjs.
+CLAIM_PAT = re.compile(r"(€[0-9][0-9.,]*|[0-9][0-9.,]* ?€|&euro;|[0-9][0-9.,]* ?EUR|[0-9][0-9.,]*%|"
+                       r"20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]|[0-9]+\.[0-9]+\.20[0-9][0-9])")
+
+
+def no_claims(label, text):
+    if CLAIM_PAT.search(text):
+        raise SystemExit("%s carries a volatile value: %s" % (label, CLAIM_PAT.search(text).group(0)))
+    return text
+
 def portrait_transform(who):
     m = re.search(
         r'\.tt-card\[data-instructor="' + who + r'"\] \.tt-portrait \{\s*transform:\s*(.+?);',
@@ -717,7 +728,7 @@ voice_css = """    .slogan { font-family: var(--font-display); font-style: itali
 _cat = re.search(r'<h1 class="hero-entrance[^"]*">(.*?)</h1>', TRAINING, re.S)
 if not _cat:
     raise SystemExit("training page h1 not found")
-CATEGORY = _cat.group(1).replace('<span class="highlight">', "<em>").replace("</span>", "</em>")
+CATEGORY = no_claims("category line", _cat.group(1)).replace('<span class="highlight">', "<em>").replace("</span>", "</em>")
 
 voice_body = """  <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
@@ -1387,8 +1398,8 @@ _desc = re.search(r'<p class="hero-desc[^"]*">\s*(.*?)<br>', INDEX, re.S)
 _ctas = re.search(r'<div class="btn-group hero-entrance[^"]*">(.*?)</div>', INDEX, re.S)
 if not (_h1 and _desc and _ctas):
     raise SystemExit("homepage hero markup not found")
-HERO_H1 = _h1.group(1)
-HERO_DESC = " ".join(_desc.group(1).split())
+HERO_H1 = no_claims("hero headline", _h1.group(1))
+HERO_DESC = no_claims("hero sentence", " ".join(_desc.group(1).split()))
 HERO_CTA = re.findall(r'<a [^>]*>(.*?)</a>', _ctas.group(1))
 if len(HERO_CTA) != 2:
     raise SystemExit("expected two hero CTAs, found %d" % len(HERO_CTA))
