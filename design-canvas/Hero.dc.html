@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -136,13 +140,13 @@
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Hero</h1>
-    <p class="lede">One composition, used on every page that has a hero. It is a wireframe here on purpose: the real hero carries four values that change, and a screenshot would hide them in pixels where nothing can check them. Dashed slots are those values.</p>
+    <p class="lede">One composition for every page with a hero. The words are read from the homepage at build time; the four values that change are dashed slots, because pixels would hide them from every check.</p>
 
     <div class="hgrid">
       <div class="htext">
         <p style="margin: 0 0 0.75rem"><span class="slot">cohort state &middot; engineers trained &middot; rating</span></p>
-        <h2 class="hh1"><span class="highlight">Practitioners</span>,<br>not trainers</h2>
-        <p class="hdesc">The engineers who teach our cohorts ship production code every week. Every pattern we teach ran on a real codebase before it reached a slide.<br><span class="slot" style="margin-top:0.5rem">price &middot; subsidy share</span></p>
+        <h2 class="hh1"><span class="highlight">Practitioners</span>, <br>not trainers</h2>
+        <p class="hdesc">The engineers who teach our cohorts still ship production code every week. Every pattern ran on a real codebase before it reached a slide.<br><span class="slot" style="margin-top:0.5rem">price &middot; subsidy share</span></p>
         <div class="hctas">
           <a class="hbtn hbtn--p" href="#">Talk to Kaido</a>
           <a class="hbtn hbtn--t" href="#">View the full program &rarr;</a>
@@ -161,18 +165,17 @@
 
     <hr class="rule">
     <h2 class="sec">What the composition fixes</h2>
-    <p class="sec-note">Every number here is in the stylesheet. The hero is the one place the type scale is overridden, so these are the values to check first when it looks wrong.</p>
-    <div class="anno"><b>grid</b><span>1.4fr / 0.6fr, 2rem gap, aligned to the BOTTOM. The headline and the butterfly share a baseline, which is what makes the two columns read as one object.</span></div>
-    <div class="anno"><b>h1</b><span>clamp(3rem, 2.5rem + 3.5vw, 4.8rem) at -0.025em and 1.05 line height. Its own ramp, not the page's --fs-h2. The break after the comma is a hard rule in the markup, never a wrap.</span></div>
-    <div class="anno"><b>text track</b><span>580px maximum, and the supporting sentence 480px. Below 1015px the headline ramps rather than sitting at its cap, because the stage holds a hard 440px and the two would collide.</span></div>
-    <div class="anno"><b>stage</b><span>440px, hidden entirely below 900px. The page loses the butterfly rather than shrinking it.</span></div>
-    <div class="anno"><b>accent</b><span>The viewport&rsquo;s one accent element is the hero body CTA. The nav CTA is an ink outline so it does not compete, and an urgency badge never appears while that CTA is visible.</span></div>
-    <div class="anno"><b>entrance</b><span>A settle, not an arrival: content starts 6px low and fully legible, and rises over 600ms once the fonts have landed. No load-bearing element ever starts invisible.</span></div>
+    <p class="sec-note">Every number is in the stylesheet. The hero overrides the type scale, so check these first when it looks wrong.</p>
+    <div class="anno"><b>grid</b><span>1.4fr / 0.6fr, 2rem gap, aligned to the bottom, so headline and butterfly share a baseline and read as one object.</span></div>
+    <div class="anno"><b>h1</b><span>clamp(3rem, 2.5rem + 3.5vw, 4.8rem) at -0.025em and 1.05. Its own ramp; the break after the comma is markup, never a wrap.</span></div>
+    <div class="anno"><b>text track</b><span>580px, the sentence 480px. Below 1015px the headline ramps, because the 440px stage would collide with it.</span></div>
+    <div class="anno"><b>stage</b><span>440px, gone below 900px: the page loses the butterfly rather than shrink it.</span></div>
+    <div class="anno"><b>accent</b><span>The body CTA spends the viewport&rsquo;s accent. The nav CTA is an ink outline, and no urgency badge shares the view.</span></div>
+    <div class="anno"><b>entrance</b><span>A settle: content starts 6px low and fully legible, and rises over 600ms once the fonts land. Nothing load-bearing starts invisible.</span></div>
 
     <hr class="rule">
     <div class="cant">
-      <p><b>The butterfly itself does not travel.</b> The hero mark is a WebGL metamorphosis, about 69 KB of module, with a rest pose the animation lands on byte-exact and a still poster behind it for anything that cannot run WebGL. It cannot be an artboard and should not be redrawn as one.</p>
-      <p>What lives here is the composition and the rules around it. The geometry and the choreography live in <span class="mono" style="font-size:0.95em">js/crystalline-metamorphosis.js</span>, and that module is the only thing that may change them.</p>
+      <p><b>The butterfly does not travel.</b> The hero mark is a WebGL metamorphosis with a byte-exact rest pose and a still poster for anything without WebGL, so it is never redrawn as an artboard. Its geometry and choreography belong to <span class="mono" style="font-size:0.95em">js/crystalline-metamorphosis.js</span> alone.</p>
     </div>
   </div>
 </x-dc>

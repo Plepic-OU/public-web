@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -98,7 +102,7 @@
     .kv b { font-family: var(--font-mono); font-size: 11px; font-weight: 400;
             color: var(--text); letter-spacing: 0.02em; }
     .kv span { font-size: 0.85rem; line-height: 1.45; color: var(--text-2); }
-    .rad { display: flex; gap: 28px; align-items: flex-end; }
+    .rad { display: flex; gap: 22px; align-items: flex-end; flex-wrap: wrap; }
     .rad-box { width: 74px; height: 74px; background: var(--bg-alt);
                border: 1px solid var(--border); }
     .rad-cap { font-family: var(--font-mono); font-size: 10.5px; color: var(--text);
@@ -117,10 +121,10 @@
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Layout</h1>
-    <p class="lede">One scale, one container, one section rhythm. Vertical space is the only thing that separates most blocks, so the scale below is doing more work than any component on this canvas.</p>
+    <p class="lede">One scale, one container, one rhythm. Vertical space separates most blocks, so the scale does more work than any component.</p>
 
     <h2 class="sec">The space scale</h2>
-    <p class="sec-note">Eight steps, each roughly a third larger than the last. A value not on this list is a mistake, not a nuance. The rhythm is tight groupings and generous separations: the same spacing everywhere reads as a wireframe nobody finished.</p>
+    <p class="sec-note">Eight steps, each about a third larger. A value off this list is a mistake. Group tight, separate generously; even spacing everywhere reads as an unfinished wireframe.</p>
     <div class="sp"><span class="sp-tok">--space-xs</span><span class="sp-val">0.25rem &middot; 4px</span><span class="sp-bar" style="width: 4px"></span><span class="sp-use">A gap inside a chip</span></div>
     <div class="sp"><span class="sp-tok">--space-sm</span><span class="sp-val">0.5rem &middot; 8px</span><span class="sp-bar" style="width: 8px"></span><span class="sp-use">Wordmark to mark; label to value</span></div>
     <div class="sp"><span class="sp-tok">--space-md</span><span class="sp-val">1rem &middot; 16px</span><span class="sp-bar" style="width: 16px"></span><span class="sp-use">Paragraph to paragraph</span></div>
@@ -132,44 +136,47 @@
 
     <hr class="rule">
     <h2 class="sec">The container</h2>
-    <p class="sec-note">1120px wide at most, with a 2rem gutter that never collapses. The container has never changed; when a page feels empty the emptiness is vertical.</p>
+    <p class="sec-note">1120px wide at most, with a 2rem gutter that never collapses. When a page feels empty, the emptiness is vertical.</p>
     <div class="cont"><div class="cont-inner" style="width: 79.4%">1120px content track &middot; 2rem gutter either side</div></div>
 
     <hr class="rule">
     <div class="two">
       <div>
         <h2 class="sec">Rhythm</h2>
-        <p class="sec-note">Four measurements set the whole page.</p>
-        <div class="kv"><b>--space-4xl</b><span>Section padding, top and bottom. The only reason two sections read as separate things.</span></div>
+        <p class="sec-note">Four measurements set the page.</p>
+        <div class="kv"><b>--space-4xl</b><span>Section padding, top and bottom: why two sections read as two.</span></div>
         <div class="kv"><b>--space-3xl</b><span>Block to block inside a section.</span></div>
-        <div class="kv"><b>--header-height</b><span>64px. The header is fixed, so anchored content pads by this plus --space-3xl.</span></div>
-        <div class="kv"><b>backdrop-filter</b><span>12px blur behind the header at 90% page ground, so content passes under it legibly.</span></div>
+        <div class="kv"><b>--header-height</b><span>64px. The header is fixed, so anchors pad by this plus --space-3xl.</span></div>
+        <div class="kv"><b>backdrop-filter</b><span>12px blur at 90% page ground, so content passes under the header legibly.</span></div>
       </div>
       <div>
         <h2 class="sec">Breakpoints</h2>
-        <p class="sec-note">Four, and each one exists because something measurably broke.</p>
+        <p class="sec-note">Four, each because something measurably broke.</p>
         <div class="kv"><b>640px</b><span>Below: the type ramp bottoms out</span></div>
         <div class="kv"><b>768px</b><span>Below: one column, nav collapses to the toggle</span></div>
         <div class="kv"><b>900px</b><span>Below: the hero's butterfly stage is hidden entirely</span></div>
-        <div class="kv"><b>901 to 1014px</b><span>The hero runs two columns while the page is still narrower than the container, so the headline ramps rather than arriving at its cap</span></div>
+        <div class="kv"><b>901 to 1014px</b><span>Two hero columns while narrower than the container; the headline ramps</span></div>
       </div>
     </div>
 
     <hr class="rule">
     <h2 class="sec">Two rules about arrangement</h2>
     <div class="two" style="margin-bottom: 32px">
-      <div class="kv"><b>Asymmetric</b><span>1.4fr / 0.6fr, never 50/50. A page split down the middle presents two equal options and argues for neither. The hero, the comparison blocks and the panel rows all lean.</span></div>
-      <div class="kv"><b>Not centred</b><span>No centred-everything layouts on desktop. Centring is for one short thing, not for a page of them.</span></div>
+      <div class="kv"><b>Asymmetric</b><span>1.4fr / 0.6fr, never 50/50. A page split down the middle argues for neither side; the hero, comparisons and panel rows lean.</span></div>
+      <div class="kv"><b>Not centred</b><span>On desktop, centring is for one short thing, never a page of them.</span></div>
     </div>
 
     <h2 class="sec">Radii</h2>
-    <p class="sec-note">Five values, each with one owner. The card and every rule-based block have no radius at all.</p>
+    <p class="sec-note">Eight tokens and their intended owners. The card and every rule-based block have no radius.</p>
     <div class="rad">
-      <div><div class="rad-box" style="border-radius: 4px"></div><p class="rad-cap">4px</p><p class="rad-use">The badge's tight corner</p></div>
-      <div><div class="rad-box" style="border-radius: 8px"></div><p class="rad-cap">8px</p><p class="rad-use">Code</p></div>
-      <div><div class="rad-box" style="border-radius: 10px"></div><p class="rad-cap">10px</p><p class="rad-use">Buttons</p></div>
-      <div><div class="rad-box" style="border-radius: 16px"></div><p class="rad-cap">16px</p><p class="rad-use">Panels</p></div>
-      <div><div class="rad-box" style="border-radius: 20px"></div><p class="rad-cap">20px</p><p class="rad-use">The badge's wide corner</p></div>
+      <div><div class="rad-box" style="border-radius: 4px"></div><p class="rad-cap">4px</p><p class="rad-use">Badge, tight corner</p></div>
+      <div><div class="rad-box" style="border-radius: 8px"></div><p class="rad-cap">8px</p><p class="rad-use">Code, small button</p></div>
+      <div><div class="rad-box" style="border-radius: 10px"></div><p class="rad-cap">10px</p><p class="rad-use">Button</p></div>
+      <div><div class="rad-box" style="border-radius: 12px"></div><p class="rad-cap">12px</p><p class="rad-use">Large button</p></div>
+      <div><div class="rad-box" style="border-radius: 14px"></div><p class="rad-cap">14px</p><p class="rad-use">Panel</p></div>
+      <div><div class="rad-box" style="border-radius: 16px"></div><p class="rad-cap">16px</p><p class="rad-use">Content card, the cap</p></div>
+      <div><div class="rad-box" style="border-radius: 20px 4px 16px"></div><p class="rad-cap">20px 4px 16px</p><p class="rad-use">The badge</p></div>
+      <div><div class="rad-box" style="border-radius: 99px"></div><p class="rad-cap">99px</p><p class="rad-use">Pill</p></div>
     </div>
   </div>
 </x-dc>

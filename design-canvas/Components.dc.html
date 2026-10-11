@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -137,9 +141,9 @@
     .pbox--onCream { background: var(--bg); }
     .pbox--onWhite { background: var(--surface); }
     .panel-white { background: var(--surface); border: 1px solid var(--border);
-                   border-radius: 14px; padding: var(--space-xl); }
+                   border-radius: var(--rounded-xl); padding: var(--space-xl); }
     .panel-cream { background: var(--bg); border: 1px solid var(--border);
-                   border-radius: 14px; padding: var(--space-xl); }
+                   border-radius: var(--rounded-xl); padding: var(--space-xl); }
     .panel-header { font-family: var(--font-mono); font-size: 0.75rem;
                     text-transform: uppercase; letter-spacing: 0.12em;
                     color: var(--green-dark); font-weight: 600; margin: 0 0 10px; }
@@ -167,33 +171,39 @@
              box-shadow: 0 2px 8px rgba(28, 28, 26, 0.04);
              background: var(--surface); color: var(--text-2); max-width: 360px; }
     .codeb .cm { color: var(--text-3); }
-    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    .grid3 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
              border-top: 1.5px solid var(--text); padding-top: 16px; }
     .grid3 h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem;
                 margin: 0 0 6px; }
     .grid3 p { font-size: 0.88rem; line-height: 1.55; color: var(--text-2); margin: 0; }
+    .sh { display: grid; grid-template-columns: 150px 320px 1fr; gap: 20px;
+          padding: 11px 0; border-top: 1px solid var(--border); align-items: baseline; }
+    .sh b { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .sh code { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em;
+               color: var(--text-3); }
+    .sh span { font-size: 0.85rem; line-height: 1.45; color: var(--text-2); }
     </style>
   </helmet>
   <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Components</h1>
-    <p class="lede">The furniture every page uses. Anything a page needs that is not here is a page&rsquo;s own problem, and does not become a component until a second page wants it.</p>
+    <p class="lede">The furniture every page shares. A one-page need stays on its page until a second page wants it.</p>
 
     <h2 class="sec">The button system</h2>
-    <p class="sec-note">Three sizes by three variants, and the two axes never touch: a variant sets colour and nothing else, a size sets the box and nothing else. On light, outline and ghost are ink, and hover fills them with <span class="mono" style="font-size:0.92em">--green-surface</span> under <span class="mono" style="font-size:0.92em">--green-dark</span> text. Hover any of them.</p>
+    <p class="sec-note">Three sizes by three variants; a variant sets colour, a size sets the box. Outline and ghost are ink and hover to <span class="mono" style="font-size:0.92em">--green-surface</span> under <span class="mono" style="font-size:0.92em">--green-dark</span>.</p>
     <div class="btnrow">
       <span class="btnrow-name">.btn-lg</span>
-      <span class="btnrow-set"><a class="btn btn-lg btn-primary" href="#">Book a free call</a><a class="btn btn-lg btn-outline" href="#">View curriculum</a><a class="btn btn-lg btn-ghost" href="#">Learn more</a></span>
+      <span class="btnrow-set"><a class="btn btn-lg btn-primary" href="#">Talk to Kaido</a><a class="btn btn-lg btn-outline" href="#">View curriculum</a><a class="btn btn-lg btn-ghost" href="#">Learn more</a></span>
       <span class="btnrow-spec">1.15rem &middot; 0.95rem 1.9rem &middot; radius 12px<br>Heroes</span>
     </div>
     <div class="btnrow">
       <span class="btnrow-name">.btn</span>
-      <span class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-outline" href="#">View curriculum</a><a class="btn btn-ghost" href="#">Learn more</a></span>
+      <span class="btnrow-set"><a class="btn btn-primary" href="#">Talk to Kaido</a><a class="btn btn-outline" href="#">View curriculum</a><a class="btn btn-ghost" href="#">Learn more</a></span>
       <span class="btnrow-spec">1.05rem &middot; 0.7rem 1.4rem &middot; radius 10px<br>The default</span>
     </div>
     <div class="btnrow">
       <span class="btnrow-name">.btn-sm</span>
-      <span class="btnrow-set"><a class="btn btn-sm btn-primary" href="#">Book a free call</a><a class="btn btn-sm btn-outline" href="#">View curriculum</a><a class="btn btn-sm btn-ghost" href="#">Learn more</a></span>
+      <span class="btnrow-set"><a class="btn btn-sm btn-primary" href="#">Talk to Kaido</a><a class="btn btn-sm btn-outline" href="#">View curriculum</a><a class="btn btn-sm btn-ghost" href="#">Learn more</a></span>
       <span class="btnrow-spec">0.9rem &middot; 0.5rem 1rem &middot; radius 8px<br>Nav, dense UIs</span>
     </div>
 
@@ -201,41 +211,41 @@
       <div>
         <a class="btn btn-outline btn-focus" href="#">Keyboard focus</a>
         <p class="demo-cap">Focus ring</p>
-        <p class="demo-note">2px <span class="mono" style="font-size:0.92em">--green-dark</span>, offset 2px. Never removed, never restyled per control.</p>
+        <p class="demo-note">2px <span class="mono" style="font-size:0.92em">--green-dark</span>, offset 2px. Never removed or restyled per control.</p>
       </div>
     </div>
 
     <hr class="rule">
     <h2 class="sec">Primary plus ghost, never two solids</h2>
-    <p class="sec-note">The hero pairing, and the reason the ghost variant exists: do this, or just look first.</p>
+    <p class="sec-note">The hero pairing: do this, or look first.</p>
     <div class="pair">
       <div>
         <h3 class="yes">This</h3>
-        <div class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-ghost" href="#">View curriculum &rarr;</a></div>
-        <p class="why">One thing to do and one thing to read. The eye lands on the solid, and the link is there for the visitor who is not ready.</p>
+        <div class="btnrow-set"><a class="btn btn-primary" href="#">Talk to Kaido</a><a class="btn btn-ghost" href="#">View the full program &rarr;</a></div>
+        <p class="why">One thing to do, one to read; the link waits for the visitor not yet ready.</p>
       </div>
       <div>
         <h3 class="no">Never this</h3>
-        <div class="btnrow-set"><a class="btn btn-primary" href="#">Book a free call</a><a class="btn btn-outline" href="#">View curriculum</a></div>
+        <div class="btnrow-set"><a class="btn btn-primary" href="#">Talk to Kaido</a><a class="btn btn-outline" href="#">View the full program</a></div>
         <p class="why">Two solid-looking buttons compete and neither wins. Use <span class="mono" style="font-size:0.92em">.btn-outline</span> only where no primary shares the row.</p>
       </div>
     </div>
 
     <hr class="rule">
     <h2 class="sec">Panels, never same on same</h2>
-    <p class="sec-note">White on cream, cream on white. Always a full 1px border, 14px radius. The green surface marks a favoured option and nothing else.</p>
+    <p class="sec-note">White on cream, cream on white. A full 1px border and a 14px radius; the green surface marks a favoured option only.</p>
     <div class="panels">
       <div class="pbox pbox--onCream">
         <div class="panel-white">
           <p class="panel-header">What you leave with</p>
-          <p>A working agent setup in your own repository, and the judgement to know when to reach for one.</p>
+          <p>A working agent setup in your own repo.</p>
         </div>
         <p class="demo-cap">.panel-white on cream &middot; the default</p>
       </div>
       <div class="pbox pbox--onWhite">
         <div class="panel-cream" data-demo="panel-cream">
           <p class="panel-header">What you leave with</p>
-          <p>A working agent setup in your own repository, and the judgement to know when to reach for one.</p>
+          <p>A working agent setup in your own repo.</p>
         </div>
         <p class="demo-cap">.panel-cream on white &middot; the inverse</p>
       </div>
@@ -243,22 +253,21 @@
 
     <hr class="rule">
     <h2 class="sec">Badges, rows, code and nav</h2>
-    <p class="sec-note">The badge radius is the signature: 20px, 4px, 16px, the one shape on the site deliberately not a rounded rectangle. Inline code carries the only resting shadow anywhere.</p>
+    <p class="sec-note">The badge corner, 20px 4px 16px, is the signature: the one shape that is not a rounded rectangle.</p>
     <div class="demo">
       <div>
         <span class="badge"><span class="badge-dot"></span>Cohort open</span>
         <p class="demo-cap">Default</p>
-        <p class="demo-note">Green dot. A state that is simply true, and the badge&rsquo;s only green.</p>
+        <p class="demo-note">A plain true state; the badge&rsquo;s only green.</p>
       </div>
       <div>
         <span class="badge badge-urgency"><span class="badge-dot"></span>Closing soon</span>
         <p class="demo-cap">Urgency</p>
-        <p class="demo-note">The dot goes ember, and it spends the viewport&rsquo;s one accent. It never appears while a CTA button is visible.</p>
+        <p class="demo-note">The ember dot spends the viewport&rsquo;s one accent; no CTA shares its view.</p>
       </div>
       <div>
         <div class="codeb"><span class="cm"># the shape of a session</span><br>claude --resume</div>
         <p class="demo-cap">Code &middot; 8px radius</p>
-        <p class="demo-note">The one resting shadow: 0 2px 8px at 4 percent ink.</p>
       </div>
     </div>
     <div class="demo" style="margin-top: 28px">
@@ -271,22 +280,31 @@
           <div class="faq-item"><div class="faq-row">How much of it is hands on keyboard?</div></div>
         </div>
         <p class="demo-cap">Row &middot; open and closed</p>
-        <p class="demo-note">Two hairlines and the space between them. No box, no radius, no shadow.</p>
+        <p class="demo-note">Two hairlines and space. No box, no radius, no shadow.</p>
       </div>
       <div>
         <nav class="navdemo">
           <a href="#" class="cur">Training</a><a href="#">Scopeful</a><a href="#">Jobs</a><a href="#" class="ext">Skill Tree</a>
         </nav>
         <p class="demo-cap">Navigation</p>
-        <p class="demo-note">Quieter ink at rest, full ink on hover, green and underlined for the page you are on. An external link earns an arrow and nothing else.</p>
+        <p class="demo-note">Quieter ink at rest, full ink on hover, green and underlined for the current page. An external link earns an arrow, nothing more.</p>
       </div>
     </div>
 
     <hr class="rule">
+    <h2 class="sec">Flat by default, and six shadows</h2>
+    <p class="sec-note">At rest, separation is a 1px or 1.5px border or a tint; a border plus a wide resting shadow is banned. Only inline code rests on a shadow; the rest are states, and the build refuses a seventh.</p>
+    <div class="sh"><b>Code ambient</b><code>0 2px 8px rgba(28, 28, 26, 0.04)</code><span>The one resting shadow, under inline code.</span></div>
+    <div class="sh"><b>Hover lift</b><code>0 8px 24px rgba(28, 28, 26, 0.06)</code><span>Interactive cards on hover, with a 2px rise.</span></div>
+    <div class="sh"><b>Tooltip</b><code>0 8px 24px rgba(28, 28, 26, 0.1)</code><span>A floating layer.</span></div>
+    <div class="sh"><b>Instructor slide</b><code>0 20px 50px rgba(28, 28, 26, 0.16)</code><span>The slide floating over the team row.</span></div>
+    <div class="sh"><b>Accent pulse</b><code>0 0 0 0 rgba(226, 108, 69, 0.3)</code><span>The CTA ring, keyframed to transparent.</span></div>
+    <div class="sh"><b>Card sheet</b><code>0 1px 2px rgba(28, 28, 26, 0.05), 0 10px 28px rgba(28, 28, 26, 0.08)</code><span>Behind a lifted card, on hover and focus.</span></div>
+
+    <hr class="rule">
     <div class="grid3">
-      <div><h3>Sizes and variants are orthogonal</h3><p>Three by three, not nine components. A variant that changes the box is a new size pretending to be a colour.</p></div>
-      <div><h3>State, not decoration</h3><p>A border, a shadow, a surface and a green fill are all states. At rest a component owns as few of them as it can.</p></div>
-      <div><h3>The box is optional</h3><p>Most things are a rule and some space. Reach for a panel only when the content genuinely has to be lifted off the page.</p></div>
+      <div><h3>The box is optional</h3><p>Most things are a rule and some space. Use a panel only when content must lift off the page.</p></div>
+      <div><h3>Judge a flourish at its count</h3><p>Craft on one specimen is noise across a row. Judge a flourish at the number it ships.</p></div>
     </div>
   </div>
 </x-dc>

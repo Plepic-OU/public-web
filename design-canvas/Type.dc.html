@@ -16,15 +16,10 @@
       --bg: #faf7f2;
       --bg-alt: #f3efe7;
       --surface: #ffffff;
-      --dark: #1c1c1a;
-      --dark-surface: #262624;
       --text: #1c1c1a;
       --text-2: #4a4a45;
       --text-3: #6b6b60;
-      --text-on-dark: #e5e2dc;
-      --text-on-dark-2: #a3a39a;
       --border: #e5e2dc;
-      --border-dark: #3a3a38;
       --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
       --font-body: 'Hanken Grotesk', 'Hanken Fallback', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Mono Fallback', monospace;
@@ -33,6 +28,15 @@
       --fs-h2: clamp(1.75rem, 1.4rem + 2.2vw, 2.6rem);
       --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.65rem);
       --fs-h4: 1.25rem;
+      --fs-faq-q: 1.25rem;
+      --rounded-xs: 4px;
+      --rounded-sm: 8px;
+      --rounded-md: 10px;
+      --rounded-lg: 12px;
+      --rounded-xl: 14px;
+      --rounded-2xl: 16px;
+      --rounded-badge: 20px 4px 16px;
+      --rounded-pill: 99px;
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
@@ -151,13 +155,14 @@
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Four things the scale assumes</h2>
+    <h2 class="sec">What the scale assumes</h2>
     <div class="canon">
-      <div><h3>Display is hero-only</h3><p>A non-hero h1 uses clamp(2rem, 2rem + 3vw, 3.5rem). Reaching for the hero ramp on an interior page makes every page look like a landing page.</p></div>
-      <div><h3>Weight carries the bottom</h3><p>At their clamp minimums h3, h4 and body are the same size. What separates them there is weight, not scale, which is why an h3 must never be set at 400.</p></div>
-      <div><h3>Two namespaces, no overlap</h3><p><span class="mono">--fs-</span> is size. <span class="mono">--text-</span> is colour. A token that sets both is a token that will be wrong for one of them.</p></div>
+      <div><h3>Display is hero-only</h3><p>A non-hero h1 uses clamp(2rem, 2rem + 3vw, 3.5rem). The hero ramp on an interior page makes every page a landing page.</p></div>
+      <div><h3>Weight carries the bottom</h3><p>At clamp minimums h3, h4 and body are one size; weight separates them, so an h3 is never 400.</p></div>
+      <div><h3>Two namespaces</h3><p><span class="mono">--fs-</span> is size, <span class="mono">--text-</span> is colour. A token that sets both is wrong for one of them.</p></div>
+      <div><h3>The Line-Height Trap</h3><p>A control that inherits the body&rsquo;s 1.7 grows a box nobody asked for. Buttons, badges and labels set <span class="mono">line-height: normal</span>.</p></div>
+      <div><h3>No all-caps headings</h3><p>Uppercase belongs to mono labels and the trust bar, never to a heading.</p></div>
     </div>
-    <p class="sec-note" style="margin-top: 18px">The Line-Height Trap: a compact component that inherits the body&rsquo;s 1.7 grows a box nobody asked for. Buttons, badges and labels set <span class="mono" style="font-size:0.95em">line-height: normal</span> explicitly.</p>
   </div>
 </x-dc>
 </body>

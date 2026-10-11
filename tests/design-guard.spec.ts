@@ -108,13 +108,12 @@ test.describe('design guard @design-guard', () => {
 
   test('green payload rule: ink headings, one green payload phrase max', () => {
     // Headings are ink with at most one load-bearing green phrase via .highlight.
-    // Only two .highlight color rules exist (brand on light, vivid on dark);
+    // Only one .highlight color rule exists (brand green);
     // full-green headings — inline or via heading-level CSS — are banned.
     const css = read('css/styles.css');
     const highlightRules = css.match(/[^{}/]*\.highlight[^{}]*\{[^}]*\}/g) || [];
-    expect(highlightRules.length, 'exactly two .highlight color rules (light + on-dark)').toBe(2);
+    expect(highlightRules.length, 'exactly one .highlight color rule').toBe(1);
     expect(highlightRules.some(r => /--green-brand/.test(r)), '.highlight must be brand green on light').toBe(true);
-    expect(highlightRules.some(r => /--green-vivid/.test(r)), '.on-dark .highlight must be vivid green').toBe(true);
     const headingGreenRules = (css.match(/^[^{}/@]*\bh[1-4][^{}]*\{[^}]*--green[^}]*\}/gm) || [])
       .filter(r => !/\.brand|\.logo-wordmark/.test(r));
     expect(headingGreenRules, 'heading-level CSS rules must not set green (wordmark exempt)').toEqual([]);

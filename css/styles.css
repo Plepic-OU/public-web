@@ -140,19 +140,14 @@
   --bg: #faf7f2;
   --bg-alt: #f3efe7;
   --surface: #ffffff;
-  --dark: #1c1c1a;
-  --dark-surface: #262624;
 
   /* Text */
   --text: #1c1c1a;
   --text-2: #4a4a45;
   --text-3: #6b6b60;
-  --text-on-dark: #e5e2dc;
-  --text-on-dark-2: #a3a39a;
 
   /* Borders */
   --border: #e5e2dc;
-  --border-dark: #3a3a38;
 
   /* Typography */
   --font-display: 'Bitter', 'Bitter Fallback', Georgia, serif;
@@ -456,7 +451,6 @@ p:last-child {
   color: var(--green-brand);
   line-height: normal;
 }
-.on-dark .logo-wordmark { color: var(--green-vivid); }
 /* On a brand-green background, the wordmark switches to dark text for contrast. */
 .on-brand .logo-wordmark { color: var(--text); }
 .logo-butterfly {
@@ -479,7 +473,6 @@ p:last-child {
 /* Heading highlight — ink everywhere (Green Rationing L3, 2026-07). Markup
    spans stay for reversibility; green is never heading decoration. */
 .highlight { color: var(--green-brand); }
-.on-dark .highlight { color: var(--green-vivid); }
 
 .nav {
   display: flex;
@@ -626,11 +619,6 @@ p:last-child {
   color: var(--green-dark);
   filter: none;
 }
-.on-dark .btn-outline:hover,
-.on-dark .btn-secondary:hover {
-  background: rgba(0, 198, 56, 0.12);
-  color: var(--green-vivid);
-}
 
 /* Ghost — underlined link-style; ink on light (Green Rationing L3) */
 .btn-ghost {
@@ -646,18 +634,6 @@ p:last-child {
   background: var(--green-surface);
   color: var(--green-dark);
   filter: none;
-}
-
-/* Dark context overrides — dark sections keep vivid (CTA-context exception) */
-.on-dark .btn-outline,
-.on-dark .btn-secondary {
-  border-color: var(--green-vivid);
-  color: var(--green-vivid);
-}
-.on-dark .btn-ghost { color: var(--green-vivid); }
-.on-dark .btn-ghost:hover {
-  background: transparent;
-  color: var(--green-vivid);
 }
 
 .btn-pulse { animation: btn-pulse 3s ease-in-out infinite; }
@@ -900,26 +876,6 @@ p:last-child {
   align-self: end;
 }
 
-.butterfly-container {
-  position: relative;
-  width: 100%;
-  max-width: 280px;
-  aspect-ratio: 300 / 280;
-}
-
-.butterfly-container::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0, 198, 56, 0.06) 0%, transparent 60%);  /* --green-vivid #00c638 */
-  pointer-events: none;
-  z-index: -1;
-}
-
 /* ── Hero butterfly: the crystalline mark, brought to life ──
    In the hero the locked mark sits as an ambient watermark (low group opacity,
    solid facets); the logo lockup and the /design-system specimen render it at
@@ -1052,21 +1008,6 @@ p:last-child {
   }
   .hero-code { opacity: 0.6; animation: none; }
   .hero-cursor { animation: none; opacity: 1; }
-}
-
-.butterfly-container:hover .wing-left {
-  animation: wing-hover-left 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.butterfly-container:hover .wing-right {
-  animation: wing-hover-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes wing-hover-left {
-  to { transform: rotate(-4deg) translateX(-6px); }
-}
-
-@keyframes wing-hover-right {
-  to { transform: rotate(4deg) translateX(6px); }
 }
 
 /* Hero code cursor blink */
@@ -2014,9 +1955,8 @@ plepic-mark > svg {
 }
 
 /* Privacy link on the light footer: brand green is the link color on cream
-   (5.0:1, AA). Vivid green is the on-dark color and fails here, so it must not
-   come back. The underline distinguishes the link from the text around it
-   independent of color. */
+   (5.0:1, AA). Vivid green fails here, so it must not come back. The underline
+   distinguishes the link from the text around it independent of color. */
 .footer-company-info a {
   color: var(--green-brand);
   text-decoration: underline;
@@ -3343,7 +3283,6 @@ plepic-mark > svg {
 
 .pricing-card-featured {
   border-color: var(--green-vivid);
-  box-shadow: 0 4px 24px rgba(0, 198, 56, 0.1);  /* --green-vivid #00c638 */
   transform: scale(1.02);
 }
 
@@ -3776,10 +3715,6 @@ plepic-mark > svg {
     margin-top: 0;
   }
 
-  .butterfly-container {
-    max-width: 180px;
-  }
-
   .hero-bottom {
     display: none;
   }
@@ -3941,10 +3876,6 @@ plepic-mark > svg {
     align-items: center;
   }
 
-  .butterfly-container {
-    max-width: 220px;
-  }
-
   .hero-bottom {
     display: none;
   }
@@ -4100,16 +4031,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   }
 }
 
-/* Butterfly idle breathing — gentle scale pulse */
-@keyframes butterfly-breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-}
-
-.butterfly-container {
-  animation: butterfly-breathe 4s ease-in-out infinite;
-}
-
 /* Card hover lift — panels, team cards, terminal cards */
 .panel,
 .big-stat,
@@ -4247,12 +4168,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   flex-shrink: 0;
 }
 .badge-urgency .badge-dot { background: var(--accent); }
-.on-dark .badge-default,
-.on-dark .badge-urgency {
-  background: var(--dark-surface);
-  color: var(--text-on-dark-2);
-  border-color: var(--border-dark);
-}
 
 /* ── Panel variants (production .panel base remains above) ──── */
 .panel-white {
@@ -4267,12 +4182,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   border-radius: 14px;
   padding: var(--space-xl);
 }
-.panel-dark {
-  background: var(--dark);
-  border: 1px solid var(--border-dark);
-  border-radius: 14px;
-  padding: var(--space-xl);
-}
 .card-info {
   background: var(--green-surface);
   border: 1px solid var(--green-light);
@@ -4281,12 +4190,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 }
 .card-info h4 { color: var(--text); }
 .card-info p  { color: var(--green-brand); font-size: 0.85rem; }
-.on-dark .card-info {
-  background: rgba(0, 198, 56, 0.1);
-  border-color: rgba(0, 198, 56, 0.18);
-}
-.on-dark .card-info h4 { color: var(--text-on-dark); }
-.on-dark .card-info p  { color: var(--green-light); }
 
 /* ── Code blocks ────────────────────────────────────────────── */
 .code-block {
@@ -4303,14 +4206,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
 }
 .code-block-default .comment { color: var(--text-3); }
 .code-block-default .keyword { color: var(--green-brand); }
-.on-dark .code-block-default {
-  background: var(--dark-surface);
-  border-color: var(--border-dark);
-  color: var(--text-on-dark);
-}
-.on-dark .code-block-default .comment { color: var(--text-3); }
-.on-dark .code-block-default .keyword { color: var(--green-vivid); }
-.on-dark .code-block-hero { color: var(--green-vivid); }
 
 /* ── Inline link styles ─────────────────────────────────────── */
 .link {
@@ -4324,10 +4219,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   color: var(--text-3);
   margin: 0 0.35rem;
 }
-.on-dark .link { color: var(--green-vivid); }
-.on-dark .link-separator { color: var(--text-3); }
-.on-dark .label { color: var(--green-vivid); }
-.on-dark .label-muted { color: var(--text-3); }
 
 /* ── Progress bar ───────────────────────────────────────────── */
 .progress-bar {
@@ -4336,23 +4227,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   background: linear-gradient(90deg, var(--green-brand), var(--green-vivid), transparent);
   margin-top: var(--space-sm);
 }
-.on-dark .progress-bar {
-  background: linear-gradient(90deg, var(--green-vivid), transparent);
-}
-
-/* ── Dark section context base ──────────────────────────────── */
-/* Focus ring flips back to vivid here: green-dark on --dark fails SC 1.4.11,
-   vivid measures 7.42:1. Width and offset stay as set on the base rules. */
-.on-dark a:focus-visible,
-.on-dark .btn:focus-visible {
-  outline-color: var(--green-vivid);
-}
-.on-dark { color: #e5e2dc; }
-.on-dark h1,
-.on-dark h2,
-.on-dark h3,
-.on-dark h4 { color: #e5e2dc; }
-.on-dark p { color: var(--text-on-dark-2); }
 
 /* ================================================================
    DESIGN-SYSTEM.HTML REFERENCE PAGE STYLES
