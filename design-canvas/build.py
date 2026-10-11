@@ -767,7 +767,23 @@ voice_body = """  <div class="board">
     <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded.</p>
     <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
     <p class="slogan" style="margin-top: 18px">Curious play. Epic growth.</p>
-    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when given room; in the footer, quiet ink that warms to green on hover. The one line allowed to be green throughout. Estonian pages carry it untranslated, as a signature, because the pun lives in an English name.</p>
+    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when given room; in the footer, quiet ink that warms to green on hover. The one line allowed to be green throughout.</p>
+
+    <hr class="rule">
+    <h2 class="sec">What Estonian carries instead</h2>
+    <p class="sec-note">The pun lives in an English name, so Estonian never translates the tagline. It carries its own line, which does a different job.</p>
+    <div class="langs">
+      <div class="lang">
+        <p class="tag">EN</p>
+        <p class="line" style="font-style: italic; font-weight: 500; color: var(--green-brand)">Curious play. Epic growth.</p>
+        <p class="why">The tagline decodes the name; nothing stands in for it.</p>
+      </div>
+      <div class="lang" lang="et">
+        <p class="tag">ET</p>
+        <p class="line">Tulemusp&otilde;hine digimuutus</p>
+        <p class="why" lang="en">Names the outcome, because an Estonian buyer is justifying a spend. Never a translation of the tagline, and never presented as one.</p>
+      </div>
+    </div>
 
     <hr class="rule">
     <h2 class="sec">The category line</h2>
@@ -1512,7 +1528,7 @@ hero_body = """  <div class="board">
 # Frames are fixed and surplus frame is harmless while clipping is not, so each
 # height is the measured content height plus about five percent. Re-measure at
 # 1120px wide after any content change.
-HEIGHTS = {"Main": 1670, "Type": 1780, "Voice": 2270, "Mark": 2550, "Layout": 1800,
+HEIGHTS = {"Main": 1670, "Type": 1780, "Voice": 2510, "Mark": 2550, "Layout": 1800,
            "Motion": 2530, "Components": 2670, "Card": 2620, "Hero": 1560}
 BOARDS = [
     ("Main.dc.html", "Foundations", HEIGHTS["Main"]),
