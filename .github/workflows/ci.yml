@@ -14,12 +14,24 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The audit ratchet reads package.json and package-lock.json from
+          # origin/<base>, so the whole history has to be here.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
       - run: npm ci
       - run: npm run lint
+      # Dependency advisories, as a ratchet rather than a bar: main already
+      # carries 16 high and 1 critical, so --audit-level=high would fail every
+      # PR from the first run. A STEP inside lint, not a job of its own — a new
+      # job id changes the check context and lands outside branch protection.
+      # `bash …` because a file added through the contents API is mode 100644.
+      - run: bash scripts/audit-ratchet.sh
+        env:
+          BASE_REF: ${{ github.base_ref }}
 
   tests:
     runs-on: ubuntu-latest
