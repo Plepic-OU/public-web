@@ -250,6 +250,22 @@
 
     <!-- Curriculum Section -->
     <section id="curriculum" class="curriculum-section section">
+      <!-- One icon set for the whole section: weeks, day modes, outcomes.
+           Stroke styling comes from .cpath-icon, so a symbol carries geometry only. -->
+      <svg class="svg-sprite" aria-hidden="true" focusable="false">
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+        <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+        <symbol id="i-checks" viewBox="0 0 24 24"><path d="M4 7l2 2 4-4M4 16l2 2 4-4M14 7h6M14 16h6"/></symbol>
+        <symbol id="i-parallel" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12h10M7 11c4 0 6-6 10-6M7 13c4 0 6 6 10 6"/></symbol>
+        <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2.5 4.5L17 13H5"/></symbol>
+        <symbol id="i-watch" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M10.5 7.5l3.5 2.5-3.5 2.5z"/></symbol>
+        <symbol id="i-build" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></symbol>
+        <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 4h10a1 1 0 011 1v7a1 1 0 01-1 1H8l-4 3v-3a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M18 8h2a1 1 0 011 1v7a1 1 0 01-1 1v3l-4-3h-4a1 1 0 01-1-1v-1"/></symbol>
+        <symbol id="i-lunch" viewBox="0 0 24 24"><path d="M4 10h12v4a5 5 0 01-5 5H9a5 5 0 01-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 010 5H16M8 3v4M12 3v4"/></symbol>
+        <symbol id="i-spec" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h12a1 1 0 001-1V8z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></symbol>
+        <symbol id="i-loop" viewBox="0 0 24 24"><path d="M20 12a8 8 0 01-14 5.3M4 12a8 8 0 0114-5.3M18 3v4h-4M6 21v-4h4"/></symbol>
+        <symbol id="i-diagram" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></symbol>
+      </svg>
       <div class="container">
         <div class="text-center mb-4 reveal">
           <p class="label">Curriculum</p>
@@ -262,74 +278,65 @@
           <p class="mt-md text-dim">Using a different agent? <a href="/#faq-claude-code">Why Claude Code &rarr;</a></p>
         </div>
 
-        <div class="typical-day reveal">
-          <p class="label">A typical Friday</p>
-          <h3 class="typical-day-title">Watch it done live, <span class="highlight">then build it yourself</span></h3>
-          <p class="typical-day-lead">The instructor works in Claude Code on a shared screen. Then you try it on your own project in a breakout room of three. Each day closes with a short quiz and a feedback round; the next Friday opens with what you said.</p>
-          <ul class="typical-day-legend" aria-hidden="true">
-            <li><i class="td-key td-watch"></i>Watch: slides and live demo</li>
-            <li><i class="td-key td-build"></i>Build: breakout room, teams of three</li>
-            <li><i class="td-key td-share"></i>Share: recap, presentations, quiz</li>
-          </ul>
-          <ol class="typical-day-strip">
-            <li class="td-block td-share" style="flex-grow:30"><time>9:00</time><span>Recap and your feedback</span></li>
-            <li class="td-block td-watch" style="flex-grow:45"><time>9:30</time><span>Slides and live demo</span></li>
-            <li class="td-block td-build" style="flex-grow:60"><time>10:15</time><span>Workshop in breakout rooms</span></li>
-            <li class="td-block td-share" style="flex-grow:30"><time>11:15</time><span>Teams present</span></li>
-            <li class="td-block td-watch" style="flex-grow:30"><time>11:45</time><span>Next topic, live</span></li>
-            <li class="td-block td-lunch" style="flex-grow:45"><time>12:15</time><span>Lunch</span></li>
-            <li class="td-block td-watch" style="flex-grow:30"><time>13:00</time><span>Demo</span></li>
-            <li class="td-block td-build" style="flex-grow:90"><time>13:30</time><span>Team task in breakout rooms</span></li>
-            <li class="td-block td-share" style="flex-grow:30"><time>15:00</time><span>Quiz and feedback</span></li>
-          </ol>
-          <p class="typical-day-note">Ends at 15:30. Short breathers between blocks.</p>
-        </div>
-
         <p class="curriculum-throughline reveal">Harness <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Context <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Verification <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Scale</p>
+        <p class="cpath-hint reveal">Pick a week to see what you watch and what you build. Underlined terms open a short definition.</p>
 
-        <div class="curriculum-timeline reveal reveal-delay-1">
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-1-desc">
-              <span class="curriculum-week">Week 1</span>
-              <span class="curriculum-title">Harness &amp; Safety</span>
-              <span class="curriculum-tagline">Configure the harness. Turn friendly fire off.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-1-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Lectures</span>
+        <!-- Learning path. One column per training day, so the graduation
+             project spans two. Steps and panels interleave in the DOM: on
+             phones each panel opens under its own step; on wide screens CSS
+             `order` moves every panel into one row below all six columns. -->
+        <div class="cpath reveal reveal-delay-1">
+          <button class="cpath-step" id="cpath-1" aria-expanded="true" aria-controls="cpath-1-desc" data-expanded>
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">Week 1</span>
+              <span class="cpath-title">Harness &amp; Safety</span>
+              <span class="cpath-tagline">Configure the harness. Turn friendly fire off.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>CLAUDE.md, plus a hook that checks every change</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-1-desc" role="region" aria-labelledby="cpath-1">
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
                 <ul>
-                  <li>Claude Code and the agentic loop: prompts, tokens, skills, subagents, MCP, plans and pricing</li>
+                  <li>Claude Code and the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-loop">agentic loop<span class="tooltip" role="tooltip" id="tip-loop">The cycle an agent repeats until the task is done: read the context, call a tool, check the result.</span></span>: prompts, tokens, skills, subagents, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-mcp">MCP<span class="tooltip" role="tooltip" id="tip-mcp">Model Context Protocol. The standard way to connect an agent to outside tools and data, such as your issue tracker or database.</span></span>, plans and pricing</li>
                   <li>Hooks: observe every tool call, block the dangerous ones</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Workshops</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
                 <ul>
-                  <li>Set up Claude Code on your own project, or on our sample repo, then /init its CLAUDE.md</li>
+                  <li>Set up Claude Code on your own project, or on our sample repo, then /init its <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-claudemd">CLAUDE.md<span class="tooltip" role="tooltip" id="tip-claudemd">A Markdown file in your repo that Claude Code reads at the start of every session: your commands, conventions and rules.</span></span></li>
                   <li>Add a hook that runs your linter or tests on every change; your breakout room then tries to get past it</li>
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-2">Next: Week 2, Guardrails &amp; Context <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-2-desc">
-              <span class="curriculum-week">Week 2</span>
-              <span class="curriculum-title">Guardrails &amp; Context</span>
-              <span class="curriculum-tagline">Give the agent a map. Validate before you build.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-2-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Lectures</span>
+          <button class="cpath-step" id="cpath-2" aria-expanded="false" aria-controls="cpath-2-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-map"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">Week 2</span>
+              <span class="cpath-title">Guardrails &amp; Context</span>
+              <span class="cpath-tagline">Give the agent a map. Validate before you build.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A project map and a spec the agent can verify</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-2-desc" role="region" aria-labelledby="cpath-2" hidden>
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
                 <ul>
-                  <li>Maps of the project: layered summaries, the C4 model, tokens vs the prompt cache</li>
-                  <li>Design docs, the testing pyramid, validation loops and subagents in depth</li>
+                  <li>Maps of the project: layered summaries, the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-c4">C4 model<span class="tooltip" role="tooltip" id="tip-c4">A way to draw software architecture at four zoom levels: system context, containers, components and code.</span></span>, tokens vs the prompt cache</li>
+                  <li>Design docs, the testing pyramid, validation loops and <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-subagent">subagents<span class="tooltip" role="tooltip" id="tip-subagent">Helper agents that the main agent starts for one task, each with a fresh context. Typical jobs: review, validation, search.</span></span> in depth</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Workshops</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
                 <ul>
                   <li>Build a C4-model skill and a DB-schema map, wired into CLAUDE.md</li>
                   <li>Prompt engineering, write-then-compare: write yours cold, run it, then run the reference. The delta is the lesson</li>
@@ -337,25 +344,30 @@
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-3">Next: Week 3, Spec-Driven Build &amp; Verification <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-3-desc">
-              <span class="curriculum-week">Week 3</span>
-              <span class="curriculum-title">Spec-Driven Build &amp; Verification</span>
-              <span class="curriculum-tagline">Build in chunks. Validate each. Guess nothing.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-3-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Lectures</span>
+          <button class="cpath-step" id="cpath-3" aria-expanded="false" aria-controls="cpath-3-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">Week 3</span>
+              <span class="cpath-title">Spec-Driven Build &amp; Verification</span>
+              <span class="cpath-tagline">Build in chunks. Validate each. Guess nothing.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A verification gate for your stack</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-3-desc" role="region" aria-labelledby="cpath-3" hidden>
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
                 <ul>
                   <li>From validated spec to working code; the two gates every change must pass: e2e and performance</li>
                   <li>Loop engineering: turn-based, goal-based, time-based and proactive loops (Anthropic&rsquo;s &ldquo;Getting started with loops&rdquo;)</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Workshops</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
                 <ul>
                   <li>Implement the spec in chunks; a validator subagent checks each one, then a /code-review loop runs until no issues remain, with a second review by another vendor&rsquo;s model</li>
                   <li>Build the verification gate for your stack (Lighthouse on a web app, a benchmark elsewhere) with a baseline diff and gated exit codes</li>
@@ -363,68 +375,98 @@
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-4">Next: Week 4, Parallel Agents &amp; Architecture <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-4-desc">
-              <span class="curriculum-week">Week 4</span>
-              <span class="curriculum-title">Parallel Agents &amp; Architecture</span>
-              <span class="curriculum-tagline">Run many agents at once. See what they do.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-4-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Lectures</span>
+          <button class="cpath-step" id="cpath-4" aria-expanded="false" aria-controls="cpath-4-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">Week 4</span>
+              <span class="cpath-title">Parallel Agents &amp; Architecture</span>
+              <span class="cpath-tagline">Run many agents at once. See what they do.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A parallel workflow: one worktree per agent</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-4-desc" role="region" aria-labelledby="cpath-4" hidden>
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
                 <ul>
                   <li>Introspection and observability: session logs, /insights, OTEL metrics</li>
                   <li>Agent-native architecture, and proactive loops that run without you: log analysis, slow-query triage, payment matching</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Workshops</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
                 <ul>
-                  <li>Complete 2&ndash;5 GitHub issues in parallel, each agent in its own worktree</li>
+                  <li>Complete 2&ndash;5 GitHub issues in parallel, each agent in its own <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-worktree">worktree<span class="tooltip" role="tooltip" id="tip-worktree">A git feature that checks out several branches side by side, so each agent works in its own copy of the repo.</span></span></li>
                   <li>A measurable improvement loop: speed up the test suite or improve your performance score, both gates staying green</li>
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-5">Next: Weeks 5 &amp; 6, Graduation Project <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item curriculum-final">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-5-desc">
-              <span class="curriculum-week">Weeks 5 &amp; 6</span>
-              <span class="curriculum-title">Graduation Project</span>
-              <span class="curriculum-tagline">Ship a real feature in your own codebase</span>
-              <span class="curriculum-sessions-badge">2 sessions</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-5-desc" hidden>
-              <p>Your company&rsquo;s real codebase, the whole workflow, instructors on hand. The weeks participants rate highest.</p>
-              <div class="curr-track">
-                <span class="curr-track-label">Deliverables</span>
-                <ul>
-                  <li>A configured agentic setup: CLAUDE.md, skills, hooks, gates</li>
-                  <li>A real feature shipped through the full workflow, with the spec, ADRs and C4 diagrams</li>
-                  <li>Final presentation and peer review</li>
-                </ul>
-              </div>
+          <button class="cpath-step cpath-final" id="cpath-5" aria-expanded="false" aria-controls="cpath-5-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">Weeks 5 &amp; 6 <span class="curriculum-sessions-badge">2 sessions</span></span>
+              <span class="cpath-title">Graduation Project</span>
+              <span class="cpath-tagline">Ship a real feature in your own codebase</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>Your own agentic setup and a shipped feature</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc cpath-desc-final" id="cpath-5-desc" role="region" aria-labelledby="cpath-5" hidden>
+            <p>Your company&rsquo;s real codebase, the whole workflow, instructors on hand. The weeks participants rate highest.</p>
+            <div class="cpath-track">
+              <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>Deliverables</p>
+              <ul>
+                <li>A configured agentic setup: CLAUDE.md, skills, hooks, gates</li>
+                <li>A real feature shipped through the full workflow, with the spec, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-adr">ADRs<span class="tooltip" role="tooltip" id="tip-adr">Architecture Decision Records. One short note per design decision: the context, the choice and its consequences.</span></span> and C4 diagrams</li>
+                <li>Final presentation and peer review</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <p class="curriculum-official reveal">Curriculum: Agentic Engineering &amp; Claude Code &middot; field of study: information and communication technology (software development and programming) &middot; volume 50 academic hours (37.5 hours): 42 contact, of which 16 classroom and 26 practical, and 8 independent study<br>Goal: participants use AI agents in software development as a repeatable method: clear specifications, guardrails, automated checks and parallel agents.</p>
-
-        <div class="curriculum-outcomes reveal">
+        <div class="cpath-outcomes reveal">
           <span class="curr-track-label">After the training, the participant</span>
           <ul>
-            <li>sets up the Claude Code harness: CLAUDE.md, skills, and hooks that block dangerous commands</li>
-            <li>writes a specification with acceptance criteria the agent can check itself</li>
-            <li>builds a verification chain that the agent runs until its work passes (tests, verification and validation)</li>
-            <li>automates recurring tasks with loops</li>
-            <li>runs several agents in parallel in git worktrees and monitors their work</li>
-            <li>documents architecture with C4 diagrams and ADRs</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>sets up the Claude Code harness: CLAUDE.md, skills, and hooks that block dangerous commands</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-spec"/></svg></span>writes a specification with acceptance criteria the agent can check itself</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>builds a verification chain that the agent runs until its work passes (tests, verification and validation)</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-loop"/></svg></span>automates recurring tasks with loops</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>runs several agents in parallel in git worktrees and monitors their work</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-diagram"/></svg></span>documents architecture with C4 diagrams and ADRs</li>
           </ul>
         </div>
+
+        <div class="typical-day typical-day-icons reveal">
+          <p class="label">A typical Friday</p>
+          <h3 class="typical-day-title">Watch it done live, <span class="highlight">then build it yourself</span></h3>
+          <p class="typical-day-lead">The instructor works in Claude Code on a shared screen. Then you try it on your own project in a breakout room of three. Each day closes with a short quiz and a feedback round; the next Friday opens with what you said.</p>
+          <ul class="typical-day-legend" aria-hidden="true">
+            <li><span class="cpath-mode td-watch"><svg class="cpath-icon"><use href="#i-watch"/></svg></span>Watch: slides and live demo</li>
+            <li><span class="cpath-mode td-build"><svg class="cpath-icon"><use href="#i-build"/></svg></span>Build: breakout room, teams of three</li>
+            <li><span class="cpath-mode td-share"><svg class="cpath-icon"><use href="#i-share"/></svg></span>Share: recap, presentations, quiz</li>
+          </ul>
+          <ol class="typical-day-strip">
+            <li class="td-block td-share" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-share"/></svg>9:00</time><span>Recap and your feedback</span></li>
+            <li class="td-block td-watch" style="flex-grow:45"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-watch"/></svg>9:30</time><span>Slides and live demo</span></li>
+            <li class="td-block td-build" style="flex-grow:60"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-build"/></svg>10:15</time><span>Workshop in breakout rooms</span></li>
+            <li class="td-block td-share" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-share"/></svg>11:15</time><span>Teams present</span></li>
+            <li class="td-block td-watch" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-watch"/></svg>11:45</time><span>Next topic, live</span></li>
+            <li class="td-block td-lunch" style="flex-grow:45"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-lunch"/></svg>12:15</time><span>Lunch</span></li>
+            <li class="td-block td-watch" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-watch"/></svg>13:00</time><span>Demo</span></li>
+            <li class="td-block td-build" style="flex-grow:90"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-build"/></svg>13:30</time><span>Team task in breakout rooms</span></li>
+            <li class="td-block td-share" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-share"/></svg>15:00</time><span>Quiz and feedback</span></li>
+          </ol>
+          <p class="typical-day-note">Ends at 15:30. Short breathers between blocks.</p>
+        </div>
+
+        <p class="curriculum-official reveal">Curriculum: Agentic Engineering &amp; Claude Code &middot; field of study: information and communication technology (software development and programming) &middot; volume 50 academic hours (37.5 hours): 42 contact, of which 16 classroom and 26 practical, and 8 independent study<br>Goal: participants use AI agents in software development as a repeatable method: clear specifications, guardrails, automated checks and parallel agents.</p>
 
       </div>
     </section>
@@ -757,16 +799,46 @@
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Curriculum accordion
-    document.querySelectorAll('.curriculum-header').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.curriculum-item');
-        const desc = item.querySelector('.curriculum-desc');
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', !expanded);
-        desc.hidden = expanded;
-        item.toggleAttribute('data-expanded');
+    // Curriculum path: one week open at a time. On the wide layout an open
+    // week stays open, because its panel is the only content of the row below.
+    const cpathWide = matchMedia('(min-width: 1024px)');
+    const cpathSteps = [...document.querySelectorAll('.cpath-step')];
+    const showWeek = (step) => {
+      cpathSteps.forEach(s => {
+        const open = s === step;
+        s.setAttribute('aria-expanded', open);
+        s.toggleAttribute('data-expanded', open);
+        document.getElementById(s.getAttribute('aria-controls')).hidden = !open;
       });
+    };
+    cpathSteps.forEach(step => {
+      step.addEventListener('click', () => {
+        const open = step.getAttribute('aria-expanded') === 'true';
+        if (open && cpathWide.matches) return;
+        showWeek(open ? null : step);
+      });
+    });
+    document.querySelectorAll('.cpath-next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const step = document.getElementById(btn.dataset.next);
+        showWeek(step);
+        step.focus({ preventScroll: true });
+        step.scrollIntoView({ block: 'nearest' });
+      });
+    });
+
+    // Glossary tooltips are 320px wide; near a screen edge, slide the panel
+    // back inside the viewport. --tip-dx moves the panel and counter-moves its arrow.
+    document.querySelectorAll('.cpath .tooltip-trigger').forEach(trigger => {
+      const tip = trigger.querySelector('.tooltip');
+      const fit = () => {
+        trigger.style.setProperty('--tip-dx', '0px');
+        const box = tip.getBoundingClientRect();
+        const dx = Math.max(12 - box.left, 0) - Math.max(box.right - (document.documentElement.clientWidth - 12), 0);
+        trigger.style.setProperty('--tip-dx', `${dx}px`);
+      };
+      trigger.addEventListener('mouseenter', fit);
+      trigger.addEventListener('focus', fit);
     });
 
     // Console easter egg for developers

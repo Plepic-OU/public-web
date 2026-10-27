@@ -226,6 +226,9 @@
   --wingbeat-dur: 1.1s;
   --wingbeat-open: 62deg;
 
+  /* Tooltip edge correction; script sets it per trigger near a screen edge. */
+  --tip-dx: 0px;
+
   /* Module tiers, named for the loadout builder. Never applied to people. */
   --tier-core: var(--green-surface);
   --tier-advanced: var(--green-light);
@@ -3184,6 +3187,433 @@ plepic-mark > svg {
 }
 
 /* ========================================
+   Training Page — Learning path (/training only; /et keeps the accordion above)
+   ======================================== */
+
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.cpath-icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.cpath-hint {
+  margin-top: var(--space-sm);
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-3);
+}
+
+/* Phones and tablets: a railed list, each panel opens under its own step. */
+.cpath {
+  margin-top: var(--space-xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.cpath-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: start;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* The rail: every step and open panel draws its own segment to the next node. */
+.cpath-step::before,
+.cpath-desc::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  background: var(--green-light);
+}
+
+.cpath-step::before {
+  left: 21px;
+  top: 22px;
+  bottom: calc(-1 * var(--space-md));
+}
+
+.cpath-desc::before {
+  left: calc(-1 * var(--space-md) - 23px);
+  top: calc(-1 * var(--space-md));
+  bottom: calc(-1 * var(--space-md));
+}
+
+.cpath-final::before,
+.cpath-desc-final::before {
+  display: none;
+}
+
+.cpath-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--green-light);
+  color: var(--green-dark);
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.cpath-final .cpath-node {
+  background: var(--green-light);
+}
+
+.cpath-step[data-expanded] .cpath-node {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--surface);
+}
+
+.cpath-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--rounded-xl);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-base);
+}
+
+.cpath-final .cpath-card {
+  background: var(--green-surface);
+}
+
+.cpath-step:hover .cpath-card {
+  box-shadow: var(--card-shadow-hover);
+}
+
+.cpath-step[data-expanded] .cpath-card {
+  border-color: var(--text);
+}
+
+.cpath-week {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-right: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cpath-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.cpath-tagline {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text-3);
+}
+
+.cpath-yield {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--border);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.cpath-yield-label {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cpath-chevron {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--text-3);
+  stroke-width: 2;
+  transition: transform var(--transition-fast);
+}
+
+.cpath-step[data-expanded] .cpath-chevron {
+  transform: rotate(180deg);
+}
+
+.cpath-desc {
+  position: relative;
+  margin-left: calc(44px + var(--space-md));
+  padding: var(--space-lg);
+  background: var(--surface);
+  border: 1.5px solid var(--text);
+  border-radius: var(--rounded-xl);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.cpath-desc[hidden] {
+  display: none;
+}
+
+.cpath-desc > p {
+  margin: 0 0 var(--space-md);
+}
+
+.cpath-tracks {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.cpath-track-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Mode chip: the day-strip fills (.td-watch, .td-build, .td-share) with the mode's pictogram. */
+.cpath-mode {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--rounded-sm);
+  color: var(--text);
+}
+
+.cpath-mode .cpath-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.cpath-desc ul,
+.cpath-outcomes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cpath-desc li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: var(--space-sm);
+}
+
+.cpath-desc li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--green-brand);
+  font-weight: 700;
+}
+
+.cpath-next {
+  margin-top: var(--space-sm);
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--green-brand);
+  text-align: left;
+  cursor: pointer;
+}
+
+.cpath-next:hover {
+  text-decoration: underline;
+}
+
+.cpath-outcomes {
+  margin-top: var(--space-2xl);
+}
+
+.cpath-outcomes .curr-track-label {
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.cpath-outcomes ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-sm);
+}
+
+.cpath-outcomes li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.cpath-outcome-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--green-surface);
+  color: var(--green-dark);
+}
+
+.typical-day-icons {
+  max-width: none;
+}
+
+.typical-day-icons .td-block time {
+  white-space: nowrap;
+}
+
+.typical-day-legend .cpath-mode {
+  width: 26px;
+  height: 26px;
+  margin-right: var(--space-sm);
+  vertical-align: middle;
+}
+
+.td-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+@media (max-width: 639px) {
+  .cpath-desc {
+    padding: var(--space-md);
+  }
+}
+
+@media (min-width: 640px) {
+  .cpath-outcomes ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cpath-outcomes li {
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rounded-lg);
+  }
+}
+
+@media (max-width: 900px) {
+  .typical-day-icons .td-block time {
+    flex-basis: 5em;
+  }
+}
+
+/* Wide screens: one column per training day, the open week's panel in the row below. */
+@media (min-width: 1024px) {
+  .cpath {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-md) var(--space-sm);
+  }
+
+  .cpath-step {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    align-items: stretch;
+  }
+
+  .cpath-final {
+    grid-column: span 2;
+  }
+
+  .cpath-step::before {
+    left: 44px;
+    right: calc(-1 * var(--space-sm));
+    top: 21px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+  }
+
+  .cpath-step[data-expanded] .cpath-card::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    width: 14px;
+    height: 14px;
+    background: var(--surface);
+    border-right: 1.5px solid var(--text);
+    border-bottom: 1.5px solid var(--text);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .cpath-final[data-expanded] .cpath-card::after {
+    background: var(--green-surface);
+  }
+
+  .cpath-desc {
+    order: 1;
+    grid-column: 1 / -1;
+    margin: var(--space-sm) 0 0;
+    padding: var(--space-xl);
+  }
+
+  .cpath-desc::before {
+    display: none;
+  }
+
+  .cpath-tracks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .cpath-outcomes ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ========================================
    Training Page — Details (Toolkit + Requirements)
    ======================================== */
 
@@ -3514,7 +3944,7 @@ plepic-mark > svg {
      padding-bottom must stay after the shorthand, which would reset it. */
   bottom: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% + var(--tip-dx)));
   width: 320px;
   padding: 0.75rem 1rem;
   padding-bottom: 10px;
@@ -3539,7 +3969,7 @@ plepic-mark > svg {
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% - var(--tip-dx)));
   border: 6px solid transparent;
   border-top-color: var(--green-light);
 }
