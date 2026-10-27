@@ -1433,7 +1433,8 @@ p:last-child {
      panel covers the row that was hovered. The anchor belongs to the slide,
      not to the pointer: anchoring on :hover made a slide still fading out
      jump rows when the pointer crossed from one row to the other. */
-  .instructor-slide[data-instructor="jevgeni"] {
+  .instructor-slide[data-instructor="jevgeni"],
+  .instructor-slide[data-instructor="ivo"] {
     top: auto;
     bottom: 0;
   }
@@ -1445,7 +1446,8 @@ p:last-child {
   .team-showcase:has(.team-card[data-instructor="joosep"]:hover) .instructor-slide[data-instructor="joosep"],
   .team-showcase:has(.team-card[data-instructor="kaido"]:hover) .instructor-slide[data-instructor="kaido"],
   .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"],
-  .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"] {
+  .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"],
+  .team-showcase:has(.team-card[data-instructor="ivo"]:hover) .instructor-slide[data-instructor="ivo"] {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1844,6 +1846,10 @@ plepic-mark > svg {
 
 .tt-card[data-instructor="aivo"] .tt-portrait {
   transform: translateY(3%) scale(1.04);
+}
+
+.tt-card[data-instructor="ivo"] .tt-portrait {
+  transform: translateY(3%) scale(1.06);
 }
 
 /* The day-job line is the part that grows, and it carries the closing rule on
