@@ -40,6 +40,10 @@ jobs:
           rm -rf docs/training-one-pager
           rm -rf docs/specs
 
+      - name: Publish design tokens
+        # skill.plepic.com links css/tokens.css for the live token values.
+        run: node scripts/extract-tokens.mjs
+
       - name: Cache-bust asset URLs
         # Stamp a content hash onto css/js URLs in the HTML so returning
         # visitors get fresh assets after a deploy instead of a stale copy
