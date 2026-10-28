@@ -283,7 +283,7 @@
               <span class="cpath-week">1. nädal</span>
               <span class="cpath-title">Töökeskkond ja turvalisus</span>
               <span class="cpath-tagline">Agent püsib piirides, ohtlikud käsud ei pääse läbi.</span>
-              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>CLAUDE.md ja hook, mis käivitab iga muudatuse järel linteri või testid</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>CLAUDE.md ja hookid, mis blokeerivad ohtlikud käsud</span>
               <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
             </span>
           </button>
@@ -300,7 +300,7 @@
                 <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Praktiline töö: oma koodibaasis</p>
                 <ul>
                   <li>Claude Code'i seadistamine oma projektis või meie näidisrepos ning <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-claudemd">CLAUDE.md<span class="tooltip" role="tooltip" id="tip-claudemd">Markdown-fail teie repos, mille Claude Code loeb iga sessiooni alguses. Selles on projekti käsud, kokkulepped ja reeglid.</span></span> loomine käsuga /init</li>
-                  <li>Hook, mis käivitab iga muudatuse järel linteri või testid. Seejärel püüab teie rühm sellest mööda hiilida</li>
+                  <li>Kaks hooki: üks jälgib iga tööriistakutset, teine blokeerib salajase faili lugemise. Seejärel püüab teie rühm blokeerivast hookist mööda hiilida</li>
                 </ul>
               </div>
             </div>
@@ -423,6 +423,7 @@
         </div>
 
         <p class="curriculum-official reveal">Õppekava: Agentne arendus ja Claude Code &middot; õppekavarühm: info- ja kommunikatsioonitehnoloogia (tarkvaraarendus ja programmeerimine) &middot; maht 50 akadeemilist tundi (37,5 tundi): kontaktõpe 42, sellest auditoorne töö 16 ja praktiline töö 26, ning iseseisev töö 8 akadeemilist tundi<br>Eesmärk on, et osaleja kasutab AI-agente tarkvaraarenduses korratava meetodina: selged spetsifikatsioonid, piirangud, automaatsed kontrollid ja paralleelsed agendid.</p>
+        <p class="curriculum-official reveal">Õppemeetodid: koolitaja demod otse Claude Code'is koos toetavate slaididega, töötoad oma koodibaasis, rühmatöö, lõpuprojekt ja selle esitlus.<br>Varasemad nimetused: Agentne tarkvaraarendus Claude Code'iga; Agentic Engineering &amp; Claude Code – AI-põhised arendustöövood tarkvaratiimidele.</p>
 
         <div class="cpath-outcomes reveal">
           <span class="curr-track-label">Koolituse läbinu</span>
@@ -576,7 +577,7 @@
             <details class="faq-item">
               <summary>Kellele koolitus on mõeldud?</summary>
               <div class="faq-answer">
-                <p>Kogenud arendajatele, kellel on vähemalt kaks aastat erialast töökogemust ja juurdepääs päris koodibaasile. Programmeerimise algõpe see ei ole.</p>
+                <p>Kogenud arendajatele, kellel on vähemalt kaks aastat erialast töökogemust, hea oskus vähemalt ühes programmeerimiskeeles ja juurdepääs päris koodibaasile. Programmeerimise algõpe see ei ole.</p>
               </div>
             </details>
 
