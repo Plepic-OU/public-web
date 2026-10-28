@@ -1,4 +1,5 @@
 # Consolidating the Plepic design system into Claude Design
+**Superseded on 2026-10-28:** the canvas is retired. The home is now a Claude Design System artifact (https://claude.ai/artifact/5jKctBduVrh3NL532fVN3k), generated one-way from `css/styles.css` by `design-system/build.py`. See the last row of section 8.
 Claude Design is now the design system's only home. `design-system.html` and six other design pages were deleted on 2026-09-10 and their content lives on an eleven-artboard canvas. Kaido decided this on 2026-09-09; it reverses the recommendation this document carried on 2026-09-08, which is kept in section 8.
 One duplication is left standing on purpose, and section 6 says why.
 ## 1. What was decided
@@ -54,7 +55,8 @@ The gaps closed before anything was deleted: the 73 percent rule, the one-accent
 | A **three-stage route**: mirror, live with it, then move authoring (2026-09-09) | Consolidation now. The old pages are gone | Staging was a way of not consolidating. The mirror was built and the original left standing, which is two homes with extra steps |
 | First slice: tokens and `<PlepicMark>` only | Eleven artboards covering every canon section | Ranked by generation cost, the Card and the rules were expensive. As artboards they are markup |
 | The hero is ruled out | Unchanged. Documented as a composition, never rebuilt | It is a page and a WebGL module, not a component |
+| The canvas is the home (2026-09-09) | A Design System artifact, generated from `css/styles.css`, read-only on its page (2026-10-28) | Claude's Slides and Design types look up Design System artifacts and never saw the canvas; agents need a README and `tokens.json`, not 2.7 MB of editor HTML |
 ## 9. Open
-1. Where plepic.com links to the canvas, and the `/design-system` redirect.
-2. Reversing the value direction, so `css/styles.css` is generated. Starts with the guards, not the generator.
+1. Where plepic.com links to the design system, and the `/design-system` redirect. Waits on the artifact being shared.
+2. Closed 2026-10-28: the stylesheet stays the source and the system is generated from it.
 3. Whether `metamorphosis-hero.html` should stay publicly reachable.

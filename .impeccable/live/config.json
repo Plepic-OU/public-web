@@ -9,7 +9,7 @@
     "screenshots/**",
     "tests/**",
     "demo-tenders.html",
-    "design-canvas/**"
+    "design-system/**"
   ],
   "insertBefore": "</body>",
   "commentSyntax": "html",

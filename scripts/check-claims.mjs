@@ -46,11 +46,11 @@ const INTERNAL_PAGES = new Set([
 ]);
 
 // Same reasoning as INTERNAL_PAGES, different shape: a directory, not a
-// filename. design-canvas/ holds the Claude Design artboards, which are
-// generated from css/styles.css and dropped from every build by the same
-// deploy step. Its .dc.html files are full of CSS percentages (a crop offset,
-// a scale) and reach no visitor, so a receipt for one would mean nothing.
-const INTERNAL_DIRS = ['design-canvas/'];
+// filename. design-system/ holds the design system's sources, which are
+// dropped from every build by the same deploy step. Its previews are full of
+// CSS percentages and reach no visitor, so a receipt for one would mean
+// nothing; build.py refuses a price or a date in their text.
+const INTERNAL_DIRS = ['design-system/'];
 
 // --- tokens added to pages ---------------------------------------------------
 const tokens = new Set();

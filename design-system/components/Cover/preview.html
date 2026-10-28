@@ -1,0 +1,23 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Plepic</title>
+<style>
+  html, body { margin: 0; height: 100%; min-height: 0; }
+  body { background: var(--bg); overflow: hidden; }
+  .cover { width: 960px; height: 288px; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--space-3xl); box-sizing: border-box; }
+  /* The header lockup, copied from index.html, scaled as one unit: at 4x the mark is its 120px art size. */
+  .cover .logo-lockup { zoom: 4; align-self: flex-start; }
+  /* The tagline specimen from the Voice rules: Bitter italic 500 in green-brand when given room. */
+  .cover .slogan { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.75rem; line-height: normal; color: var(--green-brand); margin: var(--space-md) 0 0; }
+</style>
+</head>
+<body>
+<div class="cover">
+{{lockup}}
+<p class="slogan">Curious play. Epic growth.</p>
+</div>
+</body>
+</html>
