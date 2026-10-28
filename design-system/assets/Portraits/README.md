@@ -1,3 +1,6 @@
 # Portraits
 
-- `joosep.webp`: the instructor portrait the Card preview uses. Every portrait takes the same `--photo-grade` filter; never grade one face on its own, never redraw or triangulate a person.
+- `joosep.jpg`, `kaido.jpg`, `vootele.jpg`: the graded crops The card page shows.
+- `joosep.webp`: the homepage portrait the Card component uses.
+
+Every portrait takes the same `--photo-grade`. The card section says why.

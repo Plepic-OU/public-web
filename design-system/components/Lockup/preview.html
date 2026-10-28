@@ -1,17 +1,21 @@
-<!-- @dsCard group="Brand" height=150 -->
+<!-- @dsCard group="Brand" height=150 width=1120 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Lockup</title>
 <style>
   html, body { height: 100%; }
-  body { min-height: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+  body { min-height: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
   .cell { display: flex; align-items: center; justify-content: center; padding: var(--space-xl) var(--space-md); }
-  .on-brand { background: var(--green-brand); }
+  .ground { background: var(--green-surface); }
 </style></head>
 <body>
 <div class="cell">{{lockup}}</div>
 <div class="cell stacked">{{lockup}}</div>
-<div class="cell on-brand">{{lockup}}</div>
-<script>document.querySelector('.stacked .logo-lockup').classList.add('logo-lockup--stacked');</script>
+<div class="cell domain">{{lockup}}</div>
+<div class="cell ground on-brand">{{lockup}}</div>
+<script>
+  document.querySelector('.stacked .logo-lockup').classList.add('logo-lockup--stacked');
+  document.querySelector('.domain .logo-wordmark').insertAdjacentHTML('beforeend', '<span style="color: var(--text-2)">.com</span>');
+</script>
 </body>
 </html>
