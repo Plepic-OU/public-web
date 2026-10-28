@@ -13,11 +13,11 @@
   <!-- Google Analytics + Google Ads -->
   <script src="/scripts/tracking.js"></script>
 
-  <meta name="description" content="Claude Code training curriculum: 6 Fridays, 37.5 hours, agentic engineering, graduation project in your own codebase. €2,520 per developer. Estonian employers reclaim 80% via Töötukassa.">
+  <meta name="description" content="Claude Code training curriculum: 6 Fridays, 37.5 hours, agentic engineering, capstone project in your own codebase. €2,520 per developer. Estonian employers reclaim 80% via Töötukassa.">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Agentic Engineering &amp; Claude Code training | Plepic">
-  <meta property="og:description" content="Claude Code training curriculum: 6 Fridays, 37.5 hours, agentic engineering, graduation project in your own codebase. €2,520 per developer. Estonian employers reclaim 80% via Töötukassa.">
+  <meta property="og:description" content="Claude Code training curriculum: 6 Fridays, 37.5 hours, agentic engineering, capstone project in your own codebase. €2,520 per developer. Estonian employers reclaim 80% via Töötukassa.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://plepic.com/training/">
   <meta property="og:image" content="https://plepic.com/images/plepic-og.png">
@@ -36,7 +36,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Agentic Engineering &amp; Claude Code training | Plepic">
-  <meta name="twitter:description" content="Claude Code training curriculum: 6 Fridays, 37.5 hours, agentic engineering, graduation project in your own codebase. €2,520 per developer. Estonian employers reclaim 80% via Töötukassa.">
+  <meta name="twitter:description" content="Claude Code training curriculum: 6 Fridays, 37.5 hours, agentic engineering, capstone project in your own codebase. €2,520 per developer. Estonian employers reclaim 80% via Töötukassa.">
   <meta name="twitter:image" content="https://plepic.com/images/plepic-og.png">
 
   <!-- PWA / Mobile -->
@@ -279,9 +279,9 @@
         </div>
 
         <p class="curriculum-throughline reveal">Harness <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Context <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Verification <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Scale</p>
-        <p class="cpath-hint reveal">Pick a week to see what you watch and what you build. Underlined terms open a short definition.</p>
+        <p class="cpath-hint reveal">Pick a week for details. Underlined terms open a definition.</p>
 
-        <!-- Learning path. One column per training day, so the graduation
+        <!-- Learning path. One column per training day, so the capstone
              project spans two. Steps and panels interleave in the DOM: on
              phones each panel opens under its own step; on wide screens CSS
              `order` moves every panel into one row below all six columns. -->
@@ -299,14 +299,14 @@
           <div class="cpath-desc" id="cpath-1-desc" role="region" aria-labelledby="cpath-1">
             <div class="cpath-tracks">
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
                   <li>Claude Code and the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-loop">agentic loop<span class="tooltip" role="tooltip" id="tip-loop">The cycle an agent repeats until the task is done: read the context, call a tool, check the result.</span></span>: prompts, tokens, skills, subagents, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-mcp">MCP<span class="tooltip" role="tooltip" id="tip-mcp">Model Context Protocol. The standard way to connect an agent to outside tools and data, such as your issue tracker or database.</span></span>, plans and pricing</li>
                   <li>Hooks: observe every tool call, block the dangerous ones</li>
                 </ul>
               </div>
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
                   <li>Set up Claude Code on your own project, or on our sample repo, then /init its <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-claudemd">CLAUDE.md<span class="tooltip" role="tooltip" id="tip-claudemd">A Markdown file in your repo that Claude Code reads at the start of every session: your commands, conventions and rules.</span></span></li>
                   <li>Add a hook that runs your linter or tests on every change; your breakout room then tries to get past it</li>
@@ -329,14 +329,14 @@
           <div class="cpath-desc" id="cpath-2-desc" role="region" aria-labelledby="cpath-2" hidden>
             <div class="cpath-tracks">
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
                   <li>Maps of the project: layered summaries, the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-c4">C4 model<span class="tooltip" role="tooltip" id="tip-c4">A way to draw software architecture at four zoom levels: system context, containers, components and code.</span></span>, tokens vs the prompt cache</li>
                   <li>Design docs, the testing pyramid, validation loops and <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-subagent">subagents<span class="tooltip" role="tooltip" id="tip-subagent">Helper agents that the main agent starts for one task, each with a fresh context. Typical jobs: review, validation, search.</span></span> in depth</li>
                 </ul>
               </div>
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
                   <li>Build a C4-model skill and a DB-schema map, wired into CLAUDE.md</li>
                   <li>Prompt engineering, write-then-compare: write yours cold, run it, then run the reference. The delta is the lesson</li>
@@ -360,14 +360,14 @@
           <div class="cpath-desc" id="cpath-3-desc" role="region" aria-labelledby="cpath-3" hidden>
             <div class="cpath-tracks">
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
                   <li>From validated spec to working code; the two gates every change must pass: e2e and performance</li>
                   <li>Loop engineering: turn-based, goal-based, time-based and proactive loops (Anthropic&rsquo;s &ldquo;Getting started with loops&rdquo;)</li>
                 </ul>
               </div>
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
                   <li>Implement the spec in chunks; a validator subagent checks each one, then a /code-review loop runs until no issues remain, with a second review by another vendor&rsquo;s model</li>
                   <li>Build the verification gate for your stack (Lighthouse on a web app, a benchmark elsewhere) with a baseline diff and gated exit codes</li>
@@ -391,41 +391,41 @@
           <div class="cpath-desc" id="cpath-4-desc" role="region" aria-labelledby="cpath-4" hidden>
             <div class="cpath-tracks">
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: lectures</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
                   <li>Introspection and observability: session logs, /insights, OTEL metrics</li>
                   <li>Agent-native architecture, and proactive loops that run without you: log analysis, slow-query triage, payment matching</li>
                 </ul>
               </div>
               <div class="cpath-track">
-                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: workshops</p>
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
                   <li>Complete 2&ndash;5 GitHub issues in parallel, each agent in its own <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-worktree">worktree<span class="tooltip" role="tooltip" id="tip-worktree">A git feature that checks out several branches side by side, so each agent works in its own copy of the repo.</span></span></li>
                   <li>A measurable improvement loop: speed up the test suite or improve your performance score, both gates staying green</li>
                 </ul>
               </div>
             </div>
-            <button class="cpath-next" data-next="cpath-5">Next: Weeks 5 &amp; 6, Graduation Project <span aria-hidden="true">&rarr;</span></button>
+            <button class="cpath-next" data-next="cpath-5">Next: Weeks 5 &amp; 6, Capstone Project <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <button class="cpath-step cpath-final" id="cpath-5" aria-expanded="false" aria-controls="cpath-5-desc">
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>
             <span class="cpath-card">
               <span class="cpath-week">Weeks 5 &amp; 6 <span class="curriculum-sessions-badge">2 sessions</span></span>
-              <span class="cpath-title">Graduation Project</span>
+              <span class="cpath-title">Capstone Project</span>
               <span class="cpath-tagline">Ship a real feature in your own codebase</span>
               <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>Your own agentic setup and a shipped feature</span>
               <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
             </span>
           </button>
           <div class="cpath-desc cpath-desc-final" id="cpath-5-desc" role="region" aria-labelledby="cpath-5" hidden>
-            <p>Your company&rsquo;s real codebase, the whole workflow, instructors on hand. The weeks participants rate highest.</p>
+            <p>Your own work challenge, the whole workflow, instructors on hand. The weeks participants rate highest.</p>
             <div class="cpath-track">
               <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>Deliverables</p>
               <ul>
                 <li>A configured agentic setup: CLAUDE.md, skills, hooks, gates</li>
                 <li>A real feature shipped through the full workflow, with the spec, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-adr">ADRs<span class="tooltip" role="tooltip" id="tip-adr">Architecture Decision Records. One short note per design decision: the context, the choice and its consequences.</span></span> and C4 diagrams</li>
-                <li>Final presentation and peer review</li>
+                <li>Final presentation and peer review of about 20 capstones</li>
               </ul>
             </div>
           </div>
@@ -446,15 +446,15 @@
         <div class="typical-day typical-day-icons reveal">
           <p class="label">A typical Friday</p>
           <h3 class="typical-day-title">Watch it done live, <span class="highlight">then build it yourself</span></h3>
-          <p class="typical-day-lead">The instructor works in Claude Code on a shared screen. Then you try it on your own project in a breakout room of three. Each day closes with a short quiz and a feedback round; the next Friday opens with what you said.</p>
+          <p class="typical-day-lead">An agentic engineer runs a real Claude Code workflow live: skills, prompts, agents. Slides only support it. Then you apply it to your own work in a team of three, from day one. You see how about 20 engineers work and ask anything.</p>
           <ul class="typical-day-legend" aria-hidden="true">
-            <li><span class="cpath-mode td-watch"><svg class="cpath-icon"><use href="#i-watch"/></svg></span>Watch: slides and live demo</li>
-            <li><span class="cpath-mode td-build"><svg class="cpath-icon"><use href="#i-build"/></svg></span>Build: breakout room, teams of three</li>
-            <li><span class="cpath-mode td-share"><svg class="cpath-icon"><use href="#i-share"/></svg></span>Share: recap, presentations, quiz</li>
+            <li><span class="cpath-mode td-watch"><svg class="cpath-icon"><use href="#i-watch"/></svg></span>Watch: live in Claude Code</li>
+            <li><span class="cpath-mode td-build"><svg class="cpath-icon"><use href="#i-build"/></svg></span>Build: your work, teams of three</li>
+            <li><span class="cpath-mode td-share"><svg class="cpath-icon"><use href="#i-share"/></svg></span>Share: others&rsquo; workflows, your questions</li>
           </ul>
           <ol class="typical-day-strip">
             <li class="td-block td-share" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-share"/></svg>9:00</time><span>Recap and your feedback</span></li>
-            <li class="td-block td-watch" style="flex-grow:45"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-watch"/></svg>9:30</time><span>Slides and live demo</span></li>
+            <li class="td-block td-watch" style="flex-grow:45"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-watch"/></svg>9:30</time><span>Live in Claude Code</span></li>
             <li class="td-block td-build" style="flex-grow:60"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-build"/></svg>10:15</time><span>Workshop in breakout rooms</span></li>
             <li class="td-block td-share" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-share"/></svg>11:15</time><span>Teams present</span></li>
             <li class="td-block td-watch" style="flex-grow:30"><time><svg class="cpath-icon td-icon" aria-hidden="true"><use href="#i-watch"/></svg>11:45</time><span>Next topic, live</span></li>
@@ -508,7 +508,7 @@
             <ul class="detail-list">
               <li>2+ years professional development experience</li>
               <li>Comfortable with at least one programming language</li>
-              <li>Access to a codebase you can work with during the course</li>
+              <li>Your own work challenge: those who bring one benefit most</li>
               <li>Available for all 6 full-day sessions (9:00&ndash;15:30)</li>
             </ul>
             <p class="cert-line mt-md text-sm">
@@ -546,7 +546,7 @@
               <ul class="pricing-card-features">
                 <li>For development teams across Europe</li>
                 <li>Full 6-session program</li>
-                <li>Graduation project on your own codebase</li>
+                <li>Capstone project on your own codebase</li>
                 <li>Certificate of Completion included</li>
               </ul>
               <a href="https://forms.gle/3M7XrK845svufeFn6" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
