@@ -1,4 +1,11 @@
 # Logos
 
-- `plepic-mark.svg` (asset id in the README's Iconography section): the butterfly, read from the plepic.com header at build time. Multi-ink and locked: `green-dark`, `green-brand` and `green-vivid` facets, a `green-dark` body and antennae, `green-vivid` tips, one `accent` ember. Never recolour it, not even to one colour. On a `green-brand` ground the mark stays as it is and the wordmark turns `text`.
-- The wordmark is type, not a file: "Plepic" in Bitter 600 at 1.5rem in `green-brand`, mark to its right, `space-sm` apart. The Lockup component shows it.
+Every file is exported from the plepic.com header lockup by `design-system/export-logos.mjs`, so none is redrawn. Multi-ink and locked: never recolour, re-facet or stretch.
+
+- `plepic-mark.svg`: the butterfly alone.
+- `plepic-lockup.*`: "Plepic" in `green-brand`, Bitter 600, mark to its right. The default.
+- `plepic-lockup-stacked.*`: the same pair, mark above.
+- `plepic-lockup-on-brand.*`: the wordmark in `text`, for a green ground.
+- `plepic-com-lockup.*` and `plepic-com-wordmark.*`: the domain wordmark, ".com" in `text-2`, for print and merchandise.
+
+`.pdf` is vector with the font embedded, `.svg` has the text as outlines, `.png` is transparent at eight times the header size.
