@@ -1,8 +1,202 @@
 {
   "url": "https://claude.ai/artifact/5jKctBduVrh3NL532fVN3k",
-  "createdOnFiles": {"v": 1, "at": "2026-10-28T10:20:00Z"},
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-28T10:20:00Z"
+  },
   "blobs": {
-    "Logos/plepic-mark.svg": {"blob": "846fc846caee541f84f28ff664504b5e", "size": 2858, "type": "image/svg+xml", "sha256": "2085f4ffc65409488d140881ca1a0aaed4920053eae1f144567a0517d44dde69"},
-    "Portraits/joosep.webp": {"blob": "6dea9b34fc52b1de245d5f4f3431843b", "size": 14464, "type": "image/webp", "sha256": "8b5cf11cc3caa61de20383a4a8b5c434d9406b96054b1c2b8da3512d74a158e3"}
-  }
+    "Logos/plepic-mark.svg": {
+      "blob": "846fc846caee541f84f28ff664504b5e",
+      "size": 2858,
+      "type": "image/svg+xml",
+      "sha256": "2085f4ffc65409488d140881ca1a0aaed4920053eae1f144567a0517d44dde69"
+    },
+    "Portraits/joosep.webp": {
+      "blob": "6dea9b34fc52b1de245d5f4f3431843b",
+      "size": 14464,
+      "type": "image/webp",
+      "sha256": "8b5cf11cc3caa61de20383a4a8b5c434d9406b96054b1c2b8da3512d74a158e3"
+    },
+    "Logos/plepic-lockup.svg": {
+      "blob": "e68b062c03c14b46f7ff8ca157b78d02",
+      "size": 23362,
+      "type": "image/svg+xml",
+      "sha256": "70630f51fa4117df79359a52e5614b17e5061028aee8f5f1b1c3baa045cd17ed"
+    },
+    "Logos/plepic-lockup.pdf": {
+      "blob": "701778c75abc21915f5c4c3dde62db62",
+      "size": 9032,
+      "type": "application/pdf",
+      "sha256": "86af1d1e7e283761f6e35b473db1334017ea89ee96fb66c3ed5bde15f2c8bc16"
+    },
+    "Logos/plepic-lockup.png": {
+      "blob": "b11b437d193033f506ef7c2aa0c38434",
+      "size": 25943,
+      "type": "image/png",
+      "sha256": "536d50ad945f7535a21081b2344433a9b2b9fde677a91beb83a51b6dd4ac7819"
+    },
+    "Logos/plepic-lockup-stacked.svg": {
+      "blob": "6147ccedaa62a19666f70ea8e6e66c25",
+      "size": 23609,
+      "type": "image/svg+xml",
+      "sha256": "012d7231fcebfc835f50e7d3b87d8d134d2590bc0039c08bd33fc93b00fa3d60"
+    },
+    "Logos/plepic-lockup-stacked.pdf": {
+      "blob": "09935d22ebf6d17880a411da83f77fb4",
+      "size": 9048,
+      "type": "application/pdf",
+      "sha256": "5515f6fd3254e9839f56ff430b79b1c8e98f8bf3249101be84a1e0919e054561"
+    },
+    "Logos/plepic-lockup-stacked.png": {
+      "blob": "eafcc4f7a8faad05e4de00d542f4a6e9",
+      "size": 25237,
+      "type": "image/png",
+      "sha256": "c98c79b8beec06e0c8015bc24546290fd4fb4cf9bb7dffee88d696445d914442"
+    },
+    "Logos/plepic-lockup-on-brand.svg": {
+      "blob": "faffee270b3890a274f9751153d6ec9b",
+      "size": 23368,
+      "type": "image/svg+xml",
+      "sha256": "2f420f9f5941b4fb1144e91e1112d3b5294e6a554e687e134c967f48eefdb749"
+    },
+    "Logos/plepic-lockup-on-brand.pdf": {
+      "blob": "42778c2d36513cc11055dc2f756ba822",
+      "size": 9049,
+      "type": "application/pdf",
+      "sha256": "8262e746d268bb6ee2eeb8916228752ab36eda68d3139846889c2e669959db01"
+    },
+    "Logos/plepic-lockup-on-brand.png": {
+      "blob": "52db1b875c1898654979cb018b757a58",
+      "size": 24809,
+      "type": "image/png",
+      "sha256": "47883bfc7941a2019fa0b60454d41a6482951b0cc4db56a0abe625b74910ac13"
+    },
+    "Logos/plepic-com-lockup.svg": {
+      "blob": "f8a01fbb89befbe63535ee8a65188331",
+      "size": 27862,
+      "type": "image/svg+xml",
+      "sha256": "05c227c82f61656b4f7a900037575714a1d66bb9e68c209a804f32feca57098e"
+    },
+    "Logos/plepic-com-lockup.pdf": {
+      "blob": "d2f532058e223c64c2b7ef74f787408c",
+      "size": 11532,
+      "type": "application/pdf",
+      "sha256": "5e59da5da6558bb312637f0977e8769cae0cb3c4f161cd2fe63bde95f7a51b29"
+    },
+    "Logos/plepic-com-lockup.png": {
+      "blob": "6fc84cfa65c933a8705125f3f3221cde",
+      "size": 38591,
+      "type": "image/png",
+      "sha256": "91b0f720e8431c2edb21e25b24e191426e39320cd2d07220ea824d853c4bda17"
+    },
+    "Logos/plepic-com-wordmark.svg": {
+      "blob": "d543966583b07bde85bb7a662f3d94d7",
+      "size": 12386,
+      "type": "image/svg+xml",
+      "sha256": "22a9372835bd61bb279c3d512d713f0aee31e734081fa69c19475eaf49023e8e"
+    },
+    "Logos/plepic-com-wordmark.pdf": {
+      "blob": "0f2b71346830e00c488fddcbcbd56d68",
+      "size": 9040,
+      "type": "application/pdf",
+      "sha256": "5e50028a7fd61fed7aeb0288a95d1ae91d44fe27dddd4a06e78142d2a6b84cac"
+    },
+    "Logos/plepic-com-wordmark.png": {
+      "blob": "1c92cb71c0940fceec881186c0bfd987",
+      "size": 27620,
+      "type": "image/png",
+      "sha256": "28fd7c24acebb3531f7d6b57915e6970f3f133df21f2ec89a55cfbd6bf072e85"
+    },
+    "Portraits/joosep.jpg": {
+      "blob": "7a28b86ab3514af25a3d0027fd652f43",
+      "size": 19770,
+      "type": "image/jpeg",
+      "sha256": "eee1a6e500430234b43695f54d78c4525cc6ec1cd9441e0722c9e08fb9909621"
+    },
+    "Portraits/kaido.jpg": {
+      "blob": "6009da6142e119dd1cb305dcd400306e",
+      "size": 22204,
+      "type": "image/jpeg",
+      "sha256": "083b269f41111644bf229fc464cb10ff247d147098185e24db4c70422af64aaa"
+    },
+    "Portraits/vootele.jpg": {
+      "blob": "2c227dcab05cda2b4ef5a7b429caff46",
+      "size": 18391,
+      "type": "image/jpeg",
+      "sha256": "031c02ddc437d34ad1f667c6db2a3dd2aa945ddb2b84817055ec8c2de2bbe3f4"
+    },
+    "Icons/build.svg": {
+      "blob": "aff515c47a231ab0b82a3f57ffca00dc",
+      "size": 216,
+      "type": "image/svg+xml",
+      "sha256": "50a2fed107e3777df9eafce686c837220df82d23a847556fe8b040c46377103f"
+    },
+    "Icons/checks.svg": {
+      "blob": "b58bb8ea2f6527fe2c20f4b2b25c1235",
+      "size": 217,
+      "type": "image/svg+xml",
+      "sha256": "df40becff66b821928c8d74d495ccef704d31351cdb2971c120d0c3eabb89802"
+    },
+    "Icons/diagram.svg": {
+      "blob": "040880693677b41c7e705930e66ecbfc",
+      "size": 359,
+      "type": "image/svg+xml",
+      "sha256": "8b69db7290013474866e3304b9e70a77104d3d61eed3b75ea84340980ac95550"
+    },
+    "Icons/flag.svg": {
+      "blob": "62c7ef5a2f7dba65510b4d4c5f2cc0ce",
+      "size": 208,
+      "type": "image/svg+xml",
+      "sha256": "4ef802821b12939ed49486f9da59606b449f2492e56514c42b8f6b728d16b376"
+    },
+    "Icons/loop.svg": {
+      "blob": "5df0b3be32a49cf7637ad64aa419b139",
+      "size": 239,
+      "type": "image/svg+xml",
+      "sha256": "a59bd5c2c90586840fd20824cb3630c56e8b2113d1109b04c088c7eddafe0cba"
+    },
+    "Icons/lunch.svg": {
+      "blob": "3edcba24e21a9d312042ee0b4480db08",
+      "size": 276,
+      "type": "image/svg+xml",
+      "sha256": "936b71046f7b492b2549f515bec3fa2bfbdd7fcacd092b6134c84e4d359bbbb7"
+    },
+    "Icons/map.svg": {
+      "blob": "825b3e3ffa976b7b40cb796afe446c79",
+      "size": 243,
+      "type": "image/svg+xml",
+      "sha256": "1ffcad9d4f7869616dc2c2268b9dad55c47c1f46b362be8054a0cf5c38e5a4e6"
+    },
+    "Icons/parallel.svg": {
+      "blob": "5ce78a7a4432de1d869240505bfd6ff6",
+      "size": 375,
+      "type": "image/svg+xml",
+      "sha256": "a57c58a614cdba4ad296b35528d0c48872d3ecc13b245f74a8964d6e0ee9a8d1"
+    },
+    "Icons/share.svg": {
+      "blob": "08c4d413cd39b139ff33374e7b537b75",
+      "size": 327,
+      "type": "image/svg+xml",
+      "sha256": "afde1fa06b37655506010f071a87fe8d2194ed27b856061da9df82314537ca01"
+    },
+    "Icons/shield.svg": {
+      "blob": "71b820865296bc15d90de2d8b34cc100",
+      "size": 252,
+      "type": "image/svg+xml",
+      "sha256": "7b928371008bf4c069427a4b964ce7473edc524eb2e247a1e2957cf5d8a86e48"
+    },
+    "Icons/spec.svg": {
+      "blob": "fe71ed076974e41ff1905dd391b20232",
+      "size": 270,
+      "type": "image/svg+xml",
+      "sha256": "ffbeed81cdd90d1dcf0db6b03b13494f844eae19a4e3b2be23a30631a44e0b90"
+    },
+    "Icons/watch.svg": {
+      "blob": "8f7be0968af067888fa8a54e221a4da7",
+      "size": 273,
+      "type": "image/svg+xml",
+      "sha256": "56e4403c3022a82215e16095bdde3e4f9d3816ab673f848f4b84e069b038f8f4"
+    }
+  },
+  "logos": "47e64a05b4284786192de6a647ffb6e2e936eb3831ff1b7e0e1cea63956be6c0"
 }

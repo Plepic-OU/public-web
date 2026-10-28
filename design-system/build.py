@@ -1,34 +1,38 @@
 #!/usr/bin/env python3
 """Generate the Plepic design system, a Claude Design System artifact, from the site.
 
-Every value is read from css/styles.css, index.html and training/index.html at
-build time; the rules are the Markdown under docs/ and components/. The output
-is design-system/build/project/, the file tree the artifact serves.
+Every value is read from css/styles.css and index.html at build time. The rules
+are the nine brand-book pages boards.py generates (ported from the canvas);
+each is published as a showcase page and, through pagemd.py, as a Markdown
+section agents read. The output is design-system/build/project/, the file
+tree the artifact serves.
 
 The build refuses rather than lies. It stops on a :root token with no usage
-note, a volatile value in any page of the system, a mark that is not 22 facets
-split 11/11 with exactly two swapped slots, or an asset whose upload is not
-recorded in system.json.
+note, a volatile value in the README or a component card, a mark that is not
+22 facets split 11/11 with exactly two swapped slots, an asset whose upload is
+not recorded in system.json, or logo files older than the lockup they show.
 
 To update the published system after a change to the site or to these sources:
 
   1. python3 design-system/build.py
-  2. If it names an asset to upload, publish that file to the system's url with
+  2. If it says the lockup changed, run node design-system/export-logos.mjs.
+  3. If it names an asset to upload, publish that file to the system's url with
      the Artifact tool (asset: true), record the returned blob id, size and
      sha256 under "blobs" in system.json, and run step 1 again.
-  3. Publish to the SAME url in system.json with the Artifact tool:
+  4. Publish to the SAME url in system.json with the Artifact tool:
      root design-system/build, file_path build/project/design-system.json,
-     files every other path under build/project/. A new url is a second system.
+     files every other path under build/project/ except the uploads. A new
+     url is a second system.
 
 The system is synced from code ("editing": "code"), so its page is read-only:
 a change made anywhere but this repository is overwritten by the next publish.
 """
 import datetime
 import hashlib
-import html
 import json
 import pathlib
 import re
+import runpy
 import shutil
 import subprocess
 
@@ -37,7 +41,6 @@ HERE = ROOT / "design-system"
 OUT = HERE / "build" / "project"
 CSS = (ROOT / "css" / "styles.css").read_text()
 INDEX = (ROOT / "index.html").read_text()
-TRAINING = (ROOT / "training" / "index.html").read_text()
 SYSTEM = json.loads((HERE / "system.json").read_text())
 TITLE = "Plepic"
 
@@ -252,6 +255,8 @@ MARK_SVG = re.sub(r'<svg class="logo-butterfly"[^>]*>',
 if OUT.parent.exists():
     shutil.rmtree(OUT.parent)
 (OUT / "fonts").mkdir(parents=True)
+BOARDS = runpy.run_path(str(HERE / "boards.py"))["BOARDS"]
+to_markdown = runpy.run_path(str(HERE / "pagemd.py"))["to_markdown"]
 
 
 def write(path, text):
@@ -262,9 +267,21 @@ def write(path, text):
 
 for f in FONTS:
     shutil.copy(ROOT / f["file"], OUT / f["file"])
-
+for src in sorted((HERE / "assets").rglob("*")):
+    if src.is_file():
+        (OUT / src.relative_to(HERE)).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(src, OUT / src.relative_to(HERE))
 write("assets/Logos/plepic-mark.svg", MARK_SVG)
-(OUT / "assets/Portraits").mkdir()
+# The one icon set: the curriculum pictograms, one file each, drawn in ink.
+TRAINING = (ROOT / "training" / "index.html").read_text()
+SPRITE = re.search(r'<svg class="svg-sprite".*?</svg>', TRAINING, re.S).group(0)
+ICONS = re.findall(r'<symbol id="i-([a-z]+)" viewBox="0 0 24 24">(.*?)</symbol>', SPRITE, re.S)
+ICON_ATTRS = 'fill="none" stroke="%s" stroke-width="%s" stroke-linecap="%s" stroke-linejoin="%s"' % (
+    VALUE["text"], rule(".cpath-icon", "stroke-width"), rule(".cpath-icon", "stroke-linecap"),
+    rule(".cpath-icon", "stroke-linejoin"))
+for name, body in ICONS:
+    write("assets/Icons/%s.svg" % name,
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" %s>%s</svg>\n' % (ICON_ATTRS, body.strip()))
 shutil.copy(ROOT / "images" / "joosep.webp", OUT / "assets/Portraits/joosep.webp")
 
 
@@ -276,20 +293,37 @@ def blob(path):
     return b
 
 
-# Template slots in the Markdown and the previews: values read at build time.
-TRAINING_H1 = html.unescape(re.sub(r"<[^>]+>", "", re.search(r"<h1[^>]*>(.*?)</h1>", TRAINING, re.S).group(1))).strip()
-HERO_WORDS = html.unescape(re.sub(r"<br>|<[^>]+>", "", re.search(r'<section class="hero">.*?<h1[^>]*>(.*?)</h1>', INDEX, re.S).group(1)))
+# The logo files are exported from the header lockup; they go stale when it changes.
 LOCKUP = re.search(r'<a href="/" class="logo-lockup".*?</a>', INDEX, re.S).group(0)
+LOGO_RULES = "".join(re.search(r"^" + re.escape(sel) + r"\s*\{[^}]*\}", CSS, re.M).group(0)
+                     for sel in (".logo-lockup", ".logo-lockup--stacked", ".logo-wordmark",
+                                 ".on-brand .logo-wordmark", ".logo-butterfly"))
+LOGO_INPUTS = hashlib.sha256((LOCKUP + LOGO_RULES).encode() + (ROOT / "fonts" / "bitter.woff2").read_bytes()).hexdigest()
+if SYSTEM["logos"] != LOGO_INPUTS:
+    raise SystemExit("the lockup changed since the logo files were exported: run node design-system/export-logos.mjs, "
+                     "upload design-system/assets/Logos/, and set \"logos\" in system.json to " + LOGO_INPUTS)
+
+# The brand-book pages: each is a showcase page and, converted, a Markdown section.
+for i, (fname, comp, title, height) in enumerate(BOARDS, 1):
+    doc = (OUT.parent / "boards" / fname).read_text()
+    for who in re.findall(r'src="([a-z]+)\.jpg"', doc):
+        doc = doc.replace('src="%s.jpg"' % who, 'src="/_blob/%s"' % blob("Portraits/%s.jpg" % who)["blob"])
+    write("components/%s/preview.html" % comp,
+          '<!-- @dsCard group="Brand book" height=%d width=1120 page -->\n' % height + doc)
+    write("%02d-%s.md" % (i, re.sub(r"[^a-z]+", "-", title.lower()).strip("-")), to_markdown(doc))
+
+# Template slots in the README and the component cards: values read at build time.
 SEAT = re.search(r'<div class="tt-seat" data-tilt>.*?</article>\s*</div>', INDEX, re.S).group(0)
 NAV = re.search(r'<nav class="nav">.*?</nav>', INDEX, re.S).group(0)
 FAQ = "\n".join(re.findall(r'<details class="faq-item".*?</details>', INDEX, re.S)[:2])
 SLOTS = {
-    "{{category_line}}": TRAINING_H1,
-    "{{hero_h1}}": HERO_WORDS,
     "{{lockup}}": LOCKUP,
     "{{mark_id}}": blob("Logos/plepic-mark.svg")["blob"],
     "{{nav}}": NAV,
     "{{faq}}": FAQ,
+    "{{pictograms}}": SPRITE + "".join(
+        '<figure><svg class="cpath-icon"><use href="#i-%s"/></svg><figcaption>%s</figcaption></figure>' % (n, n)
+        for n, _ in ICONS),
     "{{card}}": SEAT.replace('src="images/joosep.webp"', 'src="/_blob/%s"' % blob("Portraits/joosep.webp")["blob"]),
 }
 
@@ -305,14 +339,11 @@ def fill(label, text):
     return no_claims(label, text)
 
 
-for src in sorted((HERE / "docs").glob("*.md")):
-    write(src.name, fill(src.name, src.read_text()))
+write("README.md", fill("README.md", (HERE / "docs" / "README.md").read_text()))
 for src in sorted((HERE / "components").rglob("*")):
     if src.is_file():
         rel = src.relative_to(HERE)
         write(str(rel), fill(str(rel), src.read_text()))
-for src in sorted((HERE / "assets").rglob("*.md")):
-    write(str(src.relative_to(HERE)), src.read_text())
 
 SHA = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"],
                      capture_output=True, text=True, check=True).stdout.strip()
@@ -366,13 +397,17 @@ if "</style" in bundle.lower() or "url(" in bundle:
     raise SystemExit("bundle.css carries </style or a url() a preview cannot load")
 write("components/bundle.css", bundle)
 
+# Every asset file is an upload the index names; a group's README stays a file.
 groups = {}
-for path, b in SYSTEM["blobs"].items():
-    group, name = path.split("/", 1)
-    g = groups.setdefault(group, {"name": group, "tile": "l" if group == "Logos" else "m", "order": [], "files": {}})
-    g["order"].append(name)
-    g["files"][name] = {"name": name, "blob": b["blob"], "size": b["size"], "type": b["type"]}
-    blob(path)
+for f in sorted((OUT / "assets").rglob("*")):
+    if f.is_file() and f.suffix != ".md":
+        group, name = str(f.relative_to(OUT / "assets")).split("/", 1)
+        b = blob(group + "/" + name)
+        g = groups.setdefault(group, {"name": group, "tile": {"Logos": "l", "Icons": "s"}.get(group, "m"),
+                                      "order": [], "files": {}})
+        g["order"].append(name)
+        g["files"][name] = {"name": name, "blob": b["blob"], "size": b["size"], "type": b["type"]}
+groups = {k: groups[k] for k in ("Logos", "Icons", "Portraits")}
 
 index = {
     "v": 3, "layout": "files", "createdOnFiles": SYSTEM["createdOnFiles"],
