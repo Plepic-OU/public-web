@@ -3301,6 +3301,7 @@ plepic-mark > svg {
   flex-direction: column;
   gap: var(--space-xs);
   padding: var(--space-md);
+  overflow-wrap: break-word;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: var(--rounded-xl);
@@ -4408,6 +4409,17 @@ plepic-mark > svg {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  /* /et is the curriculum Töötukassa reads: a printout carries every week. */
+  .cpath-desc[hidden] {
+    display: block;
+  }
+
+  .cpath-hint,
+  .cpath-next,
+  .cpath-chevron {
+    display: none;
   }
 }
 

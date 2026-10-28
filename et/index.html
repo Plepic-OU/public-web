@@ -248,6 +248,22 @@
 
     <!-- Programm -->
     <section id="programm" class="curriculum-section section">
+      <!-- One icon set for the whole section: weeks, day modes, outcomes.
+           Stroke styling comes from .cpath-icon, so a symbol carries geometry only. -->
+      <svg class="svg-sprite" aria-hidden="true" focusable="false">
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+        <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+        <symbol id="i-checks" viewBox="0 0 24 24"><path d="M4 7l2 2 4-4M4 16l2 2 4-4M14 7h6M14 16h6"/></symbol>
+        <symbol id="i-parallel" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12h10M7 11c4 0 6-6 10-6M7 13c4 0 6 6 10 6"/></symbol>
+        <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2.5 4.5L17 13H5"/></symbol>
+        <symbol id="i-watch" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M10.5 7.5l3.5 2.5-3.5 2.5z"/></symbol>
+        <symbol id="i-build" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></symbol>
+        <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 4h10a1 1 0 011 1v7a1 1 0 01-1 1H8l-4 3v-3a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M18 8h2a1 1 0 011 1v7a1 1 0 01-1 1v3l-4-3h-4a1 1 0 01-1-1v-1"/></symbol>
+        <symbol id="i-lunch" viewBox="0 0 24 24"><path d="M4 10h12v4a5 5 0 01-5 5H9a5 5 0 01-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 010 5H16M8 3v4M12 3v4"/></symbol>
+        <symbol id="i-spec" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h12a1 1 0 001-1V8z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></symbol>
+        <symbol id="i-loop" viewBox="0 0 24 24"><path d="M20 12a8 8 0 01-14 5.3M4 12a8 8 0 0114-5.3M18 3v4h-4M6 21v-4h4"/></symbol>
+        <symbol id="i-diagram" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></symbol>
+      </svg>
       <div class="container">
         <div class="text-center mb-4 reveal">
           <p class="label">Õppekava</p>
@@ -255,51 +271,63 @@
           <p class="section-subtitle">6 reedet &middot; 9.00&ndash;15.30 &middot; veebis, Google Meetis</p>
         </div>
 
-        <p class="curriculum-throughline reveal">Töökeskkond <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Kontekst <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Kontroll <span class="throughline-arrow" aria-hidden="true">&rarr;</span> Skaleerimine</p>
+        <p class="cpath-hint reveal">Valige nädal, et näha selle sisu. Allajoonitud mõiste avab lühikese selgituse.</p>
 
-        <div class="curriculum-timeline reveal reveal-delay-1">
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-1-desc">
-              <span class="curriculum-week">1. nädal</span>
-              <span class="curriculum-title">Töökeskkond ja turvalisus</span>
-              <span class="curriculum-tagline">Agent püsib piirides, ohtlikud käsud ei pääse läbi.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-1-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Loengud</span>
+        <!-- Learning path, same component as /training/. This page is the curriculum
+             Töötukassa reads: keep every week item, the official line and the
+             outcomes word for word. -->
+        <div class="cpath reveal reveal-delay-1">
+          <button class="cpath-step" id="cpath-1" aria-expanded="true" aria-controls="cpath-1-desc" data-expanded>
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">1. nädal</span>
+              <span class="cpath-title">Töökeskkond ja turvalisus</span>
+              <span class="cpath-tagline">Agent püsib piirides, ohtlikud käsud ei pääse läbi.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>CLAUDE.md ja hook, mis käivitab iga muudatuse järel linteri või testid</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-1-desc" role="region" aria-labelledby="cpath-1">
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Auditoorne töö: koolitaja töötab otse Claude Code'is</p>
                 <ul>
-                  <li>Claude Code ja agendi töötsükkel: promptid, tokenid, oskused (skills), alamagendid, MCP, tellimuspaketid ja hinnad</li>
+                  <li>Claude Code ja <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-loop">agendi töötsükkel<span class="tooltip" role="tooltip" id="tip-loop">Agent kordab seda tsüklit, kuni ülesanne on tehtud: loeb konteksti, kasutab tööriista ja kontrollib tulemust.</span></span>: promptid, tokenid, oskused (skills), alamagendid, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-mcp">MCP<span class="tooltip" role="tooltip" id="tip-mcp">Model Context Protocol: avatud standard, mille abil agent ühendub väliste tööriistade ja andmetega, näiteks ülesannete haldustarkvara või andmebaasiga.</span></span>, tellimuspaketid ja hinnad</li>
                   <li>Hookid: iga tööriistakutse jälgimine ja ohtlike käskude blokeerimine</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Töötoad</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Praktiline töö: oma koodibaasis</p>
                 <ul>
-                  <li>Claude Code'i seadistamine oma projektis või meie näidisrepos ning CLAUDE.md loomine käsuga /init</li>
+                  <li>Claude Code'i seadistamine oma projektis või meie näidisrepos ning <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-claudemd">CLAUDE.md<span class="tooltip" role="tooltip" id="tip-claudemd">Markdown-fail teie repos, mille Claude Code loeb iga sessiooni alguses. Selles on projekti käsud, kokkulepped ja reeglid.</span></span> loomine käsuga /init</li>
                   <li>Hook, mis käivitab iga muudatuse järel linteri või testid. Seejärel püüab teie rühm sellest mööda hiilida</li>
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-2">Edasi: 2. nädal, Piirangud ja kontekst <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-2-desc">
-              <span class="curriculum-week">2. nädal</span>
-              <span class="curriculum-title">Piirangud ja kontekst</span>
-              <span class="curriculum-tagline">Kõigepealt projekti kaart ja kontrollitud plaan, alles siis kood.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-2-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Loengud</span>
+          <button class="cpath-step" id="cpath-2" aria-expanded="false" aria-controls="cpath-2-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-map"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">2. nädal</span>
+              <span class="cpath-title">Piirangud ja kontekst</span>
+              <span class="cpath-tagline">Kõigepealt projekti kaart ja kontrollitud plaan, alles siis kood.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>Projekti kaart ja spetsifikatsioon vastuvõtu&shy;kriteeriumidega, mida agent saab ise kontrollida</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-2-desc" role="region" aria-labelledby="cpath-2" hidden>
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Auditoorne töö: koolitaja töötab otse Claude Code'is</p>
                 <ul>
-                  <li>Projekti kaardid: kihilised kokkuvõtted, C4-mudel, tokenid ja promptide vahemälu</li>
-                  <li>Disainidokumendid, testimispüramiid, valideerimistsüklid ja alamagendid süvitsi</li>
+                  <li>Projekti kaardid: kihilised kokkuvõtted, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-c4">C4-mudel<span class="tooltip" role="tooltip" id="tip-c4">Tarkvara arhitektuuri kirjeldamise viis neljal detailsustasemel: süsteemi kontekst, konteinerid, komponendid ja kood.</span></span>, tokenid ja promptide vahemälu</li>
+                  <li>Disainidokumendid, testimispüramiid, valideerimistsüklid ja <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-subagent">alamagendid<span class="tooltip" role="tooltip" id="tip-subagent">Agendid, mille põhiagent käivitab üksikuteks ülesanneteks ja millest igaüks töötab puhta kontekstiga. Tüüpilised ülesanded on koodi ülevaatus, valideerimine ja otsing.</span></span> süvitsi</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Töötoad</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Praktiline töö: oma koodibaasis</p>
                 <ul>
                   <li>C4-mudeli oskus ja andmebaasi skeemi kaart, mõlemad seotud CLAUDE.md-ga</li>
                   <li>Promptimine võrdluse kaudu: kirjutate oma prompti, käivitate selle ja seejärel näidislahenduse. Erinevus näitab, mida õppida</li>
@@ -307,25 +335,30 @@
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-3">Edasi: 3. nädal, Spetsifikatsioonist koodini ja kontroll <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-3-desc">
-              <span class="curriculum-week">3. nädal</span>
-              <span class="curriculum-title">Spetsifikatsioonist koodini ja kontroll</span>
-              <span class="curriculum-tagline">Arendate osade kaupa: iga osa kontrollitud, kõik mõõdetud.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-3-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Loengud</span>
+          <button class="cpath-step" id="cpath-3" aria-expanded="false" aria-controls="cpath-3-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">3. nädal</span>
+              <span class="cpath-title">Spetsifikat&shy;sioonist koodini ja kontroll</span>
+              <span class="cpath-tagline">Arendate osade kaupa: iga osa kontrollitud, kõik mõõdetud.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>Kvaliteedi&shy;värav teie tehnoloogiale</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-3-desc" role="region" aria-labelledby="cpath-3" hidden>
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Auditoorne töö: koolitaja töötab otse Claude Code'is</p>
                 <ul>
                   <li>Kuidas jõuda kontrollitud spetsifikatsioonist töötava koodini ja millised kaks kvaliteediväravat peab iga muudatus läbima: e2e-testid ja jõudlus</li>
                   <li>Tsüklid: vestluspõhised, eesmärgipõhised, ajastatud ja proaktiivsed (Anthropicu juhend <span lang="en">&bdquo;Getting started with loops&ldquo;</span>)</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Töötoad</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Praktiline töö: oma koodibaasis</p>
                 <ul>
                   <li>Spetsifikatsiooni teostamine osade kaupa: iga osa kontrollib valideeriv alamagent, seejärel kordub /code-review, kuni vigu ei jää, ja lõpuks vaatab koodi üle teise tootja mudel</li>
                   <li>Kvaliteedivärav teie tehnoloogiale (veebirakendusel Lighthouse, mujal jõudlustest), mis võrdleb tulemust baastasemega ja peatab töö, kui tulemus halveneb</li>
@@ -333,66 +366,73 @@
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-4">Edasi: 4. nädal, Paralleelsed agendid ja arhitektuur <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-4-desc">
-              <span class="curriculum-week">4. nädal</span>
-              <span class="curriculum-title">Paralleelsed agendid ja arhitektuur</span>
-              <span class="curriculum-tagline">Mitu agenti korraga, igaühe töö teie silme ees.</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-4-desc" hidden>
-              <div class="curr-track">
-                <span class="curr-track-label">Loengud</span>
+          <button class="cpath-step" id="cpath-4" aria-expanded="false" aria-controls="cpath-4-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">4. nädal</span>
+              <span class="cpath-title">Paralleelsed agendid ja arhitektuur</span>
+              <span class="cpath-tagline">Mitu agenti korraga, igaühe töö teie silme ees.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>Paralleelne töövoog: iga agent oma git worktree's</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc" id="cpath-4-desc" role="region" aria-labelledby="cpath-4" hidden>
+            <div class="cpath-tracks">
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Auditoorne töö: koolitaja töötab otse Claude Code'is</p>
                 <ul>
                   <li>Introspektsioon ja jälgitavus: sessioonilogid, /insights, OTEL-i mõõdikud</li>
                   <li>Agentidele loodud arhitektuur ja proaktiivsed tsüklid, mis töötavad ka teie eemal olles: logide analüüs, aeglaste päringute läbivaatus, maksete sobitamine</li>
                 </ul>
               </div>
-              <div class="curr-track">
-                <span class="curr-track-label">Töötoad</span>
+              <div class="cpath-track">
+                <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Praktiline töö: oma koodibaasis</p>
                 <ul>
-                  <li>2&ndash;5 GitHubi issue lahendamine paralleelselt, iga agent oma git worktree's</li>
+                  <li>2&ndash;5 GitHubi issue lahendamine paralleelselt, iga agent oma <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-worktree">git worktree<span class="tooltip" role="tooltip" id="tip-worktree">Giti funktsioon, mis lubab hoida mitut haru korraga eri kaustades. Nii töötab iga agent oma töökaustas.</span></span>'s</li>
                   <li>Mõõdetav optimeerimistsükkel: testikomplekti kiirendamine või jõudlusskoori tõstmine nii, et mõlemad kvaliteediväravad jäävad roheliseks</li>
                 </ul>
               </div>
             </div>
+            <button class="cpath-next" data-next="cpath-5">Edasi: 5. ja 6. nädal, Lõpuprojekt <span aria-hidden="true">&rarr;</span></button>
           </div>
 
-          <div class="curriculum-item curriculum-final">
-            <button class="curriculum-header" aria-expanded="false" aria-controls="curr-5-desc">
-              <span class="curriculum-week">5. ja 6. nädal</span>
-              <span class="curriculum-title">Lõpuprojekt</span>
-              <span class="curriculum-tagline">Teete valmis päris funktsionaalsuse oma koodibaasis.</span>
-              <span class="curriculum-sessions-badge">2 sessiooni</span>
-              <svg class="curriculum-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="curriculum-desc" id="curr-5-desc" hidden>
-              <p>Rakendate kogu töövoo oma ettevõtte päris koodibaasis koolitaja toel. Osalejad hindavad neid nädalaid kõige kõrgemalt.</p>
-              <div class="curr-track">
-                <span class="curr-track-label">Tulemused</span>
-                <ul>
-                  <li>Seadistatud agentne töökeskkond: CLAUDE.md, oskused, hookid ja kvaliteediväravad</li>
-                  <li>Päris funktsionaalsus, mis on läbinud kogu töövoo, koos spetsifikatsiooni, arhitektuuriotsuste (ADR) ja C4-diagrammidega</li>
-                  <li>Lõpuesitlus ja kaasosalejate tagasiside</li>
-                </ul>
-              </div>
+          <button class="cpath-step cpath-final" id="cpath-5" aria-expanded="false" aria-controls="cpath-5-desc">
+            <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>
+            <span class="cpath-card">
+              <span class="cpath-week">5. ja 6. nädal <span class="curriculum-sessions-badge">2 sessiooni</span></span>
+              <span class="cpath-title">Lõpuprojekt</span>
+              <span class="cpath-tagline">Teete valmis päris funktsionaalsuse oma koodibaasis.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>Seadistatud agentne töökeskkond ja päris funktsionaalsus teie koodibaasis</span>
+              <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="cpath-desc cpath-desc-final" id="cpath-5-desc" role="region" aria-labelledby="cpath-5" hidden>
+            <p>Rakendate kogu töövoo oma ettevõtte päris koodibaasis koolitaja toel. Osalejad hindavad neid nädalaid kõige kõrgemalt.</p>
+            <div class="cpath-track">
+              <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>Tulemused</p>
+              <ul>
+                <li>Seadistatud agentne töökeskkond: CLAUDE.md, oskused, hookid ja kvaliteediväravad</li>
+                <li>Päris funktsionaalsus, mis on läbinud kogu töövoo, koos spetsifikatsiooni, arhitektuuriotsuste (<span class="tooltip-trigger" tabindex="0" aria-describedby="tip-adr">ADR<span class="tooltip" role="tooltip" id="tip-adr">Architecture Decision Record ehk arhitektuuriotsuse kirje: lühike dokument ühe disainiotsuse, selle tausta ja tagajärgede kohta.</span></span>) ja C4-diagrammidega</li>
+                <li>Lõpuesitlus ja kaasosalejate tagasiside</li>
+              </ul>
             </div>
           </div>
         </div>
 
         <p class="curriculum-official reveal">Õppekava: Agentne arendus ja Claude Code &middot; õppekavarühm: info- ja kommunikatsioonitehnoloogia (tarkvaraarendus ja programmeerimine) &middot; maht 50 akadeemilist tundi (37,5 tundi): kontaktõpe 42, sellest auditoorne töö 16 ja praktiline töö 26, ning iseseisev töö 8 akadeemilist tundi<br>Eesmärk on, et osaleja kasutab AI-agente tarkvaraarenduses korratava meetodina: selged spetsifikatsioonid, piirangud, automaatsed kontrollid ja paralleelsed agendid.</p>
 
-        <div class="curriculum-outcomes reveal">
+        <div class="cpath-outcomes reveal">
           <span class="curr-track-label">Koolituse läbinu</span>
           <ul>
-            <li>seadistab Claude Code'i töökeskkonna: CLAUDE.md, oskused ja hookid, mis blokeerivad ohtlikud käsud</li>
-            <li>koostab spetsifikatsiooni vastuvõtukriteeriumidega, mida agent saab ise kontrollida</li>
-            <li>ehitab kontrolliahela, mille läbimiseni agent oma tööd ise parandab (testid, verifitseerimise ja validatsiooni mehhanismid)</li>
-            <li>automatiseerib korduvad ülesanded tsüklitega</li>
-            <li>käitab mitut agenti paralleelselt git worktree'des ja jälgib nende tööd</li>
-            <li>dokumenteerib arhitektuuri C4-diagrammide ja ADR-idega</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>seadistab Claude Code'i töökeskkonna: CLAUDE.md, oskused ja hookid, mis blokeerivad ohtlikud käsud</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-spec"/></svg></span>koostab spetsifikatsiooni vastuvõtukriteeriumidega, mida agent saab ise kontrollida</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>ehitab kontrolliahela, mille läbimiseni agent oma tööd ise parandab (testid, verifitseerimise ja validatsiooni mehhanismid)</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-loop"/></svg></span>automatiseerib korduvad ülesanded tsüklitega</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>käitab mitut agenti paralleelselt git worktree'des ja jälgib nende tööd</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-diagram"/></svg></span>dokumenteerib arhitektuuri C4-diagrammide ja ADR-idega</li>
           </ul>
         </div>
 
@@ -703,16 +743,46 @@
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Curriculum accordion
-    document.querySelectorAll('.curriculum-header').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.curriculum-item');
-        const desc = item.querySelector('.curriculum-desc');
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', !expanded);
-        desc.hidden = expanded;
-        item.toggleAttribute('data-expanded');
+    // Curriculum path: one week open at a time. On the wide layout an open
+    // week stays open, because its panel is the only content of the row below.
+    const cpathWide = matchMedia('(min-width: 1024px)');
+    const cpathSteps = [...document.querySelectorAll('.cpath-step')];
+    const showWeek = (step) => {
+      cpathSteps.forEach(s => {
+        const open = s === step;
+        s.setAttribute('aria-expanded', open);
+        s.toggleAttribute('data-expanded', open);
+        document.getElementById(s.getAttribute('aria-controls')).hidden = !open;
       });
+    };
+    cpathSteps.forEach(step => {
+      step.addEventListener('click', () => {
+        const open = step.getAttribute('aria-expanded') === 'true';
+        if (open && cpathWide.matches) return;
+        showWeek(open ? null : step);
+      });
+    });
+    document.querySelectorAll('.cpath-next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const step = document.getElementById(btn.dataset.next);
+        showWeek(step);
+        step.focus({ preventScroll: true });
+        step.scrollIntoView({ block: 'nearest' });
+      });
+    });
+
+    // Glossary tooltips are 320px wide; near a screen edge, slide the panel
+    // back inside the viewport. --tip-dx moves the panel and counter-moves its arrow.
+    document.querySelectorAll('.cpath .tooltip-trigger').forEach(trigger => {
+      const tip = trigger.querySelector('.tooltip');
+      const fit = () => {
+        trigger.style.setProperty('--tip-dx', '0px');
+        const box = tip.getBoundingClientRect();
+        const dx = Math.max(12 - box.left, 0) - Math.max(box.right - (document.documentElement.clientWidth - 12), 0);
+        trigger.style.setProperty('--tip-dx', `${dx}px`);
+      };
+      trigger.addEventListener('mouseenter', fit);
+      trigger.addEventListener('focus', fit);
     });
 
   </script>
