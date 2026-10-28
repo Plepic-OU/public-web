@@ -1,0 +1,57 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Plepic</title>
+<style>
+  html, body { margin: 0; height: 100%; min-height: 0; }
+  body { background: var(--bg); color: var(--text); overflow: hidden; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; }
+  .brand { fill: var(--green-brand); }
+  .deep { fill: var(--green-dark); }
+  .vivid { fill: var(--green-vivid); }
+  .ink { fill: var(--text); }
+  .tint { fill: var(--green-light); }
+  .words { position: absolute; left: var(--space-xl); bottom: var(--space-xl); max-width: 440px; }
+  .cover .name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 120px; line-height: .92; letter-spacing: -0.025em; color: var(--text); }
+  .cover .tag { margin: var(--space-sm) 0 0 4px; font-family: var(--font-body); font-size: 14px; line-height: 20px; color: var(--text-2); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      green-brand 128x272 bled off the top, the identity slab · green-dark 128x160 · text (ink) 160x192 bleeding off the right edge · green-light 128x48 as relief · green-vivid 64x16 once, because it is light and decoration only. About a third of 960x288
+  arrangement one tall slab with satellites, bottoms on one line space-xl above the edge, space-xl gutters, square corners because the card and every rule-based block have no radius
+  pattern     facet triangles, from the facet law "no two adjacent facets share a colour": one strip of eleven in green-vivid and green-dark cut into the green-brand slab, so neighbours always differ
+  scales      sides in space-md multiples; gutters and the bottom inset space-xl; strip width space-2xl, triangle pitch space-md; no radius tokens used
+-->
+<rect class="brand" x="32" y="-16" width="128" height="272"/>
+<rect class="tint" x="192" y="32" width="128" height="48"/>
+<rect class="deep" x="192" y="96" width="128" height="160"/>
+<rect class="vivid" x="352" y="32" width="64" height="16"/>
+<rect class="ink" x="352" y="64" width="160" height="192"/>
+<polygon class="vivid" points="64,48 112,64 64,80"/>
+<polygon class="deep" points="112,64 64,80 112,96"/>
+<polygon class="vivid" points="64,80 112,96 64,112"/>
+<polygon class="deep" points="112,96 64,112 112,128"/>
+<polygon class="vivid" points="64,112 112,128 64,144"/>
+<polygon class="deep" points="112,128 64,144 112,160"/>
+<polygon class="vivid" points="64,144 112,160 64,176"/>
+<polygon class="deep" points="112,160 64,176 112,192"/>
+<polygon class="vivid" points="64,176 112,192 64,208"/>
+<polygon class="deep" points="112,192 64,208 112,224"/>
+<polygon class="vivid" points="64,208 112,224 64,240"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Plepic</h1>
+<p class="tag">Curious play. Epic growth.</p>
+</div>
+</div>
+</body>
+</html>

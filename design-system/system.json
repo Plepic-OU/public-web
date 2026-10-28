@@ -1,0 +1,8 @@
+{
+  "url": "https://claude.ai/artifact/5jKctBduVrh3NL532fVN3k",
+  "createdOnFiles": {"v": 1, "at": "2026-10-28T10:20:00Z"},
+  "blobs": {
+    "Logos/plepic-mark.svg": {"blob": "846fc846caee541f84f28ff664504b5e", "size": 2858, "type": "image/svg+xml", "sha256": "2085f4ffc65409488d140881ca1a0aaed4920053eae1f144567a0517d44dde69"},
+    "Portraits/joosep.webp": {"blob": "6dea9b34fc52b1de245d5f4f3431843b", "size": 14464, "type": "image/webp", "sha256": "8b5cf11cc3caa61de20383a4a8b5c434d9406b96054b1c2b8da3512d74a158e3"}
+  }
+}
