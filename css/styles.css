@@ -3620,7 +3620,7 @@ plepic-mark > svg {
 }
 
 /* ========================================
-   Training Page — Details (Toolkit + Requirements)
+   Training Page — Requirements
    ======================================== */
 
 .details-section {
@@ -3628,9 +3628,8 @@ plepic-mark > svg {
 }
 
 .details-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .detail-panel h3 {
@@ -4200,10 +4199,6 @@ plepic-mark > svg {
   }
 
   /* Training page */
-  .details-grid {
-    grid-template-columns: 1fr;
-  }
-
   .curriculum-header {
     flex-wrap: wrap;
     position: relative;

@@ -43,7 +43,7 @@ Three faces, one job each. A face never borrows another's job.
 
 ## Iconography
 
-The only icon is the mark, `assets/Logos/plepic-mark.svg`: twenty-two facets, a leaf body, two antennae and one ember. It is an upload: read it by its id, `{{mark_id}}`, or copy the inline SVG from `components/Lockup/preview.html`. Place it whole; never redraw, re-facet, stretch or recolour it. The Mark section holds its rules. Plepic uses no icon set and no emoji. An external link earns an arrow (↗), nothing more.
+The brand icon is the mark, `assets/Logos/plepic-mark.svg`: twenty-two facets, a leaf body, two antennae and one ember. It is an upload: read it by its id, `{{mark_id}}`, or copy the inline SVG from `components/Lockup/preview.html`. Place it whole; never redraw, re-facet, stretch or recolour it. The Mark section holds its rules. Plepic uses no emoji and one icon set: the curriculum pictograms, the `<symbol>` sprite at the top of the curriculum section in `training/index.html`. Each is a 24-unit line drawing with stroke 2 and round caps and joins, coloured by `currentColor`: ink, `--green-dark`, or white on the dark-green active node, never the accent. A pictogram names a week, a day mode (watch, build, share, lunch) or an outcome; it never decorates. A new pictogram joins that sprite in the same style, and no icon library enters the site. An external link earns an arrow (↗), nothing more.
 
 ## Not synced
 
