@@ -3,12 +3,12 @@ The Plepic design system, generated from `css/styles.css`, `index.html` and `tra
 ## Using this system
 
 - Read the nine sections in order before you design anything: Foundations, Type, Voice, The mark, Layout, Motion, Components, The card, Hero. Each is also a showcase page under the Brand book group, where Motion, Components and The card run live.
-- Load `tokens.css`, then `components/bundle.css`. Together they are the plepic.com stylesheet, so its classes (`.btn`, `.panel-white`, `.badge`, `.tt-card`, `.logo-lockup`) render as on the site. The component cards show the markup each class expects.
+- Load `tokens.css`, then `components/bundle.css`, and keep `fonts/` beside `tokens.css`: its `@font-face` rules point there. Together they are the plepic.com stylesheet, so its classes (`.btn`, `.panel-white`, `.badge`, `.tt-card`, `.logo-lockup`) render as on the site. The component cards show the markup each class expects.
 - Take every value from a token. A new need takes an existing step, never a new value.
 
 ## Logos
 
-Logos are uploads, not files: read each by its id from the `Logos` asset group, or copy the inline SVG from the Lockup component. The Mark section holds the rules; never redraw, recolour or stretch any of them.
+Logos are uploads, not files: `design-system.json` lists each under `assetGroups.Logos.files.<name>.blob`, and you read it by passing that id as the path. Or copy the inline SVG from the Lockup component. The Mark section holds the rules; never redraw, recolour or stretch any of them.
 
 - The mark alone: `plepic-mark.svg`, id `{{mark_id}}`.
 - The lockup, the default everywhere: `plepic-lockup`.
