@@ -8,4 +8,4 @@ Every file is exported from the plepic.com header lockup by `design-system/expor
 - `plepic-lockup-on-brand.*`: the wordmark in `text`, for a green ground.
 - `plepic-com-lockup.*` and `plepic-com-wordmark.*`: the domain wordmark, ".com" in `text-2`, for print and merchandise.
 
-`.pdf` is vector with the font embedded, `.svg` has the text as outlines, `.png` is transparent at eight times the header size. The same files are public at `https://plepic.com/brand/<file>`.
+`.pdf` is vector with the font embedded, `.svg` has the text as outlines, `.png` is transparent at eight times the header size.
