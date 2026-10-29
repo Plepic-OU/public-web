@@ -196,6 +196,18 @@
       "size": 273,
       "type": "image/svg+xml",
       "sha256": "56e4403c3022a82215e16095bdde3e4f9d3816ab673f848f4b84e069b038f8f4"
+    },
+    "Logos/plepic-mark.pdf": {
+      "blob": "eb2e56e0ee990752b5768995c42635c8",
+      "size": 3539,
+      "type": "application/pdf",
+      "sha256": "9d5e3308dce9a3df2259e174ae4a5e44ddd7285271eb504568448919365578ec"
+    },
+    "Logos/plepic-mark.png": {
+      "blob": "1809a896960c661b85f0f04c833efa42",
+      "size": 8102,
+      "type": "image/png",
+      "sha256": "ff91a076beea59540e34253d5ee46205fd3a0d0b9dc51809390245bc7286c1a2"
     }
   },
   "logos": "47e64a05b4284786192de6a647ffb6e2e936eb3831ff1b7e0e1cea63956be6c0"

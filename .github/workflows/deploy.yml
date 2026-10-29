@@ -28,6 +28,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Publish the logo files
+        # Public copies at plepic.com/brand/: the design system page only lets a signed-in viewer download.
+        run: |
+          mkdir brand
+          cp design-system/assets/Logos/*.pdf design-system/assets/Logos/*.svg design-system/assets/Logos/*.png brand/
+
       - name: Remove orphan files from deploy
         run: |
           # Internal-only / prototype / build-tooling files that should not

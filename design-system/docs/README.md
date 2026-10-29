@@ -10,13 +10,13 @@ The Plepic design system, generated from `css/styles.css`, `index.html` and `tra
 
 Logos are uploads, not files: `design-system.json` lists each under `assetGroups.Logos.files.<name>.blob`, and you read it by passing that id as the path. Or copy the inline SVG from the Lockup component. The Mark section holds the rules; never redraw, recolour or stretch any of them.
 
-- The mark alone: `plepic-mark.svg`, id `{{mark_id}}`.
+- The mark alone: `plepic-mark`; the SVG's id is `{{mark_id}}`.
 - The lockup, the default everywhere: `plepic-lockup`.
 - Stacked, for a narrow or centred space: `plepic-lockup-stacked`.
 - On a green ground, where the wordmark turns ink: `plepic-lockup-on-brand`.
 - The domain wordmark, for print and merchandise: `plepic-com-lockup`, or `plepic-com-wordmark` where the mark stands apart, as on the social card.
 
-Each lockup comes as `.pdf` (vector, fonts embedded: send this to a printer), `.svg` (text as outlines: for any tool) and `.png` (transparent, for slides and documents).
+Each comes as `.pdf` (vector, fonts embedded: send this to a printer), `.svg` (text as outlines: for any tool) and `.png` (transparent, for slides and documents). Every file is also public at `https://plepic.com/brand/<file>`, for anyone without a claude.ai sign-in: this page lets only signed-in viewers download.
 
 ## Iconography
 
