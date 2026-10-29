@@ -57,6 +57,6 @@ The gaps closed before anything was deleted: the 73 percent rule, the one-accent
 | The hero is ruled out | Unchanged. Documented as a composition, never rebuilt | It is a page and a WebGL module, not a component |
 | The canvas is the home (2026-09-09) | A Design System artifact, generated from `css/styles.css`, read-only on its page (2026-10-28) | Claude's Slides and Design types look up Design System artifacts and never saw the canvas; agents need a README and `tokens.json`, not 2.7 MB of editor HTML |
 ## 9. Open
-1. Where plepic.com links to the design system, and the `/design-system` redirect. Waits on the artifact being shared.
+1. Where plepic.com links to the design system. The `/design-system` redirect shipped on 2026-10-29, once the artifact was public.
 2. Closed 2026-10-28: the stylesheet stays the source and the system is generated from it.
 3. Whether `metamorphosis-hero.html` should stay publicly reachable.
