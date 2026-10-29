@@ -247,9 +247,6 @@ _fill = lambda p: re.search(r'fill="([^"]+)"', p).group(1)
 SWAPS = [i for i, (l, r) in enumerate(zip(_left, _right)) if _fill(l) != _fill(r)]
 if len(SWAPS) != 2:
     raise SystemExit("expected 2 swapped facet slots, found %d" % len(SWAPS))
-MARK_SVG = re.sub(r'<svg class="logo-butterfly"[^>]*>',
-                  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="geometricPrecision">',
-                  MARK) + "\n"
 
 # --- build -------------------------------------------------------------------
 if OUT.parent.exists():
@@ -271,7 +268,6 @@ for src in sorted((HERE / "assets").rglob("*")):
     if src.is_file():
         (OUT / src.relative_to(HERE)).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(src, OUT / src.relative_to(HERE))
-write("assets/Logos/plepic-mark.svg", MARK_SVG)
 # The one icon set: the curriculum pictograms, one file each, drawn in ink.
 TRAINING = (ROOT / "training" / "index.html").read_text()
 SPRITE = re.search(r'<svg class="svg-sprite".*?</svg>', TRAINING, re.S).group(0)
