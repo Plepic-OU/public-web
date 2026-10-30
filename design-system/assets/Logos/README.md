@@ -2,7 +2,7 @@
 
 Every file is exported from the plepic.com header lockup by `design-system/export-logos.mjs`, so none is redrawn. Multi-ink and locked: never recolour, re-facet or stretch.
 
-- `plepic-mark.svg`: the butterfly alone.
+- `plepic-mark.*`: the butterfly alone.
 - `plepic-lockup.*`: "Plepic" in `green-brand`, Bitter 600, mark to its right. The default.
 - `plepic-lockup-stacked.*`: the same pair, mark above.
 - `plepic-lockup-on-brand.*`: the wordmark in `text`, for a green ground.

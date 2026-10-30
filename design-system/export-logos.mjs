@@ -20,7 +20,13 @@ const WORDMARK = '<span class="logo-wordmark">Plepic</span>';
 // The domain wordmark, as on the social card (images/plepic-og.png): .com in text-2.
 const DOMAIN = '<span class="logo-wordmark">Plepic<span style="color: var(--text-2)">.com</span></span>';
 
+// The mark alone, at the header's size; its SVG is written as markup, not traced.
+const MARK = LOCKUP.match(/<svg class="logo-butterfly"[\s\S]*?<\/svg>/)[0];
+fs.writeFileSync(path.join(OUT, 'plepic-mark.svg'), MARK.replace(/<svg class="logo-butterfly"[^>]*>/,
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="geometricPrecision">') + '\n');
+
 const VARIANTS = {
+  'plepic-mark': MARK,
   'plepic-lockup': LOCKUP,
   'plepic-lockup-stacked': LOCKUP.replace('class="logo-lockup"', 'class="logo-lockup logo-lockup--stacked"'),
   'plepic-lockup-on-brand': `<span class="on-brand">${LOCKUP}</span>`,
@@ -43,7 +49,7 @@ for (const [name, markup] of Object.entries(VARIANTS)) {
   const box = await page.locator('#lockup').boundingBox();
   const pdf = path.join(OUT, name + '.pdf');
   await page.pdf({ path: pdf, width: Math.ceil(box.width) + 'px', height: Math.ceil(box.height) + 'px', pageRanges: '1' });
-  execFileSync('pdftocairo', ['-svg', pdf, path.join(OUT, name + '.svg')]);
+  if (name !== 'plepic-mark') execFileSync('pdftocairo', ['-svg', pdf, path.join(OUT, name + '.svg')]);
   await page.locator('#lockup').screenshot({ path: path.join(OUT, name + '.png'), omitBackground: true });
   console.log(name, Math.ceil(box.width) + 'x' + Math.ceil(box.height));
 }
