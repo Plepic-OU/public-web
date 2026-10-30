@@ -19,7 +19,7 @@ Logos are uploads, not files: `design-system.json` lists each under `assetGroups
 Each comes as `.pdf` (vector, fonts embedded: send this to a printer), `.svg` (text as outlines: for any tool) and `.png` (transparent, for slides and documents).
 ## Iconography
 
-The brand icon is the mark (Logos above). Plepic uses no emoji and one icon set: the curriculum pictograms, the `<symbol>` sprite at the top of the curriculum section in `training/index.html`. Each is a 24-unit line drawing with stroke 2 and round caps and joins, coloured by `currentColor`: ink, `--green-dark`, or white on the dark-green active node, never the accent. A pictogram names a week, a day mode (watch, build, share, lunch) or an outcome; it never decorates. A new pictogram joins that sprite in the same style, and no icon library enters the site. An external link earns an arrow (↗), nothing more.
+The brand icon is the mark (Logos above). Plepic uses no emoji and one icon set: the curriculum pictograms, the `<symbol>` sprite at the top of the curriculum section in `training/index.html` and `et/index.html`, one copy per page. Each is a 24-unit line drawing with stroke 2 and round caps and joins, coloured by `currentColor`: ink, `--green-dark`, or white on the dark-green active node, never the accent. A pictogram names a week, a day mode (watch, build, share, lunch) or an outcome; it never decorates. A new pictogram joins that sprite in the same style, and no icon library enters the site. An external link earns an arrow (↗), nothing more.
 
 ## Not synced
 
