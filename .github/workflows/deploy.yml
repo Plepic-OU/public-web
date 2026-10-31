@@ -44,6 +44,11 @@ jobs:
         # skill.plepic.com links css/tokens.css for the live token values.
         run: node scripts/extract-tokens.mjs
 
+      - name: Minify the stylesheet
+        # After token extraction, which reads the commented source, and before
+        # cache-bust, so the hash covers the minified file.
+        run: npx --yes esbuild@0.24.2 css/styles.css --minify --outfile=css/styles.css --allow-overwrite --log-level=warning
+
       - name: Cache-bust asset URLs
         # Stamp a content hash onto css/js URLs in the HTML so returning
         # visitors get fresh assets after a deploy instead of a stale copy

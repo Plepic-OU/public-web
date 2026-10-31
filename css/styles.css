@@ -1085,6 +1085,9 @@ p:last-child {
 .perspective-shift-quote {
   margin: var(--space-2xl) 0;
   max-width: 56ch;
+  /* Skipped until near the viewport, so its italic face is not fetched with the first screen's fonts */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
 }
 
 .perspective-shift-quote p {
@@ -3847,6 +3850,9 @@ plepic-mark > svg {
 .pricing-quote {
   margin: 0;
   padding: 0;
+  /* Skipped until near the viewport, so its italic face is not fetched with the first screen's fonts */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 150px;
 }
 
 .pricing-quote p {

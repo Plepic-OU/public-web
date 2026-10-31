@@ -25,6 +25,9 @@ for (const page of pages) {
       ? [browserPage.locator('.hero-visual')]
       : [];
 
+    // A full-page capture never brings content-visibility: auto boxes near the viewport, so they would shoot as blank placeholders.
+    await browserPage.addStyleTag({ content: '* { content-visibility: visible !important; }' });
+
     const screenshot = await browserPage.screenshot({ fullPage: true, mask });
 
     await expect(screenshot).toMatchSnapshot(`${page.name}-${testInfo.project.name}.png`, {
