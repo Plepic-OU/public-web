@@ -163,6 +163,7 @@
 
   <!-- Fonts: self-hosted (@font-face in css/styles.css); preload the above-the-fold critical files -->
   <link rel="preload" href="fonts/bitter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/bitter-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/hanken.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -360,7 +361,7 @@
     .hero-code .meta-code-line {
       display: block;
       line-height: 1.3;
-      opacity: 0.6;
+      opacity: 0.8;
       transition:
         opacity var(--dur-base) var(--ease-settle),
         transform var(--dur-base) var(--ease-settle);
@@ -440,7 +441,7 @@
     .hero-code.is-held .hero-cursor { animation: none; opacity: 1; }
     @media (prefers-reduced-motion: reduce) {
       .hero-code .meta-code-line,
-      .hero-code[data-phase] .meta-code-line { animation: none; opacity: 0.6; transform: none; }
+      .hero-code[data-phase] .meta-code-line { animation: none; opacity: 0.8; transform: none; }
     }
 
     /* ── Stacked layout (mobile + tablet, <=900px) ──────────────────────────
