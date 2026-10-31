@@ -373,11 +373,11 @@
       transform: translateY(0.35em);
     }
     .hero-code[data-phase="chrysalis"] .meta-code-line:last-child {
-      animation: meta-code-breathe 3s var(--ease-calm) infinite;
+      animation: meta-code-breathe 1.5s var(--ease-calm) infinite alternate;
     }
     @keyframes meta-code-breathe {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 0.9; }
+      from { opacity: 0.8; }
+      to { opacity: 0.9; }
     }
     .hero-code.is-dim .meta-code-line:last-child { opacity: 0.8; }
     .hero-code.is-settled .meta-code-line:last-child {
