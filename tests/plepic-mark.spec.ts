@@ -27,10 +27,12 @@ test.describe('the breathing mark', () => {
     // while the shipping mark never beat once.
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    await page.locator('#team').scrollIntoViewIfNeeded();
+    // Scroll the seat, not #team: a section taller than the viewport is
+    // centred, which leaves the first row above the fold.
+    const seat = page.locator('.tt-seat').first();
+    await seat.scrollIntoViewIfNeeded();
     await page.waitForTimeout(400);
 
-    const seat = page.locator('.tt-seat').first();
     const wing = seat.locator('.mark-live .mark-layer--left');
     await expect(wing).toHaveCount(1);
 
