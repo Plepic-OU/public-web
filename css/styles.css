@@ -1281,8 +1281,8 @@ p:last-child {
    outer card edges stay flush with the instructor slide that covers the grid
    on hover. The Card fills whatever span it is given. minmax(0, …) lets the
    tracks shrink on narrower viewports instead of pushing the grid past its
-   box. The centring rule below handles a two-card remainder only; a seventh
-   instructor would sit alone at the left and needs its own rule. */
+   box. The centring rules below handle a one-card and a two-card remainder;
+   a remainder of three is a full row and needs none. */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 115px));
@@ -1311,6 +1311,10 @@ p:last-child {
 
 .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
   grid-column: 2 / span 2;
+}
+
+.team-grid > .tt-seat:nth-child(3n + 1):last-child {
+  grid-column: 3 / span 2;
 }
 
 .ds-page .team-card {
@@ -1435,12 +1439,19 @@ p:last-child {
     --tilt-enabled: 1;
   }
 
-  /* A second-row card's slide hangs up from the bottom of the grid, so the
-     panel covers the row that was hovered. The anchor belongs to the slide,
+  /* The panel covers the row that was hovered. Rows are equal height, so a
+     middle-row slide centres on the grid, and a last-row slide hangs up from
+     the bottom of the grid. translate, not transform, does the centring,
+     because transform carries the fade-in. The anchor belongs to the slide,
      not to the pointer: anchoring on :hover made a slide still fading out
      jump rows when the pointer crossed from one row to the other. */
   .instructor-slide[data-instructor="jevgeni"],
   .instructor-slide[data-instructor="ivo"] {
+    top: 50%;
+    translate: 0 -50%;
+  }
+
+  .instructor-slide[data-instructor="andres"] {
     top: auto;
     bottom: 0;
   }
@@ -1453,7 +1464,8 @@ p:last-child {
   .team-showcase:has(.team-card[data-instructor="kaido"]:hover) .instructor-slide[data-instructor="kaido"],
   .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"],
   .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"],
-  .team-showcase:has(.team-card[data-instructor="ivo"]:hover) .instructor-slide[data-instructor="ivo"] {
+  .team-showcase:has(.team-card[data-instructor="ivo"]:hover) .instructor-slide[data-instructor="ivo"],
+  .team-showcase:has(.team-card[data-instructor="andres"]:hover) .instructor-slide[data-instructor="andres"] {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1855,6 +1867,10 @@ plepic-mark > svg {
 }
 
 .tt-card[data-instructor="ivo"] .tt-portrait {
+  transform: translateY(3%) scale(1.06);
+}
+
+.tt-card[data-instructor="andres"] .tt-portrait {
   transform: translateY(3%) scale(1.06);
 }
 
@@ -4182,7 +4198,8 @@ plepic-mark > svg {
   }
 
   .team-grid > .tt-seat,
-  .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
+  .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2),
+  .team-grid > .tt-seat:nth-child(3n + 1):last-child {
     grid-column: auto;
   }
 
@@ -4356,7 +4373,8 @@ plepic-mark > svg {
   }
 
   .team-grid > .tt-seat,
-  .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2) {
+  .team-grid > .tt-seat:nth-child(3n + 1):nth-last-child(2),
+  .team-grid > .tt-seat:nth-child(3n + 1):last-child {
     grid-column: auto;
   }
 

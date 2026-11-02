@@ -16,7 +16,7 @@ import { test, expect } from '@playwright/test';
  * the pointer and the hit test stays stable.
  */
 
-const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni', 'ivo'];
+const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni', 'ivo', 'andres'];
 
 const opacityOf = (page, who) =>
   page.evaluate(
@@ -43,6 +43,15 @@ test.describe('instructor slide preview', () => {
       for (const other of INSTRUCTORS.filter((i) => i !== who)) {
         expect(await opacityOf(page, other)).toBe('0');
       }
+
+      // The panel covers the row that was hovered, whichever row that is.
+      const cover = await page.evaluate((w) => {
+        const s = document.querySelector(`.instructor-slide[data-instructor="${w}"]`).getBoundingClientRect();
+        const c = document.querySelector(`.team-card[data-instructor="${w}"]`).getBoundingClientRect();
+        return { slideTop: s.top, slideBottom: s.bottom, cardTop: c.top, cardBottom: c.bottom };
+      }, who);
+      expect(cover.slideTop, who).toBeLessThanOrEqual(cover.cardTop + 1);
+      expect(cover.slideBottom, who).toBeGreaterThanOrEqual(cover.cardBottom - 1);
     }
   });
 
@@ -103,12 +112,12 @@ test.describe('instructor slide preview', () => {
     expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.innerWidth);
   });
 
-  test('a second-row card raises its slide inside the section, and it paints', async ({ page }, testInfo) => {
+  test('a last-row card raises its slide inside the section, and it paints', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    // With five cards the grid has two rows, so the panel no longer hangs
-    // past the section: a first-row slide covers the top of the grid, a
-    // second-row slide hangs up from its bottom edge. This guards the second
+    // With more than one row the panel no longer hangs past the section: a
+    // first-row slide covers the top of the grid, a last-row slide hangs up
+    // from its bottom edge. This guards the last-row
     // case, whose panel box has no height and once dropped the slide below
     // the grid entirely. #team still carries .reveal, which makes it a
     // stacking context, so the comparison also proves the slide is not
@@ -125,14 +134,14 @@ test.describe('instructor slide preview', () => {
     await page.waitForTimeout(500);
 
     const card = await page
-      .locator('.team-card[data-instructor="jevgeni"] .tt-art')
+      .locator('.team-card[data-instructor="andres"] .tt-art')
       .boundingBox();
     await page.mouse.move(card.x + card.width / 2, card.y + card.height / 2);
-    await expect.poll(() => opacityOf(page, 'jevgeni'), { timeout: 2000 }).toBe('1');
+    await expect.poll(() => opacityOf(page, 'andres'), { timeout: 2000 }).toBe('1');
 
     const geometry = await page.evaluate(() => {
       const s = document
-        .querySelector('.instructor-slide[data-instructor="jevgeni"]')
+        .querySelector('.instructor-slide[data-instructor="andres"]')
         .getBoundingClientRect();
       const grid = document.querySelector('.team-grid').getBoundingClientRect();
       const team = document.querySelector('#team').getBoundingClientRect();
@@ -149,7 +158,7 @@ test.describe('instructor slide preview', () => {
 
     const shown = await page.screenshot({ clip: geometry.band });
     await page.mouse.move(4, 4);
-    await expect.poll(() => opacityOf(page, 'jevgeni'), { timeout: 2000 }).toBe('0');
+    await expect.poll(() => opacityOf(page, 'andres'), { timeout: 2000 }).toBe('0');
     const hidden = await page.screenshot({ clip: geometry.band });
     expect(shown.equals(hidden)).toBe(false);
   });
