@@ -75,20 +75,40 @@ const measure = () => {
 const inside = (r, x, y, pad) => x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad;
 const open = (x, y) => !world.copy.some((r) => inside(r, x, y, 18)) && !(world.stage && inside(world.stage, x, y, 24));
 
-// The best of a few dozen open points, preferring one about a hop away.
-const destination = (c) => {
+// How many 10px steps of a hop's straight line fall on copy. On a phone the
+// copy fills the hero, and a landing spot reached across three lines of text
+// is a companion sitting on the words a fifth of the time.
+const crossing = (c, x, y) => {
+  const steps = Math.ceil(Math.hypot(x - c.x, y - c.y) / 10);
+  let over = 0;
+  for (let i = 1; i < steps; i += 1) {
+    const px = c.x + ((x - c.x) * i) / steps;
+    const py = c.y + ((y - c.y) * i) / steps;
+    if (world.copy.some((r) => inside(r, px, py, 10))) over += 1;
+  }
+  return over;
+};
+
+// The best of a few dozen open points about a hop away, each step over copy
+// costing like 40px of detour. A companion with no clear hop mostly stays and
+// lands, and now and then takes the shortest crossing, so it is never stuck.
+const destination = (c, entering = false) => {
   let best = { x: c.x, y: c.y };
   let bestScore = Infinity;
+  let bestOver = 0;
   for (let i = 0; i < 48; i += 1) {
     const x = random(28, world.width - 28);
     const y = random(world.top, world.height - 28);
     if (!open(x, y)) continue;
-    const score = Math.abs(Math.hypot(x - c.x, y - c.y) - c.hop) + random(0, 90);
+    const over = crossing(c, x, y);
+    const score = Math.abs(Math.hypot(x - c.x, y - c.y) - c.hop) + random(0, 90) + 40 * over;
     if (score < bestScore) {
       best = { x, y };
       bestScore = score;
+      bestOver = over;
     }
   }
+  if (bestOver > 0 && !entering && Math.random() < 0.75) return { x: c.x, y: c.y };
   return best;
 };
 
@@ -113,10 +133,12 @@ const build = (layer, depth, index, tokens) => {
     depth,
     cruise: tokens.cruise * depth,
     beat: tokens.beat * (0.75 + 0.25 * depth),
-    hop: narrow ? 150 : 280,
+    hop: narrow ? 110 : 280,
     wait: index * 2.4,
     x: fromLeft ? -40 : world.width + 40,
-    y: random(world.top + 20, world.height * 0.55),
+    // A stacked phone hero is copy edge to edge, so there the flock enters
+    // through the open band under the copy.
+    y: narrow ? random(world.height - 56, world.height - 28) : random(world.top + 20, world.height * 0.55),
     heading: fromLeft ? 0 : Math.PI,
     turn: 0,
     rot: (fromLeft ? 0 : Math.PI) + Math.PI / 2,
@@ -132,7 +154,7 @@ const build = (layer, depth, index, tokens) => {
     seed: random(0, TAU),
     clock: 0,
   };
-  c.target = destination(c);
+  c.target = destination(c, true);
   render(c, 0);
   return c;
 };
@@ -169,7 +191,7 @@ const step = (c, dt, t, tokens) => {
       c.beats = Math.round(random(5, 8));
       c.phase = 0;
       c.landing = false;
-      c.hop = startled ? (narrow ? 220 : 380) : (narrow ? 150 : 280);
+      c.hop = startled ? (narrow ? 200 : 380) : (narrow ? 110 : 280);
       c.target = destination(c);
       c.heading = startled ? Math.atan2(c.y - pointer.y, c.x - pointer.x) : Math.atan2(c.target.y - c.y, c.target.x - c.x);
       c.speed = startled ? c.cruise * 1.8 : c.cruise * 0.4;
@@ -182,7 +204,7 @@ const step = (c, dt, t, tokens) => {
     // A real butterfly never flies a straight line: two slow sines meander
     // the course, and every downstroke below adds a small kick.
     let desired = Math.atan2(dy, dx)
-      + (distance > 50 ? 1 : 0.3) * (0.38 * Math.sin(t * 0.9 + c.seed) + 0.2 * Math.sin(t * 2.3 + c.seed * 2));
+      + (distance > 50 ? 1 : 0.3) * (narrow ? 0.55 : 1) * (0.38 * Math.sin(t * 0.9 + c.seed) + 0.2 * Math.sin(t * 2.3 + c.seed * 2));
     if (world.stage && inside(world.stage, c.x, c.y, 30)) {
       desired = Math.atan2(c.y - (world.stage.top + world.stage.bottom) / 2, c.x - (world.stage.left + world.stage.right) / 2);
     }
