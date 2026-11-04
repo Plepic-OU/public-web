@@ -86,6 +86,7 @@ TOKEN_NAMES = [
     "--transition-fast", "--transition-base", "--transition-smooth",
     "--breath-period", "--breath-open", "--breath-offset", "--breath-bob",
     "--wingbeat-dur", "--wingbeat-open",
+    "--flight-size", "--flight-beat", "--flight-beat-open", "--flight-glide-open", "--flight-cruise",
 ]
 T = {n: token(n) for n in TOKEN_NAMES}
 
@@ -696,20 +697,20 @@ CATEGORY = no_claims("category line", _cat.group(1)).replace('<span class="highl
 voice_body = """  <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Voice</h1>
-    <p class="lede">Words are as fixed as the greens. Write like a practitioner: calm, exact, a little playful, and never longer than the thought.</p>
+    <p class="lede">Words are as fixed as the greens. Write like a practitioner at play: exact, curious, light on its feet, and never longer than the thought.</p>
 
     <h2 class="sec">Who the words are for</h2>
-    <p class="sec-note">Plepic Strategy owns the mission sentence. This is what it asks of a line.</p>
+    <p class="sec-note">Plepic Strategy owns the mission and the two readers. This is what each one asks of a line.</p>
     <div class="langs">
       <div class="lang">
-        <p class="tag">The engineer</p>
-        <p class="line">becoming an <em class="g">agentic engineer</em></p>
-        <p class="why">Show the craft: real code, real checks, the engineer directing and verifying. Never promise the agent does the job.</p>
+        <p class="tag">The decider</p>
+        <p class="line">an entrepreneurial <em class="g">engineering leader</em></p>
+        <p class="why">Buys for the team. Lead with proof the leader can check: who teaches, what graduates shipped, how they rated it. Make the relationship worth starting.</p>
       </div>
       <div class="lang">
-        <p class="tag">The entrepreneurial lead</p>
-        <p class="line">ready to be <em class="g">paid for results</em>, not hours</p>
-        <p class="why">A founder or team lead. Show the outcome and the arithmetic, and make the relationship worth starting.</p>
+        <p class="tag">The believer</p>
+        <p class="line">a software engineer becoming an <em class="g">agentic engineer</em></p>
+        <p class="why">Sits in the cohort. Show the craft: real code, real checks, the engineer directing and verifying. Never promise the agent does the job.</p>
       </div>
     </div>
 
@@ -718,7 +719,7 @@ voice_body = """  <div class="board">
     <p class="sec-note">Five qualities, each heard on the live site.</p>
     <div class="rules">
       <div class="rule-row"><b>Professional</b><span>Exact nouns and checked numbers. A boast becomes a fact or goes.</span></div>
-      <div class="rule-row"><b>A little playful</b><span>One small image or a turn of rhythm; no puns, no exclamation marks. &ldquo;This page is a cocoon.&rdquo; (404)</span></div>
+      <div class="rule-row"><b>Playful</b><span>Play is half the name, so every page carries some: a small image or a turn of rhythm. No puns, no exclamation marks. &ldquo;This page is a cocoon.&rdquo; (404)</span></div>
       <div class="rule-row"><b>Invites experiment</b><span>Low-stakes verbs: try, sketch, break, undo. &ldquo;&hellip;we&rsquo;ll sketch what an agent would do with it.&rdquo;</span></div>
       <div class="rule-row"><b>Grounded</b><span>The engineer is the subject; agents are directed and checked, never partners or minds; your checks decide when the work is done.</span></div>
       <div class="rule-row"><b>Inspiring</b><span>Name the after-state, not the tool. &ldquo;In six weeks you build it into how your team works.&rdquo;</span></div>
@@ -730,7 +731,7 @@ voice_body = """  <div class="board">
     <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded.</p>
     <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
     <p class="slogan" style="margin-top: 18px">Curious play. Epic growth.</p>
-    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when given room; in the footer, quiet ink that warms to green on hover. The one line allowed to be green throughout.</p>
+    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span>, the one line allowed to be green throughout. It is the narrative's first line, so it is never small where a page introduces Plepic: on the homepage it titles the hero, above the butterfly from 901px and first in the stack on a phone. In every footer it stays quiet ink that warms to green on hover. Plepic Strategy holds the rest of the narrative.</p>
 
     <hr class="rule">
     <h2 class="sec">What Estonian carries instead</h2>
@@ -809,21 +810,24 @@ def keyframes(*names):
 
 
 
-def hinged(px, beat=False):
+def hinged(px, beat=False, fly=False):
     """The mark the module builds: each wing inside its own hinge box, because
-    the breath and the beat cannot share one."""
+    the breath and the beat cannot share one. A flying one beats on the flight
+    tokens instead of breathing."""
     svg = ('<svg class="mk-layer mk-%s" viewBox="0 0 %g %g" '
            'xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" '
            'aria-hidden="true">%s</svg>')
-    return ("      <span class=\"mk%s\" style=\"width: %dpx\">"
+    return ("      <span class=\"mk%s\" style=\"width: %gpx; perspective: %gpx\">"
             "<span class=\"mk-hinge mk-hinge--left\">%s</span>"
             "<span class=\"mk-hinge mk-hinge--right\">%s</span>%s</span>\n" % (
-        " mk--beat" if beat else "", px,
+        " mk--beat" if beat else " mk--fly" if fly else "", px, px * 3,
         svg % ("left", VB_W, VB_H, "".join(_left)),
         svg % ("right", VB_W, VB_H, "".join(_right)),
         svg % ("core", VB_W, VB_H, "".join(_core)),
     ))
 
+
+FLIGHT_PX = float(T["--flight-size"].replace("px", ""))
 
 DURATIONS = [
     ("--dur-fast", T["--dur-fast"], "State response: a colour, an opacity, a link waking up"),
@@ -899,7 +903,16 @@ motion_css = """    .trk { display: grid; grid-template-columns: 210px 1fr 300px
     .mk .mk-core  { animation: mark-bob var(--breath-period) var(--ease-calm) infinite; }
     .mk--beat:hover .mk-left  { animation: mark-wingbeat-left var(--wingbeat-dur) var(--ease-settle) infinite; }
     .mk--beat:hover .mk-right { animation: mark-wingbeat-right var(--wingbeat-dur) var(--ease-settle) infinite; }
-%s    .lift { display: flex; gap: 40px; align-items: flex-start; }
+%s    .mk--fly .mk-hinge--left  { animation: fly-left var(--flight-beat) var(--ease-calm) infinite; }
+    .mk--fly .mk-hinge--right { animation: fly-right var(--flight-beat) var(--ease-calm) infinite; }
+    .mk--fly .mk-core { animation: none; }
+    @keyframes fly-left { 0%%, 100%% { transform: rotateY(var(--flight-beat-open)); }
+      45%% { transform: rotateY(calc(var(--flight-glide-open) - 14deg)); } }
+    @keyframes fly-right { 0%%, 100%% { transform: rotateY(calc(-1 * var(--flight-beat-open))); }
+      45%% { transform: rotateY(calc(14deg - var(--flight-glide-open))); } }
+    .flock { display: flex; align-items: flex-end; gap: 56px; margin-bottom: 28px; }
+    .flock > div { max-width: 240px; }
+    .lift { display: flex; gap: 40px; align-items: flex-start; }
     .liftbox { width: 200px; height: 120px; background: var(--bg-alt);
                border-top: 1.5px solid var(--text); position: relative;
                transition: transform var(--tilt-dur) var(--ease-settle); }
@@ -922,7 +935,7 @@ motion_css = """    .trk { display: grid; grid-template-columns: 210px 1fr 300px
 motion_body = """  <div class="board">
     <p class="eyebrow">Plepic &middot; Design system</p>
     <h1>Motion</h1>
-    <p class="lede">Everything here runs. Play lives in weight, lift, tilt and breath: each a duration and an ease, never a colour or a score bar. Sound belongs to the cohort loadout builder alone. Hover where it says.</p>
+    <p class="lede">Everything here runs. Play lives in weight, lift, tilt, breath and flight: each a duration and an ease, never a colour or a score bar. Sound belongs to the cohort loadout builder alone. Hover where it says.</p>
 
     <h2 class="sec">Four durations</h2>
     <p class="sec-note">All four dots restart together every 2.4 seconds; compare how soon each arrives.</p>
@@ -961,6 +974,34 @@ motion_body = """  <div class="board">
     </div>
 
     <hr class="rule">
+    <h2 class="sec">Flight, the companions</h2>
+    <p class="sec-note">Two or three marks fly the homepage hero's open paper: a burst of beats, a glide, a landing, a breath where they land, a take-off. Here they beat at their real sizes beside one enlarged; the course itself needs js/flight.js.</p>
+    <div class="flock">
+      <div>
+%s        <p class="trk-note" style="margin-top:14px">Enlarged. One beat is %s: the wings rise to %s and sweep down past flat.</p>
+      </div>
+      <div>
+%s        <p class="trk-note" style="margin-top:14px">Near, %s.</p>
+      </div>
+      <div>
+%s        <p class="trk-note" style="margin-top:14px">Middle, 80%%.</p>
+      </div>
+      <div>
+%s        <p class="trk-note" style="margin-top:14px">Far, 66%%, landed: the breath.</p>
+      </div>
+    </div>
+    <div class="two">
+      <div class="kv"><b>Count</b><span>Three from 901px, two on a phone. Never more: a flock is noise, a companion is company.</span></div>
+      <div class="kv"><b>Depth</b><span>Smaller flies slower and beats faster, so three sizes read as three distances. Cruise is %s a second at full size.</span></div>
+      <div class="kv"><b>Course</b><span>Never a straight line: the heading meanders, every downstroke kicks it a little, and the body rolls into a turn, outer wing higher.</span></div>
+      <div class="kv"><b>Glide</b><span>Three to eight beats, then the wings hold near flat at %s for under a second.</span></div>
+      <div class="kv"><b>Landing</b><span>On open paper only. A companion may cross a line of copy but never settles on one, and never crosses the metamorphosis stage.</span></div>
+      <div class="kv"><b>Curious</b><span>A pointer that comes close sends a resting companion up and turns a flying one aside. A tap does the same on a phone.</span></div>
+      <div class="kv"><b>One mark</b><span>Each companion is cloned from the header mark at load, never drawn twice: locked geometry, full colour, no fade, no trail.</span></div>
+      <div class="kv"><b>Restraint</b><span>It waits for the load event and an idle moment, runs only while the hero is on screen, and under reduced motion never appears.</span></div>
+    </div>
+
+    <hr class="rule">
     <h2 class="sec">Weight and lift</h2>
     <p class="sec-note">A card rises %s and a sheet prints beneath it in %s; on a fine pointer it tilts up to %s and %s. Hover it.</p>
     <div class="lift">
@@ -991,6 +1032,11 @@ motion_body = """  <div class="board">
     T["--ease-settle"], T["--ease-calm"], T["--ease-calm"],
     T["--breath-open"], T["--breath-period"], T["--breath-bob"],
     hinged(160), hinged(160, beat=True), T["--wingbeat-open"], T["--wingbeat-dur"],
+    hinged(120, fly=True), T["--flight-beat"], T["--flight-beat-open"],
+    hinged(FLIGHT_PX, fly=True), T["--flight-size"],
+    hinged(round(FLIGHT_PX * 0.8, 1), fly=True),
+    hinged(round(FLIGHT_PX * 0.66, 1)),
+    T["--flight-cruise"], T["--flight-glide-open"],
     T["--lift-height"], T["--dur-base"], T["--tilt-x"], T["--tilt-y"],
 )
 
@@ -1375,10 +1421,12 @@ layout_body = """  <div class="board">
 _h1 = re.search(r'<h1 class="hero-entrance hero-entrance-2">(.*?)</h1>', INDEX, re.S)
 _desc = re.search(r'<p class="hero-desc[^"]*">\s*(.*?)<br>', INDEX, re.S)
 _ctas = re.search(r'<div class="btn-group hero-entrance[^"]*">(.*?)</div>', INDEX, re.S)
-if not (_h1 and _desc and _ctas):
+_tag = re.search(r'<p class="hero-tagline[^"]*">(.*?)</p>', INDEX, re.S)
+if not (_h1 and _desc and _ctas and _tag):
     raise SystemExit("homepage hero markup not found")
 HERO_H1 = no_claims("hero headline", _h1.group(1))
 HERO_DESC = no_claims("hero sentence", " ".join(_desc.group(1).split()))
+HERO_TAGLINE = no_claims("hero tagline", _tag.group(1))
 HERO_CTA = re.findall(r'<a [^>]*>(.*?)</a>', _ctas.group(1))
 if len(HERO_CTA) != 2:
     raise SystemExit("expected two hero CTAs, found %d" % len(HERO_CTA))
@@ -1409,6 +1457,9 @@ hero_css = """    .hgrid { display: grid; grid-template-columns: 1.4fr 0.6fr; ga
             color: var(--accent); }
     .hvis { display: flex; flex-direction: column; align-items: center;
             justify-content: flex-end; align-self: end; }
+    .htag { font-family: var(--font-display); font-style: italic; font-weight: 500;
+            font-size: 2.1rem; line-height: 1.2; color: var(--green-brand);
+            margin: 0 0 2rem; align-self: flex-end; white-space: nowrap; }
     .hstage { width: 100%; aspect-ratio: 22 / 15; background: var(--bg-alt);
               display: flex; align-items: center; justify-content: center;
               text-align: center; padding: 20px; }
@@ -1449,6 +1500,7 @@ hero_body = """  <div class="board">
         <p class="hqual"><span class="slot">experience floor &middot; cohort size</span></p>
       </div>
       <div class="hvis">
+        <p class="htag">%s</p>
         <div class="hstage"><p>the crystalline mark<br>440px stage<br>WebGL</p></div>
         <p class="hcode">{ explore &rarr; act &rarr; verify }|</p>
       </div>
@@ -1465,14 +1517,16 @@ hero_body = """  <div class="board">
     <div class="anno"><b>h1</b><span>clamp(3rem, 2.5rem + 3.5vw, 4.8rem) at -0.025em and 1.05. Its own ramp; the break after the comma is markup, never a wrap.</span></div>
     <div class="anno"><b>text track</b><span>580px, the sentence 480px. Below 1015px the headline ramps, because the 440px stage would collide with it.</span></div>
     <div class="anno"><b>stage</b><span>440px, gone below 900px: the page loses the butterfly rather than shrink it.</span></div>
+    <div class="anno"><b>tagline</b><span>clamp(1.35rem, 1rem + 1.1vw, 2.1rem). From 901px it titles the butterfly column, right-aligned, while the copy spans both rows, so the hero grows no taller. Stacked, it leads, 0.75rem above the badge. Never in a heading tag.</span></div>
+    <div class="anno"><b>companions</b><span>Two or three small marks fly the hero&rsquo;s open paper above the copy and below the header. Motion holds their rules.</span></div>
     <div class="anno"><b>accent</b><span>The body CTA spends the viewport&rsquo;s accent. The nav CTA is an ink outline, and no urgency badge shares the view.</span></div>
     <div class="anno"><b>entrance</b><span>A settle: content starts 6px low and fully legible, and rises over 600ms once the fonts land. Nothing load-bearing starts invisible.</span></div>
 
     <hr class="rule">
     <div class="cant">
-      <p><b>The butterfly does not travel.</b> The hero mark is a WebGL metamorphosis with a byte-exact rest pose and a still poster for anything without WebGL, so it is never redrawn here. Its geometry and choreography belong to <span class="mono" style="font-size:0.95em">js/crystalline-metamorphosis.js</span> alone.</p>
+      <p><b>The hero butterfly does not travel.</b> The hero mark is a WebGL metamorphosis with a byte-exact rest pose and a still poster for anything without WebGL, so it is never redrawn here. Its geometry and choreography belong to <span class="mono" style="font-size:0.95em">js/crystalline-metamorphosis.js</span> alone.</p>
     </div>
-  </div>""" % (HERO_H1, HERO_DESC, HERO_CTA[0], HERO_CTA[1])
+  </div>""" % (HERO_H1, HERO_DESC, HERO_CTA[0], HERO_CTA[1], HERO_TAGLINE)
 
 (OUT / "Hero.dc.html").write_text(page(hero_body, hero_css))
 
@@ -1482,11 +1536,11 @@ hero_body = """  <div class="board">
 BOARDS = [
     ("Main.dc.html", "Foundations", "Foundations", 1670),
     ("Type.dc.html", "Type", "Type", 1780),
-    ("Voice.dc.html", "Voice", "Voice", 2510),
+    ("Voice.dc.html", "Voice", "Voice", 2670),
     ("Mark.dc.html", "TheMark", "The mark", 2690),
     ("Layout.dc.html", "Layout", "Layout", 1800),
-    ("Motion.dc.html", "Motion", "Motion", 2530),
+    ("Motion.dc.html", "Motion", "Motion", 3280),
     ("Components.dc.html", "Components", "Components", 2670),
     ("Card.dc.html", "TheCard", "The card", 2620),
-    ("Hero.dc.html", "Hero", "Hero", 1560),
+    ("Hero.dc.html", "Hero", "Hero", 1660),
 ]

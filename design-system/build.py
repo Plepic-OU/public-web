@@ -121,6 +121,7 @@ USAGE = {
     "breath-period": "One full breath of the mark's wings at rest.",
     "breath-offset": "The delay between the two wings' breath.",
     "wingbeat-dur": "The wing beat a card's mark plays on hover, on top of the breath.",
+    "flight-beat": "One wing beat of a flying companion, down and up.",
     "ease-settle": "Arriving: every hover, lift, reveal and entrance. Fast off the mark, long settle.",
     "ease-calm": "Idling: perpetual loops (the breath, the bob, the antennae). Symmetrical, so a loop has no beginning.",
     "max-width": "The content track. The container never grows past it; emptiness is vertical.",
