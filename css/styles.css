@@ -1432,13 +1432,6 @@ p:last-child {
     --tilt-enabled: 0;
   }
 
-  /* Aivo has no career slide yet, so nothing covers his card on hover and it
-     keeps the tilt as its hover feedback. Delete this rule when his slide
-     lands in the deck and in .instructor-slides. */
-  .team-showcase .tt-seat:has([data-instructor="aivo"]) {
-    --tilt-enabled: 1;
-  }
-
   /* The panel covers the row that was hovered. Rows are equal height, so a
      middle-row slide centres on the grid, and a last-row slide hangs up from
      the bottom of the grid. translate, not transform, does the centring,
@@ -1446,6 +1439,7 @@ p:last-child {
      not to the pointer: anchoring on :hover made a slide still fading out
      jump rows when the pointer crossed from one row to the other. */
   .instructor-slide[data-instructor="jevgeni"],
+  .instructor-slide[data-instructor="aivo"],
   .instructor-slide[data-instructor="ivo"] {
     top: 50%;
     translate: 0 -50%;
@@ -1456,7 +1450,7 @@ p:last-child {
     bottom: 0;
   }
 
-  .team-showcase .tt-seat[data-tilt]:not(:has([data-instructor="aivo"])):hover > .tt-card {
+  .team-showcase .tt-seat[data-tilt]:hover > .tt-card {
     transform: none;
   }
 
@@ -1464,6 +1458,7 @@ p:last-child {
   .team-showcase:has(.team-card[data-instructor="kaido"]:hover) .instructor-slide[data-instructor="kaido"],
   .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"],
   .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"],
+  .team-showcase:has(.team-card[data-instructor="aivo"]:hover) .instructor-slide[data-instructor="aivo"],
   .team-showcase:has(.team-card[data-instructor="ivo"]:hover) .instructor-slide[data-instructor="ivo"],
   .team-showcase:has(.team-card[data-instructor="andres"]:hover) .instructor-slide[data-instructor="andres"] {
     opacity: 1;

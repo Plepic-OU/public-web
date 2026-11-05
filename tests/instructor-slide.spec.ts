@@ -16,7 +16,7 @@ import { test, expect } from '@playwright/test';
  * the pointer and the hit test stays stable.
  */
 
-const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni', 'ivo', 'andres'];
+const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni', 'aivo', 'ivo', 'andres'];
 
 const opacityOf = (page, who) =>
   page.evaluate(
