@@ -24,7 +24,7 @@ const RUBRIC = `GROUND YOUR JUDGEMENT IN THE IMPECCABLE DESIGN RUBRIC — read t
 - ${IMPECCABLE}/critique.md — score all 10 Nielsen heuristics 0-4, cognitive load, emotional journey, AI-slop verdict.
 - ${IMPECCABLE}/audit.md — the 5 technical dimensions (a11y, performance, theming, responsive, code quality), score 0-4.
 - ${IMPECCABLE}/polish.md — the final-pass bar (alignment, spacing, consistency, detail).
-- https://claude.ai/artifact/5jKctBduVrh3NL532fVN3k — the LOCKED Plepic design system (palette, type, voice, mark, layout, motion, components, named rules); read project/README.md first with the Artifact tool; sources in public-web/design-system/, tokens in css/styles.css.
+- https://claude.ai/artifact/9A9x4VwGvfEgGbXcUMDXRv — the LOCKED Plepic design system (palette, type, voice, mark, layout, motion, components, named rules); read project/README.md first with the Artifact tool; sources in public-web/design-system/, tokens in css/styles.css.
 A defect is anything that fails this rubric OR that a demanding studio art director would not ship. The AI-slop test is mandatory: if a visitor could say "AI made this," that is a blocking defect.`
 
 const CONTEXT = `You are verifying the LIVE hero of plepic.com (a warm green-on-cream brand site for agentic-coding training). Left column: badge, "Claude Code Training for Dev Teams" headline, description, ONE orange "View Full Program" CTA, qualifier line. Right column: a crystalline low-poly GREEN butterfly logo above a monospace code loop "while(task) { explore -> act -> verify }". On load it holds a static rest state ~5s, then a metamorphosis plays ONCE (caterpillar crawls -> chrysalis -> unfurls into the butterfly) and rests forever.
