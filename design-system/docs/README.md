@@ -24,6 +24,6 @@ The brand icon is the mark (Logos above). Plepic uses no emoji and one icon set:
 ## Not synced
 
 - `--rounded-badge` (`20px 4px 16px`) is a three-value radius the token format cannot hold. It stays in the `:root` block of `components/bundle.css` with the transitions, tier fills, card tilt, mark breath and runtime channels.
-- The card's tilt and the mark's breath and wing beat need the site's scripts; the showcase pages run the CSS parts only.
+- The card's tilt, the mark's breath and wing beat, and the companions' course need the site's scripts; the showcase pages run the CSS parts only.
 - The logo files are RGB. No CMYK or spot-colour separation exists.
 - The hero's crystalline metamorphosis is a WebGL module and is never redrawn here.

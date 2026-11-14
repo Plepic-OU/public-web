@@ -21,8 +21,9 @@ for (const page of pages) {
     // frame). Mask its stage so the snapshot guards the rest of the page
     // without flaking on the moving butterfly; the metamorphosis suite
     // covers the hero's correctness (byte-exact rest pose, fallbacks).
+    // The flight companions move every frame too, so each is masked.
     const mask = page.name === 'homepage'
-      ? [browserPage.locator('.hero-visual')]
+      ? [browserPage.locator('.hero-visual'), browserPage.locator('.flier')]
       : [];
 
     // A full-page capture never brings content-visibility: auto boxes near the viewport, so they would shoot as blank placeholders.

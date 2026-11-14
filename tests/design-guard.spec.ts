@@ -310,6 +310,9 @@ test.describe('design guard @design-guard', () => {
       '--tilt-enabled', '--tt-lift', '--tt-rx', '--tt-ry',
       '--mark-perspective',
       '--breath-period', '--breath-open', '--wingbeat-dur', '--wingbeat-open',
+      // js/flight.js reads these and no stylesheet rule does.
+      '--breath-offset', '--flight-size', '--flight-beat', '--flight-beat-open',
+      '--flight-glide-open', '--flight-cruise',
     ];
     const declared = rootTokens(read('css/styles.css'));
     const missing = REQUIRED.filter((name) => !declared.has(name));
@@ -332,7 +335,7 @@ test.describe('design guard @design-guard', () => {
     expect(perPerson, 'these rules grade one instructor differently from the others. The grade is --photo-grade, applied once to every portrait; correct the grade, not the face.').toEqual([]);
   });
 
-  test('living tabletop: js/plepic-mark.js carries no copy of the mark geometry', () => {
+  test('living tabletop: the mark modules carry no copy of the mark geometry', () => {
     // <plepic-mark> enhances the SVG the page inlines and never renders one of
     // its own, which is what keeps a single copy of the locked butterfly on the
     // site: the copy the slot-6 guard above checks. A module holding its own
@@ -341,8 +344,12 @@ test.describe('design guard @design-guard', () => {
     // would flag it, because both drawings look like a butterfly. The pairs are
     // read out of the inline mark rather than typed here, so this guard cannot
     // drift from the geometry either.
-    const module = read('js/plepic-mark.js');
-    expect(module.includes('points='), 'js/plepic-mark.js names a points attribute. The module must clone nodes out of the inline SVG: keep the coordinates in the page, comments included, or change the contract in docs/specs first.').toBe(false);
+    // js/flight.js clones the header mark for its companions under the same
+    // contract, so it is held to the same line.
+    const modules = ['js/plepic-mark.js', 'js/flight.js'];
+    for (const name of modules) {
+      expect(read(name).includes('points='), `${name} names a points attribute. The module must clone nodes out of the inline SVG: keep the coordinates in the page, comments included, or change the contract in docs/specs first.`).toBe(false);
+    }
     // Only real coordinate PAIRS, and only from the butterfly. Splitting every
     // points attribute on the page into bare tokens put "0", "1" and "20" in
     // the needle list, and every one of them appears in the module as a plain
@@ -352,8 +359,10 @@ test.describe('design guard @design-guard', () => {
       .flatMap((m) => m[1].trim().split(/\s+/))
       .filter((token) => /^\d+,\d+$/.test(token)))];
     expect(pairs.length, 'index.html no longer inlines the mark, so this guard has no geometry left to compare against').toBeGreaterThan(20);
-    const copied = pairs.filter((pair) => module.includes(pair));
-    expect(copied, 'js/plepic-mark.js repeats coordinates from the locked mark. Read them from the DOM instead; do not keep a second copy, not even in prose.').toEqual([]);
+    for (const name of modules) {
+      const copied = pairs.filter((pair) => read(name).includes(pair));
+      expect(copied, `${name} repeats coordinates from the locked mark. Read them from the DOM instead; do not keep a second copy, not even in prose.`).toEqual([]);
+    }
   });
 
   test('living tabletop: an embedded image carries no colour of its own', () => {

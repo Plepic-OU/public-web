@@ -226,6 +226,15 @@
   --wingbeat-dur: 1.1s;
   --wingbeat-open: 62deg;
 
+  /* Flight: the companions js/flight.js flies over the homepage hero. Only
+     that module reads these. A perched companion breathes on the breath
+     tokens above, so the mark has one rest at every size. */
+  --flight-size: 24px;
+  --flight-beat: 210ms;
+  --flight-beat-open: 66deg;
+  --flight-glide-open: 10deg;
+  --flight-cruise: 70px;
+
   /* Tooltip edge correction; script sets it per trigger near a screen edge. */
   --tip-dx: 0px;
 
@@ -804,6 +813,53 @@ p:last-child {
   line-height: normal;
   color: var(--text-3);
   letter-spacing: 0.01em;
+}
+
+/* The tagline given room, as the design system's Voice section sets it:
+   Bitter italic 500 in --green-brand, the one line allowed to be green
+   throughout. It is a paragraph, never a heading. Stacked, it leads the
+   hero; from 901px it titles the butterfly column while the copy spans
+   both rows, so the hero is no taller than the copy. */
+.hero-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 1rem + 1.1vw, 2.1rem);
+  line-height: 1.2;
+  color: var(--green-brand);
+  text-wrap: balance;
+}
+
+/* Stacked, the grid's row gap is the only space between the tagline and the
+   badge, and 2rem would part a line from the copy it introduces. */
+@media (max-width: 900px) {
+  .hero-grid:has(> .hero-tagline) {
+    row-gap: 0.75rem;
+  }
+}
+
+@media (min-width: 901px) {
+  .hero-grid:has(> .hero-tagline) {
+    grid-template-rows: 1fr auto;
+  }
+
+  .hero-grid > .hero-tagline {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .hero-grid:has(> .hero-tagline) > .hero-text {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .hero-grid:has(> .hero-tagline) > .hero-visual {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }
 
 /* Trust bar at bottom of hero */
@@ -1673,6 +1729,40 @@ plepic-mark > svg {
   .tt-seat[data-tilt]:hover .mark-live .mark-layer--left,
   .tt-seat[data-tilt]:hover .mark-live .mark-layer--right {
     animation: none;
+  }
+}
+
+/* ── Flight ──
+   Two or three companions over the homepage hero, each a <plepic-mark> that
+   js/flight.js clones from the header mark and flies. The module writes the
+   host's transform and both hinges every frame, so every CSS loop inside a
+   companion is off: an animation would outrank the inline transform. The
+   layer is above the hero copy and below the fixed header, and the hero's
+   overflow clips it. */
+.flight {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flier {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  will-change: transform;
+}
+
+.flier .mark-hinge,
+.flier .mark-layer--core,
+.flier .mark-antenna {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flight {
+    display: none;
   }
 }
 
