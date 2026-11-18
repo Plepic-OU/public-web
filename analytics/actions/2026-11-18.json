@@ -76,6 +76,21 @@
         "440319731807"
       ],
       "success": true
+    },
+    {
+      "timestamp": "2026-11-18T00:00:00.000Z",
+      "action": "CREATE_CAMPAIGN_PAUSED",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "ad_group_id": "197510443370",
+      "ad_id": "831910304526",
+      "budget_daily_eur": 20,
+      "bidding": "TARGET_SPEND (maximize clicks)",
+      "dates": "2026-11-19..2026-11-23",
+      "targeting": "Estonia, Estonian, custom search-term audience 1034510245",
+      "final_url": "Google Form registration",
+      "reason": "Webinar 24.11 promotion on YouTube feed/Shorts/Gmail/Discover; created PAUSED for Kaido's review",
+      "success": true
     }
   ],
   "summary": {
