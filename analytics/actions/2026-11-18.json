@@ -91,6 +91,31 @@
       "final_url": "Google Form registration",
       "reason": "Webinar 24.11 promotion on YouTube feed/Shorts/Gmail/Discover; created PAUSED for Kaido's review",
       "success": true
+    },
+    {
+      "timestamp": "2026-11-18T12:10:00.000Z",
+      "action": "UPDATE_AD_IMAGES",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "ad_id": "831910304526",
+      "reason": "Design-system visuals, variant B (Plepic.com wordmark bottom right), four formats",
+      "asset_ids": [
+        "440461516666",
+        "440357940686",
+        "440461607242",
+        "440358022097"
+      ],
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T12:16:15.567Z",
+      "action": "ENABLE_CAMPAIGN",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "reason": "Kaido approved launch in chat 18.11; webinar 24.11 promotion, EUR 20/day, 19-23 Nov",
+      "previous_state": "PAUSED",
+      "new_state": "ENABLED",
+      "success": true
     }
   ],
   "summary": {
