@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-18",
+  "actions": [
+    {
+      "timestamp": "2026-11-18T09:55:08.256Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "101",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Irrelevant product/certificate seekers; ~EUR 35 spend, 0 leads, 19 Oct-17 Nov",
+      "match_type": "PHRASE",
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T09:55:09.474Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "certificate",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Irrelevant product/certificate seekers; ~EUR 35 spend, 0 leads, 19 Oct-17 Nov",
+      "match_type": "PHRASE",
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T09:55:09.817Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "certificates",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Irrelevant product/certificate seekers; ~EUR 35 spend, 0 leads, 19 Oct-17 Nov",
+      "match_type": "PHRASE",
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T09:55:10.155Z",
+      "action": "ADD_NEGATIVE_KEYWORD",
+      "keyword": "certified",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Irrelevant product/certificate seekers; ~EUR 35 spend, 0 leads, 19 Oct-17 Nov",
+      "match_type": "PHRASE",
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T09:55:10.866Z",
+      "action": "PAUSE_KEYWORD",
+      "keyword": "claude courses",
+      "keyword_id": "2316135482291",
+      "ad_group_id": "201333005744",
+      "campaign": "Claude Code Training - Search",
+      "reason": "QS 2, 0 conversions in 30 days (EUR 13.37)",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T09:55:11.760Z",
+      "action": "PAUSE_KEYWORD",
+      "keyword": "claude code kursus",
+      "keyword_id": "2478891844211",
+      "ad_group_id": "199334744046",
+      "campaign": "Claude Code Training - Search",
+      "reason": "QS 2, 0 conversions in 30 days (EUR 11.72)",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    },
+    {
+      "timestamp": "2026-11-18T00:00:00.000Z",
+      "action": "ADD_IMAGE_ASSETS",
+      "campaign": "Claude Code Training - Search",
+      "campaign_id": "23672333274",
+      "reason": "Google recommendation 'Add images to your ads'; square 1200x1200 and landscape 1200x628 crops of images/agentic-harness.webp, no text, watermark cropped out",
+      "asset_ids": [
+        "440319743807",
+        "440319731807"
+      ],
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 2,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 4,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}
