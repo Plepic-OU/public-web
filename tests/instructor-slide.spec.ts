@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 /**
  * The instructor slide preview: hovering a team card raises that
@@ -18,6 +18,30 @@ import { test, expect } from '@playwright/test';
 
 const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni', 'aivo', 'ivo', 'andres'];
 
+// #team, .team-header and .team-grid carry .reveal: scrolling the section in
+// starts a 20px slide-up (0.6s plus a 0.1s delay on the grid). While it runs,
+// page.hover() finds the card "not stable" and retries. Its first attempt
+// scrolls instantly, but its retries call element.scrollIntoView(), which
+// honours html { scroll-behavior: smooth }. The pointer then lands mid-scroll,
+// the page moves on under it, and it ends up on the section header: no slide,
+// and the opacity poll times out (about one run in five). A retry that scrolls
+// the card to the top edge can also put it under the fixed header. Waiting for
+// the reveal to finish lets the first hover attempt succeed with no retries.
+// Only the .reveal transitions are awaited: the section also runs infinite
+// animations (the breathing mark) whose finished promise never settles.
+const openTeamSection = async (page: Page) => {
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+  await page.locator('#team').scrollIntoViewIfNeeded();
+  await expect(page.locator('.team-grid')).toHaveClass(/visible/);
+  await page.evaluate(() => Promise.all(
+    document.querySelector('#team')!.getAnimations({ subtree: true })
+      .filter((a) => a instanceof CSSTransition
+        && ((a.effect as KeyframeEffect).target as Element).classList.contains('reveal'))
+      .map((a) => a.finished.catch(() => {})),
+  ));
+};
+
 const opacityOf = (page, who) =>
   page.evaluate(
     (w) => getComputedStyle(
@@ -30,9 +54,7 @@ test.describe('instructor slide preview', () => {
   test('each card raises its own slide, and only its own', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await page.locator('#team').scrollIntoViewIfNeeded();
+    await openTeamSection(page);
 
     for (const who of INSTRUCTORS) {
       await page.hover(`.team-card[data-instructor="${who}"] .tt-art`);
@@ -58,9 +80,7 @@ test.describe('instructor slide preview', () => {
   test('the slide dismisses when the pointer moves away', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await page.locator('#team').scrollIntoViewIfNeeded();
+    await openTeamSection(page);
 
     await page.hover('.team-card[data-instructor="kaido"] .tt-art');
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
@@ -72,9 +92,7 @@ test.describe('instructor slide preview', () => {
   test('the panel is fully visible and never steals the pointer', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await page.locator('#team').scrollIntoViewIfNeeded();
+    await openTeamSection(page);
     await page.hover('.team-card[data-instructor="kaido"] .tt-art');
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
 
