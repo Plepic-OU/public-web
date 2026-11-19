@@ -29,7 +29,6 @@ const VARIANTS = {
   'plepic-mark': MARK,
   'plepic-lockup': LOCKUP,
   'plepic-lockup-stacked': LOCKUP.replace('class="logo-lockup"', 'class="logo-lockup logo-lockup--stacked"'),
-  'plepic-lockup-on-brand': `<span class="on-brand">${LOCKUP}</span>`,
   'plepic-com-lockup': LOCKUP.replace(WORDMARK, DOMAIN),
   'plepic-com-wordmark': DOMAIN,
 };

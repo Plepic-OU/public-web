@@ -139,7 +139,7 @@ def page(body, extra_css=""):
 # take on trust; a ramp checks itself. The accent sits after a break because
 # it is not a step on the ramp, it is the one colour that is not green.
 BRAND = [
-    ("--green-surface", "Ground for a block that must lift off the page"),
+    ("--green-surface", "Small tints only: a favoured card, a badge, a hover fill. Never a section ground"),
     ("--green-light", "Quiet fill behind a green statement"),
     ("--green-vivid", "Facet light and decoration. Never text"),
     ("--green-brand", "Text on light: links and the one green phrase. The only green that clears AA on cream"),
@@ -497,9 +497,6 @@ mark_css = """    .locks { display: flex; align-items: flex-start; gap: 56px; fl
            text-transform: uppercase; color: var(--text-3); margin: 14px 0 0; }
     .lcap-note { font-size: 0.85rem; line-height: 1.5; color: var(--text-2);
                 margin: 4px 0 0; max-width: 26ch; }
-    .ctxs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .ctxbox { padding: 26px 24px; }
-    .ctxbox p { margin: 14px 0 0; font-size: 0.85rem; line-height: 1.5; }
     .sizes { display: flex; align-items: flex-end; gap: 60px; padding: 8px 0 0; }
     .size .m { display: block; }
     .size .cap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
@@ -565,18 +562,6 @@ mark_body = """  <div class="board">
     </div>
 
     <hr class="rule">
-    <h2 class="sec">Two grounds</h2>
-    <p class="sec-note">The mark never changes; only the wordmark answers its ground.</p>
-    <div class="ctxs">
-      <div class="ctxbox" style="background: var(--bg); outline: 1px solid var(--border); outline-offset: -1px;">
-%s        <p style="color: var(--text-2)"><b>On light.</b> <span class="mono" style="font-size:0.92em">--green-brand</span>, the default.</p>
-      </div>
-      <div class="ctxbox" style="background: var(--green-surface);">
-%s        <p style="color: var(--text-2)"><b>On brand.</b> <span class="mono" style="font-size:0.92em">--text</span>, because green on green is illegible.</p>
-      </div>
-    </div>
-
-    <hr class="rule">
     <h2 class="sec">Four host widths, and no fifth</h2>
     <p class="sec-note">The viewBox owns the ratio: size the host and the mark follows.</p>
     <div class="sizes">
@@ -620,8 +605,6 @@ mark_body = """  <div class="board">
     lockup("var(--green-brand)"),
     lockup("var(--green-brand)", stacked=True),
     lockup("var(--green-brand)", domain=True),
-    lockup("var(--green-brand)"),
-    lockup("var(--text)"),
     mark_at(300, ".mark-display", "Display"),
     mark_at(120, ".mark-art", "Art"),
     mark_at(30, ".mark-nav", "The header lockup"),

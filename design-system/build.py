@@ -292,8 +292,7 @@ def blob(path):
 # The logo files are exported from the header lockup; they go stale when it changes.
 LOCKUP = re.search(r'<a href="/" class="logo-lockup".*?</a>', INDEX, re.S).group(0)
 LOGO_RULES = "".join(re.search(r"^" + re.escape(sel) + r"\s*\{[^}]*\}", CSS, re.M).group(0)
-                     for sel in (".logo-lockup", ".logo-lockup--stacked", ".logo-wordmark",
-                                 ".on-brand .logo-wordmark", ".logo-butterfly"))
+                     for sel in (".logo-lockup", ".logo-lockup--stacked", ".logo-wordmark", ".logo-butterfly"))
 LOGO_INPUTS = hashlib.sha256((LOCKUP + LOGO_RULES).encode() + (ROOT / "fonts" / "bitter.woff2").read_bytes()).hexdigest()
 if SYSTEM["logos"] != LOGO_INPUTS:
     raise SystemExit("the lockup changed since the logo files were exported: run node design-system/export-logos.mjs, "

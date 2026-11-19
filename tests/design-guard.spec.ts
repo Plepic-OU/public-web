@@ -162,6 +162,20 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
+  test('green-surface is a small tint: never a section ground', () => {
+    // The token is allowed for these small fills only.
+    const ALLOWED = new Set([
+      '.btn-outline:hover, .btn-secondary:hover', '.btn-ghost:hover', '.flow-badge',
+      '.cpath-final .cpath-card', '.cpath-outcome-icon', '.cpath-final[data-expanded] .cpath-card::after',
+    ]);
+    const css = read('css/styles.css').replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const m of css.matchAll(/([^{}]+)\{([^{}]*var\(--green-surface\)[^{}]*)\}/g)) {
+      const selector = m[1].trim().replace(/\s+/g, ' ');
+      if (selector === ':root') continue;
+      expect(ALLOWED.has(selector), `${selector} uses --green-surface; it is not a section or card ground`).toBe(true);
+    }
+  });
+
   test('every var() resolves: no references to undeclared custom properties', () => {
     // An unresolvable var() is invalid at computed-value time, so the property
     // falls back to inherit and the page renders one tier flatter, in silence.
