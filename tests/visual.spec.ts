@@ -13,9 +13,9 @@ const pages = [
 // either, so it shot every section below the fold as an empty band and the
 // snapshot guarded section heights only. Scrolling runs the page's own reveal
 // and lazy-load code, so a broken observer fails here too, which forcing the
-// .visible class would hide. Steps are half a viewport, well inside the
-// observer's 15% threshold, with a pause for its callback and the image
-// requests to start.
+// .visible class would hide. Steps are half a viewport, so every section
+// spends several steps in view (the observer fires once 15% of a section is
+// visible), with a pause for its callback and the image requests to start.
 const scrollThrough = async (page: Page) => {
   await page.evaluate(async () => {
     const pause = () => new Promise((resolve) => setTimeout(resolve, 120));
@@ -27,6 +27,10 @@ const scrollThrough = async (page: Page) => {
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' });
     await pause();
     window.scrollTo({ top: 0, behavior: 'instant' });
+    // Two frames: the first runs the page's scroll handler and observers,
+    // which clear the header's .scrolled state and the sticky CTA (70px of
+    // body padding on mobile); the second lays the result out.
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
 
   // Every section must have been revealed by the scroll.
@@ -37,13 +41,6 @@ const scrollThrough = async (page: Page) => {
     .poll(() => page.evaluate(() => [...document.images]
       .filter((img) => img.currentSrc && !img.complete).length))
     .toBe(0);
-
-  // Let the reveal fades and slide-ups settle. Only CSS transitions are
-  // awaited: they are finite, while the page also runs infinite animations
-  // (the breathing mark) whose finished promise never settles.
-  await page.evaluate(() => Promise.all(document.getAnimations()
-    .filter((a) => a instanceof CSSTransition)
-    .map((a) => a.finished.catch(() => {}))));
 };
 
 for (const page of pages) {
@@ -70,16 +67,21 @@ for (const page of pages) {
 
     await scrollThrough(browserPage);
 
-    const screenshot = await browserPage.screenshot({ fullPage: true, mask });
+    // animations: 'disabled' finishes the reveal transitions and resets the
+    // infinite animations (breathing mark, pulses) to their first frame, so
+    // the capture does not depend on when it is taken.
+    const screenshot = await browserPage.screenshot({ fullPage: true, mask, animations: 'disabled' });
 
-    // An absolute pixel budget, not a ratio: these captures are 4,500 to
-    // 11,300px tall, so the old 5% ratio let a rewritten paragraph through.
-    // Measured on the scrolled captures: run-to-run noise peaks at 16 pixels
-    // (29 of 30 runs are pixel-identical), and a one-word copy change
-    // ("Every" to "Each" on /scopeful/) moves 1,477 pixels on desktop and 738
-    // on mobile. 200 sits well clear of both.
+    // No pixel budget. Measured: repeated captures are pixel-identical, while
+    // a one-digit change moves 13 to 18 pixels and a one-word change that
+    // reflows its line ("Every" to "Each" on /scopeful/) moves 1,477 on
+    // desktop. The per-pixel threshold is 0.1 because the default 0.2 let a
+    // body-text colour change (#1c1c1a to #3a3a3a) through with 0 pixels
+    // counted. A macOS or Chromium update that changes glyph rendering fails
+    // all six: regenerate with npm run test:visual:update and check the new
+    // baselines by eye.
     await expect(screenshot).toMatchSnapshot(`${page.name}-${testInfo.project.name}.png`, {
-      maxDiffPixels: 200,
+      threshold: 0.1,
     });
   });
 }
