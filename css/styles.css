@@ -3927,6 +3927,9 @@ plepic-mark > svg {
   border-radius: 50%;
   object-fit: cover;
   filter: grayscale(100%);
+  /* Cut-out portraits (Joosep, Neeme) have a transparent ground; the white
+     fill gives them the same disc the opaque studio shots already carry. */
+  background: #fff;
 }
 
 .team-member-info {
