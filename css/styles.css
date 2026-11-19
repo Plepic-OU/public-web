@@ -427,7 +427,7 @@ p:last-child {
   justify-content: space-between;
 }
 
-/* Logo lockup — wordmark + crystalline butterfly. Locked 2026-04-07. */
+/* Logo lockup: wordmark, crystalline butterfly, tagline. One row by default. */
 .logo-lockup {
   display: inline-flex;
   align-items: center;
@@ -435,11 +435,18 @@ p:last-child {
   line-height: normal;
   text-decoration: none;
 }
-/* Stacked variant — butterfly on top, wordmark below */
+/* Stacked: butterfly on top, wordmark, tagline */
 .logo-lockup--stacked {
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0;
+}
+/* Mark first: butterfly left, as tall as wordmark plus tagline */
+.logo-lockup--mark-first {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: start;
+  column-gap: 0.45rem;
 }
 .logo-wordmark {
   font-family: var(--font-display);
@@ -453,6 +460,57 @@ p:last-child {
   display: block;
   shape-rendering: crispEdges;
 }
+.logo-lockup--stacked .logo-butterfly {
+  order: -1;
+  width: 4.22rem;
+  height: 3.94rem;
+  margin-bottom: -0.4rem;
+}
+.logo-lockup--mark-first .logo-butterfly {
+  grid-row: 1 / span 2;
+  width: 2.99rem;
+  height: 2.79rem;
+}
+/* Sizes are ratios of the 1.5rem wordmark: two lines from its cap line to its baseline. */
+.logo-tagline {
+  position: relative;
+  align-self: flex-start;
+  margin-top: 0.192rem;
+  padding-left: 0.63rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.541rem;
+  line-height: 1.25;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.logo-tagline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1px;
+  height: 1.053rem;
+  background: var(--text);
+  opacity: 0.22;
+}
+.logo-tagline > span { display: block; }
+.logo-tagline i {
+  font-style: normal;
+  color: var(--green-brand);
+}
+.logo-lockup--stacked .logo-tagline,
+.logo-lockup--mark-first .logo-tagline {
+  align-self: auto;
+  margin-top: 0.04rem;
+  padding-left: 0;
+  font-size: 0.668rem;
+  line-height: 1;
+}
+.logo-lockup--stacked .logo-tagline::before,
+.logo-lockup--mark-first .logo-tagline::before { display: none; }
+.logo-lockup--stacked .logo-tagline > span,
+.logo-lockup--mark-first .logo-tagline > span { display: inline; }
 .logo-butterfly--hero { shape-rendering: crispEdges; }
 
 @keyframes wing-breathe-left  { 0%,100% { transform: rotate(0) scaleX(1); } 50% { transform: rotate(-2deg) scaleX(0.97); } }

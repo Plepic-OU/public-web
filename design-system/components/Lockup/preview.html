@@ -1,4 +1,4 @@
-<!-- @dsCard group="Brand" height=150 width=1120 -->
+<!-- @dsCard group="Brand" height=190 width=1120 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Lockup</title>
@@ -10,10 +10,10 @@
 <body>
 <div class="cell">{{lockup}}</div>
 <div class="cell stacked">{{lockup}}</div>
-<div class="cell domain">{{lockup}}</div>
+<div class="cell mark-first">{{lockup}}</div>
 <script>
   document.querySelector('.stacked .logo-lockup').classList.add('logo-lockup--stacked');
-  document.querySelector('.domain .logo-wordmark').insertAdjacentHTML('beforeend', '<span style="color: var(--text-2)">.com</span>');
+  document.querySelector('.mark-first .logo-lockup').classList.add('logo-lockup--mark-first');
 </script>
 </body>
 </html>
