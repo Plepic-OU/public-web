@@ -18,6 +18,19 @@ import { test, expect } from '@playwright/test';
 
 const INSTRUCTORS = ['joosep', 'kaido', 'vootele', 'jevgeni', 'aivo', 'ivo', 'andres'];
 
+// The site scrolls smoothly (html { scroll-behavior: smooth }). page.hover()
+// scrolls its target into view and then places the pointer, but a smooth
+// scroll is still running when the pointer lands, so the page moves on under
+// it and the pointer ends up over the section header instead of the card: no
+// slide, and the opacity poll times out. That made the hover tests fail about
+// one run in five. Instant scrolling makes the pointer land where Playwright
+// aimed. The stylesheet stays smooth for real visitors.
+const openHomepage = async (page) => {
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+  await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; }' });
+};
+
 const opacityOf = (page, who) =>
   page.evaluate(
     (w) => getComputedStyle(
@@ -30,8 +43,7 @@ test.describe('instructor slide preview', () => {
   test('each card raises its own slide, and only its own', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await openHomepage(page);
     await page.locator('#team').scrollIntoViewIfNeeded();
 
     for (const who of INSTRUCTORS) {
@@ -58,8 +70,7 @@ test.describe('instructor slide preview', () => {
   test('the slide dismisses when the pointer moves away', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await openHomepage(page);
     await page.locator('#team').scrollIntoViewIfNeeded();
 
     await page.hover('.team-card[data-instructor="kaido"] .tt-art');
@@ -72,8 +83,7 @@ test.describe('instructor slide preview', () => {
   test('the panel is fully visible and never steals the pointer', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'hover preview is desktop only');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await openHomepage(page);
     await page.locator('#team').scrollIntoViewIfNeeded();
     await page.hover('.team-card[data-instructor="kaido"] .tt-art');
     await expect.poll(() => opacityOf(page, 'kaido'), { timeout: 2000 }).toBe('1');
@@ -125,8 +135,7 @@ test.describe('instructor slide preview', () => {
     //
     // Mouse moves by coordinate, never page.hover(): that helper scrolls its
     // target into view, which would move the strip between the screenshots.
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await openHomepage(page);
     await page.evaluate(() => {
       const grid = document.querySelector('.team-grid').getBoundingClientRect();
       window.scrollTo({ top: window.scrollY + grid.bottom - window.innerHeight + 40, behavior: 'instant' });
@@ -171,8 +180,7 @@ test.describe('instructor slide preview', () => {
       if (/\/images\/slide-\w+\.webp/.test(req.url())) slideRequests.push(req.url());
     });
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await openHomepage(page);
     await page.locator('#team').scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
 
