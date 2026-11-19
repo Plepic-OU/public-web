@@ -289,11 +289,13 @@ def blob(path):
     return b
 
 
-# The logo files are exported from the header lockup; they go stale when it changes.
+# The logo files are exported from the header lockup and the tagline; they go stale when either changes.
 LOCKUP = re.search(r'<a href="/" class="logo-lockup".*?</a>', INDEX, re.S).group(0)
-LOGO_RULES = "".join(re.search(r"^" + re.escape(sel) + r"\s*\{[^}]*\}", CSS, re.M).group(0)
-                     for sel in (".logo-lockup", ".logo-lockup--stacked", ".logo-wordmark", ".logo-butterfly"))
-LOGO_INPUTS = hashlib.sha256((LOCKUP + LOGO_RULES).encode() + (ROOT / "fonts" / "bitter.woff2").read_bytes()).hexdigest()
+TAGLINE = (HERE / "tagline.html").read_text().strip()
+LOCKUP_FULL = LOCKUP.replace("</a>", TAGLINE + "</a>")
+LOGO_RULES = "".join(re.findall(r"^\.logo-(?:lockup|wordmark|tagline|butterfly\s)[^{]*\{[^}]*\}", CSS, re.M))
+LOGO_INPUTS = hashlib.sha256((LOCKUP_FULL + LOGO_RULES).encode() + (ROOT / "fonts" / "bitter.woff2").read_bytes()
+                             + (ROOT / "fonts" / "hanken.woff2").read_bytes()).hexdigest()
 if SYSTEM["logos"] != LOGO_INPUTS:
     raise SystemExit("the lockup changed since the logo files were exported: run node design-system/export-logos.mjs, "
                      "upload design-system/assets/Logos/, and set \"logos\" in system.json to " + LOGO_INPUTS)
@@ -312,7 +314,7 @@ SEAT = re.search(r'<div class="tt-seat" data-tilt>.*?</article>\s*</div>', INDEX
 NAV = re.search(r'<nav class="nav">.*?</nav>', INDEX, re.S).group(0)
 FAQ = "\n".join(re.findall(r'<details class="faq-item".*?</details>', INDEX, re.S)[:2])
 SLOTS = {
-    "{{lockup}}": LOCKUP,
+    "{{lockup}}": LOCKUP_FULL,
     "{{mark_id}}": blob("Logos/plepic-mark.svg")["blob"],
     "{{nav}}": NAV,
     "{{faq}}": FAQ,

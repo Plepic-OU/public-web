@@ -469,30 +469,22 @@ card_body = """  <div class="board">
 LOGO_MARK = re.search(r'<svg class="logo-butterfly".*?</svg>', INDEX, re.S).group(0)
 if LOGO_MARK.count("<polygon") != 22:
     raise SystemExit("logo mark geometry is not 22 facets")
-# The size is set on the artboard, not inherited from the page's own attributes.
-LOGO_MARK_BARE = re.sub(r'\s(width|height)="[0-9]+"', "", LOGO_MARK)
 
 
-def lockup(wordmark_colour, stacked=False, domain=False):
-    """Wordmark 1.5rem, mark 30px: one size, because the canon sizes the mark to
-    the wordmark's ascender rather than to a number of its own."""
+TAGLINE = (ROOT / "design-system" / "tagline.html").read_text().strip()
+# The site's own lockup rules, so the board cannot show a lockup the stylesheet does not draw.
+LOGO_RULES = "\n".join(re.findall(r"^\.logo-(?:lockup|wordmark|tagline|butterfly\s)[^{]*\{[^}]*\}", CSS, re.M))
+
+
+def lockup(arrangement="", domain=False):
     com = "<span style=\"color: var(--text-2)\">.com</span>" if domain else ""
-    return ("        <span class=\"lock%s\">\n"
-            "          <span class=\"lock-word\" style=\"color: %s\">Plepic%s</span>\n"
-            "          <span class=\"lock-mark\">%s</span>\n"
-            "        </span>\n"
-            % (" lock--stacked" if stacked else "", wordmark_colour, com, LOGO_MARK_BARE))
+    return ("        <span class=\"logo-lockup%s\"><span class=\"logo-wordmark\">Plepic%s</span>%s%s</span>\n"
+            % (" logo-lockup--" + arrangement if arrangement else "", com, LOGO_MARK, TAGLINE))
 
 
-mark_css = """    .locks { display: flex; align-items: flex-start; gap: 56px; flex-wrap: wrap; }
-    .lock { display: inline-flex; align-items: center; gap: 0.5rem;
-            line-height: normal; padding: 16px 20px; }
-    .lock--stacked { flex-direction: column-reverse; align-items: center;
-                     gap: 0.3rem; }
-    .lock-word { font-family: var(--font-display); font-weight: 600;
-                 font-size: 1.5rem; letter-spacing: 0.01em; line-height: normal; }
-    .lock-mark { width: 30px; flex: none; }
-    .lock-mark svg { display: block; width: 100%; height: auto; }
+mark_css = LOGO_RULES + """
+    .locks { display: flex; align-items: flex-end; gap: 56px; flex-wrap: wrap; }
+    .locks .logo-lockup { zoom: 1.6; }
     .lcap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
            text-transform: uppercase; color: var(--text-3); margin: 14px 0 0; }
     .lcap-note { font-size: 0.85rem; line-height: 1.5; color: var(--text-2);
@@ -547,17 +539,31 @@ mark_body = """  <div class="board">
     <p class="lede">One locked cut at every size: twenty-two facets, a leaf body, two antennae and one ember. Copy the geometry; never redraw, re-facet, stretch or recolour it, not even in one colour.</p>
 
     <h2 class="sec">The lockup</h2>
-    <p class="sec-note">Wordmark left, butterfly right, sized to the wordmark&rsquo;s ascender so the pair scales as one. Bitter 600 at 1.5rem is the wordmark. Stacked is the same pair, mark above, for a narrow or centred hole.</p>
+    <p class="sec-note">Wordmark, butterfly and tagline as one unit, in three arrangements. The wordmark is Bitter 600 at 1.5rem and every other size is a ratio of it, so the lockup scales as one. On the web the wordmark is Plepic.</p>
     <div class="locks">
       <div>
-%s        <p class="lcap">Horizontal &middot; header, footer, signature</p>
+%s        <p class="lcap">One row &middot; .logo-lockup</p>
+        <p class="lcap-note">Signature, document footer, slide master. The site header is this lockup without its tagline.</p>
       </div>
       <div>
 %s        <p class="lcap">Stacked &middot; .logo-lockup--stacked</p>
+        <p class="lcap-note">A square or centred space: avatar, sticker, slide closer.</p>
       </div>
       <div>
-%s        <p class="lcap">Domain &middot; print and merchandise</p>
-        <p class="lcap-note">Plepic in <span class="mono" style="font-size:0.92em">--green-brand</span>, .com in <span class="mono" style="font-size:0.92em">--text-2</span>: business cards, stickers, the social card. The site header stays Plepic.</p>
+%s        <p class="lcap">Mark first &middot; .logo-lockup--mark-first</p>
+        <p class="lcap-note">A card or a cover.</p>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top: 36px">Print, merchandise and the social card carry Plepic.com: Plepic in <span class="mono" style="font-size:0.92em">--green-brand</span>, .com in <span class="mono" style="font-size:0.92em">--text-2</span>. The web never does.</p>
+    <div class="locks">
+      <div>
+%s        <p class="lcap">Domain &middot; one row</p>
+      </div>
+      <div>
+%s        <p class="lcap">Domain &middot; stacked</p>
+      </div>
+      <div>
+%s        <p class="lcap">Domain &middot; mark first</p>
       </div>
     </div>
 
@@ -602,9 +608,12 @@ mark_body = """  <div class="board">
       <div><h3>Three layers, one source</h3><p>The page ships the flat SVG in a <span class="mono">&lt;plepic-mark&gt;</span> host; the script re-stacks it into two wings and a core and draws nothing of its own.</p></div>
     </div>
   </div>""" % (
-    lockup("var(--green-brand)"),
-    lockup("var(--green-brand)", stacked=True),
-    lockup("var(--green-brand)", domain=True),
+    lockup(),
+    lockup("stacked"),
+    lockup("mark-first"),
+    lockup(domain=True),
+    lockup("stacked", domain=True),
+    lockup("mark-first", domain=True),
     mark_at(300, ".mark-display", "Display"),
     mark_at(120, ".mark-art", "Art"),
     mark_at(30, ".mark-nav", "The header lockup"),
@@ -625,9 +634,10 @@ mark_body = """  <div class="board">
 # belong here for the same reason the greens do: one home, checked in one
 # place. What never belongs here is a volatile value, and saying so is half
 # the artboard's job.
-voice_css = """    .slogan { font-family: var(--font-display); font-style: italic;
-              font-weight: 500; font-size: 1.75rem; line-height: normal;
-              color: var(--green-brand); margin: 0 0 0.6rem; }
+voice_css = """    .slogan { font-family: var(--font-body); font-weight: 500;
+              font-size: 1.75rem; line-height: normal;
+              color: var(--text-2); margin: 0 0 0.6rem; }
+    .slogan i { font-style: normal; color: var(--green-brand); }
     .decoder { display: flex; align-items: baseline; gap: 4px;
                font-family: var(--font-display); font-weight: 700;
                font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.01em;
@@ -712,8 +722,8 @@ voice_body = """  <div class="board">
     <h2 class="sec">The tagline decodes the name</h2>
     <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded.</p>
     <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
-    <p class="slogan" style="margin-top: 18px">Curious play. Epic growth.</p>
-    <p class="slogan-note">Bitter italic 500 in <span class="mono" style="font-size:0.95em">--green-brand</span> when given room; in the footer, quiet ink that warms to green on hover. The one line allowed to be green throughout.</p>
+    <p class="slogan" style="margin-top: 18px">Curious <i>pl</i>ay. <i>Epic</i> growth.</p>
+    <p class="slogan-note">Hanken Grotesk 500 in <span class="mono" style="font-size:0.95em">--text-2</span>, with pl and Epic in <span class="mono" style="font-size:0.95em">--green-brand</span>: the two halves of the name, and the only green in the line. In the footer, quiet ink that warms to green on hover.</p>
 
     <hr class="rule">
     <h2 class="sec">What Estonian carries instead</h2>
@@ -721,7 +731,7 @@ voice_body = """  <div class="board">
     <div class="langs">
       <div class="lang">
         <p class="tag">EN</p>
-        <p class="line" style="font-style: italic; font-weight: 500; color: var(--green-brand)">Curious play. Epic growth.</p>
+        <p class="line slogan" style="font-family: var(--font-body); font-weight: 500; color: var(--text-2)">Curious <i>pl</i>ay. <i>Epic</i> growth.</p>
         <p class="why">The tagline decodes the name; nothing stands in for it.</p>
       </div>
       <div class="lang" lang="et">

@@ -11,9 +11,10 @@ The Plepic design system, generated from `css/styles.css`, `index.html` and `tra
 Logos are uploads, not files: `design-system.json` lists each under `assetGroups.Logos.files.<name>.blob`, and you read it by passing that id as the path. Or copy the inline SVG from the Lockup component. The Mark section holds the rules; never redraw, recolour or stretch any of them.
 
 - The mark alone: `plepic-mark`; the SVG's id is `{{mark_id}}`.
-- The lockup, the default everywhere: `plepic-lockup`.
-- Stacked, for a narrow or centred space: `plepic-lockup-stacked`.
-- The domain wordmark, for print and merchandise: `plepic-com-lockup`, or `plepic-com-wordmark` where the mark stands apart, as on the social card.
+- The lockup in one row, the default: `plepic-lockup`.
+- Stacked, for a square or centred space: `plepic-lockup-stacked`.
+- Mark first, for a card or a cover: `plepic-lockup-mark-first`.
+- For print, merchandise and the social card, the same three with the domain wordmark: `plepic-com-lockup`, `plepic-com-lockup-stacked`, `plepic-com-lockup-mark-first`. The web uses the three without ".com".
 
 Each comes as `.pdf` (vector, fonts embedded: send this to a printer), `.svg` (text as outlines: for any tool) and `.png` (transparent, for slides and documents).
 ## Iconography

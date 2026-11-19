@@ -1,7 +1,8 @@
 // Export the lockup variants as files for print and for anything outside the
 // site: PDF (vector, fonts embedded), SVG (glyphs as outlines, via poppler's
 // pdftocairo) and PNG on transparency. Every variant is the header lockup from
-// index.html under the site's own stylesheet and fonts, so nothing is redrawn.
+// index.html plus the tagline in tagline.html, under the site's own stylesheet
+// and fonts, so nothing is redrawn.
 // Run it when design-system/build.py says the lockup changed.
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
@@ -13,14 +14,18 @@ import url from 'node:url';
 const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'design-system/assets/Logos');
 const INDEX = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+const TAGLINE = fs.readFileSync(path.join(ROOT, 'design-system/tagline.html'), 'utf8').trim();
 const LOCKUP = INDEX.match(/<a href="\/" class="logo-lockup"[\s\S]*?<\/a>/)[0]
   .replace(/^<a [^>]*>/, '<span class="logo-lockup">')
-  .replace(/<\/a>$/, '</span>');
+  .replace(/<\/a>$/, TAGLINE + '</span>');
 const WORDMARK = '<span class="logo-wordmark">Plepic</span>';
-// The domain wordmark, as on the social card (images/plepic-og.png): .com in text-2.
+// The domain wordmark, for print, merchandise and the social card: .com in text-2.
 const DOMAIN = '<span class="logo-wordmark">Plepic<span style="color: var(--text-2)">.com</span></span>';
 
 // The mark alone, at the header's size; its SVG is written as markup, not traced.
+const STACKED = (lockup) => lockup.replace('class="logo-lockup"', 'class="logo-lockup logo-lockup--stacked"');
+const MARK_FIRST = (lockup) => lockup.replace('class="logo-lockup"', 'class="logo-lockup logo-lockup--mark-first"');
+const COM = LOCKUP.replace(WORDMARK, DOMAIN);
 const MARK = LOCKUP.match(/<svg class="logo-butterfly"[\s\S]*?<\/svg>/)[0];
 fs.writeFileSync(path.join(OUT, 'plepic-mark.svg'), MARK.replace(/<svg class="logo-butterfly"[^>]*>/,
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" shape-rendering="geometricPrecision">') + '\n');
@@ -28,9 +33,11 @@ fs.writeFileSync(path.join(OUT, 'plepic-mark.svg'), MARK.replace(/<svg class="lo
 const VARIANTS = {
   'plepic-mark': MARK,
   'plepic-lockup': LOCKUP,
-  'plepic-lockup-stacked': LOCKUP.replace('class="logo-lockup"', 'class="logo-lockup logo-lockup--stacked"'),
-  'plepic-com-lockup': LOCKUP.replace(WORDMARK, DOMAIN),
-  'plepic-com-wordmark': DOMAIN,
+  'plepic-lockup-stacked': STACKED(LOCKUP),
+  'plepic-lockup-mark-first': MARK_FIRST(LOCKUP),
+  'plepic-com-lockup': COM,
+  'plepic-com-lockup-stacked': STACKED(COM),
+  'plepic-com-lockup-mark-first': MARK_FIRST(COM),
 };
 
 const css = url.pathToFileURL(path.join(ROOT, 'css/styles.css')).href;
