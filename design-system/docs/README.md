@@ -13,7 +13,6 @@ Logos are uploads, not files: `design-system.json` lists each under `assetGroups
 - The mark alone: `plepic-mark`; the SVG's id is `{{mark_id}}`.
 - The lockup, the default everywhere: `plepic-lockup`.
 - Stacked, for a narrow or centred space: `plepic-lockup-stacked`.
-- On a green ground, where the wordmark turns ink: `plepic-lockup-on-brand`.
 - The domain wordmark, for print and merchandise: `plepic-com-lockup`, or `plepic-com-wordmark` where the mark stands apart, as on the social card.
 
 Each comes as `.pdf` (vector, fonts embedded: send this to a printer), `.svg` (text as outlines: for any tool) and `.png` (transparent, for slides and documents).
@@ -23,7 +22,7 @@ The brand icon is the mark (Logos above). Plepic uses no emoji and one icon set:
 
 ## Not synced
 
-- `--rounded-badge` (`20px 4px 16px`) is a three-value radius the token format cannot hold. It stays in the `:root` block of `components/bundle.css` with the transitions, tier fills, card tilt, mark breath and runtime channels.
+- `--rounded-badge` (`20px 4px 16px`) is a three-value radius the token format cannot hold. It stays in the `:root` block of `components/bundle.css` with the transitions, card tilt, mark breath and runtime channels.
 - The card's tilt and the mark's breath and wing beat need the site's scripts; the showcase pages run the CSS parts only.
 - The logo files are RGB. No CMYK or spot-colour separation exists.
 - The hero's crystalline metamorphosis is a WebGL module and is never redrawn here.

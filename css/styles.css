@@ -131,7 +131,7 @@
   --green-brand:   #137b30;   /* S73%  L28% — logo, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
   --green-light:   #c5f6d3;   /* S73%  L87% — light fills, borders */
-  --green-surface: #edfcf1;   /* S73%  L96% — tinted backgrounds */
+  --green-surface: #edfcf1;   /* S73%  L96% — small tints: a favoured card, a badge, a hover fill. Never a section ground. */
 
   /* Accent — H=15°, S=73% (saturation-matched). One per viewport. */
   --accent: #e26c45;
@@ -228,11 +228,6 @@
 
   /* Tooltip edge correction; script sets it per trigger near a screen edge. */
   --tip-dx: 0px;
-
-  /* Module tiers, named for the loadout builder. Never applied to people. */
-  --tier-core: var(--green-surface);
-  --tier-advanced: var(--green-light);
-  --tier-signature: var(--green-brand);
 
   /* Runtime channels. js/tabletop.js and js/plepic-mark.js write these per
      element; they are declared here because every var() must resolve. */
@@ -454,8 +449,6 @@ p:last-child {
   color: var(--green-brand);
   line-height: normal;
 }
-/* On a brand-green background, the wordmark switches to dark text for contrast. */
-.on-brand .logo-wordmark { color: var(--text); }
 .logo-butterfly {
   display: block;
   shape-rendering: crispEdges;
@@ -1067,14 +1060,8 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-.text-agent,
-.shift-col--agent h4 {
+.text-agent {
   color: var(--text) !important;
-}
-
-.shift-col--agent {
-  background: var(--green-surface);
-  border-color: var(--green-light);
 }
 
 .text-conversational,
@@ -2122,7 +2109,8 @@ plepic-mark > svg {
    ======================================== */
 
 .enlist-section {
-  background: var(--green-surface);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   padding: var(--space-4xl) 0;
 }
 
@@ -3111,10 +3099,6 @@ plepic-mark > svg {
   padding: 0 var(--space-xl) var(--space-lg);
 }
 
-.curriculum-final {
-  background: var(--green-surface);
-}
-
 .curriculum-sessions-badge {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -3703,9 +3687,9 @@ plepic-mark > svg {
    ======================================== */
 
 .pricing-section {
-  background: var(--green-surface);
-  border-top: 1px solid var(--green-light);
-  border-bottom: 1px solid var(--green-light);
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .pricing-hero {
@@ -4644,14 +4628,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   border-radius: 14px;
   padding: var(--space-xl);
 }
-.card-info {
-  background: var(--green-surface);
-  border: 1px solid var(--green-light);
-  border-radius: 10px;
-  padding: var(--space-md);
-}
-.card-info h4 { color: var(--text); }
-.card-info p  { color: var(--green-brand); font-size: 0.85rem; }
 
 /* ── Code blocks ────────────────────────────────────────────── */
 .code-block {
@@ -4723,7 +4699,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   max-width: 640px;
   margin-bottom: var(--space-lg);
 }
-.ds-locked,
 .ds-wip {
   display: inline-block;
   font-family: var(--font-mono);
@@ -4735,7 +4710,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   margin-left: var(--space-sm);
   vertical-align: middle;
 }
-.ds-locked { background: var(--green-surface); color: var(--green-dark); }
 .ds-wip    { background: #fdf0eb; color: #a3502e; }
 
 .ds-swatch-strip {
@@ -4825,7 +4799,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   padding: 2px 5px;
   border-radius: 3px;
 }
-.ds-ct-pass { background: var(--green-surface); color: var(--green-dark); }
 .ds-ct-warn { background: var(--bg-alt); color: var(--text-3); }
 .ds-ct-fail { background: #fdf0eb; color: #a3502e; }
 

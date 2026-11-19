@@ -53,24 +53,6 @@
       "type": "image/png",
       "sha256": "c98c79b8beec06e0c8015bc24546290fd4fb4cf9bb7dffee88d696445d914442"
     },
-    "Logos/plepic-lockup-on-brand.svg": {
-      "blob": "32204bcd637caaa18ea06f9ad95f1ed0",
-      "size": 23368,
-      "type": "image/svg+xml",
-      "sha256": "2f420f9f5941b4fb1144e91e1112d3b5294e6a554e687e134c967f48eefdb749"
-    },
-    "Logos/plepic-lockup-on-brand.pdf": {
-      "blob": "c4572a604dfced4184103189fbfc148b",
-      "size": 9049,
-      "type": "application/pdf",
-      "sha256": "8262e746d268bb6ee2eeb8916228752ab36eda68d3139846889c2e669959db01"
-    },
-    "Logos/plepic-lockup-on-brand.png": {
-      "blob": "22cccc04b4bea3d18c453413392b2cd1",
-      "size": 24809,
-      "type": "image/png",
-      "sha256": "47883bfc7941a2019fa0b60454d41a6482951b0cc4db56a0abe625b74910ac13"
-    },
     "Logos/plepic-com-lockup.svg": {
       "blob": "58bef91d2ff01710772554ed04cb3ea8",
       "size": 27862,
@@ -210,5 +192,5 @@
       "sha256": "ff91a076beea59540e34253d5ee46205fd3a0d0b9dc51809390245bc7286c1a2"
     }
   },
-  "logos": "47e64a05b4284786192de6a647ffb6e2e936eb3831ff1b7e0e1cea63956be6c0"
+  "logos": "d1a15ba0ec5e87c781f459cdad3ded826c007f5b5b52d527f8bd3017a5f584fa"
 }
