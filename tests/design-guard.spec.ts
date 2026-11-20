@@ -177,6 +177,19 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
+  test('the same client marks are on the homepage bar, /training and /et', () => {
+    const marks = (page: string, container: string) => {
+      const html = stripComments(read(page));
+      const block = html.slice(html.indexOf(container));
+      return [...block.matchAll(/class="company-logo [^"]*"[^>]*?(?:aria-label|alt)="([^"]+)"/g)].map((m) => m[1]).sort();
+    };
+    const home = marks('index.html', 'class="client-logos"');
+    expect(home.length, 'homepage trust bar carries 19 marks').toBe(19);
+    for (const page of ['training/index.html', 'et/index.html']) {
+      expect(marks(page, 'class="trained-logos"'), `${page}: client marks must match the homepage bar`).toEqual(home);
+    }
+  });
+
   test('green-surface is a small tint: never a section ground', () => {
     // The token is allowed for these small fills only.
     const ALLOWED = new Set([

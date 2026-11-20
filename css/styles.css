@@ -858,7 +858,9 @@ p:last-child {
   letter-spacing: 0.01em;
 }
 
-/* Trust bar at bottom of hero */
+/* Trust bar at bottom of hero. The label and hairline sit on the first row of
+   marks; the second row sits under it and shares its width. The bar is pinned
+   to the hero bottom, so the second row grows the bar upward. */
 .hero-bottom {
   position: absolute;
   bottom: 2rem;
@@ -867,9 +869,10 @@ p:last-child {
   max-width: var(--max-width);
   padding: 0 2rem;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem 1rem;
 }
 
 /* text-2 (#4a4a45, ~8.3:1 on cream) passes AA at this size; the old
@@ -885,7 +888,6 @@ p:last-child {
 }
 
 .hero-bottom-line {
-  flex: 1;
   min-width: 1.5rem;
   height: 1px;
   background: var(--border);
@@ -893,16 +895,23 @@ p:last-child {
 }
 
 /* Ten marks and a label do not fit one line at every width the bar is shown
-   at, so the row scales instead of breaking. font-size is the single scale
+   at, so the rows scale instead of breaking. font-size is the single scale
    knob: 15px where the container is at its full 1120px, 11.5px at 901px where
-   the bar is about to hide anyway, and every mark and gap below is sized in
-   em off it. One clamp, no breakpoint, nothing to keep in sync. */
+   the bar is about to move below the hero, and every mark and gap below is
+   sized in em off it. One clamp, no breakpoint, nothing to keep in sync.
+   display: contents hands both rows to the hero-bottom grid, which keeps them
+   the same width. */
 .client-logos {
+  display: contents;
+  font-size: clamp(11.5px, 1.6vw - 2.92px, 15px);
+}
+
+.client-logos-row {
+  grid-column: 3;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1.35em;
-  flex-shrink: 0;
-  font-size: clamp(11.5px, 1.6vw - 2.92px, 15px);
 }
 
 /* Heights are per mark against a shared cap height, never against the SVG
@@ -910,16 +919,65 @@ p:last-child {
    Aktiva's in all of it. One shared value leaves Aktiva shouting and Bitweb
    whispering. Marks whose own box carries padding (Merit, Aktiva, Thorgate)
    have it cropped out of the viewBox instead, so no height here is fighting
-   an exporter's artboard. */
-.client-logos .company-logo { height: 1em; }
-.client-logos .company-logo--datel,
-.client-logos .company-logo--thorgate { height: 1.07em; }
-.client-logos .company-logo--delfi { height: 0.93em; }
-.client-logos .company-logo--bitweb,
-.client-logos .company-logo--aktiva,
-.client-logos .company-logo--rethink,
-.client-logos .company-logo--mindworks { height: 0.87em; }
-.client-logos .company-logo--merit { height: 0.8em; }
+   an exporter's artboard. The /training and /et grids reuse these heights. */
+:is(.client-logos, .trained-logos) .company-logo { height: 1em; }
+:is(.client-logos, .trained-logos) .company-logo--datel,
+:is(.client-logos, .trained-logos) .company-logo--thorgate { height: 1.07em; }
+:is(.client-logos, .trained-logos) .company-logo--delfi { height: 0.93em; }
+:is(.client-logos, .trained-logos) .company-logo--bitweb,
+:is(.client-logos, .trained-logos) .company-logo--aktiva,
+:is(.client-logos, .trained-logos) .company-logo--rethink,
+:is(.client-logos, .trained-logos) .company-logo--mindworks { height: 0.87em; }
+:is(.client-logos, .trained-logos) .company-logo--merit { height: 0.8em; }
+:is(.client-logos, .trained-logos) .company-logo--coop { height: 1em; }
+:is(.client-logos, .trained-logos) .company-logo--cybernetica { height: 0.85em; }
+:is(.client-logos, .trained-logos) .company-logo--taltech { height: 1.3em; }
+:is(.client-logos, .trained-logos) .company-logo--cleveron { height: 0.8em; }
+:is(.client-logos, .trained-logos) .company-logo--skeleton { height: 0.85em; }
+:is(.client-logos, .trained-logos) .company-logo--simplbooks { height: 0.85em; }
+:is(.client-logos, .trained-logos) .company-logo--werkado { height: 0.66em; }
+:is(.client-logos, .trained-logos) .company-logo--intium { height: 1.1em; }
+:is(.client-logos, .trained-logos) .company-logo--uisupark { height: 0.9em; }
+
+/* Client marks under the proof line on /training and /et: the same marks,
+   five to a row, no motion. */
+.trained-logos-wrap {
+  margin: var(--space-md) 0;
+  text-align: center;
+}
+
+.trained-logos-label {
+  display: block;
+  margin-bottom: var(--space-md);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.trained-logos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 1.5rem 1.25rem;
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 20px;
+}
+
+.trained-logos .company-logo {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .trained-logos {
+    gap: 1.25rem 0.5rem;
+    font-size: 11px;
+  }
+}
 
 /* Butterfly visual */
 .hero-visual {
@@ -4430,10 +4488,6 @@ plepic-mark > svg {
     margin-top: 0;
   }
 
-  .hero-bottom {
-    display: none;
-  }
-
   .btn-primary {
     margin: 0 auto;
   }
@@ -4591,8 +4645,47 @@ plepic-mark > svg {
     align-items: center;
   }
 
+  /* The bar leaves the hero floor and follows the hero content: five marks
+     to a row, label centred, no hairline. */
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .hero-bottom {
+    position: static;
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 2.5rem 1.5rem 0;
+  }
+
+  .hero-bottom-label {
+    display: block;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .hero-bottom-line {
     display: none;
+  }
+
+  .client-logos {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.5rem 0.75rem;
+    align-items: center;
+    justify-items: center;
+    font-size: clamp(11px, 1.8vw, 15px);
+  }
+
+  .client-logos-row {
+    display: contents;
+  }
+
+  .client-logos .company-logo {
+    max-width: 100%;
+    object-fit: contain;
   }
 }
 
