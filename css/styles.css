@@ -1490,7 +1490,8 @@ p:last-child {
     translate: 0 -50%;
   }
 
-  .instructor-slide[data-instructor="andres"] {
+  .instructor-slide[data-instructor="andres"],
+  .instructor-slide[data-instructor="neeme"] {
     top: auto;
     bottom: 0;
   }
@@ -1505,7 +1506,8 @@ p:last-child {
   .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"],
   .team-showcase:has(.team-card[data-instructor="aivo"]:hover) .instructor-slide[data-instructor="aivo"],
   .team-showcase:has(.team-card[data-instructor="ivo"]:hover) .instructor-slide[data-instructor="ivo"],
-  .team-showcase:has(.team-card[data-instructor="andres"]:hover) .instructor-slide[data-instructor="andres"] {
+  .team-showcase:has(.team-card[data-instructor="andres"]:hover) .instructor-slide[data-instructor="andres"],
+  .team-showcase:has(.team-card[data-instructor="neeme"]:hover) .instructor-slide[data-instructor="neeme"] {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1911,6 +1913,10 @@ plepic-mark > svg {
 }
 
 .tt-card[data-instructor="andres"] .tt-portrait {
+  transform: translateY(3%) scale(1.06);
+}
+
+.tt-card[data-instructor="neeme"] .tt-portrait {
   transform: translateY(3%) scale(1.06);
 }
 
@@ -3963,6 +3969,9 @@ plepic-mark > svg {
   border-radius: 50%;
   object-fit: cover;
   filter: grayscale(100%);
+  /* Cut-out portraits (Joosep, Neeme) have a transparent ground; the white
+     fill gives them the same disc the opaque studio shots already carry. */
+  background: var(--surface);
 }
 
 .team-member-info {
