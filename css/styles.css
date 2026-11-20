@@ -188,10 +188,10 @@
   --max-width: 1120px;
 
   /* Instructor CV logos: every mark covers this ink area in px squared, so a
-     wide wordmark and a square crest weigh the same. --r is a logo's aspect
+     wide wordmark and a square crest weigh the same. --cv-logo-ratio is a logo's aspect
      ratio, set on each img; the default only keeps the formula valid. */
-  --cv-ink: 2100;
-  --r: 1;
+  --cv-logo-area: 2100;
+  --cv-logo-ratio: 1;
   --header-height: 64px;
 
   /* Motion — durations + the signature easing. See design-system.html Section 11. */
@@ -1802,7 +1802,7 @@ p:last-child {
   display: block;
   width: auto;
   height: 24px;
-  height: min(clamp(16px, calc(sqrt(var(--cv-ink) / var(--r)) * 1px), 38px), calc(118px / var(--r)));
+  height: min(clamp(16px, calc(sqrt(var(--cv-logo-area) / var(--cv-logo-ratio)) * 1px), 38px), calc(118px / var(--cv-logo-ratio)));
   filter: grayscale(1) contrast(1.2) brightness(0.85);
   opacity: 0.8;
   mix-blend-mode: multiply;
@@ -1936,6 +1936,7 @@ p:last-child {
 }
 
 .cv-dialog {
+  margin: auto;
   width: min(1040px, calc(100vw - 24px));
   max-width: none;
   max-height: calc(100dvh - 24px);
