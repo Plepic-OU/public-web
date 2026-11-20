@@ -186,6 +186,12 @@
 
   /* Layout */
   --max-width: 1120px;
+
+  /* Instructor CV logos: every mark covers this ink area in px squared, so a
+     wide wordmark and a square crest weigh the same. --cv-logo-ratio is a logo's aspect
+     ratio, set on each img; the default only keeps the formula valid. */
+  --cv-logo-area: 2100;
+  --cv-logo-ratio: 1;
   --header-height: 64px;
 
   /* Motion — durations + the signature easing. See design-system.html Section 11. */
@@ -1666,112 +1672,427 @@ p:last-child {
   margin-bottom: 0;
 }
 
-/* Instructor slide preview.
-   Hovering a card raises that instructor's career slide over the grid. The
-   panel is a SIBLING of the grid, never a child of the card: .team-card
-   clips with overflow: hidden and lifts on hover with a transform, so a
-   tooltip nested inside it would be cut off. pointer-events: none keeps the
-   panel from ever owning the pointer, so :hover always belongs to the card
-   underneath and moving the mouse away dismisses the panel with no flicker.
-   Top-aligned with the grid, the 16:9 panel overhangs the cards by about
-   150px, which lands inside the section's 6rem bottom padding. */
-.team-showcase {
-  position: relative;
-}
-
-/* Touch and narrow viewports get no panel at all. display: none also means
-   the browser never fetches the three slide images there. */
-.instructor-slides {
+/* Instructor CV.
+   One component for all eight instructors: photo with name plate, headline,
+   Experience and Focus, a keyword line, and a career timeline whose logos are
+   sized to equal ink area. Hovering or focusing a card shows its CV over the
+   page; on touch and narrow viewports the card's button opens the same CV in
+   a native dialog (js in index.html). The CVs live in .instructor-cvs at body
+   level, not beside the grid: #team carries .reveal, whose transform would make
+   a position: fixed box relative to the section, and the CV must be placed
+   against the viewport so that it always fits inside it. pointer-events: none
+   keeps the panel from owning the pointer, so :hover always belongs to the card
+   underneath and moving away dismisses the panel with no flicker. */
+.instructor-cvs {
   display: none;
 }
 
-@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
-  /* #team also carries .reveal, whose transform: translateY(0) makes the
-     section a stacking context. That traps the panel's z-index inside it, so
-     .outcome-section, later in the DOM and opaque, painted over the part of
-     the panel that overhangs the cards. Raising the section itself is what
-     puts the panel above the next section; a z-index on the panel cannot. */
-  .team-section {
-    z-index: 2;
+/* The button is the card's keyboard stop. It covers the card and paints nothing. */
+.cv-open {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cv {
+  container-type: inline-size;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-2xl);
+  box-shadow: 0 20px 50px rgba(28, 28, 26, 0.16);
+  padding: 28px 40px 24px;
+  text-align: left;
+}
+
+.cv-top {
+  display: grid;
+  grid-template-columns: 184px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.cv-photo {
+  position: relative;
+  width: 184px;
+  aspect-ratio: 1;
+  margin: 0;
+  border-radius: var(--rounded-sm);
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+
+.cv-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
+  mix-blend-mode: multiply;
+}
+
+.cv-nameplate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 7px 10px;
+  background: var(--green-dark);
+  color: var(--bg);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* One crop for the set: the same per-person framing as the card portraits, so
+   the heads are one size. Geometry only; the grade is the single filter above. */
+.cv[data-instructor="joosep"] .cv-photo img { transform: translateY(3%) scale(1.15); }
+.cv[data-instructor="kaido"] .cv-photo img { transform: translateY(4.2%) scale(1.28); }
+.cv[data-instructor="vootele"] .cv-photo img { transform: translate(5.9%, 5.5%) scale(1.17); }
+.cv[data-instructor="jevgeni"] .cv-photo img { transform: translateY(7%) scale(1.2); }
+.cv[data-instructor="aivo"] .cv-photo img { transform: translateY(3%) scale(1.04); }
+.cv[data-instructor="ivo"] .cv-photo img,
+.cv[data-instructor="andres"] .cv-photo img,
+.cv[data-instructor="neeme"] .cv-photo img { transform: translateY(3%) scale(1.06); }
+
+.cv-title {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.cv-lead {
+  color: var(--green-brand);
+}
+
+.cv-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.cv-cols h4 {
+  margin: 0 0 8px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.cv-cols ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-cols li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.cv-cols li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--text-3);
+}
+
+.cv-cols li span {
+  color: var(--text-3);
+}
+
+.cv-tags {
+  margin: 14px 0 0;
+  text-wrap: pretty;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+/* The timeline: logos above and below one axis, start year at the left end,
+   2026 and the wordmark at the right. Each logo's height comes from its aspect
+   ratio (--r, set on the img) so every mark covers the same ink area:
+   h = sqrt(area / r), bounded in height and in width. */
+.cv-timeline {
+  margin-top: 24px;
+}
+
+.cv-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 24px;
+  min-height: 40px;
+  margin: 0;
+  padding: 0 6px;
+  list-style: none;
+}
+
+.cv-row > li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cv-row > li:only-child {
+  margin-left: auto;
+}
+
+.cv-logo {
+  display: block;
+  width: auto;
+  height: 24px;
+  height: min(clamp(16px, calc(sqrt(var(--cv-logo-area) / var(--cv-logo-ratio)) * 1px), 38px), calc(118px / var(--cv-logo-ratio)));
+  filter: grayscale(1) contrast(1.2) brightness(0.85);
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+}
+
+.cv-pair .cv-logo {
+  height: 28px;
+}
+
+.cv-text {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.cv-axis {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  margin: 8px 0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cv-axis::before,
+.cv-axis::after {
+  content: "";
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.cv-axis::before {
+  height: 2px;
+  margin: 0 12px;
+  background: var(--text);
+}
+
+.cv-axis::after {
+  justify-self: end;
+  width: 9px;
+  height: 12px;
+  margin-right: 12px;
+  background: var(--text);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.cv-from {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cv-now {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  color: var(--green-brand);
+}
+
+.cv-plepic {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+@media (max-width: 699px) {
+  .cv {
+    padding: 20px 18px;
+  }
+}
+
+@container (max-width: 700px) {
+  .cv-top {
+    grid-template-columns: 96px 1fr;
+    gap: 6px 16px;
+    position: relative;
   }
 
-  .instructor-slides {
-    display: block;
+  .cv-photo {
+    position: static;
+    grid-row: 1 / 3;
+    width: 96px;
+  }
+
+  .cv-nameplate {
     position: absolute;
     top: 0;
-    bottom: 0;
+    left: 112px;
+    padding: 0;
+    background: none;
+    color: var(--text-2);
+    text-align: left;
+  }
+
+  .cv-main {
+    display: contents;
+  }
+
+  .cv-title {
+    grid-column: 2;
+    align-self: start;
+    margin: 30px 0 0;
+    font-size: 1.25rem;
+  }
+
+  .cv-cols {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .cv-tags {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .cv-row {
+    justify-content: flex-start;
+    gap: 12px 22px;
+  }
+
+  .cv-row > li:only-child {
+    margin-left: 0;
+  }
+}
+
+.cv-dialog {
+  margin: auto;
+  width: min(1040px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--rounded-2xl);
+  background: var(--surface);
+  overflow: auto;
+}
+
+.cv-dialog::backdrop {
+  background: rgba(28, 28, 26, 0.55);
+}
+
+.cv-close-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 8px 8px 0;
+  background: var(--surface);
+}
+
+.cv-close {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-pill);
+  background: var(--surface);
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.cv-dialog .cv {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding-top: 8px;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  .instructor-cvs {
+    display: block;
+  }
+
+  .instructor-cvs .cv {
+    position: fixed;
     left: 50%;
-    width: min(1040px, 100%);
-    transform: translateX(-50%);
+    top: calc(var(--header-height) + (100dvh - var(--header-height)) / 2);
+    translate: -50% -50%;
+    width: min(1040px, calc(100vw - 48px));
     z-index: 10;
     pointer-events: none;
-  }
-
-  .instructor-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: 0 20px 50px rgba(28, 28, 26, 0.16);
+    visibility: hidden;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.22s ease,
-                transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+                transform 0.22s var(--ease-settle),
+                visibility 0s linear 0.22s;
   }
 
-  /* The panel covers the card, so a tilt here would be invisible and the
-     hover sheet would show at the panel's edges. The panel is
-     the hover feedback now. --tilt-enabled is the single source of truth for
-     that: CSS owns the breakpoint, and js/tabletop.js reads the computed
-     value and applies no rotation when it is 0. The hover override carries
-     [data-tilt] because the rule it has to outrank carries it too; without
-     the attribute the two selectors weigh the same and source order, not
-     intent, would decide which shadow wins. */
+  .cv-open {
+    cursor: default;
+  }
+
+  /* The CV covers the card, so a tilt here would be invisible. --tilt-enabled
+     is the single source of truth: CSS owns the breakpoint, and js/tabletop.js
+     applies no rotation when it is 0. The hover override carries [data-tilt]
+     because the rule it has to outrank carries it too. */
   .team-showcase .tt-seat {
     --tilt-enabled: 0;
-  }
-
-  /* The panel covers the row that was hovered. Rows are equal height, so a
-     middle-row slide centres on the grid, and a last-row slide hangs up from
-     the bottom of the grid. translate, not transform, does the centring,
-     because transform carries the fade-in. The anchor belongs to the slide,
-     not to the pointer: anchoring on :hover made a slide still fading out
-     jump rows when the pointer crossed from one row to the other. */
-  .instructor-slide[data-instructor="jevgeni"],
-  .instructor-slide[data-instructor="aivo"],
-  .instructor-slide[data-instructor="ivo"] {
-    top: 50%;
-    translate: 0 -50%;
-  }
-
-  .instructor-slide[data-instructor="andres"],
-  .instructor-slide[data-instructor="neeme"] {
-    top: auto;
-    bottom: 0;
   }
 
   .team-showcase .tt-seat[data-tilt]:hover > .tt-card {
     transform: none;
   }
 
-  .team-showcase:has(.team-card[data-instructor="joosep"]:hover) .instructor-slide[data-instructor="joosep"],
-  .team-showcase:has(.team-card[data-instructor="kaido"]:hover) .instructor-slide[data-instructor="kaido"],
-  .team-showcase:has(.team-card[data-instructor="vootele"]:hover) .instructor-slide[data-instructor="vootele"],
-  .team-showcase:has(.team-card[data-instructor="jevgeni"]:hover) .instructor-slide[data-instructor="jevgeni"],
-  .team-showcase:has(.team-card[data-instructor="aivo"]:hover) .instructor-slide[data-instructor="aivo"],
-  .team-showcase:has(.team-card[data-instructor="ivo"]:hover) .instructor-slide[data-instructor="ivo"],
-  .team-showcase:has(.team-card[data-instructor="andres"]:hover) .instructor-slide[data-instructor="andres"],
-  .team-showcase:has(.team-card[data-instructor="neeme"]:hover) .instructor-slide[data-instructor="neeme"] {
+  body:has(.team-card[data-instructor="joosep"]:hover, .team-card[data-instructor="joosep"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="joosep"],
+  body:has(.team-card[data-instructor="kaido"]:hover, .team-card[data-instructor="kaido"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="kaido"],
+  body:has(.team-card[data-instructor="vootele"]:hover, .team-card[data-instructor="vootele"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="vootele"],
+  body:has(.team-card[data-instructor="jevgeni"]:hover, .team-card[data-instructor="jevgeni"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="jevgeni"],
+  body:has(.team-card[data-instructor="aivo"]:hover, .team-card[data-instructor="aivo"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="aivo"],
+  body:has(.team-card[data-instructor="ivo"]:hover, .team-card[data-instructor="ivo"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="ivo"],
+  body:has(.team-card[data-instructor="andres"]:hover, .team-card[data-instructor="andres"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="andres"],
+  body:has(.team-card[data-instructor="neeme"]:hover, .team-card[data-instructor="neeme"] .cv-open:focus-visible) .instructor-cvs .cv[data-instructor="neeme"] {
+    visibility: visible;
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition-delay: 0s;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .instructor-slide {
+  .instructor-cvs .cv {
     transform: none;
     transition: none;
   }
