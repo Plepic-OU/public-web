@@ -162,18 +162,44 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
-  test('every instructor is on every list: homepage card, career slide, training and Estonian strips', () => {
+  test('every instructor is on every list: homepage card, CV, training and Estonian strips', () => {
     const home = stripComments(read('index.html'));
     const cards = [...home.matchAll(/<article class="tt-card team-card" data-instructor="([a-z]+)">[\s\S]*?<h3 class="tt-name">([^<]+)</g)];
     const names = cards.map((m) => m[2].trim()).sort();
     expect(names.length).toBeGreaterThan(0);
     for (const [, id] of cards) {
-      expect(home.includes(`class="instructor-slide" data-instructor="${id}"`), `index.html: ${id} has a card and no career slide`).toBe(true);
+      expect(home.includes(`<article class="cv" data-instructor="${id}"`), `index.html: ${id} has a card and no CV`).toBe(true);
     }
     for (const page of ['training/index.html', 'et/index.html']) {
       const strip = [...stripComments(read(page)).matchAll(/<strong>([^<]+)<\/strong>\s*<span class="team-member-role">/g)]
         .map((m) => m[1].trim()).sort();
       expect(strip, `${page}: the instructor strip must list the same people as the homepage cards`).toEqual(names);
+    }
+  });
+
+  test('every instructor CV follows the one template', () => {
+    const home = stripComments(read('index.html'));
+    const cvs = [...home.matchAll(/<article class="cv" data-instructor="([a-z]+)"[^>]*>([\s\S]*?)<\/article>/g)];
+    const cards = [...home.matchAll(/<article class="tt-card team-card" data-instructor="([a-z]+)">/g)].map((m) => m[1]);
+    expect(cvs.map((m) => m[1]).sort()).toEqual([...cards].sort());
+    for (const [, id, body] of cvs) {
+      const text = (html: string) => html.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').trim();
+      expect(text(body.match(/<h3 class="cv-title">([\s\S]*?)<\/h3>/)![1]), `${id}: headline starts with Instructor`).toMatch(/^Instructor/);
+      const lead = body.match(/<h3 class="cv-title"><span class="cv-lead">([^<]+)<\/span>/);
+      expect(lead && lead[1], `${id}: Instructor is the one green phrase`).toMatch(/^Instructor,?$/);
+      for (const column of ['Experience', 'Focus']) {
+        const list = body.match(new RegExp(`<h4>${column}</h4><ul>([\\s\\S]*?)</ul>`));
+        expect(list, `${id}: ${column} column`).not.toBeNull();
+        const items = (list![1].match(/<li>/g) || []).length;
+        expect(items, `${id}: ${column} has 1 to 4 items`).toBeGreaterThan(0);
+        expect(items, `${id}: ${column} has at most 4 items`).toBeLessThanOrEqual(4);
+      }
+      expect(body.match(/<p class="cv-tags">[^<]+<\/p>/g) || [], `${id}: one keyword line`).toHaveLength(1);
+      const axis = body.match(/<p class="cv-axis"><span class="cv-from">(\d{4})<\/span><span class="cv-now">2026 <span class="cv-plepic">Plepic<\/span><\/span><\/p>/);
+      expect(axis, `${id}: timeline axis with start year, 2026 and Plepic`).not.toBeNull();
+      const rows = body.match(/<ul class="cv-row">[\s\S]*?<\/ul>/g) || [];
+      expect(rows, `${id}: one row above the axis and one below`).toHaveLength(2);
+      expect(rows[1], `${id}: the below row ends with the Claude Code mark`).toMatch(/alt="Claude Code"[^>]*><\/li><\/ul>$/);
     }
   });
 
