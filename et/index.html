@@ -798,6 +798,8 @@
       };
       trigger.addEventListener('mouseenter', fit);
       trigger.addEventListener('focus', fit);
+      // Hidden panels still count toward page width, so fit them at load too.
+      fit();
     });
 
   </script>
