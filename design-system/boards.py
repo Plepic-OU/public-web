@@ -1350,7 +1350,7 @@ layout_body = """  <div class="board">
 # hero would smuggle a price, a cohort state, a headcount and a rating into
 # the design system as pixels, where the claims gate cannot see them.
 _h1 = re.search(r'<h1 class="hero-entrance hero-entrance-2">(.*?)</h1>', INDEX, re.S)
-_desc = re.search(r'<p class="hero-desc[^"]*">\s*(.*?)<br>', INDEX, re.S)
+_desc = re.search(r'<p class="hero-desc[^"]*">\s*(.*?)\s*(?:<br>|</p>)', INDEX, re.S)
 _ctas = re.search(r'<div class="btn-group hero-entrance[^"]*">(.*?)</div>', INDEX, re.S)
 if not (_h1 and _desc and _ctas):
     raise SystemExit("homepage hero markup not found")
