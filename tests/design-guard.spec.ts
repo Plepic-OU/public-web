@@ -162,6 +162,21 @@ test.describe('design guard @design-guard', () => {
     }
   });
 
+  test('every instructor is on every list: homepage card, career slide, training and Estonian strips', () => {
+    const home = stripComments(read('index.html'));
+    const cards = [...home.matchAll(/<article class="tt-card team-card" data-instructor="([a-z]+)">[\s\S]*?<h3 class="tt-name">([^<]+)</g)];
+    const names = cards.map((m) => m[2].trim()).sort();
+    expect(names.length).toBeGreaterThan(0);
+    for (const [, id] of cards) {
+      expect(home.includes(`class="instructor-slide" data-instructor="${id}"`), `index.html: ${id} has a card and no career slide`).toBe(true);
+    }
+    for (const page of ['training/index.html', 'et/index.html']) {
+      const strip = [...stripComments(read(page)).matchAll(/<strong>([^<]+)<\/strong>\s*<span class="team-member-role">/g)]
+        .map((m) => m[1].trim()).sort();
+      expect(strip, `${page}: the instructor strip must list the same people as the homepage cards`).toEqual(names);
+    }
+  });
+
   test('green-surface is a small tint: never a section ground', () => {
     // The token is allowed for these small fills only.
     const ALLOWED = new Set([
