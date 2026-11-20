@@ -173,6 +173,7 @@
     .jobs-cols h3 { margin-top: var(--space-md); }
     .jobs-why { margin-top: var(--space-2xl); }
     .jobs-why p { font-size: 1.15rem; line-height: 1.7; color: var(--text-2); max-width: 60ch; margin: 0; }
+    .jobs-why p:not(.label) + p { margin-top: var(--space-sm); }
 
     @media (max-width: 720px) {
       .jobs-grid, .jobs-roles, .jobs-cols { grid-template-columns: 1fr; }
@@ -277,8 +278,10 @@
         </div>
 
         <div class="panel-white jobs-why">
-          <p class="label">Why this role exists</p>
-          <p>Plepic has trained 350+ engineers to build with Claude Code, with a course rating of 8.1 out of 10. Every cohort runs with two instructors, and I want to run many more cohorts than I can teach. You'd start next to an experienced primary and take your own cohort when you're ready.</p>
+          <p class="label">How we work</p>
+          <p><strong>Schedule learning, reward performance.</strong> Six fixed Fridays per cohort, and your pay rises with the participants' rating.</p>
+          <p><strong>Short feedback loops.</strong> Every Friday ends with participant feedback, and the next one starts from it.</p>
+          <p><strong>Small teams move mountains faster.</strong> Two instructors per cohort; participants build in small teams.</p>
         </div>
 
         <h3>Three questions we'll talk through</h3>
