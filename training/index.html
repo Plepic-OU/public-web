@@ -49,7 +49,7 @@
     "@context": "https://schema.org",
     "@type": "Course",
     "name": "Agentic Engineering & Claude Code",
-    "description": "6-week hands-on training program teaching engineers to ship production-grade code with agentic workflows; graduates self-report a median 4.7× speedup on their final project (61 of 71 measurable answers). Master prompt engineering, agentic development, and automated code quality.",
+    "description": "6-week hands-on training program teaching engineers to ship production-grade code with agentic workflows; graduates self-report a median 4.7× speedup on their capstone project (61 of 71 measurable answers). Master prompt engineering, agentic development, and automated code quality.",
     "provider": {
       "@type": "Organization",
       "name": "Plepic",
@@ -89,7 +89,7 @@
       "@type": "EducationalOccupationalCredential",
       "name": "Plepic Certificate of Completion: Agentic Engineering & Claude Code",
       "credentialCategory": "certificate",
-      "competencyRequired": "Agentic coding with Claude Code, CLAUDE.md architecture, git worktrees, agentic loop"
+      "competencyRequired": "Agentic coding with Claude Code, AGENTS.md architecture, git worktrees, agentic loop"
     },
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -163,7 +163,7 @@
     <section class="training-hero section">
       <div class="container">
         <div class="badge-base cohort-badge hero-entrance hero-entrance-1">
-          <span>First four cohorts sold out &middot; next starts 15&nbsp;January</span>
+          <span>Every cohort so far sold out &middot; next starts 15&nbsp;January</span>
         </div>
 
         <h1 class="hero-entrance hero-entrance-2">Agentic Engineering &amp; <span class="highlight">Claude&nbsp;Code</span></h1>
@@ -242,7 +242,7 @@
         <!-- This line does the work no data label has room for: it attributes
              the speedup to the graduates. The figure must never appear bare,
              and this sentence is its qualifier. -->
-        <p class="hero-qualifier mt-md">Graduates self-report a median 4.7&times; speedup on their final project.</p>
+        <p class="hero-qualifier mt-md">Graduates self-report a median 4.7&times; speedup on their capstone project.</p>
 
       </div>
     </section>
@@ -268,7 +268,7 @@
       <div class="container">
         <div class="text-center mb-4 reveal">
           <p class="label">Curriculum</p>
-          <h2>6 Sessions: Ad Hoc Agents to a Repeatable Method</h2>
+          <h2>6 sessions: ad hoc agents to a repeatable method</h2>
           <div class="powered-badge mt-sm">
             <img src="../images/claude-code-sm.webp" alt="Claude Code wordmark" width="120" height="62" loading="lazy">
             Curriculum built on Claude Code
@@ -277,7 +277,7 @@
           <p class="mt-md text-dim">Using a different agent? <a href="/#faq-claude-code">Why Claude Code &rarr;</a></p>
         </div>
 
-        <p class="cpath-hint reveal">Pick a week for details. Underlined terms open a definition.</p>
+        <p class="cpath-hint reveal">Pick a day for details. Underlined terms open a definition.</p>
 
         <!-- Learning path. One column per training day, so the capstone
              project spans two. Steps and panels interleave in the DOM: on
@@ -287,10 +287,10 @@
           <button class="cpath-step" id="cpath-1" aria-expanded="true" aria-controls="cpath-1-desc" data-expanded>
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
             <span class="cpath-card">
-              <span class="cpath-week">Week 1</span>
+              <span class="cpath-week">Day 1</span>
               <span class="cpath-title">Harness &amp; Safety</span>
               <span class="cpath-tagline">Configure the harness. Turn friendly fire off.</span>
-              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>CLAUDE.md, plus hooks that block dangerous commands</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>AGENTS.md, plus hooks that block dangerous commands</span>
               <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
             </span>
           </button>
@@ -299,28 +299,28 @@
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
-                  <li>Claude Code and the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-loop">agentic loop<span class="tooltip" role="tooltip" id="tip-loop">The cycle an agent repeats until the task is done: read the context, call a tool, check the result.</span></span>: prompts, tokens, skills, subagents, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-mcp">MCP<span class="tooltip" role="tooltip" id="tip-mcp">Model Context Protocol. The standard way to connect an agent to outside tools and data, such as your issue tracker or database.</span></span>, plans and pricing</li>
+                  <li>Claude Code and the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-loop">agentic loop<span class="tooltip" role="tooltip" id="tip-loop">The cycle an agent repeats until the task is done: read the context, call a tool, check the result.</span></span>: context, skills, subagents, tools (CLI or <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-mcp">MCP<span class="tooltip" role="tooltip" id="tip-mcp">Model Context Protocol. The standard way to connect an agent to outside tools and data, such as your issue tracker or database.</span></span>), permissions, plans and pricing</li>
                   <li>Hooks: observe every tool call, block the dangerous ones</li>
                 </ul>
               </div>
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
-                  <li>Set up Claude Code on your own project, or on our sample repo, then /init its <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-claudemd">CLAUDE.md<span class="tooltip" role="tooltip" id="tip-claudemd">A Markdown file in your repo that Claude Code reads at the start of every session: your commands, conventions and rules.</span></span></li>
-                  <li>Two hooks: one observes every tool call, the other blocks reading a secret file; your breakout room then tries to get past it</li>
+                  <li>Set up Claude Code on your own project, or vibe code one, then turn /init&rsquo;s draft into <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-claudemd">AGENTS.md<span class="tooltip" role="tooltip" id="tip-claudemd">A Markdown file in your repo that coding agents read at the start of every session: your commands, conventions and rules. /init drafts it as CLAUDE.md; you turn that into AGENTS.md.</span></span></li>
+                  <li>Two hooks: one logs every tool call, the other blocks a secret file; your partner tries to bypass it</li>
                 </ul>
               </div>
             </div>
-            <button class="cpath-next" data-next="cpath-2">Next: Week 2, Guardrails &amp; Context <span aria-hidden="true">&rarr;</span></button>
+            <button class="cpath-next" data-next="cpath-2">Next: Day 2, Context &amp; Specs <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <button class="cpath-step" id="cpath-2" aria-expanded="false" aria-controls="cpath-2-desc">
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-map"/></svg></span>
             <span class="cpath-card">
-              <span class="cpath-week">Week 2</span>
-              <span class="cpath-title">Guardrails &amp; Context</span>
+              <span class="cpath-week">Day 2</span>
+              <span class="cpath-title">Context &amp; Specs</span>
               <span class="cpath-tagline">Give the agent a map. Validate before you build.</span>
-              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A project map and a spec the agent can verify</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A map generator and a reviewed spec</span>
               <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
             </span>
           </button>
@@ -329,29 +329,29 @@
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
-                  <li>Maps of the project: layered summaries, the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-c4">C4 model<span class="tooltip" role="tooltip" id="tip-c4">A way to draw software architecture at four zoom levels: system context, containers, components and code.</span></span>, tokens vs the prompt cache</li>
-                  <li>Design docs, the testing pyramid, validation loops and <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-subagent">subagents<span class="tooltip" role="tooltip" id="tip-subagent">Helper agents that the main agent starts for one task, each with a fresh context. Typical jobs: review, validation, search.</span></span> in depth</li>
+                  <li>Context and caching, then maps: an agent-friendly repo, the <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-c4">C4 model<span class="tooltip" role="tooltip" id="tip-c4">A way to draw software architecture at four zoom levels: system context, containers, components and code.</span></span>, generate don&rsquo;t draw</li>
+                  <li>Spec-driven development, runnable scenarios, the testing pyramid and <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-subagent">subagents<span class="tooltip" role="tooltip" id="tip-subagent">Helper agents that the main agent starts for one task, each with a fresh context. Typical jobs: review, validation, search.</span></span></li>
                 </ul>
               </div>
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
-                  <li>Build a C4-model skill and a DB-schema map, wired into CLAUDE.md</li>
-                  <li>Prompt engineering, write-then-compare: write yours cold, run it, then run the reference. The delta is the lesson</li>
-                  <li>Write a spec with acceptance criteria the agent can verify, checked by parallel validation agents</li>
+                  <li>Build a skill that generates C4 and database maps, linked from AGENTS.md</li>
+                  <li>Write spec-interview and spec-review skills, then review your spec with parallel reviewer subagents</li>
+                  <li>Pick the model and effort for each reviewer</li>
                 </ul>
               </div>
             </div>
-            <button class="cpath-next" data-next="cpath-3">Next: Week 3, Spec-Driven Build &amp; Verification <span aria-hidden="true">&rarr;</span></button>
+            <button class="cpath-next" data-next="cpath-3">Next: Day 3, Loops &amp; Gates <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <button class="cpath-step" id="cpath-3" aria-expanded="false" aria-controls="cpath-3-desc">
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>
             <span class="cpath-card">
-              <span class="cpath-week">Week 3</span>
-              <span class="cpath-title">Spec-Driven Build &amp; Verification</span>
-              <span class="cpath-tagline">Build in chunks. Validate each. Guess nothing.</span>
-              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A verification gate for your stack</span>
+              <span class="cpath-week">Day 3</span>
+              <span class="cpath-title">Loops &amp; Gates</span>
+              <span class="cpath-tagline">Build in stages. Check each. Guess nothing.</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A gate for your project</span>
               <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
             </span>
           </button>
@@ -360,26 +360,26 @@
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Watch: live</p>
                 <ul>
-                  <li>From validated spec to working code; the two gates every change must pass: e2e and performance</li>
-                  <li>Loop engineering: turn-based, goal-based, time-based and proactive loops (Anthropic&rsquo;s &ldquo;Getting started with loops&rdquo;)</li>
+                  <li>Verification loops: scripts first, then AI reviewing AI, then a human</li>
+                  <li>Loop engineering: agent, verification, event-driven and improvement loops; goals and gates</li>
                 </ul>
               </div>
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Build: your work</p>
                 <ul>
-                  <li>Implement the spec in chunks; a validator subagent checks each one, then a /code-review loop runs until no issues remain, with a second review by another vendor&rsquo;s model</li>
-                  <li>Build the verification gate for your stack (Lighthouse on a web app, a benchmark elsewhere) with a baseline diff and gated exit codes</li>
-                  <li>Breakout: one ambitious goal per room. Divide the work, pick a presenter, ship</li>
+                  <li>Build your spec in stages: Claude stops after each, a reviewer skill checks it, you decide, then /code-review</li>
+                  <li>Build a gate: your tests plus one metric, a baseline and an exit code; break it on purpose</li>
+                  <li>Run the full loop: Claude loops until a test passes, then /goal improves your metric</li>
                 </ul>
               </div>
             </div>
-            <button class="cpath-next" data-next="cpath-4">Next: Week 4, Parallel Agents &amp; Architecture <span aria-hidden="true">&rarr;</span></button>
+            <button class="cpath-next" data-next="cpath-4">Next: Day 4, Parallel Agents &amp; Architecture <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <button class="cpath-step" id="cpath-4" aria-expanded="false" aria-controls="cpath-4-desc">
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>
             <span class="cpath-card">
-              <span class="cpath-week">Week 4</span>
+              <span class="cpath-week">Day 4</span>
               <span class="cpath-title">Parallel Agents &amp; Architecture</span>
               <span class="cpath-tagline">Run many agents at once. See what they do.</span>
               <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>A parallel workflow: one worktree per agent</span>
@@ -403,13 +403,13 @@
                 </ul>
               </div>
             </div>
-            <button class="cpath-next" data-next="cpath-5">Next: Weeks 5 &amp; 6, Capstone Project <span aria-hidden="true">&rarr;</span></button>
+            <button class="cpath-next" data-next="cpath-5">Next: Days 5 &amp; 6, Capstone Project <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <button class="cpath-step cpath-final" id="cpath-5" aria-expanded="false" aria-controls="cpath-5-desc">
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>
             <span class="cpath-card">
-              <span class="cpath-week">Weeks 5 &amp; 6 <span class="curriculum-sessions-badge">2 sessions</span></span>
+              <span class="cpath-week">Days 5 &amp; 6 <span class="curriculum-sessions-badge">2 sessions</span></span>
               <span class="cpath-title">Capstone Project</span>
               <span class="cpath-tagline">Ship a real feature in your own codebase</span>
               <span class="cpath-yield"><span class="cpath-yield-label">You leave with</span>Your own agentic setup and a shipped feature</span>
@@ -417,13 +417,13 @@
             </span>
           </button>
           <div class="cpath-desc cpath-desc-final" id="cpath-5-desc" role="region" aria-labelledby="cpath-5" hidden>
-            <p>Your own work challenge, the whole workflow, instructors on hand. The weeks participants rate highest.</p>
+            <p>Your own work challenge, the whole workflow, instructors on hand. The days participants rate highest.</p>
             <div class="cpath-track">
               <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-flag"/></svg></span>Deliverables</p>
               <ul>
-                <li>A configured agentic setup: CLAUDE.md, skills, hooks, gates</li>
-                <li>A real feature shipped through the full workflow, with the spec, <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-adr">ADRs<span class="tooltip" role="tooltip" id="tip-adr">Architecture Decision Records. One short note per design decision: the context, the choice and its consequences.</span></span> and C4 diagrams</li>
-                <li>Final presentation and peer review of about 20 capstones</li>
+                <li>A configured agentic setup: AGENTS.md, skills, hooks, gates</li>
+                <li>A real feature shipped through the full workflow, with the spec and C4 maps</li>
+                <li>A one-pager of goals, then a final presentation</li>
               </ul>
             </div>
           </div>
@@ -432,12 +432,12 @@
         <div class="cpath-outcomes reveal">
           <span class="curr-track-label">After the training, the participant</span>
           <ul>
-            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>sets up the Claude Code harness: CLAUDE.md, skills, and hooks that block dangerous commands</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-shield"/></svg></span>sets up the Claude Code harness: AGENTS.md, skills, and hooks that block dangerous commands</li>
             <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-spec"/></svg></span>writes a specification with acceptance criteria the agent can check itself</li>
-            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>builds a verification chain that the agent runs until its work passes (tests, verification and validation)</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-checks"/></svg></span>builds a gate of tests and one metric that the agent runs until its work passes</li>
             <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-loop"/></svg></span>automates recurring tasks with loops</li>
             <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>runs several agents in parallel in git worktrees and monitors their work</li>
-            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-diagram"/></svg></span>documents architecture with C4 diagrams and ADRs</li>
+            <li><span class="cpath-outcome-icon"><svg class="cpath-icon" aria-hidden="true"><use href="#i-diagram"/></svg></span>generates C4 and database maps for agents</li>
           </ul>
         </div>
 
@@ -475,7 +475,7 @@
       <div class="container">
         <div class="capstones-head reveal">
           <p class="label">Capstone projects</p>
-          <h2>What Participants <span class="highlight">Built in Weeks 5 and 6</span></h2>
+          <h2>What participants <span class="highlight">built in days 5 and 6</span></h2>
           <p class="capstones-sub">Most came from their own daily work; some were personal. Pick a problem.</p>
         </div>
         <div class="capstone-filters" role="group" aria-label="Filter capstone projects by problem">
@@ -493,7 +493,7 @@
         <ul class="capstone-list" aria-live="polite">
           <li data-cat="0">Began adding tests to a 164,000-line application that had none, riskiest business logic first.</li>
           <li data-cat="0">Built a review gate and a verify gate for AI-written code: the verify gate breaks the code on purpose to see whether the tests notice.</li>
-          <li data-cat="0">Made a read-only catalogue of thousands of automated tests across repositories, readable by managers as well as engineers.</li>
+          <li data-cat="0">Made a read-only catalog of thousands of automated tests across repositories, readable by managers as well as engineers.</li>
           <li data-cat="0">Wrote browser tests for two new country versions of a product. Claude writes, runs and fixes each test until it passes three times in a row.</li>
           <li data-cat="0">Wrote runnable usage examples for a library that had none; they double as regression tests.</li>
           <li data-cat="1">Planned a database migration of a business-critical service, with old and new running side by side to compare results.</li>
@@ -501,7 +501,7 @@
           <li data-cat="1">Removed a ten-year-old layer around the database in stages small enough to review, and proved that the generated SQL stayed the same.</li>
           <li data-cat="1">Migrated an AngularJS front end to modern Angular one piece at a time, with end-to-end tests as the safety net.</li>
           <li data-cat="1">Upgraded a portal stuck on Java 1.6: dependencies, getting it running, end-to-end tests, dead code.</li>
-          <li data-cat="1">Replaced an abandoned modelling tool with a standalone app, using about 100 existing models as tests that the generated code stays identical.</li>
+          <li data-cat="1">Replaced an abandoned modeling tool with a standalone app, using about 100 existing models as tests that the generated code stays identical.</li>
           <li data-cat="2">Profiled a backend service and found a library compiling a regular expression on every event. The fix halved CPU use.</li>
           <li data-cat="2">Found out why a web console kept open all day slows down, using heap snapshots, and ranked the fixes.</li>
           <li data-cat="2">Patched an open-source game launcher for touch on a Raspberry Pi: 11 patches, and one fix cut world loading from 2 minutes to about 5 seconds.</li>
@@ -512,7 +512,7 @@
           <li data-cat="3">Turned a ticket number into ready context for Claude Code: the related repositories, wiki pages and skills.</li>
           <li data-cat="3">Kept a C4 map up to date with a skill, and added a brainstorming skill that turns business input into analysis and task drafts.</li>
           <li data-cat="3">Built a pipeline of skills that extracts a knowledge base from slides and notes, with a validator on every step.</li>
-          <li data-cat="4">Built a read-only MCP server with pseudonymised data, so customers&rsquo; agents can ask how a complex system is set up.</li>
+          <li data-cat="4">Built a read-only MCP server with pseudonymized data, so customers&rsquo; agents can ask how a complex system is set up.</li>
           <li data-cat="4">Added write operations and an MCP server to a product&rsquo;s API, with confirm dialogs, dry runs and an agent whose job was to break it.</li>
           <li data-cat="4">Built a no-code REST service builder where an assistant on a self-hosted model writes the SQL and configures the endpoint.</li>
           <li data-cat="4">Built a support bot that answers in five languages from a knowledge base and hands uncertain cases to a human.</li>
@@ -554,7 +554,7 @@
         <div class="details-grid reveal">
           <div class="detail-panel panel">
             <div class="panel-header">Requirements</div>
-            <h3>Who Should Join</h3>
+            <h3>Who should join</h3>
             <ul class="detail-list">
               <li>2+ years in a software team, any role</li>
               <li>No programming needed: the agent writes the code, you direct it and check its work</li>
@@ -563,7 +563,7 @@
             </ul>
             <p class="cert-line mt-md text-sm">
               <svg class="cert-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg>
-              <span>Participants who present a final project receive a <strong>Plepic Certificate of Completion: Agentic Engineering &amp; Claude Code</strong></span>
+              <span>Participants who present a capstone project receive a <strong>Plepic Certificate of Completion: Agentic Engineering &amp; Claude Code</strong></span>
             </p>
           </div>
         </div>
@@ -575,7 +575,7 @@
       <div class="container">
         <div class="pricing-hero reveal">
           <p class="label">Investment</p>
-          <h2>Training Program</h2>
+          <h2>Training program</h2>
           <p class="section-subtitle">Your own codebase from day one, or our sample repo &middot; 6 Fridays &middot; 37.5 hours &middot; Online via Google Meet</p>
 
           <!-- Cohort status. Sold-out history is the strongest true signal the
@@ -584,7 +584,7 @@
                third sentence is load-bearing: without it, "sold out" reads as
                if 15 January is full too. No
                headcount here, by the founder's ruling. -->
-          <p class="text-dim mt-md">Our first four cohorts sold out. The next cohort starts on 15&nbsp;January. You can still join it.</p>
+          <p class="text-dim mt-md">Every cohort so far sold out. The next one starts on 15&nbsp;January. You can still join it.</p>
 
           <div class="pricing-cards">
             <div class="pricing-card">
@@ -776,7 +776,7 @@
     <section class="team-strip section">
       <div class="container">
         <div class="reveal">
-          <p class="label text-center">Your Instructors</p>
+          <p class="label text-center">Instructors</p>
           <div class="team-inline">
             <div class="team-member">
               <img src="../images/joosep.webp" alt="Joosep Simm" width="400" height="400" loading="lazy" class="team-member-photo">
@@ -844,8 +844,8 @@
     <section id="enlist" class="enlist-section">
       <div class="container">
         <div class="enlist-content reveal">
-          <h2>Start Your Claude Code Course</h2>
-          <p><span class="tooltip-trigger" tabindex="0" aria-describedby="guarantee-tip">A 3&times; promise.<span class="tooltip" role="tooltip" id="guarantee-tip">3x Time Savings Guarantee: if you don't experience at least 3x time savings in typical development tasks after completing this training, we'll refund your contribution in full. Conditions apply.</span></span></p>
+          <h2>Start your Claude Code course</h2>
+          <p><span class="tooltip-trigger" tabindex="0" aria-describedby="guarantee-tip">A 3&times; promise.<span class="tooltip" role="tooltip" id="guarantee-tip">3× Time Savings Guarantee: if you don't experience at least 3× time savings in typical development tasks after completing this training, we'll refund your contribution in full. Conditions apply.</span></span></p>
 
           <a href="https://calendar.app.google/h5sq5y19e8a11GRQ7" target="_blank" rel="noopener noreferrer" class="btn-enlist">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
