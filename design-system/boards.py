@@ -720,26 +720,10 @@ voice_body = """  <div class="board">
 
     <hr class="rule">
     <h2 class="sec">The tagline decodes the name</h2>
-    <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded.</p>
+    <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded, and why Estonian carries it in English, never translated and never replaced by a line of its own.</p>
     <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
     <p class="slogan" style="margin-top: 18px">Curious <i>pl</i>ay. <i>Epic</i> growth.</p>
     <p class="slogan-note">Hanken Grotesk 500 in <span class="mono" style="font-size:0.95em">--text-2</span>, with pl and Epic in <span class="mono" style="font-size:0.95em">--green-brand</span>: the two halves of the name, and the only green in the line. In the footer, quiet ink that warms to green on hover.</p>
-
-    <hr class="rule">
-    <h2 class="sec">What Estonian carries instead</h2>
-    <p class="sec-note">The pun lives in an English name, so Estonian never translates the tagline. It carries its own line, which does a different job.</p>
-    <div class="langs">
-      <div class="lang">
-        <p class="tag">EN</p>
-        <p class="line slogan" style="font-family: var(--font-body); font-weight: 500; color: var(--text-2)">Curious <i>pl</i>ay. <i>Epic</i> growth.</p>
-        <p class="why">The tagline decodes the name; nothing stands in for it.</p>
-      </div>
-      <div class="lang" lang="et">
-        <p class="tag">ET</p>
-        <p class="line">Tulemusp&otilde;hine digimuutus</p>
-        <p class="why" lang="en">Names the outcome, because an Estonian buyer is justifying a spend. Never a translation of the tagline, and never presented as one.</p>
-      </div>
-    </div>
 
     <hr class="rule">
     <h2 class="sec">The category line</h2>
