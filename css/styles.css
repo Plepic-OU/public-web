@@ -2172,26 +2172,40 @@ plepic-mark > svg {
 .footer {
   background: var(--bg);
   color: var(--text);
-  padding: var(--space-xl) 0;
+  padding: var(--space-lg) 0;
   border-top: 1px solid var(--border);
 }
 
-/* Two columns only: contact links left, company details right. A third wide
-   element in this row makes the pair too wide to fit, so it wraps and the
-   right-aligned block goes ragged. Keep the footer at these two. */
+/* One band: the brand left; the links and one line of legal fine print right.
+   Scopeful is the only page link; a hairline sets it apart from the contacts. */
 .footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--space-md) var(--space-xl);
+  gap: var(--space-sm) var(--space-xl);
+}
+
+/* Zoom scales the lockup's rem ratios as one unit; 1.385 sets the tagline at
+   the legal line's 0.75rem. */
+.footer-lockup {
+  display: flex;
+  width: fit-content;
+  zoom: 1.385;
+  text-decoration: none;
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .footer-links {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-lg);
+  column-gap: var(--space-lg);
 }
 
 .footer-links a {
@@ -2199,7 +2213,6 @@ plepic-mark > svg {
   align-items: center;
   gap: 0.35rem;
   min-height: 44px;
-  padding-block: 0.5rem;
   color: var(--text-2);
   font-size: 0.95rem;
   transition: color var(--transition-fast);
@@ -2215,14 +2228,21 @@ plepic-mark > svg {
   flex-shrink: 0;
 }
 
-.footer-company-info {
-  text-align: right;
-  font-size: 0.75rem;
-  color: var(--text-2);
-  line-height: 1.5;
+.footer-sep {
+  width: 1px;
+  height: 1.1rem;
+  background: var(--border);
 }
 
-.footer-company-info strong {
+.footer-legal {
+  margin: 0;
+  text-align: right;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.footer-legal strong {
   color: var(--text);
   font-weight: 600;
 }
@@ -2230,23 +2250,24 @@ plepic-mark > svg {
 /* Privacy link on the light footer: brand green is the link color on cream
    (5.0:1, AA). Vivid green fails here, so it must not come back. The underline
    distinguishes the link from the text around it independent of color. */
-.footer-company-info a {
+.footer-legal a {
   color: var(--green-brand);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-/* Measured, not guessed: the links column is about 557px and the company
-   column about 430px, so the pair needs roughly 1027px plus the gap. Below
-   this the row wraps, and a wrapped right-aligned block is the ragged edge
-   that made the footer look broken. Stack it left instead of letting it wrap. */
+/* Below this the brand and the links no longer fit one row: stack them left. */
 @media (max-width: 1100px) {
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .footer-company-info {
+  .footer-meta {
+    align-items: flex-start;
+  }
+
+  .footer-legal {
     text-align: left;
   }
 }
@@ -4294,15 +4315,6 @@ plepic-mark > svg {
    Footer Tagline
    ======================================== */
 
-.footer-tagline {
-  transition: color var(--transition-base);
-  cursor: default;
-}
-
-.footer-tagline:hover {
-  color: var(--green-brand);
-}
-
 /* ========================================
    Reduced Motion
    ======================================== */
@@ -4448,18 +4460,21 @@ plepic-mark > svg {
     grid-column: auto;
   }
 
-  /* On a phone the two footer columns have nowhere to sit side by side, so
-     they stack and centre, as they did before. */
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
+  /* On a phone the brand, the links and the legal line stack and centre. */
+  .footer-inner,
+  .footer-meta {
+    align-items: center;
   }
 
   .footer-links {
     justify-content: center;
   }
 
-  .footer-company-info {
+  .footer-sep {
+    display: none;
+  }
+
+  .footer-legal {
     text-align: center;
   }
 

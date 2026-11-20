@@ -695,14 +695,14 @@ voice_body = """  <div class="board">
     <p class="sec-note">Plepic Strategy owns the mission sentence. This is what it asks of a line.</p>
     <div class="langs">
       <div class="lang">
-        <p class="tag">The engineer</p>
+        <p class="tag">The believer</p>
         <p class="line">becoming an <em class="g">agentic engineer</em></p>
-        <p class="why">Show the craft: real code, real checks, the engineer directing and verifying. Never promise the agent does the job.</p>
+        <p class="why">The software engineer on the team. Show the craft: real code, real checks, the engineer directing and verifying. Never promise the agent does the job.</p>
       </div>
       <div class="lang">
-        <p class="tag">The entrepreneurial lead</p>
-        <p class="line">ready to be <em class="g">paid for results</em>, not hours</p>
-        <p class="why">A founder or team lead. Show the outcome and the arithmetic, and make the relationship worth starting.</p>
+        <p class="tag">The decider</p>
+        <p class="line">an <em class="g">entrepreneurial</em> engineering leader</p>
+        <p class="why">Buys for the team. Show the proof: course ratings, graduates&rsquo; speedup, capstones and testimonials.</p>
       </div>
     </div>
 
@@ -723,7 +723,7 @@ voice_body = """  <div class="board">
     <p class="sec-note">PLEPIC is PL(ay) plus EPIC, and each half of the tagline names one half. That is why it cannot be reworded, and why Estonian carries it in English, never translated and never replaced by a line of its own.</p>
     <p class="decoder"><span class="g">PL</span><span class="dim">(ay)</span><span class="g">EPIC</span></p>
     <p class="slogan" style="margin-top: 18px">Curious <i>pl</i>ay. <i>Epic</i> growth.</p>
-    <p class="slogan-note">Hanken Grotesk 500 in <span class="mono" style="font-size:0.95em">--text-2</span>, with pl and Epic in <span class="mono" style="font-size:0.95em">--green-brand</span>: the two halves of the name, and the only green in the line. In the footer, quiet ink that warms to green on hover.</p>
+    <p class="slogan-note">Hanken Grotesk 500 in <span class="mono" style="font-size:0.95em">--text-2</span>, with pl and Epic in <span class="mono" style="font-size:0.95em">--green-brand</span>: the two halves of the name, and the only green in the line. In the footer it signs off inside the one-row lockup.</p>
 
     <hr class="rule">
     <h2 class="sec">The category line</h2>
