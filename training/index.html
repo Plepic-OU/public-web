@@ -470,19 +470,82 @@
       </div>
     </section>
 
-    <!-- Recent Webinar -->
-    <section class="section">
+    <!-- Capstone projects. Lines come from the "Capstone project ideas" doc; six
+         that name a narrow industry stay out, because they can identify a client. -->
+    <section class="section capstones-section">
       <div class="container">
-        <div class="text-center reveal">
-          <p class="label">Recent Webinar</p>
-          <h2>What 300 Developers Taught Us About Agentic Coding</h2>
-          <p class="section-subtitle">The patterns, data and harness we teach, drawn from every cohort and hackathon we have run since Claude Code shipped in February 2025, across 20+ Estonian companies.</p>
-          <div class="btn-group mt-md">
-            <a href="/webinar/2026-04-17-agentic-coding/" class="btn btn-secondary btn-lg">
-              Open the deck &rarr;
-            </a>
-          </div>
+        <div class="capstones-head reveal">
+          <p class="label">Capstone projects</p>
+          <h2>What Participants <span class="highlight">Built in Weeks 5 and 6</span></h2>
+          <p class="capstones-sub">Most came from their own daily work; some were personal. Pick a problem.</p>
         </div>
+        <div class="capstone-filters" role="group" aria-label="Filter capstone projects by problem">
+          <button type="button" class="capstone-filter" data-cat="0" aria-pressed="true">Tests and gates</button>
+          <button type="button" class="capstone-filter" data-cat="1" aria-pressed="false">Legacy code</button>
+          <button type="button" class="capstone-filter" data-cat="2" aria-pressed="false">Speed and bugs</button>
+          <button type="button" class="capstone-filter" data-cat="3" aria-pressed="false">Understanding a system</button>
+          <button type="button" class="capstone-filter" data-cat="4" aria-pressed="false">Agents and chat</button>
+          <button type="button" class="capstone-filter" data-cat="5" aria-pressed="false">Messy input</button>
+          <button type="button" class="capstone-filter" data-cat="6" aria-pressed="false">Team workflow</button>
+          <button type="button" class="capstone-filter" data-cat="7" aria-pressed="false">Internal tools</button>
+          <button type="button" class="capstone-filter" data-cat="8" aria-pressed="false">Hardware</button>
+          <button type="button" class="capstone-filter" data-cat="9" aria-pressed="false">Personal</button>
+        </div>
+        <ul class="capstone-list" aria-live="polite">
+          <li data-cat="0">Began adding tests to a 164,000-line application that had none, riskiest business logic first.</li>
+          <li data-cat="0">Built a review gate and a verify gate for AI-written code: the verify gate breaks the code on purpose to see whether the tests notice.</li>
+          <li data-cat="0">Made a read-only catalogue of thousands of automated tests across repositories, readable by managers as well as engineers.</li>
+          <li data-cat="0">Wrote browser tests for two new country versions of a product. Claude writes, runs and fixes each test until it passes three times in a row.</li>
+          <li data-cat="0">Wrote runnable usage examples for a library that had none; they double as regression tests.</li>
+          <li data-cat="1">Planned a database migration of a business-critical service, with old and new running side by side to compare results.</li>
+          <li data-cat="1">Rewrote an internal admin app from an old Java web framework to React and Spring Boot, with generated API clients and new tests.</li>
+          <li data-cat="1">Removed a ten-year-old layer around the database in stages small enough to review, and proved that the generated SQL stayed the same.</li>
+          <li data-cat="1">Migrated an AngularJS front end to modern Angular one piece at a time, with end-to-end tests as the safety net.</li>
+          <li data-cat="1">Upgraded a portal stuck on Java 1.6: dependencies, getting it running, end-to-end tests, dead code.</li>
+          <li data-cat="1">Replaced an abandoned modelling tool with a standalone app, using about 100 existing models as tests that the generated code stays identical.</li>
+          <li data-cat="2">Profiled a backend service and found a library compiling a regular expression on every event. The fix halved CPU use.</li>
+          <li data-cat="2">Found out why a web console kept open all day slows down, using heap snapshots, and ranked the fixes.</li>
+          <li data-cat="2">Patched an open-source game launcher for touch on a Raspberry Pi: 11 patches, and one fix cut world loading from 2 minutes to about 5 seconds.</li>
+          <li data-cat="2">Fixed a years-old bug in an open-source device library, then pointed a camera at the device so Claude could check the fix itself.</li>
+          <li data-cat="3">Mapped a large multi-repo platform: C4 diagrams down to components, data flows, database schemas and 250 findings, with an agent that checks every document against the code.</li>
+          <li data-cat="3">Turned 100 pages of system documentation into a browsable model that links requirements to processes, use cases and code.</li>
+          <li data-cat="3">Moved a company&rsquo;s scattered know-how into git-versioned markdown, served over MCP. Agents propose updates as diffs for a human to accept.</li>
+          <li data-cat="3">Turned a ticket number into ready context for Claude Code: the related repositories, wiki pages and skills.</li>
+          <li data-cat="3">Kept a C4 map up to date with a skill, and added a brainstorming skill that turns business input into analysis and task drafts.</li>
+          <li data-cat="3">Built a pipeline of skills that extracts a knowledge base from slides and notes, with a validator on every step.</li>
+          <li data-cat="4">Built a read-only MCP server with pseudonymised data, so customers&rsquo; agents can ask how a complex system is set up.</li>
+          <li data-cat="4">Added write operations and an MCP server to a product&rsquo;s API, with confirm dialogs, dry runs and an agent whose job was to break it.</li>
+          <li data-cat="4">Built a no-code REST service builder where an assistant on a self-hosted model writes the SQL and configures the endpoint.</li>
+          <li data-cat="4">Built a support bot that answers in five languages from a knowledge base and hands uncertain cases to a human.</li>
+          <li data-cat="5">Upload a PDF invoice, the model reads it, and the user checks a prefilled form.</li>
+          <li data-cat="5">Classify incoming email: rules first, AI for the rest, a human confirms.</li>
+          <li data-cat="5">Replace a monthly report assembled by hand from many Excel and PDF formats with one pipeline.</li>
+          <li data-cat="5">Check a codebase against a customer&rsquo;s non-functional requirements with a local model.</li>
+          <li data-cat="5">Train a small multilingual model to detect prompt injection, and compare it with an open model.</li>
+          <li data-cat="6">Rules and skills strict enough to enforce company policies, then a feature built from the spec in parallel worktrees.</li>
+          <li data-cat="6">A kanban board where agents on several machines hand tasks to each other over MCP.</li>
+          <li data-cat="6">Design inside the spec flow: UI prototypes kept in sync with the code and the design system.</li>
+          <li data-cat="6">A closed build loop on an ERP platform: compile, read the errors, fix, run the best-practice checker. Deploys only with human approval.</li>
+          <li data-cat="6">A loop for a large monolith where every finished task leaves lessons for the next one.</li>
+          <li data-cat="6">Slash commands, hooks and issue-tracker connections for a team, then real work done with them.</li>
+          <li data-cat="6">A sandboxed agent environment identical to the developer&rsquo;s own, without exposing sensitive dependencies.</li>
+          <li data-cat="7">A shared UI component library, a devtools plugin for debugging analytics requests, a status page for a fleet of tablets.</li>
+          <li data-cat="7">An operations and testing console that replaces several internal tools and direct database access.</li>
+          <li data-cat="7">A test management plugin for the team&rsquo;s issue tracker, replacing spreadsheets.</li>
+          <li data-cat="7">A staffing app built from the spreadsheet used to put together CVs for tenders.</li>
+          <li data-cat="7">An API tester for a legacy backend, so front-end developers don&rsquo;t have to wait.</li>
+          <li data-cat="7">A configuration builder that keeps settings consistent across services.</li>
+          <li data-cat="7">A route planner for inspection shifts with time windows.</li>
+          <li data-cat="8">A simulator for the device behind a serial-port diagnostics app, so the app can be tested without hardware.</li>
+          <li data-cat="8">Smart-home apps: a fast replacement for a hub&rsquo;s slow app, with voice commands, and a home server rebuilt from an existing system&rsquo;s API.</li>
+          <li data-cat="9">A murder-mystery game where Claude plays every suspect and only the killer lies.</li>
+          <li data-cat="9">A tabletop role-playing encounter builder: the model picks the monsters, deterministic tools do the maths.</li>
+          <li data-cat="9">A daily crawler for car-sale sites, a terminal app for a record collection, an investment tracker, open-source accounting software for a family member.</li>
+          <li data-cat="9">An arcade game, a 2D platformer, a 3D throwing game.</li>
+          <li data-cat="9">A browser extension that merges two school portals for parents with several children.</li>
+          <li data-cat="9">A database manager built by agents in overnight loops.</li>
+        </ul>
+        <p class="capstone-caption">As participants presented them; employers are not named.</p>
       </div>
     </section>
 
@@ -730,6 +793,29 @@
   </div>
 
   <script>
+    // Capstone filter: one problem at a time. Without the script every line shows.
+    const capstoneFilters = document.querySelector('.capstone-filters');
+    const capstoneItems = [...document.querySelectorAll('.capstone-list li')];
+    const showCapstones = (cat, rise) => {
+      capstoneFilters.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.cat === cat));
+      let k = 0;
+      capstoneItems.forEach((li) => {
+        const on = li.dataset.cat === cat;
+        li.hidden = !on;
+        li.classList.remove('capstone-in');
+        if (on && rise) {
+          li.style.setProperty('--capstone-index', k++);
+          void li.offsetWidth;
+          li.classList.add('capstone-in');
+        }
+      });
+    };
+    capstoneFilters.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (b) showCapstones(b.dataset.cat, true);
+    });
+    showCapstones('0', false);
+
     // Header scroll effect
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
