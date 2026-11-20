@@ -797,23 +797,37 @@
       </div>
     </section>
 
-    <!-- Section 3: What changes. Introduces no new claim: both sentences are
-         hoisted verbatim from the FAQ item this restructure removed, and the
-         quote is the one of three that describes a discipline change. -->
+    <!-- Section 3: What participants ship. Rows come from the "Capstone project
+         ideas" doc in the session notes' wording. The 5x basis line stays in this
+         section because the hero badge cites it. -->
     <section class="outcome-section section reveal">
       <div class="container">
-        <div class="outcome-content reveal">
-          <h2>You ship <span class="highlight">a real feature in your own codebase</span></h2>
+        <div class="outcome-grid">
+          <div class="outcome-intro reveal">
+            <h2>You ship <span class="highlight">a real feature in your own codebase</span></h2>
 
-          <p>The capstone project, weeks 5 and 6: built on Fridays, shipped on Monday.</p>
+            <p>The capstone project, weeks 5 and 6: built on Fridays, shipped on Monday.</p>
 
-          <p>Graduates self-report a median 5&times; speedup on their final project, estimated at course end against their previous methods. Basis: 25 answered, 20 gave measurable comparisons; cohort medians 7.5&times; and 4.2&times;.</p>
+            <blockquote class="perspective-shift-quote">
+              <p>&ldquo;The biggest value was a mindset shift: not using AI as a tool, but building architecture around it. An entirely new perspective on applying AI systematically.&rdquo;</p>
+              <cite>Kristina Krist, Mindworks Industries</cite>
+            </blockquote>
+          </div>
 
-          <blockquote class="perspective-shift-quote">
-            <p>&ldquo;The biggest value was a mindset shift: not using AI as a tool, but building architecture around it. An entirely new perspective on applying AI systematically.&rdquo;</p>
-            <cite>Kristina Krist, Mindworks Industries</cite>
-          </blockquote>
+          <div class="reveal reveal-delay-1">
+            <dl class="outcome-rows">
+              <div class="outcome-row"><dt>Agent-written code nobody has checked</dt><dd>A review gate and a verify gate. The verify gate breaks the code on purpose to see whether the tests notice.</dd></div>
+              <div class="outcome-row"><dt>No tests at all</dt><dd>Tests for a <span class="proposal-fig">164,000</span>-line application that had none, riskiest business logic first.</dd></div>
+              <div class="outcome-row"><dt>Slow, and nobody knows why</dt><dd>Profiling found a library compiling a regular expression on every event. The fix halved CPU use.</dd></div>
+              <div class="outcome-row"><dt>A migration nobody wants to own</dt><dd>A business-critical database migration, planned with old and new running side by side to compare results.</dd></div>
+              <div class="outcome-row"><dt>A product agents cannot reach</dt><dd>A read-only MCP server over pseudonymised data, so customers&rsquo; agents can ask how the system is set up.</dd></div>
+              <div class="outcome-row"><dt>And something for fun</dt><dd>A murder mystery: Claude plays every suspect, only the killer lies, and the player has <span class="proposal-fig">20</span> questions.</dd></div>
+            </dl>
+            <p class="outcome-caption">Projects as participants presented them; employers are not named.</p>
+          </div>
         </div>
+
+        <p class="outcome-basis">Graduates self-report a median 5&times; speedup on their final project, estimated at course end against their previous methods. Basis: 25 answered, 20 gave measurable comparisons; cohort medians 7.5&times; and 4.2&times;.</p>
       </div>
     </section>
 

@@ -236,6 +236,7 @@
   --tt-rx: 0deg;
   --tt-ry: 0deg;
   --mark-perspective: 90px;
+  --capstone-index: 0;   /* training/index.html writes it per capstone line */
 }
 
 /* ========================================
@@ -1170,20 +1171,218 @@ p:last-child {
   background: var(--bg-alt);
 }
 
-.outcome-content {
-  max-width: 720px;
-  margin: 0 auto;
+.outcome-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-3xl);
+  align-items: start;
 }
 
-.outcome-content h2 {
+/* The rows run longer than the intro, so the intro holds beside them. */
+.outcome-intro {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-lg));
+}
+
+.outcome-intro h2 {
   margin-bottom: var(--space-lg);
+  text-wrap: balance;
 }
 
-.outcome-content > p {
+.outcome-intro > p {
   font-size: var(--fs-body);
   color: var(--text-2);
-  line-height: 1.7;
+  line-height: 1.6;
+}
+
+.outcome-intro .perspective-shift-quote {
+  margin: var(--space-2xl) 0 0;
+}
+
+.outcome-rows {
+  margin: 0;
+  border-top: 1.5px solid var(--text);
+}
+
+.outcome-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--space-lg);
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.outcome-row dt {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+  transition: color var(--transition-fast);
+}
+
+.outcome-row:hover dt {
+  color: var(--green-brand);
+}
+
+.outcome-row dd {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.outcome-caption {
+  margin-top: var(--space-md);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.outcome-basis {
+  max-width: 72ch;
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-3);
+}
+
+@media (max-width: 900px) {
+  .outcome-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .outcome-intro {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .outcome-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+    padding: var(--space-md) 0;
+  }
+}
+
+/* ========================================
+   Training: capstone projects, one problem at a time
+   ======================================== */
+
+.capstones-head {
+  max-width: 720px;
+  margin: 0 auto var(--space-xl);
+  text-align: center;
+}
+
+.capstones-head h2 {
   margin-bottom: var(--space-md);
+  text-wrap: balance;
+}
+
+.capstones-sub {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.capstone-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  max-width: 900px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.capstone-filter {
+  padding: 0.65rem 0.95rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-2);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--rounded-pill);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.capstone-filter:hover {
+  color: var(--green-dark);
+  border-color: var(--green-brand);
+}
+
+/* Selected is an ink ring, never an ink fill: the site carries no dark surface. */
+.capstone-filter[aria-pressed="true"] {
+  padding: calc(0.65rem - 1px) calc(0.95rem - 1px);
+  color: var(--text);
+  border-width: 2.5px;
+  border-color: var(--text);
+}
+
+.capstone-filter:focus-visible {
+  outline: 2px solid var(--green-dark);
+  outline-offset: 2px;
+}
+
+.capstone-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-2xl);
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  border-top: 1.5px solid var(--text);
+}
+
+.capstone-list li {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.capstone-list li[hidden] {
+  display: none;
+}
+
+.capstone-list li.capstone-in {
+  animation: capstone-rise var(--dur-settle) var(--ease-settle) both;
+  animation-delay: calc(var(--capstone-index) * 50ms);
+}
+
+@keyframes capstone-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.capstone-caption {
+  margin-top: var(--space-xl);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-3);
+}
+
+@media (max-width: 768px) {
+  .capstone-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capstone-list li.capstone-in {
+    animation: none;
+  }
 }
 
 /* ========================================
