@@ -131,7 +131,7 @@
   --green-brand:   #137b30;   /* S73%  L28% — logo, links. AA on cream/white. */
   --green-dark:    #0d5822;   /* S73%  L20% — body text. AAA on cream/white. */
   --green-light:   #c5f6d3;   /* S73%  L87% — light fills, borders */
-  --green-surface: #edfcf1;   /* S73%  L96% — tinted backgrounds */
+  --green-surface: #edfcf1;   /* S73%  L96% — small tints: a favoured card, a badge, a hover fill. Never a section ground. */
 
   /* Accent — H=15°, S=73% (saturation-matched). One per viewport. */
   --accent: #e26c45;
@@ -228,11 +228,6 @@
 
   /* Tooltip edge correction; script sets it per trigger near a screen edge. */
   --tip-dx: 0px;
-
-  /* Module tiers, named for the loadout builder. Never applied to people. */
-  --tier-core: var(--green-surface);
-  --tier-advanced: var(--green-light);
-  --tier-signature: var(--green-brand);
 
   /* Runtime channels. js/tabletop.js and js/plepic-mark.js write these per
      element; they are declared here because every var() must resolve. */
@@ -432,7 +427,7 @@ p:last-child {
   justify-content: space-between;
 }
 
-/* Logo lockup — wordmark + crystalline butterfly. Locked 2026-04-07. */
+/* Logo lockup: wordmark, crystalline butterfly, tagline. One row by default. */
 .logo-lockup {
   display: inline-flex;
   align-items: center;
@@ -440,11 +435,18 @@ p:last-child {
   line-height: normal;
   text-decoration: none;
 }
-/* Stacked variant — butterfly on top, wordmark below */
+/* Stacked: butterfly on top, wordmark, tagline */
 .logo-lockup--stacked {
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0;
+}
+/* Mark first: butterfly left, as tall as wordmark plus tagline */
+.logo-lockup--mark-first {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: start;
+  column-gap: 0.45rem;
 }
 .logo-wordmark {
   font-family: var(--font-display);
@@ -454,12 +456,61 @@ p:last-child {
   color: var(--green-brand);
   line-height: normal;
 }
-/* On a brand-green background, the wordmark switches to dark text for contrast. */
-.on-brand .logo-wordmark { color: var(--text); }
 .logo-butterfly {
   display: block;
   shape-rendering: crispEdges;
 }
+.logo-lockup--stacked .logo-butterfly {
+  order: -1;
+  width: 4.22rem;
+  height: 3.94rem;
+  margin-bottom: -0.4rem;
+}
+.logo-lockup--mark-first .logo-butterfly {
+  grid-row: 1 / span 2;
+  width: 2.99rem;
+  height: 2.79rem;
+}
+/* Sizes are ratios of the 1.5rem wordmark: two lines from its cap line to its baseline. */
+.logo-tagline {
+  position: relative;
+  align-self: flex-start;
+  margin-top: 0.192rem;
+  padding-left: 0.63rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.541rem;
+  line-height: 1.25;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.logo-tagline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1px;
+  height: 1.053rem;
+  background: var(--text);
+  opacity: 0.22;
+}
+.logo-tagline > span { display: block; }
+.logo-tagline i {
+  font-style: normal;
+  color: var(--green-brand);
+}
+.logo-lockup--stacked .logo-tagline,
+.logo-lockup--mark-first .logo-tagline {
+  align-self: auto;
+  margin-top: 0.04rem;
+  padding-left: 0;
+  font-size: 0.668rem;
+  line-height: 1;
+}
+.logo-lockup--stacked .logo-tagline::before,
+.logo-lockup--mark-first .logo-tagline::before { display: none; }
+.logo-lockup--stacked .logo-tagline > span,
+.logo-lockup--mark-first .logo-tagline > span { display: inline; }
 .logo-butterfly--hero { shape-rendering: crispEdges; }
 
 @keyframes wing-breathe-left  { 0%,100% { transform: rotate(0) scaleX(1); } 50% { transform: rotate(-2deg) scaleX(0.97); } }
@@ -1067,14 +1118,8 @@ p:last-child {
   margin-bottom: var(--space-md);
 }
 
-.text-agent,
-.shift-col--agent h4 {
+.text-agent {
   color: var(--text) !important;
-}
-
-.shift-col--agent {
-  background: var(--green-surface);
-  border-color: var(--green-light);
 }
 
 .text-conversational,
@@ -2128,7 +2173,8 @@ plepic-mark > svg {
    ======================================== */
 
 .enlist-section {
-  background: var(--green-surface);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   padding: var(--space-4xl) 0;
 }
 
@@ -3117,10 +3163,6 @@ plepic-mark > svg {
   padding: 0 var(--space-xl) var(--space-lg);
 }
 
-.curriculum-final {
-  background: var(--green-surface);
-}
-
 .curriculum-sessions-badge {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -3709,9 +3751,9 @@ plepic-mark > svg {
    ======================================== */
 
 .pricing-section {
-  background: var(--green-surface);
-  border-top: 1px solid var(--green-light);
-  border-bottom: 1px solid var(--green-light);
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .pricing-hero {
@@ -3929,7 +3971,7 @@ plepic-mark > svg {
   filter: grayscale(100%);
   /* Cut-out portraits (Joosep, Neeme) have a transparent ground; the white
      fill gives them the same disc the opaque studio shots already carry. */
-  background: #fff;
+  background: var(--surface);
 }
 
 .team-member-info {
@@ -4653,14 +4695,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   border-radius: 14px;
   padding: var(--space-xl);
 }
-.card-info {
-  background: var(--green-surface);
-  border: 1px solid var(--green-light);
-  border-radius: 10px;
-  padding: var(--space-md);
-}
-.card-info h4 { color: var(--text); }
-.card-info p  { color: var(--green-brand); font-size: 0.85rem; }
 
 /* ── Code blocks ────────────────────────────────────────────── */
 .code-block {
@@ -4732,7 +4766,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   max-width: 640px;
   margin-bottom: var(--space-lg);
 }
-.ds-locked,
 .ds-wip {
   display: inline-block;
   font-family: var(--font-mono);
@@ -4744,7 +4777,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   margin-left: var(--space-sm);
   vertical-align: middle;
 }
-.ds-locked { background: var(--green-surface); color: var(--green-dark); }
 .ds-wip    { background: #fdf0eb; color: #a3502e; }
 
 .ds-swatch-strip {
@@ -4834,7 +4866,6 @@ html.fonts-in .hero-entrance { animation-play-state: running; }
   padding: 2px 5px;
   border-radius: 3px;
 }
-.ds-ct-pass { background: var(--green-surface); color: var(--green-dark); }
 .ds-ct-warn { background: var(--bg-alt); color: var(--text-3); }
 .ds-ct-fail { background: #fdf0eb; color: #a3502e; }
 

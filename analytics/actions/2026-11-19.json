@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-19",
+  "actions": [
+    {
+      "timestamp": "2026-11-19T09:20:00.000Z",
+      "action": "PAUSE_AD",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "reason": "Google auto-generated a video ad from the image ad; it took EUR 1.86 of EUR 1.92 spend and Kaido rejected its quality. Google removed it after the opt-out.",
+      "success": true,
+      "ad_id": "831970430317"
+    },
+    {
+      "timestamp": "2026-11-19T09:20:00.000Z",
+      "action": "OPT_OUT_ASSET_AUTOMATION",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "reason": "Stop Google generating videos and design versions from brand images",
+      "success": true,
+      "ad_id": "831910304526",
+      "types": [
+        "GENERATE_VIDEOS_FROM_OTHER_ASSETS",
+        "GENERATE_DESIGN_VERSIONS_FOR_IMAGES"
+      ]
+    },
+    {
+      "timestamp": "2026-11-19T09:20:00.000Z",
+      "action": "UPDATE_AD_IMAGES",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "reason": "Three image variants per format (12 images) to clear Google's 'add at least 3 images' action items; ad strength now Excellent",
+      "success": true,
+      "ad_id": "831910304526"
+    },
+    {
+      "timestamp": "2026-11-19T09:20:00.000Z",
+      "action": "CREATE_VIDEO_AD",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "reason": "Design-system motion video, 15 s, 16:9 and 9:16, uploaded unlisted to YouTube (4jgbCR6iPLg, qAwLXF3ouGA); vertical and shorter auto-versions opted out",
+      "success": true,
+      "ad_id": "832123408691"
+    }
+  ],
+  "summary": {
+    "keywords_paused": 0,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 0,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}

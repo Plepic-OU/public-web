@@ -18,94 +18,112 @@
       "sha256": "8b5cf11cc3caa61de20383a4a8b5c434d9406b96054b1c2b8da3512d74a158e3"
     },
     "Logos/plepic-lockup.svg": {
-      "blob": "7abc5406ab74f197610b2baeb3cc7fc2",
-      "size": 23362,
+      "blob": "52276e9b6937d1c83214bcb2f8cf2304",
+      "size": 44857,
       "type": "image/svg+xml",
-      "sha256": "70630f51fa4117df79359a52e5614b17e5061028aee8f5f1b1c3baa045cd17ed"
+      "sha256": "40436e679cffde30e71215eb10f80d015e8445ef63771f45a37472301d29a4df"
     },
     "Logos/plepic-lockup.pdf": {
-      "blob": "ea42c8ae702cd290f2fc4cfacd37db4f",
-      "size": 9032,
+      "blob": "881e5418e2d2adef5f3c6a8a1286bb26",
+      "size": 21427,
       "type": "application/pdf",
-      "sha256": "86af1d1e7e283761f6e35b473db1334017ea89ee96fb66c3ed5bde15f2c8bc16"
+      "sha256": "7c2d6b392db7b15909ab2b8676733fce60142ffcec7111a36a46d64d9809af9b"
     },
     "Logos/plepic-lockup.png": {
-      "blob": "ba8f198e45ef83a183a40d771ef76e4d",
-      "size": 25943,
+      "blob": "02d9e37f7ee6e19906b0b11872057595",
+      "size": 45561,
       "type": "image/png",
-      "sha256": "536d50ad945f7535a21081b2344433a9b2b9fde677a91beb83a51b6dd4ac7819"
+      "sha256": "4577a0c9ed57f271dc9375a09f197d547e73e34c11c810d0742936652b4d6a03"
     },
     "Logos/plepic-lockup-stacked.svg": {
-      "blob": "1acd188aeefb8c75117b021bef922bd5",
-      "size": 23609,
+      "blob": "72c04c6c19f973241f127ce12822b76d",
+      "size": 47178,
       "type": "image/svg+xml",
-      "sha256": "012d7231fcebfc835f50e7d3b87d8d134d2590bc0039c08bd33fc93b00fa3d60"
+      "sha256": "44ae8746328a4cbe3dd7fb77e9cf0c0ab20bc7868199449037e713735367e92b"
     },
     "Logos/plepic-lockup-stacked.pdf": {
-      "blob": "ff461f646953948b9e1a147f2772635d",
-      "size": 9048,
+      "blob": "9f7d7ba995207e629f17109110044a03",
+      "size": 21395,
       "type": "application/pdf",
-      "sha256": "5515f6fd3254e9839f56ff430b79b1c8e98f8bf3249101be84a1e0919e054561"
+      "sha256": "3a2cb69aa26561b421609322cf0b994770369117f366551eb7f341f7de34134f"
     },
     "Logos/plepic-lockup-stacked.png": {
-      "blob": "90934ad85161057323140ac89673f60c",
-      "size": 25237,
+      "blob": "b8bca6295878f72e771c7900cd21cbb5",
+      "size": 56620,
       "type": "image/png",
-      "sha256": "c98c79b8beec06e0c8015bc24546290fd4fb4cf9bb7dffee88d696445d914442"
+      "sha256": "8f019caeffa3abc92bc6c1629b637a0a19bd257553bf50233f5daaa1aad5894f"
     },
-    "Logos/plepic-lockup-on-brand.svg": {
-      "blob": "32204bcd637caaa18ea06f9ad95f1ed0",
-      "size": 23368,
+    "Logos/plepic-lockup-mark-first.svg": {
+      "blob": "11e282853c96943093489dfd9c5fc693",
+      "size": 44790,
       "type": "image/svg+xml",
-      "sha256": "2f420f9f5941b4fb1144e91e1112d3b5294e6a554e687e134c967f48eefdb749"
+      "sha256": "1264cfd1eff55bd0576f71294d371e744f47f7d1afd6cc54bccfe61c67b82ea7"
     },
-    "Logos/plepic-lockup-on-brand.pdf": {
-      "blob": "c4572a604dfced4184103189fbfc148b",
-      "size": 9049,
+    "Logos/plepic-lockup-mark-first.pdf": {
+      "blob": "506805b09521f5d33ae4e44567048fb9",
+      "size": 21063,
       "type": "application/pdf",
-      "sha256": "8262e746d268bb6ee2eeb8916228752ab36eda68d3139846889c2e669959db01"
+      "sha256": "0757d48d26ef5f2a94b9fe2926c03e2fe737ac3304b108548d01420ff2609b7b"
     },
-    "Logos/plepic-lockup-on-brand.png": {
-      "blob": "22cccc04b4bea3d18c453413392b2cd1",
-      "size": 24809,
+    "Logos/plepic-lockup-mark-first.png": {
+      "blob": "e316b0fb4d6d0c79f476c04d24f24cf6",
+      "size": 53102,
       "type": "image/png",
-      "sha256": "47883bfc7941a2019fa0b60454d41a6482951b0cc4db56a0abe625b74910ac13"
+      "sha256": "3d8d20183643de01c0ab680b854e775513a02e49ed5043a40f2b25fa4d6faaca"
     },
     "Logos/plepic-com-lockup.svg": {
-      "blob": "58bef91d2ff01710772554ed04cb3ea8",
-      "size": 27862,
+      "blob": "ca911bbe90c9b660b7fd1ab5bbd15f37",
+      "size": 50098,
       "type": "image/svg+xml",
-      "sha256": "05c227c82f61656b4f7a900037575714a1d66bb9e68c209a804f32feca57098e"
+      "sha256": "c18788a94bd67fbd8dac0886cd464e99ec9e3955d265d52348c7d63daf22ab2e"
     },
     "Logos/plepic-com-lockup.pdf": {
-      "blob": "bf98c1d3ca017ef5e38cc03a91961999",
-      "size": 11532,
+      "blob": "d6015f3ee96bd55713bd751eaaacf48e",
+      "size": 23922,
       "type": "application/pdf",
-      "sha256": "5e59da5da6558bb312637f0977e8769cae0cb3c4f161cd2fe63bde95f7a51b29"
+      "sha256": "c0b1f3ceeaa049150e53d602a6e7c5401fbc4814cf04a0ffeafe7213d66709ef"
     },
     "Logos/plepic-com-lockup.png": {
-      "blob": "20f338cfc8416fd26c77ea06d4e5d159",
-      "size": 38591,
+      "blob": "fbe27e0bccd064ecdf381bb879d62cb4",
+      "size": 58594,
       "type": "image/png",
-      "sha256": "91b0f720e8431c2edb21e25b24e191426e39320cd2d07220ea824d853c4bda17"
+      "sha256": "3e7b17845d6a2f75bc031775b17ea832e60ad708993c4ce0b3d1401d76207717"
     },
-    "Logos/plepic-com-wordmark.svg": {
-      "blob": "9d2870e8f7c365647f4384c43bb974a0",
-      "size": 12386,
+    "Logos/plepic-com-lockup-stacked.svg": {
+      "blob": "b21dbc18b7e50ea33af75d5c36424d3a",
+      "size": 51557,
       "type": "image/svg+xml",
-      "sha256": "22a9372835bd61bb279c3d512d713f0aee31e734081fa69c19475eaf49023e8e"
+      "sha256": "fa06a976ae93f1db56d2adf574253106606028a98da777b997d2bf648ef4d65a"
     },
-    "Logos/plepic-com-wordmark.pdf": {
-      "blob": "f09b57557236412016b4037dbefa292b",
-      "size": 9040,
+    "Logos/plepic-com-lockup-stacked.pdf": {
+      "blob": "0cef867e6fdccd8e56660b52080d2ac1",
+      "size": 23877,
       "type": "application/pdf",
-      "sha256": "5e50028a7fd61fed7aeb0288a95d1ae91d44fe27dddd4a06e78142d2a6b84cac"
+      "sha256": "edcf232050ba075411d5383c4c658a4115323aa874224ff318be0b1c39198f11"
     },
-    "Logos/plepic-com-wordmark.png": {
-      "blob": "893bfb45648ea6601a8726d5a01b8f7c",
-      "size": 27620,
+    "Logos/plepic-com-lockup-stacked.png": {
+      "blob": "fcdbf61f2a495d5de5388aa9dee883f8",
+      "size": 67344,
       "type": "image/png",
-      "sha256": "28fd7c24acebb3531f7d6b57915e6970f3f133df21f2ec89a55cfbd6bf072e85"
+      "sha256": "a786ea0abbea17dd7e16c442d08538d4a4d3a126abc1f0e161ef568f47ab9d95"
+    },
+    "Logos/plepic-com-lockup-mark-first.svg": {
+      "blob": "4512bd05c1b334eafcfd39ea17e32eaf",
+      "size": 49177,
+      "type": "image/svg+xml",
+      "sha256": "0cc7a4ff3ffd09d0820eda55708c5a96199dd193984ffebab881318a67dc59b2"
+    },
+    "Logos/plepic-com-lockup-mark-first.pdf": {
+      "blob": "69a98d2abca630356dab595f7d115860",
+      "size": 23545,
+      "type": "application/pdf",
+      "sha256": "d0dd80cd2e5134ff45e59afd3e400dc4d11b77eae49cc4a73380814d593f6932"
+    },
+    "Logos/plepic-com-lockup-mark-first.png": {
+      "blob": "04fdb7b28fa7b147305cce63333e9fb8",
+      "size": 64009,
+      "type": "image/png",
+      "sha256": "e130febeb9c267d95fd84a35648cd3fbb306178f194b888d45631b78487f0d6c"
     },
     "Portraits/joosep.jpg": {
       "blob": "52d028a2a7d7881db3a9173553e0c2f0",
@@ -210,5 +228,5 @@
       "sha256": "ff91a076beea59540e34253d5ee46205fd3a0d0b9dc51809390245bc7286c1a2"
     }
   },
-  "logos": "47e64a05b4284786192de6a647ffb6e2e936eb3831ff1b7e0e1cea63956be6c0"
+  "logos": "e2f3db161a13e7a8a3fe56d828223a858f452df657daf45dd527855c2b4414aa"
 }

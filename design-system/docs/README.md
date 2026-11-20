@@ -11,10 +11,10 @@ The Plepic design system, generated from `css/styles.css`, `index.html` and `tra
 Logos are uploads, not files: `design-system.json` lists each under `assetGroups.Logos.files.<name>.blob`, and you read it by passing that id as the path. Or copy the inline SVG from the Lockup component. The Mark section holds the rules; never redraw, recolour or stretch any of them.
 
 - The mark alone: `plepic-mark`; the SVG's id is `{{mark_id}}`.
-- The lockup, the default everywhere: `plepic-lockup`.
-- Stacked, for a narrow or centred space: `plepic-lockup-stacked`.
-- On a green ground, where the wordmark turns ink: `plepic-lockup-on-brand`.
-- The domain wordmark, for print and merchandise: `plepic-com-lockup`, or `plepic-com-wordmark` where the mark stands apart, as on the social card.
+- The lockup in one row, the default: `plepic-lockup`.
+- Stacked, for a square or centred space: `plepic-lockup-stacked`.
+- Mark first, for a card or a cover: `plepic-lockup-mark-first`.
+- For print, merchandise and the social card, the same three with the domain wordmark: `plepic-com-lockup`, `plepic-com-lockup-stacked`, `plepic-com-lockup-mark-first`. The web uses the three without ".com".
 
 Each comes as `.pdf` (vector, fonts embedded: send this to a printer), `.svg` (text as outlines: for any tool) and `.png` (transparent, for slides and documents).
 ## Iconography
@@ -23,7 +23,7 @@ The brand icon is the mark (Logos above). Plepic uses no emoji and one icon set:
 
 ## Not synced
 
-- `--rounded-badge` (`20px 4px 16px`) is a three-value radius the token format cannot hold. It stays in the `:root` block of `components/bundle.css` with the transitions, tier fills, card tilt, mark breath and runtime channels.
+- `--rounded-badge` (`20px 4px 16px`) is a three-value radius the token format cannot hold. It stays in the `:root` block of `components/bundle.css` with the transitions, card tilt, mark breath and runtime channels.
 - The card's tilt and the mark's breath and wing beat need the site's scripts; the showcase pages run the CSS parts only.
 - The logo files are RGB. No CMYK or spot-colour separation exists.
 - The hero's crystalline metamorphosis is a WebGL module and is never redrawn here.
