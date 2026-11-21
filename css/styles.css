@@ -942,8 +942,6 @@ p:last-child {
 :is(.client-logos, .trained-logos) .company-logo--skeleton { height: 0.85em; }
 :is(.client-logos, .trained-logos) .company-logo--simplbooks { height: 0.85em; }
 :is(.client-logos, .trained-logos) .company-logo--werkado { height: 0.66em; }
-:is(.client-logos, .trained-logos) .company-logo--intium { height: 1.1em; }
-:is(.client-logos, .trained-logos) .company-logo--uisupark { height: 0.9em; }
 
 /* Client marks under the proof line on /training and /et: the same marks,
    five to a row, no motion. */
