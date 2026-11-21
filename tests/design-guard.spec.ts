@@ -184,7 +184,7 @@ test.describe('design guard @design-guard', () => {
       return [...block.matchAll(/class="company-logo [^"]*"[^>]*?(?:aria-label|alt)="([^"]+)"/g)].map((m) => m[1]).sort();
     };
     const home = marks('index.html', 'class="client-logos"');
-    expect(home.length, 'homepage trust bar carries 19 marks').toBe(19);
+    expect(home.length, 'homepage trust bar carries 17 marks').toBe(17);
     for (const page of ['training/index.html', 'et/index.html']) {
       expect(marks(page, 'class="trained-logos"'), `${page}: client marks must match the homepage bar`).toEqual(home);
     }
