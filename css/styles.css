@@ -1713,6 +1713,22 @@ p:last-child {
   align-items: start;
 }
 
+.cv-top:has(.cv-book) {
+  grid-template-columns: 184px 1fr 116px;
+}
+
+.cv-book {
+  margin: 0;
+}
+
+.cv-book img {
+  display: block;
+  width: 116px;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--rounded-xs);
+}
+
 .cv-photo {
   position: relative;
   width: 184px;
@@ -1979,6 +1995,18 @@ p:last-child {
   .cv-tags {
     grid-column: 1 / -1;
     margin: 0;
+  }
+
+  .cv-top:has(.cv-book) {
+    grid-template-columns: 96px 1fr;
+  }
+
+  .cv-book {
+    grid-column: 1 / -1;
+  }
+
+  .cv-book img {
+    width: 72px;
   }
 
   .cv-row {
