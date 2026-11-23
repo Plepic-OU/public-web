@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-23",
+  "actions": [
+    {
+      "timestamp": "2026-11-23T14:24:26.921Z",
+      "action": "PAUSE_CAMPAIGN",
+      "campaign": "Vebinar 24.11 - Demand Gen",
+      "campaign_id": "24491112649",
+      "reason": "Kaido asked to pause on 23.11: EUR 89 spent, 27 clicks, 0 ad-sourced registrations",
+      "previous_state": "ENABLED",
+      "new_state": "PAUSED",
+      "success": true
+    }
+  ],
+  "summary": {
+    "keywords_paused": 0,
+    "keywords_enabled": 0,
+    "negative_keywords_added": 0,
+    "bids_increased": 0,
+    "bids_decreased": 0,
+    "estimated_daily_savings": 0,
+    "errors": 0
+  }
+}
