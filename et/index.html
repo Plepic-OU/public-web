@@ -873,6 +873,8 @@
         s.toggleAttribute('data-expanded', open);
         document.getElementById(s.getAttribute('aria-controls')).hidden = !open;
       });
+      // An open panel's tooltips count toward page width even while invisible.
+      document.querySelectorAll('.cpath-desc:not([hidden]) .tooltip-trigger').forEach(fitTip);
     };
     cpathSteps.forEach(step => {
       step.addEventListener('click', () => {
@@ -892,18 +894,17 @@
 
     // Glossary tooltips are 320px wide; near a screen edge, slide the panel
     // back inside the viewport. --tip-dx moves the panel and counter-moves its arrow.
-    document.querySelectorAll('.cpath .tooltip-trigger').forEach(trigger => {
+    function fitTip(trigger) {
       const tip = trigger.querySelector('.tooltip');
-      const fit = () => {
-        trigger.style.setProperty('--tip-dx', '0px');
-        const box = tip.getBoundingClientRect();
-        const dx = Math.max(12 - box.left, 0) - Math.max(box.right - (document.documentElement.clientWidth - 12), 0);
-        trigger.style.setProperty('--tip-dx', `${dx}px`);
-      };
-      trigger.addEventListener('mouseenter', fit);
-      trigger.addEventListener('focus', fit);
-      // Hidden panels still count toward page width, so fit them at load too.
-      fit();
+      trigger.style.setProperty('--tip-dx', '0px');
+      const box = tip.getBoundingClientRect();
+      const dx = Math.max(12 - box.left, 0) - Math.max(box.right - (document.documentElement.clientWidth - 12), 0);
+      trigger.style.setProperty('--tip-dx', `${dx}px`);
+    }
+    document.querySelectorAll('.cpath .tooltip-trigger').forEach(trigger => {
+      trigger.addEventListener('mouseenter', () => fitTip(trigger));
+      trigger.addEventListener('focus', () => fitTip(trigger));
+      fitTip(trigger);
     });
 
   </script>
