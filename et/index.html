@@ -112,7 +112,7 @@
       {"@type": "Question", "name": "Kellele koolitus on mõeldud?", "acceptedAnswer": {"@type": "Answer", "text": "Neile, kellel on vähemalt kaks aastat tööstaaži tarkvaratiimis, mis tahes rollis: arendajatele, testijatele, analüütikutele ja tootejuhtidele. Programmeerimist ei pea oskama: koodi kirjutab agent, teie suunate ja kontrollite tema tööd. Kõige rohkem saab see, kes toob kaasa oma tööülesande ja juurdepääsu päris koodibaasile; teised töötavad meie näidisrepos. Planeerige aeg kõigiks kuueks päevaks, sest iga päev tugineb eelmisele."}},
       {"@type": "Question", "name": "Kui kaua koolitus kestab?", "acceptedAnswer": {"@type": "Answer", "text": "Koolitus toimub kuuel reedel, iga kord täispäev (9.00–15.30) Google Meetis. Programmi maht on 50 akadeemilist tundi ehk 37,5 tundi: 42 akadeemilist tundi kontaktõpet ja 8 akadeemilist tundi iseseisvat tööd. Osalejad töötavad oma ettevõtte koodibaasis või Plepicu näidisrepos Claude Code'i, Giti ja GitHubiga; iseseisva tööna rakendavad nad koolituspäevade vahel õpitut oma koodibaasis."}},
       {"@type": "Question", "name": "Kas koolituse lõpus saab tõendi?", "acceptedAnswer": {"@type": "Answer", "text": "Jah. Tõendi saab osaleja, kes on esitanud lõpuprojekti. Lõpuprojektis rakendab osaleja õpitut oma koodibaasis ja esitleb tulemust. Tõend hõlmab Claude Code'i, kontekstihaldust ja agendi kogu töötsüklit."}},
-      {"@type": "Question", "name": "Kas koolitus sobib ka tiimile, kes juba kasutab agente?", "acceptedAnswer": {"@type": "Answer", "text": "Jah. Õpetame meetodit, mitte tööriista. Hilisemad koolituspäevad käsitlevad spetsifikatsioone, mida agent saab ise kontrollida, kvaliteediväravaid, paralleelseid agente git worktree'des, jälgitavust ja agentidele loodud arhitektuuri. Varasem Claude'i kogemus tuleb kasuks, kuid pole nõutud."}},
+      {"@type": "Question", "name": "Kas koolitus sobib ka tiimile, kes juba kasutab agente?", "acceptedAnswer": {"@type": "Answer", "text": "Jah. Õpetame meetodit, mitte tööriista. Hilisemad koolituspäevad käsitlevad spetsifikatsioone, mida agent saab ise kontrollida, kvaliteediväravaid, paralleelseid agente git worktree'des ja tarkvaratehast. Varasem Claude'i kogemus tuleb kasuks, kuid pole nõutud."}},
       {"@type": "Question", "name": "Kui palju koolitus maksab ja kuidas koolitustoetus toimib?", "acceptedAnswer": {"@type": "Answer", "text": "2520 € + km ühe arendaja kohta. Töötukassa hüvitab Eesti tööandjale 80% koolitusarvest koos käibemaksuga, kuni 2500 € töötaja kohta kolme aasta jooksul. Tööandja esitab taotluse e-töötukassas enne koolituse algust ja me valmistame selle koos temaga ette. Koolitusasutus on Plepic koolitus (Plepic OÜ, registrikood 11275881), EHIS-e majandustegevusteade nr 260952. Programmi maht vastab koolitustoetuse miinimumnõudele."}}
     ]
   }
@@ -365,16 +365,16 @@
                 </ul>
               </div>
             </div>
-            <button class="cpath-next" data-next="cpath-4">Edasi: 4. päev, Paralleelsed agendid ja arhitektuur <span aria-hidden="true">&rarr;</span></button>
+            <button class="cpath-next" data-next="cpath-4">Edasi: 4. päev, Paralleelsed agendid ja tarkvaratehas <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <button class="cpath-step" id="cpath-4" aria-expanded="false" aria-controls="cpath-4-desc">
             <span class="cpath-node"><svg class="cpath-icon" aria-hidden="true"><use href="#i-parallel"/></svg></span>
             <span class="cpath-card">
               <span class="cpath-week">4. päev</span>
-              <span class="cpath-title">Paralleelsed agendid ja arhitektuur</span>
+              <span class="cpath-title">Paralleelsed agendid ja tarkvaratehas</span>
               <span class="cpath-tagline">Mitu agenti korraga, igaühe töö teie silme ees.</span>
-              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>Paralleelne töövoog: iga agent oma git worktree's</span>
+              <span class="cpath-yield"><span class="cpath-yield-label">Kaasa saate</span>Väike tarkvaratehas teie projektile</span>
               <svg class="cpath-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
             </span>
           </button>
@@ -383,15 +383,16 @@
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-watch"><svg class="cpath-icon" aria-hidden="true"><use href="#i-watch"/></svg></span>Auditoorne töö: koolitaja töötab Claude Code'is</p>
                 <ul>
-                  <li>Introspektsioon ja jälgitavus: sessioonilogid, /insights, OTEL-i mõõdikud</li>
-                  <li>Agentidele loodud arhitektuur ja proaktiivsed tsüklid, mis töötavad ka teie eemal olles: logide analüüs, aeglaste päringute läbivaatus, maksete sobitamine</li>
+                  <li>Mitu agenti korraga: worktree'd, orkestreerimine ja kuus viisi nende töö jälgimiseks</li>
+                  <li>Tarkvaratehas: agendivalmis repo, autonoomia piirid ja parendustsükkel</li>
                 </ul>
               </div>
               <div class="cpath-track">
                 <p class="cpath-track-label"><span class="cpath-mode td-build"><svg class="cpath-icon" aria-hidden="true"><use href="#i-build"/></svg></span>Praktiline töö: oma koodibaasis</p>
                 <ul>
-                  <li>2&ndash;5 GitHubi issue lahendamine paralleelselt, iga agent oma <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-worktree">git worktree<span class="tooltip" role="tooltip" id="tip-worktree">Giti funktsioon, mis lubab hoida mitut haru korraga eri kaustades. Nii töötab iga agent oma töökaustas.</span></span>'s</li>
-                  <li>Mõõdetav optimeerimistsükkel: testikomplekti kiirendamine või jõudlusskoori tõstmine nii, et mõlemad kvaliteediväravad jäävad roheliseks</li>
+                  <li>/build-tasks: iga ülesanne läheb oma alamagendile ja <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-worktree">git worktree<span class="tooltip" role="tooltip" id="tip-worktree">Giti funktsioon, mis lubab hoida mitut haru korraga eri kaustades. Nii töötab iga agent oma töökaustas.</span></span>'sse ning liidetakse pärast kvaliteediväravat</li>
+                  <li>Jälgimisvaate <span class="tooltip-trigger" tabindex="0" aria-describedby="tip-mod">mod<span class="tooltip" role="tooltip" id="tip-mod">Plugin, mis muudab Claude Code&rsquo;i ennast, näiteks paneel, mis näitab, mida agendid parajasti teevad.</span></span> ja koodiülevaatuse samm, millega masinast saab tehas</li>
+                  <li>/insights: oma sessioonidest korduva takistuse leidmine ja jäädav kõrvaldamine</li>
                 </ul>
               </div>
             </div>
@@ -713,7 +714,7 @@
             <details class="faq-item">
               <summary>Kas koolitus sobib ka tiimile, kes juba kasutab agente?</summary>
               <div class="faq-answer">
-                <p>Jah. Õpetame meetodit, mitte tööriista. Hilisemad koolituspäevad käsitlevad spetsifikatsioone, mida agent saab ise kontrollida, kvaliteediväravaid, paralleelseid agente git worktree'des, jälgitavust ja agentidele loodud arhitektuuri. Varasem Claude'i kogemus tuleb kasuks, kuid pole nõutud.</p>
+                <p>Jah. Õpetame meetodit, mitte tööriista. Hilisemad koolituspäevad käsitlevad spetsifikatsioone, mida agent saab ise kontrollida, kvaliteediväravaid, paralleelseid agente git worktree'des ja tarkvaratehast. Varasem Claude'i kogemus tuleb kasuks, kuid pole nõutud.</p>
               </div>
             </details>
 
@@ -872,6 +873,8 @@
         s.toggleAttribute('data-expanded', open);
         document.getElementById(s.getAttribute('aria-controls')).hidden = !open;
       });
+      // An open panel's tooltips count toward page width even while invisible.
+      document.querySelectorAll('.cpath-desc:not([hidden]) .tooltip-trigger').forEach(fitTip);
     };
     cpathSteps.forEach(step => {
       step.addEventListener('click', () => {
@@ -891,18 +894,17 @@
 
     // Glossary tooltips are 320px wide; near a screen edge, slide the panel
     // back inside the viewport. --tip-dx moves the panel and counter-moves its arrow.
-    document.querySelectorAll('.cpath .tooltip-trigger').forEach(trigger => {
+    function fitTip(trigger) {
       const tip = trigger.querySelector('.tooltip');
-      const fit = () => {
-        trigger.style.setProperty('--tip-dx', '0px');
-        const box = tip.getBoundingClientRect();
-        const dx = Math.max(12 - box.left, 0) - Math.max(box.right - (document.documentElement.clientWidth - 12), 0);
-        trigger.style.setProperty('--tip-dx', `${dx}px`);
-      };
-      trigger.addEventListener('mouseenter', fit);
-      trigger.addEventListener('focus', fit);
-      // Hidden panels still count toward page width, so fit them at load too.
-      fit();
+      trigger.style.setProperty('--tip-dx', '0px');
+      const box = tip.getBoundingClientRect();
+      const dx = Math.max(12 - box.left, 0) - Math.max(box.right - (document.documentElement.clientWidth - 12), 0);
+      trigger.style.setProperty('--tip-dx', `${dx}px`);
+    }
+    document.querySelectorAll('.cpath .tooltip-trigger').forEach(trigger => {
+      trigger.addEventListener('mouseenter', () => fitTip(trigger));
+      trigger.addEventListener('focus', () => fitTip(trigger));
+      fitTip(trigger);
     });
 
   </script>
